@@ -1,0 +1,50 @@
+<!DOCTYPE form-validation PUBLIC
+        "-//Apache Software Foundation//DTD Commons Validator Rules Configuration 1.3.0//EN"
+        "http://jakarta.apache.org/commons/dtds/validator_1_3_0.dtd">
+
+<form-validation>
+   <formset>
+      <form name="PrfForm">
+         <field property="prf_contractno" depends="required"> 
+         	<msg name="required" key="error.prf.contractno.required" />
+		 </field>
+        <!--  <field property="prf_tanname" depends="required"> 
+         	<msg name="required" key="error.prf.tannery.required" />
+		 </field>
+		 <field property="prf_custname" depends="required"> 
+         	<msg name="required" key="error.prf.customer.required" />
+		 </field>
+		 <field property="prf_cdd" depends="required"> 
+         	<msg name="required" key="error.prf.cDD.required" />
+		 </field>
+		 <field property="prf_add" depends="required"> 
+         	<msg name="required" key="error.prf.aDD.required" />
+		 </field>
+		 <field property="prf_destination" depends="required"> 
+         	<msg name="required" key="error.prf.destination.required" />
+		 </field>
+		 <field property="prf_terms" depends="required"> 
+         	<msg name="required" key="error.prf.terms.required" />
+		 </field>
+		 <field property="prf_payment" depends="required"> 
+         	<msg name="required" key="error.prf.payment.required" />
+		 </field>
+		 <field property="prf_elclasscommission" depends="required"> 
+         	<msg name="required" key="error.prf.elclassCommission.required" />
+		 </field>
+		 <field property="prf_commission1" depends="required"> 
+         	<msg name="required" key="error.prf.commission1.required" />
+		 </field>
+		 <field property="prf_consigneename" depends="required"> 
+         	<msg name="required" key="error.prf.consignee.required" />
+		 </field>
+		 <field property="prf_notifyname" depends="required"> 
+         	<msg name="required" key="error.prf.notify.required" />
+		 </field>
+		 <field property="prf_bankname" depends="required"> 
+         	<msg name="required" key="error.prf.bank.required" />
+		 </field> -->
+		
+     </form>
+  </formset>
+</form-validation>

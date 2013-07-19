@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC 
+	"-//Apache Software Foundation//DTD Struts Configuration 1.3//EN"
+		"http://jakarta.apache.org/struts/dtds/struts-config_1_3.dtd">
+
+
+ <struts-config>
+ 
+ 
+ <!-- FORM BEANS DEFINITIONS -->
+ <form-beans>
+ 	<form-bean name="LoginForm" type="sb.elpro.actionform.LoginForm"></form-bean>
+ 	<form-bean name="MenuForm"  type="sb.elpro.actionform.MenuForm"></form-bean>
+ 	<form-bean name="PrfForm" type="sb.elpro.actionform.PrfForm"></form-bean>
+ 	<form-bean name="SrfForm" type="sb.elpro.actionform.SrfForm"></form-bean>
+ 	<form-bean name="InvoiceForm" type="sb.elpro.actionform.InvoiceForm"></form-bean>
+ 	<form-bean name="DebitForm" type="sb.elpro.actionform.DebitForm"></form-bean>
+ 	<form-bean name="BulkTrackForm" type="sb.elpro.actionform.BulkTrackForm"></form-bean>
+ 	<form-bean name="NewUserForm" type="sb.elpro.actionform.NewUserForm"></form-bean>
+</form-beans>
+ 
+ <!-- GLOBAL FOWARDS -->
+ <global-forwards>
+ 	<forward name="login" path="/Login.jsp"></forward>
+ </global-forwards>
+ <!-- GLOBAL ERRORS -->
+
+ <!-- ACTION MAPPING DEFINITIONS -->
+ <action-mappings>
+ 
+ 	 	<!-- Login Action  -->
+	<action path="/login" name="LoginForm" type="sb.elpro.action.LoginAction"  input="/Login.jsp" validate="true" parameter="loginaction" scope="session">
+		<forward name="gotoMenu" path="/jsp/Menu.jsp"></forward>
+		<forward name="failure" path="/jsp/WrongUser.jsp"></forward>
+ 		<forward name="reset" path="/Login.jsp"></forward>
+ 	</action> 	
+ 	
+ 	 <action path="/Registernewuser" name="NewUserForm" type="sb.elpro.action.LoginAction"  input="/Login.jsp" parameter="loginaction" scope="session">
+ 	 	<forward name="newuser" path="/jsp/Registration.jsp"></forward>	
+ 	 	<forward name="reset" path="/Login.jsp"></forward>	
+ 	</action>
+ 	
+ 	<action path="/Forgotpassword" name="NewUserForm" type="sb.elpro.action.LoginAction"  input="/Login.jsp" parameter="loginaction" scope="session">
+ 		<forward name="setpwd" path="/jsp/Setpassword.jsp"></forward>	
+ 	 	<forward name="reset" path="/Login.jsp"></forward>			
+ 	</action>
+ 	 	
+ 	 	
+     <!-- Load the Prf Page from the Menu Screen -->
+     <action path="/LoadPrf" name="PrfForm" type="sb.elpro.action.PrfLoadAction" input="/jsp/Menu.jsp" scope="session" >
+		 <forward name="prfisloaded" path="/jsp/Prf.jsp"></forward>		 
+	 </action>
+		
+		
+		 
+	 <!-- All Action in Prf page-->	 
+	 <action path="/Prf" name="PrfForm" type="sb.elpro.action.PrfAction" input="/jsp/Prf.jsp" parameter="prfaction" scope="session">  	 	
+	 </action>
+	 
+	 <action path="/PrfinsertArticle" name="PrfForm" type="sb.elpro.action.PrfInsertArticle" input="/jsp/Prf.jsp" scope="session">	 
+	 </action>
+	 
+	 <action path="/ArticleSelectList" name="PrfForm" type="sb.elpro.action.ArticleSelectList" input="/jsp/Prf.jsp" scope="session">	 
+	 </action>
+	 
+	 <action path="/PrfAutocomplete" name="PrfForm" type="sb.elpro.action.PrfAutocomplete" input="/jsp/Prf.jsp" scope="session">	 
+	 </action>
+	  
+	  
+	  
+	  
+	  
+	<!--   SRF	-->	  
+	 <action path="/loadSrf" type="sb.elpro.action.SrfLoadAction" input="/jsp/Menu.jsp" scope="session">
+	  	 <forward name="srfisloaded" path="/jsp/Srf.jsp"></forward>	
+	  </action>	  
+	 <action path="/Srf" name="SrfForm" type="sb.elpro.action.SrfAction" input="/jsp/Srf.jsp" parameter="srfaction" scope="session">  
+	 	<forward name="invoiceisloaded" path="/jsp/Invoice.jsp"></forward>
+	 </action>
+	 
+	  <action path="/SrfinsertArticle" name="SrfForm" type="sb.elpro.action.SrfInsertArticle" input="/jsp/Srf.jsp" scope="session">	 
+	 </action>
+	 
+	   <action path="/AutoCompleteServlet" name="SrfForm" type="sb.elpro.action.AutoCompleteServlet" input="/jsp/Srf.jsp" scope="session">	 
+	 </action>
+	 
+	 
+	 
+	 
+	 <!--   INVOICE	-->	   	  
+	  <action path="/gotoinvoice" type="sb.elpro.action.InvoiceLoadAction" input="/jsp/Menu.jsp" scope="session">
+	  	<forward name="invoiceisloaded" path="/jsp/Invoice.jsp"></forward>
+	  </action> 
+	  <action path="/saveinvoice" name="InvoiceForm" type="sb.elpro.action.InvoiceAction" input="/jsp/Invoice.jsp" scope="session" parameter="action">
+	  	<forward name="invoiceisloaded" path="/jsp/Invoice.jsp"></forward>
+	  </action> 
+	  
+	   <action path="/InvSelectCtfromCust" name="InvoiceForm" type="sb.elpro.action.InvSelectCtfromCust" input="/jsp/Invoice.jsp" scope="session">
+	 
+	 </action>
+	 
+	  <action path="/InvAutocomplete" name="InvoiceForm" type="sb.elpro.action.InvAutocomplete" input="/jsp/Invoice.jsp" scope="session">	 
+	 </action>
+	 
+	 
+	 
+	 
+	 
+	 <!-- Debit Details -->
+	  <action path="/gotodebit" name="DebitForm" type="sb.elpro.action.DebitLoadAction" input="/jsp/Debit.jsp" scope="session" parameter="action">
+	  	<forward name="debitisloaded" path="/jsp/Debit.jsp"></forward>
+	  </action> 
+	  
+	   <action path="/savedebit" name="DebitForm" type="sb.elpro.action.DebitAction" input="/jsp/Debit.jsp" scope="session" parameter="action">
+	  	<forward name="debitisloaded" path="/jsp/Debit.jsp"></forward>
+	  </action> 
+	  <action path="/DebSelInvfromCust" name="DebitForm" type="sb.elpro.action.DebSelInvfromCust" input="/jsp/Debit.jsp" scope="session">
+	 
+	 </action>
+	 
+	 
+	 
+	 
+	 
+	 	
+     <!-- Load the Bulk Page from the Menu Screen -->
+	  <action path="/gotoBulkTracking" name="BulkTrackForm" type="sb.elpro.action.BulkTrackAction" input="/jsp/Bulk.jsp" scope="session" parameter="action"> 
+	   <forward name="bulkisloaded" path="/jsp/Bulk.jsp"></forward>	
+	  </action>
+	  
+	  
+	  <!-- Bulk Tracking  Action-->
+	  
+	  
+ </action-mappings> 
+ 
+ <!-- MESSAGE RESOURCE -->
+ <message-resources  parameter="ApplicationResources"></message-resources>
+ 
+ <plug-in className="org.apache.struts.validator.ValidatorPlugIn">
+ 	<set-property property="pathnames" value="/WEB-INF/validator-rules.xml, /WEB-INF/validator-user.xml" />
+ 
+ </plug-in>
+ 
+ </struts-config>		
+ 
+ 

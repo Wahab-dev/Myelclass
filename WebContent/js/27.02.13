@@ -1,0 +1,104 @@
+
+// Load Grid Value from Servlet Sorting not working . looks like static data
+$(function(){ 
+		  $("#list").jqGrid({
+			    url:'/Myelclass/PrfinsertArticle.do',
+			    datatype: 'json',
+			    mtype: 'GET',
+			    colNames:['ID', 'Name','Color', 'Size','Substance', 'Selec','Selec P', 'Quantity','Unit', 'Price','Tc'],
+			    colModel :[ 
+			      {name:'prf_articleid', index:'prf_articleid', width:55}, 
+			      {name:'prf_articlename', index:'prf_articlename', width:90}, 
+			      {name:'prf_color', index:'prf_color', width:80, align:'right'},
+			      {name:'prf_size', index:'prf_size', width:55}, 
+			      {name:'prf_substance', index:'prf_substance', width:90}, 
+			      {name:'prf_selection', index:'prf_selection', width:80, align:'right'},
+			      {name:'prf_selectionp', index:'prf_selectionp', width:90}, 
+			      {name:'prf_quantity', index:'prf_quantity', width:80, align:'right'},
+			      {name:'prf_unit', index:'prf_unit', width:55}, 
+			      {name:'prf_price', index:'prf_price', width:90},
+			      {name:'prf_tc', index:'prf_tc', width:90}
+			    ],
+			    pager: '#pager',
+			    height : "auto",
+			    width:"auto",
+			    rowNum:10,
+			    rowList:[10,20,30],
+			    sortname: 'prf_articleid',
+			    sortorder: 'desc',
+			    viewrecords: true,
+			    gridview: true,
+			    caption: 'My first grid'
+			  }); 
+	  });
+	  
+	  
+	  //Servlet Code
+	  
+	  String ctno = "L4259";
+						List<PrfArticle> article = prfbo.getPrfArticleDetails(ctno);
+						JSONObject responsedata=new JSONObject();
+						JSONArray cell=new JSONArray();
+						JSONArray cellarray=new JSONArray();
+						JSONObject cellobj=new JSONObject();
+						responsedata.put("page", Long.parseLong("1"));
+
+						Iterator<PrfArticle> itr = article.iterator();
+						while(itr.hasNext()){
+						PrfArticle t = itr.next();
+						cellobj.put("id", t.getPrf_articleid());
+						cell.add(t.getPrf_articleid().toString());
+						cell.add(t.getPrf_articlename().toString());
+						cell.add(t.getPrf_color().toString());
+						cell.add(t.getPrf_size().toString());
+						cell.add(t.getPrf_substance().toString());
+						cell.add(t.getPrf_selection().toString());
+						cell.add(t.getPrf_selectionp().toString());
+						cell.add(t.getPrf_quantity().toString());
+						cell.add(t.getPrf_unit().toString());
+						cell.add(t.getPrf_price().toString());
+						cell.add(t.getPrf_tc().toString());
+						cellobj.put("cell", cell);
+						cell.clear();
+						cellarray.add(cellobj);
+
+						}
+						responsedata.put("rows", cellarray);
+						response.setContentType("applisation/json");
+						out.print(responsedata);
+						out.flush();
+						
+						
+						
+						//////////////////
+						
+						<link rel="stylesheet" href="js/jquery-ui.css" />
+<script src="js/jquery-1.9.0.js"></script>
+<script src="js/jquery-ui-1.10.0.custom.js"></script> 
+<script type="text/javascript">
+						
+						
+						 <link rel="stylesheet" type="text/css" media="screen" href="css/ui-lightness/jquery-ui-1.10.1.custom.css" />
+<%-- <link rel="stylesheet" type="text/css" media="screen" href="css/ui.jqgrid.css" /> --%>
+ <!-- <script src="js/jquery-1.9.0.min.js" type="text/javascript"></script>
+<script src="js/i18n/grid.locale-en.js" type="text/javascript"></script>
+<script src="js/jquery.jqGrid.min.js" type="text/javascript"></script> -->
+ 
+ //Load the JqGrid
+/* 	$("#list").jqGrid({ 
+		datatype: "json", 	
+		height: 250, 
+		colNames:['Inv No','Date', 'Client', 'Amount','Tax','Total','Notes'], 
+		colModel:[ 
+		           {name:'id',index:'id', width:60, sorttype:"int"}, 
+		           {name:'invdate',index:'invdate', width:90, sorttype:"date"}, 
+		           {name:'name',index:'name', width:100}, 
+		           {name:'amount',index:'amount', width:80, align:"right",sorttype:"float"}, 
+		           {name:'tax',index:'tax', width:80, align:"right",sorttype:"float"}, 
+		           {name:'total',index:'total', width:80,align:"right",sorttype:"float"}, 
+		           {name:'note',index:'note', width:150, sortable:false} 
+		           ], 
+		 multiselect: true, 
+		 caption: "Manipulating Array Data" 
+	}); */
+	//for(var i=0;i<=jsonOrderArray.length;i++) jQuery("#list").jqGrid('addRowData',i+1,mydata[i]);
