@@ -5,8 +5,8 @@ package sb.elpro.bo;
 
 import java.util.ArrayList;
 
-import sb.elpro.dao.DebitDAO;
-import sb.elpro.dao.DebitDAOImpl;
+import sb.elpro.dao.DebitDao;
+import sb.elpro.dao.DebitDaoImpl;
 import sb.elpro.model.RaiseDebit;
 
 /**
@@ -14,7 +14,7 @@ import sb.elpro.model.RaiseDebit;
  *
  */
 public class DebitBOImpl implements DebitBO {
-	 private DebitDAO debdao;
+	 private DebitDao debdao;
 	 RaiseDebit debbean = new RaiseDebit();
 	 
 	 
@@ -22,7 +22,7 @@ public class DebitBOImpl implements DebitBO {
 	 * 
 	 */
 	public DebitBOImpl() {
-		this.debdao = new DebitDAOImpl();
+		this.debdao = new DebitDaoImpl();
 	}
 
 

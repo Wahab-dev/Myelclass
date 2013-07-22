@@ -25,9 +25,9 @@ public interface SrfDao {
 
 	int getSampleno() throws SQLException;
 
-	ArrayList<HandledByDetails> getsrfhandledby() throws SQLException;
+	ArrayList<HandledByDetails> getsrfhandledby(String term) throws SQLException;
 
-	ArrayList<EndUsageDetails> getsrfendusage()throws SQLException;
+	ArrayList<EndUsageDetails> getsrfendusage(String term)throws SQLException;
 
 	ArrayList<TanneryDetails> getTannery(String term) throws SQLException;
 
@@ -35,7 +35,7 @@ public interface SrfDao {
 
 	List<AutoComplete> getDestination(String term)throws SQLException;
 
-	ArrayList<PaymentDetails> getPayment()throws SQLException;
+	ArrayList<PaymentDetails> getPayment(String term)throws SQLException;
 
 	ArrayList<SrfArticle> getSrfArticleDetails(String sno)throws SQLException;
 

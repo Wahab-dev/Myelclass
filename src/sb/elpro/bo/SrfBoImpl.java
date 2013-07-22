@@ -39,8 +39,8 @@ public class SrfBoImpl implements SrfBo {
 		return sampleno;
 	}
 	@Override
-	public ArrayList<HandledByDetails> getsrfhandledby() throws Exception {
-		ArrayList<HandledByDetails> srfhandledbyarray = srfdao.getsrfhandledby();
+	public ArrayList<HandledByDetails> getsrfhandledby(String term) throws Exception {
+		ArrayList<HandledByDetails> srfhandledbyarray = srfdao.getsrfhandledby(term);
 		//HandledByDetails srfhandledby = new HandledByDetails();
 		/*if(srfhandledbyarray.isEmpty()){
 			srfhandledbyarray.setHandledbyname("NA");
@@ -49,8 +49,8 @@ public class SrfBoImpl implements SrfBo {
 		return srfhandledbyarray;
 	}
 	@Override
-	public ArrayList<EndUsageDetails> getsrfEndusage() throws Exception {
-		ArrayList<EndUsageDetails> srfendusagearray = srfdao.getsrfendusage();
+	public ArrayList<EndUsageDetails> getsrfEndusage(String term) throws Exception {
+		ArrayList<EndUsageDetails> srfendusagearray = srfdao.getsrfendusage(term);
 		return srfendusagearray;
 	}
 	@Override
@@ -76,8 +76,8 @@ public class SrfBoImpl implements SrfBo {
 		return srfdestiarray;
 	}
 	@Override
-	public ArrayList<PaymentDetails> getPaymentDetails() throws Exception {
-		ArrayList<PaymentDetails> srfpaymentearray = srfdao.getPayment();
+	public ArrayList<PaymentDetails> getPaymentDetails(String term) throws Exception {
+		ArrayList<PaymentDetails> srfpaymentearray = srfdao.getPayment(term);
 		return srfpaymentearray;
 	}
 	@Override

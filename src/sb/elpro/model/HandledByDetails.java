@@ -9,46 +9,59 @@ package sb.elpro.model;
  */
 public class HandledByDetails {
 	
-	private String handledbyid;
-	private String handledbyname;
-	private String handledbytype; //ic person, conceria, customer, agent
+	private String srf_handledbyid;
+	private String srf_handledbyname;
+	private String srf_handledbytype; //ic person, conceria, customer, agent
+	private String label; 
 	
+	/**
+	 * @return the srf_handledbyid
+	 */
+	public String getSrf_handledbyid() {
+		return srf_handledbyid;
+	}
+	/**
+	 * @param srf_handledbyid the srf_handledbyid to set
+	 */
+	public void setSrf_handledbyid(String srf_handledbyid) {
+		this.srf_handledbyid = srf_handledbyid;
+	}
+	/**
+	 * @return the srf_handledbyname
+	 */
+	public String getSrf_handledbyname() {
+		return srf_handledbyname;
+	}
+	/**
+	 * @param srf_handledbyname the srf_handledbyname to set
+	 */
+	public void setSrf_handledbyname(String srf_handledbyname) {
+		this.srf_handledbyname = srf_handledbyname;
+	}
+	/**
+	 * @return the srf_handledbytype
+	 */
+	public String getSrf_handledbytype() {
+		return srf_handledbytype;
+	}
+	/**
+	 * @param srf_handledbytype the srf_handledbytype to set
+	 */
+	public void setSrf_handledbytype(String srf_handledbytype) {
+		this.srf_handledbytype = srf_handledbytype;
+	}
+	/**
+	 * @return the label
+	 */
+	public String getLabel() {
+		return label;
+	}
+	/**
+	 * @param label the label to set
+	 */
+	public void setLabel(String label) {
+		this.label = label;
+	}
 	
-	/**
-	 * @return the handledbyid
-	 */
-	public String getHandledbyid() {
-		return handledbyid;
-	}
-	/**
-	 * @param handledbyid the handledbyid to set
-	 */
-	public void setHandledbyid(String handledbyid) {
-		this.handledbyid = handledbyid;
-	}
-	/**
-	 * @return the handledbyname
-	 */
-	public String getHandledbyname() {
-		return handledbyname;
-	}
-	/**
-	 * @param handledbyname the handledbyname to set
-	 */
-	public void setHandledbyname(String handledbyname) {
-		this.handledbyname = handledbyname;
-	}
-	/**
-	 * @return the handledbytype
-	 */
-	public String getHandledbytype() {
-		return handledbytype;
-	}
-	/**
-	 * @param handledbytype the handledbytype to set
-	 */
-	public void setHandledbytype(String handledbytype) {
-		this.handledbytype = handledbytype;
-	}
 	
 }

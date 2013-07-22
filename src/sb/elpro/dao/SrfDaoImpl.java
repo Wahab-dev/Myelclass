@@ -24,7 +24,7 @@ public class SrfDaoImpl implements SrfDao {
 	}
 
 	@Override
-	public ArrayList<HandledByDetails> getsrfhandledby() throws SQLException {
+	public ArrayList<HandledByDetails> getsrfhandledby(String term) throws SQLException {
 		ArrayList<HandledByDetails> handledbyarray = new ArrayList<HandledByDetails>();			
 		Connection con = null;
 		Statement st = null;
@@ -32,13 +32,13 @@ public class SrfDaoImpl implements SrfDao {
 		try{			
 			con = DBConnection.getConnection();
 			st = (Statement) con.createStatement();
-			String sql = "SELECT name, type FROM elpro.tbl_handledby order by name";
+			String sql = "SELECT name, type FROM elpro.tbl_handledby where name like '%"+term+"%'  order by name";
 			rs = st.executeQuery(sql);
 			while(rs.next()) {	
 				HandledByDetails handledbybean = new HandledByDetails();
-				handledbybean.setHandledbyname(rs.getString("name"));
-				handledbybean.setHandledbytype(rs.getString("type"));
-				System.out.println("handledby  name "+handledbybean.getHandledbyname());
+				handledbybean.setLabel(rs.getString("name"));
+				handledbybean.setSrf_handledbytype(rs.getString("type"));
+				System.out.println("handledby  name "+handledbybean.getLabel());
 				handledbyarray.add(handledbybean);
 			}
 		}catch(Exception e){
@@ -53,7 +53,7 @@ public class SrfDaoImpl implements SrfDao {
 	}
 
 	@Override
-	public ArrayList<EndUsageDetails> getsrfendusage() throws SQLException {
+	public ArrayList<EndUsageDetails> getsrfendusage(String term) throws SQLException {
 		ArrayList<EndUsageDetails> endusagearray = new ArrayList<EndUsageDetails>();			
 		Connection con = null;
 		Statement st = null;
@@ -61,13 +61,13 @@ public class SrfDaoImpl implements SrfDao {
 		try{			
 			con = DBConnection.getConnection();
 			st = (Statement) con.createStatement();
-			String sql = "SELECT endusagename, endusagetype FROM elpro.tbl_srfendusage order by endusagename";
+			String sql = "SELECT endusagename, endusagetype FROM elpro.tbl_srfendusage where endusagename like '%"+term+"%'   order by endusagename";
 			rs = st.executeQuery(sql);
 			while(rs.next()) {	
 				EndUsageDetails endusagebean = new EndUsageDetails();
-				endusagebean.setEndusagename(rs.getString("endusagename"));
-				endusagebean.setEndusagetype(rs.getString("endusagetype"));
-				System.out.println("endusage name "+endusagebean.getEndusagename());
+				endusagebean.setLabel(rs.getString("endusagename"));
+				endusagebean.setSrf_endusagetype(rs.getString("endusagetype"));
+				System.out.println("endusage name "+endusagebean.getLabel());
 				endusagearray.add(endusagebean);
 			}
 		}catch(Exception e){
@@ -183,7 +183,7 @@ public class SrfDaoImpl implements SrfDao {
 	}
 
 	@Override
-	public ArrayList<PaymentDetails> getPayment() throws SQLException {
+	public ArrayList<PaymentDetails> getPayment(String term) throws SQLException {
 		ArrayList<PaymentDetails> payarraylist = new ArrayList<PaymentDetails>();
 		Connection con = null;
 		Statement st = null;
@@ -191,11 +191,11 @@ public class SrfDaoImpl implements SrfDao {
 		try{			
 			con = DBConnection.getConnection();
 			st = (Statement) con.createStatement();
-			String sql = "SELECT payid, payname FROM tbl_payment order by payname";
+			String sql = "SELECT payid, payname FROM tbl_payment where payname like '%"+term+"%' order by payname";
 			rs = st.executeQuery(sql);
 			while(rs.next()) {	
 				PaymentDetails paybean = new PaymentDetails();
-				paybean.setPayment(rs.getString("payname"));
+				paybean.setLabel(rs.getString("payname"));
 				paybean.setPaymentId(rs.getString("payid"));
 				System.out.println("Payment name "+paybean.getPayment());
 				payarraylist.add(paybean);

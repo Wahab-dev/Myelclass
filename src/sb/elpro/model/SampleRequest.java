@@ -1,23 +1,21 @@
 /**
  * 
  */
-package sb.elpro.actionform;
+package sb.elpro.model;
 
-import org.apache.struts.action.ActionForm;
+import java.io.Serializable;
 
 /**
  * @author Wahab
  *
  */
-public class SrfForm extends ActionForm{
+public class SampleRequest implements Serializable {
 
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -7800330383675319633L;
+	private static final long serialVersionUID = 8501718415886354196L;
 	
-	
-	//Form Values
 	private String srf_sampleno;
 	private String srf_orderdate;
 	private String srf_referenceno;
@@ -842,7 +840,5 @@ public class SrfForm extends ActionForm{
 	public void setSrf_isSample(String srf_isSample) {
 		this.srf_isSample = srf_isSample;
 	}
-	
-	
-		
+
 }

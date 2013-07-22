@@ -25,9 +25,9 @@ public interface  SrfBo {
 
 	public int getSampleno()throws Exception;
 
-	public ArrayList<HandledByDetails> getsrfhandledby() throws Exception;
+	public ArrayList<HandledByDetails> getsrfhandledby(String handlbyterm) throws Exception;
 
-	public ArrayList<EndUsageDetails> getsrfEndusage() throws Exception;
+	public ArrayList<EndUsageDetails> getsrfEndusage(String endusageterm) throws Exception;
 
 	public ArrayList<TanneryDetails> getTanneryDetails(String term) throws Exception;
 
@@ -35,7 +35,7 @@ public interface  SrfBo {
 
 	public List<AutoComplete> getDestinationDetails(String term) throws Exception;
 
-	public ArrayList<PaymentDetails> getPaymentDetails() throws Exception;
+	public ArrayList<PaymentDetails> getPaymentDetails(String pymntterm) throws Exception;
 
 	public List<SrfArticle> getSrfArticleDetails(String sno) throws Exception;
 

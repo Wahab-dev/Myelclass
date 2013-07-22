@@ -84,13 +84,40 @@ $(document).ready(function() {
 			            		        type: 'change',
 			            		        fn: function(e) {
 			            		            var thisval = $(e.target).val();
-			            		            $.post('/Myelclass/PrfAutocomplete.do?action=artname&arttype='+thisval,
-			            		            function(data){
+			            		          //  $.post('/Myelclass/PrfAutocomplete.do?action=artname&arttype='+thisval,
+			            		           $.ajax({
+											     url: '/Myelclass/PrfAutocomplete.do?action=artname&arttype='+thisval,
+											     dataType: "json",
+											     type:"GET",
+											     success: function (data) {
+											    		//var response = jQuery.parseJSON(data);
+											    		alert('response'+data);
+											    		response($.map(data, function(item) {
+									                		 return { 
+									                             label: item.label,
+									                             shform: item.shform, //can add number of attributes here 
+									                             value: item.label // I am displaying both labe and value
+									                             };
+									                         }))
+											    		
+											    		
+								                      	var s = '<text>';
+								                      	if (response && response.length) {
+								                          	for (var i = 0, l=response.length; i<l ; i++) {
+								                            	var ri = response[i].value;
+								                             	s += '<option value="'+ri+'">'+ri+'</option>';
+								                          	}
+								                        	}
+								                       	return s + "</text>";
+											     }
+											   });//END AJAX
+			            		            		
+			            		            /* function(data){
 			            		            	
 			            		                var res = $(data).html();
 			            		                alert("RES"+res);
 			            		                $("#prf_articlename").html(res);
-			            		            });
+			            		            }); */
 			            		        }
 			            		    }]
 			            	},
@@ -438,69 +465,53 @@ $(document).ready(function() {
 		}); */
 		 
 	 $('#prf_tanname').autocomplete({
-		minLength: 1,
-		source: function(request, response,term) {
-			var param = request.term;
-			 $.ajax({
-	                url: "/Myelclass/PrfAutocomplete.do?term="+param+"&action="+"tan",
-	                dataType: "json",
-	                type:"POST",
-	                success: function (data) {
-	                	 response($.map(data, function(item) {
-	                		 return { 
-	                             value: item.label,
-	                             addr: item.tanneryAddress,
-	                             phone: item.tanneryContactNo,	
-	                             attn : item.tanneryAttention,
-	                             fax: item.tanneryFax,
-	                             };
-	                         }));//END Success
-	                    }
-	            });//END AJAX
-			},
-			select: function( event, ui ) { 
-	          	  var addr = ui.item.addr; 
-	          	  var attn = ui.item.attn; 
-	          	  var fone = ui.item.phone; 
-	          	  var fax = ui.item.fax; 
-	          	  $('#prf_tanaddr').val(addr);
-	          	 $('#prf_tanphone').val(fone);
-	          	 $('#prf_tanattn').val(attn);
-	          	 $('#prf_tanfax').val(fax);
-	            } 
-	}); 
-		 $('#prf_custname').autocomplete({
-				minLength: 1,
-				source: function(request, response,term) {
-					var param = request.term;
-					 $.ajax({
-			                url: "/Myelclass/PrfAutocomplete.do?term="+param+"&action="+"custname",
-			                dataType: "json",
-			                type:"POST",
-			                success: function (data) {
-			                	 response($.map(data, function(item) {
-			                		 return { 
-			                             value: item.label,
-			                             addr: item.customerAddress,
-			                             phone: item.customerTelephone,	
-			                             attn : item.customerAttention,
-			                             fax: item.customerFax,
-			                             };
-			                         }));//END Success
+		 source: function(request, response) {
+				var param = request.term;  
+			 	$.getJSON("/Myelclass/PrfAutocomplete.do?term="+param+"&action="+"tan",
+					function(result) { 	
+			             response($.map(result, function(item) {
+			                return { 
+			                       value: item.label,
+			                       addr: item.tanneryAddress,
+			                       phone: item.tanneryContactNo,	
+			                       attn : item.tanneryAttention,
+			                       fax: item.tanneryFax,
+			                       };
+			                     }));//END response
 			                    }
-			            });//END AJAX
+					 );
 					},
-					select: function( event, ui ) { 
-			          	  var addr = ui.item.addr; 
-			          	  var attn = ui.item.attn; 
-			          	  var fone = ui.item.phone; 
-			          	  var fax = ui.item.fax; 
-			          	  $('#prf_custaddr').val(addr);
-			          	 $('#prf_custphone').val(fone);
-			          	 $('#prf_custattn').val(attn);
-			          	 $('#prf_custfax').val(fax);
-			            } 
+					select: function( event, ui) { 
+			          	 $('#prf_tanaddr').val(ui.item.addr);
+			          	 $('#prf_tanphone').val(ui.item.phone);
+			          	 $('#prf_tanattn').val(ui.item.attn);
+			          	 $('#prf_tanfax').val(ui.item.fax);
+			           } 
 			}); 
+		 $('#prf_custname').autocomplete({
+			 source: function(request, response) {
+					var param = request.term;  
+				 	$.getJSON("/Myelclass/PrfAutocomplete.do?term="+param+"&action="+"custname",
+						function(result) { 	
+				             response($.map(result, function(item) {
+				                return { 
+				                       value: item.label,
+				                       addr: item.customerAddress,
+				                       phone: item.customerTelephone,	
+				                       attn : item.customerAttention,
+				                       fax: item.customerFax,
+				                       };
+				                     }));//END response
+				                    }
+						 );
+						},
+						select: function( event, ui) { 
+							 $('#prf_custaddr').val(ui.item.addr);
+				          	 $('#prf_custphone').val(ui.item.phone);
+				          	 $('#prf_custattn').val(ui.item.attn);
+				          	 $('#prf_custfax').val(ui.item.fax);
+				           } 
+				});  
 	
 	 
 	

@@ -18,6 +18,8 @@ public class PaymentDetails implements Serializable {
 	
 	private String paymentId;
 	private String payment;
+	private String label;
+	
 	/**
 	 * @return the paymentId
 	 */
@@ -41,6 +43,18 @@ public class PaymentDetails implements Serializable {
 	 */
 	public void setPayment(String payment) {
 		this.payment = payment;
+	}
+	/**
+	 * @return the label
+	 */
+	public String getLabel() {
+		return label;
+	}
+	/**
+	 * @param label the label to set
+	 */
+	public void setLabel(String label) {
+		this.label = label;
 	}
 	
 	

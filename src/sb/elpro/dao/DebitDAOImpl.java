@@ -16,7 +16,7 @@ import sb.elpro.utility.DBConnection;
  * @author ADMIN_WIN7
  *
  */
-public class DebitDAOImpl implements DebitDAO {
+public class DebitDaoImpl implements DebitDao {
 
 	@Override
 	public ArrayList<RaiseDebit> getDebExporter() throws Exception {

@@ -33,10 +33,10 @@ public class SrfLoadAction extends Action  {
 				//usersession.setAttribute("tanneryarray", srfbo.getTanneryDetails());
 				usersession.setAttribute("customerarray", srfbo.getCustomerDetails());
 				usersession.setAttribute("sampleno", srfbo.getSampleno());
-				usersession.setAttribute("handledbyarray",srfbo.getsrfhandledby());
-				usersession.setAttribute("endusagearray", srfbo.getsrfEndusage());
+				//usersession.setAttribute("handledbyarray",srfbo.getsrfhandledby());
+				//usersession.setAttribute("endusagearray", srfbo.getsrfEndusage());
 				
-				usersession.setAttribute("paymentarray", srfbo.getPaymentDetails());
+				//usersession.setAttribute("paymentarray", srfbo.getPaymentDetails());
 			}
 			return map.findForward("srfisloaded");
 		}

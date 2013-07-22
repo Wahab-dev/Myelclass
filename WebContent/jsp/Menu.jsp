@@ -16,7 +16,7 @@
 	Go to Prf Screen <h:link action="/LoadPrf" scope="request">PrfScreen</h:link><br /><br />
 	Go to Srf Screen <h:link action='/loadSrf' scope="request">SrfScreen</h:link><br /><br />
 	Go to Invoice Screen <h:link action='/gotoinvoice'>invoice Screen</h:link><br /><br />
-	Go to Inspection Screen <h:link action='/gotoinspection'>Inspection Screen</h:link><br /><br />
+	Go to Inspection Screen <h:link action='/loadInspection'>Inspection Screen</h:link><br /><br />
 	Go to Debit Screen <h:link action='/gotodebit'>Debit Screen</h:link><br /><br />
 	Go to Payment Screen <h:link action='/gotopayment'>Payment Screen</h:link><br /><br />
 	Go to Master Screen <h:link action='/gotomaster'>Master Screen</h:link><br /><br />

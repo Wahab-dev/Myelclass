@@ -9,45 +9,58 @@ package sb.elpro.model;
  */
 public class EndUsageDetails {
 	
-	private String endusageid;
-	private String endusagename;
-	private String endusagetype;
+	private String srf_endusageid;
+	private String srf_endusage;
+	private String label;
+	private String srf_endusagetype;
+	/**
+	 * @return the srf_endusage
+	 */
+	public String getSrf_endusage() {
+		return srf_endusage;
+	}
+	/**
+	 * @param srf_endusage the srf_endusage to set
+	 */
+	public void setSrf_endusage(String srf_endusage) {
+		this.srf_endusage = srf_endusage;
+	}
 	
 	/**
-	 * @return the endusagename
+	 * @return the srf_endusageid
 	 */
-	public String getEndusagename() {
-		return endusagename;
+	public String getSrf_endusageid() {
+		return srf_endusageid;
 	}
 	/**
-	 * @param endusagename the endusagename to set
+	 * @param srf_endusageid the srf_endusageid to set
 	 */
-	public void setEndusagename(String endusagename) {
-		this.endusagename = endusagename;
+	public void setSrf_endusageid(String srf_endusageid) {
+		this.srf_endusageid = srf_endusageid;
+	}
+	
+	public String getSrf_endusagetype() {
+		return srf_endusagetype;
 	}
 	/**
-	 * @return the endusagetype
+	 * @param srf_endusagetype the srf_endusagetype to set
 	 */
-	public String getEndusagetype() {
-		return endusagetype;
+	public void setSrf_endusagetype(String srf_endusagetype) {
+		this.srf_endusagetype = srf_endusagetype;
 	}
 	/**
-	 * @param endusagetype the endusagetype to set
+	 * @return the label
 	 */
-	public void setEndusagetype(String endusagetype) {
-		this.endusagetype = endusagetype;
+	public String getLabel() {
+		return label;
 	}
 	/**
-	 * @return the endusageid
+	 * @param label the label to set
 	 */
-	public String getEndusageid() {
-		return endusageid;
+	public void setLabel(String label) {
+		this.label = label;
 	}
-	/**
-	 * @param endusageid the endusageid to set
-	 */
-	public void setEndusageid(String endusageid) {
-		this.endusageid = endusageid;
-	}
+	
+	
 	
 }

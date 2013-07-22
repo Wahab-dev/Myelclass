@@ -11,7 +11,7 @@ import sb.elpro.model.RaiseDebit;
  * @author ADMIN_WIN7
  *
  */
-public interface DebitDAO { 
+public interface DebitDao { 
 	  
 	ArrayList<RaiseDebit> getDebExporter() throws Exception;
 
