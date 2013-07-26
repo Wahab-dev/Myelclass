@@ -29,10 +29,11 @@ public class InspectionLoadAction extends Action {
 		usersession = request.getSession(false);	
 		if(usersession !=null){		   	
 				System.out.println("In iNspection Load///////");
-				usersession.setAttribute("inspcontractarray",inspbo.getInspCtNo());
-				usersession.setAttribute("inspqctrlrarray", inspbo.getInspqtyctrlr());
+				//usersession.setAttribute("inspcontractarray",inspbo.getInspCtNo());
+//				//usersession.setAttribute("inspqctrlrarray", inspbo.getInspqtyctrlr());
 			}else{
 				System.out.println("Inspection is not Loaded,,,");
+				return mapping.findForward("login");
 			}				
 		return mapping.findForward("inspectionisloaded");		
 	}

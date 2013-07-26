@@ -3,19 +3,24 @@
  */
 package sb.elpro.dao;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
+
+import sb.elpro.model.ProductDetails;
+import sb.elpro.model.QualityCtrlrDetails;
 
 
 
 
 /**
- * @author ADMIN_WIN7
+ * @author Wahab
  *
  */
 public interface InspectionDao {
 
-	ArrayList<?> getInspContractNumber() throws Exception;
+	ArrayList<ProductDetails> getInspCtList(String inspctterm)throws SQLException;
 
-	ArrayList<?> getInspQtyCtrlr() throws Exception;
+	ArrayList<QualityCtrlrDetails> getInspQctrlrList(String qcterm)throws SQLException;
 
+	ArrayList<ProductDetails> getInspArtList(String ctno)throws SQLException;
 }

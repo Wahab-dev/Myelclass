@@ -12,8 +12,8 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
-import sb.elpro.bo.DebitBO;
-import sb.elpro.bo.DebitBOImpl;
+import sb.elpro.bo.DebitBo;
+import sb.elpro.bo.DebitBoImpl;
 
 /**
  * @author Wahab
@@ -22,14 +22,14 @@ import sb.elpro.bo.DebitBOImpl;
 public class DebitLoadAction extends Action {
 
 	HttpSession usersession;
-	DebitBO debitbo = new sb.elpro.bo.DebitBOImpl();
+	DebitBo debitbo = new DebitBoImpl();
 	
 	public ActionForward execute(ActionMapping mapping, ActionForm form, 
 			HttpServletRequest request, HttpServletResponse response)throws Exception{
 		usersession = request.getSession(false);	
 		if(usersession !=null){		   	
-			usersession.setAttribute("DebExporter",debitbo.getDebExporter());
-			usersession.setAttribute("DebTanInvno",debitbo.getDebTanInvno());
+			//usersession.setAttribute("DebExporter",debitbo.getDebExporter());
+			//usersession.setAttribute("DebTanInvno",debitbo.getDebTanInvno());
 			//usersession.setAttribute(arg0, arg1)
 			
 		}

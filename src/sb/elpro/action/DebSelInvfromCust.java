@@ -13,8 +13,8 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
-import sb.elpro.bo.DebitBO;
-import sb.elpro.bo.DebitBOImpl;
+import sb.elpro.bo.DebitBo;
+import sb.elpro.bo.DebitBoImpl;
 
 /**
  * @author Wahab
@@ -23,7 +23,7 @@ import sb.elpro.bo.DebitBOImpl;
 public class DebSelInvfromCust extends Action{
 
 	HttpSession usersession;
-	DebitBO debbo = new DebitBOImpl();
+	DebitBo debbo = new DebitBoImpl();
 	
 	public ActionForward execute(ActionMapping map, ActionForm form, 
 			HttpServletRequest request, HttpServletResponse response) throws Exception {

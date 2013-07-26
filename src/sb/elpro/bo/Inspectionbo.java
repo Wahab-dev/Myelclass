@@ -3,7 +3,12 @@
  */
 package sb.elpro.bo;
 
-import java.util.ArrayList;
+import java.util.List;
+
+import sb.elpro.action.InvSelectCtfromCust;
+import sb.elpro.model.InvCustContractDetails;
+import sb.elpro.model.ProductDetails;
+import sb.elpro.model.QualityCtrlrDetails;
 
 /**
  * @author ADMIN_WIN7
@@ -11,8 +16,10 @@ import java.util.ArrayList;
  */
 public interface Inspectionbo {
 
-	public ArrayList<?> getInspCtNo() throws Exception;
+	
+	public List<ProductDetails> getInspCtDetails(String inspctterm)throws Exception;
 
-	public ArrayList<?> getInspqtyctrlr() throws Exception;
+	public List<QualityCtrlrDetails> getInspQltyCtlr(String qcterm)throws Exception;
 
+	public List<ProductDetails> getInspArtDetails(String artterm)throws Exception;
 }

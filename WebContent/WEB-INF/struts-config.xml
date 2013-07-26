@@ -104,6 +104,9 @@
 	  <action path="/InvAutocomplete" name="InvoiceForm" type="sb.elpro.action.InvAutocomplete" input="/jsp/Invoice.jsp" scope="session">	 
 	 </action>
 	 
+	 
+	 
+	 
 	 <!-- Inspection Details Screen -->
 	 
 	 <action path="/loadInspection" type="sb.elpro.action.InspectionLoadAction" input="/jsp/Menu.jsp" scope="session" >
@@ -113,6 +116,10 @@
 	 <action path="/saveinspection" name="InspectionForm" type="sb.elpro.action.InspectionAction" input="/jsp/Inspection.jsp" scope="session" parameter="action">
 	  	<forward name="invoiceisloaded" path="/jsp/Invoice.jsp"></forward>
 	  </action> 
+	  
+	   <action path="/InspAutocomplete" name="InspectionForm" type="sb.elpro.action.InspAutocomplete" input="/jsp/Inspection.jsp" scope="session">	 
+	 </action>
+	  
 	 
 	 <!-- Debit Details -->
 	  <action path="/gotodebit" name="DebitForm" type="sb.elpro.action.DebitLoadAction" input="/jsp/Debit.jsp" scope="session" parameter="action">
@@ -122,8 +129,8 @@
 	   <action path="/savedebit" name="DebitForm" type="sb.elpro.action.DebitAction" input="/jsp/Debit.jsp" scope="session" parameter="action">
 	  	<forward name="debitisloaded" path="/jsp/Debit.jsp"></forward>
 	  </action> 
-	  <action path="/DebSelInvfromCust" name="DebitForm" type="sb.elpro.action.DebSelInvfromCust" input="/jsp/Debit.jsp" scope="session">
-	 
+	  <action path="/DebSelInvfromCust" name="DebitForm" type="sb.elpro.action.DebSelInvfromCust" input="/jsp/Debit.jsp" scope="session"></action>
+	  <action path="/DebAutoComplete" name="DebitForm" type="sb.elpro.action.DebAutoComplete" input="/jsp/Debit.jsp" scope="session">
 	 </action>
 	 
 	 

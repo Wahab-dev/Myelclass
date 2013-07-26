@@ -16,448 +16,435 @@ public class RaiseDebit implements Serializable {
 	 */
 	private static final long serialVersionUID = 1886695154562370825L;
 	
-	
-	private String debitno;
-	private String debitdate;
-	private String tannery;
-	private String tanaddr;
-	private String tanattn;
-	private String tantelephone;
-	private String tanfax;
-	private String taninvno;
-	private String elclassrefno;
-	private String contractno;
-	private String orderdate;
-	private String article;
-	private String color;
-	private String invno;
-	private String invdate;
-	private String totalquantity;
-	private String qshipped;
-	private String qremain;
-	private String rate;
-	private String invoiceamt;
-	private String commission1;
-	private String commission2;
-	private String commission3;
-	private String tc;
-	private String exchangerate;
-	private String elclassamt;
-	private String elclassamtinrs;
-	private String tax;
-	private String total;
-	private String tds;
-	private String due;
-	private String deduction;
-	private String iswaived;
-	
-	
-	
-	
-	
+	private String deb_debitno;
+	private String deb_debitdate;
+	private String deb_exporter;
+	private String deb_tanaddr;
+	private String deb_tanattn;
+	private String deb_tantelephone;
+	private String deb_tanfax;
+	private String deb_taninvno;
+	private String deb_elclassrefno;
+	private String deb_contractno;
+	private String deb_orderdate;
+	private String deb_article;
+	private String deb_color;
+	private String deb_invno;
+	private String deb_invdate;
+	private String deb_totalquantity;
+	private String deb_qshipped;
+	private String deb_qremain;
+	private String deb_rate;
+	private String deb_invoiceamt;
+	private String deb_commission1;
+	private String deb_commission2;
+	private String deb_commission3;
+	private String deb_tc;
+	private String deb_exchangerate;
+	private String deb_elclassamt;
+	private String deb_elclassamtinrs;
+	private String deb_tax;
+	private String deb_total;
+	private String deb_tds;
+	private String deb_due;
+	private String deb_deduction;
+	private String deb_iswaived;
 	/**
-	 * 
+	 * @return the deb_debitno
 	 */
-	public RaiseDebit() {
-		super();
-		// TODO Auto-generated constructor stub
+	public String getDeb_debitno() {
+		return deb_debitno;
 	}
 	/**
-	 * @return the debitno
+	 * @param deb_debitno the deb_debitno to set
 	 */
-	public String getDebitno() {
-		return debitno;
+	public void setDeb_debitno(String deb_debitno) {
+		this.deb_debitno = deb_debitno;
 	}
 	/**
-	 * @param debitno the debitno to set
+	 * @return the deb_debitdate
 	 */
-	public void setDebitno(String debitno) {
-		this.debitno = debitno;
+	public String getDeb_debitdate() {
+		return deb_debitdate;
 	}
 	/**
-	 * @return the debitdate
+	 * @param deb_debitdate the deb_debitdate to set
 	 */
-	public String getDebitdate() {
-		return debitdate;
+	public void setDeb_debitdate(String deb_debitdate) {
+		this.deb_debitdate = deb_debitdate;
 	}
 	/**
-	 * @param debitdate the debitdate to set
+	 * @return the deb_exporter
 	 */
-	public void setDebitdate(String debitdate) {
-		this.debitdate = debitdate;
+	public String getDeb_exporter() {
+		return deb_exporter;
 	}
 	/**
-	 * @return the tannery
+	 * @param deb_exporter the deb_exporter to set
 	 */
-	public String getTannery() {
-		return tannery;
+	public void setDeb_exporter(String deb_exporter) {
+		this.deb_exporter = deb_exporter;
 	}
 	/**
-	 * @param tannery the tannery to set
+	 * @return the deb_tanaddr
 	 */
-	public void setTannery(String tannery) {
-		this.tannery = tannery;
+	public String getDeb_tanaddr() {
+		return deb_tanaddr;
 	}
 	/**
-	 * @return the tanaddr
+	 * @param deb_tanaddr the deb_tanaddr to set
 	 */
-	public String getTanaddr() {
-		return tanaddr;
+	public void setDeb_tanaddr(String deb_tanaddr) {
+		this.deb_tanaddr = deb_tanaddr;
 	}
 	/**
-	 * @param tanaddr the tanaddr to set
+	 * @return the deb_tanattn
 	 */
-	public void setTanaddr(String tanaddr) {
-		this.tanaddr = tanaddr;
+	public String getDeb_tanattn() {
+		return deb_tanattn;
 	}
 	/**
-	 * @return the tanattn
+	 * @param deb_tanattn the deb_tanattn to set
 	 */
-	public String getTanattn() {
-		return tanattn;
+	public void setDeb_tanattn(String deb_tanattn) {
+		this.deb_tanattn = deb_tanattn;
 	}
 	/**
-	 * @param tanattn the tanattn to set
+	 * @return the deb_tantelephone
 	 */
-	public void setTanattn(String tanattn) {
-		this.tanattn = tanattn;
+	public String getDeb_tantelephone() {
+		return deb_tantelephone;
 	}
 	/**
-	 * @return the tantelephone
+	 * @param deb_tantelephone the deb_tantelephone to set
 	 */
-	public String getTantelephone() {
-		return tantelephone;
+	public void setDeb_tantelephone(String deb_tantelephone) {
+		this.deb_tantelephone = deb_tantelephone;
 	}
 	/**
-	 * @param tantelephone the tantelephone to set
+	 * @return the deb_tanfax
 	 */
-	public void setTantelephone(String tantelephone) {
-		this.tantelephone = tantelephone;
+	public String getDeb_tanfax() {
+		return deb_tanfax;
 	}
 	/**
-	 * @return the tanfax
+	 * @param deb_tanfax the deb_tanfax to set
 	 */
-	public String getTanfax() {
-		return tanfax;
+	public void setDeb_tanfax(String deb_tanfax) {
+		this.deb_tanfax = deb_tanfax;
 	}
 	/**
-	 * @param tanfax the tanfax to set
+	 * @return the deb_taninvno
 	 */
-	public void setTanfax(String tanfax) {
-		this.tanfax = tanfax;
+	public String getDeb_taninvno() {
+		return deb_taninvno;
 	}
 	/**
-	 * @return the taninvno
+	 * @param deb_taninvno the deb_taninvno to set
 	 */
-	public String getTaninvno() {
-		return taninvno;
+	public void setDeb_taninvno(String deb_taninvno) {
+		this.deb_taninvno = deb_taninvno;
 	}
 	/**
-	 * @param taninvno the taninvno to set
+	 * @return the deb_elclassrefno
 	 */
-	public void setTaninvno(String taninvno) {
-		this.taninvno = taninvno;
+	public String getDeb_elclassrefno() {
+		return deb_elclassrefno;
 	}
 	/**
-	 * @return the elclassrefno
+	 * @param deb_elclassrefno the deb_elclassrefno to set
 	 */
-	public String getElclassrefno() {
-		return elclassrefno;
+	public void setDeb_elclassrefno(String deb_elclassrefno) {
+		this.deb_elclassrefno = deb_elclassrefno;
 	}
 	/**
-	 * @param elclassrefno the elclassrefno to set
+	 * @return the deb_contractno
 	 */
-	public void setElclassrefno(String elclassrefno) {
-		this.elclassrefno = elclassrefno;
+	public String getDeb_contractno() {
+		return deb_contractno;
 	}
 	/**
-	 * @return the contractno
+	 * @param deb_contractno the deb_contractno to set
 	 */
-	public String getContractno() {
-		return contractno;
+	public void setDeb_contractno(String deb_contractno) {
+		this.deb_contractno = deb_contractno;
 	}
 	/**
-	 * @param contractno the contractno to set
+	 * @return the deb_orderdate
 	 */
-	public void setContractno(String contractno) {
-		this.contractno = contractno;
+	public String getDeb_orderdate() {
+		return deb_orderdate;
 	}
 	/**
-	 * @return the orderdate
+	 * @param deb_orderdate the deb_orderdate to set
 	 */
-	public String getOrderdate() {
-		return orderdate;
+	public void setDeb_orderdate(String deb_orderdate) {
+		this.deb_orderdate = deb_orderdate;
 	}
 	/**
-	 * @param orderdate the orderdate to set
+	 * @return the deb_article
 	 */
-	public void setOrderdate(String orderdate) {
-		this.orderdate = orderdate;
+	public String getDeb_article() {
+		return deb_article;
 	}
 	/**
-	 * @return the article
+	 * @param deb_article the deb_article to set
 	 */
-	public String getArticle() {
-		return article;
+	public void setDeb_article(String deb_article) {
+		this.deb_article = deb_article;
 	}
 	/**
-	 * @param article the article to set
+	 * @return the deb_color
 	 */
-	public void setArticle(String article) {
-		this.article = article;
+	public String getDeb_color() {
+		return deb_color;
 	}
 	/**
-	 * @return the color
+	 * @param deb_color the deb_color to set
 	 */
-	public String getColor() {
-		return color;
+	public void setDeb_color(String deb_color) {
+		this.deb_color = deb_color;
 	}
 	/**
-	 * @param color the color to set
+	 * @return the deb_invno
 	 */
-	public void setColor(String color) {
-		this.color = color;
+	public String getDeb_invno() {
+		return deb_invno;
 	}
 	/**
-	 * @return the invno
+	 * @param deb_invno the deb_invno to set
 	 */
-	public String getInvno() {
-		return invno;
+	public void setDeb_invno(String deb_invno) {
+		this.deb_invno = deb_invno;
 	}
 	/**
-	 * @param invno the invno to set
+	 * @return the deb_invdate
 	 */
-	public void setInvno(String invno) {
-		this.invno = invno;
+	public String getDeb_invdate() {
+		return deb_invdate;
 	}
 	/**
-	 * @return the invdate
+	 * @param deb_invdate the deb_invdate to set
 	 */
-	public String getInvdate() {
-		return invdate;
+	public void setDeb_invdate(String deb_invdate) {
+		this.deb_invdate = deb_invdate;
 	}
 	/**
-	 * @param invdate the invdate to set
+	 * @return the deb_totalquantity
 	 */
-	public void setInvdate(String invdate) {
-		this.invdate = invdate;
+	public String getDeb_totalquantity() {
+		return deb_totalquantity;
 	}
 	/**
-	 * @return the totalquantity
+	 * @param deb_totalquantity the deb_totalquantity to set
 	 */
-	public String getTotalquantity() {
-		return totalquantity;
+	public void setDeb_totalquantity(String deb_totalquantity) {
+		this.deb_totalquantity = deb_totalquantity;
 	}
 	/**
-	 * @param totalquantity the totalquantity to set
+	 * @return the deb_qshipped
 	 */
-	public void setTotalquantity(String totalquantity) {
-		this.totalquantity = totalquantity;
+	public String getDeb_qshipped() {
+		return deb_qshipped;
 	}
 	/**
-	 * @return the qshipped
+	 * @param deb_qshipped the deb_qshipped to set
 	 */
-	public String getQshipped() {
-		return qshipped;
+	public void setDeb_qshipped(String deb_qshipped) {
+		this.deb_qshipped = deb_qshipped;
 	}
 	/**
-	 * @param qshipped the qshipped to set
+	 * @return the deb_qremain
 	 */
-	public void setQshipped(String qshipped) {
-		this.qshipped = qshipped;
+	public String getDeb_qremain() {
+		return deb_qremain;
 	}
 	/**
-	 * @return the qremain
+	 * @param deb_qremain the deb_qremain to set
 	 */
-	public String getQremain() {
-		return qremain;
+	public void setDeb_qremain(String deb_qremain) {
+		this.deb_qremain = deb_qremain;
 	}
 	/**
-	 * @param qremain the qremain to set
+	 * @return the deb_rate
 	 */
-	public void setQremain(String qremain) {
-		this.qremain = qremain;
+	public String getDeb_rate() {
+		return deb_rate;
 	}
 	/**
-	 * @return the rate
+	 * @param deb_rate the deb_rate to set
 	 */
-	public String getRate() {
-		return rate;
+	public void setDeb_rate(String deb_rate) {
+		this.deb_rate = deb_rate;
 	}
 	/**
-	 * @param rate the rate to set
+	 * @return the deb_invoiceamt
 	 */
-	public void setRate(String rate) {
-		this.rate = rate;
+	public String getDeb_invoiceamt() {
+		return deb_invoiceamt;
 	}
 	/**
-	 * @return the invoiceamt
+	 * @param deb_invoiceamt the deb_invoiceamt to set
 	 */
-	public String getInvoiceamt() {
-		return invoiceamt;
+	public void setDeb_invoiceamt(String deb_invoiceamt) {
+		this.deb_invoiceamt = deb_invoiceamt;
 	}
 	/**
-	 * @param invoiceamt the invoiceamt to set
+	 * @return the deb_commission1
 	 */
-	public void setInvoiceamt(String invoiceamt) {
-		this.invoiceamt = invoiceamt;
+	public String getDeb_commission1() {
+		return deb_commission1;
 	}
 	/**
-	 * @return the commission1
+	 * @param deb_commission1 the deb_commission1 to set
 	 */
-	public String getCommission1() {
-		return commission1;
+	public void setDeb_commission1(String deb_commission1) {
+		this.deb_commission1 = deb_commission1;
 	}
 	/**
-	 * @param commission1 the commission1 to set
+	 * @return the deb_commission2
 	 */
-	public void setCommission1(String commission1) {
-		this.commission1 = commission1;
+	public String getDeb_commission2() {
+		return deb_commission2;
 	}
 	/**
-	 * @return the commission2
+	 * @param deb_commission2 the deb_commission2 to set
 	 */
-	public String getCommission2() {
-		return commission2;
+	public void setDeb_commission2(String deb_commission2) {
+		this.deb_commission2 = deb_commission2;
 	}
 	/**
-	 * @param commission2 the commission2 to set
+	 * @return the deb_commission3
 	 */
-	public void setCommission2(String commission2) {
-		this.commission2 = commission2;
+	public String getDeb_commission3() {
+		return deb_commission3;
 	}
 	/**
-	 * @return the commission3
+	 * @param deb_commission3 the deb_commission3 to set
 	 */
-	public String getCommission3() {
-		return commission3;
+	public void setDeb_commission3(String deb_commission3) {
+		this.deb_commission3 = deb_commission3;
 	}
 	/**
-	 * @param commission3 the commission3 to set
+	 * @return the deb_tc
 	 */
-	public void setCommission3(String commission3) {
-		this.commission3 = commission3;
+	public String getDeb_tc() {
+		return deb_tc;
 	}
 	/**
-	 * @return the tc
+	 * @param deb_tc the deb_tc to set
 	 */
-	public String getTc() {
-		return tc;
+	public void setDeb_tc(String deb_tc) {
+		this.deb_tc = deb_tc;
 	}
 	/**
-	 * @param tc the tc to set
+	 * @return the deb_exchangerate
 	 */
-	public void setTc(String tc) {
-		this.tc = tc;
+	public String getDeb_exchangerate() {
+		return deb_exchangerate;
 	}
 	/**
-	 * @return the exchangerate
+	 * @param deb_exchangerate the deb_exchangerate to set
 	 */
-	public String getExchangerate() {
-		return exchangerate;
+	public void setDeb_exchangerate(String deb_exchangerate) {
+		this.deb_exchangerate = deb_exchangerate;
 	}
 	/**
-	 * @param exchangerate the exchangerate to set
+	 * @return the deb_elclassamt
 	 */
-	public void setExchangerate(String exchangerate) {
-		this.exchangerate = exchangerate;
+	public String getDeb_elclassamt() {
+		return deb_elclassamt;
 	}
 	/**
-	 * @return the elclassamt
+	 * @param deb_elclassamt the deb_elclassamt to set
 	 */
-	public String getElclassamt() {
-		return elclassamt;
+	public void setDeb_elclassamt(String deb_elclassamt) {
+		this.deb_elclassamt = deb_elclassamt;
 	}
 	/**
-	 * @param elclassamt the elclassamt to set
+	 * @return the deb_elclassamtinrs
 	 */
-	public void setElclassamt(String elclassamt) {
-		this.elclassamt = elclassamt;
+	public String getDeb_elclassamtinrs() {
+		return deb_elclassamtinrs;
 	}
 	/**
-	 * @return the elclassamtinrs
+	 * @param deb_elclassamtinrs the deb_elclassamtinrs to set
 	 */
-	public String getElclassamtinrs() {
-		return elclassamtinrs;
+	public void setDeb_elclassamtinrs(String deb_elclassamtinrs) {
+		this.deb_elclassamtinrs = deb_elclassamtinrs;
 	}
 	/**
-	 * @param elclassamtinrs the elclassamtinrs to set
+	 * @return the deb_tax
 	 */
-	public void setElclassamtinrs(String elclassamtinrs) {
-		this.elclassamtinrs = elclassamtinrs;
+	public String getDeb_tax() {
+		return deb_tax;
 	}
 	/**
-	 * @return the tax
+	 * @param deb_tax the deb_tax to set
 	 */
-	public String getTax() {
-		return tax;
+	public void setDeb_tax(String deb_tax) {
+		this.deb_tax = deb_tax;
 	}
 	/**
-	 * @param tax the tax to set
+	 * @return the deb_total
 	 */
-	public void setTax(String tax) {
-		this.tax = tax;
+	public String getDeb_total() {
+		return deb_total;
 	}
 	/**
-	 * @return the total
+	 * @param deb_total the deb_total to set
 	 */
-	public String getTotal() {
-		return total;
+	public void setDeb_total(String deb_total) {
+		this.deb_total = deb_total;
 	}
 	/**
-	 * @param total the total to set
+	 * @return the deb_tds
 	 */
-	public void setTotal(String total) {
-		this.total = total;
+	public String getDeb_tds() {
+		return deb_tds;
 	}
 	/**
-	 * @return the tds
+	 * @param deb_tds the deb_tds to set
 	 */
-	public String getTds() {
-		return tds;
+	public void setDeb_tds(String deb_tds) {
+		this.deb_tds = deb_tds;
 	}
 	/**
-	 * @param tds the tds to set
+	 * @return the deb_due
 	 */
-	public void setTds(String tds) {
-		this.tds = tds;
+	public String getDeb_due() {
+		return deb_due;
 	}
 	/**
-	 * @return the due
+	 * @param deb_due the deb_due to set
 	 */
-	public String getDue() {
-		return due;
+	public void setDeb_due(String deb_due) {
+		this.deb_due = deb_due;
 	}
 	/**
-	 * @param due the due to set
+	 * @return the deb_deduction
 	 */
-	public void setDue(String due) {
-		this.due = due;
+	public String getDeb_deduction() {
+		return deb_deduction;
 	}
 	/**
-	 * @return the deduction
+	 * @param deb_deduction the deb_deduction to set
 	 */
-	public String getDeduction() {
-		return deduction;
+	public void setDeb_deduction(String deb_deduction) {
+		this.deb_deduction = deb_deduction;
 	}
 	/**
-	 * @param deduction the deduction to set
+	 * @return the deb_iswaived
 	 */
-	public void setDeduction(String deduction) {
-		this.deduction = deduction;
+	public String getDeb_iswaived() {
+		return deb_iswaived;
 	}
 	/**
-	 * @return the iswaived
+	 * @param deb_iswaived the deb_iswaived to set
 	 */
-	public String getIswaived() {
-		return iswaived;
-	}
-	/**
-	 * @param iswaived the iswaived to set
-	 */
-	public void setIswaived(String iswaived) {
-		this.iswaived = iswaived;
+	public void setDeb_iswaived(String deb_iswaived) {
+		this.deb_iswaived = deb_iswaived;
 	}
 	
-
+	
 }

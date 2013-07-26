@@ -10,25 +10,39 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Insert title here</title>
-</head>
-
-<link rel="stylesheet" type="text/css" media="screen" href="css/ui-darkness/jquery-ui-1.10.1.custom.css" />
+<link type="text/css" href="css/ui-lightness/jquery-ui-1.7.3.custom.css" rel="Stylesheet" />
+<style type="text/css">
+#ui-datepicker-div { font-size: 11px; } 	
+</style>	
+<script src="js/jquery-1.9.1.js"></script>
+<script src="js/jquery-ui.js"></script>
+<link rel="stylesheet" type="text/css" media="screen" href="css/pepper-grinder/jquery-ui-1.10.3.custom.css" />
 <link rel="stylesheet" type="text/css" media="screen" href="css/ui.jqgrid.css" />
 
-<script src="js/jquery-1.9.1.js" type="text/javascript"></script>
 <script src="js/i18n/grid.locale-en.js" type="text/javascript"></script>
-<script src="js/jquery.jqGrid.min.js" type="text/javascript"></script>
+
+<script src="js/jquery.jqGrid.min.js" type="text/javascript"></script>		
 <script type="text/javascript">
-$(function() { 
-		var gridbtn = $("#thelink");
-		 gridbtn.click( function(){
-				var custname = $("#customer").val();
-				 alert(custname);
-				 $("#tbl_debselInvDetails").jqGrid({
-					 url:"/Myelclass/DebSelInvfromCust.do?invno="+elclassrefno+"&action="+"loadGrid",
-					 datatype: "json",
-					 colNames:['Ct No','Article','Color','Size','Substance','Quantity','Rate','TC'],
-					 colModel:[
+$(document).ready(function() {
+
+	 //DATEPICKER
+    $("#deb_debitdate").datepicker({
+	   // changeYear: true,
+	    autoSize: true,
+	    changeMonth:false,
+	    dateFormat: "dd/mm/y",
+	    showWeek: true,
+	    firstDay: 1,
+	    numberOfMonths: 1,
+	    showButtonPanel: true,
+	    gotoCurrent:true, 
+	});
+		 var grid = $("#tbl_debselInvDetails");
+		 grid.jqGrid({
+			 //url:"/Myelclass/DebSelInvfromCust.do?invno="+elclassrefno+"&action="+"loadGrid",
+			 datatype: "local",
+			 colNames:['Ct No','Article','Color','Size','Substance','Quantity','Rate','TC'],
+			 colModel:[
 					           {name: 'prf_contractno', index:'prf_contractno',width:50},
 					           {name: 'prf_articlename', index:'prf_articlename',width:90},
 					           {name: 'prf_color', index:'prf_color',width:70},
@@ -39,43 +53,113 @@ $(function() {
 					           {name: 'prf_tc', index:'prf_tc',width:70}
 					           ],
 					  jsonReader : {  
-						       repeatitems:false,
-						       root: function (jsonOrderArray) { return jsonOrderArray; },
-						       page: function (jsonOrderArray) { return 1; },
-						       total: function (jsonOrderArray) { return 1; },
-						       records: function (jsonOrderArray) { return jsonOrderArray.length; }
-						       }, 
-					   pager: '#tbl_debpager',
+						  repeatitems:false,
+					        root: "rows",
+					        page: "page", //calls first
+					        total: "total" ,//calls Second
+					        records: "records" //calls Third
+					        }, 
+					   pager: '#deb_debpager',
 					   rowNum:3, 
 					   multiselect : true,
+					   toppager:true,
 					   rowList:[3,5,7],	       
 					   sortorder: 'desc',  
 				       emptyrecords: 'No records to display',
-				        
+				       caption: 'Debit Load' 
 				 });
-				 jQuery("#tbl_debselInvDetails").jqGrid('#tbl_debpager',{
-			 		 
-			 		 	});
-			});
+				 grid.jqGrid('navGrid','#deb_debpager',{ edit: false, add: false, del: false,cloneToTop:true  	 
+				});
+				
+				 
+				// Pager @ Top Customization
+			 	  var topPagerDiv = $('#' + grid[0].id + '_toppager')[0]; // "#list_toppager"
+			  		//  $("#edit_" + grid[0].id + "_top", topPagerDiv).remove();        // "#edit_list_top"
+			  //  $("#del_" + grid[0].id + "_top", topPagerDiv).remove();  // "#del_list_top"
+			 ///   $("#add_" + grid[0].id + "_top", topPagerDiv).remove();	
+			    $("#search_" + grid[0].id + "_top", topPagerDiv).remove();      // "#search_list_top"
+			    $("#refresh_" + grid[0].id + "_top", topPagerDiv).remove() ;     // "#refresh_list_top"
+			    $("#" + grid[0].id + "_toppager_center", topPagerDiv).remove(); // "#list_toppager_center"
+			    $(".ui-paging-info", topPagerDiv).remove();
+
+			    //Bootom Pager Customization
+			      var bottomPagerDiv = $("div#deb_debpager")[0];
+			      
+			    $("#add_" + grid[0].id, bottomPagerDiv).remove();
+			    $("#edit_" + grid[0].id, bottomPagerDiv).remove(); 
+			    $("#del_" + grid[0].id, bottomPagerDiv).remove(); 
+			    //$("#del_" + grid[0].id, bottomPagerDiv).remove(); 
+			    
+			    grid.jqGrid('navButtonAdd', '#tbl_debselInvDetails'+ '_toppager_left', { // Here bulkgrid[0].id -> shows bulktable 
+			        caption: "Load",
+			        buttonicon: 'ui-icon-lightbulb',
+			    
+			    }); 
+			    grid.jqGrid('navButtonAdd', '#tbl_debselInvDetails'+ '_toppager_left', { // Here bulkgrid[0].id -> shows bulktable 
+			        caption: "Calculate",
+			        buttonicon: 'ui-icon-plusthick',
+			    
+			    }); 
+			    grid.jqGrid('navButtonAdd', '#tbl_debselInvDetails'+ '_toppager_left', { // Here bulkgrid[0].id -> shows bulktable 
+			        caption: "Waived",
+			        buttonicon: 'ui-icon-lightbulb',
+			    
+			    }); 
+			    grid.jqGrid('navButtonAdd', '#tbl_debselInvDetails'+ '_toppager_left', { // Here bulkgrid[0].id -> shows bulktable 
+			        caption: "Raise TC",
+			        buttonicon: 'ui-icon-extlink',
+			    
+			    }); 
+			    
+	//Autocomplete 
+	$('#deb_exporter').autocomplete({
+		 source: function(request, response) {
+			var param = request.term;  
+			$.getJSON("/Myelclass/DebAutoComplete.do?term="+param+"&action="+"debExp",
+				function(result) { 	
+			       response($.map(result, function(item) {
+			           return { 
+			              value: item.label,
+			              addr: item.tanneryAddress,
+			              ctno: item.tanneryContactNo,
+			              };
+			        }));//END response
+			 });
+		 },
+		 select: function(event, ui){
+			 $('#deb_tanaddr').val(ui.item.addr);
+			 $('#deb_tantelephone').val(ui.item.ctno);
+			// $('#deb_taninvno').val(ui.item.splcdn);
+			 //$('#deb_elclassrefno').val(ui.item.splcdn);	 
+		 }
+	}); 
+	
+	
+	//Autocomplete 
+	$('#deb_elclassrefno').autocomplete({
+		 source: function(request, response) {
+			var param = request.term;  
+			$.getJSON("/Myelclass/DebAutoComplete.do?term="+param+"&action="+"Taninv",
+				function(result) { 	
+			       response($.map(result, function(item) {
+			           return { 
+			              value: item.label,
+			              addr: item.tanneryAddress,
+			              ctno: item.tanneryContactNo,
+			              };
+			        }));//END response
+			 });
+		 },
+		 select: function(event, ui){
+			 $('#deb_tanaddr').val(ui.item.addr);
+			 $('#deb_tantelephone').val(ui.item.ctno);
+			// $('#deb_taninvno').val(ui.item.splcdn);
+			 //$('#deb_elclassrefno').val(ui.item.splcdn);	 
+		 }
+	}); 
 });
 </script>
-
-
-<script type="text/javascript">
-//Tannery DDL	
-function loadexportervalue(){		
-			var expname = document.getElementById("tannery").value;
-	 		  <c:forEach items="${DebExporter}" var="DebExpoList">
-					var expvalue  = "<c:out value="${DebExpoList.tannery}"></c:out>";					 
-			  			 if(expname == expvalue){
-			  			     var myexpaddr = "<c:out value="${DebExpoList.tanaddr}"></c:out>" ; 			  			  	
-			  			     var mayexpphone = "<c:out value="${DebExpoList.tantelephone}"></c:out>" ;
-			   				document.getElementById("tanaddr").value = myexpaddr;
-			   				document.getElementById("tantelephone").value = mayexpphone;
-					} 
-				</c:forEach>   
-		} 
-</script>
+</head>
 <body>
 
 <h:form action="/savedebit" focus="debitno"> 	
@@ -89,34 +173,19 @@ function loadexportervalue(){
 		    <td>
 		    	<fieldset>         
         				<legend>Debit Details</legend> 
-        					Debit No: <h:text property="debitno" styleId="debitno"></h:text><br />
-        					<br />Tanner  : <h:select property="tannery" styleId="tannery" onchange="loadexportervalue();">
-       		 						<h:option value="0">select Tanner</h:option>
-       		 							<c:forEach items="${DebExporter}" var="DebExporterlist">
-          		 							<h:option value="${DebExporterlist.tannery}">
-         		 								<c:out value=  "${DebExporterlist.tannery}"></c:out>
-          		 							</h:option>
-          	 							</c:forEach>
-        							</h:select><br />        
-       	 					
-         					<br />Address: <h:textarea property="tanaddr" cols="30" rows="2" styleId="tanaddr"></h:textarea><br />
-        					<br />Telephone : <h:text property="tantelephone" styleId="tantelephone"> </h:text><br />
+        					Debit No: <h:text property="deb_debitno" styleId="deb_debitno"></h:text><br />
+        					<br />Tanner  : <h:text property="deb_exporter" styleId="deb_exporter"></h:text><br />        	 					
+         					<br />Address: <h:textarea property="deb_tanaddr" cols="30" rows="2" styleId="deb_tanaddr"></h:textarea><br />
+        					<br />Telephone : <h:text property="deb_tantelephone" styleId="deb_tantelephone"> </h:text><br />
 							
       				</fieldset>
 		    </td>
 		    <td>
 		
-        					<br />Debit Date: <h:text property="debitdate" styleId="debitdate"></h:text><br />
-        					<br />elclass ref no: <h:select property="taninvno" styleId="taninvno">
-       		 						<h:option value="0">select Tanner</h:option>
-       		 							<c:forEach items="${DebTanInvno}" var="DebTanInvnolist">
-          		 							<h:option value="${DebTanInvnolist.taninvno}">
-         		 								<c:out value="${DebTanInvnolist.taninvno}"></c:out>
-          		 							</h:option>
-          	 							</c:forEach>
-        							</h:select><br />        
+        					<br />Debit Date: <h:text property="deb_debitdate" styleId="deb_debitdate"></h:text><br />
+        					<br />elclass ref no: <h:text property="deb_taninvno" styleId="deb_taninvno"></h:text><br />        
        	 					
-         					<br />Tanner Invoice No : <h:text property="elclassrefno" styleId="elclassrefno"></h:text><br />
+         					<br />Tanner Invoice No : <h:text property="deb_elclassrefno" styleId="deb_elclassrefno"></h:text><br />
         					
       			
 			</td>
@@ -125,53 +194,30 @@ function loadexportervalue(){
 	  		<td>&nbsp;</td>
 	  		<td>&nbsp;</td>
 	  	</tr>
-	  	<tr>
-	  		 <td><h:submit property="action" value="Clickhere"></h:submit></td> 
-	  		 <td><h:submit property="action" value="Calculate"></h:submit></td> 
-	  	</tr>
   		<tr>
 		   <td colspan="3">
-		   			<h:button property="action" styleId="thelink" value="loadgrid"></h:button>
-            		 <table id="tbl_debselInvDetails">
-               		 <!--<tr>
-                  		<td>Contract No</td>
-                  		<td>Date</td>
-                  		<td>Article</td>
-                  		<td>Color</td>
-                  		<td>Size %</td>
-                  		<td>Substance</td>
-                  		<td>Selection</td>
-                  		<td>Quantity</td>
-                  		<td>Rate</td>
-                  		<td>Commission</td>
-                  		<td>TC</td>
-                	</tr>--> 	
-             		</table>
-             		<div id="tbl_debpager"></div>
+            		 <table id="tbl_debselInvDetails"></table>
+             		<div id="deb_debpager"></div>
               	</td>
               	<td>
               	</td>
-	  	</tr>	  	
-  		<tr>
-	  		<td><h:submit property="action" value="RaiseTc"></h:submit></td> 
-	  		<td><h:submit property="action" value="Waived"></h:submit></td> 
 	  	</tr>
 	  	<tr>
 		    <td>
-		    	<br />Exchange Rate: <h:text property="exchangerate" styleId="exchangerate" > </h:text><br />
-				<br />Commission :  <h:text property="commission1" styleId="commission1"> </h:text>  <br />  
-				<br />Rate: <h:text property="rate" styleId="rate"> </h:text><br />
-				<br />Quantity :  <h:text property="totalquantity" styleId="totalquantity"> </h:text>  <br />  
-				<br />Invoice Amount: <h:text property="invoiceamt" styleId="invoiceamt"> </h:text><br />
-				<br />el class Commission :  <h:text property="elclassamt" styleId="elclassamt"> </h:text>  <br />  
+		    	<br />Exchange Rate: <h:text property="deb_exchangerate" styleId="deb_exchangerate" > </h:text><br />
+				<br />Commission :  <h:text property="deb_commission1" styleId="deb_commission1"> </h:text>  <br />  
+				<br />Rate: <h:text property="deb_rate" styleId="deb_rate"> </h:text><br />
+				<br />Quantity :  <h:text property="deb_totalquantity" styleId="deb_totalquantity"> </h:text>  <br />  
+				<br />Invoice Amount: <h:text property="deb_invoiceamt" styleId="deb_invoiceamt"> </h:text><br />
+				<br />el class Commission :  <h:text property="deb_elclassamt" styleId="deb_elclassamt"> </h:text>  <br />  
 				
       		</td>
 		    <td>
-		    	<br />Commission in INR: <h:text property="elclassamtinrs" styleId="elclassamtinrs"> </h:text><br />
-				<br />Tax @ 12.36% :  <h:text property="tax" styleId="tax"> </h:text>  <br />  
-				<br />Total: <h:text property="total" styleId="total"> </h:text><br />
-				<br />TDS :  <h:text property="tds" styleId="tds"> </h:text>  <br />  
-				<br />Total Due: <h:text property="due" styleId="due"> </h:text><br />
+		    	<br />Commission in INR: <h:text property="deb_elclassamtinrs" styleId="deb_elclassamtinrs"> </h:text><br />
+				<br />Tax @ 12.36% :  <h:text property="deb_tax" styleId="deb_tax"> </h:text>  <br />  
+				<br />Total: <h:text property="deb_total" styleId="deb_total"> </h:text><br />
+				<br />TDS :  <h:text property="deb_tds" styleId="deb_tds"> </h:text>  <br />  
+				<br />Total Due: <h:text property="deb_due" styleId="deb_due"> </h:text><br />
 			</td>
 		   
 	  	</tr>

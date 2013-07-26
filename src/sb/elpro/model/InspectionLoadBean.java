@@ -13,7 +13,7 @@ public class InspectionLoadBean {
 	private String inspContractNo;
 	private String inspdate;
 	private String inspqualityctrlr;
-	
+	private String insp_cdn;
 	
 	/**
 	 * @return the inspContractNo
@@ -50,6 +50,18 @@ public class InspectionLoadBean {
 	 */
 	public void setInspqualityctrlr(String inspqualityctrlr) {
 		this.inspqualityctrlr = inspqualityctrlr;
+	}
+	/**
+	 * @return the insp_cdn
+	 */
+	public String getInsp_cdn() {
+		return insp_cdn;
+	}
+	/**
+	 * @param insp_cdn the insp_cdn to set
+	 */
+	public void setInsp_cdn(String insp_cdn) {
+		this.insp_cdn = insp_cdn;
 	}
 	
 

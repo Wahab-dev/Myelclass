@@ -3,9 +3,12 @@
  */
 package sb.elpro.dao;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 
+import sb.elpro.model.AutoComplete;
 import sb.elpro.model.RaiseDebit;
+import sb.elpro.model.TanneryDetails;
 
 /**
  * @author ADMIN_WIN7
@@ -13,9 +16,9 @@ import sb.elpro.model.RaiseDebit;
  */
 public interface DebitDao { 
 	  
-	ArrayList<RaiseDebit> getDebExporter() throws Exception;
+	ArrayList<TanneryDetails> getDebExporter(String debexp) throws SQLException;
 
-	ArrayList<RaiseDebit> getDebTanInvno() throws Exception;
+	ArrayList<AutoComplete> getDebTanInvno(String debTaninv) throws SQLException;
 
 	
 }

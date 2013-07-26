@@ -64,6 +64,7 @@ public class ProductDetails implements Serializable {
 	private String prf_cdd;
 	private String prf_add;
 	private String prf_special;
+	private String prf_inspcdn;
 	private String prf_commission2;
 	private String prf_commission3;
 	private String checkboxValue;
@@ -143,6 +144,9 @@ public class ProductDetails implements Serializable {
 	private String termid;
 	private String commname;
 	private String commid;
+	
+	//For Autocomplete
+	private String label;
 	/**
 	 * @return the prf_agentid
 	 */
@@ -1592,6 +1596,30 @@ public class ProductDetails implements Serializable {
 	 */
 	public void setPrf_elclasscommission(String prf_elclasscommission) {
 		this.prf_elclasscommission = prf_elclasscommission;
+	}
+	/**
+	 * @return the prf_inspcdn
+	 */
+	public String getPrf_inspcdn() {
+		return prf_inspcdn;
+	}
+	/**
+	 * @param prf_inspcdn the prf_inspcdn to set
+	 */
+	public void setPrf_inspcdn(String prf_inspcdn) {
+		this.prf_inspcdn = prf_inspcdn;
+	}
+	/**
+	 * @return the label
+	 */
+	public String getLabel() {
+		return label;
+	}
+	/**
+	 * @param label the label to set
+	 */
+	public void setLabel(String label) {
+		this.label = label;
 	}
 	
 	

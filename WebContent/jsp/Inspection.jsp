@@ -9,84 +9,176 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Insert title here</title>
-<link type="text/css" href="css/ui-lightness/jquery-ui-1.7.3.custom.css" rel="Stylesheet" />	
-<script type="text/javascript" src="js/jquery-1.3.2.min.js"></script>
-<script type="text/javascript" src="js/jquery-ui-1.7.3.custom.min.js"></script>
-<script>
-	$(function() {
-		$("#inspdate").datepicker();
+<link type="text/css" href="css/ui-lightness/jquery-ui-1.7.3.custom.css" rel="Stylesheet" />
+<style type="text/css">
+#ui-datepicker-div { font-size: 11px; } 	
+</style>	
+<script src="js/jquery-1.9.1.js"></script>
+<script src="js/jquery-ui.js"></script>
+<link rel="stylesheet" type="text/css" media="screen" href="css/pepper-grinder/jquery-ui-1.10.3.custom.css" />
+<link rel="stylesheet" type="text/css" media="screen" href="css/ui.jqgrid.css" />
+
+<script src="js/i18n/grid.locale-en.js" type="text/javascript"></script>
+
+<script src="js/jquery.jqGrid.min.js" type="text/javascript"></script>		
+<script type="text/javascript">
+$(document).ready(function() {
+	//:Load Grid
+	var gridbtn = $('#loadCtDetails'); 
+	var grid = $('#insp_Ctdetails'); 
+	gridbtn.click( function()
+		    {
+			var ctno = $('#inps_ContractNumber').val();
+    		grid.jqGrid({  
+				url:"/Myelclass/InspAutocomplete.do?ctno="+ctno+"&action="+"loadArticle",   
+				datatype:"json",
+				colNames:['Article Name', 'Color', 'Size','Subs','Selec','Selec P', 'Quantity'],  
+			    colModel:[   
+					{name:'prf_articlename', index:'articlename'},
+					{name:'prf_color', index:'color'},
+					{name:'prf_size', index:'size'},
+					{name:'prf_substance', index:'subatance'},
+					{name:'prf_selection', index:'selection'},
+					{name:'prf_selectionp', index:'selectionp'},
+					{name:'prf_quantity', index:'qty'},
+				],  
+				jsonReader : {  
+				  	repeatitems:false,
+			      	root: "rows",
+			      	page: "page", //calls first
+			      	total: "total" ,//calls Second
+			      	records: "records" //calls Third
+				},
+				caption: "Load Article Details On Selected CT",
+		    	pager: '#insp_CtDetalspager',
+		    	rowNum:6, 
+		    	rowList:[2,4,6],
+		    	//loadonce:false,
+		        loadtext: "Bow Bow........... ",
+		        height : "auto",
+		        width:"auto",  
+		        sortname: 'articlename',  
+		        sortorder: 'desc',  
+		        emptyrecords: 'No records to display',
+			});
+			 		
+			grid.jqGrid('navGrid', '#insp_CtDetalspager',  { edit: true, add: true, del: false, 
+					search: false, refresh: false },
+					{ // edit option
+	 					 top: 150,
+	 					 left: 200,
+	 					 beforeShowForm: function(form) { 
+	 						alert("In Edit Form"); 
+	 					 },
+	 					 url: "/Myelclass/PrfinsertArticle.do?ctno="+ctno+"&action="+"edit",
+	 					 mtype: "POST",
+	 					 closeAfterEdit: true,
+	 					 //editData
+	 		          },
+	 		          
+	 				{ // add option
+	 		              beforeShowForm: function(form) { 
+	 		            	  alert("In Add Form");  
+	 		              },
+	 		        	  top: 150,
+					 	  left: 200,
+					 	  width : 350,
+					 	  url: "/Myelclass/PrfinsertArticle.do?ctno="+ctno+"&action="+"add",
+	 		          }
+	 		          );
 	});
-	</script>
+	$('#inps_ContractNumber').autocomplete({
+		 source: function(request, response) {
+			var param = request.term;  
+			$.getJSON("/Myelclass/InspAutocomplete.do?term="+param+"&action="+"inspCt",
+				function(result) { 	
+			       response($.map(result, function(item) {
+			           return { 
+			              value: item.label,
+			              splcdn: item.prf_inspcdn,
+			              };
+			        }));//END response
+			 });
+		 },
+		 select: function( event, ui ) { 
+         	 $('#insp_cdn').val(ui.item.splcdn);
+           } 
+	}); 
+	$('#inps_qualityctrlr').autocomplete({
+		 source: function(request, response) {
+			var param = request.term;  
+			$.getJSON("/Myelclass/InspAutocomplete.do?term="+param+"&action="+"inspQtCtr",
+				function(result) { 	
+			       response($.map(result, function(item) {
+			           return { 
+			              value: item.label,
+			              addr: item.tanneryAddress,
+			              phone: item.tanneryContactNo,	
+			              attn : item.tanneryAttention,
+			              fax: item.tanneryFax,
+			              };
+			        }));//END response
+			 });
+		 }
+	}); 
+	 //DATEPICKER
+     $("#inps_date").datepicker({
+	   // changeYear: true,
+	    autoSize: true,
+	    changeMonth:false,
+	    dateFormat: "dd/mm/y",
+	    showWeek: true,
+	    firstDay: 1,
+	    numberOfMonths: 1,
+	    showButtonPanel: true,
+	    gotoCurrent:true, 
+	});
+	
+
+	  
+	
+});
+</script>
 </head>
 <body>
 <h:form action="/saveinspection" styleId="saveInspection">
 	<table width="800" height="586" border="2" cellpadding="0" cellspacing="0">
 	  	<tr>
-		   <td height="533">Welcome ${user.name}.. <h:submit property="action" value="Logout"></h:submit>
+		   <td height="533">Welcome ${user.name}..
 		     <fieldset> 	
 		     	<legend>Basic Details</legend>  
 		     		<table>
 		     			<tr>
 		     				<td>
 		     					Contract Number :
-		     						<h:select property="inpsContractNumber">
-          								<%-- <c:forEach items="${inspcontractarray}" var ="inspCtno">
-          													<h:option value="${inspCtno.inspContractNo}">
-          			    										<c:out value="${inspCtno.inspContractNo}"></c:out>
-          													</h:option>       		
-          												</c:forEach> --%>
-          											</h:select><br />	
+		     						<h:text property="inps_ContractNumber" styleId="inps_ContractNumber"></h:text><br />	
           												
 		     				</td>
 		     				<td>
 		     					Inspection Date :
-		     						<h:text property="inspdate" styleId="inspdate"></h:text><br />
+		     						<h:text property="inps_date" styleId="inps_date"></h:text><br />
 		     				</td>
 		     				<td>
 		     					Quality Controller:
-		     						<h:select property="inspqualityctrlr">
-          								<%-- <c:forEach items="${inspqctrlrarray}" var ="inspqtyCtrl">
-          													<h:option value="${inspqtyCtrl.inspqualityctrlr}">
-          			    										<c:out value="${inspqtyCtrl.inspqualityctrlr}"></c:out>
-          													</h:option>       		
-          												</c:forEach> --%>
-          											</h:select><br />		
+		     						<h:text property="inps_qualityctrlr" styleId="inps_qualityctrlr"></h:text><br />		
 		     				</td>
 		     			</tr>
 		     		</table>          																
 		     </fieldset>
-		    
-		     <table width="800" border="2" cellspacing="0" cellpadding="0">
-		      <tr>
-		      	<td width="93">Ct No</td>
-		        <td width="93">Order Date</td>
-		        <td width="93">Article</td>
-		        <td width="74">Colour</td>
-		        <td width="56">Size</td>
-		        <td width="62">Substance</td>
-		        <td width="55">Selection</td>
-		        <td width="113">Customer</td>
-		        <td width="113">Supplier</td>
-		        <td width="62">Quantity</td>
-		        <td width="55">Rate</td>
-	          </tr>
-		      <tr>
-		        <td>&nbsp;</td>
-		        <td>&nbsp;</td>
-		        <td>&nbsp;</td>
-		        <td>&nbsp;</td>
-		        <td>&nbsp;</td>
-		        <td>&nbsp;</td>
-		        <td>&nbsp;</td>
-		        <td>&nbsp;</td>
-		        <td>&nbsp;</td>
-		        <td>&nbsp;</td>
-		        <td>&nbsp;</td>
-	          </tr>
-	          
-	        </table>
+		   
+		    <table>
+		    <tr>
+		   <td>
+		    <div>
+		      <h:button property="inspinsert" value="insert" styleId="loadCtDetails"></h:button>    
+		    	<table id="insp_Ctdetails"></table>
+		    		<div id="insp_CtDetalspager"></div>
+		    		</div>
+		   	</td>
+		     </tr>
+		    </table>
 	          <div>Please make sure you check the following before Inspection of Goods</div>
-	            <textarea rows="4" cols="100"></textarea>
+	            <h:textarea  property="insp_cdn" styleId="insp_cdn" rows="4" cols="100"></h:textarea>
 	            
 	            
 	            <fieldset> 	
@@ -263,9 +355,9 @@
 	              <td height="55"></td>
                 </tr>   
                  <tr>
-  					<td><h:submit property="action" value="Save" styleId="Save"></h:submit>
-  						<h:reset property="action" value="Clear" styleId="Clear"></h:reset>
-  						<h:reset property="action" value="Print" styleId="Print"></h:reset>
+  					<td><h:submit property="Save" value="Save" styleId="Save"></h:submit>
+  						<h:reset property="Clear" value="Clear" styleId="Clear"></h:reset>
+  						
   					</td>	
   				</tr>
               </table>

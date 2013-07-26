@@ -32,8 +32,7 @@ public class InvSelectCtfromCust extends Action {
 	InvoiceBo invbo = new InvoiceBoImpl();
 	JSONObject jsonobj = new JSONObject();
 	public ActionForward execute(ActionMapping map, ActionForm form, 
-			HttpServletRequest request, HttpServletResponse response) throws Exception {
-		
+			HttpServletRequest request, HttpServletResponse response) throws Exception {		
 		usersession = request.getSession(false);
 		PrintWriter out = response.getWriter();
 		response.setContentType("application/json");
@@ -53,12 +52,9 @@ public class InvSelectCtfromCust extends Action {
 			System.out.println("action "+action);
 			if(action.equalsIgnoreCase("load")){
 				String custid = request.getParameter("custid");
-				System.out.println("Customer Id "+custid);
-			
+				System.out.println("Customer Id "+custid);			
 				List<CustomerInvoice> invctlist = invbo.getInvCustCtDetails(custid, sidx,sord);
 				int records = invctlist.size();
-				//jsonobj
-				
 				
 				int page = Integer.parseInt(pag);
                 int totalPages = 0;
@@ -81,12 +77,7 @@ public class InvSelectCtfromCust extends Action {
 				jsonobj.put("records", records);
 				jsonobj.put("rows", invctlist);
 				System.out.println(jsonobj);		
-				out.println(jsonobj);
-				/*
-				JSONArray jsonOrderArray = JSONArray.fromObject(article);
-				System.out.println(jsonOrderArray);					
-		 		out.println(jsonOrderArray);*/
-			
+				out.println(jsonobj);				
 			}else if(action.equalsIgnoreCase("selectCt")){
 				//List<CustomerInvoice> article = invbo.getInvCustCtDetails();
 				//jsonobj

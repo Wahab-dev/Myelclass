@@ -14,8 +14,8 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.actions.DispatchAction;
 
-import sb.elpro.bo.DebitBO;
-import sb.elpro.bo.DebitBOImpl;
+import sb.elpro.bo.DebitBo;
+import sb.elpro.bo.DebitBoImpl;
 
 /**
  * @author Wahab
@@ -23,7 +23,7 @@ import sb.elpro.bo.DebitBOImpl;
  */
 public class DebitAction extends DispatchAction {
 	HttpSession usersession;
-	DebitBO debbo = new DebitBOImpl();
+	DebitBo debbo = new DebitBoImpl();
 	/*public ActionForward Load(ActionMapping mapping, ActionForm form, 
 			HttpServletRequest request, HttpServletResponse response) throws Exception{
 		
