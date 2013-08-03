@@ -17,7 +17,7 @@ public class ExporterDetails {
 		private String expfax; 
 		private String expref; 
 		private String shortform;
-		
+		//private String  label;
 		
 		
 		/**

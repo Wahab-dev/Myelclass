@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.Statement;
 
+import sb.elpro.model.ArticleDetails;
 import sb.elpro.model.BankDetails;
 import sb.elpro.model.CustomerDetails;
 import sb.elpro.model.CustomerInvoice;
@@ -26,7 +27,7 @@ import sb.elpro.utility.DBConnection;
 public class InvoiceDaoImpl implements InvoiceDao {
 
 	@Override
-	public ArrayList<ExporterDetails> getInvExporter() throws SQLException {
+	public ArrayList<ExporterDetails> getInvExporter(String expterm) throws SQLException {
 		 ArrayList<ExporterDetails> invexporterarray = new ArrayList<ExporterDetails>();			
 			Connection con = null;
 			Statement st = null;
@@ -34,7 +35,7 @@ public class InvoiceDaoImpl implements InvoiceDao {
 			try{			
 				con = DBConnection.getConnection();
 				st = (Statement) con.createStatement();
-				String sql = "SELECT expname, expattn, expaddr, expphone, expfax, expref FROM elpro.tbl_exporter order by expname";
+				String sql = "SELECT expname, expattn, expaddr, expphone, expfax, expref FROM elpro.tbl_exporter where expname like '%"+expterm+"%' order by expname";
 				rs = st.executeQuery(sql);
 				while(rs.next()) {	
 					ExporterDetails invexporterbean = new ExporterDetails();
@@ -325,7 +326,7 @@ public class InvoiceDaoImpl implements InvoiceDao {
 				CustomerInvoice InvCustCtbean = new CustomerInvoice();
 					InvCustCtbean.setArticlename(rs.getString("articlename"));
 					InvCustCtbean.setCustid(rs.getString("custid"));
-					InvCustCtbean.setContractno(rs.getString("contractno"));
+					InvCustCtbean.setId(rs.getString("contractno"));
 					InvCustCtbean.setColor(rs.getString("color"));
 					InvCustCtbean.setSize(rs.getString("size"));
 					InvCustCtbean.setSubstance(rs.getString("subatance"));
@@ -382,6 +383,108 @@ public class InvoiceDaoImpl implements InvoiceDao {
 		 rs.close();
    }	
 	return invcustarraylist;
+	}
+
+	@Override
+	public ArrayList<DestinationDetails> getInvloadctrylist(String loadctryterm)
+			throws SQLException {
+		ArrayList<DestinationDetails> invcustarraylist = new ArrayList<DestinationDetails>();			
+		Connection con = null;
+		Statement st = null;
+		ResultSet rs = null;	
+		try{			
+			con = DBConnection.getConnection();
+			st = (Statement) con.createStatement();
+			String sql = "SELECT CountryId, CountryName FROM elpro.tbl_desticountry where CountryName like '%"+loadctryterm+"%'order by CountryName";
+			rs = st.executeQuery(sql);
+			while(rs.next()) {						
+				DestinationDetails InvCtrybean = new DestinationDetails();
+				InvCtrybean.setDestination(rs.getString("CountryName"));
+				InvCtrybean.setDestinationId(rs.getString("CountryId"));
+				System.out.println("Cust CT List"+InvCtrybean);
+				invcustarraylist.add(InvCtrybean);
+			}
+	}catch(Exception e){
+		e.printStackTrace();
+		System.out.println("Customer Name ERROR RESULT");
+	}finally{
+		 con.close() ;
+		 st.close();
+		 rs.close();
+   }	
+	return invcustarraylist;
+	}
+
+	@Override
+	public ArrayList<DestinationDetails> getInvloadportlist(String loadportterm, String ctryvalterm)
+			throws SQLException {
+		ArrayList<DestinationDetails> invloadportarraylist = new ArrayList<DestinationDetails>();			
+		Connection con = null;
+		Statement st = null;
+		ResultSet rs = null;	
+		try{			
+			con = DBConnection.getConnection();
+			st = (Statement) con.createStatement();
+			String sql = "SELECT LoadingId, LoadingName FROM elpro.tbl_loadingport where LoadingName like '%"+loadportterm+"%'order by LoadingName";
+			rs = st.executeQuery(sql);
+			while(rs.next()) {						
+				DestinationDetails Invloadportbean = new DestinationDetails();
+				Invloadportbean.setDestination(rs.getString("LoadingName"));
+				Invloadportbean.setDestinationId(rs.getString("LoadingId"));
+				System.out.println("Cust CT List"+Invloadportbean);
+				invloadportarraylist.add(Invloadportbean);
+			}
+	}catch(Exception e){
+		e.printStackTrace();
+		System.out.println("Customer Name ERROR RESULT");
+	}finally{
+		 con.close() ;
+		 st.close();
+		 rs.close();
+   }	
+	return invloadportarraylist;
+	}
+
+	@Override
+	public ArrayList<ArticleDetails> getInvDelContractDetails(String ctno)
+			throws SQLException {
+		ArrayList<ArticleDetails> invloadportarraylist = new ArrayList<ArticleDetails>();			
+		Connection con = null;
+		Statement st = null;
+		ResultSet rs = null;	
+		try{			
+			con = DBConnection.getConnection();
+			st = (Statement) con.createStatement();
+			String sql = "SELECT articleid, articlename, size, substance, selection, selectionpercent, color, quantity, unit, pcs, rate, tc, contractno, prfarticleid from tbl_prf_article where contractno in ('"+ctno+"') order by contractno";
+			rs = st.executeQuery(sql);
+			System.out.println((sql));
+			while(rs.next()) {						
+				ArticleDetails artbean = new ArticleDetails();
+				artbean.setArticleid(rs.getString("articleid"));
+				artbean.setArticletype(rs.getString("articletype"));
+				artbean.setArticlename(rs.getString("articlename"));
+				artbean.setArticleshortform(rs.getString("articleshortform"));
+				artbean.setSize(rs.getString("size"));
+				artbean.setSubstance(rs.getString("substance"));
+				artbean.setSelection(rs.getString("selection"));
+				artbean.setSelp(rs.getString("selectionpercent"));
+				artbean.setColor(rs.getString("color"));
+				artbean.setRate(rs.getString("rate"));
+				artbean.setTc(rs.getString("tc"));
+				artbean.setContractno(rs.getString("contractno"));
+				artbean.setArticlefamily(rs.getString("othername"));
+				System.out.println("Art CT List"+artbean.getContractno());
+				invloadportarraylist.add(artbean);
+			}
+	}catch(Exception e){
+		e.printStackTrace();
+		System.out.println("Customer Name ERROR RESULT");
+	}finally{
+		 con.close() ;
+		 st.close();
+		 rs.close();
+   }	
+	return invloadportarraylist;
 	}
 	
 

@@ -61,23 +61,7 @@ public class PrfBoImpl implements PrfBo {
 		return customerList;
 	}
 
-	@Override
-	public ArrayList<ConsigneeDetails> getConsigneeDetails() throws Exception {
-		ArrayList<ConsigneeDetails> consigneeList = prfdao.getConsigneeList();
-		return consigneeList;
-	}
-
-	@Override
-	public ArrayList<NotifyConsigneeDetails> getNotifyDetails() throws Exception {
-		ArrayList<NotifyConsigneeDetails> notifyList = prfdao.getNotifyList();
-		return notifyList;
-	}
-
-	@Override
-	public ArrayList<BankDetails> getBankDetails() throws Exception {
-		ArrayList<BankDetails> bankList = prfdao.getBankList();
-		return bankList;
-	}
+	
 
 	@Override
 	public ArrayList<DestinationDetails> getDestinationDetails()throws Exception {
@@ -299,8 +283,8 @@ public class PrfBoImpl implements PrfBo {
 	@Override
 	public boolean addPrfArticleDetails(PrfArticle artindertdetail,
 			String ctno, String sidx, String sord) throws Exception {
-				boolean isupdate = prfdao.addprfArticle(artindertdetail,ctno, sidx, sord);
-		return false;
+		boolean isupdate = prfdao.addprfArticle(artindertdetail,ctno, sidx, sord);
+		return isupdate;
 	}
 
 	

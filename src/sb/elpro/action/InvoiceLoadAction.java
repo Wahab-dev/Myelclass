@@ -28,15 +28,15 @@ public class InvoiceLoadAction extends Action {
 				HttpServletRequest request, HttpServletResponse response) throws Exception, ServletException{
 			usersession = request.getSession(false);
 			if(usersession != null){
-				usersession.setAttribute("InvExporterarray",invbo.getInvExporter());
-				usersession.setAttribute("InvNotifyarray",invbo.getInvNotify());
-				usersession.setAttribute("invBankarray",invbo.getInvBank());
+				//usersession.setAttribute("InvExporterarray",invbo.getInvExporter());
+				//usersession.setAttribute("InvNotifyarray",invbo.getInvNotify());
+				//usersession.setAttribute("invBankarray",invbo.getInvBank());
 				usersession.setAttribute("invLoadingPortarray",invbo.getInvLoadingPort());
 				usersession.setAttribute("invCountryFinalDestiarray",invbo.getInvFinalDestinationCountry());
 				usersession.setAttribute("invFinalDestinationarray",invbo.getInvFinalDestination());
 				usersession.setAttribute("invDischargeportarray",invbo.getInvDischargeport());
-				usersession.setAttribute("invCustomerarray",invbo.getInvCustomer());
-				usersession.setAttribute("invCustContract", invbo.getInvCustContract());
+				//usersession.setAttribute("invCustomerarray",invbo.getInvCustomer());
+				//usersession.setAttribute("invCustContract", invbo.getInvCustContract());
 				//usersession.setAttribute("invoiceno",invbo.getInvoiceNo());
 			}else{
 				System.out.println("Error");

@@ -9,986 +9,1133 @@ public class InvoiceForm extends ActionForm {
 	 */
 	private static final long serialVersionUID = -7103743427275202140L;
 		
-		private String invoicetype;
-		private String invoiceno;
-		private String invdate;
-		private String expref;		
-		private String otherref;
-		private String exporter;
-		private String exporterattn;
-		private String exporteraddress;
-		private String exportertele;
-		private String exporterfax;
-		private String notify;
-		private String notifyattn;
-		private String notifyaddress;
-		private String notifyfax;
-		private String notifytele;
-		private String terms;
-		private String payment;
-		private String bank;
-		private String bankbranch;
-		private String bankaddress;
-		private String banktele;
-		private String bankfax;
-		private String bankswiftcode;
-		private String bankacno;
-		private String ctryoforigngoods;
-		private String loadingport;
-		private String ctryoffinaldesti;
-		private String dischargeport;
-		private String finaldesti;
-		private String grosswt;
-		private String dimension;
-		private String awbillno;
-		private String precarriageby;
-		private String placeofreciept;
-		private String vesselno;
-		private String marksno;
-		private String noofpackages;
-		private String packno;
-		private String netwt;
-		private String awbilldate;
-		private String courierchrgs;
-		private String vatcst;
-		private String packingcharges;
-		private String custid;
-		/**
-		 * @return the custid
-		 */
-		public String getCustid() {
-			return custid;
-		}
-		/**
-		 * @param custid the custid to set
-		 */
-		public void setCustid(String custid) {
-			this.custid = custid;
-		}
-		private String customer;		
-		private String custaddr;
-		private String custattn;
-		private String custtele;
-		private String custfax;
-		private String discount;
-		private String ctrno;
-		private String pojwno;
-		private String pojwtannery;
-		private String pojwprice;		
-		private String article;
-		private String ctrdate;
-		private String pono;
-		private String color;
-		private String size;
-		private String substance;
-		private String selection;
-		private String selectionp;
-		private String quantity;
-		private String pieces;
-		private String rate;
-		private String shipment;
-		private String qsend;
-		private String qremain;
-		private String amount;
-		private String tc;
-		private String type;
-		private String total;
-		private String reduction;
+		private String inv_invoicetype;
+		private String inv_invoiceno;
+		private String inv_invdate;
+		private String inv_expref;		
+		private String inv_otherref;
+		private String inv_exporter;
+		private String inv_exporterattn;
+		private String inv_exporteraddress;
+		private String inv_exportertele;
+		private String inv_exporterfax;
+		private String inv_notify;
+		private String inv_notifyattn;
+		private String inv_notifyaddress;
+		private String inv_notifyfax;
+		private String inv_notifytele;
+		private String inv_terms;
+		private String inv_payment;
+		private String inv_bank;
+		private String inv_bankbranch;
+		private String inv_bankaddress;
+		private String inv_banktele;
+		private String inv_bankfax;
+		private String inv_bankswiftcode;
+		private String inv_bankacno;
+		private String inv_ctryoforigngoods;
+		private String inv_loadingport;
+		private String inv_ctryoffinaldesti;
+		private String inv_dischargeport;
+		private String inv_finaldesti;
+		private String inv_grosswt;
+		private String inv_dimension;
+		private String inv_awbillno;
+		private String inv_precarriageby;
+		private String inv_placeofreciept;
+		private String inv_vesselno;
+		private String inv_marksno;
+		private String inv_noofpackages;
+		private String inv_packno;
+		private String inv_netwt;
+		private String inv_awbilldate;
+		private String inv_courierchrgs;
+		private String inv_vatcst;
+		private String inv_packingcharges;
+		private String inv_custid;
+		private String inv_customer;		
+		private String inv_custaddr;
+		private String inv_custattn;
+		private String inv_custtele;
+		private String inv_custfax;
+		private String inv_discount;
+		private String inv_ctrno;
+		private String inv_pojwno;
+		private String inv_pojwtannery;
+		private String inv_pojwprice;		
+		private String inv_article;
+		private String inv_ctrdate;
+		private String inv_pono;
+		private String inv_color;
+		private String inv_size;
+		private String inv_substance;
+		private String inv_selection;
+		private String inv_selectionp;
+		private String inv_quantity;
+		private String inv_pieces;
+		private String inv_rate;
+		private String inv_shipment;
+		private String inv_qsend;
+		private String inv_qremain;
+		private String inv_amount;
+		private String inv_tc;
+		private String inv_type;
+		private String inv_total;
+		private String inv_reduction;
 		
-		private String selectForBill;
+		private String inv_selectForBill;
 
-		private String myname;
+		private String inv_myname;
+
+		/**
+		 * @return the inv_invoicetype
+		 */
+		public String getInv_invoicetype() {
+			return inv_invoicetype;
+		}
+
+		/**
+		 * @param inv_invoicetype the inv_invoicetype to set
+		 */
+		public void setInv_invoicetype(String inv_invoicetype) {
+			this.inv_invoicetype = inv_invoicetype;
+		}
+
+		/**
+		 * @return the inv_invoiceno
+		 */
+		public String getInv_invoiceno() {
+			return inv_invoiceno;
+		}
+
+		/**
+		 * @param inv_invoiceno the inv_invoiceno to set
+		 */
+		public void setInv_invoiceno(String inv_invoiceno) {
+			this.inv_invoiceno = inv_invoiceno;
+		}
+
+		/**
+		 * @return the inv_invdate
+		 */
+		public String getInv_invdate() {
+			return inv_invdate;
+		}
+
+		/**
+		 * @param inv_invdate the inv_invdate to set
+		 */
+		public void setInv_invdate(String inv_invdate) {
+			this.inv_invdate = inv_invdate;
+		}
+
+		/**
+		 * @return the inv_expref
+		 */
+		public String getInv_expref() {
+			return inv_expref;
+		}
+
+		/**
+		 * @param inv_expref the inv_expref to set
+		 */
+		public void setInv_expref(String inv_expref) {
+			this.inv_expref = inv_expref;
+		}
+
+		/**
+		 * @return the inv_otherref
+		 */
+		public String getInv_otherref() {
+			return inv_otherref;
+		}
+
+		/**
+		 * @param inv_otherref the inv_otherref to set
+		 */
+		public void setInv_otherref(String inv_otherref) {
+			this.inv_otherref = inv_otherref;
+		}
+
+		/**
+		 * @return the inv_exporter
+		 */
+		public String getInv_exporter() {
+			return inv_exporter;
+		}
+
+		/**
+		 * @param inv_exporter the inv_exporter to set
+		 */
+		public void setInv_exporter(String inv_exporter) {
+			this.inv_exporter = inv_exporter;
+		}
+
+		/**
+		 * @return the inv_exporterattn
+		 */
+		public String getInv_exporterattn() {
+			return inv_exporterattn;
+		}
+
+		/**
+		 * @param inv_exporterattn the inv_exporterattn to set
+		 */
+		public void setInv_exporterattn(String inv_exporterattn) {
+			this.inv_exporterattn = inv_exporterattn;
+		}
+
+		/**
+		 * @return the inv_exporteraddress
+		 */
+		public String getInv_exporteraddress() {
+			return inv_exporteraddress;
+		}
+
+		/**
+		 * @param inv_exporteraddress the inv_exporteraddress to set
+		 */
+		public void setInv_exporteraddress(String inv_exporteraddress) {
+			this.inv_exporteraddress = inv_exporteraddress;
+		}
+
+		/**
+		 * @return the inv_exportertele
+		 */
+		public String getInv_exportertele() {
+			return inv_exportertele;
+		}
+
+		/**
+		 * @param inv_exportertele the inv_exportertele to set
+		 */
+		public void setInv_exportertele(String inv_exportertele) {
+			this.inv_exportertele = inv_exportertele;
+		}
+
+		/**
+		 * @return the inv_exporterfax
+		 */
+		public String getInv_exporterfax() {
+			return inv_exporterfax;
+		}
+
+		/**
+		 * @param inv_exporterfax the inv_exporterfax to set
+		 */
+		public void setInv_exporterfax(String inv_exporterfax) {
+			this.inv_exporterfax = inv_exporterfax;
+		}
+
+		/**
+		 * @return the inv_notify
+		 */
+		public String getInv_notify() {
+			return inv_notify;
+		}
+
+		/**
+		 * @param inv_notify the inv_notify to set
+		 */
+		public void setInv_notify(String inv_notify) {
+			this.inv_notify = inv_notify;
+		}
+
+		/**
+		 * @return the inv_notifyattn
+		 */
+		public String getInv_notifyattn() {
+			return inv_notifyattn;
+		}
+
+		/**
+		 * @param inv_notifyattn the inv_notifyattn to set
+		 */
+		public void setInv_notifyattn(String inv_notifyattn) {
+			this.inv_notifyattn = inv_notifyattn;
+		}
+
+		/**
+		 * @return the inv_notifyaddress
+		 */
+		public String getInv_notifyaddress() {
+			return inv_notifyaddress;
+		}
+
+		/**
+		 * @param inv_notifyaddress the inv_notifyaddress to set
+		 */
+		public void setInv_notifyaddress(String inv_notifyaddress) {
+			this.inv_notifyaddress = inv_notifyaddress;
+		}
+
+		/**
+		 * @return the inv_notifyfax
+		 */
+		public String getInv_notifyfax() {
+			return inv_notifyfax;
+		}
+
+		/**
+		 * @param inv_notifyfax the inv_notifyfax to set
+		 */
+		public void setInv_notifyfax(String inv_notifyfax) {
+			this.inv_notifyfax = inv_notifyfax;
+		}
+
+		/**
+		 * @return the inv_notifytele
+		 */
+		public String getInv_notifytele() {
+			return inv_notifytele;
+		}
+
+		/**
+		 * @param inv_notifytele the inv_notifytele to set
+		 */
+		public void setInv_notifytele(String inv_notifytele) {
+			this.inv_notifytele = inv_notifytele;
+		}
+
+		/**
+		 * @return the inv_terms
+		 */
+		public String getInv_terms() {
+			return inv_terms;
+		}
+
+		/**
+		 * @param inv_terms the inv_terms to set
+		 */
+		public void setInv_terms(String inv_terms) {
+			this.inv_terms = inv_terms;
+		}
+
+		/**
+		 * @return the inv_payment
+		 */
+		public String getInv_payment() {
+			return inv_payment;
+		}
+
+		/**
+		 * @param inv_payment the inv_payment to set
+		 */
+		public void setInv_payment(String inv_payment) {
+			this.inv_payment = inv_payment;
+		}
+
+		/**
+		 * @return the inv_bank
+		 */
+		public String getInv_bank() {
+			return inv_bank;
+		}
+
+		/**
+		 * @param inv_bank the inv_bank to set
+		 */
+		public void setInv_bank(String inv_bank) {
+			this.inv_bank = inv_bank;
+		}
+
+		/**
+		 * @return the inv_bankbranch
+		 */
+		public String getInv_bankbranch() {
+			return inv_bankbranch;
+		}
+
+		/**
+		 * @param inv_bankbranch the inv_bankbranch to set
+		 */
+		public void setInv_bankbranch(String inv_bankbranch) {
+			this.inv_bankbranch = inv_bankbranch;
+		}
+
+		/**
+		 * @return the inv_bankaddress
+		 */
+		public String getInv_bankaddress() {
+			return inv_bankaddress;
+		}
+
+		/**
+		 * @param inv_bankaddress the inv_bankaddress to set
+		 */
+		public void setInv_bankaddress(String inv_bankaddress) {
+			this.inv_bankaddress = inv_bankaddress;
+		}
+
+		/**
+		 * @return the inv_banktele
+		 */
+		public String getInv_banktele() {
+			return inv_banktele;
+		}
+
+		/**
+		 * @param inv_banktele the inv_banktele to set
+		 */
+		public void setInv_banktele(String inv_banktele) {
+			this.inv_banktele = inv_banktele;
+		}
+
+		/**
+		 * @return the inv_bankfax
+		 */
+		public String getInv_bankfax() {
+			return inv_bankfax;
+		}
+
+		/**
+		 * @param inv_bankfax the inv_bankfax to set
+		 */
+		public void setInv_bankfax(String inv_bankfax) {
+			this.inv_bankfax = inv_bankfax;
+		}
+
+		/**
+		 * @return the inv_bankswiftcode
+		 */
+		public String getInv_bankswiftcode() {
+			return inv_bankswiftcode;
+		}
+
+		/**
+		 * @param inv_bankswiftcode the inv_bankswiftcode to set
+		 */
+		public void setInv_bankswiftcode(String inv_bankswiftcode) {
+			this.inv_bankswiftcode = inv_bankswiftcode;
+		}
+
+		/**
+		 * @return the inv_bankacno
+		 */
+		public String getInv_bankacno() {
+			return inv_bankacno;
+		}
+
+		/**
+		 * @param inv_bankacno the inv_bankacno to set
+		 */
+		public void setInv_bankacno(String inv_bankacno) {
+			this.inv_bankacno = inv_bankacno;
+		}
+
+		/**
+		 * @return the inv_ctryoforigngoods
+		 */
+		public String getInv_ctryoforigngoods() {
+			return inv_ctryoforigngoods;
+		}
+
+		/**
+		 * @param inv_ctryoforigngoods the inv_ctryoforigngoods to set
+		 */
+		public void setInv_ctryoforigngoods(String inv_ctryoforigngoods) {
+			this.inv_ctryoforigngoods = inv_ctryoforigngoods;
+		}
+
+		/**
+		 * @return the inv_loadingport
+		 */
+		public String getInv_loadingport() {
+			return inv_loadingport;
+		}
+
+		/**
+		 * @param inv_loadingport the inv_loadingport to set
+		 */
+		public void setInv_loadingport(String inv_loadingport) {
+			this.inv_loadingport = inv_loadingport;
+		}
+
+		/**
+		 * @return the inv_ctryoffinaldesti
+		 */
+		public String getInv_ctryoffinaldesti() {
+			return inv_ctryoffinaldesti;
+		}
+
+		/**
+		 * @param inv_ctryoffinaldesti the inv_ctryoffinaldesti to set
+		 */
+		public void setInv_ctryoffinaldesti(String inv_ctryoffinaldesti) {
+			this.inv_ctryoffinaldesti = inv_ctryoffinaldesti;
+		}
+
+		/**
+		 * @return the inv_dischargeport
+		 */
+		public String getInv_dischargeport() {
+			return inv_dischargeport;
+		}
+
+		/**
+		 * @param inv_dischargeport the inv_dischargeport to set
+		 */
+		public void setInv_dischargeport(String inv_dischargeport) {
+			this.inv_dischargeport = inv_dischargeport;
+		}
+
+		/**
+		 * @return the inv_finaldesti
+		 */
+		public String getInv_finaldesti() {
+			return inv_finaldesti;
+		}
+
+		/**
+		 * @param inv_finaldesti the inv_finaldesti to set
+		 */
+		public void setInv_finaldesti(String inv_finaldesti) {
+			this.inv_finaldesti = inv_finaldesti;
+		}
+
+		/**
+		 * @return the inv_grosswt
+		 */
+		public String getInv_grosswt() {
+			return inv_grosswt;
+		}
+
+		/**
+		 * @param inv_grosswt the inv_grosswt to set
+		 */
+		public void setInv_grosswt(String inv_grosswt) {
+			this.inv_grosswt = inv_grosswt;
+		}
+
+		/**
+		 * @return the inv_dimension
+		 */
+		public String getInv_dimension() {
+			return inv_dimension;
+		}
+
+		/**
+		 * @param inv_dimension the inv_dimension to set
+		 */
+		public void setInv_dimension(String inv_dimension) {
+			this.inv_dimension = inv_dimension;
+		}
+
+		/**
+		 * @return the inv_awbillno
+		 */
+		public String getInv_awbillno() {
+			return inv_awbillno;
+		}
+
+		/**
+		 * @param inv_awbillno the inv_awbillno to set
+		 */
+		public void setInv_awbillno(String inv_awbillno) {
+			this.inv_awbillno = inv_awbillno;
+		}
+
+		/**
+		 * @return the inv_precarriageby
+		 */
+		public String getInv_precarriageby() {
+			return inv_precarriageby;
+		}
+
+		/**
+		 * @param inv_precarriageby the inv_precarriageby to set
+		 */
+		public void setInv_precarriageby(String inv_precarriageby) {
+			this.inv_precarriageby = inv_precarriageby;
+		}
+
+		/**
+		 * @return the inv_placeofreciept
+		 */
+		public String getInv_placeofreciept() {
+			return inv_placeofreciept;
+		}
+
+		/**
+		 * @param inv_placeofreciept the inv_placeofreciept to set
+		 */
+		public void setInv_placeofreciept(String inv_placeofreciept) {
+			this.inv_placeofreciept = inv_placeofreciept;
+		}
+
+		/**
+		 * @return the inv_vesselno
+		 */
+		public String getInv_vesselno() {
+			return inv_vesselno;
+		}
+
+		/**
+		 * @param inv_vesselno the inv_vesselno to set
+		 */
+		public void setInv_vesselno(String inv_vesselno) {
+			this.inv_vesselno = inv_vesselno;
+		}
+
+		/**
+		 * @return the inv_marksno
+		 */
+		public String getInv_marksno() {
+			return inv_marksno;
+		}
+
+		/**
+		 * @param inv_marksno the inv_marksno to set
+		 */
+		public void setInv_marksno(String inv_marksno) {
+			this.inv_marksno = inv_marksno;
+		}
+
+		/**
+		 * @return the inv_noofpackages
+		 */
+		public String getInv_noofpackages() {
+			return inv_noofpackages;
+		}
+
+		/**
+		 * @param inv_noofpackages the inv_noofpackages to set
+		 */
+		public void setInv_noofpackages(String inv_noofpackages) {
+			this.inv_noofpackages = inv_noofpackages;
+		}
+
+		/**
+		 * @return the inv_packno
+		 */
+		public String getInv_packno() {
+			return inv_packno;
+		}
+
+		/**
+		 * @param inv_packno the inv_packno to set
+		 */
+		public void setInv_packno(String inv_packno) {
+			this.inv_packno = inv_packno;
+		}
+
+		/**
+		 * @return the inv_netwt
+		 */
+		public String getInv_netwt() {
+			return inv_netwt;
+		}
+
+		/**
+		 * @param inv_netwt the inv_netwt to set
+		 */
+		public void setInv_netwt(String inv_netwt) {
+			this.inv_netwt = inv_netwt;
+		}
+
+		/**
+		 * @return the inv_awbilldate
+		 */
+		public String getInv_awbilldate() {
+			return inv_awbilldate;
+		}
+
+		/**
+		 * @param inv_awbilldate the inv_awbilldate to set
+		 */
+		public void setInv_awbilldate(String inv_awbilldate) {
+			this.inv_awbilldate = inv_awbilldate;
+		}
+
+		/**
+		 * @return the inv_courierchrgs
+		 */
+		public String getInv_courierchrgs() {
+			return inv_courierchrgs;
+		}
+
+		/**
+		 * @param inv_courierchrgs the inv_courierchrgs to set
+		 */
+		public void setInv_courierchrgs(String inv_courierchrgs) {
+			this.inv_courierchrgs = inv_courierchrgs;
+		}
+
+		/**
+		 * @return the inv_vatcst
+		 */
+		public String getInv_vatcst() {
+			return inv_vatcst;
+		}
+
+		/**
+		 * @param inv_vatcst the inv_vatcst to set
+		 */
+		public void setInv_vatcst(String inv_vatcst) {
+			this.inv_vatcst = inv_vatcst;
+		}
+
+		/**
+		 * @return the inv_packingcharges
+		 */
+		public String getInv_packingcharges() {
+			return inv_packingcharges;
+		}
+
+		/**
+		 * @param inv_packingcharges the inv_packingcharges to set
+		 */
+		public void setInv_packingcharges(String inv_packingcharges) {
+			this.inv_packingcharges = inv_packingcharges;
+		}
+
+		/**
+		 * @return the inv_custid
+		 */
+		public String getInv_custid() {
+			return inv_custid;
+		}
+
+		/**
+		 * @param inv_custid the inv_custid to set
+		 */
+		public void setInv_custid(String inv_custid) {
+			this.inv_custid = inv_custid;
+		}
+
+		/**
+		 * @return the inv_customer
+		 */
+		public String getInv_customer() {
+			return inv_customer;
+		}
+
+		/**
+		 * @param inv_customer the inv_customer to set
+		 */
+		public void setInv_customer(String inv_customer) {
+			this.inv_customer = inv_customer;
+		}
+
+		/**
+		 * @return the inv_custaddr
+		 */
+		public String getInv_custaddr() {
+			return inv_custaddr;
+		}
+
+		/**
+		 * @param inv_custaddr the inv_custaddr to set
+		 */
+		public void setInv_custaddr(String inv_custaddr) {
+			this.inv_custaddr = inv_custaddr;
+		}
+
+		/**
+		 * @return the inv_custattn
+		 */
+		public String getInv_custattn() {
+			return inv_custattn;
+		}
+
+		/**
+		 * @param inv_custattn the inv_custattn to set
+		 */
+		public void setInv_custattn(String inv_custattn) {
+			this.inv_custattn = inv_custattn;
+		}
+
+		/**
+		 * @return the inv_custtele
+		 */
+		public String getInv_custtele() {
+			return inv_custtele;
+		}
+
+		/**
+		 * @param inv_custtele the inv_custtele to set
+		 */
+		public void setInv_custtele(String inv_custtele) {
+			this.inv_custtele = inv_custtele;
+		}
+
+		/**
+		 * @return the inv_custfax
+		 */
+		public String getInv_custfax() {
+			return inv_custfax;
+		}
+
+		/**
+		 * @param inv_custfax the inv_custfax to set
+		 */
+		public void setInv_custfax(String inv_custfax) {
+			this.inv_custfax = inv_custfax;
+		}
+
+		/**
+		 * @return the inv_discount
+		 */
+		public String getInv_discount() {
+			return inv_discount;
+		}
+
+		/**
+		 * @param inv_discount the inv_discount to set
+		 */
+		public void setInv_discount(String inv_discount) {
+			this.inv_discount = inv_discount;
+		}
+
+		/**
+		 * @return the inv_ctrno
+		 */
+		public String getInv_ctrno() {
+			return inv_ctrno;
+		}
+
+		/**
+		 * @param inv_ctrno the inv_ctrno to set
+		 */
+		public void setInv_ctrno(String inv_ctrno) {
+			this.inv_ctrno = inv_ctrno;
+		}
+
+		/**
+		 * @return the inv_pojwno
+		 */
+		public String getInv_pojwno() {
+			return inv_pojwno;
+		}
+
+		/**
+		 * @param inv_pojwno the inv_pojwno to set
+		 */
+		public void setInv_pojwno(String inv_pojwno) {
+			this.inv_pojwno = inv_pojwno;
+		}
+
+		/**
+		 * @return the inv_pojwtannery
+		 */
+		public String getInv_pojwtannery() {
+			return inv_pojwtannery;
+		}
+
+		/**
+		 * @param inv_pojwtannery the inv_pojwtannery to set
+		 */
+		public void setInv_pojwtannery(String inv_pojwtannery) {
+			this.inv_pojwtannery = inv_pojwtannery;
+		}
+
+		/**
+		 * @return the inv_pojwprice
+		 */
+		public String getInv_pojwprice() {
+			return inv_pojwprice;
+		}
+
+		/**
+		 * @param inv_pojwprice the inv_pojwprice to set
+		 */
+		public void setInv_pojwprice(String inv_pojwprice) {
+			this.inv_pojwprice = inv_pojwprice;
+		}
+
+		/**
+		 * @return the inv_article
+		 */
+		public String getInv_article() {
+			return inv_article;
+		}
+
+		/**
+		 * @param inv_article the inv_article to set
+		 */
+		public void setInv_article(String inv_article) {
+			this.inv_article = inv_article;
+		}
+
+		/**
+		 * @return the inv_ctrdate
+		 */
+		public String getInv_ctrdate() {
+			return inv_ctrdate;
+		}
+
+		/**
+		 * @param inv_ctrdate the inv_ctrdate to set
+		 */
+		public void setInv_ctrdate(String inv_ctrdate) {
+			this.inv_ctrdate = inv_ctrdate;
+		}
+
+		/**
+		 * @return the inv_pono
+		 */
+		public String getInv_pono() {
+			return inv_pono;
+		}
+
+		/**
+		 * @param inv_pono the inv_pono to set
+		 */
+		public void setInv_pono(String inv_pono) {
+			this.inv_pono = inv_pono;
+		}
+
+		/**
+		 * @return the inv_color
+		 */
+		public String getInv_color() {
+			return inv_color;
+		}
+
+		/**
+		 * @param inv_color the inv_color to set
+		 */
+		public void setInv_color(String inv_color) {
+			this.inv_color = inv_color;
+		}
+
+		/**
+		 * @return the inv_size
+		 */
+		public String getInv_size() {
+			return inv_size;
+		}
+
+		/**
+		 * @param inv_size the inv_size to set
+		 */
+		public void setInv_size(String inv_size) {
+			this.inv_size = inv_size;
+		}
+
+		/**
+		 * @return the inv_substance
+		 */
+		public String getInv_substance() {
+			return inv_substance;
+		}
+
+		/**
+		 * @param inv_substance the inv_substance to set
+		 */
+		public void setInv_substance(String inv_substance) {
+			this.inv_substance = inv_substance;
+		}
+
+		/**
+		 * @return the inv_selection
+		 */
+		public String getInv_selection() {
+			return inv_selection;
+		}
+
+		/**
+		 * @param inv_selection the inv_selection to set
+		 */
+		public void setInv_selection(String inv_selection) {
+			this.inv_selection = inv_selection;
+		}
+
+		/**
+		 * @return the inv_selectionp
+		 */
+		public String getInv_selectionp() {
+			return inv_selectionp;
+		}
+
+		/**
+		 * @param inv_selectionp the inv_selectionp to set
+		 */
+		public void setInv_selectionp(String inv_selectionp) {
+			this.inv_selectionp = inv_selectionp;
+		}
+
+		/**
+		 * @return the inv_quantity
+		 */
+		public String getInv_quantity() {
+			return inv_quantity;
+		}
+
+		/**
+		 * @param inv_quantity the inv_quantity to set
+		 */
+		public void setInv_quantity(String inv_quantity) {
+			this.inv_quantity = inv_quantity;
+		}
+
+		/**
+		 * @return the inv_pieces
+		 */
+		public String getInv_pieces() {
+			return inv_pieces;
+		}
+
+		/**
+		 * @param inv_pieces the inv_pieces to set
+		 */
+		public void setInv_pieces(String inv_pieces) {
+			this.inv_pieces = inv_pieces;
+		}
+
+		/**
+		 * @return the inv_rate
+		 */
+		public String getInv_rate() {
+			return inv_rate;
+		}
+
+		/**
+		 * @param inv_rate the inv_rate to set
+		 */
+		public void setInv_rate(String inv_rate) {
+			this.inv_rate = inv_rate;
+		}
+
+		/**
+		 * @return the inv_shipment
+		 */
+		public String getInv_shipment() {
+			return inv_shipment;
+		}
+
+		/**
+		 * @param inv_shipment the inv_shipment to set
+		 */
+		public void setInv_shipment(String inv_shipment) {
+			this.inv_shipment = inv_shipment;
+		}
+
+		/**
+		 * @return the inv_qsend
+		 */
+		public String getInv_qsend() {
+			return inv_qsend;
+		}
+
+		/**
+		 * @param inv_qsend the inv_qsend to set
+		 */
+		public void setInv_qsend(String inv_qsend) {
+			this.inv_qsend = inv_qsend;
+		}
+
+		/**
+		 * @return the inv_qremain
+		 */
+		public String getInv_qremain() {
+			return inv_qremain;
+		}
+
+		/**
+		 * @param inv_qremain the inv_qremain to set
+		 */
+		public void setInv_qremain(String inv_qremain) {
+			this.inv_qremain = inv_qremain;
+		}
+
+		/**
+		 * @return the inv_amount
+		 */
+		public String getInv_amount() {
+			return inv_amount;
+		}
+
+		/**
+		 * @param inv_amount the inv_amount to set
+		 */
+		public void setInv_amount(String inv_amount) {
+			this.inv_amount = inv_amount;
+		}
+
+		/**
+		 * @return the inv_tc
+		 */
+		public String getInv_tc() {
+			return inv_tc;
+		}
+
+		/**
+		 * @param inv_tc the inv_tc to set
+		 */
+		public void setInv_tc(String inv_tc) {
+			this.inv_tc = inv_tc;
+		}
+
+		/**
+		 * @return the inv_type
+		 */
+		public String getInv_type() {
+			return inv_type;
+		}
+
+		/**
+		 * @param inv_type the inv_type to set
+		 */
+		public void setInv_type(String inv_type) {
+			this.inv_type = inv_type;
+		}
+
+		/**
+		 * @return the inv_total
+		 */
+		public String getInv_total() {
+			return inv_total;
+		}
+
+		/**
+		 * @param inv_total the inv_total to set
+		 */
+		public void setInv_total(String inv_total) {
+			this.inv_total = inv_total;
+		}
+
+		/**
+		 * @return the inv_reduction
+		 */
+		public String getInv_reduction() {
+			return inv_reduction;
+		}
+
+		/**
+		 * @param inv_reduction the inv_reduction to set
+		 */
+		public void setInv_reduction(String inv_reduction) {
+			this.inv_reduction = inv_reduction;
+		}
+
+		/**
+		 * @return the inv_selectForBill
+		 */
+		public String getInv_selectForBill() {
+			return inv_selectForBill;
+		}
+
+		/**
+		 * @param inv_selectForBill the inv_selectForBill to set
+		 */
+		public void setInv_selectForBill(String inv_selectForBill) {
+			this.inv_selectForBill = inv_selectForBill;
+		}
+
+		/**
+		 * @return the inv_myname
+		 */
+		public String getInv_myname() {
+			return inv_myname;
+		}
+
+		/**
+		 * @param inv_myname the inv_myname to set
+		 */
+		public void setInv_myname(String inv_myname) {
+			this.inv_myname = inv_myname;
+		}
 		
 		
-		/**
-		 * @return the invoicetype
-		 */
-		public String getInvoicetype() {
-			return invoicetype;
-		}
-		/**
-		 * @param invoicetype the invoicetype to set
-		 */
-		public void setInvoicetype(String invoicetype) {
-			this.invoicetype = invoicetype;
-		}
-		/**
-		 * @return the invoiceno
-		 */
-		public String getInvoiceno() {
-			return invoiceno;
-		}
-		/**
-		 * @param invoiceno the invoiceno to set
-		 */
-		public void setInvoiceno(String invoiceno) {
-			this.invoiceno = invoiceno;
-		}
-		/**
-		 * @return the invdate
-		 */
-		public String getInvdate() {
-			return invdate;
-		}
-		/**
-		 * @param invdate the invdate to set
-		 */
-		public void setInvdate(String invdate) {
-			this.invdate = invdate;
-		}
-		/**
-		 * @return the expref
-		 */
-		public String getExpref() {
-			return expref;
-		}
-		/**
-		 * @param expref the expref to set
-		 */
-		public void setExpref(String expref) {
-			this.expref = expref;
-		}
-		/**
-		 * @return the otherref
-		 */
-		public String getOtherref() {
-			return otherref;
-		}
-		/**
-		 * @param otherref the otherref to set
-		 */
-		public void setOtherref(String otherref) {
-			this.otherref = otherref;
-		}
-		/**
-		 * @return the exporter
-		 */
-		public String getExporter() {
-			return exporter;
-		}
-		/**
-		 * @param exporter the exporter to set
-		 */
-		public void setExporter(String exporter) {
-			this.exporter = exporter;
-		}
-		/**
-		 * @return the exporteraddress
-		 */
-		public String getExporteraddress() {
-			return exporteraddress;
-		}
-		/**
-		 * @param exporteraddress the exporteraddress to set
-		 */
-		public void setExporteraddress(String exporteraddress) {
-			this.exporteraddress = exporteraddress;
-		}
-		/**
-		 * @return the exportertele
-		 */
-		public String getExportertele() {
-			return exportertele;
-		}
-		/**
-		 * @param exportertele the exportertele to set
-		 */
-		public void setExportertele(String exportertele) {
-			this.exportertele = exportertele;
-		}
-		/**
-		 * @return the exporterfax
-		 */
-		public String getExporterfax() {
-			return exporterfax;
-		}
-		/**
-		 * @param exporterfax the exporterfax to set
-		 */
-		public void setExporterfax(String exporterfax) {
-			this.exporterfax = exporterfax;
-		}
-		/**
-		 * @return the notify
-		 */
-		public String getNotify() {
-			return notify;
-		}
-		/**
-		 * @param notify the notify to set
-		 */
-		public void setNotify(String notify) {
-			this.notify = notify;
-		}
-		/**
-		 * @return the notifyaddress
-		 */
-		public String getNotifyaddress() {
-			return notifyaddress;
-		}
-		/**
-		 * @param notifyaddress the notifyaddress to set
-		 */
-		public void setNotifyaddress(String notifyaddress) {
-			this.notifyaddress = notifyaddress;
-		}
-		/**
-		 * @return the notifyfax
-		 */
-		public String getNotifyfax() {
-			return notifyfax;
-		}
-		/**
-		 * @param notifyfax the notifyfax to set
-		 */
-		public void setNotifyfax(String notifyfax) {
-			this.notifyfax = notifyfax;
-		}
-		/**
-		 * @return the notifytele
-		 */
-		public String getNotifytele() {
-			return notifytele;
-		}
-		/**
-		 * @param notifytele the notifytele to set
-		 */
-		public void setNotifytele(String notifytele) {
-			this.notifytele = notifytele;
-		}
-		/**
-		 * @return the terms
-		 */
-		public String getTerms() {
-			return terms;
-		}
-		/**
-		 * @param terms the terms to set
-		 */
-		public void setTerms(String terms) {
-			this.terms = terms;
-		}
-		/**
-		 * @return the payment
-		 */
-		public String getPayment() {
-			return payment;
-		}
-		/**
-		 * @param payment the payment to set
-		 */
-		public void setPayment(String payment) {
-			this.payment = payment;
-		}
-		/**
-		 * @return the bank
-		 */
-		public String getBank() {
-			return bank;
-		}
-		/**
-		 * @param bank the bank to set
-		 */
-		public void setBank(String bank) {
-			this.bank = bank;
-		}
-		/**
-		 * @return the bankbranch
-		 */
-		public String getBankbranch() {
-			return bankbranch;
-		}
-		/**
-		 * @param bankbranch the bankbranch to set
-		 */
-		public void setBankbranch(String bankbranch) {
-			this.bankbranch = bankbranch;
-		}
-		/**
-		 * @return the bankaddress
-		 */
-		public String getBankaddress() {
-			return bankaddress;
-		}
-		/**
-		 * @param bankaddress the bankaddress to set
-		 */
-		public void setBankaddress(String bankaddress) {
-			this.bankaddress = bankaddress;
-		}
-		/**
-		 * @return the banktele
-		 */
-		public String getBanktele() {
-			return banktele;
-		}
-		/**
-		 * @param banktele the banktele to set
-		 */
-		public void setBanktele(String banktele) {
-			this.banktele = banktele;
-		}
-		/**
-		 * @return the bankfax
-		 */
-		public String getBankfax() {
-			return bankfax;
-		}
-		/**
-		 * @param bankfax the bankfax to set
-		 */
-		public void setBankfax(String bankfax) {
-			this.bankfax = bankfax;
-		}
-		/**
-		 * @return the bankswiftcode
-		 */
-		public String getBankswiftcode() {
-			return bankswiftcode;
-		}
-		/**
-		 * @param bankswiftcode the bankswiftcode to set
-		 */
-		public void setBankswiftcode(String bankswiftcode) {
-			this.bankswiftcode = bankswiftcode;
-		}
-		/**
-		 * @return the bankacno
-		 */
-		public String getBankacno() {
-			return bankacno;
-		}
-		/**
-		 * @param bankacno the bankacno to set
-		 */
-		public void setBankacno(String bankacno) {
-			this.bankacno = bankacno;
-		}
-		/**
-		 * @return the ctryoforigngoods
-		 */
-		public String getCtryoforigngoods() {
-			return ctryoforigngoods;
-		}
-		/**
-		 * @param ctryoforigngoods the ctryoforigngoods to set
-		 */
-		public void setCtryoforigngoods(String ctryoforigngoods) {
-			this.ctryoforigngoods = ctryoforigngoods;
-		}
-		/**
-		 * @return the loadingport
-		 */
-		public String getLoadingport() {
-			return loadingport;
-		}
-		/**
-		 * @param loadingport the loadingport to set
-		 */
-		public void setLoadingport(String loadingport) {
-			this.loadingport = loadingport;
-		}
-		/**
-		 * @return the ctryoffinaldesti
-		 */
-		public String getCtryoffinaldesti() {
-			return ctryoffinaldesti;
-		}
-		/**
-		 * @param ctryoffinaldesti the ctryoffinaldesti to set
-		 */
-		public void setCtryoffinaldesti(String ctryoffinaldesti) {
-			this.ctryoffinaldesti = ctryoffinaldesti;
-		}
-		/**
-		 * @return the dischargeport
-		 */
-		public String getDischargeport() {
-			return dischargeport;
-		}
-		/**
-		 * @param dischargeport the dischargeport to set
-		 */
-		public void setDischargeport(String dischargeport) {
-			this.dischargeport = dischargeport;
-		}
-		/**
-		 * @return the finaldesti
-		 */
-		public String getFinaldesti() {
-			return finaldesti;
-		}
-		/**
-		 * @param finaldesti the finaldesti to set
-		 */
-		public void setFinaldesti(String finaldesti) {
-			this.finaldesti = finaldesti;
-		}
-		/**
-		 * @return the grosswt
-		 */
-		public String getGrosswt() {
-			return grosswt;
-		}
-		/**
-		 * @param grosswt the grosswt to set
-		 */
-		public void setGrosswt(String grosswt) {
-			this.grosswt = grosswt;
-		}
-		/**
-		 * @return the dimension
-		 */
-		public String getDimension() {
-			return dimension;
-		}
-		/**
-		 * @param dimension the dimension to set
-		 */
-		public void setDimension(String dimension) {
-			this.dimension = dimension;
-		}
-		/**
-		 * @return the awbillno
-		 */
-		public String getAwbillno() {
-			return awbillno;
-		}
-		/**
-		 * @param awbillno the awbillno to set
-		 */
-		public void setAwbillno(String awbillno) {
-			this.awbillno = awbillno;
-		}
-		/**
-		 * @return the precarriageby
-		 */
-		public String getPrecarriageby() {
-			return precarriageby;
-		}
-		/**
-		 * @param precarriageby the precarriageby to set
-		 */
-		public void setPrecarriageby(String precarriageby) {
-			this.precarriageby = precarriageby;
-		}
-		/**
-		 * @return the placeofreciept
-		 */
-		public String getPlaceofreciept() {
-			return placeofreciept;
-		}
-		/**
-		 * @param placeofreciept the placeofreciept to set
-		 */
-		public void setPlaceofreciept(String placeofreciept) {
-			this.placeofreciept = placeofreciept;
-		}
-		/**
-		 * @return the vesselno
-		 */
-		public String getVesselno() {
-			return vesselno;
-		}
-		/**
-		 * @param vesselno the vesselno to set
-		 */
-		public void setVesselno(String vesselno) {
-			this.vesselno = vesselno;
-		}
-		/**
-		 * @return the marksno
-		 */
-		public String getMarksno() {
-			return marksno;
-		}
-		/**
-		 * @param marksno the marksno to set
-		 */
-		public void setMarksno(String marksno) {
-			this.marksno = marksno;
-		}
-		/**
-		 * @return the noofpackages
-		 */
-		public String getNoofpackages() {
-			return noofpackages;
-		}
-		/**
-		 * @param noofpackages the noofpackages to set
-		 */
-		public void setNoofpackages(String noofpackages) {
-			this.noofpackages = noofpackages;
-		}
-		/**
-		 * @return the packno
-		 */
-		public String getPackno() {
-			return packno;
-		}
-		/**
-		 * @param packno the packno to set
-		 */
-		public void setPackno(String packno) {
-			this.packno = packno;
-		}
-		/**
-		 * @return the netwt
-		 */
-		public String getNetwt() {
-			return netwt;
-		}
-		/**
-		 * @param netwt the netwt to set
-		 */
-		public void setNetwt(String netwt) {
-			this.netwt = netwt;
-		}
-		/**
-		 * @return the awbilldate
-		 */
-		public String getAwbilldate() {
-			return awbilldate;
-		}
-		/**
-		 * @param awbilldate the awbilldate to set
-		 */
-		public void setAwbilldate(String awbilldate) {
-			this.awbilldate = awbilldate;
-		}
-		/**
-		 * @return the courierchrgs
-		 */
-		public String getCourierchrgs() {
-			return courierchrgs;
-		}
-		/**
-		 * @param courierchrgs the courierchrgs to set
-		 */
-		public void setCourierchrgs(String courierchrgs) {
-			this.courierchrgs = courierchrgs;
-		}
-		/**
-		 * @return the vatcst
-		 */
-		public String getVatcst() {
-			return vatcst;
-		}
-		/**
-		 * @param vatcst the vatcst to set
-		 */
-		public void setVatcst(String vatcst) {
-			this.vatcst = vatcst;
-		}
-		/**
-		 * @return the packingcharges
-		 */
-		public String getPackingcharges() {
-			return packingcharges;
-		}
-		/**
-		 * @param packingcharges the packingcharges to set
-		 */
-		public void setPackingcharges(String packingcharges) {
-			this.packingcharges = packingcharges;
-		}
-		/**
-		 * @return the customer
-		 */
-		public String getCustomer() {
-			return customer;
-		}
-		/**
-		 * @param customer the customer to set
-		 */
-		public void setCustomer(String customer) {
-			this.customer = customer;
-		}
-		/**
-		 * @return the custaddr
-		 */
-		public String getCustaddr() {
-			return custaddr;
-		}
-		/**
-		 * @param custaddr the custaddr to set
-		 */
-		public void setCustaddr(String custaddr) {
-			this.custaddr = custaddr;
-		}
-		/**
-		 * @return the custattn
-		 */
-		public String getCustattn() {
-			return custattn;
-		}
-		/**
-		 * @param custattn the custattn to set
-		 */
-		public void setCustattn(String custattn) {
-			this.custattn = custattn;
-		}
-		/**
-		 * @return the custtele
-		 */
-		public String getCusttele() {
-			return custtele;
-		}
-		/**
-		 * @param custtele the custtele to set
-		 */
-		public void setCusttele(String custtele) {
-			this.custtele = custtele;
-		}
-		/**
-		 * @return the custfax
-		 */
-		public String getCustfax() {
-			return custfax;
-		}
-		/**
-		 * @param custfax the custfax to set
-		 */
-		public void setCustfax(String custfax) {
-			this.custfax = custfax;
-		}
-		/**
-		 * @return the ctrno
-		 */
-		public String getCtrno() {
-			return ctrno;
-		}
-		/**
-		 * @param ctrno the ctrno to set
-		 */
-		public void setCtrno(String ctrno) {
-			this.ctrno = ctrno;
-		}
-		/**
-		 * @return the pojwno
-		 */
-		public String getPojwno() {
-			return pojwno;
-		}
-		/**
-		 * @param pojwno the pojwno to set
-		 */
-		public void setPojwno(String pojwno) {
-			this.pojwno = pojwno;
-		}
-		/**
-		 * @return the pojwtannery
-		 */
-		public String getPojwtannery() {
-			return pojwtannery;
-		}
-		/**
-		 * @param pojwtannery the pojwtannery to set
-		 */
-		public void setPojwtannery(String pojwtannery) {
-			this.pojwtannery = pojwtannery;
-		}
-		/**
-		 * @return the pojwprice
-		 */
-		public String getPojwprice() {
-			return pojwprice;
-		}
-		/**
-		 * @param pojwprice the pojwprice to set
-		 */
-		public void setPojwprice(String pojwprice) {
-			this.pojwprice = pojwprice;
-		}
-		/**
-		 * @return the article
-		 */
-		public String getArticle() {
-			return article;
-		}
-		/**
-		 * @param article the article to set
-		 */
-		public void setArticle(String article) {
-			this.article = article;
-		}
-		/**
-		 * @return the ctrdate
-		 */
-		public String getCtrdate() {
-			return ctrdate;
-		}
-		/**
-		 * @param ctrdate the ctrdate to set
-		 */
-		public void setCtrdate(String ctrdate) {
-			this.ctrdate = ctrdate;
-		}
-		/**
-		 * @return the pono
-		 */
-		public String getPono() {
-			return pono;
-		}
-		/**
-		 * @param pono the pono to set
-		 */
-		public void setPono(String pono) {
-			this.pono = pono;
-		}
-		/**
-		 * @return the color
-		 */
-		public String getColor() {
-			return color;
-		}
-		/**
-		 * @param color the color to set
-		 */
-		public void setColor(String color) {
-			this.color = color;
-		}
-		/**
-		 * @return the size
-		 */
-		public String getSize() {
-			return size;
-		}
-		/**
-		 * @param size the size to set
-		 */
-		public void setSize(String size) {
-			this.size = size;
-		}
-		/**
-		 * @return the substance
-		 */
-		public String getSubstance() {
-			return substance;
-		}
-		/**
-		 * @param substance the substance to set
-		 */
-		public void setSubstance(String substance) {
-			this.substance = substance;
-		}
-		/**
-		 * @return the selection
-		 */
-		public String getSelection() {
-			return selection;
-		}
-		/**
-		 * @param selection the selection to set
-		 */
-		public void setSelection(String selection) {
-			this.selection = selection;
-		}
-		/**
-		 * @return the selectionp
-		 */
-		public String getSelectionp() {
-			return selectionp;
-		}
-		/**
-		 * @param selectionp the selectionp to set
-		 */
-		public void setSelectionp(String selectionp) {
-			this.selectionp = selectionp;
-		}
-		/**
-		 * @return the quantity
-		 */
-		public String getQuantity() {
-			return quantity;
-		}
-		/**
-		 * @param quantity the quantity to set
-		 */
-		public void setQuantity(String quantity) {
-			this.quantity = quantity;
-		}
-		/**
-		 * @return the pieces
-		 */
-		public String getPieces() {
-			return pieces;
-		}
-		/**
-		 * @param pieces the pieces to set
-		 */
-		public void setPieces(String pieces) {
-			this.pieces = pieces;
-		}
-		/**
-		 * @return the rate
-		 */
-		public String getRate() {
-			return rate;
-		}
-		/**
-		 * @param rate the rate to set
-		 */
-		public void setRate(String rate) {
-			this.rate = rate;
-		}
-		/**
-		 * @return the shipment
-		 */
-		public String getShipment() {
-			return shipment;
-		}
-		/**
-		 * @param shipment the shipment to set
-		 */
-		public void setShipment(String shipment) {
-			this.shipment = shipment;
-		}
-		/**
-		 * @return the qsend
-		 */
-		public String getQsend() {
-			return qsend;
-		}
-		/**
-		 * @param qsend the qsend to set
-		 */
-		public void setQsend(String qsend) {
-			this.qsend = qsend;
-		}
-		/**
-		 * @return the qremain
-		 */
-		public String getQremain() {
-			return qremain;
-		}
-		/**
-		 * @param qremain the qremain to set
-		 */
-		public void setQremain(String qremain) {
-			this.qremain = qremain;
-		}
-		/**
-		 * @return the amount
-		 */
-		public String getAmount() {
-			return amount;
-		}
-		/**
-		 * @param amount the amount to set
-		 */
-		public void setAmount(String amount) {
-			this.amount = amount;
-		}
-		/**
-		 * @return the tc
-		 */
-		public String getTc() {
-			return tc;
-		}
-		/**
-		 * @param tc the tc to set
-		 */
-		public void setTc(String tc) {
-			this.tc = tc;
-		}
-		/**
-		 * @return the type
-		 */
-		public String getType() {
-			return type;
-		}
-		/**
-		 * @param type the type to set
-		 */
-		public void setType(String type) {
-			this.type = type;
-		}
-		/**
-		 * @return the total
-		 */
-		public String getTotal() {
-			return total;
-		}
-		/**
-		 * @param total the total to set
-		 */
-		public void setTotal(String total) {
-			this.total = total;
-		}
-		/**
-		 * @return the reduction
-		 */
-		public String getReduction() {
-			return reduction;
-		}
-		/**
-		 * @param reduction the reduction to set
-		 */
-		public void setReduction(String reduction) {
-			this.reduction = reduction;
-		}
-		/**
-		 * @return the exporterattn
-		 */
-		public String getExporterattn() {
-			return exporterattn;
-		}
-		/**
-		 * @param exporterattn the exporterattn to set
-		 */
-		public void setExporterattn(String exporterattn) {
-			this.exporterattn = exporterattn;
-		}
-		/**
-		 * @return the notifyattn
-		 */
-		public String getNotifyattn() {
-			return notifyattn;
-		}
-		/**
-		 * @param notifyattn the notifyattn to set
-		 */
-		public void setNotifyattn(String notifyattn) {
-			this.notifyattn = notifyattn;
-		}
-		/**
-		 * @return the selectForBill
-		 */
-		public String getSelectForBill() {
-			return selectForBill;
-		}
-		/**
-		 * @param selectForBill the selectForBill to set
-		 */
-		public void setSelectForBill(String selectForBill) {
-			this.selectForBill = selectForBill;
-		}
-		/**
-		 * @return the myname
-		 */
-		public String getMyname() {
-			return myname;
-		}
-		/**
-		 * @param myname the myname to set
-		 */
-		public void setMyname(String myname) {
-			this.myname = myname;
-		}
-		/**
-		 * @return the discount
-		 */
-		public String getDiscount() {
-			return discount;
-		}
-		/**
-		 * @param discount the discount to set
-		 */
-		public void setDiscount(String discount) {
-			this.discount = discount;
-		}
-		
-		
-		
-}
+	}

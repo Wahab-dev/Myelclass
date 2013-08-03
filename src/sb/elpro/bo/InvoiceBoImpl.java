@@ -9,6 +9,7 @@ import java.util.List;
 
 import sb.elpro.dao.InvoiceDao;
 import sb.elpro.dao.InvoiceDaoImpl;
+import sb.elpro.model.ArticleDetails;
 import sb.elpro.model.BankDetails;
 import sb.elpro.model.CustomerDetails;
 import sb.elpro.model.CustomerInvoice;
@@ -30,8 +31,8 @@ public class InvoiceBoImpl implements InvoiceBo {
 		this.invdao = new InvoiceDaoImpl();
 	}
 	@Override
-	public List<ExporterDetails> getInvExporter() throws Exception {
-		ArrayList<ExporterDetails> invExporterarr = invdao.getInvExporter();
+	public List<ExporterDetails> getInvExporter(String expterm) throws Exception {
+		ArrayList<ExporterDetails> invExporterarr = invdao.getInvExporter(expterm);
 		return invExporterarr;
 	}
 	@Override
@@ -88,6 +89,24 @@ public class InvoiceBoImpl implements InvoiceBo {
 			throws Exception {
 		ArrayList<CustomerDetails> invCustomerctlist = invdao.getInvCustlist(custterm);
 		return invCustomerctlist;
+	}
+	@Override
+	public List<DestinationDetails> getLoadinCtryName(String loadctryterm)
+			throws Exception {
+		ArrayList<DestinationDetails> invLoadinCtryNamelist = invdao.getInvloadctrylist(loadctryterm);
+		return invLoadinCtryNamelist;
+	}
+	@Override
+	public List<DestinationDetails> getLoadinPortName(String loadportterm, String ctryvalterm)
+			throws Exception {
+		ArrayList<DestinationDetails> invLoadinPortNamelist = invdao.getInvloadportlist(loadportterm,ctryvalterm);
+		return invLoadinPortNamelist;
+	}
+	@Override
+	public List<ArticleDetails> getInvSelCtDetails(String ctno)
+			throws Exception {
+		ArrayList<ArticleDetails> invSelCtarr = invdao.getInvDelContractDetails(ctno);
+		return invSelCtarr;
 	}
 	
 	

@@ -41,12 +41,12 @@ public interface PrfDao {
 	
 	ArrayList<CustomerDetails> getCustomerList(String custterm) throws SQLException;
 
-	ArrayList<ConsigneeDetails> getConsigneeList()throws SQLException;
+	/*ArrayList<ConsigneeDetails> getConsigneeList()throws SQLException;
 
 	ArrayList<NotifyConsigneeDetails> getNotifyList()throws SQLException;
 
 	ArrayList<BankDetails> getBankList() throws SQLException; 
-
+*/
 	ArrayList<DestinationDetails> getDestinationList() throws SQLException;
 
 	ArrayList<PaymentDetails> getPaymnetList() throws SQLException;

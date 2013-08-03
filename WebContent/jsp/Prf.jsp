@@ -98,7 +98,7 @@ $(document).ready(function() {
 									                             shform: item.shform, //can add number of attributes here 
 									                             value: item.label // I am displaying both labe and value
 									                             };
-									                         }))
+									                         }));
 											    		
 											    		
 								                      	var s = '<text>';

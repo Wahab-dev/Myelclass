@@ -138,7 +138,7 @@ public class PrfDaoImpl implements PrfDao {
 	   }	
 		return custrraylist;
 	}
-
+/*
 	@Override
 	public ArrayList<ConsigneeDetails> getConsigneeList() throws SQLException {
 		ArrayList<ConsigneeDetails> consigarrayList = new ArrayList<ConsigneeDetails>();
@@ -239,7 +239,7 @@ public class PrfDaoImpl implements PrfDao {
 		   }	
 		return bankarraylist;
 	}
-
+*/
 	@Override
 	public ArrayList<DestinationDetails> getDestinationList() throws SQLException {
 		ArrayList<DestinationDetails> destarraylist = new ArrayList<DestinationDetails>();
@@ -981,9 +981,10 @@ public class PrfDaoImpl implements PrfDao {
 				bankbean.setBankAddress(rs.getString("bankaddr"));
 				bankbean.setBankBranch(rs.getString("bankbranch"));
 				bankbean.setBankFax(rs.getString("bankfax"));
-				bankbean.setLabel(rs.getString("bankname"));
-				bankbean.setValue(rs.getString("shortform"));
+				bankbean.setBankName(rs.getString("bankname"));
+				bankbean.setBankSwiftCode(rs.getString("swiftcode"));
 				bankbean.setBankContactNo(rs.getString("bankphone"));
+				bankbean.setBankAcctNo(rs.getString("Acctno"));
 				System.out.println("Bank  name "+bankbean.getBankName());
 				bankarraylist.add(bankbean);
 				}
@@ -1051,8 +1052,8 @@ public class PrfDaoImpl implements PrfDao {
 				notifyconsigbean.setNotifyConsigneeAddress(rs.getString("notifyaddr"));
 				notifyconsigbean.setNotifyConsigneeAttention(rs.getString("notifyattn"));
 				notifyconsigbean.setNotifyConsigneefax(rs.getString("notifyfax"));
-				notifyconsigbean.setLabel(rs.getString("notifyname"));
-				notifyconsigbean.setValue(rs.getString("shortform"));				
+				notifyconsigbean.setNotifyConsigneeName(rs.getString("notifyname"));
+				notifyconsigbean.setNotifyConsigneeContactNo(rs.getString("notifyphone"));				
 				System.out.println("Notify  name "+notifyconsigbean.getNotifyConsigneeName());
 				notifyconsigarrayList.add(notifyconsigbean);
 			}

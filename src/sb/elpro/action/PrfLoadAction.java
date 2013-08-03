@@ -30,9 +30,9 @@ public class PrfLoadAction extends Action{
 			usersession.setAttribute("agentarray", prfbo.getAgentDetails());
 			//usersession.setAttribute("tanneryarray", prfbo.getTanneryDetails());
 			//usersession.setAttribute("customerarray", prfbo.getCustomerDetails());
-			usersession.setAttribute("consigneearray", prfbo.getConsigneeDetails());
-			usersession.setAttribute("notifyarray", prfbo.getNotifyDetails());			
-			usersession.setAttribute("bankarray", prfbo.getBankDetails());
+			//usersession.setAttribute("consigneearray", prfbo.getConsigneeDetails());
+			//usersession.setAttribute("notifyarray", prfbo.getNotifyDetails());			
+			//usersession.setAttribute("bankarray", prfbo.getBankDetails());
 			usersession.setAttribute("destiarray", prfbo.getDestinationDetails());
 			usersession.setAttribute("paymentarray", prfbo.getPaymentDetails());
 			usersession.setAttribute("termsarray", prfbo.getTermsDetails());

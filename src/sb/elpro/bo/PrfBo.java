@@ -42,12 +42,6 @@ public interface PrfBo  {
 
 	public ArrayList<CustomerDetails> getCustomerDetails(String custterm) throws Exception;
 
-	public ArrayList<ConsigneeDetails> getConsigneeDetails() throws Exception;
-
-	public ArrayList<NotifyConsigneeDetails> getNotifyDetails() throws Exception;
-
-	public ArrayList<BankDetails> getBankDetails() throws Exception;
-
 	public ArrayList<DestinationDetails> getDestinationDetails()throws Exception;
 
 	public ArrayList<PaymentDetails> getPaymentDetails()throws Exception;

@@ -21,26 +21,56 @@
 <script src="js/i18n/grid.locale-en.js" type="text/javascript"></script>
 <script src="js/jquery.jqGrid.min.js" type="text/javascript"></script>		
 <script type="text/javascript">
-	$(function() { 	
-		 var gridbtn = $("#thelink");
+$(function() { 	
+		// var gridbtn = $("#thelink");
+		var billgrid = $("#tbl_invaddinvBill");
 		 var grid = $("#tbl_invListCustomerContract"); 
 		// var billbtn = $("#loadBill");
-		 
-		 //Load Cust Ct No
-		gridbtn.click(function (){
-			var custid = $("#custid").val();
-			 alert("Customer Name is "+custid);
+		 $('#inv_customer').autocomplete({
+			minLength: 1,
+			source: function(request, response,term) {
+				var param = request.term;
+				$.getJSON("/Myelclass/InvAutocomplete.do?term="+param+"&action="+"customer",
+					function(result) { 	
+		               response($.map(result, function(item) {
+		            	  
+		               	return { 
+		                	id: item.customerId,
+		                	label : item.value,
+		                	value: item.value,
+		                    addr: item.customerAddress,
+		                    fone: item.customerTelephone,	
+		                    attn : item.customerAttention,
+		                    fax: item.customerFax,
+		                    
+		                 // url:"/Myelclass/InvSelectCtfromCuswet.do?custid="+custid+"&action="+"load",
+		                    };
+		                 }));//END Response	
+					});//End getJSon
+				},
+				select: function( event, ui ) { 
+					var custid = $("#inv_custid").val();
+					 $('#tbl_invListCustomerContract').jqGrid().setGridParam({url:"/Myelclass/InvSelectCtfromCust.do?custid="+custid+"&action="+"load"}).trigger("reloadGrid");
+		          	  $('#inv_custaddr').val(ui.item.addr);
+		          	  $('#inv_custtele').val(ui.item.fone);
+		          	  $('#inv_custattn').val(ui.item.attn);
+		          	  $('#inv_custfax').val(ui.item.fax);
+		          	 $('#inv_custid').val(ui.item.id);
+				    }
+		  	});
+		
 			 grid.jqGrid({ // MAster Grid
-				 url:"/Myelclass/InvSelectCtfromCust.do?custid="+custid+"&action="+"load",
+				 url: "",
 				 datatype: "json",
 				 loadonce: false,
 				 mtype: 'GET', 
 				 colNames:['Ct No','Article','Color','Size','Substance','Quantity','Rate','TC'],
 				 colModel:[
-				           {name: 'contractno', index:'contractno',editable: true, formoptions:{
+				           {name: 'id', index:'id',editable: true, 
+				        	   /* formoptions:{
 				        	   	elmprefix:"(<span class='mystar' style='color:red'>*</span>)&nbsp;",
 				        	    elmsuffix:"&nbsp;yyyy-mm-dd",
-				        	    label: "<span>Date<span><span style='float:right'>XXX</span>"}, 
+				        	    label: "<span>Date<span><span style='float:right'>XXX</span>"}, */ 
 				        	  width:50},
 				           {name: 'articlename', index:'articlename',width:90},
 				           {name: 'color', index:'color',width:70},
@@ -49,13 +79,13 @@
 				           {name: 'quantity', index:'quantity',width:70},
 				           {name: 'rate', index:'rate',width:70},
 				           {name: 'tc', index:'tc',width:70}
-				           ],
+				          ],
 				  jsonReader : {  
 					       repeatitems:false,
 					       root: "rows",
-					        page: "page", //calls first
-					        total: "total" ,//calls Second
-					        records: "records", //calls Third
+					       page: "page", //calls first
+					       total: "total" ,//calls Second
+					       records: "records", //calls Third
 					       },
 				   pager : '#tbl_invpager',
 				   autoheight: true,
@@ -64,6 +94,8 @@
 				   rowList:[5,10,15],	 
 				   sortname: 'contractno',
 				   sortorder: 'desc',  
+				   height : "auto",
+				   //hide: false,
 			       emptyrecords: 'No records to display',
 			       caption  : "Select Contract From List",
 			       });
@@ -75,71 +107,28 @@
 				search : false,
 				reload: true		
 			}).navButtonAdd('#tbl_invpager',{
-	 		 	   caption:"Status", 
+	 		 	   caption:"Select", 
 	 		 	   buttonicon:"ui-icon-add", 
-	 		 	   onClickButton: function(){ 
-	 		 	     alert("Adding Row");
-	 		 	    alert(grid.jqGrid('getGridParam','selarrrow'));
-	 		 	   }, 
-	 		 	   position:"last"
-	 		 	});
-		
-		
+	 		 	   onClickButton: function(ids){ 
+	 		 		// if(ids != null) {
+	 				//	ids=0;
+	 				//	if(billgrid.jqGrid('getGridParam','records') ==0 )
+	 					//{
+	 						// contractno alert(ids);
+	 						var ctno = grid.jqGrid('getGridParam','selarrrow');
+	 						//var myCellData = grid.jqGrid('getCell', ctno, 'articlename');
+	 						alert(ctno );
+	 						billgrid.jqGrid('setGridParam',{url:"/Myelclass/InvSelectCtfromCust.do?ctno="+ctno+"&action="+"loadsubgrid",page:1});
+	 						billgrid.jqGrid('setCaption',"Raise Invoice  ")
+	 						.trigger('reloadGrid');
+	 						
+	 					//}
+	 		 		// }
+	 		 	   },
+	 		 	   position:"last",
 		});
-		 
-		 
-		 
-		//$('#tbl_invListCustomerContract' ).trigger( 'reloadGrid', [{ page: 1}] );
-		
-		//Invoice Type
-		$('#invoicetype').change(function(){
-			var value = $('#invoicetype').val();
-			alert("select box value changed"+value);
-		});
-		
-		$('#customer').autocomplete({
-			minLength: 1,
-			source: function(request, response,term) {
-				var param = request.term;
-				 $.ajax({
-		                url: "/Myelclass/InvAutocomplete.do?term="+param+"&action="+"customer",
-		                dataType: "json",
-		                type:"POST",
-		                success: function (data) {
-		                	 response($.map(data, function(item) {
-		                		  return { 
-		                			 id: item.customerId,
-		                			 label : item.value,
-		                			 value: item.value,
-		                             addr: item.customerAddress,
-		                             fone: item.customerTelephone,	
-		                             attn : item.customerAttention,
-		                             fax: item.customerFax,
-		                             };
-		                         }));//END Response
-		                    }//END Success
-		            });//END AJAX
-				},
-				select: function( event, ui ) { 
-		          	  $('#custaddr').val(ui.item.addr);
-		          	  $('#custtele').val(ui.item.fone);
-		          	  $('#custattn').val(ui.item.attn);
-		          	  $('#custfax').val(ui.item.fax);
-		          	 $('#custid').val(ui.item.id);
-				    }
-		  	});
-		
-		 $(".dateclass").datepicker({
-			    autoSize: true,
-			    changeMonth:false,
-			    dateFormat: "dd/mm/yy",
-			    firstDay: 1,
-			    gotoCurrent:true, 
-			});
-		
-			
+
 			//Load Billing Details
-			/*  billbtn.click(function (){
 				 $("#tbl_invaddinvBill").jqGrid({
 					 datatype: "json",
 					 colNames:['Ct No','Article','Color','Size','Substance','Selection','Pieces','Quantity','Rate','Commission','TC'],
@@ -157,13 +146,13 @@
 								{name: 'prf_tc', index:'prf_tc',width:70}
 					           ],
 					jsonReader : {  
-							       repeatitems:false,
-							       root: function (jsonOrderArray) { return jsonOrderArray; },
-							       page: function (jsonOrderArray) { return 1; },
-							       total: function (jsonOrderArray) { return 1; },
-							       records: function (jsonOrderArray) { return jsonOrderArray.length; }
+						 repeatitems:false,
+					       root: "rows",
+					       page: "page", //calls first
+					       total: "total" ,//calls Second
+					       records: "records", //calls Third
 							       }, 
-					pager: '#tbl_invpager',
+					pager: '#tbl_invbillpager',
 					rowNum:3, 
 					multiselect : true,
 					rowList:[3,5,7],	       
@@ -171,103 +160,138 @@
 					emptyrecords: 'No records to display',
 					caption  : "Select Contract"
 							       
-				 });
-			 }); */
-			
-			 
-	});
-	
-</script>
-<script type="text/javascript">
-	//Tannery DDL	
-	function loadexportervalue(){		
-				var expname = document.getElementById("exporter").value;
-		 		  <c:forEach items="${InvExporterarray}" var="ExpoList">
-						var expvalue  = "<c:out value="${ExpoList.expname}"></c:out>";					 
-				  			 if(expname == expvalue){
-				  			     var myexpaddr = "<c:out value="${ExpoList.expaddr}"></c:out>" ; 			  			  	
-				  			     var mayexpphone = "<c:out value="${ExpoList.expphone}"></c:out>" ;
-				  			     var myexpattn = "<c:out value="${ExpoList.expattn}"></c:out>" ; 
-				  			     var myexpfax = "<c:out value="${ExpoList.expfax}"></c:out>" ; 	 
-				  			     var myexpref = "<c:out value="${ExpoList.expref}"></c:out>" ; 
-				   				
-				   				document.getElementById("exportertele").value = mayexpphone;
-				   				document.getElementById("exporterattn").value = myexpattn;
-				   				document.getElementById("exporterfax").value = myexpfax;   
-				  			    document.getElementById("exporteraddress").value = myexpaddr; 
-				  			    document.getElementById("expref").value = myexpref;
-						} 
-					</c:forEach>   
-			}
-	
-	//Notify  DDL	
-	function loadnotifyvalue(){		
-				var notifyname = document.getElementById("notify").value;
-		 		  <c:forEach items="${InvNotifyarray}" var="NotifyList">
-						var notifyvalue  = "<c:out value="${NotifyList.notifyConsigneeName}"></c:out>";					 
-				  			 if(notifyname == notifyvalue){
-				  			     var mynotifyaddr = "<c:out value="${NotifyList.notifyConsigneeAddress}"></c:out>" ; 			  			  	
-				  			     var maynotifyphone = "<c:out value="${NotifyList.notifyConsigneeContactNo}"></c:out>" ;
-				  			     var mynotifyattn = "<c:out value="${NotifyList.notifyConsigneeAttention}"></c:out>" ; 
-				  			     var mynotifyfax = "<c:out value="${NotifyList.notifyConsigneefax}"></c:out>" ; 	 
-				  			     
-				   				document.getElementById("notifytele").value = maynotifyphone;
-				   				document.getElementById("notifyattn").value = mynotifyattn;
-				   				document.getElementById("notifyfax").value = mynotifyfax;   
-				  			    document.getElementById("notifyaddress").value = mynotifyaddr; 
-				  			} 
-					</c:forEach>   
-			}
-	
+				 });	 
+		//Invoice Type
+		$('#inv_invoicetype').change(function(){
+			var value = $('#inv_invoicetype').val();
+			alert("select box value changed"+value);
+		});
 		
-
-	//Bank DDL	
-	function loadbankvalue(){		
-				var bankname = document.getElementById("bank").value;			
-		 		  <c:forEach items="${invBankarray}" var="BankList">
-						var bankvalue  = "<c:out value="${BankList.bankName}"></c:out>";						
-				  			if(bankname == bankvalue){
-				  				
-				  			    var mybankaddr = "<c:out value="${BankList.bankAddress}"></c:out>" ; 			  			  	
-				  			    var maybankphone = "<c:out value="${BankList.bankContactNo}"></c:out>" ;
-				  			    var mybankbranch = "<c:out value="${BankList.bankBranch}"></c:out>" ; 
-				  			    var mybankswiftcode = "<c:out value="${BankList.bankSwiftCode}"></c:out>" ; 
-				  			 	var mybankacno = "<c:out value="${BankList.bankAcctNo}"></c:out>" ; 
-				   				
-				   				document.getElementById("bankaddress").value = mybankaddr;
-				   				document.getElementById("banktele").value = maybankphone;
-				   				document.getElementById("bankbranch").value = mybankbranch;   
-				  			    document.getElementById("bankswiftcode").value = mybankswiftcode;   
-				  			    document.getElementById("bankacno").value = mybankacno;   
-						} 
-					</c:forEach>   
-			} 		
-
-	//Customer DDL	
-	function loadcustvalue(){		
-				 var custname = document.getElementById("customer").value;
-				 <c:forEach items="${invCustomerarray}" var="invCustList">
-				 var custvalue  = "<c:out value="${invCustList.customerName}"></c:out>";
-				 if(custname == custvalue){
-					 //Address is not Working pls check
-					 	 var mycustaddr = "<c:out value="${invCustList.customerAddress}"></c:out>" ;
-						 var mycustphone = "<c:out value="${invCustList.customerTelephone}"></c:out>" ;
-			  			var mycustattn = "<c:out value="${invCustList.customerAttention}"></c:out>" ; 
-			  			var mycustfax = "<c:out value="${invCustList.customerFax}"></c:out>" ; 		
-			  			var mytable = document.getElementById("ListCustomerContract");
-			   			document.getElementById("custtele").value = mycustphone;
-			   			document.getElementById("custattn").value = mycustattn;
-			   			document.getElementById("custfax").value = mycustfax;  
-			   			document.getElementById("custaddr").value = mycustaddr;  
-			   			loadcustInvValue(custvalue,mytable);
-				 }
-				 
-				 </c:forEach> 
-				 
-			} 	
-	
-	</script>
-	
+		
+		
+		$('#inv_bank').autocomplete({
+			minLength: 1,
+			source: function(request, response,term) {
+				var param = request.term;
+				$.getJSON("/Myelclass/InvAutocomplete.do?term="+param+"&action="+"bank",
+					function(result) { 	
+		               response($.map(result, function(item) {
+		               	return { 
+		                	label : item.bankName,
+		                	value: item.bankName,
+		                    addr: item.bankAddress,
+		                    branch: item.bankBranch,
+		                    swiftcode: item.bankSwiftCode,	
+		                    acctno : item.bankAcctNo,
+		                    ctno: item.bankContactNo,
+		                    fax: item.bankFax,
+		                    };
+		                 }));//END Response	
+					});//End getJSon
+				},
+				select: function( event, ui ) { 
+		          	  $('#inv_bankbranch').val(ui.item.branch);
+		          	  $('#inv_bankaddress').val(ui.item.addr);
+		          	  $('#inv_banktele').val(ui.item.ctno);
+		          	  $('#inv_bankfax').val(ui.item.fax);
+		          	  $('#inv_bankswiftcode').val(ui.item.swiftcode);
+		          	  $('#inv_bankacno').val(ui.item.acctno);
+				    }
+		  	});
+		
+		$('#inv_notify').autocomplete({
+			minLength: 1,
+			source: function(request, response,term) {
+				var param = request.term;
+				$.getJSON("/Myelclass/InvAutocomplete.do?term="+param+"&action="+"notify",
+					function(result) { 	
+		               response($.map(result, function(item) {
+		               	return { 
+		                	label : item.notifyConsigneeName,
+		                	value: item.notifyConsigneeName,
+		                    addr: item.notifyConsigneeAddress,
+		                    fone: item.notifyConsigneeContactNo,	
+		                    attn : item.notifyConsigneeAttention,
+		                    fax: item.notifyConsigneefax,
+		                    };
+		                 }));//END Response	
+					});//End getJSon
+				},
+				select: function( event, ui ) { 
+		          	  $('#inv_notifyaddress').val(ui.item.addr);
+		          	  $('#inv_notifytele').val(ui.item.fone);
+		          	  $('#inv_notifyattn').val(ui.item.attn);
+		          	  $('#inv_notifyfax').val(ui.item.fax);
+				    }
+		  	});
+		
+		$('#inv_exporter').autocomplete({
+			minLength: 1,
+			source: function(request, response,term) {
+				var param = request.term;
+				$.getJSON("/Myelclass/InvAutocomplete.do?term="+param+"&action="+"exporter",
+					function(result) { 	
+		               response($.map(result, function(item) {
+		               	return { 
+		                	id: item.customerId,
+		                	label : item.expname,
+		                	value: item.expname,
+		                    addr: item.expaddr,
+		                    fone: item.expphone,	
+		                    attn : item.expattn,
+		                    fax: item.expfax,
+		                    };
+		                 }));//END Response	
+					});//End getJSon
+				},
+				select: function( event, ui ) { 
+		          	  $('#inv_exporteraddress').val(ui.item.addr);
+		          	  $('#inv_exportertele').val(ui.item.fone);
+		          	  $('#inv_exporterattn').val(ui.item.attn);
+		          	  $('#inv_exporterfax').val(ui.item.fax);
+				    }
+		  	});
+		
+		$('#inv_ctryoforigngoods').autocomplete({
+			 source: function(request, response) {
+				var param = request.term;  
+				$.getJSON("/Myelclass/InvAutocomplete.do?term="+param+"&action="+"loadctry",
+					function(result) { 	
+				       response($.map(result, function(item) {
+				           return { 
+				              value: item.destination,
+				              };
+				        }));//END response
+				 });
+			 }
+		}); 
+		
+		$('#inv_loadingport').autocomplete({
+			 source: function(request, response) {
+				var param = request.term;  
+				var ctryval = $('#inv_ctryoforigngoods').val();
+				$.getJSON("/Myelclass/InvAutocomplete.do?term="+param+"&action="+"loadport&ctryval="+ctryval,
+					function(result) { 	
+				       response($.map(result, function(item) {
+				           return { 
+				              value: item.destination,
+				              };
+				        }));//END response
+				 });
+			 }
+		});
+		
+		 $(".dateclass").datepicker({
+			    autoSize: true,
+			    changeMonth:false,
+			    dateFormat: "dd/mm/yy",
+			    firstDay: 1,
+			    gotoCurrent:true, 
+			});
+		
+			
+	});	
+</script>
 </head>
 <body>
 <h:form action="/saveinvoice" styleId="saveinvoice">
@@ -282,7 +306,7 @@
    			  <td width="300">
 				  <fieldset>         
        				  <legend>Invoice Details</legend><br/> 
-       					  Type: <h:select property="invoicetype" styleId="invoicetype">
+       					  Type: <h:select property="inv_invoicetype" styleId="inv_invoicetype">
        					  		  <h:option value="0">Select Type</h:option>
    		 						  <h:option value="1">IC-Local</h:option>
    		 						  <h:option value="2">IC-Exports</h:option>
@@ -290,47 +314,33 @@
    		 						  <h:option value="4">Other-Tanner Courier</h:option> 
    		 						  <h:option value="5">Other-Tanner Exports</h:option> 
    		 						  <h:option value="6">Other-Tanner Local</h:option>
-   		 						   <h:option value="6">IC-PO</h:option>  
-   		 						   <h:option value="6">IC-JW</h:option>  
+   		 						  <h:option value="7">IC-PO</h:option>  
+   		 						  <h:option value="8">IC-JW</h:option>  
        							 </h:select><br />        
-   	 					 <br /> Invoice No: <h:text property="invoiceno" styleId="invoiceno"></h:text><br />
-       					 <br /> Invoice Date:<h:text property="invdate" styleId="invdate" styleClass="dateclass"></h:text><br />
-       					 <br /> Exporters Ref. : <h:text property="expref" styleId="expref"> </h:text><br />
-						 <br /> Other ref :  <h:text property="otherref" styleId="otherref"> </h:text>  <br />  
+   	 					 <br /> Invoice No: <h:text property="inv_invoiceno" styleId="inv_invoiceno"></h:text><br />
+       					 <br /> Invoice Date:<h:text property="inv_invdate" styleId="inv_invdate" styleClass="dateclass"></h:text><br />
+       					 <br /> Exporters Ref. : <h:text property="inv_expref" styleId="inv_expref"> </h:text><br />
+						 <br /> Other ref :  <h:text property="inv_otherref" styleId="inv_otherref"> </h:text>  <br />  
    				  </fieldset>
 			  </td>
    			  <td width="300">
    				  <fieldset>         
        				  <legend>Exporter Details</legend><br/> 
-       					  Exporter: <h:select property="exporter" styleId="exporter" onchange="loadexportervalue();">
-   		 						  <h:option value="0">select Tanner</h:option>
-   		 							  <c:forEach items="${InvExporterarray}" var="InvExporterlist">
-          		 							<h:option value="${InvExporterlist.expname}">
-         		 								<c:out value="${InvExporterlist.expname}"></c:out>
-          		 							</h:option>
-          	 							</c:forEach>
-       							  </h:select><br />        
-   	 					 <br /> Attn: <h:text property="exporterattn" styleId="exporterattn"></h:text><br />
-       					 <br /> Address: <h:textarea property="exporteraddress" cols="30" rows="2" styleId="exporteraddress"></h:textarea><br />
-       					 <br /> Telephone : <h:text property="exportertele" styleId="exportertele"> </h:text><br />
-						<br /> Fax :  <h:text property="exporterfax" styleId="exporterfax"> </h:text>  <br />  
+       					  Exporter: <h:text property="inv_exporter" styleId="inv_exporter" styleClass="invautocompleteclass"></h:text><br />        
+   	 					 <br /> Attn: <h:text property="inv_exporterattn" styleId="inv_exporterattn"></h:text><br />
+       					 <br /> Address: <h:textarea property="inv_exporteraddress" cols="30" rows="2" styleId="inv_exporteraddress"></h:textarea><br />
+       					 <br /> Telephone : <h:text property="inv_exportertele" styleId="inv_exportertele"> </h:text><br />
+						<br /> Fax :  <h:text property="inv_exporterfax" styleId="inv_exporterfax"> </h:text>  <br />  
        			  </fieldset>
        		  </td>
    			  <td width="300">
    				  <fieldset>         
        				  <legend>Notify Details</legend><br/> 
-       					  Notify: <h:select property="notify" styleId="notify" onchange="loadnotifyvalue();">
-   		 						  <h:option value="0">select Notify</h:option>
-   		 							  <c:forEach items="${InvNotifyarray}" var="InvNotifylist">
-          		 							<h:option value="${InvNotifylist.notifyConsigneeName}">
-         		 								<c:out value="${InvNotifylist.notifyConsigneeName}"></c:out>
-          		 							</h:option>
-          	 							</c:forEach>
-       							  </h:select><br />        
-   	 					 <br /> Attn: <h:text property="notifyattn" styleId="notifyattn"></h:text><br />
-       					 <br /> Address:<h:textarea property="notifyaddress" cols="15" rows="1" styleId="notifyaddress"></h:textarea><br />
-       					<br />  Phone : <h:text property="notifytele" styleId="notifytele"> </h:text><br />
-						 <br /> Fax :  <h:text property="notifyfax" styleId="notifyfax"> </h:text>  <br />  
+       					  Notify: <h:text property="inv_notify" styleId="inv_notify" styleClass="invautocompleteclass"></h:text><br />        
+   	 					 <br /> Attn: <h:text property="inv_notifyattn" styleId="inv_notifyattn"></h:text><br />
+       					 <br /> Address:<h:textarea property="inv_notifyaddress" cols="15" rows="1" styleId="inv_notifyaddress"></h:textarea><br />
+       					<br />  Phone : <h:text property="inv_notifytele" styleId="inv_notifytele"> </h:text><br />
+						 <br /> Fax :  <h:text property="inv_notifyfax" styleId="inv_notifyfax"> </h:text>  <br />  
        			  </fieldset>
    			  </td>
 		  </tr>
@@ -339,39 +349,21 @@
 
    				  <fieldset>         
        				  <legend>Bank Details</legend><br/> 
-       					  Bank: <h:select property="bank" styleId="bank" onchange="loadbankvalue();">
-   		 						  <h:option value="0">select Bank</h:option>
-   		 							  <c:forEach items="${invBankarray}" var="invBanklist">
-       		 							  <h:option value="${invBanklist.bankName}">
-       		 								  <c:out value="${invBanklist.bankName}"></c:out>
-       		 							  </h:option>
-       	 							  </c:forEach>
-       							  </h:select><br />        
-   	 					  <br />Branch: <h:text property="bankbranch" styleId="bankbranch"></h:text><br />
-       					  <br />addr:<h:textarea property="bankaddress" cols="15" rows="1" styleId="bankaddress" style="align:center"></h:textarea><br />
-       					  <br />Swift Code: <h:text property="bankswiftcode" styleId="bankswiftcode"> </h:text><br />
-       					  <br />Acct No : <h:text property="bankacno" styleId="bankacno"> </h:text><br />
-       					  <br />Phone : <h:text property="banktele" styleId="banktele"> </h:text><br />
-						  <br />fax :  <h:text property="bankfax" styleId="bankfax"> </h:text>  <br />  
+       					  Bank: <h:text property="inv_bank" styleId="inv_bank"></h:text><br />        
+   	 					  <br />Branch: <h:text property="inv_bankbranch" styleId="inv_bankbranch"></h:text><br />
+       					  <br />addr:<h:textarea property="inv_bankaddress" cols="15" rows="1" styleId="inv_bankaddress" style="align:center"></h:textarea><br />
+       					  <br />Swift Code: <h:text property="inv_bankswiftcode" styleId="inv_bankswiftcode"> </h:text><br />
+       					  <br />Acct No : <h:text property="inv_bankacno" styleId="inv_bankacno"> </h:text><br />
+       					  <br />Phone : <h:text property="inv_banktele" styleId="inv_banktele"> </h:text><br />
+						  <br />fax :  <h:text property="inv_bankfax" styleId="inv_bankfax"> </h:text>  <br />  
        			  </fieldset>
        		  </td>
    			  <td>
    			      <fieldset>         
        				  <legend>Dispatch Details</legend><br/> 
-       					  COG: <h:select property="ctryoforigngoods" styleId="ctryoforigngoods" onchange="">
-       					  		<h:option value="0">select Loading Country</h:option>
-       					  		<h:option value="1">India</h:option>
-       					  		<h:option value="2">China</h:option>
-          		 			   </h:select><br />
-       					  <br />Port Of Loading: <h:select property="loadingport" styleId="loadingport" onchange="loadtanvalue();">
-   		 						  <h:option value="0">select Loading Port</h:option>
-   		 							  <c:forEach items="${invLoadingPortarray}" var="invLoadingPortlist">
-          		 							<h:option value="${invLoadingPortlist.destination}">
-         		 								<c:out value="${invLoadingPortlist.destination}"></c:out>
-          		 							</h:option>
-          	 							</c:forEach>
-       							  </h:select><br /> 
-						 <br /> COF: <h:select property="ctryoffinaldesti" styleId="ctryoffinaldesti" onchange="loadtanvalue();">
+       					  COG: <h:text property="inv_ctryoforigngoods" styleId="inv_ctryoforigngoods"></h:text><br />
+       					  <br />Port Of Loading: <h:text property="inv_loadingport" styleId="inv_loadingport"></h:text><br /> 
+						 <br /> COF: <h:select property="inv_ctryoffinaldesti" styleId="inv_ctryoffinaldesti" onchange="loadtanvalue();">
    		 						  <h:option value="0">select Loading Port</h:option>
    		 							  <c:forEach items="${invCountryFinalDestiarray}" var="invCountryFinalDestilist">
           		 							<h:option value="${invCountryFinalDestilist.destinationCountry}">
@@ -379,7 +371,7 @@
           		 							</h:option>
           	 							</c:forEach>
        							  </h:select><br /> 
-   	 					  <br />Final Destination: <h:select property="finaldesti" styleId="finaldesti" onchange="loadtanvalue();">
+   	 					  <br />Final Destination: <h:select property="inv_finaldesti" styleId="inv_finaldesti" onchange="loadtanvalue();">
    		 						  <h:option value="0">select Destination</h:option>
    		 							  <c:forEach items="${invFinalDestinationarray}" var="invDestinationlist">
           		 							<h:option value="${invDestinationlist.destination}">
@@ -387,7 +379,7 @@
           		 							</h:option>
           	 							</c:forEach>
        							  </h:select><br /> 
-       					  <br />Discharge port:<h:select property="dischargeport" styleId="dischargeport" onchange="loadtanvalue();">
+       					  <br />Discharge port:<h:select property="inv_dischargeport" styleId="inv_dischargeport" onchange="loadtanvalue();">
    		 						  <h:option value="0">select Discharge Port</h:option>
    		 							  <c:forEach items="${invDischargeportarray}" var="invFinalDestinationlist">
           		 							<h:option value="${invFinalDestinationlist.destination}">
@@ -395,20 +387,22 @@
           		 							</h:option>
           	 							</c:forEach>
        							  </h:select><br /> 
-       					  <br />Vessel No  : <h:text property="vesselno" styleId="vesselno"></h:text><br />      
-       					 <br /> AW/Bill Date: <h:text property="awbilldate" styleId="awbilldate" styleClass="dateclass"> </h:text><br />
-						  <br />AW/Bill No :  <h:text property="awbillno" styleId="awbillno"> </h:text>  <br />  
+       					  <br />Vessel No  : <h:text property="inv_vesselno" styleId="inv_vesselno"></h:text><br />      
+       					 <br /> AW/Bill Date: <h:text property="inv_awbilldate" styleId="inv_awbilldate" styleClass="dateclass"> </h:text><br />
+						  <br />AW/Bill No :  <h:text property="inv_awbillno" styleId="inv_awbillno"> </h:text>  <br />  
        			  </fieldset>    				  			
    			  </td>
    			  <td>
    				  <fieldset>         
        				  <legend>Other Details</legend><br/> 
-   						  Gross Wt: <h:text property="grosswt" styleId="grosswt"></h:text><br />
-       					  <br />Dimension: <h:text property="dimension" styleId="dimension" onchange="loadtanvalue();"></h:text><br /> 
-						 <br /> Marks: <h:text property="marksno" styleId="marksno"></h:text><br />
-   	 					 <br /> No Of packages: <h:text property="noofpackages" styleId="noofpackages"></h:text><br />
-       					  <br />Pack No:<h:text property="packno" styleId="packno"></h:text><br />
-       					 <br />Net Wt: <h:text property="netwt" styleId="netwt"></h:text><br />      
+       				  	  Pre Carriage By: <h:text property="inv_precarriageby" styleId="inv_precarriageby"></h:text><br />
+       					  Place of Reciept: <br />Dimension: <h:text property="inv_precarriageby" styleId="inv_precarriageby" onchange="loadtanvalue();"></h:text><br /> 						
+   						  Gross Wt: <h:text property="inv_grosswt" styleId="inv_grosswt"></h:text><br />
+       					  <br />Dimension: <h:text property="inv_dimension" styleId="inv_dimension" onchange="loadtanvalue();"></h:text><br /> 
+						 <br /> Marks: <h:text property="inv_marksno" styleId="inv_marksno"></h:text><br />
+   	 					 <br /> No Of packages: <h:text property="inv_noofpackages" styleId="inv_noofpackages"></h:text><br />
+       					  <br />Pack No:<h:text property="inv_packno" styleId="inv_packno"></h:text><br />
+       					 <br />Net Wt: <h:text property="inv_netwt" styleId="inv_netwt"></h:text><br />      
        					 
 				  </fieldset>  
 				 
@@ -418,21 +412,13 @@
    			  <td>
    				  <fieldset>         
        				  <legend>Customer Details</legend>
-   						  Customer Name: <h:text property="customer" styleId="customer"></h:text> 
-   						  				<%-- <h:select property="customer" styleId="customer" onchange="loadcustvalue();">
-   		 						  <h:option value="0">select Customer</h:option>
-   		 							  <c:forEach items="${invCustomerarray}" var="invCustomerlist">
-       		 							  <h:option value="${invCustomerlist.customerName}">
-       		 								  <c:out value="${invCustomerlist.customerName}"></c:out>
-       		 							  </h:option>
-       	 							  </c:forEach>
-       							  </h:select> --%><br />
-       					  <br />Attn: 	   <h:text property="customer" styleId="custattn"></h:text><br /> 
-						 <br /> Address:   <h:textarea property="custaddr" cols="15" rows="1" styleId="custaddr"></h:textarea><br />
-   	 					  <br />Telephone: <h:text property="custtele" styleId="custtele"></h:text><br />
-       					  <br />Fax:	   <h:text property="custfax" styleId="custfax"></h:text><br />
-       					    <br />ID:	   <h:text property="custid" styleId="custid"></h:text><br />
-       					  <h:button property="selctforcust" value="load" styleId="thelink"></h:button>
+   						  Customer Name: <h:text property="inv_customer" styleId="inv_customer"></h:text><br />
+       					  <br />Attn: 	   <h:text property="inv_custattn" styleId="inv_custattn"></h:text><br /> 
+						  <br /> Address:   <h:textarea property="inv_custaddr" cols="15" rows="1" styleId="inv_custaddr"></h:textarea><br />
+   	 					  <br />Telephone: <h:text property="inv_custtele" styleId="inv_custtele"></h:text><br />
+       					  <br />Fax:	   <h:text property="inv_custfax" styleId="inv_custfax"></h:text><br />
+       					  <br />ID:	   <h:text property="inv_custid" styleId="inv_custid"></h:text><br />
+       					
 				  </fieldset>  
 			  </td>
     			 
@@ -447,7 +433,7 @@
 	    </tr>
 		  <tr>
 		     <td colspan="3">
-		     <h:button property="Addinv" value="LoadBill" styleId="loadBill"></h:button>
+		    <%--  <h:button property="Addinv" value="LoadBill" styleId="loadBill"></h:button> --%>
 		     	<table id="tbl_invaddinvBill">
 		       </table>
 		       <div id="tbl_invbillpager">
@@ -502,11 +488,11 @@
 			    <td>&nbsp;</td>
                   <td> <fieldset>         
        				  <legend>Other Charges</legend>
-				  		 Courier Charges: <h:text property="courierchrgs" styleId="courierchrgs"> </h:text>
-				  		 <h:radio property="vatcst" value="cst" styleId="vatcst">Discount: </h:radio><h:radio property="discount" value="vat" styleId="vatcst">Deduction:</h:radio>
-				  		  <br /> <h:radio property="vatcst" value="cst" styleId="vatcst">CST: </h:radio><h:radio property="vatcst" value="vat" styleId="vatcst">Vat: </h:radio>
-						  <br />Other Charges :  <h:text property="courierchrgs" styleId="courierchrgs"> </h:text>  <br />
-						   <br />Total Amount :  <h:text property="total" styleId="total"> </h:text>  <br />
+				  		 Courier Charges: <h:text property="inv_courierchrgs" styleId="inv_courierchrgs"> </h:text>
+				  		 <h:radio property="inv_vatcst" value="cst" styleId="inv_vatcst">Discount: </h:radio><h:radio property="inv_reduction" value="vat" styleId="vatcst">Deduction:</h:radio>
+				  		  <br /> <h:radio property="inv_packingcharges" value="cst" styleId="inv_packingcharges">CST: </h:radio><h:radio property="inv_vatcst" value="vat" styleId="inv_vatcst">Vat: </h:radio>
+						  <br />Other Charges :  <h:text property="inv_courierchrgs" styleId="inv_courierchrgs"> </h:text>  <br />
+						   <br />Total Amount :  <h:text property="inv_total" styleId="inv_total"> </h:text>  <br />
 						 </fieldset></td>
 		  </tr>
 	    <tr>

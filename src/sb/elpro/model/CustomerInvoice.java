@@ -31,6 +31,7 @@ public class CustomerInvoice implements Serializable {
 	private String balance; 
 	private String pono; 
 	private String podate;	
+	private String id;
 	
 	/**
 	 * @return the custid
@@ -211,6 +212,18 @@ public class CustomerInvoice implements Serializable {
 	 */
 	public void setPodate(String podate) {
 		this.podate = podate;
+	}
+	/**
+	 * @return the id
+	 */
+	public String getId() {
+		return id;
+	}
+	/**
+	 * @param id the id to set
+	 */
+	public void setId(String id) {
+		this.id = id;
 	}
 	
 		
