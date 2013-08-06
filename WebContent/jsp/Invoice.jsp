@@ -21,8 +21,10 @@
 <script src="js/i18n/grid.locale-en.js" type="text/javascript"></script>
 <script src="js/jquery.jqGrid.min.js" type="text/javascript"></script>		
 <script type="text/javascript">
+
 $(function() { 	
 		// var gridbtn = $("#thelink");
+		var invgrid = $("#invBill");
 		var billgrid = $("#tbl_invaddinvBill");
 		 var grid = $("#tbl_invListCustomerContract"); 
 		// var billbtn = $("#loadBill");
@@ -49,13 +51,14 @@ $(function() {
 					});//End getJSon
 				},
 				select: function( event, ui ) { 
-					var custid = $("#inv_custid").val();
-					 $('#tbl_invListCustomerContract').jqGrid().setGridParam({url:"/Myelclass/InvSelectCtfromCust.do?custid="+custid+"&action="+"load"}).trigger("reloadGrid");
-		          	  $('#inv_custaddr').val(ui.item.addr);
+					 $('#inv_custaddr').val(ui.item.addr);
 		          	  $('#inv_custtele').val(ui.item.fone);
 		          	  $('#inv_custattn').val(ui.item.attn);
 		          	  $('#inv_custfax').val(ui.item.fax);
 		          	 $('#inv_custid').val(ui.item.id);
+		          	 var custid = $("#inv_custid").val();
+					 $('#tbl_invListCustomerContract').jqGrid().setGridParam({url:"/Myelclass/InvSelectCtfromCust.do?custid="+custid+"&action="+"load"}).trigger("reloadGrid");
+		          	 
 				    }
 		  	});
 		
@@ -64,21 +67,20 @@ $(function() {
 				 datatype: "json",
 				 loadonce: false,
 				 mtype: 'GET', 
-				 colNames:['Ct No','Article','Color','Size','Substance','Quantity','Rate','TC'],
+				 colNames:['Ct No','Date','Po NO','CDD','ADD','Desti','Cust Id'],
 				 colModel:[
-				           {name: 'id', index:'id',editable: true, 
+				           {name: 'ctno', index:'ctno',editable: true, 
 				        	   /* formoptions:{
 				        	   	elmprefix:"(<span class='mystar' style='color:red'>*</span>)&nbsp;",
 				        	    elmsuffix:"&nbsp;yyyy-mm-dd",
 				        	    label: "<span>Date<span><span style='float:right'>XXX</span>"}, */ 
 				        	  width:50},
-				           {name: 'articlename', index:'articlename',width:90},
-				           {name: 'color', index:'color',width:70},
-				           {name: 'size', index:'size',width:70},
-				           {name: 'substance', index:'substance',width:70},
-				           {name: 'quantity', index:'quantity',width:70},
-				           {name: 'rate', index:'rate',width:70},
-				           {name: 'tc', index:'tc',width:70}
+				           {name: 'orderdt', index:'orderdt',width:90},
+				           {name: 'pono', index:'color',width:70},
+				           {name: 'cdd_date', index:'size',width:70},
+				           {name: 'add_date', index:'substance',width:70},
+				           {name: 'destination', index:'quantity',width:70},
+				           {name: 'customerid', index:'tc',width:70}
 				          ],
 				  jsonReader : {  
 					       repeatitems:false,
@@ -92,16 +94,15 @@ $(function() {
 				   rowNum: 5, 
 				   multiselect : true,
 				   rowList:[5,10,15],	 
-				   sortname: 'contractno',
+				   sortname: 'Ctno',
 				   sortorder: 'desc',  
-				   height : "auto",
 				   //hide: false,
 			       emptyrecords: 'No records to display',
 			       caption  : "Select Contract From List",
 			       });
 			grid.jqGrid('navGrid','#tbl_invpager',{
 				add : false,
-				edit: true, editCaption:'Check For the Values',
+				edit: false, editCaption:'Check For the Values',
 				del : false,
 				view: false,
 				search : false,
@@ -109,41 +110,45 @@ $(function() {
 			}).navButtonAdd('#tbl_invpager',{
 	 		 	   caption:"Select", 
 	 		 	   buttonicon:"ui-icon-add", 
-	 		 	   onClickButton: function(ids){ 
-	 		 		// if(ids != null) {
-	 				//	ids=0;
-	 				//	if(billgrid.jqGrid('getGridParam','records') ==0 )
-	 					//{
-	 						// contractno alert(ids);
-	 						var ctno = grid.jqGrid('getGridParam','selarrrow');
-	 						//var myCellData = grid.jqGrid('getCell', ctno, 'articlename');
-	 						alert(ctno );
-	 						billgrid.jqGrid('setGridParam',{url:"/Myelclass/InvSelectCtfromCust.do?ctno="+ctno+"&action="+"loadsubgrid",page:1});
-	 						billgrid.jqGrid('setCaption',"Raise Invoice  ")
-	 						.trigger('reloadGrid');
-	 						
-	 					//}
-	 		 		// }
+	 		 	   onClickButton: function(){
+	 		 		 var columndata="";
+	 		 		 var ids = grid.jqGrid('getGridParam','selarrrow');
+	 		 		 alert(ids.length);
+	 		 		 for (var i=0; i<ids.length;i++){
+	 		 		     var rowData = grid.jqGrid('getRowData',ids[i]);
+	 		 			 var colData = " '"+rowData.ctno+"',";
+	 		 			 columndata = columndata+colData;
+	 		 		   }
+	 		 		 var itemp =columndata.lastIndexOf(",");
+					 var columndatamodified = columndata.substring(0, itemp);
+	 		 		 alert(columndatamodified);
+	 				 billgrid.jqGrid('setGridParam',{url:"/Myelclass/InvSelectCtfromCust.do?ctno="+columndatamodified+"&action="+"loadsubgrid",page:1});
+	 				 billgrid.jqGrid('setCaption',"Raise Invoice").trigger('reloadGrid');
 	 		 	   },
 	 		 	   position:"last",
-		});
-
+			});
+	
 			//Load Billing Details
-				 $("#tbl_invaddinvBill").jqGrid({
+				 billgrid.jqGrid({
+					 url:"",
 					 datatype: "json",
-					 colNames:['Ct No','Article','Color','Size','Substance','Selection','Pieces','Quantity','Rate','Commission','TC'],
+					 colNames:['Ct No','Article','Color','Size','Substance','Selection','Quantity','Rate','Q Shipped','Q Balance','amount', 'Total','TC','articleid','Article Id'],
 					 colModel:[
-								{name: 'prf_contractno', index:'prf_contractno',width:50},
-								{name: 'prf_articlename', index:'prf_articlename',width:90},
-								{name: 'prf_color', index:'prf_color',width:70},
-								{name: 'prf_size', index:'prf_size',width:70},
-								{name: 'prf_substance', index:'prf_substance',width:70},
-								{name: 'prf_selection', index:'prf_selection',width:90},
-								{name: 'prf_pieces', index:'prf_pieces',width:90},
-								{name: 'prf_quantity', index:'prf_quantity',width:70},
-								{name: 'prf_price', index:'prf_price',width:70},
-								{name: 'prf_comm', index:'prf_comm',width:70},
-								{name: 'prf_tc', index:'prf_tc',width:70}
+								{name:'contractno', index:'contractno',sortable:true, editable: true, width:50},
+								{name:'articlename', index:'articlename',sortable:true, editable: true, width:70},
+								{name:'color', index:'color',sortable:true, editable: true, width:70},
+								{name:'size', index:'size',sortable:true, editable: true, width:70},
+								{name:'substance', index:'substance',sortable:true, editable: true, width:90},
+								{name:'selection', index:'selection',sortable:true, editable: true, width:90},
+								{name:'quantity', index:'quantity',sortable:true, editable: true, width:70},
+								{name:'rate', index:'rate',sortable:true, editable: true, width:70},
+								{name:'qshipped', index:'qshipped',sortable:true, editable: true, width:70, edittype:'text', editoptions:{defaultValue:'0'} },
+								{name:'qbal', index:'qbal',sortable:true, editable: true, width:70},
+								{name:'amount', index:'amount',sortable:true, editable: true, width:70},
+								{name:'total', index:'total',hidden: true, sortable:true, editable: true, width:70},
+								{name:'tc', index:'tc',hidden: true,sortable:true, editable: true, width:70},
+								{name:'articleid', index:'articleid',hidden: true,sortable:true, editable: true, width:70},
+								{name:'prfarticleid', index:'prfarticleid',hidden: true,ssortable:true, editable: true, width:90},
 					           ],
 					jsonReader : {  
 						 repeatitems:false,
@@ -154,13 +159,79 @@ $(function() {
 							       }, 
 					pager: '#tbl_invbillpager',
 					rowNum:3, 
+				//	multiselect : true,
+					rowList:[3,5,7],	       
+					sortorder: 'desc',  
+					emptyrecords: 'No records to display',
+					/* ondblClickRow: function(rowid, form) {
+						alert(form);
+					    jQuery(this).jqGrid('editGridRow', rowid);
+					   
+					} */
+				 });	
+			
+				  billgrid.jqGrid('navGrid','#tbl_invbillpager',{
+						add : true, edit: true, del : true, view: true, search : true, reload: true},
+						{
+							
+							beforeShowForm: function(form) { // Shows the Hidden Date field @ Form LOads
+					         alert("click");   
+							}
+						},
+						
+						{}, 
+						{
+							 //$("tr#trv_orderdate",form[0]).show();
+							 },{},{}	
+					);
+				 
+				//INV Billing Details
+				 invgrid.jqGrid({
+					 url:"",
+					 datatype: "json",
+					 colNames:['Inv No','Inv date','Ct No','Article','Color','Size','Substance','Selection','Quantity','Rate','Q Shipped','Q Balance','amount', 'Total','TC','articleid','Article Id'],
+					 colModel:[
+								{name: 'invno', index:'contractno',sortable:true, editable: true, width:50},
+								{name: 'articlename', index:'articlename',sortable:true, editable: true, width:70},
+								{name: 'contractno', index:'contractno',sortable:true, editable: true, width:50},
+								{name: 'articlename', index:'articlename',sortable:true, editable: true, width:70},
+								{name: 'color', index:'color',sortable:true, editable: true, width:70},
+								{name: 'size', index:'size',sortable:true, editable: true, width:70},
+								{name: 'substance', index:'substance',sortable:true, editable: true, width:90},
+								{name: 'selection', index:'selection',sortable:true, editable: true, width:90},
+								{name: 'quantity', index:'quantity',sortable:true, editable: true, width:70},
+								{name: 'rate', index:'rate',sortable:true, editable: true, width:70},
+								{name: 'qshipped', index:'qshipped',sortable:true, width:70, editable: true},
+								{name: 'qbal', index:'qbal',sortable:true, editable: true, width:70},
+								{name: 'amount', index:'amount',hidden: true, sortable:true, editable: true, width:70},
+								{name: 'total', index:'total',hidden: true, sortable:true, editable: true, width:70},
+								{name: 'tc', index:'tc',hidden: true,sortable:true, editable: true, width:70},
+								{name: 'articleid', index:'articleid',hidden: true,sortable:true, editable: true, width:70},
+								{name: 'prfarticleid', index:'prfarticleid',hidden: true,ssortable:true, editable: true, width:90},
+					           ],
+					jsonReader : {  
+						 repeatitems:false,
+					       root: "rows",
+					       page: "page", //calls first
+					       total: "total" ,//calls Second
+					       records: "records", //calls Third
+							       }, 
+					pager: '#invbillpager',
+					rowNum:3, 
 					multiselect : true,
 					rowList:[3,5,7],	       
 					sortorder: 'desc',  
 					emptyrecords: 'No records to display',
-					caption  : "Select Contract"
-							       
-				 });	 
+				 });	
+			
+				 invgrid.jqGrid('navGrid','#invbillpager',{
+						add : true,
+						edit: true, 
+						del : true,
+						view: true,
+						search : true,
+						reload: true		
+					});		 
 		//Invoice Type
 		$('#inv_invoicetype').change(function(){
 			var value = $('#inv_invoicetype').val();
@@ -301,7 +372,7 @@ $(function() {
    			<td><h:submit property="action" value="Logout"></h:submit></td> 
    		</tr>
     </table>
-	  <table width="840" height="426" border="1" cellpadding="0" cellspacing="0">
+	  <table border="1" cellpadding="0" cellspacing="0">
 		  <tr>
    			  <td width="300">
 				  <fieldset>         
@@ -421,71 +492,30 @@ $(function() {
        					
 				  </fieldset>  
 			  </td>
-    			 
    			  <td colspan="2">
-           		  <table id="tbl_invListCustomerContract" >
-           		  </table>   
-           		  <div id="tbl_invpager">
-           		  </div>            	 
+           		  <table id="tbl_invListCustomerContract" > </table>   
+           		  <div id="tbl_invpager"></div>            	 
            	</td>	      	  
 		  <tr>
   			  <td colspan="3">&nbsp;</td>
 	    </tr>
 		  <tr>
 		     <td colspan="3">
-		    <%--  <h:button property="Addinv" value="LoadBill" styleId="loadBill"></h:button> --%>
-		     	<table id="tbl_invaddinvBill">
-		       </table>
-		       <div id="tbl_invbillpager">
-		       
-		       </div>
-		      <!--  <tr>
-		         <td width="72">Contract No</td>
-		         <td width="51">Article</td>
-		         <td width="68">Color</td>
-		         <td width="56">Size</td>
-		         <td width="70">Substance</td>
-		         <td width="58">Selection</td>
-		         <td width="55">Quantity</td>
-		         <td width="39">Pieces</td>
-		         <td width="33">Rate</td>
-		         <td width="62">Shipment</td>
-		         <td width="80">Commission</td>
-		         <td width="186">TC</td>
-	           </tr> -->
-	           
+		     	<table id="tbl_invaddinvBill"></table>
+		       <div id="tbl_invbillpager"></div>
+		       </td>
 		      
-	         </td>
 		  </tr>
+		   <tr>
+  			  <td colspan="3">&nbsp;</td>
+	    </tr>
 		  <tr>
    			   <td colspan="3">
-           		  <table width="899" border="2" cellspacing="0" cellpadding="0">
-           		    <tr>
-               		   <td colspan="14">&nbsp;</td>
-           		    </tr>
-               	    <tr>
-               	      <td width="86">Contract No</td>
-               	      <td width="40">Article</td>
-               	      <td width="35">Color</td>
-               	      <td width="25">Size</td>
-               	      <td width="62">Substance</td>
-               	      <td width="55">Selection</td>
-               	      <td width="53">Quantity</td>
-               	      <td width="39">Pieces</td>
-               	      <td width="28">Rate</td>
-               	      <td width="61">Shipment</td>
-               	      <td width="75">Commission</td>
-               	      <td width="62">QShipped</td>
-               	      <td width="75">QRemaining</td>
-               	      <td width="448">Amount</td>
-              	   </tr>
-                	             	
-           		  </table>
-           	  </td>
-		  </tr>
+           		 
+							<table id="invBill"></table>
+		      				 <div id="invbillpager"></div>
+						</td>    
           <tr>
-		  <td>&nbsp;</td>
-			    <td>&nbsp;</td>
                   <td> <fieldset>         
        				  <legend>Other Charges</legend>
 				  		 Courier Charges: <h:text property="inv_courierchrgs" styleId="inv_courierchrgs"> </h:text>

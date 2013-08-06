@@ -319,24 +319,21 @@ public class InvoiceDaoImpl implements InvoiceDao {
 		try{			
 			con = DBConnection.getConnection();
 			st = (Statement) con.createStatement();
-			String sql = "SELECT custid, contractno, articlename, articletype, color, size, subatance, selection, quantity, rate, tc, shipped, balance, pono, podate FROM elpro.tmp_custinv where custid like '%"+custid+"%'order by "+sortname+" "+sortorder+" ";
+			String sql = "SELECT Ctno, Orderdt, pono, customerid, cdd_date, add_date, destination, commission FROM elpro.tbl_prfform where customerid like '%"+custid+"%' order by "+sortname+" "+sortorder+" ";
 			System.out.println("SQL + "+sql);
 			rs = st.executeQuery(sql);
 			while(rs.next()) {						
 				CustomerInvoice InvCustCtbean = new CustomerInvoice();
-					InvCustCtbean.setArticlename(rs.getString("articlename"));
-					InvCustCtbean.setCustid(rs.getString("custid"));
-					InvCustCtbean.setId(rs.getString("contractno"));
-					InvCustCtbean.setColor(rs.getString("color"));
-					InvCustCtbean.setSize(rs.getString("size"));
-					InvCustCtbean.setSubstance(rs.getString("subatance"));
-					InvCustCtbean.setSelection(rs.getString("selection"));
-					InvCustCtbean.setQuantity(rs.getString("quantity"));
-					InvCustCtbean.setRate(rs.getString("rate"));
-					InvCustCtbean.setTc(rs.getString("tc"));
-					InvCustCtbean.setShipped(rs.getString("shipped"));
-					InvCustCtbean.setBalance(rs.getString("balance"));
-					System.out.println("Cust Name "+InvCustCtbean.getCustid());
+					InvCustCtbean.setCtno(rs.getString("Ctno"));
+					InvCustCtbean.setOrderdt(rs.getString("Orderdt"));
+					InvCustCtbean.setPono(rs.getString("pono")); //
+					InvCustCtbean.setCustomerid(rs.getString("customerid"));
+					InvCustCtbean.setCdd_date(rs.getString("cdd_date"));
+					InvCustCtbean.setAdd_date(rs.getString("add_date"));
+					InvCustCtbean.setDestination(rs.getString("destination"));
+					InvCustCtbean.setCommission(rs.getString("commission"));
+					
+					System.out.println("Cust Name "+InvCustCtbean.getCustomerid());
 					invcustctrraylist.add(InvCustCtbean);
 			}
 	}catch(Exception e){
@@ -455,24 +452,24 @@ public class InvoiceDaoImpl implements InvoiceDao {
 		try{			
 			con = DBConnection.getConnection();
 			st = (Statement) con.createStatement();
-			String sql = "SELECT articleid, articlename, size, substance, selection, selectionpercent, color, quantity, unit, pcs, rate, tc, contractno, prfarticleid from tbl_prf_article where contractno in ('"+ctno+"') order by contractno";
+			String sql = "SELECT articleid, articlename, size, substance, selection, selectionpercent, color, quantity, unit, pcs, rate, tc, contractno, prfarticleid from tbl_prf_article where contractno in ("+ctno+") order by contractno";
+			System.out.println((sql));
 			rs = st.executeQuery(sql);
 			System.out.println((sql));
 			while(rs.next()) {						
 				ArticleDetails artbean = new ArticleDetails();
 				artbean.setArticleid(rs.getString("articleid"));
-				artbean.setArticletype(rs.getString("articletype"));
 				artbean.setArticlename(rs.getString("articlename"));
-				artbean.setArticleshortform(rs.getString("articleshortform"));
 				artbean.setSize(rs.getString("size"));
 				artbean.setSubstance(rs.getString("substance"));
 				artbean.setSelection(rs.getString("selection"));
 				artbean.setSelp(rs.getString("selectionpercent"));
 				artbean.setColor(rs.getString("color"));
+				artbean.setQuantity(rs.getString("quantity"));
 				artbean.setRate(rs.getString("rate"));
 				artbean.setTc(rs.getString("tc"));
 				artbean.setContractno(rs.getString("contractno"));
-				artbean.setArticlefamily(rs.getString("othername"));
+				artbean.setPrfarticleid(rs.getString("prfarticleid"));
 				System.out.println("Art CT List"+artbean.getContractno());
 				invloadportarraylist.add(artbean);
 			}
