@@ -70,7 +70,7 @@ $(document).ready(function() {
 			            		 dataUrl:'/Myelclass/PrfAutocomplete.do?action=arttype',
 			            		 buildSelect: function(data) {
 			            		  	var response = jQuery.parseJSON(data);
-			                      	var s = '<text>';
+			                      	var s = '<select>';
 			                      	if (response && response.length) {
 			                      		
 			                          	for (var i = 0, l=response.length; i<l ; i++) {
@@ -78,9 +78,9 @@ $(document).ready(function() {
 			                             	s += '<option value="'+ri+'">'+ri+'</option>';
 			                          	}
 			                        	}
-			                       	return s + "</text>";
+			                       	return s + "</select>";
 			                     	},
-			            			dataEvents :[{ 
+			            			/* dataEvents :[{ 
 			            		        type: 'change',
 			            		        fn: function(e) {
 			            		            var thisval = $(e.target).val();
@@ -110,16 +110,16 @@ $(document).ready(function() {
 								                        	}
 								                       	return s + "</text>";
 											     }
-											   });//END AJAX
+											   });//END AJAX */
 			            		            		
 			            		            /* function(data){
 			            		            	
 			            		                var res = $(data).html();
 			            		                alert("RES"+res);
 			            		                $("#prf_articlename").html(res);
-			            		            }); */
+			            		            }); 
 			            		        }
-			            		    }]
+			            		    }]*/
 			            	},
 					},         
 					{name:'prf_articlename', index:'articlename', width:90, sortable:true,  editable:true, edittype:'select',					     

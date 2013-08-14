@@ -10,7 +10,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
 import org.apache.struts.action.Action;
@@ -22,7 +21,7 @@ import sb.elpro.bo.InvoiceBo;
 import sb.elpro.bo.InvoiceBoImpl;
 import sb.elpro.model.ArticleDetails;
 import sb.elpro.model.CustomerInvoice;
-import sb.elpro.model.PrfArticle;
+import sb.elpro.model.InvBillDetails;
 /**
  * @author Wahab
  *
@@ -107,6 +106,83 @@ public class InvSelectCtfromCust extends Action {
 				jsonobj.put("rows", invctlist);
 				System.out.println(jsonobj);		
 				out.println(jsonobj);	
+		   }else if(action.equalsIgnoreCase("addBill")){
+			   System.out.println(" In Add Bill Details s");
+			   InvBillDetails invbill = new InvBillDetails();
+			  
+			   invbill.setInvctno(request.getParameter("contractno"));
+			   invbill.setInvcolor(request.getParameter("color"));
+			   invbill.setInvartname(request.getParameter("articlename"));
+			   invbill.setInvsize(request.getParameter("size"));
+			   invbill.setInvsubs(request.getParameter("substance"));
+			   invbill.setInvselc(request.getParameter("selection"));
+			   invbill.setInvqty(request.getParameter("quantity"));
+			   invbill.setInvrate(request.getParameter("rate"));
+			   invbill.setInvqshpd(request.getParameter("qshipped"));
+			   invbill.setInvqbal(request.getParameter("qbal"));
+			   invbill.setInvamt(request.getParameter("amount"));
+			   invbill.setInvtc(request.getParameter("tc"));
+			   invbill.setInvartid(request.getParameter("articleid"));
+			  // invbill.setInv(request.getParameter("id"));
+			   //invbill.setInvctno(request.getParameter("ctno"));
+			   
+			   
+			  // String oper = request.getParameter("oper");
+			   //if(oper.equalsIgnoreCase("edit")){
+               int invbilllist = invbo.getInvAddBillDetails(invbill);
+   			  // int records = invbilllist.size();
+			  /* int page = Integer.parseInt(pag);
+               int totalPages = 0;
+               int totalCount = 0;
+               if (totalCount > 0) {
+               	 if (totalCount % Integer.parseInt(rows) == 0) {
+               		 System.out.println("STEP 1 "+totalCount % Integer.parseInt(rows) );
+                        totalPages = totalCount / Integer.parseInt(rows);
+                        System.out.println("STEP 2 "+totalPages);
+                    } else {
+                        totalPages = (totalCount / Integer.parseInt(rows)) + 1;
+                        System.out.println("STEP 3 "+totalPages);
+                    }
+               }else {
+                   totalPages = 0;
+               }
+               
+               jsonobj.put("total", 1);
+				jsonobj.put("page", 1);
+				jsonobj.put("records", 1);
+				jsonobj.put("rows", 1);*/
+				System.out.println(invbilllist);		
+				out.println(invbilllist);	
+		   }else if(action.equalsIgnoreCase("loadBill")){
+			   String invno = request.getParameter("invno");
+			   System.out.println("invno"+invno);
+			   List<InvBillDetails> invbilllist = invbo.getInvBillDetails(invno);
+			   int records = invbilllist.size();
+				
+				int page = Integer.parseInt(pag);
+               int totalPages = 0;
+               int totalCount = records;
+               if (totalCount > 0) {
+               	 if (totalCount % Integer.parseInt(rows) == 0) {
+               		 System.out.println("STEP 1 "+totalCount % Integer.parseInt(rows) );
+                        totalPages = totalCount / Integer.parseInt(rows);
+                        System.out.println("STEP 2 "+totalPages);
+                    } else {
+                        totalPages = (totalCount / Integer.parseInt(rows)) + 1;
+                        System.out.println("STEP 3 "+totalPages);
+                    }
+               }else {
+                   totalPages = 0;
+               }
+               
+               jsonobj.put("total", totalPages);
+				jsonobj.put("page", page);
+				jsonobj.put("records", records);
+				jsonobj.put("rows", invbilllist);
+				System.out.println(jsonobj);		
+				out.println(jsonobj);	
+		   }else if(action.equalsIgnoreCase("editBill")) {
+			   System.out.println("In EDit MOde OF ADD BILLL ");
 		   }
 		}
 		

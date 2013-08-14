@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import com.mysql.jdbc.Connection;
+import com.mysql.jdbc.PreparedStatement;
 import com.mysql.jdbc.Statement;
 
 import sb.elpro.model.ArticleDetails;
@@ -16,6 +17,7 @@ import sb.elpro.model.CustomerDetails;
 import sb.elpro.model.CustomerInvoice;
 import sb.elpro.model.DestinationDetails;
 import sb.elpro.model.ExporterDetails;
+import sb.elpro.model.InvBillDetails;
 import sb.elpro.model.InvCustContractDetails;
 import sb.elpro.model.NotifyConsigneeDetails;
 import sb.elpro.utility.DBConnection;
@@ -466,6 +468,7 @@ public class InvoiceDaoImpl implements InvoiceDao {
 				artbean.setSelp(rs.getString("selectionpercent"));
 				artbean.setColor(rs.getString("color"));
 				artbean.setQuantity(rs.getString("quantity"));
+				artbean.setUnit(rs.getString("unit"));
 				artbean.setRate(rs.getString("rate"));
 				artbean.setTc(rs.getString("tc"));
 				artbean.setContractno(rs.getString("contractno"));
@@ -482,6 +485,99 @@ public class InvoiceDaoImpl implements InvoiceDao {
 		 rs.close();
    }	
 	return invloadportarraylist;
+	}
+
+	@Override
+	public int getInvAddbillDetails(InvBillDetails invbill)
+			throws SQLException {
+	
+		Connection con = null;
+		PreparedStatement pst = null;
+		int noofrows  = 0;
+		try{			
+			con = DBConnection.getConnection();
+			StringBuffer sql_saveprfArticle = new StringBuffer("insert into tbl_inv_bill (ctno, artname, color, size, subs, selc, qty, pcs, rate, tc, comm,invno, invdate, qshpd, qbal, amt,articleid)");
+			sql_saveprfArticle.append("values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+			String sqlquery_saveprfArticle = sql_saveprfArticle.toString();
+			System.out.println("Insert quert" +sqlquery_saveprfArticle);
+			pst = (PreparedStatement) con.prepareStatement(sqlquery_saveprfArticle);
+			pst.setString(1, invbill.getInvctno());
+			System.out.println("getInvctno " +invbill.getInvctno());
+			pst.setString(2, invbill.getInvartname());
+			System.out.println("getInvartname " +invbill.getInvartname());
+			pst.setString(3, invbill.getInvcolor());
+			pst.setString(4, invbill.getInvsize());
+			pst.setString(5, invbill.getInvsubs());
+			pst.setString(6, invbill.getInvselc());
+			
+			pst.setString(7, invbill.getInvqty());
+			pst.setString(8, invbill.getInvpcs());
+			pst.setString(9, invbill.getInvrate());
+			pst.setString(10, invbill.getInvtc());
+			
+			pst.setString(11, invbill.getInvcomm());
+			pst.setString(12, invbill.getInvno());
+			pst.setString(13, invbill.getInvdate());
+			pst.setString(14, invbill.getInvqshpd());
+			pst.setString(15, invbill.getInvqbal());
+			pst.setString(16, invbill.getInvamt());
+			pst.setString(17, invbill.getInvartid());
+			noofrows = pst.executeUpdate();
+			System.out.println("Sucessfully inserted the record.." + noofrows);
+	}catch(Exception e){
+		e.printStackTrace();
+		System.out.println("Customer Name ERROR RESULT");
+	}finally{
+		 con.close() ;
+		 pst.close();
+   }	
+	return noofrows;
+	}
+
+	@Override
+	public ArrayList<InvBillDetails> getInvBillDetails(String invno)
+			throws SQLException {
+		ArrayList<InvBillDetails> invBilllist = new ArrayList<InvBillDetails>();		
+		Connection con = null;
+		Statement st = null;
+		ResultSet rs = null;	
+		try{			
+			con = DBConnection.getConnection();
+			st = (Statement) con.createStatement();
+			String sql = "SELECT invbillid, articleid, artname, color, size, subs, selc, qty, pcs, rate, tc, comm, ctno, invno, invdate, qshpd, qbal, amt FROM elpro.tbl_inv_bill where invno in ("+invno+") order by artname";
+			System.out.println((sql));
+			rs = st.executeQuery(sql);
+			System.out.println((sql));
+			while(rs.next()) {						
+				InvBillDetails invbillbean = new InvBillDetails();
+				invbillbean.setInvid(rs.getString("invbillid"));
+				invbillbean.setInvartid(rs.getString("articleid"));
+				invbillbean.setInvartname(rs.getString("artname"));
+				invbillbean.setInvcolor(rs.getString("color"));
+				invbillbean.setInvsize(rs.getString("size"));
+				invbillbean.setInvsubs(rs.getString("subs"));
+				invbillbean.setInvselc(rs.getString("selc"));
+				invbillbean.setInvqty(rs.getString("qty"));
+				//invbillbean.setUnit(rs.getString("pcs"));
+				invbillbean.setInvrate(rs.getString("rate"));
+				invbillbean.setInvtc(rs.getString("tc"));
+				invbillbean.setInvctno(rs.getString("ctno"));
+				invbillbean.setInvno(rs.getString("invno"));
+				invbillbean.setInvqshpd(rs.getString("qshpd"));
+				invbillbean.setInvqbal(rs.getString("qbal"));
+				invbillbean.setInvamt(rs.getString("amt"));
+				System.out.println("Art CT List"+invbillbean.getInvctno());
+				invBilllist.add(invbillbean);
+			}
+	}catch(Exception e){
+		e.printStackTrace();
+		System.out.println("Customer Name ERROR RESULT");
+	}finally{
+		 con.close() ;
+		 st.close();
+		 rs.close();
+   }	
+	return invBilllist;
 	}
 	
 

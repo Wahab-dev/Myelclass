@@ -15,9 +15,9 @@ import sb.elpro.model.CustomerDetails;
 import sb.elpro.model.CustomerInvoice;
 import sb.elpro.model.DestinationDetails;
 import sb.elpro.model.ExporterDetails;
+import sb.elpro.model.InvBillDetails;
 import sb.elpro.model.InvCustContractDetails;
 import sb.elpro.model.NotifyConsigneeDetails;
-import sb.elpro.model.PrfArticle;
 
 /**
  * @author Wahab
@@ -107,6 +107,19 @@ public class InvoiceBoImpl implements InvoiceBo {
 			throws Exception {
 		ArrayList<ArticleDetails> invSelCtarr = invdao.getInvDelContractDetails(ctno);
 		return invSelCtarr;
+	}
+	@Override
+	public int getInvAddBillDetails(InvBillDetails invbill)
+			throws Exception {
+		int invaddbillarr = invdao.getInvAddbillDetails(invbill);
+		System.out.println("111");
+		return invaddbillarr;
+	}
+	@Override
+	public List<InvBillDetails> getInvBillDetails(String invno)
+			throws Exception {
+		ArrayList<InvBillDetails> invBillarr = invdao.getInvBillDetails(invno);
+		return invBillarr;
 	}
 	
 	

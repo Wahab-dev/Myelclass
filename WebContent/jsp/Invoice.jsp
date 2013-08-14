@@ -21,7 +21,6 @@
 <script src="js/i18n/grid.locale-en.js" type="text/javascript"></script>
 <script src="js/jquery.jqGrid.min.js" type="text/javascript"></script>		
 <script type="text/javascript">
-
 $(function() { 	
 		// var gridbtn = $("#thelink");
 		var invgrid = $("#invBill");
@@ -57,11 +56,11 @@ $(function() {
 		          	  $('#inv_custfax').val(ui.item.fax);
 		          	 $('#inv_custid').val(ui.item.id);
 		          	 var custid = $("#inv_custid").val();
-					 $('#tbl_invListCustomerContract').jqGrid().setGridParam({url:"/Myelclass/InvSelectCtfromCust.do?custid="+custid+"&action="+"load"}).trigger("reloadGrid");
-		          	 
+		          	grid.jqGrid('setGridParam',{url:"/Myelclass/InvSelectCtfromCust.do?custid="+custid+"&action="+"load"}).trigger("reloadGrid");
+		          	//billgrid.jqGrid('setGridParam',{url:"/Myelclass/InvSelectCtfromCust.do?ctno="+columndatamodified+"&action="+"loadsubgrid",page:1});
+	 				 
 				    }
-		  	});
-		
+		  	 });
 			 grid.jqGrid({ // MAster Grid
 				 url: "",
 				 datatype: "json",
@@ -94,6 +93,9 @@ $(function() {
 				   rowNum: 5, 
 				   multiselect : true,
 				   rowList:[5,10,15],	 
+				   //pagerpos: 'right',
+				  // toppager: true,
+				//   toolbar:[true,"top"],
 				   sortname: 'Ctno',
 				   sortorder: 'desc',  
 				   //hide: false,
@@ -132,7 +134,7 @@ $(function() {
 				 billgrid.jqGrid({
 					 url:"",
 					 datatype: "json",
-					 colNames:['Ct No','Article','Color','Size','Substance','Selection','Quantity','Rate','Q Shipped','Q Balance','amount', 'Total','TC','articleid','Article Id'],
+					 colNames:['Ct No','Article','Color','Size','Substance','Selection','Quantity','unit','Rate','Q Shipped','Q Balance','Amount', 'Total','TC','articleid','Article Id'],
 					 colModel:[
 								{name:'contractno', index:'contractno',sortable:true, editable: true, width:50},
 								{name:'articlename', index:'articlename',sortable:true, editable: true, width:70},
@@ -141,6 +143,7 @@ $(function() {
 								{name:'substance', index:'substance',sortable:true, editable: true, width:90},
 								{name:'selection', index:'selection',sortable:true, editable: true, width:90},
 								{name:'quantity', index:'quantity',sortable:true, editable: true, width:70},
+								{name:'unit', index:'unit',sortable:true, editable: true, hidden : true, width:70},
 								{name:'rate', index:'rate',sortable:true, editable: true, width:70},
 								{name:'qshipped', index:'qshipped',sortable:true, editable: true, width:70, edittype:'text', editoptions:{defaultValue:'0'} },
 								{name:'qbal', index:'qbal',sortable:true, editable: true, width:70},
@@ -158,10 +161,11 @@ $(function() {
 					       records: "records", //calls Third
 							       }, 
 					pager: '#tbl_invbillpager',
-					rowNum:3, 
+					rowNum:10, 
 				//	multiselect : true,
-					rowList:[3,5,7],	       
+					rowList:[10,20,30,40],	       
 					sortorder: 'desc',  
+					editurl: "/Myelclass/InvSelectCtfromCust.do?action="+"addBill",
 					emptyrecords: 'No records to display',
 					/* ondblClickRow: function(rowid, form) {
 						alert(form);
@@ -174,9 +178,32 @@ $(function() {
 						add : true, edit: true, del : true, view: true, search : true, reload: true},
 						{
 							
+							/**
+							 *  Billing Form Edit - 
+							 *
+							 */
+							
 							beforeShowForm: function(form) { // Shows the Hidden Date field @ Form LOads
-					         alert("click");   
-							}
+					         alert("in Edit Grid "); 
+					         $('#quantity').val($('#quantity').val()+$('#unit').val());
+							},
+							/* beforeSubmit : function(postdata, formid) { 
+								alert("In b$ submit ");
+						      //0   var prfarticleid = $('#prfarticleid').val();
+						         //alert("In b$ submit "+prfarticleid); 
+							}, */
+							 
+							afterSubmit: function(response, postdata){
+								 if(response.responseText != 1){
+					                    return [false,"error. user exists"];
+					                    
+					                }else{
+					                	
+					                	invgrid.jqGrid('setGridParam',{url:"/Myelclass/InvSelectCtfromCust.do?invno="+1+"&action="+"loadBill",page:1}).trigger("reloadGrid");
+					                	return [true,"Successfully Saved"];
+					                }
+							},
+	 					   closeAfterEdit: true,
 						},
 						
 						{}, 
@@ -189,26 +216,23 @@ $(function() {
 				 invgrid.jqGrid({
 					 url:"",
 					 datatype: "json",
-					 colNames:['Inv No','Inv date','Ct No','Article','Color','Size','Substance','Selection','Quantity','Rate','Q Shipped','Q Balance','amount', 'Total','TC','articleid','Article Id'],
+					 colNames:['Inv No','articleid','Ct No','Article','Color','Size','Substance','Selection','Quantity','Rate','TC','Q Shipped','Q Balance','amount'],
 					 colModel:[
-								{name: 'invno', index:'contractno',sortable:true, editable: true, width:50},
-								{name: 'articlename', index:'articlename',sortable:true, editable: true, width:70},
-								{name: 'contractno', index:'contractno',sortable:true, editable: true, width:50},
-								{name: 'articlename', index:'articlename',sortable:true, editable: true, width:70},
-								{name: 'color', index:'color',sortable:true, editable: true, width:70},
-								{name: 'size', index:'size',sortable:true, editable: true, width:70},
-								{name: 'substance', index:'substance',sortable:true, editable: true, width:90},
-								{name: 'selection', index:'selection',sortable:true, editable: true, width:90},
-								{name: 'quantity', index:'quantity',sortable:true, editable: true, width:70},
-								{name: 'rate', index:'rate',sortable:true, editable: true, width:70},
-								{name: 'qshipped', index:'qshipped',sortable:true, width:70, editable: true},
-								{name: 'qbal', index:'qbal',sortable:true, editable: true, width:70},
-								{name: 'amount', index:'amount',hidden: true, sortable:true, editable: true, width:70},
-								{name: 'total', index:'total',hidden: true, sortable:true, editable: true, width:70},
-								{name: 'tc', index:'tc',hidden: true,sortable:true, editable: true, width:70},
-								{name: 'articleid', index:'articleid',hidden: true,sortable:true, editable: true, width:70},
-								{name: 'prfarticleid', index:'prfarticleid',hidden: true,ssortable:true, editable: true, width:90},
-					           ],
+								{name: 'invno', index:'invno',sortable:true, editable: true, width:50},
+								{name: 'invartid', index:'articleid',sortable:true, editable: true, width:70},
+								{name: 'invctno', index:'ctno',sortable:true, editable: true, width:50},
+								{name: 'invartname', index:'articlename',sortable:true, editable: true, width:70},
+								{name: 'invcolor', index:'color',sortable:true, editable: true, width:70},
+								{name: 'invsize', index:'size',sortable:true, editable: true, width:70},
+								{name: 'invsubs', index:'substance',sortable:true, editable: true, width:90},
+								{name: 'invselc', index:'selection',sortable:true, editable: true, width:90},
+								{name: 'invqty', index:'quantity',sortable:true, editable: true, width:70},
+								{name: 'invrate', index:'rate',sortable:true, editable: true, width:70},
+								{name: 'invtc', index:'tc',sortable:true, width:70, editable: true},
+								{name: 'invqshpd', index:'qshpd',sortable:true, editable: true, width:70},
+								{name: 'invqbal', index:'qbal',hidden: false, sortable:true, editable: true, width:70},
+								{name: 'invamt', index:'amt',hidden: false, sortable:true, editable: true, width:70},
+								 ],
 					jsonReader : {  
 						 repeatitems:false,
 					       root: "rows",
@@ -217,9 +241,10 @@ $(function() {
 					       records: "records", //calls Third
 							       }, 
 					pager: '#invbillpager',
-					rowNum:3, 
-					multiselect : true,
-					rowList:[3,5,7],	       
+					rowNum:20, 
+					multiselect : false,
+					rowList:[10,20,30],	  
+					sortname: 'invartname',
 					sortorder: 'desc',  
 					emptyrecords: 'No records to display',
 				 });	
@@ -230,8 +255,44 @@ $(function() {
 						del : true,
 						view: true,
 						search : true,
-						reload: true		
-					});		 
+						reload: true},
+						{
+							beforeShowForm: function(form) { // Shows the Hidden Date field @ Form LOads
+						         alert("inEdit  Grid "); 
+						         $('#quantity').val($('#quantity').val()+$('#unit').val());
+								},
+								url: "/Myelclass/InvSelectCtfromCust.do?invno="+1+"&action="+"editBill",
+								mtype: "GET",
+							    closeAfterEdit: true,
+							
+						},
+						{
+							beforeShowForm: function(formId) { // Shows the Hidden Date field @ Form LOads
+						         alert("in Add Grid "); 
+						         $(formId).attr('align', 'right');
+							
+							
+						        // $('#quantity').val($('#quantity').val()+$('#unit').val());
+								},
+							
+						},
+						{
+							beforeShowForm: function(form) { // Shows the Hidden Date field @ Form LOads
+						         alert("in Delete Grid "); 
+						        // $('#quantity').val($('#quantity').val()+$('#unit').val());
+								},
+							
+						},{},
+						
+						 {
+							beforeShowForm: function(form) { //  Shows the Hidden Date field @ Form LOads
+						         alert("in View Grid "); 
+						        // $('#quantity').val($('#quantity').val()+$('#unit').val());
+								},
+							
+						}
+						
+					);		 
 		//Invoice Type
 		$('#inv_invoicetype').change(function(){
 			var value = $('#inv_invoicetype').val();

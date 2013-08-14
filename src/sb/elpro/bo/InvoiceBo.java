@@ -11,6 +11,7 @@ import sb.elpro.model.CustomerDetails;
 import sb.elpro.model.CustomerInvoice;
 import sb.elpro.model.DestinationDetails;
 import sb.elpro.model.ExporterDetails;
+import sb.elpro.model.InvBillDetails;
 import sb.elpro.model.InvCustContractDetails;
 import sb.elpro.model.NotifyConsigneeDetails;
 import sb.elpro.model.PrfArticle;
@@ -48,5 +49,9 @@ public interface InvoiceBo {
 	public List<DestinationDetails> getLoadinPortName(String loadportterm, String ctryvalterm)throws Exception;
 
 	public List<ArticleDetails> getInvSelCtDetails(String ctno)throws Exception;
+
+	public int getInvAddBillDetails(InvBillDetails invbill)throws Exception;
+
+	public List<InvBillDetails> getInvBillDetails(String invno)throws Exception;
 	
 }
