@@ -863,7 +863,8 @@ public class PrfDaoImpl implements PrfDao {
 		try{			
 			con = DBConnection.getConnection();
 			st = (Statement) con.createStatement();
-			String sql = "SELECT articleid, articletype, articlename, articleshortform, size, substance, selection, color, selectionpercent, quantity, pcs, rate, tc, othername FROM elpro.tbl_article where articletype like '%"+term+"%' order by articlename";
+			//String sql = "SELECT articleid, articletype, articlename, articleshortform, size, substance, selection, color, selectionpercent, quantity, pcs, rate, tc, othername FROM elpro.tbl_article where articletype like '%"+term+"%' order by articlename";
+			String sql = "SELECT articleid, articletype, articlename, articleshortform, size, substance, selection, color, selectionpercent, quantity, pcs, rate, tc, othername FROM elpro.tbl_article order by articlename";
 			System.out.println(sql);
 			rs = st.executeQuery(sql);
 			
@@ -1075,39 +1076,43 @@ public class PrfDaoImpl implements PrfDao {
 		Connection con = null;
 		PreparedStatement pst = null;
 		int noofrows  = 0;
+		boolean isadded = true;
 		try{			
 			con = DBConnection.getConnection();
 			StringBuffer sql_saveprfArticle = new StringBuffer("insert into tbl_prf_article (articleid, articlename, size, substance, selection, selectionpercent, color, quantity, unit, pcs, rate, tc, contractno, articletype, articleshfrom)");
-			sql_saveprfArticle.append("values (?,?,?,?,?,?,?,?,?,?,?,?,?)");
+			sql_saveprfArticle.append("values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
 			String sqlquery_saveprfArticle = sql_saveprfArticle.toString();
 			pst = (PreparedStatement) con.prepareStatement(sqlquery_saveprfArticle);
-		/*	pst.setString(1, prfarticlebean.getArticleid());
-			System.out.println("getArticleid " +prfarticlebean.getArticleid());
-			pst.setString(2, prfarticlebean.getPrf_articlename());
-			System.out.println("getArticlename " +prfarticlebean.getPrf_articlename());
-			pst.setString(3, prfarticlebean.getPrf_size());
-			pst.setString(4, prfarticlebean.getPrf_substance());
-			pst.setString(5, prfarticlebean.getPrf_selection());
-			pst.setString(6, prfarticlebean.getPrf_selectionp());
-			pst.setString(7, prfarticlebean.getPrf_color());
-			pst.setString(8, prfarticlebean.getPrf_quantity());
-			pst.setString(9, prfarticlebean.getPrf_unit());
-			pst.setString(10, prfarticlebean.getPrf_pieces());
-			pst.setString(11, prfarticlebean.getPrf_price());
-			pst.setString(12, prfarticlebean.getPrf_tc());
-			pst.setString(13, prfarticlebean.getPrf_contractno());
-			System.out.println("getContractno " +prfarticlebean.getPrf_contractno());*/
+			pst.setString(1, artindertdetail.getArticleid());
+			System.out.println("getArticleid " +artindertdetail.getArticleid());
+			pst.setString(2, artindertdetail.getPrf_articlename());
+			System.out.println("getArticlename " +artindertdetail.getPrf_articlename());
+			pst.setString(3, artindertdetail.getPrf_size());
+			pst.setString(4, artindertdetail.getPrf_substance());
+			pst.setString(5, artindertdetail.getPrf_selection());
+			pst.setString(6, artindertdetail.getPrf_selectionp());
+			pst.setString(7, artindertdetail.getPrf_color());
+			pst.setString(8, artindertdetail.getPrf_quantity());
+			pst.setString(9, artindertdetail.getPrf_unit());
+			pst.setString(10, artindertdetail.getPrf_pieces());
+			pst.setString(11, artindertdetail.getPrf_rate());
+			pst.setString(12, artindertdetail.getPrf_tc());
+			pst.setString(13, artindertdetail.getPrf_contractno());
+			pst.setString(14, artindertdetail.getPrf_articletype());
+			pst.setString(15, artindertdetail.getArtshform() );
+			System.out.println("getContractno " +artindertdetail.getPrf_contractno());
 			noofrows = pst.executeUpdate();
 			System.out.println("Sucessfully inserted the record.." + noofrows);
 		}catch(Exception e){
 			e.printStackTrace();
+			isadded = false;
 			System.out.println("ERROR RESULT");
 		}finally{
 			 con.close() ;
 			 pst.close();
 	   }	
 	//return noofrows;
-		return false;
+		return isadded;
 	}
 
 	@Override
@@ -1120,7 +1125,7 @@ public class PrfDaoImpl implements PrfDao {
 		try{			
 			con = DBConnection.getConnection();
 			st = (Statement) con.createStatement();
-			String sql = "SELECT articleid, articletype, articleshortform FROM elpro.tbl_article order by articletype";
+			String sql = "SELECT distinct articletype FROM elpro.tbl_article order by articletype";
 			System.out.println(sql);
 			rs = st.executeQuery(sql);
 			
@@ -1128,8 +1133,8 @@ public class PrfDaoImpl implements PrfDao {
 				//destarraylist.add(rs.getString("destname"));
 				ArticleDetails artbean = new ArticleDetails();
 				artbean.setValue(rs.getString("articletype"));	
-				artbean.setLabel(rs.getString("articleshortform"));
-				artbean.setArticleid(rs.getString("articleid"));
+			//	artbean.setLabel(rs.getString("articleshortform"));
+				//artbean.setArticleid(rs.getString("articleid"));
 				arttypeeditarraylist.add(artbean);
 				}
 			System.out.println(" dest Result Added Successfully");
@@ -1142,6 +1147,80 @@ public class PrfDaoImpl implements PrfDao {
 				 rs.close();
 		   }	
 		return arttypeeditarraylist;
+	}
+
+	@Override
+	public boolean editprfArticle(PrfArticle artindertdetail, String ctno,
+			String sidx, String sord) throws SQLException {
+		Connection con = null;
+		PreparedStatement pst = null;
+		int noofrows  = 0;
+		boolean isupdate = true;
+		try{			
+			con = DBConnection.getConnection();
+			StringBuffer sql_saveprfArticle = new StringBuffer("UPDATE elpro.tbl_prf_article SET articleid = ? , articlename = ? , size = ? , substance = ? , selection = ? , selectionpercent = ? , color = ? , quantity = ? , unit = ? , pcs = ? , rate = ? , tc = ? , contractno = ? ,  articletype = ? , articleshfrom = ?  WHERE prfarticleid = '"+ctno+"' ");
+			//sql_saveprfArticle.append("values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+			String sqlquery_saveprfArticle = sql_saveprfArticle.toString();
+			pst = (PreparedStatement) con.prepareStatement(sqlquery_saveprfArticle);
+			pst.setString(1, artindertdetail.getArticleid());
+			System.out.println("getArticleid " +artindertdetail.getArticleid());
+			pst.setString(2, artindertdetail.getPrf_articlename());
+			System.out.println("getArticlename " +artindertdetail.getPrf_articlename());
+			pst.setString(3, artindertdetail.getPrf_size());
+			pst.setString(4, artindertdetail.getPrf_substance());
+			pst.setString(5, artindertdetail.getPrf_selection());
+			pst.setString(6, artindertdetail.getPrf_selectionp());
+			pst.setString(7, artindertdetail.getPrf_color());
+			pst.setString(8, artindertdetail.getPrf_quantity());
+			pst.setString(9, artindertdetail.getPrf_unit());
+			pst.setString(10, artindertdetail.getPrf_pieces());
+			pst.setString(11, artindertdetail.getPrf_rate());
+			pst.setString(12, artindertdetail.getPrf_tc());
+			pst.setString(13, artindertdetail.getPrf_contractno());
+			pst.setString(14, artindertdetail.getPrf_articletype());
+			pst.setString(15, artindertdetail.getArtshform() );
+			System.out.println("Prf Article ID " +artindertdetail.getPrf_articleid());
+			noofrows = pst.executeUpdate();
+			System.out.println("Sucessfully inserted the record.." + noofrows);
+		}catch(Exception e){
+			e.printStackTrace();
+			isupdate = false;
+			System.out.println("ERROR RESULT");
+		}finally{
+			 con.close() ;
+			 pst.close();
+	   }	
+	//return noofrows;
+		return isupdate;
+	}
+
+	@Override
+	public boolean delprfArticle(PrfArticle artindertdetail, String artid,
+			String sidx, String sord) throws SQLException {
+		Connection con = null;
+		PreparedStatement pst = null;
+		int noofrows  = 0;
+		boolean isdel = true;
+		try{			
+			con = DBConnection.getConnection();
+			StringBuffer sql_saveprfArticle = new StringBuffer("delete from elpro.tbl_prf_article WHERE prfarticleid = '"+artid+"' ");
+			//sql_saveprfArticle.append("values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+			String sqlquery_saveprfArticle = sql_saveprfArticle.toString();
+			System.out.println(sqlquery_saveprfArticle);
+			pst = (PreparedStatement) con.prepareStatement(sqlquery_saveprfArticle);
+		//	pst.setString(1, artindertdetail.getPrf_articleid());
+			noofrows = pst.executeUpdate();
+			System.out.println("Sucessfully deleted the record.." + noofrows);
+		}catch(Exception e){
+			e.printStackTrace();
+			isdel = false;
+			System.out.println("ERROR RESULT");
+		}finally{
+			 con.close() ;
+			 pst.close();
+	   }	
+	//return noofrows;
+		return isdel;
 	}
 
 

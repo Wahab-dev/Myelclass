@@ -92,8 +92,15 @@ public interface PrfBo  {
 
 	public List<NotifyConsigneeDetails> getnotifyDetails(String notifyterm)throws Exception;
 
+	
 	public boolean addPrfArticleDetails(PrfArticle artindertdetail,
 			String ctno, String sidx, String sord)throws Exception;
+
+	public boolean editPrfArticleDetails(PrfArticle artindertdetail,
+			String ctno, String sidx, String sord)throws Exception;
+
+	public boolean delPrfArticleDetails(PrfArticle artindertdetail,
+			String artid, String sidx, String sord)throws Exception;
 
 	
 	

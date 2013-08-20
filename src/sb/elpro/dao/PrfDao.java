@@ -102,6 +102,11 @@ public interface PrfDao {
 	boolean addprfArticle(PrfArticle artindertdetail, String ctno, String sidx,
 			String sord)throws SQLException;
 
+	boolean editprfArticle(PrfArticle artindertdetail, String ctno,
+			String sidx, String sord)throws SQLException;
+
+	boolean delprfArticle(PrfArticle artindertdetail, String artid,
+			String sidx, String sord)throws SQLException;
 	
 	
 	

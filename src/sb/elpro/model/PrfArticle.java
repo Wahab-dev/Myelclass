@@ -51,6 +51,7 @@ public class PrfArticle implements Serializable {
 	private String prf_price;
 	private String prf_tc;
 	private String prf_contractno;
+	private String artshform;
 	private String checkboxValue;
 	
 	/**
@@ -436,5 +437,17 @@ public class PrfArticle implements Serializable {
 	 */
 	public void setCheckboxValue(String checkboxValue) {
 		this.checkboxValue = checkboxValue;
+	}
+	/**
+	 * @return the artshform
+	 */
+	public String getArtshform() {
+		return artshform;
+	}
+	/**
+	 * @param artshform the artshform to set
+	 */
+	public void setArtshform(String artshform) {
+		this.artshform = artshform;
 	}
 }
