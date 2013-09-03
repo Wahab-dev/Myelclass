@@ -12,7 +12,8 @@ $(document).ready(function() {
 			  */
 	    var ctno =$('#prf_contractno').val();
 		 alert(ctno);
-			 grid.jqGrid({  
+			 grid.jqGrid({ 
+				// url: "",
 				url:"/Myelclass/PrfinsertArticle.do?ctno="+ctno+"&action="+"load",   
 				datatype:"json",
 				colNames:['Article Type','Name','ArticleId', 'Color', 'Size','Size rem','Size avg','Subs','Selec','Selec P', 'Quantity','Unit', 'Pcs','Rate sign','Rate amt','Shipment','Tc sign','Tc amt','Tc to','Article Type','Ct','PrfArtId'],  
@@ -200,53 +201,21 @@ $(document).ready(function() {
 					sortorder: "desc",
 					pager: '#pager',
 					caption: "Demonstrate dependend select/dropdown lists (edit on double-click)" */
-			});
-				 		
-			grid.jqGrid('navGrid', '#pager',  { edit: true, add: true, del: true, 
-						search: false, refresh: false },
-						{ // edit option
-		 					 top: 150,
-		 					 left: 200,
-		 					 beforeShowForm: function(form) { 
-		 						alert("In Edit Form"); 
-		 					 },
-		 					
-		 					 url: "/Myelclass/PrfinsertArticle.do?ctno="+ctno+"&action="+"edit",
-		 					 mtype: "POST",
-		 					 closeAfterEdit: true,
-		 					 //editData
-		 		          },
-		 		          
-		 				{ // add option
-		 		              beforeShowForm: function(form) { 
-		 		            	  alert("In Add Form");  
-		 		              },
-		 		        	  top: 150,
-	 					 	  left: 200,
-	 					 	  width : 350,
-	 					 	  url: "/Myelclass/PrfinsertArticle.do?action=add",
-	 					 	  mtype: "POST",
-	 					 	  datatype: "json",
-	 					 	  closeAfterEdit: true,	
-	 					 	  afterSubmit:function(response, postdata) {
-	 					 		  alert("Response frm server"+response);
-	 					 	  }
-		 		          },
-		 		          {
-		 		        	  // delete option
-		 		        	 beforeShowForm: function(form) { 
-		 		            	  alert("what happening in");  
-		 		        	 } ,
-		 		        	  top: 150,
-	 					 	  left: 200,
-	 					 	  width : 350,
-	 					      url: "/Myelclass/PrfinsertArticle.do?prf_articleid="+ctno+"&action="+"delete",
-	 					 	  mtype: "POST",
-	 					 	  datatype: "json",
-	 					 	  closeAfterEdit: true,	
-		 		            }
-		 		           
-		 	);
+			}).jqGrid('delGridRow',gr,{
+				height:280,
+				reloadAfterSubmit:false,
+				afterSubmit:function(data,postd){
+					console.log(data);
+					console.log(postd);
+					return {0:true};
+				},
+				afterComplete:function(data,postd){
+					return true;
+				},
+				url: "/Myelclass/PrfinsertArticle.do?action=delete",
+				msg: "Are u SURE u wanna Delete ??"
+			});	 	
+		
 			
 			
 			//Formatter 
