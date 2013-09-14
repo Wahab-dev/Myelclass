@@ -81,17 +81,16 @@ public interface PrfDao {
 	List<SelectArticle> getArticleNameList() throws SQLException;
 	int saveprfArticleList(PrfArticle prfarticlebean)throws SQLException;
 
-	ArrayList<PrfArticle> getPrfArticleDetails(String myctno, String sidx, String sord)throws SQLException;
+	ArrayList<PrfArticle> getPrfArticleDetails(String sidx, String sord)throws SQLException;
 
 	List<ArticleDetails> editprfArticle(String prfarticleid)throws SQLException;
 
 	List<ArticleDetails> updateprfArticle(ArticleDetails prfbean)throws SQLException;
 
-	List<ArticleDetails> getArticleNameinEditGridlist(String term)throws SQLException;
+	List<ArticleDetails> getPrfArticleNamelist(String term)throws SQLException;
 	
-	List<ArticleDetails> getArticleTypeinEditGridlist()throws SQLException;
 
-	List<AutoComplete> getColorGridlist(String term)throws SQLException;
+	List<AutoComplete> getPrfColorlist(String term)throws SQLException;
 	
 	ArrayList<BankDetails> getbankList(String bankterm)throws SQLException;
 
@@ -107,11 +106,9 @@ public interface PrfDao {
 
 	boolean delprfArticle(PrfArticle artindertdetail, String artid,
 			String sidx, String sord)throws SQLException;
-	
-	
-	
 
+	List<ArticleDetails> getPrfArticleTypelist() throws SQLException;
 
-
+	
 	
 }

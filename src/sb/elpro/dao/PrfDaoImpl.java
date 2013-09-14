@@ -666,7 +666,7 @@ public class PrfDaoImpl implements PrfDao {
 	}
 
 	@Override
-	public ArrayList<PrfArticle> getPrfArticleDetails(String myctno, String sidx, String sord) throws SQLException {
+	public ArrayList<PrfArticle> getPrfArticleDetails( String sidx, String sord) throws SQLException {
 		ArrayList<PrfArticle> articlearray = new ArrayList<PrfArticle>();
 		Connection con = null;
 		Statement st = null;
@@ -674,7 +674,7 @@ public class PrfDaoImpl implements PrfDao {
 		try{			
 			con = DBConnection.getConnection();
 			st = (Statement) con.createStatement();
-			String sql = "SELECT articleid, articlename, size, substance, selection, selectionpercent, color, quantity, unit, pcs, rate, tc, contractno, prfarticleid FROM tbl_prf_article where contractno = '"+myctno+"' order by "+sidx+" "+sord+"";
+			String sql = "SELECT articleid, articlename, size, substance, selection, selectionpercent, color, quantity, unit, pcs, rate, tc, contractno, prfarticleid FROM tbl_prf_article order by "+sidx+" "+sord+"";
 			System.out.println(sql);
 			rs = st.executeQuery(sql);
 			while(rs.next()) {	
@@ -854,7 +854,7 @@ public class PrfDaoImpl implements PrfDao {
 	}
 
 	@Override
-	public List<ArticleDetails> getArticleNameinEditGridlist(String term)
+	public List<ArticleDetails> getPrfArticleNamelist(String term)
 			throws SQLException {
 		List<ArticleDetails> artnameeditarraylist = new ArrayList<ArticleDetails>() ;
 		Connection con = null;
@@ -864,15 +864,18 @@ public class PrfDaoImpl implements PrfDao {
 			con = DBConnection.getConnection();
 			st = (Statement) con.createStatement();
 			//String sql = "SELECT articleid, articletype, articlename, articleshortform, size, substance, selection, color, selectionpercent, quantity, pcs, rate, tc, othername FROM elpro.tbl_article where articletype like '%"+term+"%' order by articlename";
-			String sql = "SELECT articleid, articletype, articlename, articleshortform, size, substance, selection, color, selectionpercent, quantity, pcs, rate, tc, othername FROM elpro.tbl_article order by articlename";
+			String sql = "SELECT articleid, articletype, articlename, articleshortform, size, substance, selection, color, selectionpercent, quantity, pcs, rate, tc, othername FROM elpro.tbl_article where articlename like '%"+term+"%' order by articlename";
+			//String sql = "SELECT distinct articlename FROM elpro.tbl_article where articlename like '%"+term+"%'order by articlename";
+			
 			System.out.println(sql);
 			rs = st.executeQuery(sql);
 			
 			while(rs.next()) {	
 				//destarraylist.add(rs.getString("destname"));
 				ArticleDetails artbean = new ArticleDetails();
-				artbean.setLabel(rs.getString("articletype"));	
-				artbean.setValue(rs.getString("articlename"));
+				//artbean.setLabel(rs.getString("articletype"));
+				artbean.setArticleshortform(rs.getString("articleshortform"));
+				artbean.setArticlename(rs.getString("articlename"));
 				artbean.setArticleid(rs.getString("articleid"));
 				artbean.setColor(rs.getString("color"));
 				artbean.setSize(rs.getString("size")); 
@@ -896,7 +899,7 @@ public class PrfDaoImpl implements PrfDao {
 	}
 	
 	@Override
-	public List<AutoComplete> getColorGridlist(String term) throws SQLException {
+	public List<AutoComplete> getPrfColorlist(String term) throws SQLException {
 		List<AutoComplete> artnameeditarraylist = new ArrayList<AutoComplete>() ;
 		Connection con = null;
 		Statement st = null;
@@ -1116,7 +1119,7 @@ public class PrfDaoImpl implements PrfDao {
 	}
 
 	@Override
-	public List<ArticleDetails> getArticleTypeinEditGridlist()
+	public List<ArticleDetails> getPrfArticleTypelist()
 			throws SQLException {
 		List<ArticleDetails> arttypeeditarraylist = new ArrayList<ArticleDetails>() ;
 		Connection con = null;
@@ -1222,6 +1225,7 @@ public class PrfDaoImpl implements PrfDao {
 	//return noofrows;
 		return isdel;
 	}
+
 
 
 	

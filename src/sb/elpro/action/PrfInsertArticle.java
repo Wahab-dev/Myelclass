@@ -35,6 +35,9 @@ public class PrfInsertArticle extends Action  {
 			//Map<String,Object> listmap = new LinkedHashMap<String,Object>();
 			 response.setContentType("application/json");
 			 if(usersession != null){	
+				String oper =   request.getParameter("oper");
+				System.out.println("oper "+oper);
+				
 				String ctno = request.getParameter("ctno");
 				String action = request.getParameter("action");
 				String rows = request.getParameter("rows");
@@ -49,9 +52,9 @@ public class PrfInsertArticle extends Action  {
                 System.out.println("ctno "+ctno);
 				System.out.println("action "+action);
 				
-				if(action.equalsIgnoreCase("load")){
+				if(oper == null){
 					 System.out.println(" In Article LAOD");
-					List<PrfArticle> article = prfbo.getPrfArticleDetails(ctno,sidx,sord);
+					List<PrfArticle> article = prfbo.getPrfArticleDetails(sidx,sord);
 					int records = article.size();
 					System.out.println("Reords  "+records);
 					

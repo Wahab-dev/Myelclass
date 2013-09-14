@@ -12,7 +12,8 @@
 <script src="js/jquery-1.9.0.js"></script>
 <script src="js/jquery-1.9.0.min.js"></script> --%>
 <style type="text/css">
-#ui-datepicker-div { font-size: 11px; } 	
+#ui-datepicker-div { font-size: 11px; } 
+$('.ui-autocomplete').css('zIndex',1000); // z index for jqgfrid and autocomplete has been misalignment so we are manually setting it	
 </style>
 <script src="js/jquery-1.9.1.js"></script>
 <script src="js/jquery-ui.js"></script>
@@ -25,6 +26,7 @@
 <script src="js/elpro/prf.js"></script> 
 <!-- <script>!window.jQuery && document.write('<script src="js/elpro/prf.js"><\/script>');</script>  -->
 <script type="text/javascript">
+
 //Agent DDL
 function loadAgent(){
 	 var agentname = $("#prf_agentname").val();
@@ -34,7 +36,7 @@ function loadAgent(){
 	 		var agentctno = "<c:out value='${agentlist.contractNo}' />" ;
 	 		if(agentctno.length == 0 )
 			{
-					agentctno = "L0001";
+					agentctno = "L4501";
 			}
 	 		$("#prf_contractno").val(agentctno);
 		}

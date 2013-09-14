@@ -188,8 +188,8 @@ public class PrfBoImpl implements PrfBo {
 	}
 
 	@Override
-	public List<PrfArticle> getPrfArticleDetails(String myctno, String sidx, String sord) throws Exception {
-		ArrayList<PrfArticle> aticlearray = prfdao.getPrfArticleDetails(myctno,sidx,sord);
+	public List<PrfArticle> getPrfArticleDetails(String sidx, String sord) throws Exception {
+		ArrayList<PrfArticle> aticlearray = prfdao.getPrfArticleDetails(sidx,sord);
 		return aticlearray;
 	}
 
@@ -236,16 +236,16 @@ public class PrfBoImpl implements PrfBo {
 	}
 
 	@Override
-	public List<ArticleDetails> getArticleNameinEditGrid(String term)
+	public List<ArticleDetails> getPrfArticleName(String term)
 			throws Exception {
-		List<ArticleDetails> prfdarticlenamegridarray = prfdao.getArticleNameinEditGridlist(term);
+		List<ArticleDetails> prfdarticlenamegridarray = prfdao.getPrfArticleNamelist(term);
 		return prfdarticlenamegridarray;
 	}
 	
 	@Override
-	public List<ArticleDetails> getArticleTypeinEditGrid()
+	public List<ArticleDetails> getPrfArticleType()
 			throws Exception {
-		List<ArticleDetails> prfdarticletypegridarray = prfdao.getArticleTypeinEditGridlist();
+		List<ArticleDetails> prfdarticletypegridarray = prfdao.getPrfArticleTypelist();
 		return prfdarticletypegridarray;
 	}
 
@@ -275,8 +275,8 @@ public class PrfBoImpl implements PrfBo {
 	}
 
 	@Override
-	public List<AutoComplete> getColorinEditGrid(String term) throws Exception {
-		List<AutoComplete> prfcolrgridarray = prfdao.getColorGridlist(term);
+	public List<AutoComplete> getPrfColor(String term) throws Exception {
+		List<AutoComplete> prfcolrgridarray = prfdao.getPrfColorlist(term);
 		return prfcolrgridarray;
 	}
 

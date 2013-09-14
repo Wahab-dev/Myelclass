@@ -54,16 +54,16 @@ public class PrfAutocomplete extends Action {
 					 System.out.println(jsonOrdertanArray);
 					 out.println(jsonOrdertanArray);
 				}else if (action.equalsIgnoreCase("artname")){
-					String term = request.getParameter("arttype");
+					String term = request.getParameter("term");
 					System.out.println("Art type "+term);
-					List<ArticleDetails> articlelist =  prfbo.getArticleNameinEditGrid(term);
+					List<ArticleDetails> articlelist =  prfbo.getPrfArticleName(term);
 					System.out.println("List Value " +articlelist.size());
 					JSONArray jsonOrdertanArray = JSONArray.fromObject(articlelist);
 					 System.out.println(jsonOrdertanArray);
 			 		out.println(jsonOrdertanArray);
 				}else if (action.equalsIgnoreCase("arttype")){
 					//String term = request.getParameter("term");
-					List<ArticleDetails> articlelist =  prfbo.getArticleTypeinEditGrid();
+					List<ArticleDetails> articlelist =  prfbo.getPrfArticleType();
 					System.out.println("List Value " +articlelist.size());
 					JSONArray jsonOrdertanArray = JSONArray.fromObject(articlelist);
 					 System.out.println(jsonOrdertanArray);
@@ -71,7 +71,7 @@ public class PrfAutocomplete extends Action {
 				}
 				else if (action.equalsIgnoreCase("color")){
 					String term = request.getParameter("term");
-					List<AutoComplete> articlelist =  prfbo.getColorinEditGrid(term);
+					List<AutoComplete> articlelist =  prfbo.getPrfColor(term);
 					System.out.println("List Value " +articlelist.size());
 					JSONArray jsonOrdertanArray = JSONArray.fromObject(articlelist);
 					 System.out.println(jsonOrdertanArray);

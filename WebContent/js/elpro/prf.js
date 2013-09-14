@@ -4,224 +4,247 @@
  * 
  */
 $(document).ready(function() {
-	var grid = $("#list"); //table id
-	    
-	    
-	  /*   gridbtn.click( function()
-		    {
-			  */
-	    var ctno =$('#prf_contractno').val();
-		 alert(ctno);
-			 grid.jqGrid({ 
-				// url: "",
-				url:"/Myelclass/PrfinsertArticle.do?ctno="+ctno+"&action="+"load",   
-				datatype:"json",
-				colNames:['Article Type','Name','ArticleId', 'Color', 'Size','Size rem','Size avg','Subs','Selec','Selec P', 'Quantity','Unit', 'Pcs','Rate sign','Rate amt','Shipment','Tc sign','Tc amt','Tc to','Article Type','Ct','PrfArtId'],  
-			    colModel:[   
-					{name: 'prf_articletype',index:'articletype', width:80, sortable:true, editable: true, edittype:'select',						 
-							 editoptions: { 
-			            		 dataUrl:'/Myelclass/PrfAutocomplete.do?action=arttype',
-			            		 buildSelect: function(data) {
-			            		  	var response = jQuery.parseJSON(data);
-			                      	var s = '<select>';
-			                      	if (response && response.length) {
-			                          	for (var i = 0, l=response.length; i<l ; i++) {
-			                            	var ri = response[i].value;
-			                             	s += '<option value="'+ri+'">'+ri+'</option>';
-			                          	}
-			                        	}
-			                       	return s + "</select>";
-			                     	},
-			            			/*dataEvents :[{ 
-			            		        type: 'change',
-			          	  		        fn: function(e) {
-			            		            var thisval = $(e.target).val();
-			            		          //  $.post('/Myelclass/PrfAutocomplete.do?action=artname&arttype='+thisval,
-			            		           $.ajax({
-											     url: '/Myelclass/PrfAutocomplete.do?action=artname&arttype='+thisval,
-											     dataType: "json",
-											     type:"GET",
-											     success: function (data) {
-											    		//var response = jQuery.parseJSON(data);
-											    		alert('response'+data);
-											    		response($.map(data, function(item) {
-									                		 return { 
-									                             label: item.label,
-									                             shform: item.shform, //can add number of attributes here 
-									                             value: item.label // I am displaying both labe and value
-									                             };
-									                         }));
-											    		
-											    		
-								                      	var s = '<text>';
-								                      	if (response && response.length) {
-								                          	for (var i = 0, l=response.length; i<l ; i++) {
-								                            	var ri = response[i].value;
-								                             	s += '<option value="'+ri+'">'+ri+'</option>';
-								                          	}
-								                        	}
-								                       	return s + "</text>";
-											     }
-											   });//END AJAX */
-			            		            		
-			            		            /* function(data){
-			            		            	
-			            		                var res = $(data).html();
-			            		                alert("RES"+res);
-			            		                $("#prf_articlename").html(res);
-			            		            }); 
-			            		        }
-			            		    }]*/
-			            	},
-					},         
-					{name:'prf_articlename', index:'articlename', width:90, sortable:true,  editable:true, edittype:'select',					     
-						  editoptions:{///
-						  	maxlength: 50 , value: 'Select:Select',
-							   dataUrl:'/Myelclass/PrfAutocomplete.do?action=artname',
-			            		 buildSelect: function(data) {
-			            		  var response = jQuery.parseJSON(data);
-			                      var s = '<select>';
-			                      if (response && response.length) {
-			                          for (var i = 0, l=response.length; i<l ; i++) {
-			                             var ri = response[i].value;
-			                             s += '<option value="'+ri+'">'+ri+'</option>';
-			                          }
-			                        }
-			                       return s + "</select>";
-			                     },	 
-							},
-					 },
-					{name:'articleid', index:'articleid', sortable:true, width:90, editable:true, edittype:'text',hidden: false},
-					{name:'prf_color', index:'color', width:80, sortable:true, align:'right', editable:true,edittype:'text',
-						  editoptions:{
-								dataInit:function (elem) { 
-									$(elem).autocomplete({
-										minLength: 2,
-										source: function(request, response,term) {
-											var param = request.term;
-								            $.ajax({
-								                url: "/Myelclass/PrfAutocomplete.do?term="+param+"&action="+"color",
-								                dataType: "json",
-								                type:"POST",
-								                success: function (data) {
-								                	 response($.map(data, function(item) {
-								                		 return { 
-								                             label: item.label,
-								                             shform: item.shform, //can add number of attributes here 
-								                             value: item.label // I am displaying both labe and value
-								                             };
-								                         }));//END Response
-								                    },//END Success
-								            });//END AJAX
-										},
-									});
-									$('.ui-autocomplete').css('zIndex',1000); // z index for jqgfrid and autocomplete has been disaligned so we are manually setting it 
-									}
-								   }
-					 			},  
-					{name:'prf_size', index:'prf_size', width:55, editable:true, 
-						       formatter: sizeFmatter, editoptions: {size:10}
-					 },   
-					{name:'prf_sizerem', index:'sizerem', width:55, editable:true,edittype:'select',align:'left',
-							  editoptions:{value:{F:'F',S:'S',FS:'F/S',NA:'Double Butt'}},
-					},
-					{name:'prf_sizeavg', index:'sizeavg', width:55, editable:true,editoptions: {size:10}}, 
-					{name:'prf_substance', index:'substance', width:90, editable:true}, 
-					{name:'prf_selection', index:'selection', width:80, align:'right', editable:true, 
-							  edittype:'select',
-							  editoptions:{value:{A:'A',AB:'AB',ABC:'ABC',TR:'TR',Available:'Available'}}
-					},  
-					{name:'prf_selectionp', index:'selectionpercent', sortable:true, width:90,editable:true},   
-					{name:'prf_quantity', index:'quantity', sortable:true, width:80, align:'right',
-							  editable:true, editrules:{number:true}, formatter: 'number',  
-							  formatoptions: {decimalSeparator: ".", thousandsSeparator: ",", decimalPlaces: 2, defaultValue: '0.0000' },				        		  
-					},  
-					{name:'prf_unit', index:'unit', width:55, editable:true, edittype:'select',
-							  editoptions:{value:{sqft:'sq ft',skins:'skins',Garment:'Garment',NA:'NA'}}
-					},
-					{name:'prf_pcs', index:'pcs', sortable:true, width:90, editable:true, 
-					}, 
-					{name:'prf_ratesign', index:'ratesign', width:90, sortable:true, editable:true,
-							  edittype:'select',
-							  editoptions:{value:{$:'$',INR:'INR',Euro:'Euro',NA:'NA'}},
-					},  
-					{name:'prf_rateamt', index:'rateamt', width:90, sortable:true, editable:true}, 
-					{name:'prf_shipment', index:'shipment', width:90, sortable:true, editable:true, 
-						      edittype:'select',
-						      editoptions:{value:{Air:'Air',Sea:'Sea',Courier:'Courier',Truck:'Truck'}}
-					}, 
-					{name:'prf_tcsign', index:'tcsign', sortable:true, width:90, editable:true, 
-					  	  edittype:'select',
-					  	  editoptions:{value:{cents:'cents',paise:'paise',shillings:'shillings',NA:'NA'}}
-					}, 
-					{name:'prf_tcamt', index:'tcamt', sortable:true, width:90, editable:true, 
-					}, 
-					{name:'prf_tcto', index:'tcto', sortable:true, width:90, editable:true,
-						      edittype:'select',
-						      editoptions:{value:{IC:'IC',Cust:'Cust',ICMD:'IC/MD',NA:'NA'}}
-					}, 
-						      //editable:true,editrules:{required:true}, editoptions:{dataInit: function(element) {$(element).attr("readonly", "readonly"); }}} ---Field visible in grid, Form and read-only
-					{name:'prf_articletype', index:'type', sortable:true, width:90, editable:true, 
-							 	  edittype:'select', editoptions:{value:{FinishedLeather:'Finished Leather',LeatherGoods:'Leather Goods'}}
-					},	
-					{name:'prf_ctno', index:'prf_ctno', width:90, editable:true, hidden:true,
-						 editrules:{edithidden :true},editoptions:{ 
-			                           // FOR READ ONLY   
-			                             dataInit: function(element) { 
-			                            	 var ctnoval = $("#prf_contractno").val();
-			                            	 $(element).val(ctnoval);
-			                                  $(element).attr("readonly", "readonly"); 
-			                             }  
-			                           }
-					},
-					{name:'prf_articleid', index:'prf_articleid', width:90, editable:true, edittype:'text'}						  
-				],  
-				jsonReader : {  
-				  	repeatitems:false,
-			      	root: "rows",
-			      	page: "page", //calls first
-			      	total: "total" ,//calls Second
-			      	records: "records" //calls Third
-				},
-				caption: "Add Article",
-		    	pager: '#pager',
-		    	rowNum:6, 
-		    	rowList:[2,4,6],
-		        loadtext: "Bow Bow........... ",
-		        height : "auto",
-		        width:"auto",  
-		        sortname: 'articlename',  
-		        sortorder: 'desc',  
-		        emptyrecords: 'No records to display',
-					/* sortname: 'Name',
-					ignoreCase: true,
-					height: '100%',
-					viewrecords: true,
-					rownumbers: true,
-					sortorder: "desc",
-					pager: '#pager',
-					caption: "Demonstrate dependend select/dropdown lists (edit on double-click)" */
-			}).jqGrid('delGridRow',gr,{
-				height:280,
-				reloadAfterSubmit:false,
-				afterSubmit:function(data,postd){
-					console.log(data);
-					console.log(postd);
-					return {0:true};
-				},
-				afterComplete:function(data,postd){
-					return true;
-				},
-				url: "/Myelclass/PrfinsertArticle.do?action=delete",
-				msg: "Are u SURE u wanna Delete ??"
-			});	 	
+	
+	
+	var grid = $("#list"); //table id artinsert
+
+	 grid.jqGrid({ 
+		url:"/Myelclass/PrfinsertArticle.do",   
+		datatype:"json",
+		colNames:['Article ID','Article Type', 'Article Shform','Name','Color','Size','Size avg','Size Rem','Substance','Selection','Selp','Quantity','Unit','Pcs','Rate','RateSign','Rate','Shipment','Tc','tcsign','tcamt','tccust','Contract','Prfarticleid','User'],  
+	    colModel:[   
+			{name:'articleid', index:'articleid', width:90, sortable:true,  editable:true,  hidden: false,					     				 
+			 },
+			 {name:'articletype', index:'articletype', width:80, sortable:true, align:'right', editable:true, hidden: false, edittype:'select', 
+				 editoptions: { 
+          		 dataUrl:'/Myelclass/PrfAutocomplete.do?action=arttype',
+          		 type:"GET",
+          		 buildSelect: function(data) {
+          		  	var response = jQuery.parseJSON(data);
+                    	var s = '<select>';
+                    	if (response && response.length) {
+                        	for (var i = 0, l=response.length; i<l ; i++) {
+                          	var ri = response[i].value;
+                           	s += '<option value="'+ri+'">'+ri+'</option>';
+                        		}
+                      	}
+                     	return s + "</select>";
+                   	},
+                 } 
+			 },  	
+			{name:'articleshfrom', index:'articleshfrom', width:55, editable:true, hidden: false
+		    }, 
+			{name:'articlename', index:'articlename', width:90,  editable:true, hidden: false, edittype:'text',
+		    	  editoptions:{
+						dataInit:function (elem) { 
+							$(elem).autocomplete({
+								minLength: 2,
+								source: function(request, response,term) {
+									var param = request.term;
+						            $.ajax({
+						                url: "/Myelclass/PrfAutocomplete.do?term="+param+"&action="+"artname",
+						                dataType: "json",
+						                type:"GET",
+						                success: function (data) {
+						                	 response($.map(data, function(item) {
+						                		 return { 
+						                             id: item.articleid,
+						                             shform: item.articleshortform, //can add number of attributes here 
+						                             value: item.articlename, // I am displaying both labe and value
+						                             size: item.size,
+						                             subs: item.substance,
+						                             selec:item.selection ,
+						                             selp:item.selp ,
+						                             rate: item.rate,
+						                             tc: item.tc
+						                             };
+						                         }));//END Response
+	
+						                },//END Success
+						            });//END AJAX
+								},
+								select: function( event, ui ) { 
+									 $('#articleid').val(ui.item.id);
+						          	 $('#articleshfrom').val(ui.item.shform);
+						          	 $('#size').val(ui.item.size);
+						          	 $('#substance').val(ui.item.subs);
+						          	 $('#selection').val(ui.item.selec);
+						          	 $('#selectionpercent').val(ui.item.selp);
+						          	 $('#rate').val(ui.item.rate);
+						          	 $('#tc').val(ui.item.tc);
+						            } 
+							 });
+							$('.ui-autocomplete').css('zIndex',1000); // z index for jqgfrid and autocomplete has been misalignment so we are manually setting it 
+							}
+						   }
+			}, 
+			{name:'color', index:'color', width:90, sortable:true, hidden: false, editable:true, edittype:'text',
+				 editoptions:{
+						dataInit:function (elem) { 
+							$(elem).autocomplete({
+								minLength: 2,
+								source: function(request, response,term) {
+									var param = request.term;
+						            $.ajax({
+						                url: "/Myelclass/PrfAutocomplete.do?term="+param+"&action="+"color",
+						                dataType: "json",
+						                type:"POST",
+						                success: function (data) {
+						                	 response($.map(data, function(item) {
+						                		 return { 
+						                             label: item.value,
+						                             //shform: item.shform, //can add number of attributes here 
+						                             value: item.value // I am displaying both labe and value
+						                             };
+						                         }));//END Response
+	
+						                },//END Success
+						            });//END AJAX
+								},
+								
+							});
+							$('.ui-autocomplete').css('zIndex',1000); // z index for jqgfrid and autocomplete has been misalignment so we are manually setting it 
+							}
+						   }
+			
+			}, 	
+			{name:'size', index:'size', width:80, align:'right', hidden: false, editable:true,sortable:true,
+				 editoptions: { 
+						dataEvents:[{
+							type: 'focusout',
+							fn: function(e){
+								var sizeval = $("#size").val();
+								var size_minindex = sizeval.indexOf('/');
+								var size_maxindex = sizeval.indexOf(' '); // in order to avoid Size remarks. Make Size remrk seperate row in Table
+								var sizemin = sizeval.substring(0, size_minindex);
+								var sizemax=  sizeval.substring(size_minindex+1,size_maxindex);
+								var sizeavg = ( (parseFloat (sizemin) + parseFloat(sizemax)) /2) ;
+								$("#sizeavg").val(sizeavg);
+							}
+						}]  
+					  },
+			},  
+			{name:'sizeavg', index:'sizeavg', width:80, align:'right', editable:true, hidden: false}, 
+			{name:'sizerem', index:'sizerem', width:80, align:'right', editable:true, hidden: false, 
+				edittype:'select',align:'left',
+				  editoptions:{value:{F:'F',S:'S',FS:'F/S',NA:'Double Butt'}},
+			}, 
+			{name:'substance', index:'substance', sortable:true, hidden: false, width:80, align:'right',
+					  editable:true, 
+			},  
+			{name:'selection', index:'selection', width:90, sortable:true, hidden: false, editable:true,
+				edittype:'select',
+				  editoptions:{value:{A:'A',AB:'AB',ABC:'ABC',TR:'TR',Available:'Available'}}	
+			}, 
+			{name:'selectionpercent', index:'selectionpercent', width:90, sortable:true, editable:true, hidden: false
+				
+			}, 	
+		
+			{name:'quantity', index:'quantity', width:90, sortable:true, hidden: false, editable:true,
+				editable:true, editrules:{number:true}, formatter: 'number',  
+				  formatoptions: {decimalSeparator: ".", thousandsSeparator: ",", decimalPlaces: 2, defaultValue: '0.0000' },
+			}, 	
+			{name:'unit', index:'unit', width:90, sortable:true, hidden: false, editable:true,
+				edittype:'select',
+				  editoptions:{
+					  value:{sqft:'sq ft',skins:'skins',Garment:'Garment',NA:'NA'},
+					  dataEvents:[{
+							type: 'focusout',
+							fn: function(e){
+								var qty = $("#quantity").val();
+								alert("qty"+qty);
+								var unit = $("#unit option:selected").val();
+								alert("unit"+unit);
+								var sizeav = $("#sizeavg").val();
+								alert("sizeav"+sizeav);
+								var piecs = ((unit == "sqft") ? (parseInt (qty) / parseInt(sizeav)) : parseInt(qty)) ;
+								alert(piecs);
+								$("#pcs").val(parseInt(piecs));
+							}
+						}],
+						
+					  }, 
+			 }, 	
+			{name:'pcs', index:'pcs', width:90, sortable:true, hidden: false, editable:true}, 	
+			{name:'rate', index:'rate', width:90, sortable:true, hidden: false, editable:true}, 
+			{name:'ratesign', index:'ratesign', width:90, sortable:true, hidden: false, editable:true,
+				  edittype:'select',
+				  editoptions:{value:{$:'$',INR:'INR',Euro:'Euro',NA:'NA'}},
+			},  
+			{name:'rateamt', index:'rateamt', width:90, sortable:true, hidden: false, editable:true}, 
+			{name:'shipment', index:'shipment', width:90, sortable:true, editable:true, hidden: false,
+			      edittype:'select',
+			      editoptions:{value:{Air:'Air',Sea:'Sea',Courier:'Courier',Truck:'Truck'}}
+			}, 
+			{name:'tc', index:'tc', width:90, sortable:true, editable:true, hidden: false}, 
+			{name:'tcsign', index:'tcsign', width:90, sortable:true, editable:true, hidden: false,
+				edittype:'select',
+			  	  editoptions:{value:{cents:'cents',paise:'paise',shillings:'shillings',NA:'NA'}}
+			}, 	
+			{name:'tcamt', index:'tcamt', width:90, sortable:true, editable:true, hidden: false}, 	
+			{name:'tccust', index:'tccust', width:90, sortable:true, editable:true, hidden: false,
+				 edittype:'select',
+			      editoptions:{value:{IC:'IC',Cust:'Cust',ICMD:'IC/MD',NA:'NA'}}
+			}, 	
+			{name:'contractno', index:'contractno', width:90, sortable:true, editable:true,editoptions:{readonly: true}, hidden: false}, 	
+			{name:'prfarticleid', index:'prfarticleid', width:90, sortable:true, editable:true, hidden: false}, 	
+			
+			{name:'user', index:'user', width:90, sortable:true, editable:true, hidden: false}, 	
+									  
+		],  
+		jsonReader : {  
+		  	repeatitems:false,
+	      	root: "rows",
+	      	page: "page", //calls first
+	      	total: "total" ,//calls Second
+	      	records: "records" //calls Third
+		},
+		caption: "Add Article",
+  	pager: '#pager',
+  	rowNum:6, 
+  	rowList:[6,8,10],
+      loadtext: "Bow Bow........... ",
+      height : "auto",
+      width:"auto",  
+      sortname: 'articlename',  
+      sortorder: 'desc',  
+      emptyrecords: 'No records to display',
+      editurl: "/Myelclass/PrfinsertArticle.do",
+		}).jqGrid('navGrid','#pager',{add:true, edit:true, del:true, search: false}, 
+			{ // edit option
+			  beforeShowForm: function(form) { 
+				  alert("Hola ");
+		      },
+		   	  closeAfterEdit: true,
+		    },
+		    { // add option
+		    	 top: 150,
+			 	  left: 200,
+			 	  width : 350,
+			 	 onCellSelect : function(rowid, iCol, cellcontent) {
+			 		alert("2345");
+			 		var myval =grid.jqGrid('getCell', rowid,'substance');
+			 		alert("myval  "+myval);
+			 	 },
+		          beforeShowForm: function(form) { 
+		           	 var ctnoval = $("#prf_contractno").val();
+		           	 $("#contractno").val(ctnoval);
+		          },
+				  closeAfterAdd: true,
+			 },
+			 {
+					// del option
+					 
+			 }    
+	 	);
+		 	
 		
 			
 			
 			//Formatter 
-			function sizeFmatter(cellvalue, options, rowObject){
+			/*function sizeFmatter(cellvalue, options, rowObject){
 				return rowObject.prf_color + " / " + rowObject.prf_selection;
-			}
+			}*/
 		//Commssion AutoComplete 		
 			 $('#prf_elclasscommission').autocomplete({
 					minLength: 1,
@@ -496,7 +519,8 @@ $(document).ready(function() {
 		  		        $("#prfcommissiondiv" + counter).remove();
 		  		 
 		  		     });
-		   });
+ });
+
 	
 	
  

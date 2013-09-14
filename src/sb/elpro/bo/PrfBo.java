@@ -73,16 +73,14 @@ public interface PrfBo  {
 
 	public int saveprfArticle(PrfArticle prfartbean)throws Exception;
 	public List<ArticleDetails> updateprfArticle(ArticleDetails prfbean)throws Exception;
-	public List<PrfArticle> getPrfArticleDetails(String myctno, String sidx, String sord)throws Exception;
+	public List<PrfArticle> getPrfArticleDetails( String sidx, String sord)throws Exception;
 
 	//Edit Values 
 	public List<ArticleDetails> editprfArticle(String prfarticleid) throws Exception;
 
-	public List<ArticleDetails> getArticleNameinEditGrid(String term) throws Exception;
+	public List<ArticleDetails> getPrfArticleName(String term) throws Exception;
 	
-	public List<ArticleDetails> getArticleTypeinEditGrid()throws Exception;
-	
-	public List<AutoComplete> getColorinEditGrid(String term)throws Exception;
+	public List<AutoComplete> getPrfColor(String term)throws Exception;
 
 	public List<CommissionDetails> getOtherCommissionDetails(String othercommissnterm) throws Exception;
 
@@ -101,6 +99,9 @@ public interface PrfBo  {
 
 	public boolean delPrfArticleDetails(PrfArticle artindertdetail,
 			String artid, String sidx, String sord)throws Exception;
+
+	public List<ArticleDetails> getPrfArticleType()throws Exception;
+
 
 	
 	
