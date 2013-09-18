@@ -13,11 +13,14 @@
 <script src="js/jquery-1.9.0.min.js"></script> --%>
 <style type="text/css">
 #ui-datepicker-div { font-size: 11px; } 
-$('.ui-autocomplete').css('zIndex',1000); // z index for jqgfrid and autocomplete has been misalignment so we are manually setting it	
+table.EditTable > tbody > tr.FormData > td.DataTD > input[type="select"] {
+    width: 115px !important;
+}
+	
 </style>
 <script src="js/jquery-1.9.1.js"></script>
 <script src="js/jquery-ui.js"></script>
-<link rel="stylesheet" type="text/css" media="screen" href="css/pepper-grinder/jquery-ui-1.10.3.custom.css" />
+<link rel="stylesheet" type="text/css" media="screen" href="css/redmond/jquery-ui-1.10.3.custom.css" />
 <link rel="stylesheet" type="text/css" media="screen" href="css/ui.jqgrid.css" />
 
 <script src="js/i18n/grid.locale-en.js" type="text/javascript"></script>
@@ -49,6 +52,7 @@ function loadAgent(){
 		<table width="812" border="1" cellspacing="0" cellpadding="0" >
    		<tr>  			
    			<td>Welcome ${user.name}...</td> 
+   			<h:text property="userinsession" styleId="userinsession" value="${user.name}" readonly="true" ></h:text>
    			<td><h:submit property="prfaction" value="Logout"></h:submit></td> 
    		</tr>
    </table>
@@ -131,7 +135,7 @@ function loadAgent(){
        	 									ADD: <h:text property="prf_add" styleId="prf_add" styleClass="prf_delivrydate"></h:text><br /><br /> 
        	 									
          									Destination: <h:text property="prf_destination" styleId="prf_destination"></h:text><br /><br /> 
-        									Terms : <h:select property="prf_terms" styleId="prf_terms">
+        									Terms : <h:select  property="prf_terms" styleId="prf_terms">
        		 													<h:option value="0">select Terms</h:option>
           															<c:forEach items="${termsarray}" var ="termsList">
           																<h:option value="${termsList.termName}">

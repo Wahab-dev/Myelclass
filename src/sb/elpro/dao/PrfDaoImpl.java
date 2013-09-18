@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+
 import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.PreparedStatement;
 import com.mysql.jdbc.Statement;
@@ -674,12 +675,16 @@ public class PrfDaoImpl implements PrfDao {
 		try{			
 			con = DBConnection.getConnection();
 			st = (Statement) con.createStatement();
-			String sql = "SELECT articleid, articlename, size, substance, selection, selectionpercent, color, quantity, unit, pcs, rate, tc, contractno, prfarticleid FROM tbl_prf_article order by "+sidx+" "+sord+"";
+			String sql = "SELECT articleid, articletype, articleshfrom, articlename, size, substance, selection, selectionpercent, color, quantity, unit, pcs, rate, tc, user, contractno, prfarticleid FROM tbl_prf_article order by "+sidx+" "+sord+"";
 			System.out.println(sql);
 			rs = st.executeQuery(sql);
 			while(rs.next()) {	
+				/*String qty = rs.getString("quantity") +" "+rs.getString("unit");
+				*/
 				PrfArticle artbean = new PrfArticle();
 				artbean.setArticleid(rs.getString("articleid"));
+				artbean.setPrf_articletype(rs.getString("articletype"));
+				artbean.setArtshform(rs.getString("articleshfrom"));
 				artbean.setPrf_articlename(rs.getString("articlename"));
 				artbean.setPrf_size(rs.getString("size"));
 				artbean.setPrf_substance(rs.getString("substance"));
@@ -691,8 +696,10 @@ public class PrfDaoImpl implements PrfDao {
 				artbean.setPrf_articleid(rs.getString("color"));
 				artbean.setPrf_unit(rs.getString("unit"));
 				artbean.setPrf_pieces(rs.getString("pcs"));
-				artbean.setPrf_price(rs.getString("rate"));
-				artbean.setPrf_tc(rs.getString("tc"));	
+				artbean.setPrf_rate(rs.getString("rate"));
+				artbean.setPrf_tc(rs.getString("tc"));
+				System.out.println(" tC  "+artbean.getPrf_tc());
+				artbean.setUser(rs.getString("user"));
 				artbean.setPrf_articleid(rs.getString("prfarticleid"));	
 				System.out.println("Artilce REtrieved Successfully");
 				System.out.println("Article name "+artbean.getPrf_articlename());
@@ -871,6 +878,21 @@ public class PrfDaoImpl implements PrfDao {
 			rs = st.executeQuery(sql);
 			
 			while(rs.next()) {	
+				String siz = rs.getString("size");
+				int size_index = siz.indexOf(' ');
+				String sizval = siz.substring(0, size_index);
+				String sizerem = siz.substring(size_index+1);
+				
+				String rat = rs.getString("rate");
+				System.out.println("rat "+rat);
+				int shipmntindex = siz.lastIndexOf(' ');
+				String ratesign = rat.substring(0,1);
+				System.out.println(" ratesign"+ratesign);
+				String rateamt = rat.substring(1,shipmntindex-1);
+				System.out.println(" rateamt"+rateamt);
+				String shipment = rat.substring(shipmntindex=1);
+				System.out.println(" shipment"+shipment);
+				
 				//destarraylist.add(rs.getString("destname"));
 				ArticleDetails artbean = new ArticleDetails();
 				//artbean.setLabel(rs.getString("articletype"));
@@ -878,11 +900,14 @@ public class PrfDaoImpl implements PrfDao {
 				artbean.setArticlename(rs.getString("articlename"));
 				artbean.setArticleid(rs.getString("articleid"));
 				artbean.setColor(rs.getString("color"));
-				artbean.setSize(rs.getString("size")); 
+				artbean.setSize(sizval); 
+				artbean.setSize_remarks(sizerem);
 				artbean.setSubstance(rs.getString("substance"));
 				artbean.setSelection(rs.getString("selection"));
 				artbean.setSelp(rs.getString("selectionpercent"));
-				artbean.setRate(rs.getString("rate"));
+				artbean.setRate_sign(ratesign);
+				artbean.setRateamt(rateamt);
+				artbean.setShipment(shipment);
 				artbean.setTc(rs.getString("tc"));
 				artnameeditarraylist.add(artbean);
 				}
@@ -1074,7 +1099,7 @@ public class PrfDaoImpl implements PrfDao {
 	}
 
 	@Override
-	public boolean addprfArticle(PrfArticle artindertdetail, String ctno,
+	public boolean addprfArticle(PrfArticle artindertdetail, 
 			String sidx, String sord) throws SQLException {
 		Connection con = null;
 		PreparedStatement pst = null;
@@ -1082,8 +1107,8 @@ public class PrfDaoImpl implements PrfDao {
 		boolean isadded = true;
 		try{			
 			con = DBConnection.getConnection();
-			StringBuffer sql_saveprfArticle = new StringBuffer("insert into tbl_prf_article (articleid, articlename, size, substance, selection, selectionpercent, color, quantity, unit, pcs, rate, tc, contractno, articletype, articleshfrom)");
-			sql_saveprfArticle.append("values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+			StringBuffer sql_saveprfArticle = new StringBuffer("insert into tbl_prf_article (articleid, articlename, size, substance, selection, selectionpercent, color, quantity, unit, pcs, rate, tc, contractno, articletype, articleshfrom,user)");
+			sql_saveprfArticle.append("values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
 			String sqlquery_saveprfArticle = sql_saveprfArticle.toString();
 			pst = (PreparedStatement) con.prepareStatement(sqlquery_saveprfArticle);
 			pst.setString(1, artindertdetail.getArticleid());
@@ -1103,6 +1128,7 @@ public class PrfDaoImpl implements PrfDao {
 			pst.setString(13, artindertdetail.getPrf_contractno());
 			pst.setString(14, artindertdetail.getPrf_articletype());
 			pst.setString(15, artindertdetail.getArtshform() );
+			pst.setString(16, artindertdetail.getUser());
 			System.out.println("getContractno " +artindertdetail.getPrf_contractno());
 			noofrows = pst.executeUpdate();
 			System.out.println("Sucessfully inserted the record.." + noofrows);

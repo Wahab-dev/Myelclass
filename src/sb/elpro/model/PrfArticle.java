@@ -24,19 +24,19 @@ public class PrfArticle implements Serializable {
 	private String articleid;
 	private String prf_articlename;
 	private String prf_color;
-	private String prf_substancemin;
-	private String prf_substancemax;
+	/*private String prf_substancemin;
+	private String prf_substancemax;*/
 	private String prf_substance;
-	private String prf_sizemin;
-	private String prf_sizemax;
+	/*private String prf_sizemin;
+	private String prf_sizemax;*/
 	private String prf_sizeavg;
 	private String prf_sizeremarks;
 	private String prf_articletype;
 	private String prf_selection;
-	private String prf_selectionp1;
+	/*private String prf_selectionp1;
 	private String prf_selectionp2;
 	private String prf_selectionp3;
-	private String prf_selectionp4;
+	private String prf_selectionp4;*/
 	private String prf_quantity;
 	private String prf_unit;
 	private String prf_pieces;
@@ -53,6 +53,7 @@ public class PrfArticle implements Serializable {
 	private String prf_contractno;
 	private String artshform;
 	private String checkboxValue;
+	private String user;
 	
 	/**
 	 * @return the prf_articleid
@@ -93,27 +94,27 @@ public class PrfArticle implements Serializable {
 	/**
 	 * @return the prf_substancemin
 	 */
-	public String getPrf_substancemin() {
+	/*public String getPrf_substancemin() {
 		return prf_substancemin;
 	}
-	/**
+	*//**
 	 * @param prf_substancemin the prf_substancemin to set
-	 */
+	 *//*
 	public void setPrf_substancemin(String prf_substancemin) {
 		this.prf_substancemin = prf_substancemin;
 	}
-	/**
+	*//**
 	 * @return the prf_substancemax
-	 */
+	 *//*
 	public String getPrf_substancemax() {
 		return prf_substancemax;
 	}
-	/**
+	*//**
 	 * @param prf_substancemax the prf_substancemax to set
-	 */
+	 *//*
 	public void setPrf_substancemax(String prf_substancemax) {
 		this.prf_substancemax = prf_substancemax;
-	}
+	}*/
 	/**
 	 * @return the prf_substance
 	 */
@@ -129,27 +130,27 @@ public class PrfArticle implements Serializable {
 	/**
 	 * @return the prf_sizemin
 	 */
-	public String getPrf_sizemin() {
+	/*public String getPrf_sizemin() {
 		return prf_sizemin;
 	}
-	/**
+	*//**
 	 * @param prf_sizemin the prf_sizemin to set
-	 */
+	 *//*
 	public void setPrf_sizemin(String prf_sizemin) {
 		this.prf_sizemin = prf_sizemin;
 	}
-	/**
+	*//**
 	 * @return the prf_sizemax
-	 */
+	 *//*
 	public String getPrf_sizemax() {
 		return prf_sizemax;
 	}
-	/**
+	*//**
 	 * @param prf_sizemax the prf_sizemax to set
-	 */
+	 *//*
 	public void setPrf_sizemax(String prf_sizemax) {
 		this.prf_sizemax = prf_sizemax;
-	}
+	}*/
 	/**
 	 * @return the prf_sizeavg
 	 */
@@ -201,51 +202,51 @@ public class PrfArticle implements Serializable {
 	/**
 	 * @return the prf_selectionp1
 	 */
-	public String getPrf_selectionp1() {
+	/*public String getPrf_selectionp1() {
 		return prf_selectionp1;
 	}
-	/**
+	*//**
 	 * @param prf_selectionp1 the prf_selectionp1 to set
-	 */
+	 *//*
 	public void setPrf_selectionp1(String prf_selectionp1) {
 		this.prf_selectionp1 = prf_selectionp1;
 	}
-	/**
+	*//**
 	 * @return the prf_selectionp2
-	 */
+	 *//*
 	public String getPrf_selectionp2() {
 		return prf_selectionp2;
 	}
-	/**
+	*//**
 	 * @param prf_selectionp2 the prf_selectionp2 to set
-	 */
+	 *//*
 	public void setPrf_selectionp2(String prf_selectionp2) {
 		this.prf_selectionp2 = prf_selectionp2;
 	}
-	/**
+	*//**
 	 * @return the prf_selectionp3
-	 */
+	 *//*
 	public String getPrf_selectionp3() {
 		return prf_selectionp3;
 	}
-	/**
+	*//**
 	 * @param prf_selectionp3 the prf_selectionp3 to set
-	 */
+	 *//*
 	public void setPrf_selectionp3(String prf_selectionp3) {
 		this.prf_selectionp3 = prf_selectionp3;
 	}
-	/**
+	*//**
 	 * @return the prf_selectionp4
-	 */
+	 *//*
 	public String getPrf_selectionp4() {
 		return prf_selectionp4;
 	}
-	/**
+	*//**
 	 * @param prf_selectionp4 the prf_selectionp4 to set
-	 */
+	 *//*
 	public void setPrf_selectionp4(String prf_selectionp4) {
 		this.prf_selectionp4 = prf_selectionp4;
-	}
+	}*/
 	/**
 	 * @return the prf_quantity
 	 */
@@ -449,5 +450,17 @@ public class PrfArticle implements Serializable {
 	 */
 	public void setArtshform(String artshform) {
 		this.artshform = artshform;
+	}
+	/**
+	 * @return the user
+	 */
+	public String getUser() {
+		return user;
+	}
+	/**
+	 * @param user the user to set
+	 */
+	public void setUser(String user) {
+		this.user = user;
 	}
 }

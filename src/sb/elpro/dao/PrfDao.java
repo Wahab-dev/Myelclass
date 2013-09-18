@@ -41,12 +41,7 @@ public interface PrfDao {
 	
 	ArrayList<CustomerDetails> getCustomerList(String custterm) throws SQLException;
 
-	/*ArrayList<ConsigneeDetails> getConsigneeList()throws SQLException;
 
-	ArrayList<NotifyConsigneeDetails> getNotifyList()throws SQLException;
-
-	ArrayList<BankDetails> getBankList() throws SQLException; 
-*/
 	ArrayList<DestinationDetails> getDestinationList() throws SQLException;
 
 	ArrayList<PaymentDetails> getPaymnetList() throws SQLException;
@@ -98,7 +93,7 @@ public interface PrfDao {
 
 	ArrayList<NotifyConsigneeDetails> getnotifyList(String notifyterm)throws SQLException;
 
-	boolean addprfArticle(PrfArticle artindertdetail, String ctno, String sidx,
+	boolean addprfArticle(PrfArticle artindertdetail, String sidx,
 			String sord)throws SQLException;
 
 	boolean editprfArticle(PrfArticle artindertdetail, String ctno,

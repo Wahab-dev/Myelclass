@@ -150,7 +150,7 @@ public class PrfBoImpl implements PrfBo {
 	public int saveprfArticle(PrfArticle prfarticlebean) 
 			throws Exception  {
 		int rowsinserted = 0;
-		String selectp1 = null; 
+		/*String selectp1 = null; 
 		String selectp2 = null; 
 		String selectp3 = null;
 		String selectp4 = null;
@@ -171,10 +171,10 @@ public class PrfBoImpl implements PrfBo {
 		 selectp1 = prfarticlebean.getPrf_selectionp1();
 		 selectp2 = prfarticlebean.getPrf_selectionp2();
 		 selectp3 = prfarticlebean.getPrf_selectionp3();		
-		 selectp4 = prfarticlebean.getPrf_selectionp4();
+		 selectp4 = prfarticlebean.getPrf_selectionp4();*/
 		 
-		 String selecp = selectp1+"%"+selectp2+"%"+selectp3+"%"+selectp4;
-		 prfarticlebean.setPrf_selectionp(selecp);
+		// String selecp = selectp1+"%"+selectp2+"%"+selectp3+"%"+selectp4;
+		// prfarticlebean.setPrf_selectionp(selecp);
 		 
 		 String rate  = prfarticlebean.getPrf_ratesign() +" "+  prfarticlebean.getPrf_rate() +" "+  prfarticlebean.getPrf_shipment();
 		 prfarticlebean.setPrf_price(rate);
@@ -282,8 +282,8 @@ public class PrfBoImpl implements PrfBo {
 
 	@Override
 	public boolean addPrfArticleDetails(PrfArticle artindertdetail,
-			String ctno, String sidx, String sord) throws Exception {
-		boolean isadded = prfdao.addprfArticle(artindertdetail,ctno, sidx, sord);
+			String sidx, String sord) throws Exception {
+		boolean isadded = prfdao.addprfArticle(artindertdetail, sidx, sord);
 		return isadded;
 	}
 

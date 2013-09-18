@@ -92,7 +92,7 @@ public interface PrfBo  {
 
 	
 	public boolean addPrfArticleDetails(PrfArticle artindertdetail,
-			String ctno, String sidx, String sord)throws Exception;
+			String sord, String sidx)throws Exception;
 
 	public boolean editPrfArticleDetails(PrfArticle artindertdetail,
 			String ctno, String sidx, String sord)throws Exception;

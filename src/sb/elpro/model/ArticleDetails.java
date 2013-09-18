@@ -40,6 +40,7 @@ public class ArticleDetails implements Serializable {
 	private String rate_sign;
 	private String rate;
 	private String pieces;
+	private String rateamt;
 	private String shipment;
 	private String tc;
 	private String tc_currency;
@@ -470,6 +471,18 @@ public class ArticleDetails implements Serializable {
 	 */
 	public void setLabel(String label) {
 		this.label = label;
+	}
+	/**
+	 * @return the rateamt
+	 */
+	public String getRateamt() {
+		return rateamt;
+	}
+	/**
+	 * @param rateamt the rateamt to set
+	 */
+	public void setRateamt(String rateamt) {
+		this.rateamt = rateamt;
 	}
 		
 

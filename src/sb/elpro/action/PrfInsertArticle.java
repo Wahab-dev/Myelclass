@@ -37,7 +37,7 @@ public class PrfInsertArticle extends Action  {
 			 if(usersession != null){	
 				String oper =   request.getParameter("oper");
 				System.out.println("oper "+oper);
-				
+				String artaxn = request.getParameter("oper");
 				String ctno = request.getParameter("ctno");
 				String action = request.getParameter("action");
 				String rows = request.getParameter("rows");
@@ -83,32 +83,52 @@ public class PrfInsertArticle extends Action  {
 					/*JSONArray jsonOrderArray = JSONArray.fromObject(article);
 					System.out.println(jsonOrderArray);					
 			 		out.println(jsonOrderArray);*/
-				}else{
-					String artaxn = request.getParameter("oper");
-					System.out.println("artaxn "+artaxn);
+				}else if (oper.equalsIgnoreCase("add")){
+					System.out.println(" In Article Add");
+					String sizerem = request.getParameter("sizerem");
+					String siz = request.getParameter("size");
+					String size = sizerem+" "+siz;
+					System.out.println("size "+size);
+					
+					String tc = request.getParameter("tcamt");
+					String tcsig = request.getParameter("tcsign");
+					String tcto = request.getParameter("tccust");
+					String Tc = tc+" "+tcsig+" "+tcto;
+					System.out.println("Tc "+Tc);
+					
+					String rat = request.getParameter("rateamt");
+					String ratsig = request.getParameter("ratesign");
+					String ship = request.getParameter("shipment");
+					String rate = ratsig+" "+rat+" "+ship;
+					System.out.println("rate"+rate);
+					
 					PrfArticle artindertdetail = new PrfArticle();
-					 artindertdetail.setPrf_contractno(request.getParameter("prf_ctno"));
+					 artindertdetail.setPrf_contractno(request.getParameter("contractno"));
 					 artindertdetail.setArticleid(request.getParameter("articleid")) ;
-					 artindertdetail.setPrf_articlename(request.getParameter("prf_articlename"));
-					 artindertdetail.setPrf_articletype(request.getParameter("prf_articletype"));
-					 artindertdetail.setPrf_color(request.getParameter("prf_color"));
-					 artindertdetail.setPrf_rate(request.getParameter("prf_rateamt"));
-					 artindertdetail.setPrf_ratesign(request.getParameter("prf_ratesign"));
-					 artindertdetail.setPrf_shipment(request.getParameter("prf_shipment"));
-					 artindertdetail.setPrf_sizeavg(request.getParameter("prf_sizeavg")); 
-					 artindertdetail.setPrf_sizeremarks(request.getParameter("prf_sizerem"));
-					 artindertdetail.setPrf_tc(request.getParameter("prf_tcamt"));
-					 artindertdetail.setPrf_tccurrency(request.getParameter("prf_tcsign"));
-					 artindertdetail.setPrf_tcagent(request.getParameter("prf_tcto"));
-					 artindertdetail.setPrf_unit(request.getParameter("prf_unit"));
-					 artindertdetail.setPrf_pieces(request.getParameter("prf_pcs"));
-					 artindertdetail.setPrf_quantity(request.getParameter("prf_quantity"));
-					 artindertdetail.setPrf_selection(request.getParameter("prf_selection"));
-					 artindertdetail.setPrf_selectionp(request.getParameter("prf_selectionp"));
-					 artindertdetail.setPrf_size(request.getParameter("prf_size"));
-					 artindertdetail.setPrf_substance(request.getParameter("prf_substance"));
-					 artindertdetail.setArtshform("NA");
-					if(artaxn.equalsIgnoreCase("edit")){
+					 artindertdetail.setPrf_articlename(request.getParameter("articlename"));
+					 artindertdetail.setArtshform(request.getParameter("articleshfrom"));
+					 artindertdetail.setPrf_articletype(request.getParameter("articletype"));
+					 artindertdetail.setPrf_color(request.getParameter("color"));
+					 artindertdetail.setPrf_rate(rate);
+					 artindertdetail.setPrf_tc(Tc);
+					 artindertdetail.setPrf_unit(request.getParameter("unit"));
+					 artindertdetail.setPrf_pieces(request.getParameter("pcs"));
+					 artindertdetail.setPrf_quantity(request.getParameter("quantity"));
+					 artindertdetail.setPrf_selection(request.getParameter("selection"));
+					 artindertdetail.setPrf_selectionp(request.getParameter("selectionpercent"));
+					 artindertdetail.setPrf_size(size);
+					 artindertdetail.setPrf_substance(request.getParameter("substance"));
+					 artindertdetail.setUser(request.getParameter("user"));
+					 
+					 boolean isPrfArticleAdded = prfbo.addPrfArticleDetails(artindertdetail,sidx,sord);
+					System.out.println("isPrfArticleAdded"+isPrfArticleAdded);
+					jsonobj.put("message", "Successfully Inserted The Record");
+					
+					System.out.println(jsonobj);		
+					out.println(jsonobj);
+				}else{
+					 //artindertdetail.setArtshform("NA");
+					/*if(artaxn.equalsIgnoreCase("edit")){
 						String artid = request.getParameter("prf_articleid");
 						 System.out.println(" In Article EDIZT");
 						 boolean isPrfArticleUpdated = prfbo.editPrfArticleDetails(artindertdetail,artid,sidx,sord);
@@ -123,7 +143,7 @@ public class PrfInsertArticle extends Action  {
 						System.out.println("artid"+artid);
 						boolean isPrfArticleDel = prfbo.delPrfArticleDetails(artindertdetail,artid,sidx,sord);
 						System.out.println("isPrfArticleDel"+isPrfArticleDel);
-					}
+					}*/
 				}
 						
 				return null;
