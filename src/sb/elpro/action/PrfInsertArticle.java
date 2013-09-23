@@ -32,13 +32,10 @@ public class PrfInsertArticle extends Action  {
 			usersession = request.getSession(false);
 			PrintWriter out = response.getWriter();
 			JSONObject jsonobj = new JSONObject();
-			//Map<String,Object> listmap = new LinkedHashMap<String,Object>();
-			 response.setContentType("application/json");
+			response.setContentType("application/json");
 			 if(usersession != null){	
 				String oper =   request.getParameter("oper");
 				System.out.println("oper "+oper);
-				String artaxn = request.getParameter("oper");
-				String ctno = request.getParameter("ctno");
 				String action = request.getParameter("action");
 				String rows = request.getParameter("rows");
                 String pag = request.getParameter("page");
@@ -49,8 +46,7 @@ public class PrfInsertArticle extends Action  {
                 System.out.println("page "+pag); //1
                 System.out.println("sidx "+sidx);
                 System.out.println("sord "+sord);
-                System.out.println("ctno "+ctno);
-				System.out.println("action "+action);
+               System.out.println("action "+action);
 				
 				if(oper == null){
 					 System.out.println(" In Article LAOD");
@@ -77,58 +73,85 @@ public class PrfInsertArticle extends Action  {
 					jsonobj.put("page", page);
 					jsonobj.put("records", records);
 					jsonobj.put("rows", article);
-					
 					System.out.println(jsonobj);		
 					out.println(jsonobj);
-					/*JSONArray jsonOrderArray = JSONArray.fromObject(article);
-					System.out.println(jsonOrderArray);					
-			 		out.println(jsonOrderArray);*/
-				}else if (oper.equalsIgnoreCase("add")){
-					System.out.println(" In Article Add");
-					String sizerem = request.getParameter("sizerem");
-					String siz = request.getParameter("size");
-					String size = sizerem+" "+siz;
+				}else {
+					String sizerem = request.getParameter("prf_sizeremarks");
+					String siz = request.getParameter("prf_size");
+					String size = siz+" "+sizerem;
 					System.out.println("size "+size);
 					
-					String tc = request.getParameter("tcamt");
-					String tcsig = request.getParameter("tcsign");
-					String tcto = request.getParameter("tccust");
+					String tc = request.getParameter("prf_tcamt");
+					String tcsig = request.getParameter("prf_tccurrency");
+					String tcto = request.getParameter("prf_tcagent");
 					String Tc = tc+" "+tcsig+" "+tcto;
 					System.out.println("Tc "+Tc);
 					
-					String rat = request.getParameter("rateamt");
-					String ratsig = request.getParameter("ratesign");
-					String ship = request.getParameter("shipment");
+					String rat = request.getParameter("prf_rateamt");
+					String ratsig = request.getParameter("prf_ratesign");
+					String ship = request.getParameter("prf_shipment");
 					String rate = ratsig+" "+rat+" "+ship;
 					System.out.println("rate"+rate);
 					
 					PrfArticle artindertdetail = new PrfArticle();
-					 artindertdetail.setPrf_contractno(request.getParameter("contractno"));
+					 artindertdetail.setPrf_contractnum(request.getParameter("prf_contractnum"));
 					 artindertdetail.setArticleid(request.getParameter("articleid")) ;
-					 artindertdetail.setPrf_articlename(request.getParameter("articlename"));
-					 artindertdetail.setArtshform(request.getParameter("articleshfrom"));
-					 artindertdetail.setPrf_articletype(request.getParameter("articletype"));
-					 artindertdetail.setPrf_color(request.getParameter("color"));
+					 artindertdetail.setPrf_articleid(request.getParameter("prf_articleid")) ;
+					 artindertdetail.setPrf_articlename(request.getParameter("prf_articlename"));
+					 artindertdetail.setArtshform(request.getParameter("artshform"));
+					 artindertdetail.setPrf_articletype(request.getParameter("prf_articletype"));
+					 artindertdetail.setPrf_color(request.getParameter("prf_color"));
 					 artindertdetail.setPrf_rate(rate);
 					 artindertdetail.setPrf_tc(Tc);
-					 artindertdetail.setPrf_unit(request.getParameter("unit"));
-					 artindertdetail.setPrf_pieces(request.getParameter("pcs"));
-					 artindertdetail.setPrf_quantity(request.getParameter("quantity"));
-					 artindertdetail.setPrf_selection(request.getParameter("selection"));
-					 artindertdetail.setPrf_selectionp(request.getParameter("selectionpercent"));
+					 artindertdetail.setPrf_unit(request.getParameter("prf_unit"));
+					 artindertdetail.setPrf_pieces(request.getParameter("prf_pieces"));
+					 artindertdetail.setPrf_quantity(request.getParameter("prf_quantity"));
+					 artindertdetail.setPrf_selection(request.getParameter("prf_selection"));
+					 artindertdetail.setPrf_selectionp(request.getParameter("prf_selectionp"));
 					 artindertdetail.setPrf_size(size);
-					 artindertdetail.setPrf_substance(request.getParameter("substance"));
+					 artindertdetail.setPrf_substance(request.getParameter("prf_substance"));
 					 artindertdetail.setUser(request.getParameter("user"));
-					 
-					 boolean isPrfArticleAdded = prfbo.addPrfArticleDetails(artindertdetail,sidx,sord);
-					System.out.println("isPrfArticleAdded"+isPrfArticleAdded);
-					jsonobj.put("message", "Successfully Inserted The Record");
+					if(oper.equalsIgnoreCase("add")){
+						System.out.println(" In Article Add");
+						boolean isPrfArticleAdded = prfbo.addPrfArticleDetails(artindertdetail,sidx,sord);
+						if(isPrfArticleAdded){
+							jsonobj.put("success", "Successfully Inserted The Record");
+						}else{
+							jsonobj.put("Error", "Error in Inserrting");
+						}
+						System.out.println(jsonobj);		
+						out.println(jsonobj);
+					}else if(oper.equalsIgnoreCase("edit")){
+						boolean isPrfArticleUpdated = prfbo.editPrfArticleDetails(artindertdetail,sidx,sord);
+						if(isPrfArticleUpdated){
+							jsonobj.put("message", "Successfully Inserted The Record");
+						}else{
+							jsonobj.put("Error", "Error in Updating");
+						}
+						System.out.println(jsonobj);		
+						out.println(jsonobj);
+					}else{
+						boolean isPrfArticleDel = prfbo.delPrfArticleDetails(artindertdetail,sidx,sord);
+						if(isPrfArticleDel){
+						jsonobj.put("message", "Successfully Inserted The Record");
+						}else{
+							jsonobj.put("Error", "Error in Deleting");
+						}
+						System.out.println(jsonobj);		
+						out.println(jsonobj);
+					}
 					
-					System.out.println(jsonobj);		
-					out.println(jsonobj);
-				}else{
+					
+					
+					
+					
+					 
+					
+					
+					
+				}/*else{
 					 //artindertdetail.setArtshform("NA");
-					/*if(artaxn.equalsIgnoreCase("edit")){
+					if(artaxn.equalsIgnoreCase("edit")){
 						String artid = request.getParameter("prf_articleid");
 						 System.out.println(" In Article EDIZT");
 						 boolean isPrfArticleUpdated = prfbo.editPrfArticleDetails(artindertdetail,artid,sidx,sord);
@@ -141,10 +164,9 @@ public class PrfInsertArticle extends Action  {
 						System.out.println(" In Article Dele");
 						String artid = request.getParameter("prf_articleid");
 						System.out.println("artid"+artid);
-						boolean isPrfArticleDel = prfbo.delPrfArticleDetails(artindertdetail,artid,sidx,sord);
-						System.out.println("isPrfArticleDel"+isPrfArticleDel);
-					}*/
-				}
+						
+					}
+				}*/
 						
 				return null;
 			}else{
@@ -157,6 +179,8 @@ public class PrfInsertArticle extends Action  {
 
 
 /*	//Display Name Value Pair 
+ * //Map<String,Object> listmap = new LinkedHashMap<String,Object>();
+			 
 Enumeration enumarticle = request.getParameterNames();
 while (enumarticle.hasMoreElements()) {
     String keys = (String) enumarticle.nextElement();

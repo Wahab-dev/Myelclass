@@ -4,14 +4,12 @@
  * 
  */
 $(document).ready(function() {
-	
-	
 	var grid = $("#list"); //table id artinsert
 
 	 grid.jqGrid({ 
 		url:"/Myelclass/PrfinsertArticle.do",   
 		datatype:"json",
-		colNames:['Article Type','Name','Article Shform', 'Article ID','Color','Size','Size avg','Size Rem','Substance','Selection','Selp','Quantity','Unit','Pcs','Price','RateSign','Rate ','Shipment','T c','tcsign','tcamt','tccust','Contract','Prfarticleid','User'],  
+		colNames:['Article Type','Name','Article Shform', 'Article ID','Color','Size','Size avg','Size Rem','Substance','Selection','Selp','Quantity','Unit','Pcs','Price','RateSign','Rateamt','Shipment','T c','tcamt','tcsign','tccust','Contract','Prfarticleid','User'],  
 	    colModel:[   
 			 
 			 {name:'prf_articletype', index:'articletype', width:80, align:'center', sortable:true, editable:true, hidden: false, edittype:'select', 
@@ -51,6 +49,7 @@ $(document).ready(function() {
 						                             id: item.articleid,
 						                             shform: item.articleshortform, //can add number of attributes here 
 						                             value: item.articlename, // I am displaying both labe and value
+						                             clr : item.color, 
 						                             size: item.size,
 						                             sizeremar:item.size_remarks,
 						                             subs: item.substance,
@@ -59,7 +58,9 @@ $(document).ready(function() {
 						                             ratesign: item.rate_sign,
 						                             rateamt: item.rateamt,
 						                             shipment: item.shipment,
-						                             tc: item.tc
+						                             tcsign: item.tc_currency,
+						                             tcamt: item.tc_amount,
+						                             tcagt: item.tc_agent
 						                             };
 						                         }));//END Response
 	
@@ -68,22 +69,19 @@ $(document).ready(function() {
 								},
 								select: function( event, ui ) { 
 									 $('#articleid').val(ui.item.id);
-						          	 $('#articleshfrom').val(ui.item.shform);
-						          	 $('#size').val(ui.item.size);
-						          	// $('#sizerem').text()(ui.item.sizeremar);
-						          	 $("select option ").filter(function() {  // Explore this 
-						          	    //may want to use $.trim in here
-						          	    return $(this).text() == ui.item.sizeremar; 
-						          	}).prop('selected', 'selected');
-						             $("select option ").filter(function() {  // Explore this 
-							          	    //may want to use $.trim in here
-							          	    return $(this).text() == ui.item.rate_sign; 
-							          	}).prop('selected', 'selected');
-						          	 $('#substance').val(ui.item.subs);
-						          	 $('#selection').val(ui.item.selec);
-						          	 $('#selectionpercent').val(ui.item.selp);
-						          	 $('#rate').val(ui.item.rate);
-						          	 $('#tc').val(ui.item.tc);
+						          	 $('#artshform').val(ui.item.shform);
+						        	 $('#prf_color').val(ui.item.clr);
+						          	 $('#prf_size').val(ui.item.size);
+						          	 $('#prf_sizeremarks').val(ui.item.sizeremar);
+						          	 $('#prf_substance').val(ui.item.subs);
+						          	 $('#prf_selection').val(ui.item.selec);
+						          	 $('#prf_selectionp').val(ui.item.selp);
+						          	 $('#prf_ratesign').val(ui.item.ratesign);
+						          	 $('#prf_rateamt').val(ui.item.rateamt);
+						          	 $('#prf_shipment').val(ui.item.shipment);
+						          	 $('#prf_tcamt').val(ui.item.tcamt);
+						          	 $('#prf_tcagent').val(ui.item.tcagt);
+						          	 $('#prf_tccurrency').val(ui.item.tcsign);
 						            } 
 							 });
 							$('.ui-autocomplete').css('zIndex',1000); // z index for jqgfrid and autocomplete has been misalignment so we are manually setting it 
@@ -91,7 +89,7 @@ $(document).ready(function() {
 		    	  	},
 		    	  	formoptions:{rowpos: 1, colpos: 2} 
 			}, 
-			{name:'artshform', index:'articleshfrom', width:55, align:'center', editable:true, hidden: false,
+			{name:'artshform', index:'articleshfrom', width:55, align:'center', editable:true, hidden: true,
 				formoptions:{rowpos: 1, colpos: 3} 
 			}, 
 			{name:'articleid', index:'articleid', align: 'center', width:40, sortable:true,  editable:true,  hidden: true,					     				 
@@ -151,7 +149,7 @@ $(document).ready(function() {
 			}, 
 			{name:'prf_sizeremarks', index:'sizerem', width:40, align:'center',  editable:true, hidden: true, 
 				edittype:'select',
-				 editoptions:{value:"0:Select Size Remarks; F:F; S:S; F//S:F/S; DB:Double Butt"},
+				editoptions:{value:{0: 'Select Size Remarks', F:'F', S:'S', FS:'FS', DB:'Double Butt'}},
 				  editrules: {required: true},
 				  formoptions:{rowpos: 6, colpos: 2} 	
 			}, 
@@ -179,11 +177,11 @@ $(document).ready(function() {
 					  dataEvents:[{
 							type: 'focusout',
 							fn: function(e){
-								var qty = $("#quantity").val();
-								var unit = $("#unit option:selected").val();
-								var sizeav = $("#sizeavg").val();
+								var qty = $("#prf_quantity").val();
+								var unit = $("#prf_unit option:selected").val();
+								var sizeav = $("#prf_sizeavg").val();
 								var piecs = ((unit == "sqft") ? (parseInt (qty) / parseInt(sizeav)) : parseInt(qty)) ;
-								$("#pcs").val(parseInt(piecs));
+								$("#prf_pieces").val(parseInt(piecs));
 							}
 						}],
 						
@@ -192,45 +190,61 @@ $(document).ready(function() {
 			{name:'prf_pieces', index:'pcs', width:90, align:'center', sortable:true, hidden: false, editable:true,
 				 formoptions: {rowpos: 8, colpos: 3},
 			}, 	
-			{name:'rate', index:'rate', width:90, align:'center', sortable:true, hidden: true, editable:true,
+			{name:'prf_rate', index:'rate', width:90, align:'center', sortable:true, hidden: false, editable:true,
+				 editrules:{edithidden:true}, 
 				formoptions: {rowpos: 9, colpos: 1},
 				
 			}, 
 			{name:'prf_ratesign', index:'ratesign', width:90, align:'center', sortable:true, hidden: true, editable:true,
 				  edittype:'select',
-				  //editoptions:{value:{0:'--- Select Currency --- ',$:'$',INR:'INR',€:'€',NA:' Not Available'}},
-				  editoptions:{value:"0:--- Select Currency --- ; $:Dollar; Rs:Rupees; €:Euro; NA:Not Available"},
+				  editoptions:{value:{0:'--- Select Currency --- ',$:'$',Rs:'Rs',Euro:'Euro',NA:' Not Available'}},
+				  //editoptions:{value:"0:--- Select Currency --- ; $:Dollar; Rs:Rupees; €:Euro; NA:Not Available"},
+				  editrules:{edithidden:true}, 
 				  formoptions: {rowpos: 10, colpos: 1},
 			},  
-			{name:'prf_rate', index:'rateamt', width:90, align:'center', sortable:true, hidden: false, editable:true,
-				formoptions: {rowpos: 10, colpos: 2},	
+			{name:'prf_rateamt', index:'rateamt', width:90, align:'center', sortable:true, hidden: true, editable:true,
+				 editrules:{edithidden:true}, 
+				 formoptions: {rowpos: 10, colpos: 2},	
 			}, 
 			{name:'prf_shipment', index:'shipment', width:90, align:'center', sortable:true, editable:true, hidden: true,
 			      edittype:'select',
 			      editoptions:{value:{0:'--- Select Shipment --- ',Air:'Air',Sea:'Sea',Courier:'Courier',Truck:'Truck'}},
-			      formoptions: {rowpos: 10, colpos: 3},	
+			      editrules:{edithidden:true},  formoptions: {rowpos: 10, colpos: 3},	
 			}, 
 			{name:'prf_tc', index:'tc', width:90, align:'center', sortable:true, editable:true, hidden: false}, 
+			 	
+			{name:'prf_tcamt', index:'tcamt', width:90, align:'center', sortable:true, editable:true, hidden: true,
+				 editrules:{edithidden:true}, formoptions: {rowpos: 12, colpos: 2},
+			}, 	
 			{name:'prf_tccurrency', index:'tcsign', width:90, align:'center', sortable:true, editable:true, hidden: true,
 				edittype:'select',
 			  	  editoptions:{value:{0:'Select TC currency ',cents:'cents',paise:'paise',shillings:'shillings',NA:'NA'}},
-			  	formoptions: {rowpos: 12, colpos: 1},
-			}, 	
-			{name:'prf_tcamt', index:'tcamt', width:90, align:'center', sortable:true, editable:true, hidden: true,
-				formoptions: {rowpos: 12, colpos: 2},
-			}, 	
+			  	 editrules:{edithidden:true}, formoptions: {rowpos: 12, colpos: 1},
+			},
 			{name:'prf_tcagent', index:'tccust', width:90, align:'center', sortable:true, editable:true, hidden: true,
 				 edittype:'select',
-			      editoptions:{value:{0:'Select TC Customer',IC:'IC',Cust:'Cust',ICMD:'IC/MD',NA:'NA'}},
-			      formoptions: {rowpos: 12, colpos: 3},
+			      editoptions:{value:{0:'Select TC Customer',IC:'IC',Cust:'Cust',ICMD:'IC/MD',MD:'MD',NA:'NA'}},
+			      editrules:{edithidden:true}, formoptions: {rowpos: 12, colpos: 3},
 			}, 	
-			{name:'prf_contractno', index:'contractno', width:90, align:'center', sortable:true, editable:true,editoptions:{readonly: true}, hidden: false}, 	
+			{name:'prf_contractnum', index:'contractno', width:90, align:'center', sortable:true, editable:true,editoptions:{readonly: true}, hidden: false}, 	
 			{name:'prf_articleid', index:'prfarticleid', width:90, align:'center', sortable:true, editable:true, hidden: true}, 	
 			
 			{name:'user', index:'user', width:90, align:'center', sortable:true, editable:true, hidden: true,
 				//${user.name}.	
 			
 			}, 	
+			/*{
+			    name: 'checkbox',
+			    index: 'checkbox',
+			    editable:true,
+			    checked:false,
+			    edittype:'checkbox',
+			    align:"center",
+			  //  hidden : adminHide,
+			    editoptions: { value:"True:False"},
+			    formatter: "checkbox",
+			    formatoptions: {disabled : false,checked:false}
+			}*/
 									  
 		],  
 		jsonReader : {  
@@ -253,14 +267,64 @@ $(document).ready(function() {
       emptyrecords: 'No records to display',
       editurl: "/Myelclass/PrfinsertArticle.do",
 		}).jqGrid('navGrid','#pager',{add:true, edit:true, del:true, search: false}, 
-			{ // edit option
+			/*
+	         *  // edit option
+			 */
+		     { 
+			  width : 650,
+			  top:120,
+			  left:120,
+				
+			// edit option
 			  beforeShowForm: function(form) { 
-				  alert("Hola ");
+				  
+				  //Size Calculation
+				 var sizec = $("#prf_size").val();
+				 var temp = sizec.indexOf(' ');
+				 $("#prf_size").val(sizec.substring(0, temp));
+				 $("#prf_sizeremarks").val(sizec.substring(temp+1));
+				 
+				 //Size Avg Calculation
+				   var sizeval = $("#prf_size").val();
+					var size_minindex = sizeval.indexOf('/');
+					//var size_maxindex = sizeval.indexOf(' '); // in order to avoid Size remarks. Make Size remrk seperate row in Table
+					var sizemin = sizeval.substring(0, size_minindex);
+					var sizemax=  sizeval.substring(size_minindex+1);
+					var sizeavg = ( (parseFloat (sizemin) + parseFloat(sizemax)) /2) ;
+					$("#prf_sizeavg").val(sizeavg);
+					
+				//Rate Calculation
+				 var ratec = $("#prf_rate").val();
+				 var ratemp = ratec.indexOf(' ');
+				 var ratemplast = ratec.lastIndexOf(' ');
+				 $("#prf_ratesign").val(ratec.substring(0, ratemp));
+				 $("#prf_rateamt").val(ratec.substring(ratemp+1, ratemplast));
+				 $("#prf_shipment").val(ratec.substring(ratemplast+1));
+				 
+				 
+				//TC Calculation
+				 var tctec = $("#prf_tc").val(); 
+				 var tcindex = tctec.indexOf(" ");
+				 var tcindex1 = tctec.lastIndexOf(" ");
+				 var tcamt = tctec.substring(0, tcindex);
+				 var tcsign = tctec.substring(tcindex+1, tcindex1);
+				 var agent = tctec.substring(tcindex1+1);
+				 $("#prf_tcamt").val(tcamt);
+				 $("#prf_tcagent").val(agent);
+				 $("#prf_tccurrency").val(tcsign);
+				 $("#tr_prf_tc").hide();
+				 $("#tr_prf_rate").hide();
 		      },
-		   	  closeAfterEdit: true,
-		    },
-		    { // add option
-		    	 //top: 150,
+		        closeAfterEdit: true,
+				reloadAfterSubmit: true,
+		      },
+		   
+		    /*
+		     *  // add option
+		     */
+		    
+		    {	    	 
+		    	//top: 150,
 			 	  //left: 200,
 			 	  width : 650,
 			 	/* onCellSelect : function(rowid, iCol, cellcontent) {
@@ -269,15 +333,27 @@ $(document).ready(function() {
 			 		alert("myval  "+myval);
 			 	 },*/
 		          beforeShowForm: function(form) { 
-		           	 $("#contractno").val($("#prf_contractno").val());
+		           	 $("#prf_contractnum").val($("#prf_contractno").val());
 		           	 $("#user").val($("#userinsession").val());
-		           	 
-		           
+		            	$("#tr_prf_tc").hide(); // hide the tr prf_rate
+		            	$("#tr_prf_rate").hide();
 		          },
-				  closeAfterAdd: true,
+		          closeAfterAdd: true,
+					reloadAfterSubmit: true
 			 },
 			 {
 					// del option
+				//Del Article
+					delData: {
+						//Function to Add parameters to the delete 
+						//Here i am passing artid with val 
+						prf_articleid: function() {
+                                var sel_id = grid.jqGrid('getGridParam', 'selrow');
+                                var value = grid.jqGrid('getCell', sel_id, 'prf_articleid');
+                                return value;
+                             }
+                         },
+						reloadAfterSubmit: true,
 					 
 			 }    
 	 	);

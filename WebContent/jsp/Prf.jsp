@@ -20,7 +20,7 @@ table.EditTable > tbody > tr.FormData > td.DataTD > input[type="select"] {
 </style>
 <script src="js/jquery-1.9.1.js"></script>
 <script src="js/jquery-ui.js"></script>
-<link rel="stylesheet" type="text/css" media="screen" href="css/redmond/jquery-ui-1.10.3.custom.css" />
+<link rel="stylesheet" type="text/css" media="screen" href="css/vader/jquery-ui-1.10.3.custom.css" />
 <link rel="stylesheet" type="text/css" media="screen" href="css/ui.jqgrid.css" />
 
 <script src="js/i18n/grid.locale-en.js" type="text/javascript"></script>

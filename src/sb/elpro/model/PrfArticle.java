@@ -42,6 +42,7 @@ public class PrfArticle implements Serializable {
 	private String prf_pieces;
 	private String prf_ratesign;
 	private String prf_rate;	
+	private String prf_rateamt;
 	private String prf_shipment;
 	private String prf_tcamt;
 	private String prf_tccurrency;
@@ -50,7 +51,7 @@ public class PrfArticle implements Serializable {
 	private String prf_selectionp;
 	private String prf_price;
 	private String prf_tc;
-	private String prf_contractno;
+	private String prf_contractnum;
 	private String artshform;
 	private String checkboxValue;
 	private String user;
@@ -403,18 +404,7 @@ public class PrfArticle implements Serializable {
 	public void setPrf_tc(String prf_tc) {
 		this.prf_tc = prf_tc;
 	}
-	/**
-	 * @return the prf_contractno
-	 */
-	public String getPrf_contractno() {
-		return prf_contractno;
-	}
-	/**
-	 * @param prf_contractno the prf_contractno to set
-	 */
-	public void setPrf_contractno(String prf_contractno) {
-		this.prf_contractno = prf_contractno;
-	}
+	
 	/**
 	 * @return the articleid
 	 */
@@ -462,5 +452,29 @@ public class PrfArticle implements Serializable {
 	 */
 	public void setUser(String user) {
 		this.user = user;
+	}
+	/**
+	 * @return the prf_contractnum
+	 */
+	public String getPrf_contractnum() {
+		return prf_contractnum;
+	}
+	/**
+	 * @param prf_contractnum the prf_contractnum to set
+	 */
+	public void setPrf_contractnum(String prf_contractnum) {
+		this.prf_contractnum = prf_contractnum;
+	}
+	/**
+	 * @return the prf_rateamt
+	 */
+	public String getPrf_rateamt() {
+		return prf_rateamt;
+	}
+	/**
+	 * @param prf_rateamt the prf_rateamt to set
+	 */
+	public void setPrf_rateamt(String prf_rateamt) {
+		this.prf_rateamt = prf_rateamt;
 	}
 }

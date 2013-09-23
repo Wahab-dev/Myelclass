@@ -289,15 +289,15 @@ public class PrfBoImpl implements PrfBo {
 
 	@Override
 	public boolean editPrfArticleDetails(PrfArticle artindertdetail,
-			String ctno, String sidx, String sord) throws Exception {
-		boolean isupdate = prfdao.editprfArticle(artindertdetail,ctno, sidx, sord);
+			String sidx, String sord) throws Exception {
+		boolean isupdate = prfdao.editprfArticle(artindertdetail, sidx, sord);
 		return isupdate;
 	}
 
 	@Override
 	public boolean delPrfArticleDetails(PrfArticle artindertdetail,
-			String artid, String sidx, String sord) throws Exception {
-		boolean isdelete = prfdao.delprfArticle(artindertdetail,artid, sidx, sord);
+			String sidx, String sord) throws Exception {
+		boolean isdelete = prfdao.delprfArticle(artindertdetail, sidx, sord);
 		return isdelete;
 	}
 

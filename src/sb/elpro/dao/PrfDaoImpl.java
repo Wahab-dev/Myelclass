@@ -652,8 +652,8 @@ public class PrfDaoImpl implements PrfDao {
 			pst.setString(10, prfarticlebean.getPrf_pieces());
 			pst.setString(11, prfarticlebean.getPrf_price());
 			pst.setString(12, prfarticlebean.getPrf_tc());
-			pst.setString(13, prfarticlebean.getPrf_contractno());
-			System.out.println("getContractno " +prfarticlebean.getPrf_contractno());
+			pst.setString(13, prfarticlebean.getPrf_contractnum());
+			System.out.println("getContractno " +prfarticlebean.getPrf_contractnum());
 			noofrows = pst.executeUpdate();
 			System.out.println("Sucessfully inserted the record.." + noofrows);
 		}catch(Exception e){
@@ -692,7 +692,7 @@ public class PrfDaoImpl implements PrfDao {
 				artbean.setPrf_selectionp(rs.getString("selectionpercent"));
 				artbean.setPrf_color(rs.getString("color"));
 				artbean.setPrf_quantity(rs.getString("quantity"));
-				artbean.setPrf_contractno(rs.getString("contractno"));
+				artbean.setPrf_contractnum(rs.getString("contractno"));
 				artbean.setPrf_articleid(rs.getString("color"));
 				artbean.setPrf_unit(rs.getString("unit"));
 				artbean.setPrf_pieces(rs.getString("pcs"));
@@ -885,17 +885,29 @@ public class PrfDaoImpl implements PrfDao {
 				
 				String rat = rs.getString("rate");
 				System.out.println("rat "+rat);
-				int shipmntindex = siz.lastIndexOf(' ');
-				String ratesign = rat.substring(0,1);
+				int shipmntindex = rat.indexOf(' ');
+				int shipmntindexlst = rat.lastIndexOf(' ');
+				System.out.println(" shipmntindex"+shipmntindex);
+				String ratesign = rat.substring(0,shipmntindex).trim();
 				System.out.println(" ratesign"+ratesign);
-				String rateamt = rat.substring(1,shipmntindex-1);
+				String rateamt = rat.substring(shipmntindex+1,shipmntindexlst-1).trim();
 				System.out.println(" rateamt"+rateamt);
-				String shipment = rat.substring(shipmntindex=1);
+				String shipment = rat.substring(shipmntindexlst+1).trim();
 				System.out.println(" shipment"+shipment);
 				
-				//destarraylist.add(rs.getString("destname"));
+				//tc calc
+				String tc = rs.getString("tc");
+				int tctemindex = tc.indexOf(' ');
+				int tctemlastindex = tc.lastIndexOf(' ');
+				String tcamt = tc.substring(0,tctemindex).trim();
+				System.out.println(" tcamt"+tcamt);
+				String tcsign = tc.substring(tctemindex,tctemlastindex).trim();
+				System.out.println(" tcsign"+tcsign);
+				String tcto = tc.substring(tctemlastindex).trim();
+				System.out.println(" tcto"+tcto);
+				
+				
 				ArticleDetails artbean = new ArticleDetails();
-				//artbean.setLabel(rs.getString("articletype"));
 				artbean.setArticleshortform(rs.getString("articleshortform"));
 				artbean.setArticlename(rs.getString("articlename"));
 				artbean.setArticleid(rs.getString("articleid"));
@@ -906,9 +918,13 @@ public class PrfDaoImpl implements PrfDao {
 				artbean.setSelection(rs.getString("selection"));
 				artbean.setSelp(rs.getString("selectionpercent"));
 				artbean.setRate_sign(ratesign);
+				System.out.println("ratesign ++"+ratesign);
 				artbean.setRateamt(rateamt);
+				System.out.println("rateamt ++"+rateamt);
 				artbean.setShipment(shipment);
-				artbean.setTc(rs.getString("tc"));
+				artbean.setTc_agent(tcto);
+				artbean.setTc_amount(tcamt);
+				artbean.setTc_currency(tcsign);
 				artnameeditarraylist.add(artbean);
 				}
 			System.out.println(" dest Result Added Successfully");
@@ -1125,11 +1141,11 @@ public class PrfDaoImpl implements PrfDao {
 			pst.setString(10, artindertdetail.getPrf_pieces());
 			pst.setString(11, artindertdetail.getPrf_rate());
 			pst.setString(12, artindertdetail.getPrf_tc());
-			pst.setString(13, artindertdetail.getPrf_contractno());
+			pst.setString(13, artindertdetail.getPrf_contractnum());
 			pst.setString(14, artindertdetail.getPrf_articletype());
 			pst.setString(15, artindertdetail.getArtshform() );
 			pst.setString(16, artindertdetail.getUser());
-			System.out.println("getContractno " +artindertdetail.getPrf_contractno());
+			System.out.println("getContractno " +artindertdetail.getPrf_contractnum());
 			noofrows = pst.executeUpdate();
 			System.out.println("Sucessfully inserted the record.." + noofrows);
 		}catch(Exception e){
@@ -1179,7 +1195,7 @@ public class PrfDaoImpl implements PrfDao {
 	}
 
 	@Override
-	public boolean editprfArticle(PrfArticle artindertdetail, String ctno,
+	public boolean editprfArticle(PrfArticle artindertdetail, 
 			String sidx, String sord) throws SQLException {
 		Connection con = null;
 		PreparedStatement pst = null;
@@ -1187,7 +1203,7 @@ public class PrfDaoImpl implements PrfDao {
 		boolean isupdate = true;
 		try{			
 			con = DBConnection.getConnection();
-			StringBuffer sql_saveprfArticle = new StringBuffer("UPDATE elpro.tbl_prf_article SET articleid = ? , articlename = ? , size = ? , substance = ? , selection = ? , selectionpercent = ? , color = ? , quantity = ? , unit = ? , pcs = ? , rate = ? , tc = ? , contractno = ? ,  articletype = ? , articleshfrom = ?  WHERE prfarticleid = '"+ctno+"' ");
+			StringBuffer sql_saveprfArticle = new StringBuffer("UPDATE elpro.tbl_prf_article SET articleid = ? , articlename = ? , size = ? , substance = ? , selection = ? , selectionpercent = ? , color = ? , quantity = ? , unit = ? , pcs = ? , rate = ? , tc = ? , contractno = ? ,  articletype = ? , articleshfrom = ?  WHERE prfarticleid = '"+artindertdetail.getPrf_articleid()+"' ");
 			//sql_saveprfArticle.append("values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
 			String sqlquery_saveprfArticle = sql_saveprfArticle.toString();
 			pst = (PreparedStatement) con.prepareStatement(sqlquery_saveprfArticle);
@@ -1205,7 +1221,7 @@ public class PrfDaoImpl implements PrfDao {
 			pst.setString(10, artindertdetail.getPrf_pieces());
 			pst.setString(11, artindertdetail.getPrf_rate());
 			pst.setString(12, artindertdetail.getPrf_tc());
-			pst.setString(13, artindertdetail.getPrf_contractno());
+			pst.setString(13, artindertdetail.getPrf_contractnum());
 			pst.setString(14, artindertdetail.getPrf_articletype());
 			pst.setString(15, artindertdetail.getArtshform() );
 			System.out.println("Prf Article ID " +artindertdetail.getPrf_articleid());
@@ -1224,15 +1240,15 @@ public class PrfDaoImpl implements PrfDao {
 	}
 
 	@Override
-	public boolean delprfArticle(PrfArticle artindertdetail, String artid,
-			String sidx, String sord) throws SQLException {
+	public boolean delprfArticle(PrfArticle artindertdetail, String sidx, 
+			String sord) throws SQLException {
 		Connection con = null;
 		PreparedStatement pst = null;
 		int noofrows  = 0;
 		boolean isdel = true;
 		try{			
 			con = DBConnection.getConnection();
-			StringBuffer sql_saveprfArticle = new StringBuffer("delete from elpro.tbl_prf_article WHERE prfarticleid = '"+artid+"' ");
+			StringBuffer sql_saveprfArticle = new StringBuffer("delete from elpro.tbl_prf_article WHERE prfarticleid = '"+artindertdetail.getPrf_articleid()+"' ");
 			//sql_saveprfArticle.append("values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
 			String sqlquery_saveprfArticle = sql_saveprfArticle.toString();
 			System.out.println(sqlquery_saveprfArticle);

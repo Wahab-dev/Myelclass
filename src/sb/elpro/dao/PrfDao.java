@@ -97,10 +97,10 @@ public interface PrfDao {
 			String sord)throws SQLException;
 
 	boolean editprfArticle(PrfArticle artindertdetail, String ctno,
-			String sidx, String sord)throws SQLException;
+			String sidx)throws SQLException;
 
 	boolean delprfArticle(PrfArticle artindertdetail, String artid,
-			String sidx, String sord)throws SQLException;
+			String sidx)throws SQLException;
 
 	List<ArticleDetails> getPrfArticleTypelist() throws SQLException;
 

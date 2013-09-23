@@ -95,10 +95,10 @@ public interface PrfBo  {
 			String sord, String sidx)throws Exception;
 
 	public boolean editPrfArticleDetails(PrfArticle artindertdetail,
-			String ctno, String sidx, String sord)throws Exception;
+			String ctno, String sidx)throws Exception;
 
 	public boolean delPrfArticleDetails(PrfArticle artindertdetail,
-			String artid, String sidx, String sord)throws Exception;
+			String artid, String sidx)throws Exception;
 
 	public List<ArticleDetails> getPrfArticleType()throws Exception;
 

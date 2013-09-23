@@ -10,215 +10,20 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Sample Request Form</title>
-<link rel="stylesheet" type="text/css" media="screen" href="css/ui-darkness/jquery-ui-1.10.1.custom.css" />
+<link rel="stylesheet" type="text/css" media="screen" href="css/vader/jquery-ui-1.10.3.custom.css" />
 <link rel="stylesheet" type="text/css" media="screen" href="css/ui.jqgrid.css" />
 <style type="text/css">
 #ui-datepicker-div { font-size: 11px; } 	
 </style>
-<!-- For Auto Complete -->
- <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css" />
-<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
-<script src="http://code.jquery.com/ui/1.10.2/jquery-ui.js"></script>
-<link rel="stylesheet" href="/resources/demos/style.css" />
+<script src="js/jquery-1.9.1.js"></script>
+<script src="js/jquery-ui.js"></script>
+<link rel="stylesheet" type="text/css" media="screen" href="css/vader/jquery-ui-1.10.3.custom.css" />
+<link rel="stylesheet" type="text/css" media="screen" href="css/ui.jqgrid.css" />
 
- <script type="text/javascript">
-$(function(){
-	//AutoComplete
-	
-	 $('#srf_tanname').autocomplete({
-		 source: function(request, response) {
-				var param = request.term;  
-			 	$.getJSON("/Myelclass/PrfAutocomplete.do?term="+param+"&action="+"tan",
-					function(result) { 	
-			             response($.map(result, function(item) {
-			                return { 
-			                       value: item.label,
-			                       addr: item.tanneryAddress,
-			                       phone: item.tanneryContactNo,	
-			                       attn : item.tanneryAttention,
-			                       fax: item.tanneryFax,
-			                       };
-			                     }));//END response
-			                    }
-					 );
-					},
-					select: function( event, ui) { 
-			          	 $('#srf_tanaddr').val(ui.item.addr);
-			          	 $('#srf_tanphone').val(ui.item.phone);
-			          	 $('#srf_tanattn').val(ui.item.attn);
-			          	 $('#srf_tanfax').val(ui.item.fax);
-			           } 
-			}); 
-		  $('#srf_deliver').autocomplete({
-			 source: function(request, response) {
-				var param = request.term;  
-			 	$.getJSON("/Myelclass/PrfAutocomplete.do?term="+param+"&action="+"custname",
-					function(result) { 	
-			             response($.map(result, function(item) {
-			                return { 
-			                       value: item.label,
-			                       addr: item.customerAddress,
-			                       phone: item.customerTelephone,	
-			                       attn : item.customerAttention,
-			                       fax: item.customerFax,
-			                       };
-			                     }));//END response
-			                    }
-					 );
-					},
-					select: function( event, ui) { 
-			          	 $('#srf_custaddr').val(ui.item.addr);
-			          	 $('#srf_custphone').val(ui.item.phone);
-			          	 $('#srf_custattn').val(ui.item.attn);
-			          	 $('#srf_custfax').val(ui.item.fax);
-			           } 
-			}); 
-		  
-		  $('#srf_customer').autocomplete({
-			    source: function(request, response) {
-			    	var param = request.term;  
-			        $.getJSON("/Myelclass/PrfAutocomplete.do?term="+param+"&action="+"custname", 
-			        		 function(result) {
-			            		response($.map(result, function(item) {
-			                	return {
-			                		label: item.label,  //can add number of attributes here   
-			                        value: item.label  // I am displaying both labe and value  
-			                		};
-			            }));
-			        });
-			    }
+<script src="js/i18n/grid.locale-en.js" type="text/javascript"></script>
 
-			});
-	$('#srf_destination').autocomplete({
-	    source: function(request, response) {
-	    	var param = request.term;  
-	        $.getJSON("/Myelclass/AutoCompleteServlet.do?term="+param+"&action="+"desti", 
-	        		 function(result) {
-	            		response($.map(result, function(item) {
-	                	return {
-	                		label: item.label,  
-	                        shform: item.shform, //can add number of attributes here   
-	                        value: item.label +" , "+ item.value // I am displaying both labe and value  
-	                		};
-	            }));
-	        });
-	    }
-
-	});
-	
-	$('#srf_handledby').autocomplete({
-	    source: function(request, response) {
-	    	var param = request.term;  
-	        $.getJSON("/Myelclass/SrfAutoComplete.do?term="+param+"&action="+"handlby", 
-	        		 function(result) {
-	            		response($.map(result, function(item) {
-	                	return {
-	                		label: item.label,  
-	                         //can add number of attributes here   
-	                        value: item.label  // I am displaying both labe and value  
-	                		};
-	            }));
-	        });
-	    }
-
-	});
-	
-	$('#srf_endusage').autocomplete({
-	    source: function(request, response) {
-	    	var param = request.term;  
-	        $.getJSON("/Myelclass/SrfAutoComplete.do?term="+param+"&action="+"endusage", 
-	        		 function(result) {
-	            		response($.map(result, function(item) {
-	                	return {
-	                		label: item.label,  
-	                         //can add number of attributes here   
-	                        value: item.label  // I am displaying both labe and value  
-	                		};
-	            }));
-	        });
-	    }
-
-	});
-	
-	$('#srf_paymentterms').autocomplete({
-	    source: function(request, response) {
-	    	var param = request.term;  
-	        $.getJSON("/Myelclass/SrfAutoComplete.do?term="+param+"&action="+"pymttrms", 
-	        		 function(result) {
-	            		response($.map(result, function(item) {
-	                	return {
-	                		label: item.label,  
-	                         //can add number of attributes here   
-	                        value: item.label  // I am displaying both labe and value  
-	                		};
-	            }));
-	        });
-	    }
-
-	});
-	//Date Picker
-		 $('.srf_deliverydate').datepicker({
-			 	numberOfMonths: 2,
-				formatDate:'dd/mm/y',
-			    firstDay: 1, 
-			});
-		$("#srf_orderdate").datepicker({
-			changeMonth:true,
-			formatDate:'dd/mm/y',
-		    firstDay: 1, 
-		});
-		
-			
-		    var grid = $("#thelink");
-			grid.click( function(){ 
-				 var sno =$('#sampleno').val();
-					$("#list").jqGrid({    
-						 datatype: "json",
-						    url:"/Myelclass/SrfinsertArticle.do?sno="+sno+"&action="+"load",
-					        loadonce: true,
-					        height:'auto',  
-					         mtype: 'GET',  
-					        colNames:['id', 'Name','Color', 'Size','Substance', 'Selec','Selec P', 'Quantity','Unit', 'Price','Tc'],  
-					        colModel :[   
-							  {name:'srf_articleid',index:'srf_articleid', width:60, sorttype:"int",editable:true },  
-					          {name:'srf_articlename', index:'srf_articlename', width:90, editable:true },   
-					          {name:'srf_color', index:'srf_color', width:80, align:'right', editable:true },  
-					          {name:'srf_size', index:'srf_size' , width:55, editable:true},   
-					          {name:'srf_substance', index:'srf_substance', width:90, editable:true},   
-					          {name:'srf_selection', index:'srf_selection', width:80, align:'right', editable:true, jqModal:true},  
-					          {name:'srf_selectionp', index:'srf_selectionp', width:90, editable:true},   
-					          {name:'srf_quantity', index:'srf_quantity', width:80, align:'right', editable:true},  
-					          {name:'srf_unit', index:'srf_unit', width:55, editable:true},   
-					          {name:'srf_price', index:'srf_price', width:90, editable:true},  
-					          {name:'srf_tc', index:'srf_tc', width:90, editable:true}  
-					        ],  
-					        jsonReader : {  
-					        	repeatitems:false,
-					            root: function (jsonOrderArray) { return jsonOrderArray; },
-					            page: function (jsonOrderArray) { return 1; },
-					            total: function (jsonOrderArray) { return 1; },
-					            records: function (jsonOrderArray) { return jsonOrderArray.length; }
-					        },  
-					        multiselect:true,
-					    	pager: '#pager',
-					    	rowNum:7, 
-					    	viewrecords: true ,
-					    	rowList:[7,10,15],
-					        loadtext: "Bow Bow",
-					        height : "auto",
-					        width:"auto",  
-					        sortname: 'articleid',  
-					        sortorder: 'desc',  
-					        emptyrecords: 'No records to display',
-					         
-					        });  
-					 	 jQuery("#list").jqGrid('navGrid','#pager',{edit:true,add:true,del:true, search:true, view:true});
-			
-					});
-}); 
-
-</script> 
-
+<script src="js/jquery.jqGrid.min.js" type="text/javascript"></script>		
+<script src="js/elpro/srf.js"></script> 
 </head>
 <body>
 	<h:form action="/Srf">
@@ -275,16 +80,12 @@ $(function(){
   		</tr>
   		<tr>
     		<td colspan="3">
-    		<h:button property="artinsert" value="insert" styleId="thelink"></h:button>  
-    			<table id="list">
-    				<tr>
-    					<td />
-    				</tr>
+    		<%-- <h:button property="artinsert" value="insert" styleId="thelink"></h:button>   --%>
+    			<table id="srfArticletbl">
     			</table>
     		
-    			<div id="pager">    			
+    			<div id="srfArticlepager">    			
     			</div>
-    			
   			</td>
   		</tr> 		
   		
