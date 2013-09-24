@@ -30,6 +30,7 @@
 	<table width="826" height="369" border="2" cellpadding="0" cellspacing="0">
 		<tr>  			
    			<td>Welcome ${user.name}...</td> 
+   			<h:text property="userinsession" styleId="userinsession" value="${user.name}" readonly="true" ></h:text>
    			<td><h:submit property="srfaction" value="logout"></h:submit></td> 
    		</tr>
   		<tr>

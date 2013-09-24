@@ -193,48 +193,7 @@ public class PrfBoImpl implements PrfBo {
 		return aticlearray;
 	}
 
-	@Override
-	public List<ArticleDetails> updateprfArticle(ArticleDetails prfartbean) throws Exception{
-		String selectp1 = null; 
-		String selectp2 = null; 
-		String selectp3 = null;
-		String selectp4 = null;
-		
-		String sizemin = prfartbean.getSize_min();
-		String sizemax = prfartbean.getSize_max();
-		String unit = prfartbean.getUnit();
-		String articletype = prfartbean.getSize_remarks();		
-		String size  = sizemin +" / "+ sizemax + " "+unit + " "+articletype;
-		prfartbean.setSize(size); 	
-		
-		String subatancemin = prfartbean.getSubs_min();
-		String subatancemax = prfartbean.getSubs_max();
-		String substance = subatancemin + " / " +subatancemax+ " mm";
-		prfartbean.setSubstance(substance);
-		
-		selectp1 = prfartbean.getSelp1();
-			 selectp2 = prfartbean.getSelp2();
-			 selectp3 = prfartbean.getSelp3();		
-			 selectp4 = prfartbean.getSelp4();
-			 
-			String selecp = selectp1+"%"+selectp2+"%"+selectp3+"%"+selectp4;
-			prfartbean.setSelp(selecp);
-			
-			String rate  = prfartbean.getRate_sign() +" "+prfartbean.getRate() +" "+prfartbean.getShipment();
-			prfartbean.setPrice(rate);
-			
-			String tc = prfartbean.getTc_amount() +" "+ prfartbean.getTc_currency()+" "+ prfartbean.getTc_agent();
-			prfartbean.setTc(tc);
 	
-		return prfdao.updateprfArticle(prfartbean);
-	}
-
-	@Override
-	public List<ArticleDetails> editprfArticle(String prfarticleid) throws Exception {
-		 List<ArticleDetails> editarticlelist = prfdao.editprfArticle(prfarticleid);
-		 return editarticlelist;
-	}
-
 	@Override
 	public List<ArticleDetails> getPrfArticleName(String term)
 			throws Exception {

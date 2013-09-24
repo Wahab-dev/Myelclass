@@ -6,9 +6,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.mysql.jdbc.Connection;
+import com.mysql.jdbc.PreparedStatement;
 import com.mysql.jdbc.Statement;
 
-import sb.elpro.action.SrfArticle;
+import sb.elpro.model.SrfArticle;
 import sb.elpro.model.AutoComplete;
 import sb.elpro.model.CustomerDetails;
 import sb.elpro.model.EndUsageDetails;
@@ -213,7 +214,7 @@ public class SrfDaoImpl implements SrfDao {
 	}
 
 	@Override
-	public ArrayList<SrfArticle> getSrfArticleDetails(String sno)
+	public ArrayList<SrfArticle> getSrfArticleDetails(String sidx, String sord)
 			throws SQLException {
 		ArrayList<SrfArticle> articlearray = new ArrayList<SrfArticle>();
 		Connection con = null;
@@ -222,22 +223,33 @@ public class SrfDaoImpl implements SrfDao {
 		try{			
 			con = DBConnection.getConnection();
 			st = (Statement) con.createStatement();
-			String sql = "SELECT Article, Color, Size, Substance, Selection, Selectionp, Quantity, Unit, pieces, Rate, Tc, ColorMatching, TapeTest, CrockingWet, CrockingDry, Fourfold, KeyTest, SampleNo, Status, CourierDetails, Srf_ArticleID, FeedBackDetails, ArticleID from tbl_srf_article where SampleNo = '"+sno+"' ";
+			String sql = "SELECT articleid, articletype,articleshform, articlename, color, size, substance, selection, selectionp, quantity, pcs, unit, rate, colormatching, tapetest, crockingwet, crockingdry, fourfolds, keytest, sampleno, srfarticleid, user from tbl_srf_article order by "+sidx+"  "+sord+" ";
 			System.out.println(sql);
 			rs = st.executeQuery(sql);
 			while(rs.next()) {	
 				SrfArticle artbean = new SrfArticle();
-				artbean.setArticleid(rs.getString("ArticleID"));
-				artbean.setSrf_articleid(rs.getString("Srf_ArticleID"));
-				artbean.setSrf_articlename(rs.getString("Article"));
-				artbean.setSrf_color(rs.getString("Color"));
-				artbean.setSrf_size(rs.getString("Size"));
-				artbean.setSrf_substance(rs.getString("Substance"));
-				artbean.setSrf_selection(rs.getString("Selection"));
-				artbean.setSrf_selectionp(rs.getString("Selectionp"));
-				artbean.setSrf_quantity(rs.getString("Quantity"));
-				artbean.setSrf_price(rs.getString("Rate"));
-				artbean.setSrf_tc(rs.getString("Tc"));
+				artbean.setArticleid(rs.getString("articleid"));
+				artbean.setSrf_articletype(rs.getString("articletype"));
+				artbean.setSrf_articleshform(rs.getString("articleshform"));
+				artbean.setSrf_articlename(rs.getString("articlename"));
+				artbean.setSrf_color(rs.getString("color"));
+				artbean.setSrf_size(rs.getString("size"));
+				artbean.setSrf_substance(rs.getString("substance"));
+				artbean.setSrf_selection(rs.getString("selection"));
+				artbean.setSrf_selectionp(rs.getString("selectionp"));
+				artbean.setSrf_qty(rs.getString("quantity"));
+				artbean.setSrf_unit(rs.getString("unit"));
+				artbean.setSrf_pieces(rs.getString("pcs"));
+				artbean.setSrf_price(rs.getString("rate"));
+				artbean.setSrf_colormatch(rs.getString("colormatching"));
+				artbean.setSrf_tapetest(rs.getString("tapetest"));
+				artbean.setSrf_crockwet(rs.getString("crockingwet"));
+				artbean.setSrf_crockdry(rs.getString("crockingdry"));
+				artbean.setSrf_fourfold(rs.getString("fourfolds"));
+				artbean.setSrf_keytest(rs.getString("keytest"));
+				artbean.setSrf_samplenum(rs.getString("sampleno"));
+				artbean.setSrf_articleid(rs.getString("srfarticleid"));
+				artbean.setUser(rs.getString("user"));
 				articlearray.add(artbean);
 			}
 		}catch(Exception e){
@@ -251,6 +263,144 @@ public class SrfDaoImpl implements SrfDao {
 		return articlearray;	
 
 	}
+
+	@Override
+	public boolean addsrfArticle(SrfArticle artindertdetail, String sidx,
+			String sord) throws SQLException {
+		Connection con = null;
+		PreparedStatement pst = null;
+		int noofrows  = 0;
+		boolean isadded = true;
+		try{			
+			con = DBConnection.getConnection();
+			StringBuffer sql_savesrfArticle = new StringBuffer("insert into tbl_srf_article (articleid, articletype, articleshform, articlename, color, size, substance, selection, selectionp, quantity,  unit, pcs, rate, colormatching, tapetest, crockingwet, crockingdry, fourfolds, keytest, sampleno, user)");
+			sql_savesrfArticle.append("values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+			String sqlquery_savesrfArticle = sql_savesrfArticle.toString();
+			pst = (PreparedStatement) con.prepareStatement(sqlquery_savesrfArticle);
+			pst.setString(1, artindertdetail.getArticleid());
+			System.out.println("getArticleid " +artindertdetail.getArticleid());
+			pst.setString(2, artindertdetail.getSrf_articletype());
+			System.out.println("getSrf_articletype " +artindertdetail.getSrf_articletype());
+			pst.setString(3, artindertdetail.getSrf_articleshform());
+			pst.setString(4, artindertdetail.getSrf_articlename());
+			pst.setString(5, artindertdetail.getSrf_color());
+			pst.setString(6, artindertdetail.getSrf_size());
+			pst.setString(7, artindertdetail.getSrf_substance());
+			pst.setString(8, artindertdetail.getSrf_selection());
+			pst.setString(9, artindertdetail.getSrf_selectionp());
+			pst.setString(10, artindertdetail.getSrf_qty());	
+			pst.setString(11, artindertdetail.getSrf_unit());
+			pst.setString(12, artindertdetail.getSrf_pieces());			
+			pst.setString(13, artindertdetail.getSrf_price());
+			pst.setString(14, artindertdetail.getSrf_colormatch());
+			pst.setString(15, artindertdetail.getSrf_tapetest());
+			pst.setString(16, artindertdetail.getSrf_crockwet());
+			pst.setString(17, artindertdetail.getSrf_crockdry());
+			pst.setString(18, artindertdetail.getSrf_fourfold());
+			pst.setString(19, artindertdetail.getSrf_keytest());
+			pst.setString(20, artindertdetail.getSrf_samplenum());
+			pst.setString(21, artindertdetail.getUser());
+			
+			System.out.println("getSrf_samplenum " +artindertdetail.getSrf_samplenum());
+			noofrows = pst.executeUpdate();
+			System.out.println("Sucessfully inserted the record.." + noofrows);
+		}catch(Exception e){
+			e.printStackTrace();
+			isadded = false;
+			System.out.println("ERROR RESULT");
+		}finally{
+			 con.close() ;
+			 pst.close();
+	   }
+	  return isadded;
+	}
+
+	@Override
+	public boolean editsrfArticle(SrfArticle artindertdetail, String sidx,
+			String sord) throws SQLException {
+			Connection con = null;
+			PreparedStatement pst = null;
+			int noofrows  = 0;
+			boolean isupdate = true;
+			try{			
+				con = DBConnection.getConnection();
+				StringBuffer sql_updtsrfArticle = new StringBuffer("UPDATE elpro.tbl_srf_article SET articleid = ? , articletype = ? , articleshform = ? , articlename = ? , color = ? , size = ? , substance = ? , selection = ? , selectionp = ? , quantity = ? , unit = ? , pcs  = ? , rate = ? ,colormatching=?, tapetest=?, crockingwet=?, crockingdry=?, fourfolds=?, keytest=?, sampleno=?, user=? where srfarticleid = '"+artindertdetail.getSrf_articleid()+"' ");
+				String sqlquery_updtsrfArticle = sql_updtsrfArticle.toString();
+				pst = (PreparedStatement) con.prepareStatement(sqlquery_updtsrfArticle);
+				pst.setString(1, artindertdetail.getArticleid());
+				pst.setString(2, artindertdetail.getSrf_articletype());
+				pst.setString(3, artindertdetail.getSrf_articleshform());
+				pst.setString(4, artindertdetail.getSrf_articlename());
+				pst.setString(5, artindertdetail.getSrf_color());
+				pst.setString(6, artindertdetail.getSrf_size());
+				pst.setString(7, artindertdetail.getSrf_substance());
+				pst.setString(8, artindertdetail.getSrf_selection());
+				pst.setString(9, artindertdetail.getSrf_selectionp());
+				pst.setString(10, artindertdetail.getSrf_qty());
+				pst.setString(11, artindertdetail.getSrf_unit());
+				pst.setString(12, artindertdetail.getSrf_pieces());
+				pst.setString(13, artindertdetail.getSrf_price());
+				pst.setString(14, artindertdetail.getSrf_colormatch());							
+				pst.setString(15, artindertdetail.getSrf_tapetest());				
+				pst.setString(16, artindertdetail.getSrf_crockwet());
+				pst.setString(17, artindertdetail.getSrf_crockdry());
+				pst.setString(18, artindertdetail.getSrf_fourfold());
+				pst.setString(19, artindertdetail.getSrf_keytest());
+				pst.setString(20, artindertdetail.getSrf_samplenum());
+				pst.setString(21, artindertdetail.getUser());
+				
+				
+				noofrows = pst.executeUpdate();
+				System.out.println("Sucessfully inserted the record.." + noofrows);
+			}catch(Exception e){
+				e.printStackTrace();
+				isupdate = false;
+				System.out.println("ERROR RESULT");
+			}finally{
+				 con.close() ;
+				 pst.close();
+		   }	
+		//return noofrows;
+			return isupdate;
+	}
+
+	@Override
+	public boolean delsrfArticle(SrfArticle artindertdetail, String sidx,
+			String sord) throws SQLException {
+		Connection con = null;
+		PreparedStatement pst = null;
+		int noofrows  = 0;
+		boolean isdel = true;
+		try{			
+			con = DBConnection.getConnection();
+			StringBuffer sql_delsrfArticle = new StringBuffer("delete from elpro.tbl_srf_article WHERE srfarticleid = '"+artindertdetail.getSrf_articleid()+"' ");
+			String sqlquery_delsrfArticle = sql_delsrfArticle.toString();
+			System.out.println(sqlquery_delsrfArticle);
+			pst = (PreparedStatement) con.prepareStatement(sqlquery_delsrfArticle);
+			noofrows = pst.executeUpdate();
+			System.out.println("Sucessfully deleted the record.." + noofrows);
+		}catch(Exception e){
+			e.printStackTrace();
+			isdel = false;
+			System.out.println("ERROR RESULT");
+		}finally{
+			 con.close() ;
+			 pst.close();
+	   }	
+	//return noofrows;
+		return isdel;
+	}
 	
 	
-}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	}

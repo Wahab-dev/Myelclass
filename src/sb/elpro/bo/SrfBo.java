@@ -6,11 +6,9 @@ package sb.elpro.bo;
 import java.util.ArrayList;
 import java.util.List;
 
-import sb.elpro.action.SrfArticle;
+import sb.elpro.model.SrfArticle;
 import sb.elpro.model.AutoComplete;
 import sb.elpro.model.CustomerDetails;
-import sb.elpro.model.DestinationDetails;
-import sb.elpro.model.DestinationDetailstemp;
 import sb.elpro.model.EndUsageDetails;
 import sb.elpro.model.HandledByDetails;
 import sb.elpro.model.PaymentDetails;
@@ -37,8 +35,17 @@ public interface  SrfBo {
 
 	public ArrayList<PaymentDetails> getPaymentDetails(String pymntterm) throws Exception;
 
-	public List<SrfArticle> getSrfArticleDetails(String sno) throws Exception;
+	public List<SrfArticle> getSrfArticleDetails(String sidx, String sord) throws Exception;
 
-	//public ArrayList<HandledByDetails> getsrfEndusage()throws Exception;
+	public boolean addSrfArticleDetails(SrfArticle artindertdetail,
+			
+			String sidx, String sord) throws Exception;
+
+	public boolean editSrfArticleDetails(SrfArticle artindertdetail,
+			String sidx, String sord) throws Exception;
+
+	public boolean delPrfArticleDetails(SrfArticle artindertdetail,
+			String sidx, String sord)throws Exception;
+
 	
 }

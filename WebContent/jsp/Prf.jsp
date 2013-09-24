@@ -45,6 +45,8 @@ function loadAgent(){
 		}
 	 </c:forEach>
 	}
+
+
 </script>
 </head>
 <body>
@@ -145,12 +147,14 @@ function loadAgent(){
        		 											  		</h:select><br />
       				</fieldset>
       			</td>
-            	<td><fieldset><legend>Commission Details</legend>
-            							    Insurance:  <h:select property="prf_insurance" styleId="prf_insurance"> <br /> 
+            	<td>
+            	<fieldset>
+            		<legend>Commission Details</legend>
+            			  Insurance:  <h:select property="prf_insurance" styleId="prf_insurance"> <br /> 
           														<h:option value="1">Will Be Covered By Consignee</h:option>     
           														<h:option value="2">Will Be Covered By Shipper</h:option>      			    													         															
        		 											</h:select><br /><br />
-            								Payment:  <h:select property="prf_payment" styleId="prf_payment">
+            			 Payment:  <h:select property="prf_payment" styleId="prf_payment">
        		 													<h:option value="0">select Payment</h:option>
           															<c:forEach items="${paymentarray}" var ="paymList">
           																<h:option value="${paymList.payment}">
@@ -159,25 +163,24 @@ function loadAgent(){
           															</c:forEach>
        		 											  		</h:select><br /><br />
        		 											  			
-        									elclass Commission : 
-        									
-        									<h:text property="prf_elclasscommission" styleId="prf_elclasscommission"></h:text>
-        									<br /><br />
+        				elclass Commission : 
+        					<h:text property="prf_elclasscommission" styleId="prf_elclasscommission"></h:text>
+        					<br /><br />
        		 											  		
-       		 								<!--  TRY with Dynamically Add Textbox -->
+       		 			<!--  TRY with Dynamically Add Textbox -->
        		 											  		
-       		 									<div id="prfcommissiongroup">
-       		 											<div id="prfcommissiondiv">
-									       		 		Commission :<h:text property="prf_commission" styleId="prf_commission" ></h:text><br /><br/>
-									       		 		</div> 							
-       		 									</div>	
-       		 									<h:button value='Add' property='addButton' styleId="addButton"></h:button>
-												<h:button value='Remove' property='removeButton' styleId="removeButton"></h:button> 					  					  		
-      							</fieldset>
+       		 		   <div id="prfcommissiongroup">
+       		 		   		Commission :<h:text property="prf_commission" styleId="prf_commission" ></h:text><br /><br/>
+       		 				<div id="prfcommissiondiv"></div> 							
+       		 			</div>	
+       		 			<h:button value='Add' property='addButton' styleId="addButton"></h:button>
+						<h:button value='Remove' property='removeButton' styleId="removeButton"></h:button> 					  					  		
+      			</fieldset>
       			</td>
             	<td><fieldset><legend>Special Condition</legend><br/> 
         									Condtion 1: <h:textarea property="prf_special" cols="30" rows="2" styleId="prf_special"></h:textarea><br />        
        	 									Inspection Cdn: <h:textarea property="prf_special" cols="30" rows="2" styleId="prf_special"></h:textarea><br />
+       	 										
          			</fieldset></td>
           	</tr>
           	<tr>

@@ -4,21 +4,18 @@
  * 
  */
 $(document).ready(function() {
-	
-	var sno = $('#srf_sampleno').val();
-	 var grid = $("#srfArticletbl");
-	
+	 var grid = $("#srfArticletbl");	
 		grid.jqGrid({ 
 			         datatype: "json",
 				    // url:"/Myelclass/SrfinsertArticle.do",
-				     url:"",
+				     url:"/Myelclass/SrfinsertArticle.do", 
 			         mtype: 'GET',  
-			         colNames:['ArticleID', 'ArticleType','ArticleShForm', 'Article name','Color', 'Size','Sizeavg','Substance', 'Selection','Selectionp', 'Quantity','Unit','Price','Ratesign','Rateamt','Shipment','Colormatching','Tapetest','Crockingwet','CrockingDry','Fourfolds','Keytest','SampleNo','Srfarticleid'],  
+			         colNames:['ArticleID', 'ArticleType','ArticleShForm', 'Article name','Color', 'Size','Sizeavg','Size Rem','Substance', 'Selection','Selectionp', 'Quantity','Unit','Pieces','Price','Ratesign','Rateamt','Shipment','Colormatching','Tapetest','Crockingwet','CrockingDry','Fourfolds','Keytest','SampleNo','Srfarticleid','User'],  
 			         colModel :[   
 			                    {name:'articleid',index:'articleid',align:'center', editable:true, sortable:true, hidden:true,
 			                    	
 			                    },  
-			                    {name:'srf_articletype',index:'articletype', align:'center', editable:true, sortable:true, hidden:false, edittype:'select',
+			                    {name:'srf_articletype',index:'articletype', align:'center', width:80, editable:true, sortable:true, hidden:false, edittype:'select',
 			                    	 editoptions: { 
 			                      		 dataUrl:'/Myelclass/PrfAutocomplete.do?action=arttype',
 			                      		 type:"GET",
@@ -37,8 +34,8 @@ $(document).ready(function() {
 			                             } ,
 			                             editrules :{require : true},	
 			                    },  
-			                    {name:'srf_articleshform', index:'articleshform', align:'center', editable:true, sortable:true, hidden:true},   
-			                    {name:'srf_articlename', index:'articlename',  align:'center', editable:true, sortable:true, hidden:false,
+			                    {name:'srf_articleshform', index:'articleshform', align:'center', width:80, editable:true, sortable:true, hidden:true},   
+			                    {name:'srf_articlename', index:'articlename',  align:'center', width:80, editable:true, sortable:true, hidden:false,
 			                    	edittype:'text',
 			      		    	    editoptions:{
 			      						dataInit:function (elem) { 
@@ -65,9 +62,7 @@ $(document).ready(function() {
 			      						                             ratesign: item.rate_sign,
 			      						                             rateamt: item.rateamt,
 			      						                             shipment: item.shipment,
-			      						                             tcsign: item.tc_currency,
-			      						                             tcamt: item.tc_amount,
-			      						                             tcagt: item.tc_agent
+			      						                             
 			      						                             };
 			      						                         }));//END Response
 			      	
@@ -76,53 +71,169 @@ $(document).ready(function() {
 			      								},
 			      								select: function( event, ui ) { 
 			      									 $('#articleid').val(ui.item.id);
-			      						          	 $('#artshform').val(ui.item.shform);
-			      						        	 $('#prf_color').val(ui.item.clr);
-			      						          	 $('#prf_size').val(ui.item.size);
-			      						          	 $('#prf_sizeremarks').val(ui.item.sizeremar);
-			      						          	 $('#prf_substance').val(ui.item.subs);
-			      						          	 $('#prf_selection').val(ui.item.selec);
-			      						          	 $('#prf_selectionp').val(ui.item.selp);
-			      						          	 $('#prf_ratesign').val(ui.item.ratesign);
-			      						          	 $('#prf_rateamt').val(ui.item.rateamt);
-			      						          	 $('#prf_shipment').val(ui.item.shipment);
-			      						          	 $('#prf_tcamt').val(ui.item.tcamt);
-			      						          	 $('#prf_tcagent').val(ui.item.tcagt);
-			      						          	 $('#prf_tccurrency').val(ui.item.tcsign);
+			      						          	 $('#srf_articleshform').val(ui.item.shform);
+			      						        	 $('#srf_color').val(ui.item.clr);
+			      						          	 $('#srf_size').val(ui.item.size);
+			      						          	 $('#srf_sizeremarks').val(ui.item.sizeremar);
+			      						          	 $('#srf_substance').val(ui.item.subs);
+			      						          	 $('#srf_selection').val(ui.item.selec);
+			      						          	 $('#srf_selectionp').val(ui.item.selp);
+			      						          	 $('#srf_ratesign').val(ui.item.ratesign);
+			      						          	 $('#srf_rateamt').val(ui.item.rateamt);
+			      						          	 $('#srf_shipment').val(ui.item.shipment);
 			      						            } 
 			      							 });
 			      							$('.ui-autocomplete').css('zIndex',1000); // z index for jqgfrid and autocomplete has been misalignment so we are manually setting it 
 			      							}
 			      		    	  	},	
 			                    },  
-			                    {name:'srf_color', index:'color' ,  align:'center', editable:true, sortable:true, hidden:false, },  
-			                    {name:'srf_size', index:'size', align:'center', editable:true, sortable:true, hidden:false, },  
-			                    {name:'srf_sizeavg', index:'sizeavg',  align:'center', editable:true, sortable:true, hidden:true, },
-			                    {name:'srf_substance', index:'substance', align:'center', editable:true, sortable:true, hidden:false,  }, 
-			                    {name:'srf_selection', index:'selection', align:'center', editable:true, sortable:true, hidden:false, },  
-			                    {name:'srf_selectionp', index:'selectionp',  align:'center', editable:true, sortable:true, hidden:false, },   
-			                    {name:'srf_qty', index:'quantity', align:'center', editable:true, sortable:true, hidden:false, },  
-			                    {name:'srf_unit', index:'unit' , align:'center', editable:true, sortable:true, hidden:false, },   
-			                    {name:'srf_price', index:'price',  align:'center', editable:true, sortable:true, hidden:false, },   
-			                    {name:'srf_ratesign', index:'ratesign',  align:'center', editable:true, sortable:true, hidden:true, },  
-			                    {name:'srf_rateamt', index:'rateamt',  align:'center', editable:true, sortable:true, hidden:true, },   
-			                    {name:'srf_shipment', index:'shipment',  align:'center', editable:true, sortable:true, hidden:true, },  
-			                    {name:'srf_colormatch', index:'colormatching', align:'center', editable:true, sortable:true, hidden:true, },   
-			                    {name:'srf_tapetest', index:'tapetest', align:'center', editable:true, sortable:true, hidden:true, },  
-			                    {name:'srf_crockwet', index:'crockingwet', align:'center', editable:true, sortable:true, hidden:true, },  
-			                    {name:'srf_crockdry', index:'crockingdry', align:'center', editable:true, sortable:true, hidden:true, }, 
-			                    {name:'srf_fourfold', index:'fourfolds',  align:'center', editable:true, sortable:true, hidden:true, },  
-			                    {name:'srf_keytest', index:'keytest',  align:'center', editable:true, sortable:true, hidden:true, }, 
-			                    {name:'srf_samplenum', index:'samplenum', align:'center', editable:true, sortable:true, hidden:false, },
+			                    {name:'srf_color', index:'color',  align:'center', width:80, editable:true, sortable:true, hidden:false, edittype:'text', 
+			                    	editoptions:{
+			       						dataInit:function (elem) { 
+			       							$(elem).autocomplete({
+			       								minLength: 2,
+			       								source: function(request, response,term) {
+			       									var param = request.term;
+			       						            $.ajax({
+			       						                url: "/Myelclass/PrfAutocomplete.do?term="+param+"&action="+"color",
+			       						                dataType: "json",
+			       						                type:"POST",
+			       						                success: function (data) {
+			       						                	 response($.map(data, function(item) {
+			       						                		 return { 
+			       						                             label: item.value,
+			       						                             //shform: item.shform, //can add number of attributes here 
+			       						                             value: item.value // I am displaying both labe and value
+			       						                             };
+			       						                         }));//END Response
+			       	
+			       						                },//END Success
+			       						            });//END AJAX
+			       								},
+			       								
+			       							});
+			       							$('.ui-autocomplete').css('zIndex',1000); // z index for jqgfrid and autocomplete has been misalignment so we are manually setting it 
+			       							}
+			       						   }
+			       				
+			                    },  
+			                    {name:'srf_size', index:'size', align:'center', width:80, editable:true, sortable:true, hidden:false, 
+			                    	editoptions: { 
+			    						dataEvents:[{
+			    							type: 'focusout',
+			    							fn: function(e){
+			    								var sizeval = $("#srf_size").val();
+			    								var size_minindex = sizeval.indexOf('/');
+			    								//var size_maxindex = sizeval.indexOf(' '); // in order to avoid Size remarks. Make Size remrk seperate row in Table
+			    								var sizemin = sizeval.substring(0, size_minindex);
+			    								var sizemax=  sizeval.substring(size_minindex+1);
+			    								var sizeavg = ( (parseFloat (sizemin) + parseFloat(sizemax)) /2) ;
+			    								$("#srf_sizeavg").val(sizeavg);
+			    							}
+			    						}]  
+			    					  },
+			    					  editrules: {required: true},
+			    				},  
+			                    {name:'srf_sizeavg', index:'sizeavg',  align:'center', editable:true, sortable:true, hidden:true,
+			    					editrules:{edithidden:true},	
+			                    },
+			                    {name:'srf_sizeremarks', index:'sizerem', width:40, align:'center',  editable:true, hidden: true, 
+			        				edittype:'select',
+			        				editoptions:{value:{0: 'Select Size Remarks', F:'F', S:'S', FS:'FS', DB:'Double Butt'}},
+			        				editrules:{edithidden:true},
+			        				  	
+			        			}, 
+			                    {name:'srf_substance', index:'substance', align:'center', width:80, editable:true, sortable:true, hidden:false,  }, 
+			                    {name:'srf_selection', index:'selection', align:'center', width:80, editable:true, sortable:true, hidden:false, edittype:'select',			                    	
+			      				  editoptions:{value:{0:'Select Selection %',A:'A',AB:'AB',ABC:'ABC',TR:'TR',Available:'Available'}},
+			    				},  
+			                    {name:'srf_selectionp', index:'selectionp',  align:'center', width:80, editable:true, sortable:true, hidden:true, 
+			    					editrules:{edithidden:true},
+			    				},   
+			                    {name:'srf_qty', index:'quantity', align:'center', width:80, editable:true, sortable:true, hidden:false, 
+			                      editrules:{number:true}, formatter: 'number',  
+			      				  formatoptions: {decimalSeparator: ".", thousandsSeparator: ",", decimalPlaces: 2, defaultValue: '0.0000' },
+			                    },  
+			                    {name:'srf_unit', index:'unit' , align:'center', width:80, editable:true, sortable:true, hidden:false, 
+			                    	edittype:'select',
+			      				  editoptions:{
+			      					  value:{0:'Select Quantity Unit',sqft:'sq ft',skins:'skins',Garment:'Garment',NA:'NA'},
+			      					  dataEvents:[{
+			      							type: 'focusout',
+			      							fn: function(e){
+			      								var qty = $("#srf_qty").val();
+			      								var unit = $("#srf_unit option:selected").val();
+			      								var sizeav = $("#srf_sizeavg").val();
+			      								var piecs = ((unit == "sqft") ? (parseInt (qty) / parseInt(sizeav)) : parseInt(qty)) ;
+			      								$("#srf_pieces").val(parseInt(piecs));
+			      							}
+			      						}],
+			      						
+			      					  },	
+			                    }, 
+			                    {name:'srf_pieces', index:'pcs', align:'center', width:80, sortable:true, hidden: false, editable:true,
+			       				 
+			                    }, 
+			                    {name:'srf_price', index:'price',  align:'center', width:80, editable:true, sortable:true, hidden:false,
+			                    	
+			                    },   
+			                    {name:'srf_ratesign', index:'ratesign',  align:'center', editable:true, sortable:true, hidden:true, 
+			                    	 edittype:'select',
+			       				     editoptions:{value:{0:'--- Select Currency --- ',$:'$',Rs:'Rs',Euro:'Euro',NA:' Not Available'}},
+			       				     //editoptions:{value:"0:--- Select Currency --- ; $:Dollar; Rs:Rupees; €:Euro; NA:Not Available"},
+			       				     editrules:{edithidden:true},	
+			                    },  
+			                    {name:'srf_rateamt', index:'rateamt',  align:'center', editable:true, sortable:true, hidden:true, 
+			                    	editrules:{edithidden:true}, 
+			                    },   
+			                    {name:'srf_shipment', index:'shipment',  align:'center', editable:true, sortable:true, hidden:true, 
+			                    	 edittype:'select',
+			       			      editoptions:{value:{0:'--- Select Shipment --- ',Air:'Air',Sea:'Sea',Courier:'Courier',Truck:'Truck'}},
+			       			      editrules:{edithidden:true},	
+			                    },  
+			                    {name:'srf_colormatch', index:'colormatching', align:'center', editable:true, sortable:true, hidden:true, 
+			                    	 edittype:'select',
+				       			      editoptions:{value:{0:'--- Select colormatching --- ',Normalwhitetubelight:'Normal White Tube Light',NaturalLight:'Natural Light',TL84:'TL 84',TL86:'TL 86'}},
+				       			      editrules:{edithidden:true},	
+			                    },   
+			                    {name:'srf_tapetest', index:'tapetest', align:'center', editable:true, sortable:true, hidden:true, 
+			                    	 edittype:'select',
+				       			      editoptions:{value:{0:'--- Select tapetest --- ',APC:'As per Cutting',APS:'As per swatch',Good:'Good',Medium:'Medium'}},
+				       			      editrules:{edithidden:true},	
+			                    },  
+			                    {name:'srf_crockwet', index:'crockingwet', align:'center', editable:true, sortable:true, hidden:true, 
+			                    	 edittype:'select',
+				       			      editoptions:{value:{0:'--- Select crockingwet --- ',APC:'As per Cutting',APS:'As per swatch',Good:'Good',}},
+				       			      editrules:{edithidden:true},	
+			                    },  
+			                    {name:'srf_crockdry', index:'crockingdry', align:'center', editable:true, sortable:true, hidden:true, 
+			                    	 edittype:'select',
+				       			      editoptions:{value:{0:'--- Select crockingdry --- ',APC:'As per Cutting',APS:'As per swatch',Good:'Good',}},
+				       			      editrules:{edithidden:true},	
+			                    }, 
+			                    {name:'srf_fourfold', index:'fourfolds',  align:'center', editable:true, sortable:true, hidden:true, 
+			                    	 edittype:'select',
+				       			      editoptions:{value:{0:'--- Select fourfolds --- ',True:'True',False:'False'}},
+				       			      editrules:{edithidden:true},	
+			                    },  
+			                    {name:'srf_keytest', index:'keytest',  align:'center', editable:true, sortable:true, hidden:true, 
+			                    	 edittype:'select',
+				       			      editoptions:{value:{0:'--- Select keytest --- ',True:'True',False:'False'}},
+				       			      editrules:{edithidden:true},	
+			                    }, 
+			                    {name:'srf_samplenum', index:'samplenum', align:'center', width:80, editable:true, sortable:true, hidden:false, 
+			                    	
+			                    },
 			                    {name:'srf_articleid', index:'srfarticleid', align:'center', editable:true, sortable:true, hidden:true, },
+			                    {name:'user', index:'user', width:90, align:'center', sortable:true, editable:true, hidden: false,},
 			                    ],  
 			        jsonReader : {  
-			        	repeatitems:false,
-			            root: function (jsonOrderArray) { return jsonOrderArray; },
-			            page: function (jsonOrderArray) { return 1; },
-			            total: function (jsonOrderArray) { return 1; },
-			            records: function (jsonOrderArray) { return jsonOrderArray.length; }
-			        },  
+			            repeatitems:false,
+			       	    root: "rows",
+			            page: "page", //calls first
+			            total: "total" ,//calls Second
+			            records: "records" //calls Third
+			            }, 
 			        pager: '#srfArticlepager',
 			    	rowNum:7, 
 			    	viewrecords: true ,
@@ -133,9 +244,72 @@ $(document).ready(function() {
 			        sortname: 'articleid',  
 			        sortorder: 'desc',  
 			        emptyrecords: 'No records to display',
-			         
+			        editurl: "/Myelclass/SrfinsertArticle.do", 
 			        });  
-		grid.jqGrid('navGrid','#srfArticlepager',{edit:true,add:true,del:true, search:true, view:true});
+		grid.jqGrid('navGrid','#srfArticlepager',{edit:true,add:true,del:true, search:true, view:true},
+		{
+		  //Edit 
+			beforeShowForm: function(form) { 
+				  
+				  //Size Calculation
+				 var sizec = $("#srf_size").val();
+				 var temp = sizec.indexOf(' ');
+				 $("#srf_size").val(sizec.substring(0, temp));
+				 $("#srf_sizeremarks").val(sizec.substring(temp+1));
+				 
+				 //Size Avg Calculation
+				   var sizeval = $("#srf_size").val();
+					var size_minindex = sizeval.indexOf('/');
+					//var size_maxindex = sizeval.indexOf(' '); // in order to avoid Size remarks. Make Size remrk seperate row in Table
+					var sizemin = sizeval.substring(0, size_minindex);
+					var sizemax=  sizeval.substring(size_minindex+1);
+					var sizeavg = ( (parseFloat (sizemin) + parseFloat(sizemax)) /2) ;
+					$("#srf_sizeavg").val(sizeavg);
+					
+				//Rate Calculation
+				 var ratec = $("#srf_price").val();
+				 var ratemp = ratec.indexOf(' ');
+				 var ratemplast = ratec.lastIndexOf(' ');
+				 $("#srf_ratesign").val(ratec.substring(0, ratemp));
+				 $("#srf_rateamt").val(ratec.substring(ratemp+1, ratemplast));
+				 $("#srf_shipment").val(ratec.substring(ratemplast+1));
+				 
+				 $("#tr_srf_price").hide();
+		      },
+		        closeAfterEdit: true,
+				reloadAfterSubmit: true,
+		      	  
+			
+		},		
+		{
+			//Add
+			beforeShowForm: function(form) { 
+	           	 $("#srf_samplenum").val($("#srf_sampleno").val());
+	           	 $("#user").val($("#userinsession").val());
+	            	$("#tr_srf_price").hide(); // hide the tr prf_rate
+	            	//$("#tr_prf_rate").hide();
+	          },
+	          closeAfterAdd: true,
+			  reloadAfterSubmit: true
+			
+		},
+		{
+			//Del
+			
+			delData: {
+				//Function to Add parameters to the delete 
+				//Here i am passing artid with val 
+				srf_articleid: function() {
+                        var sel_id = grid.jqGrid('getGridParam', 'selrow');
+                        var value = grid.jqGrid('getCell', sel_id, 'srf_articleid');
+                        return value;
+                     }
+                 },
+				reloadAfterSubmit: true,
+			 
+		}
+		
+		);
 	
 			
 	//Autocomplete

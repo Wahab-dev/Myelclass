@@ -3,22 +3,19 @@
  */
 package sb.elpro.bo;
 
-import java.sql.SQLException;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import sb.elpro.action.SrfArticle;
+import sb.elpro.model.SrfArticle;
 import sb.elpro.dao.SrfDao;
 import sb.elpro.dao.SrfDaoImpl;
 import sb.elpro.model.AutoComplete;
 import sb.elpro.model.CustomerDetails;
-import sb.elpro.model.DestinationDetails;
-import sb.elpro.model.DestinationDetailstemp;
 import sb.elpro.model.EndUsageDetails;
 import sb.elpro.model.HandledByDetails;
 import sb.elpro.model.PaymentDetails;
-import sb.elpro.model.PrfArticle;
 import sb.elpro.model.TanneryDetails;
 
 /**
@@ -81,9 +78,27 @@ public class SrfBoImpl implements SrfBo {
 		return srfpaymentearray;
 	}
 	@Override
-	public List<SrfArticle> getSrfArticleDetails(String sno) throws Exception {
-		ArrayList<SrfArticle> srfaticlearray = srfdao.getSrfArticleDetails(sno);
+	public List<SrfArticle> getSrfArticleDetails(String sidx, String sord) throws Exception {
+		ArrayList<SrfArticle> srfaticlearray = srfdao.getSrfArticleDetails(sidx, sord);
 		return srfaticlearray;
+	}
+	@Override
+	public boolean addSrfArticleDetails(SrfArticle artindertdetail,
+			String sidx, String sord) throws Exception {
+		boolean isadded = srfdao.addsrfArticle(artindertdetail, sidx, sord);
+		return isadded;
+	}
+	@Override
+	public boolean editSrfArticleDetails(SrfArticle artindertdetail,
+			String sidx, String sord) throws Exception {
+		boolean isupdated = srfdao.editsrfArticle(artindertdetail, sidx, sord);
+		return isupdated;
+	}
+	@Override
+	public boolean delPrfArticleDetails(SrfArticle artindertdetail,
+			String sidx, String sord) throws Exception {
+		boolean isdeleted = srfdao.delsrfArticle(artindertdetail, sidx, sord);
+		return isdeleted;
 	}
 	
 

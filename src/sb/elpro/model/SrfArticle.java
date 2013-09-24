@@ -23,6 +23,8 @@ public class SrfArticle implements Serializable {
 	private String srf_color;
 	private String srf_size;
 	private String srf_sizeavg;
+	private String srf_sizeremarks;
+	private String srf_pieces;
 	private String srf_substance;
 	private String srf_selection;
 	private String srf_selectionp;
@@ -40,6 +42,7 @@ public class SrfArticle implements Serializable {
 	private String srf_keytest;
 	private String srf_samplenum;
 	private String srf_articleid;
+	private String user;
 	
 	
 	/**
@@ -329,6 +332,42 @@ public class SrfArticle implements Serializable {
 	 */
 	public void setSrf_articleid(String srf_articleid) {
 		this.srf_articleid = srf_articleid;
+	}
+	/**
+	 * @return the srf_sizeremarks
+	 */
+	public String getSrf_sizeremarks() {
+		return srf_sizeremarks;
+	}
+	/**
+	 * @param srf_sizeremarks the srf_sizeremarks to set
+	 */
+	public void setSrf_sizeremarks(String srf_sizeremarks) {
+		this.srf_sizeremarks = srf_sizeremarks;
+	}
+	/**
+	 * @return the srf_pieces
+	 */
+	public String getSrf_pieces() {
+		return srf_pieces;
+	}
+	/**
+	 * @param srf_pieces the srf_pieces to set
+	 */
+	public void setSrf_pieces(String srf_pieces) {
+		this.srf_pieces = srf_pieces;
+	}
+	/**
+	 * @return the user
+	 */
+	public String getUser() {
+		return user;
+	}
+	/**
+	 * @param user the user to set
+	 */
+	public void setUser(String user) {
+		this.user = user;
 	}
 	 
 }

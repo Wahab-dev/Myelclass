@@ -70,9 +70,9 @@ public class PrfAction extends DispatchAction {
 		 }else{
 			 System.out.println("It is an Update Command ");
 			// PrfArticle editprfartbean = new PrfArticle();
-			 List<ArticleDetails> editarticle =  prfbo.editprfArticle(prfartid);
+			// List<ArticleDetails> editarticle =  prfbo.editprfArticle(prfartid);
 			
-			 usersession.setAttribute("articlearray",editarticle);
+			 //usersession.setAttribute("articlearray",editarticle);
 			 
 		 }
 			

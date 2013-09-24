@@ -72,12 +72,9 @@ public interface PrfBo  {
 	public List<SelectArticle> getarticlename()throws Exception;
 
 	public int saveprfArticle(PrfArticle prfartbean)throws Exception;
-	public List<ArticleDetails> updateprfArticle(ArticleDetails prfbean)throws Exception;
 	public List<PrfArticle> getPrfArticleDetails( String sidx, String sord)throws Exception;
 
 	//Edit Values 
-	public List<ArticleDetails> editprfArticle(String prfarticleid) throws Exception;
-
 	public List<ArticleDetails> getPrfArticleName(String term) throws Exception;
 	
 	public List<AutoComplete> getPrfColor(String term)throws Exception;

@@ -165,7 +165,7 @@ $(document).ready(function() {
 				 formoptions:{rowpos: 7, colpos: 3} 
 			}, 	
 		
-			{name:'prf_quantity', index:'quantity', width:90, align:'center', sortable:true, hidden: false, editable:true,
+			{name:'prf_quantity', index:'quantity', width:90, align:'center', sortable:true, hidden: false, 
 				editable:true, editrules:{number:true}, formatter: 'number',  
 				  formatoptions: {decimalSeparator: ".", thousandsSeparator: ",", decimalPlaces: 2, defaultValue: '0.0000' },
 				  formoptions:{rowpos: 8, colpos: 1} 
@@ -620,10 +620,9 @@ $(document).ready(function() {
 					}   
 					var newTextBoxDiv = $(document.createElement('div')) // Please check here  
 				     .attr("id", 'prfcommissiondiv' + counter);
-			 
+					
 					newTextBoxDiv.after().html('Commssion #'+ counter + ' : ' +
-				      '<h:text property="prf_commission' + counter + 
-				      '" value="" ></h:text><br /><br/>');
+				      '<input type="text" id="prf_commission'+ counter +'" name="prf_commission'+ counter +'" value=" ></input><br /><br/>');
 			 
 					newTextBoxDiv.appendTo("#prfcommissiongroup");
 				counter++;

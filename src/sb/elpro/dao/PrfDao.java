@@ -78,10 +78,6 @@ public interface PrfDao {
 
 	ArrayList<PrfArticle> getPrfArticleDetails(String sidx, String sord)throws SQLException;
 
-	List<ArticleDetails> editprfArticle(String prfarticleid)throws SQLException;
-
-	List<ArticleDetails> updateprfArticle(ArticleDetails prfbean)throws SQLException;
-
 	List<ArticleDetails> getPrfArticleNamelist(String term)throws SQLException;
 	
 
