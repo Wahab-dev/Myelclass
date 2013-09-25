@@ -67,7 +67,9 @@
 	 <action path="/PrfAutocomplete" name="PrfForm" type="sb.elpro.action.PrfAutocomplete" input="/jsp/Prf.jsp" scope="session">	 
 	 </action>
 	  
-	  
+	  <!-- Bulk Tracking Page  -->
+	  <action path="/BulkAction" name="BulkTrackForm" type="sb.elpro.action.BulkAction" input="/jsp/Bulk.jsp" scope="session">  
+	  </action>
 	  
 	  
 	  

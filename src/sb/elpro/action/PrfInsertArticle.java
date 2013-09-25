@@ -141,33 +141,7 @@ public class PrfInsertArticle extends Action  {
 						out.println(jsonobj);
 					}
 					
-					
-					
-					
-					
-					 
-					
-					
-					
-				}/*else{
-					 //artindertdetail.setArtshform("NA");
-					if(artaxn.equalsIgnoreCase("edit")){
-						String artid = request.getParameter("prf_articleid");
-						 System.out.println(" In Article EDIZT");
-						 boolean isPrfArticleUpdated = prfbo.editPrfArticleDetails(artindertdetail,artid,sidx,sord);
-						 System.out.println("isPrfArticleUpdated"+isPrfArticleUpdated);
-					}else if(artaxn.equalsIgnoreCase("add")){
-						 System.out.println(" In Article Add");
-						 boolean isPrfArticleAdded = prfbo.addPrfArticleDetails(artindertdetail,ctno,sidx,sord);
-						System.out.println("isPrfArticleAdded"+isPrfArticleAdded);
-					}else{
-						System.out.println(" In Article Dele");
-						String artid = request.getParameter("prf_articleid");
-						System.out.println("artid"+artid);
-						
-					}
-				}*/
-						
+				}						
 				return null;
 			}else{
 				System.out.println("Error Invalid Session");
