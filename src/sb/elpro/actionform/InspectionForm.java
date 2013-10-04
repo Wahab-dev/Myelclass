@@ -17,85 +17,76 @@ public class InspectionForm extends ActionForm {
 	 */
 	private static final long serialVersionUID = -1326268577180737805L;
 	
-	private String inps_ContractNumber;
-	private String inps_date;
-	private String inps_qualityctrlr;
-	private String inps_id;
-	private String inps_Comments;
-	private String insp_cdn;
-	//Grading
-	private String inps_GradingId;
-	private String inps_grade1skincount;
-	private String inps_grade2skincount;
-	private String inps_grade3skincount;
-	private String inps_grade4skincount;
-	private String inps_grade5skincount;
-	private String inps_grade1percent;
-	private String inps_grade2percent;
-	private String inps_grade3percent;
-	private String inps_grade4percent;
-	private String inps_grade5percent;
-	private String inps_grade1comments;
-	private String inps_grade2comments;
-	private String inps_grade3comments;
-	private String inps_grade4comments;
-	private String inps_grade5comments;
+		private String inps_contractnumber;
+		private String inps_date;
+		private String inps_qualityctrlr;
+		private String inps_id;
+		private String inps_comments;
+		private String insp_cdn;
+		//Grading
+		private String inps_gradingid;
+		private String inps_grade1skincount;
+		private String inps_grade2skincount;
+		private String inps_grade3skincount;
+		private String inps_grade4skincount;
+		private String inps_grade5skincount;
+		private String inps_grade1percent;
+		private String inps_grade2percent;
+		private String inps_grade3percent;
+		private String inps_grade4percent;
+		private String inps_grade5percent;
+		private String inps_grade1comments;
+		private String inps_grade2comments;
+		private String inps_grade3comments;
+		private String inps_grade4comments;
+		private String inps_grade5comments;
+		
+		//Rejects
+		private String inps_rejectsid;
+		private String inps_sidespassed;
+		private String inps_hidespassed;
+		private String inps_totalpassed;
+		private String inps_substancerejectssides;
+		private String inps_substancerejectshides;
+		private String inps_substancerejects; 
+		private String inps_sizerejectssides;
+		private String inps_sizerejectshides;
+		private String inps_sizerejects;
+		private String inps_selectionrejectssides;
+		private String inps_selectionrejectshides;
+		private String inps_selectionrejects;
+		private String inps_colorrejectssides;
+		private String inps_colorrejectshides;
+		private String inps_colorrejects;
+		private String inps_orgrejectssides;
+		private String inps_orgrejectshides;
+		private String inps_orgrejects;
+		private String inps_otherrejectssides;
+		private String inps_otherrejectshides;
+		private String inps_otherrejects;
+		private String inps_totalrejectssides;
+		private String inps_totalrejectshides;
+		private String inps_totalrejects;
+		
+		//Manual Test
+		private String inps_testid;
+		private String inps_article;
+		private String inps_colortest;
+		private String inps_substancetest;
+		
+		private String inps_tearstrenghttest;
+		private String inps_grainbreaktest;
+		private String inps_crockingdrytest;
+		private String inps_crockingwettest;
+		private String inps_finishadhensiontest;
+		private String inps_fourfoldtest;
+		private String inps_crosssectiontest;
+		private String inps_organoleptictest;
+		private String[] inps_testedpcs; 
+		private String[] inps_testcomments;
+		
+		private String status;
 	
-	//Rejects
-	private String inps_RejectsId;
-	private String inps_sidespassed;
-	private String inps_hidespassed;
-	private String inps_totalpassed;
-	private String inps_substancerejectssides;
-	private String inps_substancerejectshides;
-	private String inps_substancerejects; 
-	private String inps_sizerejectssides;
-	private String inps_sizerejectshides;
-	private String inps_sizerejects;
-	private String inps_selectionrejectssides;
-	private String inps_selectionrejectshides;
-	private String inps_selectionrejects;
-	private String inps_colorrejectssides;
-	private String inps_colorrejectshides;
-	private String inps_colorrejects;
-	private String inps_orgrejectssides;
-	private String inps_orgrejectshides;
-	private String inps_orgrejects;
-	private String inps_otherrejectssides;
-	private String inps_otherrejectshides;
-	private String inps_otherrejects;
-	private String inps_totalrejectssides;
-	private String inps_totalrejectshides;
-	private String inps_totalrejects;
-	
-	//Manual Test
-	private String inps_TestId;
-	private String inps_article;
-	private String inps_colortest;
-	private String inps_substancetest;
-	
-	private String inps_tearstrenghttest;
-	private String inps_grainbreaktest;
-	private String inps_crockingdrytest;
-	private String inps_crockingwettest;
-	private String inps_finishadhensiontest;
-	private String inps_fourfoldtest;
-	private String inps_crosssectiontest;
-	private String inps_organoleptictest;
-	private String[] inps_testedpcs; 
-	private String[] inps_testcomments;
-	/**
-	 * @return the inps_ContractNumber
-	 */
-	public String getInps_ContractNumber() {
-		return inps_ContractNumber;
-	}
-	/**
-	 * @param inps_ContractNumber the inps_ContractNumber to set
-	 */
-	public void setInps_ContractNumber(String inps_ContractNumber) {
-		this.inps_ContractNumber = inps_ContractNumber;
-	}
 	/**
 	 * @return the inps_date
 	 */
@@ -132,30 +123,7 @@ public class InspectionForm extends ActionForm {
 	public void setInps_id(String inps_id) {
 		this.inps_id = inps_id;
 	}
-	/**
-	 * @return the inps_Comments
-	 */
-	public String getInps_Comments() {
-		return inps_Comments;
-	}
-	/**
-	 * @param inps_Comments the inps_Comments to set
-	 */
-	public void setInps_Comments(String inps_Comments) {
-		this.inps_Comments = inps_Comments;
-	}
-	/**
-	 * @return the inps_GradingId
-	 */
-	public String getInps_GradingId() {
-		return inps_GradingId;
-	}
-	/**
-	 * @param inps_GradingId the inps_GradingId to set
-	 */
-	public void setInps_GradingId(String inps_GradingId) {
-		this.inps_GradingId = inps_GradingId;
-	}
+	
 	/**
 	 * @return the inps_grade1skincount
 	 */
@@ -336,18 +304,7 @@ public class InspectionForm extends ActionForm {
 	public void setInps_grade5comments(String inps_grade5comments) {
 		this.inps_grade5comments = inps_grade5comments;
 	}
-	/**
-	 * @return the inps_RejectsId
-	 */
-	public String getInps_RejectsId() {
-		return inps_RejectsId;
-	}
-	/**
-	 * @param inps_RejectsId the inps_RejectsId to set
-	 */
-	public void setInps_RejectsId(String inps_RejectsId) {
-		this.inps_RejectsId = inps_RejectsId;
-	}
+	
 	/**
 	 * @return the inps_sidespassed
 	 */
@@ -636,18 +593,7 @@ public class InspectionForm extends ActionForm {
 	public void setInps_totalrejects(String inps_totalrejects) {
 		this.inps_totalrejects = inps_totalrejects;
 	}
-	/**
-	 * @return the inps_TestId
-	 */
-	public String getInps_TestId() {
-		return inps_TestId;
-	}
-	/**
-	 * @param inps_TestId the inps_TestId to set
-	 */
-	public void setInps_TestId(String inps_TestId) {
-		this.inps_TestId = inps_TestId;
-	}
+	
 	/**
 	 * @return the inps_article
 	 */
@@ -816,9 +762,79 @@ public class InspectionForm extends ActionForm {
 	public void setInsp_cdn(String insp_cdn) {
 		this.insp_cdn = insp_cdn;
 	}
+	/**
+	 * @return the status
+	 */
+	public String getStatus() {
+		return status;
+	}
+	/**
+	 * @param status the status to set
+	 */
+	public void setStatus(String status) {
+		this.status = status;
+	}
 	
-	
-	
+	/**
+	 * @return the inps_comments
+	 */
+	public String getInps_comments() {
+		return inps_comments;
+	}
+	/**
+	 * @param inps_comments the inps_comments to set
+	 */
+	public void setInps_comments(String inps_comments) {
+		this.inps_comments = inps_comments;
+	}
+	/**
+	 * @return the inps_contractnumber
+	 */
+	public String getInps_contractnumber() {
+		return inps_contractnumber;
+	}
+	/**
+	 * @param inps_contractnumber the inps_contractnumber to set
+	 */
+	public void setInps_contractnumber(String inps_contractnumber) {
+		this.inps_contractnumber = inps_contractnumber;
+	}
+	/**
+	 * @return the inps_gradingid
+	 */
+	public String getInps_gradingid() {
+		return inps_gradingid;
+	}
+	/**
+	 * @param inps_gradingid the inps_gradingid to set
+	 */
+	public void setInps_gradingid(String inps_gradingid) {
+		this.inps_gradingid = inps_gradingid;
+	}
+	/**
+	 * @return the inps_rejectsid
+	 */
+	public String getInps_rejectsid() {
+		return inps_rejectsid;
+	}
+	/**
+	 * @param inps_rejectsid the inps_rejectsid to set
+	 */
+	public void setInps_rejectsid(String inps_rejectsid) {
+		this.inps_rejectsid = inps_rejectsid;
+	}
+	/**
+	 * @return the inps_testid
+	 */
+	public String getInps_testid() {
+		return inps_testid;
+	}
+	/**
+	 * @param inps_testid the inps_testid to set
+	 */
+	public void setInps_testid(String inps_testid) {
+		this.inps_testid = inps_testid;
+	}
 	
 		
 }

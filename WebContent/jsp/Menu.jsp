@@ -21,7 +21,8 @@
 	Go to Payment Screen <h:link action='/gotopayment'>Payment Screen</h:link><br /><br />
 	Go to Master Screen <h:link action='/gotomaster'>Master Screen</h:link><br /><br />
 	Go to Bulk Trackig <h:link action='/gotoBulkTracking'>Bulk Tacking</h:link><br /><br />
-	
+	Go to Sample Trackig <h:link action='/gotoSampleTracking'>Sample Tacking</h:link><br /><br />
+	Go to Inspection Trackig <h:link action='/gotoInspectionTracking'>Inspection Tacking</h:link><br /><br />
 
 </body>
 </html>

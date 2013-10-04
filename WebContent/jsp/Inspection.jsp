@@ -151,7 +151,7 @@ $(document).ready(function() {
 		     			<tr>
 		     				<td>
 		     					Contract Number :
-		     						<h:text property="inps_ContractNumber" styleId="inps_ContractNumber"></h:text><br />	
+		     						<h:text property="inps_contractnumber" styleId="inps_ContractNumber"></h:text><br />	
           												
 		     				</td>
 		     				<td>
