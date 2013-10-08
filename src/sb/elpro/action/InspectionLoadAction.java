@@ -28,9 +28,7 @@ public class InspectionLoadAction extends Action {
 			HttpServletRequest request, HttpServletResponse response)throws Exception{
 		usersession = request.getSession(false);	
 		if(usersession !=null){		   	
-				System.out.println("In iNspection Load///////");
-				//usersession.setAttribute("inspcontractarray",inspbo.getInspCtNo());
-//				//usersession.setAttribute("inspqctrlrarray", inspbo.getInspqtyctrlr());
+				System.out.println("In iNspection Load.....");
 			}else{
 				System.out.println("Inspection is not Loaded,,,");
 				return mapping.findForward("login");

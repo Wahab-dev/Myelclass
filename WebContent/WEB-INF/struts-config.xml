@@ -116,6 +116,8 @@
 	  </action> 
 	   <action path="/InspAutocomplete" name="InspectionForm" type="sb.elpro.action.InspAutocomplete" input="/jsp/Inspection.jsp" scope="session">	 
 	 </action>
+	  <action path="/InspectionAction" name="InspectionForm" type="sb.elpro.action.InspectionGridAction" input="/jsp/Inspection.jsp" scope="session">	 
+	 </action>
 	  
 	 <!-- Inspection Track Screen -->
 	 

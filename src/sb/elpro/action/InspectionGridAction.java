@@ -17,20 +17,17 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
-import sb.elpro.bo.BulkBo;
-import sb.elpro.bo.BulkBoImpl;
-import sb.elpro.bo.SampTrackBo;
-import sb.elpro.bo.SampTrackBoImpl;
-import sb.elpro.model.BulkArticle;
+import sb.elpro.bo.Inspectionbo;
+import sb.elpro.bo.InspectionboImpl;
 import sb.elpro.model.SampleTrack;
 
 /**
  * @author Wahab
  *
  */
-public class SampleInsertAction extends Action{
+public class InspectionGridAction extends Action{
 	HttpSession usersession;
-	SampTrackBo samptrackbo  =  new SampTrackBoImpl();
+	Inspectionbo inspbo  =  new InspectionboImpl();
 	public ActionForward execute (ActionMapping map, ActionForm form, 
 			HttpServletRequest request, HttpServletResponse response) throws Exception{
 		usersession = request.getSession(false);
@@ -41,7 +38,6 @@ public class SampleInsertAction extends Action{
 		 if(usersession != null){
 			 String oper =   request.getParameter("oper");
 			 System.out.println("oper "+oper);
-			 
 			 String action = request.getParameter("action");
 			 String rows = request.getParameter("rows");
              String pag = request.getParameter("page");
@@ -53,12 +49,12 @@ public class SampleInsertAction extends Action{
              System.out.println("sidx "+sidx);
              System.out.println("sord "+sord);
              System.out.println("action "+action);
-             
              if(oper == null){
-				 System.out.println(" In Sample  LAOD");
-				List<SampleTrack> sampletrack = samptrackbo.getSampleTrackDetails(sidx,sord);
+				 System.out.println(" In Insp  LAOD");
+				List<SampleTrack> sampletrack = inspbo.getInspectionTestDetails(sidx,sord);
 				int records = sampletrack.size();
 				System.out.println("Reords  "+records);
+				
 					int page = Integer.parseInt(pag);
 	                int totalPages = 0;
 	                int totalCount = records;
@@ -81,13 +77,11 @@ public class SampleInsertAction extends Action{
 				System.out.println(jsonobj);		
 				out.println(jsonobj);
              }
+             
 		 }else{
 			 System.out.println("Error Invalid Session");
 			 return map.findForward("login");
 		 }
-		
-		return null;
+		 return null;
 	}
-	
-	
 }

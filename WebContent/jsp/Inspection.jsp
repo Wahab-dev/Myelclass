@@ -15,22 +15,22 @@
 </style>	
 <script src="js/jquery-1.9.1.js"></script>
 <script src="js/jquery-ui.js"></script>
-<link rel="stylesheet" type="text/css" media="screen" href="css/pepper-grinder/jquery-ui-1.10.3.custom.css" />
+<link rel="stylesheet" type="text/css" media="screen" href="css/redmond/jquery-ui-1.10.3.custom.css" />
 <link rel="stylesheet" type="text/css" media="screen" href="css/ui.jqgrid.css" />
 
 <script src="js/i18n/grid.locale-en.js" type="text/javascript"></script>
-
 <script src="js/jquery.jqGrid.min.js" type="text/javascript"></script>		
+
 <script type="text/javascript">
 $(document).ready(function() {
 	//:Load Grid
-	var gridbtn = $('#loadCtDetails'); 
-	var grid = $('#insp_Ctdetails'); 
-	gridbtn.click( function()
-		    {
-			var ctno = $('#inps_ContractNumber').val();
-    		grid.jqGrid({  
-				url:"/Myelclass/InspAutocomplete.do?ctno="+ctno+"&action="+"loadArticle",   
+	var artgrid = $('#insp_Ctdetails'); 
+	var testgrid = $('#insptesttbl'); 
+	var gradgrid = $('#inspgradtbl'); 
+	var rejgrid = $('#insprejtbl'); 
+			
+			artgrid.jqGrid({  
+				url:"",   
 				datatype:"json",
 				colNames:['Article Name', 'Color', 'Size','Subs','Selec','Selec P', 'Quantity'],  
 			    colModel:[   
@@ -53,7 +53,64 @@ $(document).ready(function() {
 		    	pager: '#insp_CtDetalspager',
 		    	rowNum:6, 
 		    	rowList:[2,4,6],
-		    	//loadonce:false,
+		        loadtext: "Bow Bow........... ",
+		        height : "auto",
+		        width:"auto",  
+		        sortname: 'articlename',  
+		        sortorder: 'desc',  
+		        emptyrecords: 'No records to display',
+			});	
+			artgrid.jqGrid('navGrid', '#insp_CtDetalspager',  { edit: false, add: false, del: false, 
+					search: false, refresh: false, view:true });
+//tEST GRID LOAD 
+	testgrid.jqGrid({  
+				url:"",   
+				datatype:"json",
+				colNames:['Test Id','Inspection ID','ArticleID','TestType', 'pieces tested', 'Results','Comments'],  
+			    colModel:[  
+					{name:'testid', index:'testid', align:'center', width:120, editable:true, sortable: true, hidden: true, 
+						editoptions: {size:8},
+						
+					},
+					{name:'Inspid', index:'Inspid', align:'center', width:120, editable:true, sortable: true, hidden: true, 
+						editoptions: {size:5},
+					
+					},
+					{name:'articleid', index:'articleid', align:'center', width:120, editable:true, sortable: true, hidden: true, 
+						editoptions: {size:8},
+						
+					},
+					{name:'testtype', index:'testtype', align:'center', width:120, editable:true, sortable: true, hidden:false, 
+						edittype: 'select', 
+						editoptions: {value: {0:'Color',1:'Subatance',2:'Tear Strength',3:'Grain Break',4:'Crocking Wet',5:'Crocking Dry',6:'Finish Adhension',7:'Four Folds',8:'Cross Section',9:'Organoleptic'}},
+						
+					},
+					{name:'piecestested', index:'piecestested', align:'center', width:130, editable:true, sortable: true, hidden:false, 
+						editoptions: {size:5},
+						
+					},
+					{name:'results', index:'results', align:'center', width:120, editable:true, sortable: true, hidden:false, 
+						  edittype: 'select', 
+						  editoptions: {value: {P:'Pass',F:'Fail',NA:'NA'}},
+						
+					},
+					{name:'comments', index:'comments', align:'center', width:120, editable:true, sortable: true, hidden:false, 
+						edittype: 'textarea',
+					},
+					
+				],  
+				jsonReader : {  
+				  	repeatitems:false,
+			      	root: "rows",
+			      	page: "page", //calls first
+			      	total: "total" ,//calls Second
+			      	records: "records" //calls Third
+				},
+				editurl: "/Myelclass/InspectionAction.do",
+				caption: "Test Details",
+		    	pager: '#insptestpager',
+		    	rowNum:6, 
+		    	rowList:[2,4,6],
 		        loadtext: "Bow Bow........... ",
 		        height : "auto",
 		        width:"auto",  
@@ -62,32 +119,144 @@ $(document).ready(function() {
 		        emptyrecords: 'No records to display',
 			});
 			 		
-			grid.jqGrid('navGrid', '#insp_CtDetalspager',  { edit: true, add: true, del: false, 
-					search: false, refresh: false },
-					{ // edit option
-	 					 top: 150,
-	 					 left: 200,
-	 					 beforeShowForm: function(form) { 
-	 						alert("In Edit Form"); 
-	 					 },
-	 					 url: "/Myelclass/PrfinsertArticle.do?ctno="+ctno+"&action="+"edit",
-	 					 mtype: "POST",
-	 					 closeAfterEdit: true,
-	 					 //editData
-	 		          },
-	 		          
-	 				{ // add option
-	 		              beforeShowForm: function(form) { 
-	 		            	  alert("In Add Form");  
-	 		              },
-	 		        	  top: 150,
-					 	  left: 200,
-					 	  width : 350,
-					 	  url: "/Myelclass/PrfinsertArticle.do?ctno="+ctno+"&action="+"add",
-	 		          }
-	 		          );
+		testgrid.jqGrid('navGrid', '#insptestpager',  { edit: true, add: true, del: true, 
+					search: false, refresh: true, view: true },
+					{
+						// Edit
+					},
+					{
+					
+					 // Before Add 
+			 		  beforeInitData: function(formid) {
+					 	/* testgrid.setColProp('Color', {
+	 		 				formoptions : {
+								label : "",
+							},
+						}); */
+			 		  },
+					  beforeShowForm: function(form){
+						  /*  $('<tr class="FormData"><td class="CaptionTD ui-widget-content" colspan="2">' +
+						           '<hr/><div style="padding:3px" class="ui-widget-header ui-corner-all">' +
+						           '<b>Test Details :</b></div></td></tr>')
+						           .insertBefore('#articleid');	  */
+						/*  $("#tr_testid").hide();
+						 $("#tr_testtype").hide();
+						 $("#tr_Inspdate").hide(); */
+						 
+					 },
+					 recreateForm: true,
+					});
+		
+//Grade GRID
+		gradgrid.jqGrid({  
+				url:"",   
+				datatype:"json",
+				colNames:['Insp ID','Grade ID ', 'Grade ','Skin Count', 'Percentage','Comments'],  
+			    colModel:[   
+					{name:'inspid', index:'inspid',align:'center', width:120, editable:true, sortable: true, hidden: true, },
+					{name:'gradeid', index:'gradeid', align:'center', width:120, editable:true, sortable: true, hidden: true, },
+					{name:'grade', index:'grade', align:'center', width:120, editable:true, sortable: true, hidden: false,
+						edittype: 'select', 
+						editoptions: {value: {1:'Grade 1',2:'Grade 2', 3:'Grade 3', 4:'Grade 4', 5:'Grade 5'}},
+					},
+					{name:'skincount', index:'skincount', align:'center', width:120, editable:true, sortable: true, hidden: false, },	
+					{name:'percentage', index:'size', align:'center', width:120, editable:true, sortable: true, hidden:false, },
+					{name:'comments', index:'subatance', align:'center', width:120, editable:true, sortable: true, hidden:false, 
+						edittype: 'textarea',
+					},				
+				],  
+				jsonReader : {  
+				  	repeatitems:false,
+			      	root: "rows",
+			      	page: "page", //calls first
+			      	total: "total" ,//calls Second
+			      	records: "records" //calls Third
+				},
+				caption: "Grading Details ",
+		    	pager: '#inspgradpager',
+		    	rowNum:6, 
+		    	rowList:[2,4,6],
+		        loadtext: "Bow Bow........... ",
+		        height : "auto",
+		        width:"auto",  
+		        sortname: 'articlename',  
+		        sortorder: 'desc',  
+		        emptyrecords: 'No records to display',
+			});
+		gradgrid.jqGrid('navGrid', '#inspgradpager',  { edit: true, add: true, del: true, 
+			search: false, refresh: true, view: true });
+
+//Rejects Grid
+rejgrid.jqGrid({  
+	url:"",   
+	datatype:"json",
+	colNames:['Article Type','Reject ID ', 'Article ID','Total Passed','Substance','Size','Selec','Color','Org','Other','Total Rejects','Total Inspected'],  
+    colModel:[  
+		{name:'arttype', index:'arttype', align:'center', width:120, editable:true, sortable: true, hidden:false, 
+			edittype: 'select', editoptions: {value: {H:'Hides',S:'Sides',NA:'NA'}},
+		},
+		{name:'rejectid', index:'rejectid',align:'center', width:120, editable:true, sortable: true,  hidden: true, 
+				
+		}, 
+		{name:'articleid', index:'articleid', align:'center', width:120, editable:true, sortable: true,  hidden: true, 
+			
+		},
+		{name:'passed', index:'passed', align:'center', width:80, editable:true, sortable: true, hidden:false, 
+			
+		},
+		{name:'subs', index:'subs', align:'center', width:60, editable:true, sortable: true, hidden:false, 
+			
+		},	
+		{name:'size', index:'size', align:'center', width:50, editable:true, sortable: true, hidden:false, 
+			
+		},
+		{name:'selec', index:'selec', align:'center', width:50, editable:true, sortable: true, hidden:false, 
+			
+		},			
+		{name:'color', index:'color', align:'center', width:50, editable:true, sortable: true, hidden:false, 
+			
+		},	
+		{name:'org', index:'org', align:'center', width:50, editable:true, sortable: true, hidden:false, 
+			
+		},	
+		{name:'other', index:'other', align:'center', width:50, editable:true, sortable: true, hidden:false, 
+			
+		},
+		{name:'totrejects', index:'totrejects', align:'center', width:50, editable:true, sortable: true, hidden:false, 
+			
+		},	
+		{name:'totinsp', index:'totinsp', align:'center', width:120, editable:true, sortable: true, hidden:false, 
+			
+		},
+	],  
+	jsonReader : {  
+	  	repeatitems:false,
+      	root: "rows",
+      	page: "page", //calls first
+      	total: "total" ,//calls Second
+      	records: "records" //calls Third
+	},
+	caption: "Rejects Details ",
+	pager: '#insprejpager',
+	rowNum:6, 
+	rowList:[2,4,6],
+    loadtext: "Bow Bow........... ",
+    height : "auto",
+    width:"auto",  
+    sortname: 'rejectid',  
+    sortorder: 'desc',  
+    emptyrecords: 'No records to display',
+});
+rejgrid.jqGrid('navGrid', '#insprejpager',  { edit: true, add: true, del: true, 
+search: false, refresh: false, view: false });
+rejgrid.jqGrid('setGroupHeaders', {
+	  useColSpanStyle: false, 
+	  groupHeaders:[
+		{startColumnName: 'subs', numberOfColumns: 7, titleText: '<em>Rejects</em>'},
+	  ]
 	});
-	$('#inps_ContractNumber').autocomplete({
+//AUTOCOMPLETE			
+	$('#inps_ContractNumber').autocomplete({		
 		 source: function(request, response) {
 			var param = request.term;  
 			$.getJSON("/Myelclass/InspAutocomplete.do?term="+param+"&action="+"inspCt",
@@ -102,6 +271,8 @@ $(document).ready(function() {
 		 },
 		 select: function( event, ui ) { 
          	 $('#insp_cdn').val(ui.item.splcdn);
+         	var ctno = $('#inps_ContractNumber').val();
+         	artgrid.jqGrid('setGridParam',{url:"/Myelclass/InspAutocomplete.do?ctno="+ctno+"&action="+"loadArticle"}).trigger("reloadGrid");
            } 
 	}); 
 	$('#inps_qualityctrlr').autocomplete({
@@ -118,8 +289,8 @@ $(document).ready(function() {
 			              fax: item.tanneryFax,
 			              };
 			        }));//END response
-			 });
-		 }
+			 	});
+		 	}
 	}); 
 	 //DATEPICKER
      $("#inps_date").datepicker({
@@ -165,195 +336,45 @@ $(document).ready(function() {
 		     			</tr>
 		     		</table>          																
 		     </fieldset>
-		   
 		    <table>
 		    <tr>
 		   <td>
-		    <div>
-		      <h:button property="inspinsert" value="insert" styleId="loadCtDetails"></h:button>    
+		    <fieldset> 	 	
+		     	<legend>Contract Details</legend>
 		    	<table id="insp_Ctdetails"></table>
 		    		<div id="insp_CtDetalspager"></div>
-		    		</div>
+		      </fieldset> 
 		   	</td>
 		     </tr>
 		    </table>
 	          <div>Please make sure you check the following before Inspection of Goods</div>
-	            <h:textarea  property="insp_cdn" styleId="insp_cdn" rows="4" cols="100"></h:textarea>
+	            <h:textarea  property="insp_cdn" styleId="insp_cdn" rows="4" cols="100"></h:textarea>	           
+	             <fieldset> 	 	
+		     	  <legend>Test Details</legend>
+	            	<table id="insptesttbl"></table>
+	            	<div id="insptestpager"></div>
+	            </fieldset>	         
 	            
-	            
-	            <fieldset> 	
-		     		<legend>Manual Test</legend>
-	         	  <table width="800" border="2" cellspacing="0" cellpadding="0">
-	          		
-		     		<tr>
-	            		<td width="198">Test Type</td>
-	            		<td width="193">Tested Peces</td>
-	            		<td width="399">Comments</td>
-	            	</tr>
-	          		<tr>
-	            		<td>Color</td>
-	            		<td>&nbsp;</td>
-	            		<td>&nbsp;</td>
-	            	</tr>
-	          		<tr>
-	            		<td>Substance</td>
-	            		<td>&nbsp;</td>
-	            		<td>&nbsp;</td>
-	            	</tr>
-	          		<tr>
-	            		<td>Tear Strength</td>
-	            		<td>&nbsp;</td>
-	            		<td>&nbsp;</td>
-	            	</tr>
-	          		<tr>
-			            <td>Grain Break</td>
-			            <td>&nbsp;</td>
-			            <td>&nbsp;</td>
-	           	 	</tr>
-	          		<tr>
-			            <td>Crocking Dry</td>
-			            <td>&nbsp;</td>
-			            <td>&nbsp;</td>
-	            	</tr>
-	          		<tr>
-			            <td>Crocking Wet</td>
-			            <td>&nbsp;</td>
-			            <td>&nbsp;</td>
-	            	</tr>
-	          		<tr>
-			            <td>Finish Adhension</td>
-			            <td>&nbsp;</td>
-			            <td>&nbsp;</td>
-	            	</tr>
-	          		<tr>
-			            <td>Four Fold</td>
-			            <td>&nbsp;</td>
-			            <td>&nbsp;</td>
-	            	</tr>
-	          		<tr>
-			            <td>Cross Section</td>
-			            <td>&nbsp;</td>
-			            <td>&nbsp;</td>
-	            	</tr>
-	          		<tr>
-			            <td>Organoleptic</td>
-			            <td>&nbsp;</td>
-			            <td>&nbsp;</td>
-	            	</tr>	            
-	         	 </table>
-	          </fieldset> 
-	          <div>Content for New Div Tag Goes Here</div>
-	          <fieldset> 	
-		     		<legend>Grading</legend>
-	          	<table width="800" border="2" cellspacing="0" cellpadding="0">
-	            	<tr>
-	              		<td width="88">Grading</td>
-	              		<td width="118">Skin Count</td>
-	              		<td width="223">Percentage</td>
-	              		<td width="359">Comments</td>
-                	</tr>
-	            	<tr>
-	              		<td>Grading 1</td>
-	              		<td>&nbsp;</td>
-	              		<td>&nbsp;</td>
-	              		<td>&nbsp;</td>
-                	</tr>
-	            	<tr>
-	              		<td>Grading 2</td>
-	              		<td>&nbsp;</td>
-	              		<td>&nbsp;</td>
-	              		<td>&nbsp;</td>
-                	</tr>
-	            	<tr>
-	              		<td>Grading 3</td>
-	              		<td>&nbsp;</td>
-	              		<td>&nbsp;</td>
-	              		<td>&nbsp;</td>
-                	</tr>
-	            	<tr>
-	              		<td>Grading 4</td>
-	              		<td>&nbsp;</td>
-	              		<td>&nbsp;</td>
-	              		<td>&nbsp;</td>
-                	</tr>
-	            	<tr>
-	              		<td>Grading 5</td>
-	              		<td>&nbsp;</td>
-	              		<td>&nbsp;</td>
-	              		<td>&nbsp;</td>
-                	</tr>
-              	</table>
-              </fieldset>
-	          <div>Content for New Div Tag Goes Here</div>
+	          <fieldset> 	 	
+		     	<legend>Grading</legend>
+	          	<table id="inspgradtbl"></table>
+		     		<div id="inspgradpager"></div>
+	         </fieldset> 
+	         	
 	          <fieldset> 	 	
 		     	<legend>Rejects</legend>
-	          		<table width="799" border="2" cellspacing="0" cellpadding="0">
-	            		<tr>
-	              			<td height="28" colspan="2" rowspan="2">Total Skins Passed</td>
-	              			<td colspan="7"><div align="center">Rejects</div></td>
-	              			<td rowspan="2">Total Skins Inspected</td>
-                		</tr>
-	            		<tr>
-	              			<td width="92">Substance</td>
-	              			<td width="68">Size</td>
-	              			<td width="77">Selection</td>
-	              			<td width="42">Color</td>
-	              			<td width="84">Organoleptic</td>
-	              			<td width="53">Other</td>
-	              			<td width="106">Total Rejects</td>
-                		</tr>
-	            		<tr>
-	              			<td width="44" height="22">Sides</td>
-	              			<td width="72">&nbsp;</td>
-	              			<td>&nbsp;</td>
-	              			<td>&nbsp;</td>
-	              			<td>&nbsp;</td>
-	              			<td>&nbsp;</td>
-	              			<td>&nbsp;</td>
-	              			<td>&nbsp;</td>
-	              			<td>&nbsp;</td>
-	              			<td width="137">&nbsp;</td>
-                		</tr>
-	            		<tr>
-	              			<td>Hides</td>
-	              			<td>&nbsp;</td>
-	              			<td>&nbsp;</td>
-	              			<td>&nbsp;</td>
-	              			<td>&nbsp;</td>
-	              			<td>&nbsp;</td>
-	              			<td>&nbsp;</td>
-	              			<td>&nbsp;</td>
-	              			<td>&nbsp;</td>
-	              			<td>&nbsp;</td>
-                		</tr>
-	            		<tr>
-	              			<td>Total</td>
-	              			<td>&nbsp;</td>
-	              			<td>&nbsp;</td>
-	              			<td>&nbsp;</td>
-	              			<td>&nbsp;</td>
-	              			<td>&nbsp;</td>
-	              			<td>&nbsp;</td>
-	              			<td>&nbsp;</td>
-	              			<td>&nbsp;</td>
-	              			<td>&nbsp;</td>
-                		</tr>
-              		</table>
-              	</fieldset>
+		     	<table id="insprejtbl"></table>
+		     	<div id="insprejpager"></div>
+              </fieldset> 
 	        
-	          <table width="800" border="2" cellspacing="0" cellpadding="0">
+	          <table width="1200" border="2" cellspacing="0" cellpadding="0">
 	           	 <tr>
 	              <td height="15">Comments</td>	  	                           
                 </tr>
 	           	<tr>          	
 	              <td height="55"></td>
                 </tr>              
-                <tr>
-	              <td height="15">Stamping Details</td>	  	                           
-                </tr>
-                <tr>          	
-	              <td height="55"></td>
-                </tr>   
+                  
                  <tr>
   					<td><h:submit property="Save" value="Save" styleId="Save"></h:submit>
   						<h:reset property="Clear" value="Clear" styleId="Clear"></h:reset>
