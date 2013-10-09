@@ -9,8 +9,205 @@ package sb.elpro.model;
  */
 public class InspectionRejects {
 	
-	private String contractno;
-	private String inspectionid;
+	private String id;
+	private String rejectid;
+	private String inspid;
+	private String articleid;
+	private String arttype;
+	private String color;
+	private String totinspected;
+	private String totpassed;
+	private String totrejects;
+	private String subsrejects;
+	private String sizerejects;
+	private String selecrejects;
+	private String colorrejects;
+	private String orgrejects;
+	private String otherrejects;
+	
+	
+	/**
+	 * @return the id
+	 */
+	public String getId() {
+		return id;
+	}
+	/**
+	 * @param id the id to set
+	 */
+	public void setId(String id) {
+		this.id = id;
+	}
+	/**
+	 * @return the rejectid
+	 */
+	public String getRejectid() {
+		return rejectid;
+	}
+	/**
+	 * @param rejectid the rejectid to set
+	 */
+	public void setRejectid(String rejectid) {
+		this.rejectid = rejectid;
+	}
+	/**
+	 * @return the inspid
+	 */
+	public String getInspid() {
+		return inspid;
+	}
+	/**
+	 * @param inspid the inspid to set
+	 */
+	public void setInspid(String inspid) {
+		this.inspid = inspid;
+	}
+	/**
+	 * @return the articleid
+	 */
+	public String getArticleid() {
+		return articleid;
+	}
+	/**
+	 * @param articleid the articleid to set
+	 */
+	public void setArticleid(String articleid) {
+		this.articleid = articleid;
+	}
+	/**
+	 * @return the color
+	 */
+	public String getColor() {
+		return color;
+	}
+	/**
+	 * @param color the color to set
+	 */
+	public void setColor(String color) {
+		this.color = color;
+	}
+	/**
+	 * @return the totinspected
+	 */
+	public String getTotinspected() {
+		return totinspected;
+	}
+	/**
+	 * @param totinspected the totinspected to set
+	 */
+	public void setTotinspected(String totinspected) {
+		this.totinspected = totinspected;
+	}
+	/**
+	 * @return the totpassed
+	 */
+	public String getTotpassed() {
+		return totpassed;
+	}
+	/**
+	 * @param totpassed the totpassed to set
+	 */
+	public void setTotpassed(String totpassed) {
+		this.totpassed = totpassed;
+	}
+	/**
+	 * @return the totrejects
+	 */
+	public String getTotrejects() {
+		return totrejects;
+	}
+	/**
+	 * @param totrejects the totrejects to set
+	 */
+	public void setTotrejects(String totrejects) {
+		this.totrejects = totrejects;
+	}
+	/**
+	 * @return the subsrejects
+	 */
+	public String getSubsrejects() {
+		return subsrejects;
+	}
+	/**
+	 * @param subsrejects the subsrejects to set
+	 */
+	public void setSubsrejects(String subsrejects) {
+		this.subsrejects = subsrejects;
+	}
+	/**
+	 * @return the sizerejects
+	 */
+	public String getSizerejects() {
+		return sizerejects;
+	}
+	/**
+	 * @param sizerejects the sizerejects to set
+	 */
+	public void setSizerejects(String sizerejects) {
+		this.sizerejects = sizerejects;
+	}
+	/**
+	 * @return the selecrejects
+	 */
+	public String getSelecrejects() {
+		return selecrejects;
+	}
+	/**
+	 * @param selecrejects the selecrejects to set
+	 */
+	public void setSelecrejects(String selecrejects) {
+		this.selecrejects = selecrejects;
+	}
+	/**
+	 * @return the colorrejects
+	 */
+	public String getColorrejects() {
+		return colorrejects;
+	}
+	/**
+	 * @param colorrejects the colorrejects to set
+	 */
+	public void setColorrejects(String colorrejects) {
+		this.colorrejects = colorrejects;
+	}
+	/**
+	 * @return the orgrejects
+	 */
+	public String getOrgrejects() {
+		return orgrejects;
+	}
+	/**
+	 * @param orgrejects the orgrejects to set
+	 */
+	public void setOrgrejects(String orgrejects) {
+		this.orgrejects = orgrejects;
+	}
+	/**
+	 * @return the otherrejects
+	 */
+	public String getOtherrejects() {
+		return otherrejects;
+	}
+	/**
+	 * @param otherrejects the otherrejects to set
+	 */
+	public void setOtherrejects(String otherrejects) {
+		this.otherrejects = otherrejects;
+	}
+	/**
+	 * @return the arttype
+	 */
+	public String getArttype() {
+		return arttype;
+	}
+	/**
+	 * @param arttype the arttype to set
+	 */
+	public void setArttype(String arttype) {
+		this.arttype = arttype;
+	}
+	 
+	/*private String inspectionid;
 	private String qualityctrl;
 	private String testid;
 	private String sidespassed;
@@ -36,345 +233,9 @@ public class InspectionRejects {
 	private String otherrejects;
 	private String totalrejectssides;
 	private String totalrejectshides;
-	private String totalrejects;
+	private String totalrejects;*/
 	
 	
-	/**
-	 * @return the contractno
-	 */
-	public String getContractno() {
-		return contractno;
-	}
-	/**
-	 * @param contractno the contractno to set
-	 */
-	public void setContractno(String contractno) {
-		this.contractno = contractno;
-	}
-	/**
-	 * @return the inspectionid
-	 */
-	public String getInspectionid() {
-		return inspectionid;
-	}
-	/**
-	 * @param inspectionid the inspectionid to set
-	 */
-	public void setInspectionid(String inspectionid) {
-		this.inspectionid = inspectionid;
-	}
-	/**
-	 * @return the qualityctrl
-	 */
-	public String getQualityctrl() {
-		return qualityctrl;
-	}
-	/**
-	 * @param qualityctrl the qualityctrl to set
-	 */
-	public void setQualityctrl(String qualityctrl) {
-		this.qualityctrl = qualityctrl;
-	}
-	/**
-	 * @return the testid
-	 */
-	public String getTestid() {
-		return testid;
-	}
-	/**
-	 * @param testid the testid to set
-	 */
-	public void setTestid(String testid) {
-		this.testid = testid;
-	}
-	/**
-	 * @return the sidespassed
-	 */
-	public String getSidespassed() {
-		return sidespassed;
-	}
-	/**
-	 * @param sidespassed the sidespassed to set
-	 */
-	public void setSidespassed(String sidespassed) {
-		this.sidespassed = sidespassed;
-	}
-	/**
-	 * @return the hidespassed
-	 */
-	public String getHidespassed() {
-		return hidespassed;
-	}
-	/**
-	 * @param hidespassed the hidespassed to set
-	 */
-	public void setHidespassed(String hidespassed) {
-		this.hidespassed = hidespassed;
-	}
-	/**
-	 * @return the totalpassed
-	 */
-	public String getTotalpassed() {
-		return totalpassed;
-	}
-	/**
-	 * @param totalpassed the totalpassed to set
-	 */
-	public void setTotalpassed(String totalpassed) {
-		this.totalpassed = totalpassed;
-	}
-	/**
-	 * @return the substancerejectssides
-	 */
-	public String getSubstancerejectssides() {
-		return substancerejectssides;
-	}
-	/**
-	 * @param substancerejectssides the substancerejectssides to set
-	 */
-	public void setSubstancerejectssides(String substancerejectssides) {
-		this.substancerejectssides = substancerejectssides;
-	}
-	/**
-	 * @return the substancerejectshides
-	 */
-	public String getSubstancerejectshides() {
-		return substancerejectshides;
-	}
-	/**
-	 * @param substancerejectshides the substancerejectshides to set
-	 */
-	public void setSubstancerejectshides(String substancerejectshides) {
-		this.substancerejectshides = substancerejectshides;
-	}
-	/**
-	 * @return the substancerejects
-	 */
-	public String getSubstancerejects() {
-		return substancerejects;
-	}
-	/**
-	 * @param substancerejects the substancerejects to set
-	 */
-	public void setSubstancerejects(String substancerejects) {
-		this.substancerejects = substancerejects;
-	}
-	/**
-	 * @return the sizerejectssides
-	 */
-	public String getSizerejectssides() {
-		return sizerejectssides;
-	}
-	/**
-	 * @param sizerejectssides the sizerejectssides to set
-	 */
-	public void setSizerejectssides(String sizerejectssides) {
-		this.sizerejectssides = sizerejectssides;
-	}
-	/**
-	 * @return the sizerejectshides
-	 */
-	public String getSizerejectshides() {
-		return sizerejectshides;
-	}
-	/**
-	 * @param sizerejectshides the sizerejectshides to set
-	 */
-	public void setSizerejectshides(String sizerejectshides) {
-		this.sizerejectshides = sizerejectshides;
-	}
-	/**
-	 * @return the sizerejects
-	 */
-	public String getSizerejects() {
-		return sizerejects;
-	}
-	/**
-	 * @param sizerejects the sizerejects to set
-	 */
-	public void setSizerejects(String sizerejects) {
-		this.sizerejects = sizerejects;
-	}
-	/**
-	 * @return the selectionrejectssides
-	 */
-	public String getSelectionrejectssides() {
-		return selectionrejectssides;
-	}
-	/**
-	 * @param selectionrejectssides the selectionrejectssides to set
-	 */
-	public void setSelectionrejectssides(String selectionrejectssides) {
-		this.selectionrejectssides = selectionrejectssides;
-	}
-	/**
-	 * @return the selectionrejectshides
-	 */
-	public String getSelectionrejectshides() {
-		return selectionrejectshides;
-	}
-	/**
-	 * @param selectionrejectshides the selectionrejectshides to set
-	 */
-	public void setSelectionrejectshides(String selectionrejectshides) {
-		this.selectionrejectshides = selectionrejectshides;
-	}
-	/**
-	 * @return the selectionrejects
-	 */
-	public String getSelectionrejects() {
-		return selectionrejects;
-	}
-	/**
-	 * @param selectionrejects the selectionrejects to set
-	 */
-	public void setSelectionrejects(String selectionrejects) {
-		this.selectionrejects = selectionrejects;
-	}
-	/**
-	 * @return the colorrejectssides
-	 */
-	public String getColorrejectssides() {
-		return colorrejectssides;
-	}
-	/**
-	 * @param colorrejectssides the colorrejectssides to set
-	 */
-	public void setColorrejectssides(String colorrejectssides) {
-		this.colorrejectssides = colorrejectssides;
-	}
-	/**
-	 * @return the colorrejectshides
-	 */
-	public String getColorrejectshides() {
-		return colorrejectshides;
-	}
-	/**
-	 * @param colorrejectshides the colorrejectshides to set
-	 */
-	public void setColorrejectshides(String colorrejectshides) {
-		this.colorrejectshides = colorrejectshides;
-	}
-	/**
-	 * @return the colorrejects
-	 */
-	public String getColorrejects() {
-		return colorrejects;
-	}
-	/**
-	 * @param colorrejects the colorrejects to set
-	 */
-	public void setColorrejects(String colorrejects) {
-		this.colorrejects = colorrejects;
-	}
-	/**
-	 * @return the orgrejectssides
-	 */
-	public String getOrgrejectssides() {
-		return orgrejectssides;
-	}
-	/**
-	 * @param orgrejectssides the orgrejectssides to set
-	 */
-	public void setOrgrejectssides(String orgrejectssides) {
-		this.orgrejectssides = orgrejectssides;
-	}
-	/**
-	 * @return the orgrejectshides
-	 */
-	public String getOrgrejectshides() {
-		return orgrejectshides;
-	}
-	/**
-	 * @param orgrejectshides the orgrejectshides to set
-	 */
-	public void setOrgrejectshides(String orgrejectshides) {
-		this.orgrejectshides = orgrejectshides;
-	}
-	/**
-	 * @return the orgrejects
-	 */
-	public String getOrgrejects() {
-		return orgrejects;
-	}
-	/**
-	 * @param orgrejects the orgrejects to set
-	 */
-	public void setOrgrejects(String orgrejects) {
-		this.orgrejects = orgrejects;
-	}
-	/**
-	 * @return the otherrejectssides
-	 */
-	public String getOtherrejectssides() {
-		return otherrejectssides;
-	}
-	/**
-	 * @param otherrejectssides the otherrejectssides to set
-	 */
-	public void setOtherrejectssides(String otherrejectssides) {
-		this.otherrejectssides = otherrejectssides;
-	}
-	/**
-	 * @return the otherrejectshides
-	 */
-	public String getOtherrejectshides() {
-		return otherrejectshides;
-	}
-	/**
-	 * @param otherrejectshides the otherrejectshides to set
-	 */
-	public void setOtherrejectshides(String otherrejectshides) {
-		this.otherrejectshides = otherrejectshides;
-	}
-	/**
-	 * @return the otherrejects
-	 */
-	public String getOtherrejects() {
-		return otherrejects;
-	}
-	/**
-	 * @param otherrejects the otherrejects to set
-	 */
-	public void setOtherrejects(String otherrejects) {
-		this.otherrejects = otherrejects;
-	}
-	/**
-	 * @return the totalrejectssides
-	 */
-	public String getTotalrejectssides() {
-		return totalrejectssides;
-	}
-	/**
-	 * @param totalrejectssides the totalrejectssides to set
-	 */
-	public void setTotalrejectssides(String totalrejectssides) {
-		this.totalrejectssides = totalrejectssides;
-	}
-	/**
-	 * @return the totalrejectshides
-	 */
-	public String getTotalrejectshides() {
-		return totalrejectshides;
-	}
-	/**
-	 * @param totalrejectshides the totalrejectshides to set
-	 */
-	public void setTotalrejectshides(String totalrejectshides) {
-		this.totalrejectshides = totalrejectshides;
-	}
-	/**
-	 * @return the totalrejects
-	 */
-	public String getTotalrejects() {
-		return totalrejects;
-	}
-	/**
-	 * @param totalrejects the totalrejects to set
-	 */
-	public void setTotalrejects(String totalrejects) {
-		this.totalrejects = totalrejects;
-	}
 	
 
 }

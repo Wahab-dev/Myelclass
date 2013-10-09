@@ -62,7 +62,7 @@ public class PrfInsertArticle extends Action  {
 		                		 System.out.println("STEP 1 "+totalCount % Integer.parseInt(rows) );
 		                         totalPages = totalCount / Integer.parseInt(rows);
 		                         System.out.println("STEP 2 "+totalPages);
-		                     } else {
+		                     } else { 
 		                         totalPages = (totalCount / Integer.parseInt(rows)) + 1;
 		                         System.out.println("STEP 3 "+totalPages);
 		                     }
@@ -112,7 +112,7 @@ public class PrfInsertArticle extends Action  {
 					 artindertdetail.setPrf_substance(request.getParameter("prf_substance"));
 					 artindertdetail.setUser(request.getParameter("user"));
 					if(oper.equalsIgnoreCase("add")){
-						System.out.println(" In Article Add");
+						System.out.println(" In Inspection test Add");
 						boolean isPrfArticleAdded = prfbo.addPrfArticleDetails(artindertdetail,sidx,sord);
 						if(isPrfArticleAdded){
 							jsonobj.put("success", "Successfully Inserted The Record");

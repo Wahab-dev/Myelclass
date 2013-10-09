@@ -50,6 +50,7 @@ $(document).ready(function() {
 			      	records: "records" //calls Third
 				},
 				caption: "Load Article Details On Selected CT",
+				rownumbers: true,
 		    	pager: '#insp_CtDetalspager',
 		    	rowNum:6, 
 		    	rowList:[2,4,6],
@@ -64,57 +65,76 @@ $(document).ready(function() {
 					search: false, refresh: false, view:true });
 //tEST GRID LOAD 
 	testgrid.jqGrid({  
-				url:"",   
+				url:'/Myelclass/InspectionAction.do?event=manualtest',   
 				datatype:"json",
-				colNames:['Test Id','Inspection ID','ArticleID','TestType', 'pieces tested', 'Results','Comments'],  
+				colNames:['Id','Test Id','Inspection ID','ArticleID','Color','TestType', 'pieces tested', 'Results','Comments'],  
 			    colModel:[  
-					{name:'testid', index:'testid', align:'center', width:120, editable:true, sortable: true, hidden: true, 
+					{name:'id', index:'id', align:'center', width:60, editable:true, sortable: true, hidden: true, 
+						editoptions: {size:8},
+	
+					},	
+					{name:'testid', index:'testid', align:'center', width:60, editable:true, sortable: true, hidden: false, 
 						editoptions: {size:8},
 						
 					},
-					{name:'Inspid', index:'Inspid', align:'center', width:120, editable:true, sortable: true, hidden: true, 
+					{name:'inspectionid', index:'inspectionid', align:'center', width:60, editable:true, sortable: true, hidden: false, 
 						editoptions: {size:5},
 					
 					},
-					{name:'articleid', index:'articleid', align:'center', width:120, editable:true, sortable: true, hidden: true, 
+					{name:'articleid', index:'articleid', align:'center', width:60, editable:true, sortable: true, hidden: false, 
+						editoptions: {size:8},
+						
+					},
+					{name:'color', index:'color', align:'center', width:120, editable:true, sortable: true, hidden: false, 
 						editoptions: {size:8},
 						
 					},
 					{name:'testtype', index:'testtype', align:'center', width:120, editable:true, sortable: true, hidden:false, 
 						edittype: 'select', 
-						editoptions: {value: {0:'Color',1:'Subatance',2:'Tear Strength',3:'Grain Break',4:'Crocking Wet',5:'Crocking Dry',6:'Finish Adhension',7:'Four Folds',8:'Cross Section',9:'Organoleptic'}},
-						
+						editoptions: {value: {Color:'Color',Substance:'Substance',TearStrength:'Tear Strength',GrainBreak:'Grain Break',CrockingWet:'Crocking Wet',CrockingDry:'Crocking Dry',
+							FinishAdhension:'Finish Adhension',FourFolds:'Four Folds',CrossSection:'Cross Section',Organoleptic:'Organoleptic'}},						
+					
 					},
-					{name:'piecestested', index:'piecestested', align:'center', width:130, editable:true, sortable: true, hidden:false, 
-						editoptions: {size:5},
-						
+					{name:'testedpcs', index:'testedpcs', align:'center', width:130, editable:true, sortable: true, hidden:false, 
+						edittype:'text',
+						editoptions:{ 
+							size: 15, 
+							maxlength:2, 
+                         	dataInit: function(element) { 
+                             $(element).keyup(function(){
+                                 var val1 = element.value;
+                                 var num = new Number(val1);
+                                 if(isNaN(num))
+                                 {alert("Only Numbers are Allowed");}
+                             });
+                         	}
+						}
 					},
-					{name:'results', index:'results', align:'center', width:120, editable:true, sortable: true, hidden:false, 
+					{name:'result', index:'result', align:'center', width:120, editable:true, sortable: true, hidden:false, 
 						  edittype: 'select', 
-						  editoptions: {value: {P:'Pass',F:'Fail',NA:'NA'}},
-						
+						  editoptions: {value: {P:'Pass',F:'Fail',N:'NA'}},						
 					},
 					{name:'comments', index:'comments', align:'center', width:120, editable:true, sortable: true, hidden:false, 
 						edittype: 'textarea',
-					},
-					
+					},					
 				],  
 				jsonReader : {  
 				  	repeatitems:false,
 			      	root: "rows",
-			      	page: "page", //calls first
-			      	total: "total" ,//calls Second
-			      	records: "records" //calls Third
+			      	page: "page", 
+			      	total: "total" ,
+			      	records: "records" 
 				},
-				editurl: "/Myelclass/InspectionAction.do",
+				rownumbers: true,
+				editurl: '/Myelclass/InspectionAction.do?event=manualtest',
 				caption: "Test Details",
 		    	pager: '#insptestpager',
-		    	rowNum:6, 
-		    	rowList:[2,4,6],
+		    	rowNum: 6, 
+		    	rowList: [2,4,6],
 		        loadtext: "Bow Bow........... ",
 		        height : "auto",
-		        width:"auto",  
-		        sortname: 'articlename',  
+		        width: "auto",  
+		        sortname: 'testid',  
 		        sortorder: 'desc',  
 		        emptyrecords: 'No records to display',
 			});
@@ -123,6 +143,8 @@ $(document).ready(function() {
 					search: false, refresh: true, view: true },
 					{
 						// Edit
+						 reloadAfterSubmit: true,
+						 closeAfterEdit: true,
 					},
 					{
 					
@@ -144,24 +166,28 @@ $(document).ready(function() {
 						 $("#tr_Inspdate").hide(); */
 						 
 					 },
-					 recreateForm: true,
+					 reloadAfterSubmit: true,
+					 closeAfterAdd: true,
 					});
 		
 //Grade GRID
 		gradgrid.jqGrid({  
-				url:"",   
+				url: '/Myelclass/InspectionAction.do?event=grade',   
 				datatype:"json",
-				colNames:['Insp ID','Grade ID ', 'Grade ','Skin Count', 'Percentage','Comments'],  
+				colNames:['Id','Insp ID','Grade ID ','articleid', 'Grade ','Color','Skin Count', 'Percentage','Comments'],  
 			    colModel:[   
-					{name:'inspid', index:'inspid',align:'center', width:120, editable:true, sortable: true, hidden: true, },
-					{name:'gradeid', index:'gradeid', align:'center', width:120, editable:true, sortable: true, hidden: true, },
+					{name:'id', index:'id',align:'center', width:80, editable:true, sortable: true, hidden: false, },
+					{name:'inspid', index:'inspid',align:'center', width:80, editable:true, sortable: true, hidden: false, },
+					{name:'gradeid', index:'gradeid', align:'center', width:80, editable:true, sortable: true, hidden: false, },
+					{name:'articleid', index:'articleid', align:'center', width:80, editable:true, sortable: true, hidden: false, },
 					{name:'grade', index:'grade', align:'center', width:120, editable:true, sortable: true, hidden: false,
 						edittype: 'select', 
-						editoptions: {value: {1:'Grade 1',2:'Grade 2', 3:'Grade 3', 4:'Grade 4', 5:'Grade 5'}},
+						editoptions: {value: {Grade1:'Grade 1',Grade2:'Grade 2', Grade3:'Grade 3', Grade4:'Grade 4', Grade5:'Grade 5'}},
 					},
+					{name:'color', index:'color', align:'center', width:80, editable:true, sortable: true, hidden: false, },
 					{name:'skincount', index:'skincount', align:'center', width:120, editable:true, sortable: true, hidden: false, },	
-					{name:'percentage', index:'size', align:'center', width:120, editable:true, sortable: true, hidden:false, },
-					{name:'comments', index:'subatance', align:'center', width:120, editable:true, sortable: true, hidden:false, 
+					{name:'percent', index:'percent', align:'center', width:120, editable:true, sortable: true, hidden: false, },
+					{name:'comment', index:'comment', align:'center', width:120, editable:true, sortable: true, hidden:false, 
 						edittype: 'textarea',
 					},				
 				],  
@@ -173,59 +199,80 @@ $(document).ready(function() {
 			      	records: "records" //calls Third
 				},
 				caption: "Grading Details ",
+				editurl: '/Myelclass/InspectionAction.do?event=grade',
 		    	pager: '#inspgradpager',
 		    	rowNum:6, 
 		    	rowList:[2,4,6],
 		        loadtext: "Bow Bow........... ",
 		        height : "auto",
 		        width:"auto",  
-		        sortname: 'articlename',  
+		        sortname: 'gradeid',  
 		        sortorder: 'desc',  
 		        emptyrecords: 'No records to display',
 			});
 		gradgrid.jqGrid('navGrid', '#inspgradpager',  { edit: true, add: true, del: true, 
-			search: false, refresh: true, view: true });
+			search: false, refresh: true, view: true },
+			{			
+					// Edit
+					 reloadAfterSubmit: true,
+					 closeAfterEdit: true,
+			},
+			{
+				 reloadAfterSubmit: true,
+				 closeAfterAdd: true,
+			}
+			);
 
 //Rejects Grid
 rejgrid.jqGrid({  
-	url:"",   
+	url:'/Myelclass/InspectionAction.do?event=reject',   
 	datatype:"json",
-	colNames:['Article Type','Reject ID ', 'Article ID','Total Passed','Substance','Size','Selec','Color','Org','Other','Total Rejects','Total Inspected'],  
-    colModel:[  
-		{name:'arttype', index:'arttype', align:'center', width:120, editable:true, sortable: true, hidden:false, 
-			edittype: 'select', editoptions: {value: {H:'Hides',S:'Sides',NA:'NA'}},
+	colNames:[ 'Arttype', 'id', 'RejectID ', 'InspID', 'ArticleID', 'Color ','Tot Passed','Substance','Size','Selec','Color','Org','Other','Tot Rejects','Tot Inspected'],  
+    colModel:[ 
+		{name:'arttype', index:'arttype', align:'center', width:120, editable:true, sortable: true, hidden: false, 
+			edittype: 'select', editoptions: {value: {H:'Hides',S:'Sides',N:'NA'}},
 		},
-		{name:'rejectid', index:'rejectid',align:'center', width:120, editable:true, sortable: true,  hidden: true, 
+		{name:'id', index:'id', align:'center', width:120, editable:true, sortable: true,  hidden: false, 
+	
+		},
+		{name:'rejectid', index:'rejectid',align:'center', width:120, editable:true, sortable: true,  hidden: false, 
 				
 		}, 
-		{name:'articleid', index:'articleid', align:'center', width:120, editable:true, sortable: true,  hidden: true, 
+		{name:'inspid', index:'inspid', align:'center', width:120, editable:true, sortable: true,  hidden: false, 
 			
 		},
-		{name:'passed', index:'passed', align:'center', width:80, editable:true, sortable: true, hidden:false, 
+		{name:'articleid', index:'articleid', align:'center', width:120, editable:true, sortable: true,  hidden: false, 
 			
 		},
-		{name:'subs', index:'subs', align:'center', width:60, editable:true, sortable: true, hidden:false, 
+		
+		{name:'color', index:'color', align:'center', width:80, editable:true, sortable: true, hidden:false, 
+			
+		},
+		{name:'totpassed', index:'totpassed', align:'center', width:80, editable:true, sortable: true, hidden:false, 
+			
+		},
+		{name:'subsrejects', index:'subsrejects', align:'center', width:60, editable:true, sortable: true, hidden:false, 
 			
 		},	
-		{name:'size', index:'size', align:'center', width:50, editable:true, sortable: true, hidden:false, 
+		{name:'sizerejects', index:'sizerejects', align:'center', width:50, editable:true, sortable: true, hidden:false, 
 			
 		},
-		{name:'selec', index:'selec', align:'center', width:50, editable:true, sortable: true, hidden:false, 
+		{name:'selecrejects', index:'selecrejects', align:'center', width:50, editable:true, sortable: true, hidden:false, 
 			
 		},			
-		{name:'color', index:'color', align:'center', width:50, editable:true, sortable: true, hidden:false, 
+		{name:'colorrejects', index:'colorrejects', align:'center', width:50, editable:true, sortable: true, hidden:false, 
 			
 		},	
-		{name:'org', index:'org', align:'center', width:50, editable:true, sortable: true, hidden:false, 
+		{name:'orgrejects', index:'orgrejects', align:'center', width:50, editable:true, sortable: true, hidden:false, 
 			
 		},	
-		{name:'other', index:'other', align:'center', width:50, editable:true, sortable: true, hidden:false, 
+		{name:'otherrejects', index:'otherrejects', align:'center', width:50, editable:true, sortable: true, hidden:false, 
 			
 		},
 		{name:'totrejects', index:'totrejects', align:'center', width:50, editable:true, sortable: true, hidden:false, 
 			
 		},	
-		{name:'totinsp', index:'totinsp', align:'center', width:120, editable:true, sortable: true, hidden:false, 
+		{name:'totinspected', index:'totinspected', align:'center', width:120, editable:true, sortable: true, hidden:false, 
 			
 		},
 	],  
@@ -237,6 +284,7 @@ rejgrid.jqGrid({
       	records: "records" //calls Third
 	},
 	caption: "Rejects Details ",
+	editurl: '/Myelclass/InspectionAction.do?event=reject',
 	pager: '#insprejpager',
 	rowNum:6, 
 	rowList:[2,4,6],
@@ -247,12 +295,20 @@ rejgrid.jqGrid({
     sortorder: 'desc',  
     emptyrecords: 'No records to display',
 });
-rejgrid.jqGrid('navGrid', '#insprejpager',  { edit: true, add: true, del: true, 
-search: false, refresh: false, view: false });
+	rejgrid.jqGrid('navGrid', '#insprejpager',  { edit: true, add: true, del: true, 
+		   search: false, refresh: false, view: false },
+		{ 
+		  reloadAfterSubmit: true,
+		  closeAfterEdit: true,					
+		},
+		{
+		  reloadAfterSubmit: true,
+		  closeAfterAdd: true,
+		});
 rejgrid.jqGrid('setGroupHeaders', {
 	  useColSpanStyle: false, 
 	  groupHeaders:[
-		{startColumnName: 'subs', numberOfColumns: 7, titleText: '<em>Rejects</em>'},
+		{startColumnName: 'subsrejects', numberOfColumns: 7, titleText: '<em>Rejects</em>'},
 	  ]
 	});
 //AUTOCOMPLETE			

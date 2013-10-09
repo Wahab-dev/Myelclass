@@ -6,10 +6,14 @@ package sb.elpro.dao;
 import java.util.ArrayList;
 
 import com.mysql.jdbc.Connection;
+import com.mysql.jdbc.PreparedStatement;
 import com.mysql.jdbc.Statement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import sb.elpro.model.InspectionGrading;
+import sb.elpro.model.InspectionManualTest;
+import sb.elpro.model.InspectionRejects;
 import sb.elpro.model.ProductDetails;
 import sb.elpro.model.QualityCtrlrDetails;
 
@@ -136,4 +140,439 @@ public class InspectionDaoImpl implements InspectionDao {
 	   }			
 		return inspCtlist;
 	}
+
+	@Override
+	public ArrayList<InspectionManualTest> getInspTestList(String sidx,
+			String sord) throws SQLException {
+		ArrayList<InspectionManualTest> insptestarray = new ArrayList<InspectionManualTest>();
+		Connection con = null;
+		Statement st = null;
+		ResultSet rs = null;
+		try{			
+			con = DBConnection.getConnection();
+			st = (Statement) con.createStatement();
+			String sql = "SELECT id, testid, testtype,  pcstested, result, comments, articleid, color, inspid FROM tbl_insptestdetails order by "+sidx+" "+sord+"";
+			System.out.println(sql);
+			rs = st.executeQuery(sql);
+			while(rs.next()) {	
+			 InspectionManualTest insptestbean = new InspectionManualTest();
+			 insptestbean.setId(rs.getString("id"));
+			    insptestbean.setTestid(rs.getString("testid"));
+			    insptestbean.setTesttype(rs.getString("testtype"));
+				insptestbean.setTestedpcs(rs.getString("pcstested"));
+				insptestbean.setResult(rs.getString("result"));
+				insptestbean.setComments(rs.getString("comments"));
+				insptestbean.setArticleid(rs.getString("articleid"));
+				insptestbean.setColor(rs.getString("color"));
+				insptestbean.setInspectionid(rs.getString("inspid"));
+				insptestarray.add(insptestbean);
+			}
+		}catch(Exception e){
+				e.printStackTrace();
+				System.out.println("ERROR RESULT");
+		}finally{
+				 con.close() ;
+				 st.close();
+				 rs.close();
+		}	
+		return insptestarray;
+		}
+
+	@Override
+	public boolean getInspTestAddList(InspectionManualTest insptest, String sidx,
+			String sord) throws SQLException {
+		Connection con = null;
+		PreparedStatement pst = null;
+		int noofrows  = 0;
+		boolean isadded = true;
+		try{			
+			con = DBConnection.getConnection();
+			StringBuffer sql_saveinspTest = new StringBuffer("insert into tbl_insptestdetails (testid, inspid, articleid, color, testtype, pcstested, result, comments)");
+			sql_saveinspTest.append("values (?,?,?,?,?,?,?,?)");
+			String sqlquery_saveinspTest = sql_saveinspTest.toString();
+			
+			pst = (PreparedStatement) con.prepareStatement(sqlquery_saveinspTest);
+			pst.setString(1, insptest.getTestid());
+			System.out.println("getTestid " +insptest.getTestid());
+			pst.setString(2, insptest.getInspectionid());
+			System.out.println("getInspectionid " +insptest.getInspectionid());
+			pst.setString(3, insptest.getArticleid());
+			pst.setString(4, insptest.getColor());
+			pst.setString(5, insptest.getTesttype());
+			pst.setString(6, insptest.getTestedpcs());
+			pst.setString(7, insptest.getResult());
+			pst.setString(8, insptest.getComments());
+			
+			System.out.println("getComments " +insptest.getComments());
+			noofrows = pst.executeUpdate();
+			
+			System.out.println("Sucessfully inserted the record.." + noofrows);
+		}catch(Exception e){
+			e.printStackTrace();
+			isadded = false;
+			System.out.println("ERROR RESULT");
+		}finally{
+			 con.close() ;
+			 pst.close();
+	   }	
+	return isadded;
+	}
+
+	@Override
+	public boolean getInspTestEditList(InspectionManualTest insptest,
+			String sidx, String sord) throws SQLException {
+		Connection con = null;
+		PreparedStatement pst = null;
+		int noofrows  = 0;
+		boolean isupdate = true;
+		try{			
+			con = DBConnection.getConnection();
+			StringBuffer sql_saveInsptest = new StringBuffer("UPDATE elpro.tbl_insptestdetails SET testid = ? , inspid = ? , articleid = ? , color = ? , testtype = ? , pcstested = ? , result = ? , comments = ?  WHERE id = '"+insptest.getId()+"' ");
+			String sqlquery_saveInsptest = sql_saveInsptest.toString();
+			pst = (PreparedStatement) con.prepareStatement(sqlquery_saveInsptest);
+			pst.setString(1, insptest.getTestid());
+			System.out.println("getTestid " +insptest.getTestid());
+			pst.setString(2, insptest.getInspectionid());
+			System.out.println("getInspectionid " +insptest.getInspectionid());
+			pst.setString(3, insptest.getArticleid());
+			pst.setString(4, insptest.getColor());
+			pst.setString(5, insptest.getTesttype());
+			pst.setString(6, insptest.getTestedpcs());
+			pst.setString(7, insptest.getResult());
+			pst.setString(8, insptest.getComments());
+			noofrows = pst.executeUpdate();
+			System.out.println("Sucessfully inserted the record.." + noofrows);
+		}catch(Exception e){
+			e.printStackTrace();
+			isupdate = false;
+			System.out.println("ERROR RESULT");
+		}finally{
+			 con.close() ;
+			 pst.close();
+	   }	
+		return isupdate;
+	}
+
+	@Override
+	public boolean getInspTestDelList(InspectionManualTest insptest,
+			String sidx, String sord) throws SQLException {
+		Connection con = null;
+		PreparedStatement pst = null;
+		int noofrows  = 0;
+		boolean isdel = true;
+		try{			
+			con = DBConnection.getConnection();
+			StringBuffer sql_delInsptest = new StringBuffer("delete from elpro.tbl_insptestdetails WHERE id = '"+insptest.getId()+"' ");			
+			String sqlquery_delInsptest = sql_delInsptest.toString();
+			System.out.println(sqlquery_delInsptest);
+			pst = (PreparedStatement) con.prepareStatement(sqlquery_delInsptest);
+			noofrows = pst.executeUpdate();
+			System.out.println("Sucessfully deleted the record.." + noofrows);
+		}catch(Exception e){
+			e.printStackTrace();
+			isdel = false;
+			System.out.println("ERROR RESULT");
+		}finally{
+			 con.close() ;
+			 pst.close();
+	   }	
+	//return noofrows;
+		return isdel;
+	}
+
+	@Override
+	public ArrayList<InspectionGrading> getInspGradeList(String sidx,
+			String sord) throws SQLException {
+		ArrayList<InspectionGrading> insptestarray = new ArrayList<InspectionGrading>();
+		Connection con = null;
+		Statement st = null;
+		ResultSet rs = null;
+		try{			
+			con = DBConnection.getConnection();
+			st = (Statement) con.createStatement();
+			String sql = "SELECT id, gradeid, inspid,  articleid, color, grade, skincount, percent, comment FROM tbl_inspgradedetails order by "+sidx+" "+sord+"";
+			System.out.println(sql);
+			rs = st.executeQuery(sql);
+			while(rs.next()) {	
+				InspectionGrading insptestbean = new InspectionGrading();
+			 insptestbean.setId(rs.getString("id"));
+			    insptestbean.setGradeid(rs.getString("gradeid"));
+			    insptestbean.setInspid(rs.getString("inspid"));
+				insptestbean.setArticleid(rs.getString("articleid"));
+				insptestbean.setColor(rs.getString("color"));
+				insptestbean.setGrade(rs.getString("grade"));
+				insptestbean.setSkincount(rs.getString("skincount"));
+				insptestbean.setPercent(rs.getString("percent"));
+				insptestbean.setComment(rs.getString("comment"));
+				insptestarray.add(insptestbean);
+			}
+		}catch(Exception e){
+				e.printStackTrace();
+				System.out.println("ERROR RESULT");
+		}finally{
+				 con.close() ;
+				 st.close();
+				 rs.close();
+		}	
+		return insptestarray;
+	}
+
+	@Override
+	public boolean getInspGradeAddList(InspectionGrading inspgrad, String sidx,
+			String sord) throws SQLException {
+		Connection con = null;
+		PreparedStatement pst = null;
+		int noofrows  = 0;
+		boolean isadded = true;
+		try{			
+			con = DBConnection.getConnection();
+			StringBuffer sql_saveinspgrad = new StringBuffer("insert into tbl_inspgradedetails (gradeid, inspid, articleid, color, grade, skincount, percent, comment)");
+			sql_saveinspgrad.append("values (?,?,?,?,?,?,?,?)");
+			String sqlquery_saveinspgrad = sql_saveinspgrad.toString();
+			
+			pst = (PreparedStatement) con.prepareStatement(sqlquery_saveinspgrad);
+			pst.setString(1, inspgrad.getGradeid());
+			System.out.println("getGradeid " +inspgrad.getGradeid());
+			pst.setString(2, inspgrad.getInspid());
+			System.out.println("getInspid " +inspgrad.getInspid());
+			pst.setString(3, inspgrad.getArticleid());
+			pst.setString(4, inspgrad.getColor());
+			pst.setString(5, inspgrad.getGrade());
+			pst.setString(6, inspgrad.getSkincount());
+			pst.setString(7, inspgrad.getPercent());
+			pst.setString(8, inspgrad.getComment());
+			
+			System.out.println("getComment " +inspgrad.getComment());
+			noofrows = pst.executeUpdate();
+			
+			System.out.println("Sucessfully inserted the record.." + noofrows);
+		}catch(Exception e){
+			e.printStackTrace();
+			isadded = false;
+			System.out.println("ERROR RESULT");
+		}finally{
+			 con.close() ;
+			 pst.close();
+	   }	
+	return isadded;
+	}
+
+	@Override
+	public boolean getInspGradeEditList(InspectionGrading inspgrad, String sidx,
+			String sord) throws SQLException {
+		Connection con = null;
+		PreparedStatement pst = null;
+		int noofrows  = 0;
+		boolean isupdate = true;
+		try{			
+			con = DBConnection.getConnection();
+			StringBuffer sql_saveInspgrad = new StringBuffer("UPDATE elpro.tbl_inspgradedetails SET gradeid = ? , inspid = ? , articleid = ? , color = ? , grade= ? , skincount = ? , percent = ? , comment = ?  WHERE id = '"+inspgrad.getId()+"' ");
+			String sqlquery_saveInspgrad = sql_saveInspgrad.toString();
+			pst = (PreparedStatement) con.prepareStatement(sqlquery_saveInspgrad);
+			pst.setString(1, inspgrad.getGradeid());
+			System.out.println("getGradeid " +inspgrad.getGradeid());
+			pst.setString(2, inspgrad.getInspid());
+			System.out.println("getInspid " +inspgrad.getInspid());
+			pst.setString(3, inspgrad.getArticleid());
+			pst.setString(4, inspgrad.getColor());
+			pst.setString(5, inspgrad.getGrade());
+			pst.setString(6, inspgrad.getSkincount());
+			pst.setString(7, inspgrad.getPercent());
+			pst.setString(8, inspgrad.getComment());
+			noofrows = pst.executeUpdate();
+			System.out.println("Sucessfully inserted the record.." + noofrows);
+		}catch(Exception e){
+			e.printStackTrace();
+			isupdate = false;
+			System.out.println("ERROR RESULT");
+		}finally{
+			 con.close() ;
+			 pst.close();
+	   }	
+		return isupdate;
+	}
+
+	@Override
+	public boolean getInspGradeDelList(InspectionGrading inspgrad, String sidx,
+			String sord) throws SQLException {
+		Connection con = null;
+		PreparedStatement pst = null;
+		int noofrows  = 0;
+		boolean isdel = true;
+		try{			
+			con = DBConnection.getConnection();
+			StringBuffer sql_delInspgrade = new StringBuffer("delete from elpro.tbl_inspgradedetails WHERE id = '"+inspgrad.getId()+"' ");			
+			String sqlquery_delInspgrade = sql_delInspgrade.toString();
+			System.out.println(sqlquery_delInspgrade);
+			pst = (PreparedStatement) con.prepareStatement(sqlquery_delInspgrade);
+			noofrows = pst.executeUpdate();
+			System.out.println("Sucessfully deleted the record.." + noofrows);
+		}catch(Exception e){
+			e.printStackTrace();
+			isdel = false;
+			System.out.println("ERROR RESULT");
+		}finally{
+			 con.close() ;
+			 pst.close();
+	   }	
+	//return noofrows;
+		return isdel;
+	}
+
+	@Override
+	public ArrayList<InspectionRejects> getInspRejList(String sidx, String sord)
+			throws SQLException {
+		ArrayList<InspectionRejects> insprejarray = new ArrayList<InspectionRejects>();
+		Connection con = null;
+		Statement st = null;
+		ResultSet rs = null;
+		try{			
+			con = DBConnection.getConnection();
+			st = (Statement) con.createStatement();
+			String sql = "SELECT id, rejectid, inspid,  articleid, arttype, color, totinspected, totpassed, totrejects, subsrejects, sizerejects, selecrejects, colorrejects, orgrejects, otherrejects  FROM tbl_insprejectdetails order by "+sidx+" "+sord+"";
+			System.out.println(sql);
+			rs = st.executeQuery(sql);
+			while(rs.next()) {	
+				InspectionRejects insprejbean = new InspectionRejects();
+				insprejbean.setId(rs.getString("id"));
+			    insprejbean.setRejectid(rs.getString("rejectid"));
+			    insprejbean.setInspid(rs.getString("inspid"));
+				insprejbean.setArticleid(rs.getString("articleid"));
+				insprejbean.setArttype(rs.getString("arttype"));
+				insprejbean.setColor(rs.getString("color"));
+				insprejbean.setTotinspected(rs.getString("totinspected"));
+				insprejbean.setTotpassed(rs.getString("totpassed"));
+				insprejbean.setTotrejects(rs.getString("totrejects"));
+				insprejbean.setSubsrejects(rs.getString("subsrejects"));
+				insprejbean.setSizerejects(rs.getString("sizerejects"));
+				insprejbean.setSelecrejects(rs.getString("selecrejects"));
+				insprejbean.setColorrejects(rs.getString("colorrejects"));
+				insprejbean.setOrgrejects(rs.getString("orgrejects"));
+				insprejbean.setOtherrejects(rs.getString("otherrejects"));
+				insprejarray.add(insprejbean);
+			}
+		}catch(Exception e){
+				e.printStackTrace();
+				System.out.println("ERROR RESULT");
+		}finally{
+				 con.close() ;
+				 st.close();
+				 rs.close();
+		}	
+		return insprejarray;
+	}
+
+	@Override
+	public boolean getInspRejAddList(InspectionRejects insprej, String sidx,
+			String sord) throws SQLException {
+		Connection con = null;
+		PreparedStatement pst = null;
+		int noofrows  = 0;
+		boolean isadded = true;
+		try{			
+			con = DBConnection.getConnection();
+			StringBuffer sql_saveinsprej = new StringBuffer("insert into tbl_insprejectdetails (rejectid, inspid, articleid, arttype,  color, totinspected, totpassed, totrejects, subsrejects, sizerejects, selecrejects, colorrejects, orgrejects, otherrejects )");
+			sql_saveinsprej.append("values (?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+			String sqlquery_saveinsprejinspgrad = sql_saveinsprej.toString();
+			
+			pst = (PreparedStatement) con.prepareStatement(sqlquery_saveinsprejinspgrad);
+			pst.setString(1, insprej.getRejectid());
+			System.out.println("getRejectid " +insprej.getRejectid());
+			pst.setString(2, insprej.getInspid());
+			System.out.println("getInspid " +insprej.getInspid());
+			pst.setString(3, insprej.getArticleid());
+			pst.setString(4, insprej.getArttype());
+			pst.setString(5, insprej.getColor());
+			pst.setString(6, insprej.getTotinspected());
+			pst.setString(7, insprej.getTotpassed());
+			pst.setString(8, insprej.getTotrejects());
+			pst.setString(9, insprej.getSubsrejects());
+			pst.setString(10, insprej.getSizerejects());
+			pst.setString(11, insprej.getSelecrejects());
+			pst.setString(12, insprej.getColorrejects());
+			pst.setString(13, insprej.getOrgrejects());
+			pst.setString(14, insprej.getOtherrejects());
+			System.out.println("getOtherrejects " +insprej.getOtherrejects());
+			noofrows = pst.executeUpdate();
+			
+			System.out.println("Sucessfully inserted the record.." + noofrows);
+		}catch(Exception e){
+			e.printStackTrace();
+			isadded = false;
+			System.out.println("ERROR RESULT");
+		}finally{
+			 con.close() ;
+			 pst.close();
+	   }	
+	return isadded;
+	}
+
+	@Override
+	public boolean getInspRejEditList(InspectionRejects insprej, String sidx,
+			String sord) throws SQLException {
+		Connection con = null;
+		PreparedStatement pst = null;
+		int noofrows  = 0;
+		boolean isupdate = true;
+		try{			
+			con = DBConnection.getConnection();
+			StringBuffer sql_saveInsprej = new StringBuffer("UPDATE elpro.tbl_insprejectdetails SET rejectid = ? , inspid = ? , articleid = ? , arttype= ?, color = ? , totinspected= ? , totpassed = ? , totrejects = ? , subsrejects = ?, sizerejects = ? , selecrejects = ? , colorrejects = ? , orgrejects= ?, otherrejects = ?  WHERE id = '"+insprej.getId()+"' ");
+			String sqlquery_saveInsprej = sql_saveInsprej.toString();
+			pst = (PreparedStatement) con.prepareStatement(sqlquery_saveInsprej);
+			pst.setString(1, insprej.getRejectid());
+			System.out.println("getRejectid " +insprej.getRejectid());
+			pst.setString(2, insprej.getInspid());
+			System.out.println("getInspid " +insprej.getInspid());
+			pst.setString(3, insprej.getArticleid());
+			pst.setString(4, insprej.getArttype());
+			pst.setString(5, insprej.getColor());
+			pst.setString(6, insprej.getTotinspected());
+			pst.setString(7, insprej.getTotpassed());
+			pst.setString(8, insprej.getTotrejects());
+			pst.setString(9, insprej.getSubsrejects());
+			pst.setString(10, insprej.getSizerejects());
+			pst.setString(11, insprej.getSelecrejects());
+			pst.setString(12, insprej.getColorrejects());
+			pst.setString(13, insprej.getOrgrejects());
+			pst.setString(14, insprej.getOtherrejects());
+			noofrows = pst.executeUpdate();
+			System.out.println("Sucessfully inserted the record.." + noofrows);
+		}catch(Exception e){
+			e.printStackTrace();
+			isupdate = false;
+			System.out.println("ERROR RESULT");
+		}finally{
+			 con.close() ;
+			 pst.close();
+	   }	
+		return isupdate;
+	}
+
+	@Override
+	public boolean getInspRejDelList(InspectionRejects insprej, String sidx,
+			String sord) throws SQLException {
+		Connection con = null;
+		PreparedStatement pst = null;
+		int noofrows  = 0;
+		boolean isdel = true;
+		try{			
+			con = DBConnection.getConnection();
+			StringBuffer sql_delInsprej= new StringBuffer("delete from elpro.tbl_insprejectdetails WHERE id = '"+insprej.getId()+"' ");			
+			String sqlquery_delInsprej = sql_delInsprej.toString();
+			System.out.println(sqlquery_delInsprej);
+			pst = (PreparedStatement) con.prepareStatement(sqlquery_delInsprej);
+			noofrows = pst.executeUpdate();
+			System.out.println("Sucessfully deleted the record.." + noofrows);
+		}catch(Exception e){
+			e.printStackTrace();
+			isdel = false;
+			System.out.println("ERROR RESULT");
+		}finally{
+			 con.close() ;
+			 pst.close();
+	   }	
+	//return noofrows;
+		return isdel;
+	}
+
 }

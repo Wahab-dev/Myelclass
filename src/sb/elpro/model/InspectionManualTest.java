@@ -9,25 +9,29 @@ package sb.elpro.model;
  */
 public class InspectionManualTest {
 	
-
+		private String id;
 		private String contractno;
 		private String inspectionid;
 		private String qualityctrl;
 		private String testid;
+		private String testtype;
+		private String articleid;		
+		private String color;
+		private String testedpcs; 
+		private String result;
+		private String comments;
+		
 		private String article;
 		private String colortest;
-		private String substancetest;
-		private String tearstrenghttest;
-		private String grainbreaktest;
-		private String crockingdrytest;
-		private String crockingwettest;
-		private String finishadhensiontest;
-		private String fourfoldtest;
-		private String crosssectiontest;
-		private String organoleptictest;
-		private String[] testedpcs; 
-		private String[] testcomments;
-		
+		private String subs;
+		private String tearstrength;
+		private String grainbreak;
+		private String crockingdry;
+		private String crockingwet;
+		private String finishadhension;
+		private String fourfold;
+		private String crosssection;
+		private String organoleptic;
 		
 		
 		/**
@@ -79,6 +83,18 @@ public class InspectionManualTest {
 			this.testid = testid;
 		}
 		/**
+		 * @return the articleid
+		 */
+		public String getArticleid() {
+			return articleid;
+		}
+		/**
+		 * @param articleid the articleid to set
+		 */
+		public void setArticleid(String articleid) {
+			this.articleid = articleid;
+		}
+		/**
 		 * @return the article
 		 */
 		public String getArticle() {
@@ -89,6 +105,150 @@ public class InspectionManualTest {
 		 */
 		public void setArticle(String article) {
 			this.article = article;
+		}
+		/**
+		 * @return the color
+		 */
+		public String getColor() {
+			return color;
+		}
+		/**
+		 * @param color the color to set
+		 */
+		public void setColor(String color) {
+			this.color = color;
+		}
+		/**
+		 * @return the subs
+		 */
+		public String getSubs() {
+			return subs;
+		}
+		/**
+		 * @param subs the subs to set
+		 */
+		public void setSubs(String subs) {
+			this.subs = subs;
+		}
+		/**
+		 * @return the tearstrength
+		 */
+		public String getTearstrength() {
+			return tearstrength;
+		}
+		/**
+		 * @param tearstrength the tearstrength to set
+		 */
+		public void setTearstrength(String tearstrength) {
+			this.tearstrength = tearstrength;
+		}
+		/**
+		 * @return the grainbreak
+		 */
+		public String getGrainbreak() {
+			return grainbreak;
+		}
+		/**
+		 * @param grainbreak the grainbreak to set
+		 */
+		public void setGrainbreak(String grainbreak) {
+			this.grainbreak = grainbreak;
+		}
+		/**
+		 * @return the crockingdry
+		 */
+		public String getCrockingdry() {
+			return crockingdry;
+		}
+		/**
+		 * @param crockingdry the crockingdry to set
+		 */
+		public void setCrockingdry(String crockingdry) {
+			this.crockingdry = crockingdry;
+		}
+		/**
+		 * @return the crockingwet
+		 */
+		public String getCrockingwet() {
+			return crockingwet;
+		}
+		/**
+		 * @param crockingwet the crockingwet to set
+		 */
+		public void setCrockingwet(String crockingwet) {
+			this.crockingwet = crockingwet;
+		}
+		/**
+		 * @return the finishadhension
+		 */
+		public String getFinishadhension() {
+			return finishadhension;
+		}
+		/**
+		 * @param finishadhension the finishadhension to set
+		 */
+		public void setFinishadhension(String finishadhension) {
+			this.finishadhension = finishadhension;
+		}
+		/**
+		 * @return the fourfold
+		 */
+		public String getFourfold() {
+			return fourfold;
+		}
+		/**
+		 * @param fourfold the fourfold to set
+		 */
+		public void setFourfold(String fourfold) {
+			this.fourfold = fourfold;
+		}
+		/**
+		 * @return the crosssection
+		 */
+		public String getCrosssection() {
+			return crosssection;
+		}
+		/**
+		 * @param crosssection the crosssection to set
+		 */
+		public void setCrosssection(String crosssection) {
+			this.crosssection = crosssection;
+		}
+		/**
+		 * @return the organoleptic
+		 */
+		public String getOrganoleptic() {
+			return organoleptic;
+		}
+		/**
+		 * @param organoleptic the organoleptic to set
+		 */
+		public void setOrganoleptic(String organoleptic) {
+			this.organoleptic = organoleptic;
+		}
+		/**
+		 * @return the testedpcs
+		 */
+		public String getTestedpcs() {
+			return testedpcs;
+		}
+		/**
+		 * @param testedpcs the testedpcs to set
+		 */
+		public void setTestedpcs(String testedpcs) {
+			this.testedpcs = testedpcs;
+		}
+		/**
+		 * @return the comments
+		 */
+		public String getComments() {
+			return comments;
+		}
+		/**
+		 * @param comments the comments to set
+		 */
+		public void setComments(String comments) {
+			this.comments = comments;
 		}
 		/**
 		 * @return the colortest
@@ -103,135 +263,41 @@ public class InspectionManualTest {
 			this.colortest = colortest;
 		}
 		/**
-		 * @return the substancetest
+		 * @return the testtype
 		 */
-		public String getSubstancetest() {
-			return substancetest;
+		public String getTesttype() {
+			return testtype;
 		}
 		/**
-		 * @param substancetest the substancetest to set
+		 * @param testtype the testtype to set
 		 */
-		public void setSubstancetest(String substancetest) {
-			this.substancetest = substancetest;
+		public void setTesttype(String testtype) {
+			this.testtype = testtype;
 		}
 		/**
-		 * @return the tearstrenghttest
+		 * @return the result
 		 */
-		public String getTearstrenghttest() {
-			return tearstrenghttest;
+		public String getResult() {
+			return result;
 		}
 		/**
-		 * @param tearstrenghttest the tearstrenghttest to set
+		 * @param result the result to set
 		 */
-		public void setTearstrenghttest(String tearstrenghttest) {
-			this.tearstrenghttest = tearstrenghttest;
+		public void setResult(String result) {
+			this.result = result;
 		}
 		/**
-		 * @return the grainbreaktest
+		 * @return the id
 		 */
-		public String getGrainbreaktest() {
-			return grainbreaktest;
+		public String getId() {
+			return id;
 		}
 		/**
-		 * @param grainbreaktest the grainbreaktest to set
+		 * @param id the id to set
 		 */
-		public void setGrainbreaktest(String grainbreaktest) {
-			this.grainbreaktest = grainbreaktest;
+		public void setId(String id) {
+			this.id = id;
 		}
-		/**
-		 * @return the crockingdrytest
-		 */
-		public String getCrockingdrytest() {
-			return crockingdrytest;
-		}
-		/**
-		 * @param crockingdrytest the crockingdrytest to set
-		 */
-		public void setCrockingdrytest(String crockingdrytest) {
-			this.crockingdrytest = crockingdrytest;
-		}
-		/**
-		 * @return the crockingwettest
-		 */
-		public String getCrockingwettest() {
-			return crockingwettest;
-		}
-		/**
-		 * @param crockingwettest the crockingwettest to set
-		 */
-		public void setCrockingwettest(String crockingwettest) {
-			this.crockingwettest = crockingwettest;
-		}
-		/**
-		 * @return the finishadhensiontest
-		 */
-		public String getFinishadhensiontest() {
-			return finishadhensiontest;
-		}
-		/**
-		 * @param finishadhensiontest the finishadhensiontest to set
-		 */
-		public void setFinishadhensiontest(String finishadhensiontest) {
-			this.finishadhensiontest = finishadhensiontest;
-		}
-		/**
-		 * @return the fourfoldtest
-		 */
-		public String getFourfoldtest() {
-			return fourfoldtest;
-		}
-		/**
-		 * @param fourfoldtest the fourfoldtest to set
-		 */
-		public void setFourfoldtest(String fourfoldtest) {
-			this.fourfoldtest = fourfoldtest;
-		}
-		/**
-		 * @return the crosssectiontest
-		 */
-		public String getCrosssectiontest() {
-			return crosssectiontest;
-		}
-		/**
-		 * @param crosssectiontest the crosssectiontest to set
-		 */
-		public void setCrosssectiontest(String crosssectiontest) {
-			this.crosssectiontest = crosssectiontest;
-		}
-		/**
-		 * @return the organoleptictest
-		 */
-		public String getOrganoleptictest() {
-			return organoleptictest;
-		}
-		/**
-		 * @param organoleptictest the organoleptictest to set
-		 */
-		public void setOrganoleptictest(String organoleptictest) {
-			this.organoleptictest = organoleptictest;
-		}
-		/**
-		 * @return the testedpcs
-		 */
-		public String[] getTestedpcs() {
-			return testedpcs;
-		}
-		/**
-		 * @param testedpcs the testedpcs to set
-		 */
-		public void setTestedpcs(String[] testedpcs) {
-			this.testedpcs = testedpcs;
-		}
-		/**
-		 * @return the testcomments
-		 */
-		public String[] getTestcomments() {
-			return testcomments;
-		}
-		/**
-		 * @param testcomments the testcomments to set
-		 */
-		public void setTestcomments(String[] testcomments) {
-			this.testcomments = testcomments;
-		}
+		
+		
 }
