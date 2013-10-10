@@ -65,6 +65,7 @@ $(document).ready(function() {
 					   toppager:true,
 					   rowList:[3,5,7],	       
 					   sortorder: 'desc',  
+					   height : 'automatic',
 				       emptyrecords: 'No records to display',
 				       caption: 'Debit Load' 
 				 });

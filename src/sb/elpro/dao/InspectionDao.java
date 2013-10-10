@@ -6,9 +6,7 @@ package sb.elpro.dao;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import sb.elpro.model.InspectionGrading;
-import sb.elpro.model.InspectionManualTest;
-import sb.elpro.model.InspectionRejects;
+import sb.elpro.model.InspectionBean;
 import sb.elpro.model.ProductDetails;
 import sb.elpro.model.QualityCtrlrDetails;
 
@@ -28,39 +26,39 @@ public interface InspectionDao {
 	ArrayList<ProductDetails> getInspArtList(String ctno)throws SQLException;
 
 	//test
-	ArrayList<InspectionManualTest> getInspTestList(String sidx, String sord)throws SQLException;
+	ArrayList<InspectionBean> getInspTestList(String sidx, String sord)throws SQLException;
 
-	boolean getInspTestAddList(InspectionManualTest insptest, String sidx,
+	boolean getInspTestAddList(InspectionBean insptest, String sidx,
 			String sord)throws SQLException;
 
-	boolean getInspTestEditList(InspectionManualTest insptest, String sidx, String sord)throws SQLException;
+	boolean getInspTestEditList(InspectionBean insptest, String sidx, String sord)throws SQLException;
 
 	
-	boolean getInspTestDelList(InspectionManualTest insptest, String sidx,
+	boolean getInspTestDelList(InspectionBean insptest, String sidx,
 			String sord)throws SQLException;
 
 	//Grading
-	ArrayList<InspectionGrading> getInspGradeList(String sidx, String sord)throws SQLException;
+	ArrayList<InspectionBean> getInspGradeList(String sidx, String sord)throws SQLException;
 
-	boolean getInspGradeAddList(InspectionGrading inspgrad, String sidx,
+	boolean getInspGradeAddList(InspectionBean inspgrad, String sidx,
 			String sord) throws SQLException;
 
-	boolean getInspGradeEditList(InspectionGrading inspgrad, String sidx,
+	boolean getInspGradeEditList(InspectionBean inspgrad, String sidx,
 			String sord)throws SQLException;
 
-	boolean getInspGradeDelList(InspectionGrading inspgrad, String sidx,
+	boolean getInspGradeDelList(InspectionBean inspgrad, String sidx,
 			String sord) throws SQLException;
 
 	//Rejetcs
-	ArrayList<InspectionRejects> getInspRejList(String sidx, String sord)throws SQLException;
+	ArrayList<InspectionBean> getInspRejList(String sidx, String sord)throws SQLException;
 
-	boolean getInspRejAddList(InspectionRejects insprej, String sidx,
+	boolean getInspRejAddList(InspectionBean insprej, String sidx,
 			String sord)throws SQLException;
 
-	boolean getInspRejEditList(InspectionRejects insprej, String sidx,
+	boolean getInspRejEditList(InspectionBean insprej, String sidx,
 			String sord)throws SQLException;
 
-	boolean getInspRejDelList(InspectionRejects insprej, String sidx,
+	boolean getInspRejDelList(InspectionBean insprej, String sidx,
 			String sord)throws SQLException;	
 
 

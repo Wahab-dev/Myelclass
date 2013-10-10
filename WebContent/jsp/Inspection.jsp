@@ -15,7 +15,7 @@
 </style>	
 <script src="js/jquery-1.9.1.js"></script>
 <script src="js/jquery-ui.js"></script>
-<link rel="stylesheet" type="text/css" media="screen" href="css/redmond/jquery-ui-1.10.3.custom.css" />
+<link rel="stylesheet" type="text/css" media="screen" href="css/pepper-grinder/jquery-ui-1.10.3.custom.css" />
 <link rel="stylesheet" type="text/css" media="screen" href="css/ui.jqgrid.css" />
 
 <script src="js/i18n/grid.locale-en.js" type="text/javascript"></script>
@@ -23,24 +23,31 @@
 
 <script type="text/javascript">
 $(document).ready(function() {
-	//:Load Grid
+	 var clr = null ;
+	 var arid = null ; 
+	 
+	// Load Grid
 	var artgrid = $('#insp_Ctdetails'); 
 	var testgrid = $('#insptesttbl'); 
 	var gradgrid = $('#inspgradtbl'); 
 	var rejgrid = $('#insprejtbl'); 
-			
 			artgrid.jqGrid({  
 				url:"",   
 				datatype:"json",
-				colNames:['Article Name', 'Color', 'Size','Subs','Selec','Selec P', 'Quantity'],  
+				colNames:['Article Id','Article Name', 'Color', 'Tannery', 'Customer','Order Date', 'PONo', 'Size','Subs','Selec','Selec P', 'Quantity'],  
 			    colModel:[   
-					{name:'prf_articlename', index:'articlename'},
-					{name:'prf_color', index:'color'},
-					{name:'prf_size', index:'size'},
-					{name:'prf_substance', index:'subatance'},
-					{name:'prf_selection', index:'selection'},
-					{name:'prf_selectionp', index:'selectionp'},
-					{name:'prf_quantity', index:'qty'},
+					{name:'prf_articleid', index:'prf_articleid', width:60, hidden: true, },
+					{name:'prf_articlename', index:'articlename', width:60, },
+					{name:'prf_color', index:'color', width:60, },
+					{name:'prf_tannid', index:'prf_tannid', width:60,  hidden: true,},
+					{name:'prf_custid', index:'prf_custid', width:60, hidden: true,},
+					{name:'prf_orderdate', index:'prf_orderdate', width:60, hidden: true,},
+					{name:'prf_poref', index:'prf_poref', width:60, },
+					{name:'prf_size', index:'size', width:60, },
+					{name:'prf_substance', index:'subatance', width:60, },
+					{name:'prf_selection', index:'selection', width:60, },
+					{name:'prf_selectionp', index:'selectionp', width:60, },
+					{name:'prf_quantity', index:'prf_quantity', width:60, },
 				],  
 				jsonReader : {  
 				  	repeatitems:false,
@@ -50,16 +57,21 @@ $(document).ready(function() {
 			      	records: "records" //calls Third
 				},
 				caption: "Load Article Details On Selected CT",
-				rownumbers: true,
-		    	pager: '#insp_CtDetalspager',
+				pager: '#insp_CtDetalspager',
 		    	rowNum:6, 
 		    	rowList:[2,4,6],
 		        loadtext: "Bow Bow........... ",
 		        height : "auto",
-		        width:"auto",  
+		        width:"auto",
+		       // multiselect: true,
 		        sortname: 'articlename',  
 		        sortorder: 'desc',  
 		        emptyrecords: 'No records to display',
+		        onSelectRow: function(rowid){
+		        	clr = artgrid.jqGrid('getCell', rowid, 'prf_color');
+		        	arid = artgrid.jqGrid('getCell', rowid, 'prf_articleid');
+		        	alert(arid);
+		        }
 			});	
 			artgrid.jqGrid('navGrid', '#insp_CtDetalspager',  { edit: false, add: false, del: false, 
 					search: false, refresh: false, view:true });
@@ -73,20 +85,20 @@ $(document).ready(function() {
 						editoptions: {size:8},
 	
 					},	
-					{name:'testid', index:'testid', align:'center', width:60, editable:true, sortable: true, hidden: false, 
+					{name: 'testid', index:'testid', align:'center', width:60, editable:true, sortable: true, hidden: false, 
 						editoptions: {size:8},
 						
 					},
-					{name:'inspectionid', index:'inspectionid', align:'center', width:60, editable:true, sortable: true, hidden: false, 
+					{name: 'inspid', index:'inspid', align:'center', width:60, editable:true, sortable: true, hidden: false, 
 						editoptions: {size:5},
 					
 					},
-					{name:'articleid', index:'articleid', align:'center', width:60, editable:true, sortable: true, hidden: false, 
+					{name: 'articleid', index: 'articleid', align:'center', width:60, editable:true, sortable: true, hidden: false, 
 						editoptions: {size:8},
 						
 					},
-					{name:'color', index:'color', align:'center', width:120, editable:true, sortable: true, hidden: false, 
-						editoptions: {size:8},
+					{name:'colortest', index:'colortest', align:'center', width:120, editable:true, sortable: true, hidden: false, 
+						editoptions: {size:8}, 
 						
 					},
 					{name:'testtype', index:'testtype', align:'center', width:120, editable:true, sortable: true, hidden:false, 
@@ -125,7 +137,6 @@ $(document).ready(function() {
 			      	total: "total" ,
 			      	records: "records" 
 				},
-				rownumbers: true,
 				editurl: '/Myelclass/InspectionAction.do?event=manualtest',
 				caption: "Test Details",
 		    	pager: '#insptestpager',
@@ -147,8 +158,7 @@ $(document).ready(function() {
 						 closeAfterEdit: true,
 					},
 					{
-					
-					 // Before Add 
+					   // Before Add 
 			 		  beforeInitData: function(formid) {
 					 	/* testgrid.setColProp('Color', {
 	 		 				formoptions : {
@@ -157,7 +167,9 @@ $(document).ready(function() {
 						}); */
 			 		  },
 					  beforeShowForm: function(form){
-						  /*  $('<tr class="FormData"><td class="CaptionTD ui-widget-content" colspan="2">' +
+						  $("#colortest").val(clr);
+						  $("#articleid").val(arid);
+						  /*$('<tr class="FormData"><td class="CaptionTD ui-widget-content" colspan="2">' +
 						           '<hr/><div style="padding:3px" class="ui-widget-header ui-corner-all">' +
 						           '<b>Test Details :</b></div></td></tr>')
 						           .insertBefore('#articleid');	  */
@@ -184,7 +196,7 @@ $(document).ready(function() {
 						edittype: 'select', 
 						editoptions: {value: {Grade1:'Grade 1',Grade2:'Grade 2', Grade3:'Grade 3', Grade4:'Grade 4', Grade5:'Grade 5'}},
 					},
-					{name:'color', index:'color', align:'center', width:80, editable:true, sortable: true, hidden: false, },
+					{name:'gradecolor', index:'gradecolor', align:'center', width:80, editable:true, sortable: true, hidden: false, },
 					{name:'skincount', index:'skincount', align:'center', width:120, editable:true, sortable: true, hidden: false, },	
 					{name:'percent', index:'percent', align:'center', width:120, editable:true, sortable: true, hidden: false, },
 					{name:'comment', index:'comment', align:'center', width:120, editable:true, sortable: true, hidden:false, 
@@ -213,13 +225,17 @@ $(document).ready(function() {
 		gradgrid.jqGrid('navGrid', '#inspgradpager',  { edit: true, add: true, del: true, 
 			search: false, refresh: true, view: true },
 			{			
-					// Edit
-					 reloadAfterSubmit: true,
-					 closeAfterEdit: true,
+				// Edit
+				reloadAfterSubmit: true,
+				closeAfterEdit: true,
 			},
 			{
-				 reloadAfterSubmit: true,
-				 closeAfterAdd: true,
+				 beforeShowForm: function(form){
+					  alert("Color "+clr);
+					  $("#gradecolor").val(clr);
+				 }, 
+				reloadAfterSubmit: true,
+				closeAfterAdd: true,
 			}
 			);
 
@@ -245,7 +261,7 @@ rejgrid.jqGrid({
 			
 		},
 		
-		{name:'color', index:'color', align:'center', width:80, editable:true, sortable: true, hidden:false, 
+		{name:'rejcolor', index:'rejcolor', align:'center', width:80, editable:true, sortable: true, hidden:false, 
 			
 		},
 		{name:'totpassed', index:'totpassed', align:'center', width:80, editable:true, sortable: true, hidden:false, 
@@ -302,6 +318,10 @@ rejgrid.jqGrid({
 		  closeAfterEdit: true,					
 		},
 		{
+			 beforeShowForm: function(form){
+				  alert("Color "+clr);
+				  $("#rejcolor").val(clr);		 
+			 },
 		  reloadAfterSubmit: true,
 		  closeAfterAdd: true,
 		});
@@ -311,6 +331,7 @@ rejgrid.jqGrid('setGroupHeaders', {
 		{startColumnName: 'subsrejects', numberOfColumns: 7, titleText: '<em>Rejects</em>'},
 	  ]
 	});
+	
 //AUTOCOMPLETE			
 	$('#inps_ContractNumber').autocomplete({		
 		 source: function(request, response) {
@@ -328,7 +349,7 @@ rejgrid.jqGrid('setGroupHeaders', {
 		 select: function( event, ui ) { 
          	 $('#insp_cdn').val(ui.item.splcdn);
          	var ctno = $('#inps_ContractNumber').val();
-         	artgrid.jqGrid('setGridParam',{url:"/Myelclass/InspAutocomplete.do?ctno="+ctno+"&action="+"loadArticle"}).trigger("reloadGrid");
+         	artgrid.jqGrid('setGridParam',{url:"/Myelclass/InspectionAction.do?event=loadarticle&ctno="+ctno}).trigger("reloadGrid");
            } 
 	}); 
 	$('#inps_qualityctrlr').autocomplete({

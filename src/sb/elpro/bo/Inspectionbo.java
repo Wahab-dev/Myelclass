@@ -6,9 +6,7 @@ package sb.elpro.bo;
 import java.util.List;
 
 import sb.elpro.action.InvSelectCtfromCust;
-import sb.elpro.model.InspectionGrading;
-import sb.elpro.model.InspectionManualTest;
-import sb.elpro.model.InspectionRejects;
+import sb.elpro.model.InspectionBean;
 import sb.elpro.model.InvCustContractDetails;
 import sb.elpro.model.ProductDetails;
 import sb.elpro.model.QualityCtrlrDetails;
@@ -29,38 +27,38 @@ public interface Inspectionbo {
 
 	
 	//Manual Test 
-	public List<InspectionManualTest> getInspectionTestDetails(String sidx, String sord)throws Exception;
+	public List<InspectionBean> getInspectionTestDetails(String sidx, String sord)throws Exception;
 
-	public boolean getInspectionTestAddDetails(InspectionManualTest insptest, String sidx, String sord)throws Exception;
+	public boolean getInspectionTestAddDetails(InspectionBean insptest, String sidx, String sord)throws Exception;
 
-	public boolean getInspectionTesEditDetails(InspectionManualTest insptest, String sidx, String sord)throws Exception;
+	public boolean getInspectionTesEditDetails(InspectionBean insptest, String sidx, String sord)throws Exception;
 
-	public boolean getInspectionTesDelDetails(InspectionManualTest insptest,
+	public boolean getInspectionTesDelDetails(InspectionBean insptest,
 			String sidx, String sord)throws Exception;
 
 	//Grading test  
-	public List<InspectionGrading> getInspectionGradeDetails(String sidx,
+	public List<InspectionBean> getInspectionGradeDetails(String sidx,
 			String sord)throws Exception;
-	public boolean getInspectionGradeAddDetails(InspectionGrading inspgrad,
+	public boolean getInspectionGradeAddDetails(InspectionBean inspgrad,
 			String sidx, String sord)throws Exception;
 
-	public boolean getInspectionGradEditDetails(InspectionGrading inspgrad,
+	public boolean getInspectionGradEditDetails(InspectionBean inspgrad,
 			String sidx, String sord)throws Exception;
 
-	public boolean getInspectionGradeDelDetails(InspectionGrading inspgrad,
+	public boolean getInspectionGradeDelDetails(InspectionBean inspgrad,
 			String sidx, String sord)throws Exception;
 
 	//Reject test  
-	public List<InspectionRejects> getInspectionRejDetails(String sidx,
+	public List<InspectionBean> getInspectionRejDetails(String sidx,
 			String sord)throws Exception;
 
-	public boolean getInspectionRejAddDetails(InspectionRejects insprej,
+	public boolean getInspectionRejAddDetails(InspectionBean insprej,
 			String sidx, String sord)throws Exception;
 
-	public boolean getInspectionRejEditDetails(InspectionRejects insprej,
+	public boolean getInspectionRejEditDetails(InspectionBean insprej,
 			String sidx, String sord)throws Exception;
 
-	public boolean getInspectionGradeRejDetails(InspectionRejects insprej,
+	public boolean getInspectionGradeRejDetails(InspectionBean insprej,
 			String sidx, String sord)throws Exception;
 
 	

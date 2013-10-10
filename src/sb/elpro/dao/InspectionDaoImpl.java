@@ -11,9 +11,7 @@ import com.mysql.jdbc.Statement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import sb.elpro.model.InspectionGrading;
-import sb.elpro.model.InspectionManualTest;
-import sb.elpro.model.InspectionRejects;
+import sb.elpro.model.InspectionBean;
 import sb.elpro.model.ProductDetails;
 import sb.elpro.model.QualityCtrlrDetails;
 
@@ -111,21 +109,27 @@ public class InspectionDaoImpl implements InspectionDao {
 		try{			
 			con = DBConnection.getConnection();
 			st = (Statement) con.createStatement();
-			String sql = "SELECT distinct Ctno, Orderdt, pono, inspcdn, articlename, size, substance, selection, selectionpercent, color, quantity, unit, pcs, articletype, articleshfrom  FROM elpro.tbl_prfform prf, elpro.tbl_prf_article article  where prf.Ctno = article.contractno and Ctno like '%"+ctno+"%' order by articlename";
+			String sql = "SELECT distinct Ctno, Orderdt, tanneryid, customerid, pono, inspcdn, articlename, size, substance, selection, selectionpercent, color, quantity, unit, pcs, prfarticleid, articletype, articleshfrom  FROM elpro.tbl_prfform prf, elpro.tbl_prf_article article  where prf.Ctno = article.contractno and Ctno like '%"+ctno+"%' order by articlename";
 			//String sql = "SELECT distinct Ctno FROM elpro.tbl_prfform prf where Ctno like '%"+inspctterm+"%' order by articlename";
 			rs = st.executeQuery(sql);
 			while(rs.next()) {	
+				String qty =  rs.getString("quantity")+" "+ rs.getString("unit");
+				
 				ProductDetails inspctbean = new ProductDetails();
 				inspctbean.setPrf_articlename(rs.getString("articlename"));
+				inspctbean.setPrf_articleid(rs.getString("prfarticleid"));
 				inspctbean.setPrf_orderdate(rs.getString("Orderdt"));
+				inspctbean.setPrf_tannid(rs.getString("tanneryid"));
+				inspctbean.setPrf_custid(rs.getString("customerid"));
 				inspctbean.setPrf_poref(rs.getString("pono"));
 				inspctbean.setPrf_inspcdn(rs.getString("inspcdn"));
 				inspctbean.setPrf_contractno(rs.getString("Ctno"));
 				inspctbean.setPrf_size(rs.getString("size"));
 				inspctbean.setPrf_substance(rs.getString("substance"));
 				inspctbean.setPrf_selection(rs.getString("selection"));
+				inspctbean.setPrf_selectionp(rs.getString("selectionpercent"));
 				inspctbean.setPrf_color(rs.getString("color"));
-				inspctbean.setPrf_quantity(rs.getString("quantity"));
+				inspctbean.setPrf_quantity(qty);
 				System.out.println("Insp CT  name "+inspctbean.getLabel());
 				inspCtlist.add(inspctbean);
 			}
@@ -142,9 +146,9 @@ public class InspectionDaoImpl implements InspectionDao {
 	}
 
 	@Override
-	public ArrayList<InspectionManualTest> getInspTestList(String sidx,
+	public ArrayList<InspectionBean> getInspTestList(String sidx,
 			String sord) throws SQLException {
-		ArrayList<InspectionManualTest> insptestarray = new ArrayList<InspectionManualTest>();
+		ArrayList<InspectionBean> insptestarray = new ArrayList<InspectionBean>();
 		Connection con = null;
 		Statement st = null;
 		ResultSet rs = null;
@@ -155,7 +159,7 @@ public class InspectionDaoImpl implements InspectionDao {
 			System.out.println(sql);
 			rs = st.executeQuery(sql);
 			while(rs.next()) {	
-			 InspectionManualTest insptestbean = new InspectionManualTest();
+				InspectionBean insptestbean = new InspectionBean();
 			 insptestbean.setId(rs.getString("id"));
 			    insptestbean.setTestid(rs.getString("testid"));
 			    insptestbean.setTesttype(rs.getString("testtype"));
@@ -163,8 +167,8 @@ public class InspectionDaoImpl implements InspectionDao {
 				insptestbean.setResult(rs.getString("result"));
 				insptestbean.setComments(rs.getString("comments"));
 				insptestbean.setArticleid(rs.getString("articleid"));
-				insptestbean.setColor(rs.getString("color"));
-				insptestbean.setInspectionid(rs.getString("inspid"));
+				insptestbean.setColortest(rs.getString("color"));
+				insptestbean.setInspid(rs.getString("inspid"));
 				insptestarray.add(insptestbean);
 			}
 		}catch(Exception e){
@@ -179,7 +183,7 @@ public class InspectionDaoImpl implements InspectionDao {
 		}
 
 	@Override
-	public boolean getInspTestAddList(InspectionManualTest insptest, String sidx,
+	public boolean getInspTestAddList(InspectionBean insptest, String sidx,
 			String sord) throws SQLException {
 		Connection con = null;
 		PreparedStatement pst = null;
@@ -194,10 +198,10 @@ public class InspectionDaoImpl implements InspectionDao {
 			pst = (PreparedStatement) con.prepareStatement(sqlquery_saveinspTest);
 			pst.setString(1, insptest.getTestid());
 			System.out.println("getTestid " +insptest.getTestid());
-			pst.setString(2, insptest.getInspectionid());
-			System.out.println("getInspectionid " +insptest.getInspectionid());
+			pst.setString(2, insptest.getInspid());
+			System.out.println("getInspectionid " +insptest.getInspid());
 			pst.setString(3, insptest.getArticleid());
-			pst.setString(4, insptest.getColor());
+			pst.setString(4, insptest.getColortest());
 			pst.setString(5, insptest.getTesttype());
 			pst.setString(6, insptest.getTestedpcs());
 			pst.setString(7, insptest.getResult());
@@ -219,7 +223,7 @@ public class InspectionDaoImpl implements InspectionDao {
 	}
 
 	@Override
-	public boolean getInspTestEditList(InspectionManualTest insptest,
+	public boolean getInspTestEditList(InspectionBean insptest,
 			String sidx, String sord) throws SQLException {
 		Connection con = null;
 		PreparedStatement pst = null;
@@ -232,10 +236,10 @@ public class InspectionDaoImpl implements InspectionDao {
 			pst = (PreparedStatement) con.prepareStatement(sqlquery_saveInsptest);
 			pst.setString(1, insptest.getTestid());
 			System.out.println("getTestid " +insptest.getTestid());
-			pst.setString(2, insptest.getInspectionid());
-			System.out.println("getInspectionid " +insptest.getInspectionid());
+			pst.setString(2, insptest.getInspid());
+			System.out.println("getInspectionid " +insptest.getInspid());
 			pst.setString(3, insptest.getArticleid());
-			pst.setString(4, insptest.getColor());
+			pst.setString(4, insptest.getColortest());
 			pst.setString(5, insptest.getTesttype());
 			pst.setString(6, insptest.getTestedpcs());
 			pst.setString(7, insptest.getResult());
@@ -254,7 +258,7 @@ public class InspectionDaoImpl implements InspectionDao {
 	}
 
 	@Override
-	public boolean getInspTestDelList(InspectionManualTest insptest,
+	public boolean getInspTestDelList(InspectionBean insptest,
 			String sidx, String sord) throws SQLException {
 		Connection con = null;
 		PreparedStatement pst = null;
@@ -281,9 +285,9 @@ public class InspectionDaoImpl implements InspectionDao {
 	}
 
 	@Override
-	public ArrayList<InspectionGrading> getInspGradeList(String sidx,
+	public ArrayList<InspectionBean> getInspGradeList(String sidx,
 			String sord) throws SQLException {
-		ArrayList<InspectionGrading> insptestarray = new ArrayList<InspectionGrading>();
+		ArrayList<InspectionBean> insptestarray = new ArrayList<InspectionBean>();
 		Connection con = null;
 		Statement st = null;
 		ResultSet rs = null;
@@ -294,12 +298,12 @@ public class InspectionDaoImpl implements InspectionDao {
 			System.out.println(sql);
 			rs = st.executeQuery(sql);
 			while(rs.next()) {	
-				InspectionGrading insptestbean = new InspectionGrading();
+				InspectionBean insptestbean = new InspectionBean();
 			 insptestbean.setId(rs.getString("id"));
 			    insptestbean.setGradeid(rs.getString("gradeid"));
 			    insptestbean.setInspid(rs.getString("inspid"));
 				insptestbean.setArticleid(rs.getString("articleid"));
-				insptestbean.setColor(rs.getString("color"));
+				insptestbean.setGradecolor(rs.getString("color"));
 				insptestbean.setGrade(rs.getString("grade"));
 				insptestbean.setSkincount(rs.getString("skincount"));
 				insptestbean.setPercent(rs.getString("percent"));
@@ -318,7 +322,7 @@ public class InspectionDaoImpl implements InspectionDao {
 	}
 
 	@Override
-	public boolean getInspGradeAddList(InspectionGrading inspgrad, String sidx,
+	public boolean getInspGradeAddList(InspectionBean inspgrad, String sidx,
 			String sord) throws SQLException {
 		Connection con = null;
 		PreparedStatement pst = null;
@@ -336,7 +340,7 @@ public class InspectionDaoImpl implements InspectionDao {
 			pst.setString(2, inspgrad.getInspid());
 			System.out.println("getInspid " +inspgrad.getInspid());
 			pst.setString(3, inspgrad.getArticleid());
-			pst.setString(4, inspgrad.getColor());
+			pst.setString(4, inspgrad.getGradecolor());
 			pst.setString(5, inspgrad.getGrade());
 			pst.setString(6, inspgrad.getSkincount());
 			pst.setString(7, inspgrad.getPercent());
@@ -358,7 +362,7 @@ public class InspectionDaoImpl implements InspectionDao {
 	}
 
 	@Override
-	public boolean getInspGradeEditList(InspectionGrading inspgrad, String sidx,
+	public boolean getInspGradeEditList(InspectionBean inspgrad, String sidx,
 			String sord) throws SQLException {
 		Connection con = null;
 		PreparedStatement pst = null;
@@ -374,7 +378,7 @@ public class InspectionDaoImpl implements InspectionDao {
 			pst.setString(2, inspgrad.getInspid());
 			System.out.println("getInspid " +inspgrad.getInspid());
 			pst.setString(3, inspgrad.getArticleid());
-			pst.setString(4, inspgrad.getColor());
+			pst.setString(4, inspgrad.getGradecolor());
 			pst.setString(5, inspgrad.getGrade());
 			pst.setString(6, inspgrad.getSkincount());
 			pst.setString(7, inspgrad.getPercent());
@@ -393,7 +397,7 @@ public class InspectionDaoImpl implements InspectionDao {
 	}
 
 	@Override
-	public boolean getInspGradeDelList(InspectionGrading inspgrad, String sidx,
+	public boolean getInspGradeDelList(InspectionBean inspgrad, String sidx,
 			String sord) throws SQLException {
 		Connection con = null;
 		PreparedStatement pst = null;
@@ -420,9 +424,9 @@ public class InspectionDaoImpl implements InspectionDao {
 	}
 
 	@Override
-	public ArrayList<InspectionRejects> getInspRejList(String sidx, String sord)
+	public ArrayList<InspectionBean> getInspRejList(String sidx, String sord)
 			throws SQLException {
-		ArrayList<InspectionRejects> insprejarray = new ArrayList<InspectionRejects>();
+		ArrayList<InspectionBean> insprejarray = new ArrayList<InspectionBean>();
 		Connection con = null;
 		Statement st = null;
 		ResultSet rs = null;
@@ -433,13 +437,13 @@ public class InspectionDaoImpl implements InspectionDao {
 			System.out.println(sql);
 			rs = st.executeQuery(sql);
 			while(rs.next()) {	
-				InspectionRejects insprejbean = new InspectionRejects();
+				InspectionBean insprejbean = new InspectionBean();
 				insprejbean.setId(rs.getString("id"));
 			    insprejbean.setRejectid(rs.getString("rejectid"));
 			    insprejbean.setInspid(rs.getString("inspid"));
 				insprejbean.setArticleid(rs.getString("articleid"));
 				insprejbean.setArttype(rs.getString("arttype"));
-				insprejbean.setColor(rs.getString("color"));
+				insprejbean.setRejcolor(rs.getString("color"));
 				insprejbean.setTotinspected(rs.getString("totinspected"));
 				insprejbean.setTotpassed(rs.getString("totpassed"));
 				insprejbean.setTotrejects(rs.getString("totrejects"));
@@ -463,7 +467,7 @@ public class InspectionDaoImpl implements InspectionDao {
 	}
 
 	@Override
-	public boolean getInspRejAddList(InspectionRejects insprej, String sidx,
+	public boolean getInspRejAddList(InspectionBean insprej, String sidx,
 			String sord) throws SQLException {
 		Connection con = null;
 		PreparedStatement pst = null;
@@ -482,7 +486,7 @@ public class InspectionDaoImpl implements InspectionDao {
 			System.out.println("getInspid " +insprej.getInspid());
 			pst.setString(3, insprej.getArticleid());
 			pst.setString(4, insprej.getArttype());
-			pst.setString(5, insprej.getColor());
+			pst.setString(5, insprej.getRejcolor());
 			pst.setString(6, insprej.getTotinspected());
 			pst.setString(7, insprej.getTotpassed());
 			pst.setString(8, insprej.getTotrejects());
@@ -508,7 +512,7 @@ public class InspectionDaoImpl implements InspectionDao {
 	}
 
 	@Override
-	public boolean getInspRejEditList(InspectionRejects insprej, String sidx,
+	public boolean getInspRejEditList(InspectionBean insprej, String sidx,
 			String sord) throws SQLException {
 		Connection con = null;
 		PreparedStatement pst = null;
@@ -525,7 +529,7 @@ public class InspectionDaoImpl implements InspectionDao {
 			System.out.println("getInspid " +insprej.getInspid());
 			pst.setString(3, insprej.getArticleid());
 			pst.setString(4, insprej.getArttype());
-			pst.setString(5, insprej.getColor());
+			pst.setString(5, insprej.getRejcolor());
 			pst.setString(6, insprej.getTotinspected());
 			pst.setString(7, insprej.getTotpassed());
 			pst.setString(8, insprej.getTotrejects());
@@ -549,7 +553,7 @@ public class InspectionDaoImpl implements InspectionDao {
 	}
 
 	@Override
-	public boolean getInspRejDelList(InspectionRejects insprej, String sidx,
+	public boolean getInspRejDelList(InspectionBean insprej, String sidx,
 			String sord) throws SQLException {
 		Connection con = null;
 		PreparedStatement pst = null;

@@ -19,10 +19,8 @@ import org.apache.struts.action.ActionMapping;
 
 import sb.elpro.bo.Inspectionbo;
 import sb.elpro.bo.InspectionboImpl;
-import sb.elpro.model.InspectionGrading;
-import sb.elpro.model.InspectionManualTest;
-import sb.elpro.model.InspectionRejects;
-import sb.elpro.model.SampleTrack;
+import sb.elpro.model.InspectionBean;
+import sb.elpro.model.ProductDetails;
 
 /**
  * @author Wahab
@@ -40,7 +38,6 @@ public class InspectionGridAction extends Action{
 		System.out.println("In Sample Track  Action ");
 		 if(usersession != null){
 			 String oper =   request.getParameter("oper");
-			 String action = request.getParameter("action");
 			 String rows = request.getParameter("rows");
              String pag = request.getParameter("page");
              String sidx = request.getParameter("sidx");
@@ -51,13 +48,12 @@ public class InspectionGridAction extends Action{
              System.out.println("page "+pag); 
              System.out.println("sidx "+sidx);
              System.out.println("sord "+sord);
-             System.out.println("action "+action);
              System.out.println("event "+event);
              if(event.equalsIgnoreCase("manualtest")){
             	 System.out.println("In INsp test ");
 		             if(oper == null){
 						System.out.println(" In Insp Test Load");
-						List<InspectionManualTest> testload = inspbo.getInspectionTestDetails(sidx,sord);
+						List<InspectionBean> testload = inspbo.getInspectionTestDetails(sidx,sord);
 						int records = testload.size();
 						System.out.println("Reords  "+records);
 							int page = Integer.parseInt(pag);
@@ -82,12 +78,11 @@ public class InspectionGridAction extends Action{
 						System.out.println(jsonobj);		
 						out.println(jsonobj);
 		             }else {
-		            	 InspectionManualTest insptest = new InspectionManualTest();
+		            	 InspectionBean insptest = new InspectionBean();
 		            	 	insptest.setTestid(request.getParameter("testid"));
-		            	 	insptest.setInspectionid(request.getParameter("inspectionid"));
+		            	 	insptest.setInspid(request.getParameter("inspid"));
 		            	 	insptest.setArticleid(request.getParameter("articleid"));
-		            	 	//insptest.setArticleid("2");
-		            	 	insptest.setColor(request.getParameter("color"));
+		            	 	insptest.setColortest(request.getParameter("colortest"));
 		            	 	insptest.setId(request.getParameter("id"));
 		            	 	insptest.setTesttype(request.getParameter("testtype"));
 		            	 	insptest.setTestedpcs(request.getParameter("testedpcs"));
@@ -130,7 +125,7 @@ public class InspectionGridAction extends Action{
              		 System.out.println("In INsp GRADING---- ");
 		             if(oper == null){
 						System.out.println(" In Insp Grade Load");
-						List<InspectionGrading> gradeload = inspbo.getInspectionGradeDetails(sidx,sord);
+						List<InspectionBean> gradeload = inspbo.getInspectionGradeDetails(sidx,sord);
 						int records = gradeload.size();
 						System.out.println("Reords  "+records);
 							int page = Integer.parseInt(pag);
@@ -155,12 +150,12 @@ public class InspectionGridAction extends Action{
 						System.out.println(jsonobj);		
 						out.println(jsonobj);
 		             }else {
-		            	 InspectionGrading inspgrad = new InspectionGrading();
+		            	 InspectionBean inspgrad = new InspectionBean();
 		            	 	inspgrad.setId(request.getParameter("id"));
 		            	 	inspgrad.setGradeid(request.getParameter("gradeid"));
 		            	 	inspgrad.setInspid(request.getParameter("inspid"));
 		            	 	inspgrad.setArticleid(request.getParameter("articleid"));
-		            	 	inspgrad.setColor(request.getParameter("color"));
+		            	 	inspgrad.setGradecolor(request.getParameter("gradecolor"));
 		            	 	inspgrad.setGrade(request.getParameter("grade"));
 		            	 	inspgrad.setSkincount(request.getParameter("skincount"));
 		            	 	inspgrad.setPercent(request.getParameter("percent"));
@@ -202,7 +197,7 @@ public class InspectionGridAction extends Action{
              		 System.out.println("In INsp Reject---- ");
 		             if(oper == null){
 						System.out.println(" In Insp Reject Load");
-						List<InspectionRejects> rejectload = inspbo.getInspectionRejDetails(sidx,sord);
+						List<InspectionBean> rejectload = inspbo.getInspectionRejDetails(sidx,sord);
 						int records = rejectload.size();
 						System.out.println("Reords  "+records);
 							int page = Integer.parseInt(pag);
@@ -227,11 +222,12 @@ public class InspectionGridAction extends Action{
 						System.out.println(jsonobj);		
 						out.println(jsonobj);
 		             }else {
-		            	 InspectionRejects insprej = new InspectionRejects();
+		             
+		            	 InspectionBean insprej = new InspectionBean();
 		            	 	insprej.setId(request.getParameter("id"));
 		            	 	insprej.setArticleid(request.getParameter("articleid"));
 		            	 	insprej.setArttype(request.getParameter("arttype"));
-		            	 	insprej.setColor(request.getParameter("color"));
+		            	 	insprej.setRejcolor(request.getParameter("rejcolor"));
 		            	 	insprej.setColorrejects(request.getParameter("colorrejects"));
 		            	 	insprej.setInspid(request.getParameter("inspid"));
 		            	 	insprej.setOrgrejects(request.getParameter("orgrejects"));
@@ -277,7 +273,34 @@ public class InspectionGridAction extends Action{
 								out.println(jsonobj);
 		            		}
 		             }
+             	}else if(event.equalsIgnoreCase("loadarticle")){
+             		String ctno = request.getParameter("ctno");
+             		List<ProductDetails> inspartllist =  inspbo.getInspArtDetails(ctno);
+    				int records = inspartllist.size();
+    				System.out.println("Reords  "+records);
+    				int page = Integer.parseInt(pag);
+	                int totalPages = 0;
+	                int totalCount = records;
+	                if (totalCount > 0) {
+	                	 if (totalCount % Integer.parseInt(rows) == 0) {
+	                		 System.out.println("STEP 1 "+totalCount % Integer.parseInt(rows) );
+	                         totalPages = totalCount / Integer.parseInt(rows);
+	                         System.out.println("STEP 2 "+totalPages);
+	                     } else {
+	                         totalPages = (totalCount / Integer.parseInt(rows)) + 1;
+	                         System.out.println("STEP 3 "+totalPages);
+	                     }
+	                }else {
+	                    totalPages = 0;
+	                }
+				jsonobj.put("total", totalPages);
+				jsonobj.put("page", page);
+				jsonobj.put("records", records);
+				jsonobj.put("rows", inspartllist);
+				System.out.println(jsonobj);		
+				out.println(jsonobj);
              	}
+             
 			 }else{
 			 System.out.println("Error Invalid Session");
 			 return map.findForward("login");
