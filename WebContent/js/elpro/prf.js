@@ -262,7 +262,7 @@ $(document).ready(function() {
       sortname: 'articlename',  
       sortorder: 'desc', 
       viewrecords: true,
-      gridview: true,
+      gridview: true, // if used cant use subgrid, treegrid and aftertInsertRow 
       height: "100%", 
       emptyrecords: 'No records to display',
       editurl: "/Myelclass/PrfinsertArticle.do",

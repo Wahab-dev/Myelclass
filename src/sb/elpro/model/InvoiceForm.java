@@ -1,17 +1,20 @@
-package sb.elpro.actionform;
+/**
+ * 
+ */
+package sb.elpro.model;
 
 import java.io.Serializable;
 
-import org.apache.struts.action.ActionForm;
-
-public class InvoiceForm extends ActionForm implements Serializable{
-
-    /**
+/**
+ * @author Wahab
+ *
+ */
+public class InvoiceForm implements Serializable {
+	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -7103743427275202140L;
-		
-	//Inovice Details 
+	private static final long serialVersionUID = -2017781039158616835L;
+	
 	private String inv_invoicetype;
 	private String inv_invoiceno;
 	private String inv_invdate;
@@ -103,6 +106,7 @@ public class InvoiceForm extends ActionForm implements Serializable{
 	private String inv_tc;
 	private String inv_type;
 	private String inv_total;
+	
 	
 	
 	/**
@@ -729,7 +733,9 @@ public class InvoiceForm extends ActionForm implements Serializable{
 	public void setInv_netwt(String inv_netwt) {
 		this.inv_netwt = inv_netwt;
 	}
-	
+	/**
+	 * @return the inv_discount
+	 */
 	public String getInv_discount() {
 		return inv_discount;
 	}
@@ -1051,6 +1057,4 @@ public class InvoiceForm extends ActionForm implements Serializable{
 	public void setInv_total(String inv_total) {
 		this.inv_total = inv_total;
 	}
-
-
-	}
+}

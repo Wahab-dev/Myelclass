@@ -4,13 +4,9 @@
 package sb.elpro.bo;
 
 import java.util.List;
-
-import sb.elpro.action.InvSelectCtfromCust;
 import sb.elpro.model.InspectionBean;
-import sb.elpro.model.InvCustContractDetails;
 import sb.elpro.model.ProductDetails;
 import sb.elpro.model.QualityCtrlrDetails;
-import sb.elpro.model.SampleTrack;
 
 /**
  * @author ADMIN_WIN7

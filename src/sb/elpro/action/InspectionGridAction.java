@@ -80,7 +80,6 @@ public class InspectionGridAction extends Action{
 		             }else {
 		            	 InspectionBean insptest = new InspectionBean();
 		            	 	insptest.setTestid(request.getParameter("testid"));
-		            	 	insptest.setInspid(request.getParameter("inspid"));
 		            	 	insptest.setArticleid(request.getParameter("articleid"));
 		            	 	insptest.setColortest(request.getParameter("colortest"));
 		            	 	insptest.setId(request.getParameter("id"));
@@ -153,7 +152,6 @@ public class InspectionGridAction extends Action{
 		            	 InspectionBean inspgrad = new InspectionBean();
 		            	 	inspgrad.setId(request.getParameter("id"));
 		            	 	inspgrad.setGradeid(request.getParameter("gradeid"));
-		            	 	inspgrad.setInspid(request.getParameter("inspid"));
 		            	 	inspgrad.setArticleid(request.getParameter("articleid"));
 		            	 	inspgrad.setGradecolor(request.getParameter("gradecolor"));
 		            	 	inspgrad.setGrade(request.getParameter("grade"));
@@ -229,7 +227,6 @@ public class InspectionGridAction extends Action{
 		            	 	insprej.setArttype(request.getParameter("arttype"));
 		            	 	insprej.setRejcolor(request.getParameter("rejcolor"));
 		            	 	insprej.setColorrejects(request.getParameter("colorrejects"));
-		            	 	insprej.setInspid(request.getParameter("inspid"));
 		            	 	insprej.setOrgrejects(request.getParameter("orgrejects"));
 		            	 	insprej.setOtherrejects(request.getParameter("otherrejects"));
 		            	 	insprej.setRejectid(request.getParameter("rejectid"));
