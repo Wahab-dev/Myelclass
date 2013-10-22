@@ -14,8 +14,6 @@ import sb.elpro.model.ExporterDetails;
 import sb.elpro.model.InvBillDetails;
 import sb.elpro.model.InvCustContractDetails;
 import sb.elpro.model.NotifyConsigneeDetails;
-import sb.elpro.model.PrfArticle;
-
 /**
  * @author Wahab
  *
@@ -27,14 +25,20 @@ public interface InvoiceBo {
 	public List<NotifyConsigneeDetails> getInvNotify() throws Exception;
 
 	public List<BankDetails> getInvBank() throws Exception;
+	
+	public List<DestinationDetails> getLoadinCtryName(String loadctryterm)throws Exception;
 
-	public List<DestinationDetails> getInvLoadingPort() throws Exception;
+	public List<DestinationDetails> getLoadinPortName(String loadportterm, String ctryvalterm)throws Exception;
+	
+	public List<DestinationDetails> getDestiCtryName(String destictryterm)throws Exception;
+	
+	public List<DestinationDetails> getDestiPortName(String destictryterm,String destictryvalterm)throws Exception;
+	
+	
+	
+	
 
-	public List<DestinationDetails> getInvFinalDestinationCountry() throws Exception;
-
-	public List<DestinationDetails> getInvFinalDestination() throws Exception;
-
-	public List<DestinationDetails> getInvDischargeport()throws Exception;
+	
 
 	public List<CustomerDetails> getInvCustomer()throws Exception;
 
@@ -44,14 +48,18 @@ public interface InvoiceBo {
 
 	public List<CustomerDetails> getCustomerDetails(String tanterm)throws Exception;
 
-	public List<DestinationDetails> getLoadinCtryName(String loadctryterm)throws Exception;
-
-	public List<DestinationDetails> getLoadinPortName(String loadportterm, String ctryvalterm)throws Exception;
+	
 
 	public List<ArticleDetails> getInvSelCtDetails(String ctno)throws Exception;
 
 	public int getInvAddBillDetails(InvBillDetails invbill)throws Exception;
 
 	public List<InvBillDetails> getInvBillDetails(String invno)throws Exception;
+
+	public String getInvoiceNo(String invtype)throws Exception;
+
+	
+
+	
 	
 }

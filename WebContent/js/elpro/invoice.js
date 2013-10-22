@@ -4,6 +4,84 @@
  */
 
 $(document).ready(function() {
+	// Invoice Type
+	$("#inv_invoicetype").change(function() {
+		var str = "" ;
+		 $("#inv_invoicetype option:selected" ).each(function() {
+			str = "" ;
+			str = $(this).text();
+			//str += $( this ).text() + " ";
+			
+			$.ajax({
+				url: "/Myelclass/InvAutocomplete.do",
+				type: "GET",
+				async: true,
+				dataType: "text",
+				data: { term: str, action: "invtype" },
+				contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+				success: function (data) {
+	                console.log("success"+data);
+	                alert(data);
+	                $("#inv_invoiceno").val(data);
+	            }, 
+	            error: function (data) {
+	                console.log("error");
+	                alert(data);
+	            } 
+				});
+		});
+		 $("#dv_invtype").text(str);
+			if(str == "IC-Local"){
+				alert(str+"1");
+				$("#invnotify").hide();
+				$("#invbuyer").hide();
+				$("#invbank").hide();
+				$("#inv_ctryoforigngoods").hide();
+				$("#inv_ctryoffinaldesti").hide();
+				$("#inv_dischargeport").hide();
+				$("#inv_vesselno").hide();
+				$("#inv_precarriageby").hide();
+				$("#inv_precarriageby").hide();
+				$("#inv_marksno").hide();
+				$("#invbank").hide();
+				$("#inv_courierchrgs").hide();
+				$("#inv_discount").hide();
+				$("#inv_deduction").hide();
+			}else if (str == "IC-Exports"){
+				alert(str+"2");
+				$("#invnotify").show();
+				$("#invbuyer").show();
+				$("#invbank").show();
+				$("#inv_ctryoforigngoods").show();
+				$("#inv_ctryoffinaldesti").show();
+				$("#inv_dischargeport").show();
+				$("#inv_vesselno").show();
+				$("#inv_precarriageby").show();
+				$("#inv_precarriageby").show();
+				$("#inv_marksno").show();
+				$("#invbank").show();
+				$("#inv_courierchrgs").show();
+				$("#inv_discount").show();
+				$("#inv_deduction").show();
+			}else{
+				$("#invnotify").show();
+				$("#invbuyer").show();
+				$("#invbank").show();
+				$("#inv_ctryoforigngoods").show();
+				$("#inv_ctryoffinaldesti").show();
+				$("#inv_dischargeport").show();
+				$("#inv_vesselno").show();
+				$("#inv_precarriageby").show();
+				$("#inv_precarriageby").show();
+				$("#inv_marksno").show();
+				$("#invbank").show();
+				$("#inv_courierchrgs").show();
+				$("#inv_discount").show();
+				$("#inv_deduction").show();
+			}
+		 }).trigger("change");
+	
+	
 	var invgrid = $("#invBill");
 	var billgrid = $("#tbl_invaddinvBill");
 	var invctgrid = $("#tbl_invListCustomerContract"); 
@@ -16,7 +94,6 @@ $(document).ready(function() {
 				$.getJSON("/Myelclass/InvAutocomplete.do?term="+param+"&action="+"customer",
 					function(result) { 	
 		               response($.map(result, function(item) {
-		            	  
 		               	return { 
 		                	id: item.customerId,
 		                	label : item.value,
@@ -406,7 +483,7 @@ $(document).ready(function() {
 					function(result) { 	
 		               response($.map(result, function(item) {
 		               	return { 
-		                	id: item.customerId,
+		                	ref: item.expref,
 		                	label : item.expname,
 		                	value: item.expname,
 		                    addr: item.expaddr,
@@ -422,6 +499,7 @@ $(document).ready(function() {
 		          	  $('#inv_exportertele').val(ui.item.fone);
 		          	  $('#inv_exporterattn').val(ui.item.attn);
 		          	  $('#inv_exporterfax').val(ui.item.fax);
+		            	$('#inv_expref').val(ui.item.ref);
 				    }
 		  	});
 		
@@ -453,6 +531,48 @@ $(document).ready(function() {
 				 });
 			 }
 		});
+		$('#inv_ctryoffinaldesti').autocomplete({
+			 source: function(request, response) {
+				var param = request.term;  
+				$.getJSON("/Myelclass/InvAutocomplete.do?term="+param+"&action="+"destictry",
+					function(result) { 	
+				       response($.map(result, function(item) {
+				           return { 
+				              value: item.destinationCountry,
+				              };
+				        }));//END response
+				 });
+			 }
+		});
+		$('.autocmplet').autocomplete({
+			 source: function(request, response) {
+				var param = request.term;  
+				var destictryval = $('#inv_ctryoffinaldesti').val();
+				$.getJSON("/Myelclass/InvAutocomplete.do?term="+param+"&action="+"destiport&destictryval="+destictryval,
+					function(result) { 	
+				       response($.map(result, function(item) {
+				           return { 
+				              value: item.destination,
+				              };
+				        }));//END response
+				 });
+			 }
+		});
+		/*$('#inv_dischargeport').autocomplete({
+			 source: function(request, response) {
+				var param = request.term;  
+				var ctryval = $('#inv_ctryoforigngoods').val();
+				$.getJSON("/Myelclass/InvAutocomplete.do?term="+param+"&action="+"loadport&ctryval="+ctryval,
+					function(result) { 	
+				       response($.map(result, function(item) {
+				           return { 
+				              value: item.destination,
+				              };
+				        }));//END response
+				 });
+			 }
+		});*/
+		
 		
 		 $(".dateclass").datepicker({
 			    autoSize: true,

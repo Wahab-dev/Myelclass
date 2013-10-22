@@ -91,6 +91,33 @@ public class InvAutocomplete extends Action {
 					JSONArray jsonOrdertanArray = JSONArray.fromObject(loadporttermlist);
 					System.out.println(jsonOrdertanArray);
 					out.println(jsonOrdertanArray);
+				}else if(action.equalsIgnoreCase("destictry")) {
+					System.out.println("In destictry Autocomplete");
+					String destictryterm = request.getParameter("term");
+					List<DestinationDetails> destictrylist =  invbo.getDestiCtryName(destictryterm);
+					System.out.println("List Value " +destictrylist.size());
+					JSONArray jsonOrdertanArray = JSONArray.fromObject(destictrylist);
+					System.out.println(jsonOrdertanArray);
+					out.println(jsonOrdertanArray);
+				}else if(action.equalsIgnoreCase("destiport")) {
+					System.out.println("In destiport Autocomplete");
+					String destictryterm = request.getParameter("term");
+					String destictryvalterm = request.getParameter("destictryval");
+					List<DestinationDetails> destictrylist =  invbo.getDestiPortName(destictryterm,destictryvalterm);
+					System.out.println("List Value " +destictrylist.size());
+					JSONArray jsonOrdertanArray = JSONArray.fromObject(destictrylist);
+					System.out.println(jsonOrdertanArray);
+					out.println(jsonOrdertanArray);
+				}else if(action.equalsIgnoreCase("invtype")){
+					System.out.println("In Inv Type Autocomplete");
+					String invtype = request.getParameter("term");
+					String invtypelist =  invbo.getInvoiceNo(invtype);
+					if(invtypelist.isEmpty()){
+						//Check for null and filter i                                                  
+					}else{
+						System.out.println(invtypelist);
+						out.println(invtypelist);
+					}
 				}
 				else{
 					/*

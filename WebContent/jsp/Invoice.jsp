@@ -23,26 +23,7 @@
 <script src="js/elpro/invoice.js"></script> 
 <script type="text/javascript">
 $(document).ready(function() {
-$("#inv_invoicetype").change(function() {
-	var str = "";
-	 $("#inv_invoicetype option:selected" ).each(function() {
-	str += $( this ).text() + " ";
-	});
-		/*alert($("#inv_invoicetype option:selected" ).val()); */
-	$("#dv_invtype").text(str);
-		alert(str);
-		if(str.equals ("IC-Local")){
-			alert(str.indexOf("IC-Local"));
-			$("#invnotify").show();
-			$("#invbuyer").show();
-			$("#invbank").show();
-		}else{
-			alert(str);
-			$("#invnotify").hide();
-			$("#invbuyer").hide();
-			$("#invbank").hide();
-		}
-	}).trigger("change");
+	
 });
 </script>
 </head>
@@ -69,34 +50,34 @@ $("#inv_invoicetype").change(function() {
    		 				  <h:option value="6">Other-Tanner Local</h:option>
    		 				  <h:option value="7">IC-PO</h:option>  
    		 				  <h:option value="8">IC-JW</h:option>  
-       		    		</h:select><br />     
+       		    		</h:select><br/>     
        		    		<div id="dv_invtype">
        		    		</div>   
-   	 					 <br /> Invoice No: <h:text property="inv_invoiceno" styleId="inv_invoiceno"></h:text><br />
-       					 <br /> Invoice Date:<h:text property="inv_invdate" styleId="inv_invdate" styleClass="dateclass"></h:text><br />
-       					 <br /> Exporters Ref. : <h:text property="inv_expref" styleId="inv_expref"> </h:text><br />
-						 <br /> Other ref :  <h:text property="inv_otherref" styleId="inv_otherref"> </h:text>  <br />  
+   	 					 <br/> Invoice No: <h:text property="inv_invoiceno" styleId="inv_invoiceno"></h:text><br/>
+       					 <br/> Invoice Date:<h:text property="inv_invdate" styleId="inv_invdate" styleClass="dateclass"></h:text><br/>
+       					 <br/> Exporters Ref. : <h:text property="inv_expref" styleId="inv_expref"> </h:text><br/>
+						 <br/> Other ref :  <h:text property="inv_otherref" styleId="inv_otherref"> </h:text>  <br/>  
    			</fieldset>
 		  </td>
    			  <td width="250">
    				  <fieldset>         
        				  <legend>Exporter Details</legend><br/> 
-       					  Exporter: <h:text property="inv_exporter" styleId="inv_exporter"></h:text><br />        
-   	 					 <br /> Attn: <h:text property="inv_exporterattn" styleId="inv_exporterattn"></h:text><br />
-       					 <br /> Address: <h:textarea property="inv_exporteraddress" cols="15" rows="1" styleId="inv_exporteraddress"></h:textarea><br />
-       					 <br /> Telephone : <h:text property="inv_exportertele" styleId="inv_exportertele"> </h:text><br />
-						<br /> Fax :  <h:text property="inv_exporterfax" styleId="inv_exporterfax"> </h:text>  <br />  
+       					  Exporter: <h:text property="inv_exporter" styleId="inv_exporter"></h:text><br/>        
+   	 					 <br/> Attn: <h:text property="inv_exporterattn" styleId="inv_exporterattn"></h:text><br/>
+       					 <br/> Address: <h:textarea property="inv_exporteraddress" cols="15" rows="1" styleId="inv_exporteraddress"></h:textarea><br/>
+       					 <br/> Telephone : <h:text property="inv_exportertele" styleId="inv_exportertele"> </h:text><br/>
+						<br/> Fax :  <h:text property="inv_exporterfax" styleId="inv_exporterfax"> </h:text>  <br/>  
        			  </fieldset>
        		  </td>
    			  <td width="250">
    			  <div id="invnotify">
    				  <fieldset>         
        				  <legend>Notify Details</legend><br/> 
-       					  Notify: <h:text property="inv_notify" styleId="inv_notify" ></h:text><br />        
-   	 					 <br /> Attn: <h:text property="inv_notifyattn" styleId="inv_notifyattn"></h:text><br />
-       					 <br /> Address:<h:textarea property="inv_notifyaddress" cols="15" rows="1" styleId="inv_notifyaddress"></h:textarea><br />
-       					<br />  Phone : <h:text property="inv_notifytele" styleId="inv_notifytele"> </h:text><br />
-						 <br /> Fax :  <h:text property="inv_notifyfax" styleId="inv_notifyfax"> </h:text>  <br />  
+       					  Notify: <h:text property="inv_notify" styleId="inv_notify" ></h:text><br/>        
+   	 					 <br/> Attn: <h:text property="inv_notifyattn" styleId="inv_notifyattn"></h:text><br/>
+       					 <br/> Address:<h:textarea property="inv_notifyaddress" cols="15" rows="1" styleId="inv_notifyaddress"></h:textarea><br/>
+       					<br/>  Phone : <h:text property="inv_notifytele" styleId="inv_notifytele"> </h:text><br/>
+						 <br/> Fax :  <h:text property="inv_notifyfax" styleId="inv_notifyfax"> </h:text>  <br/>  
        			  </fieldset>
        			  </div>
    			  </td>
@@ -104,89 +85,67 @@ $("#inv_invoicetype").change(function() {
    			    <div id="invbuyer">
    				  <fieldset>         
        				  <legend>Buyer Details</legend>
-   						  Buyer Name: <h:text property="inv_buyer" styleId="inv_buyer"></h:text><br />
-       					  <br />Attn: 	   <h:text property="inv_buyerattn" styleId="inv_buyerattn"></h:text><br /> 
-						  <br /> Address:   <h:textarea property="inv_buyeraddr" cols="15" rows="1" styleId="inv_buyeraddr"></h:textarea><br />
-   	 					  <br />Telephone: <h:text property="inv_buyertele" styleId="inv_buyertele"></h:text><br />
-       					  <br />Fax:	   <h:text property="inv_buyerfax" styleId="inv_buyerfax"></h:text><br />
-       					  <br />ID:	   <h:text property="inv_buyerid" styleId="inv_buyerid"></h:text><br />      					
+   						  Buyer Name: <h:text property="inv_buyer" styleId="inv_buyer"></h:text><br/>
+       					  <br/>Attn: 	   <h:text property="inv_buyerattn" styleId="inv_buyerattn"></h:text><br/> 
+						  <br/> Address:   <h:textarea property="inv_buyeraddr" cols="15" rows="1" styleId="inv_buyeraddr"></h:textarea><br/>
+   	 					  <br/>Telephone: <h:text property="inv_buyertele" styleId="inv_buyertele"></h:text><br/>
+       					  <br/>Fax:	   <h:text property="inv_buyerfax" styleId="inv_buyerfax"></h:text><br/>
+       					  <br/>ID:	   <h:text property="inv_buyerid" styleId="inv_buyerid"></h:text><br/>      					
 				  </fieldset>  
 				</div>
 			  </td> 
 		  </tr>
 		  <tr style="border: solid;">
-   			  <td width="250">
+   			  <td>
 				<div id="invbank">
    				  <fieldset>         
        				  <legend>Bank Details</legend><br/> 
-       					  Bank: <h:text property="inv_bank" styleId="inv_bank"></h:text><br />        
-   	 					  <br />Branch: <h:text property="inv_bankbranch" styleId="inv_bankbranch"></h:text><br />
-       					  <br />addr:<h:textarea property="inv_bankaddress" cols="15" rows="1" styleId="inv_bankaddress" style="align:center"></h:textarea><br />
-       					  <br />Swift Code: <h:text property="inv_bankswiftcode" styleId="inv_bankswiftcode"> </h:text><br />
-       					  <br />Acct No : <h:text property="inv_bankacno" styleId="inv_bankacno"> </h:text><br />
-       					  <br />Phone : <h:text property="inv_banktele" styleId="inv_banktele"> </h:text><br />
-						  <br />fax :  <h:text property="inv_bankfax" styleId="inv_bankfax"> </h:text>  <br />  
+       					  Bank: <h:text property="inv_bank" styleId="inv_bank"></h:text><br/>        
+   	 					  <br/>Branch: <h:text property="inv_bankbranch" styleId="inv_bankbranch"></h:text><br/>
+       					  <br/>Addr:<h:textarea property="inv_bankaddress" cols="15" rows="1" styleId="inv_bankaddress" style="align:center"></h:textarea><br/>
+       					  <br/>Swift Code: <h:text property="inv_bankswiftcode" styleId="inv_bankswiftcode"> </h:text><br/>
+       					  <br/>Acct No : <h:text property="inv_bankacno" styleId="inv_bankacno"> </h:text><br/>
+       					  <br/>Phone : <h:text property="inv_banktele" styleId="inv_banktele"> </h:text><br/>
+						  <br/>fax :  <h:text property="inv_bankfax" styleId="inv_bankfax"> </h:text>  <br/>  
        			  </fieldset>
        			</div>
        		  </td>
-   			  <td width="250">
-   			 	
+   			  <td>
    			      <fieldset>         
        				  <legend>Dispatch Details</legend><br/> 
-       					  COG: <h:text property="inv_ctryoforigngoods" styleId="inv_ctryoforigngoods"></h:text><br />
-       					  <br />Port Of Loading: <h:text property="inv_loadingport" styleId="inv_loadingport"></h:text><br /> 
-						 <br /> COF: <h:select property="inv_ctryoffinaldesti" styleId="inv_ctryoffinaldesti" onchange="loadtanvalue();">
-   		 						  <h:option value="0">select Loading Port</h:option>
-   		 							  <c:forEach items="${invCountryFinalDestiarray}" var="invCountryFinalDestilist">
-          		 							<h:option value="${invCountryFinalDestilist.destinationCountry}">
-         		 								<c:out value="${invCountryFinalDestilist.destinationCountry}"></c:out>
-          		 							</h:option>
-          	 							</c:forEach>
-       							  </h:select><br /> 
-   	 					  <br />Final Destination: <h:select property="inv_finaldesti" styleId="inv_finaldesti" onchange="loadtanvalue();">
-   		 						  <h:option value="0">select Destination</h:option>
-   		 							  <c:forEach items="${invFinalDestinationarray}" var="invDestinationlist">
-          		 							<h:option value="${invDestinationlist.destination}">
-         		 								<c:out value="${invDestinationlist.destination}"></c:out>
-          		 							</h:option>
-          	 							</c:forEach>
-       							  </h:select><br /> 
-       					  <br />Discharge port:<h:select property="inv_dischargeport" styleId="inv_dischargeport" onchange="loadtanvalue();">
-   		 						  <h:option value="0">select Discharge Port</h:option>
-   		 							  <c:forEach items="${invDischargeportarray}" var="invFinalDestinationlist">
-          		 							<h:option value="${invFinalDestinationlist.destination}">
-         		 								<c:out value="${invFinalDestinationlist.destination}"></c:out>
-          		 							</h:option>
-          	 							</c:forEach>
-       							  </h:select><br /> 
-       					  <br />Vessel No  : <h:text property="inv_vesselno" styleId="inv_vesselno"></h:text><br />      
-       					 <br /> AW/Bill Date: <h:text property="inv_awbilldate" styleId="inv_awbilldate" styleClass="dateclass"> </h:text><br />
-						  <br />AW/Bill No :  <h:text property="inv_awbillno" styleId="inv_awbillno"> </h:text>  <br />  
+       					  COG: <h:text property="inv_ctryoforigngoods" styleId="inv_ctryoforigngoods" ></h:text><br/>
+       					  <br/>LoadingPort: <h:text property="inv_loadingport" styleId="inv_loadingport" ></h:text><br/> 
+						  <br/>COF: <h:text property="inv_ctryoffinaldesti" styleId="inv_ctryoffinaldesti" ></h:text><br/> 
+   	 					  <br/>Destination: <h:text property="inv_finaldesti" styleId="inv_finaldesti" styleClass="autocmplet"></h:text><br/>
+       					  <br/>Dischargeport: <h:text property="inv_dischargeport" styleId="inv_dischargeport" styleClass="autocmplet"></h:text><br/> 
+       					  <br/>Vessel No  : <h:text property="inv_vesselno" styleId="inv_vesselno" ></h:text><br/>      
+       					  <br/>AW/Bill Date: <h:text property="inv_awbilldate" styleId="inv_awbilldate" styleClass="dateclass"> </h:text><br/>
+						  <br/>AW/Bill No :  <h:text property="inv_awbillno" styleId="inv_awbillno"> </h:text>  <br/>  
        			  </fieldset>    				  			
    			  </td>
    			  <td width="250">
    				  <fieldset>         
        				  <legend>Other Details</legend><br/> 
-       				  	  Pre Carriage By: <h:text property="inv_precarriageby" styleId="inv_precarriageby"></h:text><br />
-       					  Place of Reciept: <br />Dimension: <h:text property="inv_precarriageby" styleId="inv_precarriageby" onchange="loadtanvalue();"></h:text><br /> 						
-   						  Gross Wt: <h:text property="inv_grosswt" styleId="inv_grosswt"></h:text><br />
-       					  <br />Dimension: <h:text property="inv_dimension" styleId="inv_dimension" onchange="loadtanvalue();"></h:text><br /> 
-						 <br /> Marks: <h:text property="inv_marksno" styleId="inv_marksno"></h:text><br />
-   	 					 <br /> No Of packages: <h:text property="inv_noofpackages" styleId="inv_noofpackages"></h:text><br />
-       					  <br />Pack No:<h:text property="inv_packno" styleId="inv_packno"></h:text><br />
-       					 <br />Net Wt: <h:text property="inv_netwt" styleId="inv_netwt"></h:text><br /> 
+       				  	  Pre Carriage By: <h:text property="inv_precarriageby" styleId="inv_precarriageby"></h:text><br/>
+       					  Place of Reciept: <br/>Dimension: <h:text property="inv_precarriageby" styleId="inv_precarriageby" onchange="loadtanvalue();"></h:text><br/> 						
+   						  Gross Wt: <h:text property="inv_grosswt" styleId="inv_grosswt"></h:text><br/>
+       					  <br/>Dimension: <h:text property="inv_dimension" styleId="inv_dimension" onchange="loadtanvalue();"></h:text><br/> 
+						  <br/> Marks: <h:text property="inv_marksno" styleId="inv_marksno"></h:text><br/>
+   	 					  <br/> No Of packages: <h:text property="inv_noofpackages" styleId="inv_noofpackages"></h:text><br/>
+       					  <br/>Pack No:<h:text property="inv_packno" styleId="inv_packno"></h:text><br/>
+       					  <br/>Net Wt: <h:text property="inv_netwt" styleId="inv_netwt"></h:text><br/> 
 				  </fieldset>  
 			</td>
 			<td width="250"> 
 			 	<fieldset>         
        				<legend>Other Charges</legend>
 				  	Courier Charges: <h:text property="inv_courierchrgs" styleId="inv_courierchrgs"> </h:text>
-				  	<br />Discount: <h:radio property="inv_discount" value="discount" styleId="inv_discount">
+				  	<br/>Discount: <h:radio property="inv_discount" value="discount" styleId="inv_discount">
 				  	Deduction:</h:radio><h:radio property="inv_deduction" value="deduct" styleId="inv_deduction"></h:radio>
-				  	<br />CST:  <h:radio property="inv_vatcst" value="cst" styleId="inv_vatcst">
+				  	<br/>CST:  <h:radio property="inv_vatcst" value="cst" styleId="inv_vatcst">
 				  	Vat: </h:radio><h:radio property="inv_vatcst" value="vat" styleId="inv_vatcst"></h:radio>
-					<br />Other Charges :  <h:text property="inv_courierchrgs" styleId="inv_courierchrgs"> </h:text>  <br />
-					<br />Total Amount :  <h:text property="inv_total" styleId="inv_total"> </h:text>  <br />
+					<br/>Other Charges :  <h:text property="inv_courierchrgs" styleId="inv_courierchrgs"> </h:text>  <br/>
+					<br/>Total Amount :  <h:text property="inv_total" styleId="inv_total"> </h:text>  <br/>
 				</fieldset>
 			</td>
 		</tr>
@@ -194,12 +153,12 @@ $("#inv_invoicetype").change(function() {
 		    <td width="250">
 			   <fieldset>         
        			  <legend>Customer Details</legend>
-   					 Customer Name: <h:text property="inv_customer" styleId="inv_customer"></h:text><br />
-       				 <br />Attn: 	   <h:text property="inv_custattn" styleId="inv_custattn"></h:text><br /> 
-					 <br /> Address:   <h:textarea property="inv_custaddr" cols="15" rows="1" styleId="inv_custaddr"></h:textarea><br />
-   	 				 <br />Telephone: <h:text property="inv_custtele" styleId="inv_custtele"></h:text><br />
-       				 <br />Fax:	   <h:text property="inv_custfax" styleId="inv_custfax"></h:text><br />
-       				 <br />ID:	   <h:text property="inv_custid" styleId="inv_custid"></h:text><br />	
+   					 Customer Name: <h:text property="inv_customer" styleId="inv_customer"></h:text><br/>
+       				 <br/>Attn: 	   <h:text property="inv_custattn" styleId="inv_custattn"></h:text><br/> 
+					 <br/> Address:   <h:textarea property="inv_custaddr" cols="15" rows="1" styleId="inv_custaddr"></h:textarea><br/>
+   	 				 <br/>Telephone: <h:text property="inv_custtele" styleId="inv_custtele"></h:text><br/>
+       				 <br/>Fax:	   <h:text property="inv_custfax" styleId="inv_custfax"></h:text><br/>
+       				 <br/>ID:	   <h:text property="inv_custid" styleId="inv_custid"></h:text><br/>	
 			   </fieldset>
 			</td>
    			<td colspan="3">

@@ -14,6 +14,7 @@ import sb.elpro.model.DestinationDetails;
 import sb.elpro.model.ExporterDetails;
 import sb.elpro.model.InvBillDetails;
 import sb.elpro.model.InvCustContractDetails;
+import sb.elpro.model.InvoiceForm;
 import sb.elpro.model.NotifyConsigneeDetails;
 import sb.elpro.model.PrfArticle;
 
@@ -28,14 +29,16 @@ public interface InvoiceDao {
 	ArrayList<NotifyConsigneeDetails> getInvNotify()throws SQLException;
 
 	ArrayList<BankDetails> getInvBank() throws SQLException;
+	
+	ArrayList<DestinationDetails> getInvloadctrylist(String loadctryterm)throws SQLException;
 
-	ArrayList<DestinationDetails> getInvLoadingPort()throws SQLException;
+	ArrayList<DestinationDetails> getInvloadportlist(String loadportterm, String ctryvalterm)throws SQLException;
 
-	ArrayList<DestinationDetails> getInvDestiCountry()throws SQLException;
+	ArrayList<DestinationDetails> getInvDestiCtrylist(String destictryterm)throws SQLException;
+	
+	ArrayList<DestinationDetails> getInvDestiPortlist(String destictryterm, String destictryvalterm)throws SQLException;
 
-	ArrayList<DestinationDetails> getInvFinalDestination()throws SQLException;
-
-	ArrayList<DestinationDetails> getinvDischargePort()throws SQLException;
+	
 
 	ArrayList<CustomerDetails> getinvCustomerDetails()throws SQLException;
 
@@ -45,15 +48,16 @@ public interface InvoiceDao {
 
 	ArrayList<CustomerDetails> getInvCustlist(String custterm)throws SQLException;
 
-	ArrayList<DestinationDetails> getInvloadctrylist(String loadctryterm)throws SQLException;
-
-	ArrayList<DestinationDetails> getInvloadportlist(String loadportterm, String ctryvalterm)throws SQLException;
-
+	
 	ArrayList<ArticleDetails> getInvDelContractDetails(String ctno)throws SQLException;
 
 	int getInvAddbillDetails(InvBillDetails invbill)throws SQLException;
 
 	ArrayList<InvBillDetails> getInvBillDetails(String invno)throws SQLException;
+
+	String getInvoiceNoDetails(String invtype)throws SQLException;
+
+	
 
 		
 }

@@ -124,40 +124,10 @@ public class InvoiceDaoImpl implements InvoiceDao {
 	   }			
 		return InvBankarray;
 	}
-
+	
+	
 	@Override
-	public ArrayList<DestinationDetails> getInvLoadingPort()
-			throws SQLException {
-		ArrayList<DestinationDetails> InvloadingPortarray = new ArrayList<DestinationDetails>();			
-		Connection con = null;
-		Statement st = null;
-		ResultSet rs = null;			
-		try{			
-			con = DBConnection.getConnection();
-			st = (Statement) con.createStatement();
-			String sql = "SELECT LoadingName FROM elpro.tbl_loadingport order by LoadingName";
-			rs = st.executeQuery(sql);
-			while(rs.next()) {	
-				DestinationDetails Invloadingportbean = new DestinationDetails();
-				Invloadingportbean.setDestination(rs.getString("LoadingName"));
-				System.out.println("Result Added Successfully");
-				System.out.println("DestinationName"+Invloadingportbean.getDestination());
-				InvloadingPortarray.add(Invloadingportbean);
-			}
-		}catch(Exception e){
-			System.out.println("ERROR RESULT");
-			e.printStackTrace();
-		}finally{
-			 con.close() ;
-			 st.close();
-			 rs.close();
-	   }			
-		return InvloadingPortarray;
-	}
-
-	@Override
-	public ArrayList<DestinationDetails> getInvDestiCountry()
-			throws SQLException {
+	public ArrayList<DestinationDetails> getInvDestiCtrylist(String destictryterm) throws SQLException {
 		ArrayList<DestinationDetails> InvDestiCountryarray = new ArrayList<DestinationDetails>();			
 		Connection con = null;
 		Statement st = null;
@@ -165,12 +135,12 @@ public class InvoiceDaoImpl implements InvoiceDao {
 		try{			
 			con = DBConnection.getConnection();
 			st = (Statement) con.createStatement();
-			String sql = "SELECT CountryName FROM elpro.tbl_desticountry order by CountryName";
+			String sql = "SELECT distinct destcountry FROM elpro.tbl_destination where destcountry like '%"+destictryterm+"%' order by destcountry";
 			rs = st.executeQuery(sql);
 			while(rs.next()) {	
 				DestinationDetails InvDestiCountrybean = new DestinationDetails();
-				InvDestiCountrybean.setDestinationCountry(rs.getString("CountryName"));
-				System.out.println("CountryName"+InvDestiCountrybean.getDestinationCountry());
+				InvDestiCountrybean.setDestinationCountry(rs.getString("destcountry"));
+				System.out.println("destcountry"+InvDestiCountrybean.getDestinationCountry());
 				InvDestiCountryarray.add(InvDestiCountrybean);
 			}
 		}catch(Exception e){
@@ -183,10 +153,9 @@ public class InvoiceDaoImpl implements InvoiceDao {
 	   }			
 		return InvDestiCountryarray;
 	}
-
+	
 	@Override
-	public ArrayList<DestinationDetails> getInvFinalDestination()
-			throws SQLException {
+	public ArrayList<DestinationDetails> getInvDestiPortlist(String destictryterm, String destictryvalterm) throws SQLException {
 		ArrayList<DestinationDetails> InvFinalDestiarray = new ArrayList<DestinationDetails>();			
 		Connection con = null;
 		Statement st = null;
@@ -194,12 +163,12 @@ public class InvoiceDaoImpl implements InvoiceDao {
 		try{			
 			con = DBConnection.getConnection();
 			st = (Statement) con.createStatement();
-			String sql = "SELECT DestinationName FROM elpro.tbl_destinationport order by DestinationName";
+			String sql = "SELECT destname, destcountry FROM elpro.tbl_destination where destcountry like '%"+destictryvalterm+"%' and destname like '%"+destictryterm+"%' order by destname";
 			rs = st.executeQuery(sql);
 			while(rs.next()) {	
 				DestinationDetails InvFinalDestibean = new DestinationDetails();
-				InvFinalDestibean.setDestination(rs.getString("DestinationName"));
-				System.out.println("DestinationName"+InvFinalDestibean.getDestination());
+				InvFinalDestibean.setDestination(rs.getString("destname"));
+				System.out.println("destname"+InvFinalDestibean.getDestination());
 				InvFinalDestiarray.add(InvFinalDestibean);
 			}
 		}catch(Exception e){
@@ -212,8 +181,9 @@ public class InvoiceDaoImpl implements InvoiceDao {
 	   }			
 		return InvFinalDestiarray;
 	}
+	
 
-	@Override
+	/*@Override
 	public ArrayList<DestinationDetails> getinvDischargePort()
 			throws SQLException {
 		ArrayList<DestinationDetails> InvDischargePortarray = new ArrayList<DestinationDetails>();			
@@ -241,7 +211,7 @@ public class InvoiceDaoImpl implements InvoiceDao {
 			 rs.close();
 	   }			
 		return InvDischargePortarray;
-	}
+	}*/
 
 	@Override
 	public ArrayList<CustomerDetails> getinvCustomerDetails()
@@ -424,7 +394,7 @@ public class InvoiceDaoImpl implements InvoiceDao {
 		try{			
 			con = DBConnection.getConnection();
 			st = (Statement) con.createStatement();
-			String sql = "SELECT LoadingId, LoadingName FROM elpro.tbl_loadingport where LoadingName like '%"+loadportterm+"%'order by LoadingName";
+			String sql = "SELECT loadingid, loadingname, loadingcountry FROM elpro.tbl_loading where loadingcountry = '"+ctryvalterm+"'  and LoadingName like '%"+loadportterm+"%'order by LoadingName";
 			rs = st.executeQuery(sql);
 			while(rs.next()) {						
 				DestinationDetails Invloadportbean = new DestinationDetails();
@@ -579,6 +549,44 @@ public class InvoiceDaoImpl implements InvoiceDao {
    }	
 	return invBilllist;
 	}
+
+	@Override
+	public String getInvoiceNoDetails(String invtype)
+			throws SQLException {
+		String maxCtno= "";
+		Connection con = null;
+		Statement st = null;
+		ResultSet rs = null;	
+		try{			
+			con = DBConnection.getConnection();
+			st = (Statement) con.createStatement();
+			String sql = "SELECT id, invtype, maxinvno FROM elpro.tbl_invno where invtype in ('"+invtype+"')";
+			System.out.println((sql));
+			rs = st.executeQuery(sql);
+			System.out.println((sql));
+			while(rs.next()) {
+				 maxCtno = rs.getString("maxinvno");
+				/*InvoiceForm invNobean = new InvoiceForm();
+				//invNobean.setInvid(rs.getString("id"));
+				invNobean.setInv_type(rs.getString("invtype"));
+				invNobean.setInv_invoiceno(rs.getString("maxinvno"));
+				System.out.println("INV NO"+invNobean.getInv_invoiceno());*/
+				
+			}
+	}catch(Exception e){
+		e.printStackTrace();
+		System.out.println("Customer Name ERROR RESULT");
+	}finally{
+		 con.close() ;
+		 st.close();
+		 rs.close();
+   }	
+	return maxCtno;
+	}
+
+	
+
+
 	
 
 }
