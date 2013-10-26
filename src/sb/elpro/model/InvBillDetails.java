@@ -21,7 +21,8 @@ public class InvBillDetails implements Serializable{
 	private String invartid;
 	private String invid;
 	private String invno;
-	private String invdate;
+	private String invtype;
+	private String invdt;
 	private String invartname;
 	private String invcolor;
 	private String invsize;
@@ -67,18 +68,7 @@ public class InvBillDetails implements Serializable{
 	public void setInvid(String invid) {
 		this.invid = invid;
 	}
-	/**
-	 * @return the invdate
-	 */
-	public String getInvdate() {
-		return invdate;
-	}
-	/**
-	 * @param invdate the invdate to set
-	 */
-	public void setInvdate(String invdate) {
-		this.invdate = invdate;
-	}
+	
 	/**
 	 * @return the invartname
 	 */
@@ -307,6 +297,30 @@ public class InvBillDetails implements Serializable{
 	 */
 	public void setInvcomm(String invcomm) {
 		this.invcomm = invcomm;
+	}
+	/**
+	 * @return the invtype
+	 */
+	public String getInvtype() {
+		return invtype;
+	}
+	/**
+	 * @param invtype the invtype to set
+	 */
+	public void setInvtype(String invtype) {
+		this.invtype = invtype;
+	}
+	/**
+	 * @return the invdt
+	 */
+	public String getInvdt() {
+		return invdt;
+	}
+	/**
+	 * @param invdt the invdt to set
+	 */
+	public void setInvdt(String invdt) {
+		this.invdt = invdt;
 	}
 	
 		

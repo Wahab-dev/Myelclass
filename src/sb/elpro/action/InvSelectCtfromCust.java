@@ -109,7 +109,6 @@ public class InvSelectCtfromCust extends Action {
 		   }else if(action.equalsIgnoreCase("addBill")){
 			   System.out.println(" In Add Bill Details s");
 			   InvBillDetails invbill = new InvBillDetails();
-			  
 			   invbill.setInvctno(request.getParameter("contractno"));
 			   invbill.setInvcolor(request.getParameter("color"));
 			   invbill.setInvartname(request.getParameter("articlename"));
@@ -123,64 +122,117 @@ public class InvSelectCtfromCust extends Action {
 			   invbill.setInvamt(request.getParameter("amount"));
 			   invbill.setInvtc(request.getParameter("tc"));
 			   invbill.setInvartid(request.getParameter("articleid"));
-			  // invbill.setInv(request.getParameter("id"));
-			   //invbill.setInvctno(request.getParameter("ctno"));
-			   
-			   
-			  // String oper = request.getParameter("oper");
-			   //if(oper.equalsIgnoreCase("edit")){
-               int invbilllist = invbo.getInvAddBillDetails(invbill);
-   			  // int records = invbilllist.size();
-			  /* int page = Integer.parseInt(pag);
-               int totalPages = 0;
-               int totalCount = 0;
-               if (totalCount > 0) {
-               	 if (totalCount % Integer.parseInt(rows) == 0) {
-               		 System.out.println("STEP 1 "+totalCount % Integer.parseInt(rows) );
-                        totalPages = totalCount / Integer.parseInt(rows);
-                        System.out.println("STEP 2 "+totalPages);
-                    } else {
-                        totalPages = (totalCount / Integer.parseInt(rows)) + 1;
-                        System.out.println("STEP 3 "+totalPages);
-                    }
-               }else {
-                   totalPages = 0;
-               }
+			   invbill.setInvno(request.getParameter("invoiceno"));
+			   invbill.setInvtype(request.getParameter("invoicetype"));
+			   invbill.setInvdt(request.getParameter("invoicedt"));
+			   String oper = request.getParameter("oper");
+			   if(oper.equalsIgnoreCase("edit")){
+				   /*
+				    * Perform Edit Function
+				    */
+			   }else if(oper.equalsIgnoreCase("add")){
+				   boolean invbilllist = invbo.getInvAddBillDetails(invbill);
+				   if(invbilllist){
+					   jsonobj.clear();
+					   jsonobj.put("Success", "Successfully Inserted The Record");	
+					   out.println(jsonobj);	
+					}else{
+						jsonobj.clear();
+						jsonobj.put("Error", "Error in Inserting the Record ");	
+						out.println(jsonobj);	
+					}
+				   
+			   }else{
+				   /*
+				    * Perform Delete Function
+				    */
+			   }
                
-               jsonobj.put("total", 1);
-				jsonobj.put("page", 1);
-				jsonobj.put("records", 1);
-				jsonobj.put("rows", 1);*/
-				System.out.println(invbilllist);		
-				out.println(invbilllist);	
-		   }else if(action.equalsIgnoreCase("loadBill")){
-			   String invno = request.getParameter("invno");
-			   System.out.println("invno"+invno);
-			   List<InvBillDetails> invbilllist = invbo.getInvBillDetails(invno);
-			   int records = invbilllist.size();
+   			 
 				
-				int page = Integer.parseInt(pag);
-               int totalPages = 0;
-               int totalCount = records;
-               if (totalCount > 0) {
-               	 if (totalCount % Integer.parseInt(rows) == 0) {
-               		 System.out.println("STEP 1 "+totalCount % Integer.parseInt(rows) );
-                        totalPages = totalCount / Integer.parseInt(rows);
-                        System.out.println("STEP 2 "+totalPages);
-                    } else {
-                        totalPages = (totalCount / Integer.parseInt(rows)) + 1;
-                        System.out.println("STEP 3 "+totalPages);
-                    }
-               }else {
-                   totalPages = 0;
-               }
-               
-               jsonobj.put("total", totalPages);
-				jsonobj.put("page", page);
-				jsonobj.put("records", records);
-				jsonobj.put("rows", invbilllist);
-				System.out.println(jsonobj);		
-				out.println(jsonobj);	
+		   }else if(action.equalsIgnoreCase("loadBill")){ // nOt USed Use for 3 grrid
+			   String invno = request.getParameter("invno");
+			   String ctno = request.getParameter("ctno");
+			   String oper = request.getParameter("oper");
+			   /*  String invtype = request.getParameter("invoicetype");*/
+			   if(oper == null){
+					List<InvBillDetails> invbilllist = invbo.getInvBillDetails(invno,ctno);
+			   		int records = invbilllist.size();
+			   		int page = Integer.parseInt(pag);
+		            int totalPages = 0;
+		            int totalCount = records;
+		            if (totalCount > 0) {
+		               	 if(totalCount % Integer.parseInt(rows) == 0) {
+		               		 	System.out.println("STEP 1 "+totalCount % Integer.parseInt(rows) );
+		                        totalPages = totalCount / Integer.parseInt(rows);
+		                        System.out.println("STEP 2 "+totalPages);
+		                  } else {
+		                        totalPages = (totalCount / Integer.parseInt(rows)) + 1;
+		                        System.out.println("STEP 3 "+totalPages);
+		                  }
+		             }else {
+		                   totalPages = 0;
+		             }
+		            jsonobj.put("total", totalPages);
+					jsonobj.put("page", page);
+					jsonobj.put("records", records);
+					jsonobj.put("rows", invbilllist);
+					System.out.println(jsonobj);		
+					out.println(jsonobj);	
+			   }else{ 
+				   InvBillDetails invaddagainbill = new InvBillDetails();
+				   invaddagainbill.setInvctno(request.getParameter("invctno"));
+				   invaddagainbill.setInvcolor(request.getParameter("invcolor"));
+				   invaddagainbill.setInvartname(request.getParameter("invartname"));
+				   invaddagainbill.setInvsize(request.getParameter("invsize"));
+				   invaddagainbill.setInvsubs(request.getParameter("invsubs"));
+				   invaddagainbill.setInvselc(request.getParameter("invselc"));
+				   invaddagainbill.setInvqty(request.getParameter("invqty"));
+				   invaddagainbill.setInvrate(request.getParameter("invrate"));
+				   invaddagainbill.setInvqshpd(request.getParameter("invqshpd"));
+				   invaddagainbill.setInvqbal(request.getParameter("invqbal"));
+				   invaddagainbill.setInvamt(request.getParameter("invamt"));
+				   invaddagainbill.setInvtc(request.getParameter("invtc"));
+				   invaddagainbill.setInvartid(request.getParameter("invartid"));
+				   invaddagainbill.setInvno(request.getParameter("invno"));
+				   invaddagainbill.setInvdt(request.getParameter("invdt"));
+				   invaddagainbill.setInvid(request.getParameter("invid"));
+				   
+			   	   if(oper.equalsIgnoreCase("add")){
+			   		 boolean invbillsecondaddlist = invbo.getInvBillAddDetails(invaddagainbill);
+			   		 if(invbillsecondaddlist){
+						   jsonobj.clear();
+						   jsonobj.put("Success", "Successfully Inserted The Record");	
+						   out.println(jsonobj);	
+					 }else{
+							jsonobj.clear();
+							jsonobj.put("Error", "Error in Inserting the Record ");	
+							out.println(jsonobj);	
+					}	
+			   	   }else if(oper.equalsIgnoreCase("edit")){
+			   		 boolean invbilleditlist = invbo.getInvBillEditDetails(invaddagainbill);
+			   		 if(invbilleditlist){
+						   jsonobj.clear();
+						   jsonobj.put("Success", "Successfully Edited The Record");	
+						   out.println(jsonobj);	
+					 }else{
+							jsonobj.clear();
+							jsonobj.put("Error", "Error in Edited the Record ");	
+							out.println(jsonobj);	
+					}	
+			   	   }else{
+				   		 boolean invbilldellist = invbo.getInvBillDelDetails(invaddagainbill);
+				   		 if(invbilldellist){
+							   jsonobj.clear();
+							   jsonobj.put("Success", "Successfully Deleted The Record");	
+							   out.println(jsonobj);	
+						 }else{
+								jsonobj.clear();
+								jsonobj.put("Error", "Error in Deleted the Record ");	
+								out.println(jsonobj);	
+						}	
+				   	   }
+		   }
 		   }else if(action.equalsIgnoreCase("editBill")) {
 			   System.out.println("In EDit MOde OF ADD BILLL ");
 		   }

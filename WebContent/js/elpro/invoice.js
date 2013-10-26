@@ -4,6 +4,12 @@
  */
 
 $(document).ready(function() {
+	 //Radiio Box Chercked b
+	$("#inv_vatcst").click(function() { 
+		var val = "";
+		val= $('input[type="radio"]:checked').val();
+		});
+	
 	// Invoice Type
 	$("#inv_invoicetype").change(function() {
 		var str = "" ;
@@ -11,7 +17,9 @@ $(document).ready(function() {
 			str = "" ;
 			str = $(this).text();
 			//str += $( this ).text() + " ";
-			
+			/*
+			 * Ajax Call for Invoice no Based on Invoice Type 
+			 */
 			$.ajax({
 				url: "/Myelclass/InvAutocomplete.do",
 				type: "GET",
@@ -21,17 +29,16 @@ $(document).ready(function() {
 				contentType: "application/x-www-form-urlencoded; charset=UTF-8",
 				success: function (data) {
 	                console.log("success"+data);
-	                alert(data);
 	                $("#inv_invoiceno").val(data);
 	            }, 
 	            error: function (data) {
 	                console.log("error");
-	                alert(data);
 	            } 
 				});
+			
 		});
 		 $("#dv_invtype").text(str);
-			if(str == "IC-Local"){
+			/*if(str == "IC-Local"){
 				alert(str+"1");
 				$("#invnotify").hide();
 				$("#invbuyer").hide();
@@ -78,7 +85,7 @@ $(document).ready(function() {
 				$("#inv_courierchrgs").show();
 				$("#inv_discount").show();
 				$("#inv_deduction").show();
-			}
+			}*/
 		 }).trigger("change");
 	
 	
@@ -113,8 +120,7 @@ $(document).ready(function() {
 		          	  $('#inv_custfax').val(ui.item.fax);
 		          	 $('#inv_custid').val(ui.item.id);
 		          	 var custid = $("#inv_custid").val();
-		          	invctgrid.jqGrid('setGridParam',{url:"/Myelclass/InvSelectCtfromCust.do?custid="+custid+"&action="+"load"}).trigger("reloadGrid");
-		          	//billgrid.jqGrid('setGridParam',{url:"/Myelclass/InvSelectCtfromCust.do?ctno="+columndatamodified+"&action="+"loadsubgrid",page:1});	 				 
+		          	invctgrid.jqGrid('setGridParam',{url:"/Myelclass/InvSelectCtfromCust.do?custid="+custid+"&action="+"load"}).trigger("reloadGrid");				 
 				    }
 		  	 });
 			 invctgrid.jqGrid({ // MAster Grid
@@ -165,33 +171,38 @@ $(document).ready(function() {
 	 		 	   caption:"Select", 
 	 		 	   buttonicon:"ui-icon-add", 
 	 		 	   onClickButton: function(){
-	 		 		 var columndata="";
+	 		 		 var selctnos="";
 	 		 		 var ids = invctgrid.jqGrid('getGridParam','selarrrow');
-	 		 		 alert(ids.length);
 	 		 		 for (var i=0; i<ids.length;i++){
 	 		 		     var rowData = invctgrid.jqGrid('getRowData',ids[i]);
-	 		 			 var colData = " '"+rowData.ctno+"',";
-	 		 			 columndata = columndata+colData;
+	 		 			 var ctno = " '"+rowData.ctno+"',";
+	 		 			 selctnos = selctnos+ctno;
 	 		 		   }
-	 		 		 var itemp =columndata.lastIndexOf(",");
-					 var columndatamodified = columndata.substring(0, itemp);
-	 		 		 alert(columndatamodified);
-	 				 billgrid.jqGrid('setGridParam',{url:"/Myelclass/InvSelectCtfromCust.do?ctno="+columndatamodified+"&action="+"loadsubgrid",page:1});
+	 		 		 var itemp =selctnos.lastIndexOf(",");
+					 var ctnoselc = selctnos.substring(0, itemp);
+					 //var ctnowoquote = ctnoselc.replace(/'/g, "");
+	 				 billgrid.jqGrid('setGridParam',{url:"/Myelclass/InvSelectCtfromCust.do?ctno="+ctnoselc+"&action="+"loadsubgrid",page:1});
 	 				 billgrid.jqGrid('setCaption',"Raise Invoice").trigger('reloadGrid');
+	 				 invgrid.jqGrid('setGridParam',{url:"/Myelclass/InvSelectCtfromCust.do?action="+"loadBill&ctno="+ctnoselc ,page:1}).trigger('reloadGrid');
 	 		 	   },
 	 		 	   position:"last",
 			});
 	
+			
+			
+			/*
+			 * GRID 2
+			 */			
 			//Load Billing Details
 			billgrid.jqGrid({
-				url:"",
+				//url:"",
 				datatype: "json",
 				colNames:['Ct No','Article','Color','Size','Substance','Selection','Quantity','unit','Rate','Q Shipped','Q Balance','Amount', 'Total','TC','articleid','Article Id'],
 			    colModel:[
-			  			{name:'contractno', index:'contractno',sortable:true, editable: true, width:50,
+			            {name:'contractno', index:'contractno',sortable:true, editable: true, width:50,
 			  				/*formoptions:{
 				        	   	elmprefix:"(<span class='mystar' style='color:red'>*</span>)&nbsp;",
-				        	    elmsuffix:"&nbsp;yyyy-mm-dd",
+				        	    	elmsuffix:"&nbsp;yyyy-mm-dd",
 				        	    label: "<span>Date<span><span style='float:right'>XXX</span>"
 				        	    }, */
 						},
@@ -256,6 +267,7 @@ $(document).ready(function() {
 				sortorder: 'desc',  
 				editurl: "/Myelclass/InvSelectCtfromCust.do?action="+"addBill",
 				emptyrecords: 'No records to display',
+				//setCaption : 'Raise Invoice',
 				/* ondblClickRow: function(rowid, form) {
 				       alert(form);
 				jQuery(this).jqGrid('editGridRow', rowid);
@@ -264,39 +276,18 @@ $(document).ready(function() {
 			});	
 			billgrid.jqGrid('navGrid','#tbl_invbillpager',{
 						add : true, 
-						edit: true, editCaption:'Check For the Values',
-						del : true, 
-						view: true, 
-						search : true, 
-						reload: true},
+						edit: false, editCaption:'Check For the Values',
+						del : false, 
+						view: false, 
+						search : false, 
+						reload: false},
+						{},
 						{
-							/**
-							 *  Billing Form Edit - 
+							/*
+							 * Add Method 
 							 */
-							beforeShowForm: function(form) { // Shows the Hidden Date field @ Form LOads
-					         alert("in Edit Grid "); 
-					         $('#quantity').val($('#quantity').val()+$('#unit').val());
-							},
-							
-							/* beforeSubmit : function(postdata, formid) { 
-								alert("In b$ submit ");
-						      //0   var prfarticleid = $('#prfarticleid').val();
-						         //alert("In b$ submit "+prfarticleid); 
-							}, */
-							 
-							/* afterSubmit: function(response, postdata){
-								 if(response.responseText != 1){
-					                   return [false,"error. user exists"];
-					                    
-					              }else{
-					                	billgrid.jqGrid('setGridParam',{url:"/Myelclass/InvSelectCtfromCust.do?invno="+1+"&action="+"loadBill",page:1}).trigger("reloadGrid");
-					                	return [true,"Successfully Saved"];
-					              }
-							}, */
-	 					   closeAfterEdit: true,
-						},
-						
-						{
+							closeAfterAdd: true,
+							reloadAfterSubmit: true,
 							//Add 
 							beforeShowForm : function(formID){
 								var selRowData;
@@ -324,33 +315,91 @@ $(document).ready(function() {
 					            $('#' + 'tc' + '.FormElement', formID).val(selRowData.tc);
 					            $('#' + 'articleid' + '.FormElement', formID).val(selRowData.articleid);
 					            $('#' + 'prfarticleid' + '.FormElement', formID).val(selRowData.prfarticleid);
-							}
-						}, 
-						{
-							 //$("tr#trv_orderdate",form[0]).show();
-						},{},{}	
-					);
+							}, //BeforeShowForm 
+						
+						
+							/*
+							 * Add Parameter 
+							 */
+						editData : {
+							invoiceno: function() {
+                                var invno = $('#inv_invoiceno').val();
+                                return invno;
+                             },
+							invoicetype: function() {
+                                var invtyp = $('#inv_invoicetype').val();
+                                return invtyp;
+                             },
+							invoicedt: function() {
+                                var invdt = $('#inv_invdate').val();
+                                 return invdt;
+                             },
+						},
+						afterSubmit: function (response, postdata) {
+							var invno = $('#inv_invoiceno').val();
+							 var ctno = $("#contractno").val();
+							 ctno = "'"+ctno+"'";
+							invgrid.jqGrid('setGridParam',{url:"/Myelclass/InvSelectCtfromCust.do?action="+"loadBill&invno="+invno+"&ctno="+ctno ,page:1}).trigger('reloadGrid');
+							
+							if(response.responseText != ""){
+								return [true,"Success"];
+			                }else{
+			                    return [false,"Error"];
+			                }
+							
+						}
+					});
 				 
+			
+			/*
+			 * 
+			 * GRID 3
+			 */			
 				//INV Billing Details
 				 invgrid.jqGrid({
 					 url:"",
 					 datatype: "json",
-					 colNames:['Inv No','articleid','Ct No','Article','Color','Size','Substance','Selection','Quantity','Rate','TC','Q Shipped','Q Balance','amount'],
+					 colNames:['Inv Id','Inv No','InvDt','articleid','Ct No','Article','Color','Size','Substance','Selection','Quantity','Rate','TC','Q Shipped','Q Balance','amount'],
 					 colModel:[
+					           	{name: 'invid', index:'invid',sortable:true, editable: true, width:50},
 								{name: 'invno', index:'invno',sortable:true, editable: true, width:50},
-								{name: 'invartid', index:'articleid',sortable:true, editable: true, width:70},
-								{name: 'invctno', index:'ctno',sortable:true, editable: true, width:50},
-								{name: 'invartname', index:'articlename',sortable:true, editable: true, width:70},
-								{name: 'invcolor', index:'color',sortable:true, editable: true, width:70},
-								{name: 'invsize', index:'size',sortable:true, editable: true, width:70},
-								{name: 'invsubs', index:'substance',sortable:true, editable: true, width:90},
-								{name: 'invselc', index:'selection',sortable:true, editable: true, width:90},
-								{name: 'invqty', index:'quantity',sortable:true, editable: true, width:70},
-								{name: 'invrate', index:'rate',sortable:true, editable: true, width:70},
-								{name: 'invtc', index:'tc',sortable:true, width:70, editable: true},
-								{name: 'invqshpd', index:'qshpd',sortable:true, editable: true, width:70},
+								{name: 'invdt', index:'invdt',sortable:true, editable: true, width:50},
+								{name: 'invartid', index:'invartid',sortable:true, editable: true, width:70},
+								{name: 'invctno', index:'invctno',sortable:true, editable: true, width:50},
+								{name: 'invartname', index:'invartname',sortable:true, editable: true, width:70},
+								{name: 'invcolor', index:'invcolor',sortable:true, editable: true, width:70},
+								{name: 'invsize', index:'invsize',sortable:true, editable: true, width:70},
+								{name: 'invsubs', index:'invsubs',sortable:true, editable: true, width:90},
+								{name: 'invselc', index:'invselc',sortable:true, editable: true, width:90},
+								{name: 'invqty', index:'invqty',sortable:true, editable: true, width:70,
+									formatter : 'number', formatoptions:{decimalSeparator:".", decimalPlaces: 2, },
+								},
+								{name: 'invrate', index:'invrate',sortable:true, editable: true, width:70},
+								{name: 'invtc', index:'invtc',sortable:true, width:70, editable: true},
+								{name: 'invqshpd', index:'invqshpd',sortable:true, editable: true, width:70,
+									formatter : 'number', formatoptions:{decimalSeparator:".", decimalPlaces: 2, },
+									edittype:'text', 
+									editoptions:{
+									 	dataEvents:  [{
+											type: 'focusout',
+											fn: function(e){
+												 $("#invqbal").val(parseFloat($("#invqbal").val() - $("#invqshpd").val()));
+												//Rate Calculation
+												 var rate = $("#invrate").val();
+												 alert(rate);
+												 var ratemp = rate.indexOf(' ');
+												 var ratemplast = rate.lastIndexOf(' ');
+												 var rates = rate.substring(ratemp+1, ratemplast);
+												 alert(rates);
+												 $("#invamt").val(parseFloat (rates * $("#invqshpd").val()));
+											}
+										}]
+									},	
+								},
 								{name: 'invqbal', index:'qbal',hidden: false, sortable:true, editable: true, width:70},
-								{name: 'invamt', index:'amt',hidden: false, sortable:true, editable: true, width:70},
+								{name: 'invamt', index:'amt',hidden: false, sortable:true, editable: true, width:70,
+									formatter : 'number', formatoptions:{decimalSeparator:".", decimalPlaces: 2, },	
+								},
 								 ],
 					jsonReader : {  
 						   repeatitems:false,
@@ -367,6 +416,8 @@ $(document).ready(function() {
 					sortorder: 'desc',  
 					height: 'automatic',
 					emptyrecords: 'No records to display',
+					editurl: "/Myelclass/InvSelectCtfromCust.do?action="+"loadBill",
+					//caption: 'BILL PAGE ',
 				 });	
 			
 				 invgrid.jqGrid('navGrid','#invbillpager',{
@@ -376,37 +427,69 @@ $(document).ready(function() {
 						view: true,
 						search : true,
 						reload: true},
-						{
-							beforeShowForm: function(form) { // Shows the Hidden Date field @ Form LOads
-						         alert("inEdit  Grid "); 
-						         $('#quantity').val($('#quantity').val()+$('#unit').val());
-								},
-								url: "/Myelclass/InvSelectCtfromCust.do?invno="+1+"&action="+"editBill",
-								mtype: "GET",
-							    closeAfterEdit: true,
-							
+						{	
+							/*
+							 * Edit Method 
+							 */
+							closeAfterEdit: true,
+							reloadAfterSubmit: true,
 						},
 						{
-							beforeShowForm: function(formId) { // Shows the Hidden Date field @ Form LOads
-						         alert("in Add Grid "); 
-						         $(formId).attr('align', 'right');
-						        // $('#quantity').val($('#quantity').val()+$('#unit').val());
-								},
-							
+							/*
+							 * Add Method 
+							 */
+							closeAfterAdd: true,
+							reloadAfterSubmit: true,
+							//Add 
+							beforeShowForm : function(formID){
+								
+								var selRowData;
+								var rowid = invgrid.jqGrid('getGridParam', 'selrow');
+					           	if (rowid === null) {
+					             // todo: how to cancel add command here
+					             alert('Please select row');
+					             return;
+								}
+					           	selRowData = invgrid.jqGrid('getRowData', rowid);
+					           	alert(selRowData);
+					           	$('#' + 'invid' + '.FormElement', formID).val(selRowData.invid);
+					            $('#' + 'invno' + '.FormElement', formID).val(selRowData.invno);
+					            $('#' + 'invdt' + '.FormElement', formID).val(selRowData.invdt);
+					            $('#' + 'invartid' + '.FormElement', formID).val(selRowData.invartid);
+					            $('#' + 'invctno' + '.FormElement', formID).val(selRowData.invctno);
+					            $('#' + 'invartname' + '.FormElement', formID).val(selRowData.invartname);
+					            $('#' + 'invcolor' + '.FormElement', formID).val(selRowData.invcolor);
+					            $('#' + 'invsize' + '.FormElement', formID).val(selRowData.invsize);
+					            $('#' + 'invsubs' + '.FormElement', formID).val(selRowData.invsubs);
+					            $('#' + 'invselc' + '.FormElement', formID).val(selRowData.invselc);
+					            $('#' + 'invqty' + '.FormElement', formID).val(selRowData.invqty); 
+					            $('#' + 'invrate' + '.FormElement', formID).val(selRowData.invrate);
+					            $('#' + 'invtc' + '.FormElement', formID).val(selRowData.invtc);
+					            $('#' + 'invqshpd' + '.FormElement', formID).val("0");
+					            $('#' + 'invqbal' + '.FormElement', formID).val(selRowData.invqbal);
+					            $('#' + 'invamt' + '.FormElement', formID).val(selRowData.invamt);
+					           // $('#' + 'prfarticleid' + '.FormElement', formID).val(selRowData.prfarticleid);
+						    }, 							
 						},
 						{
-							beforeShowForm: function(form) { // Shows the Hidden Date field @ Form LOads
-						         alert("in Delete Grid "); 
-						        // $('#quantity').val($('#quantity').val()+$('#unit').val());
-								},
+							delData: {
+								//Function to Add parameters to the delete 
+								//Here i am passing artid with val 
+								invid: function() {
+		                                var sel_id = invgrid.jqGrid('getGridParam', 'selrow');
+		                                var value = invgrid.jqGrid('getCell', sel_id, 'invid');
+		                                return value;
+		                             }
+		                         },
+								reloadAfterSubmit: true,
 							
 						},{},
 						
 						 {
-							beforeShowForm: function(form) { //  Shows the Hidden Date field @ Form LOads
+							/*beforeShowForm: function(form) { //  Shows the Hidden Date field @ Form LOads
 						         alert("in View Grid "); 
 						        // $('#quantity').val($('#quantity').val()+$('#unit').val());
-								},
+								},*/
 							
 						}
 						
@@ -416,9 +499,6 @@ $(document).ready(function() {
 			var value = $('#inv_invoicetype').val();
 			alert("select box value changed"+value);
 		});*/
-		
-	
-		
 		$('#inv_bank').autocomplete({
 			minLength: 1,
 			source: function(request, response,term) {

@@ -52,11 +52,17 @@ public interface InvoiceBo {
 
 	public List<ArticleDetails> getInvSelCtDetails(String ctno)throws Exception;
 
-	public int getInvAddBillDetails(InvBillDetails invbill)throws Exception;
+	public boolean getInvAddBillDetails(InvBillDetails invbill)throws Exception;
 
-	public List<InvBillDetails> getInvBillDetails(String invno)throws Exception;
+	public List<InvBillDetails> getInvBillDetails(String invno, String ctno)throws Exception;
 
 	public String getInvoiceNo(String invtype)throws Exception;
+
+	public boolean getInvBillAddDetails(InvBillDetails invaddagainbill)throws Exception; // Second Add
+
+	public boolean getInvBillEditDetails(InvBillDetails invaddagainbill)throws Exception;
+
+	public boolean getInvBillDelDetails(InvBillDetails invaddagainbill)throws Exception;
 
 	
 

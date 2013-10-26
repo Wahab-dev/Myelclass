@@ -51,11 +51,17 @@ public interface InvoiceDao {
 	
 	ArrayList<ArticleDetails> getInvDelContractDetails(String ctno)throws SQLException;
 
-	int getInvAddbillDetails(InvBillDetails invbill)throws SQLException;
+	boolean getInvAddbillDetails(InvBillDetails invbill)throws SQLException;
 
-	ArrayList<InvBillDetails> getInvBillDetails(String invno)throws SQLException;
+	ArrayList<InvBillDetails> getInvBillDetails(String invno, String ctno)throws SQLException;
 
 	String getInvoiceNoDetails(String invtype)throws SQLException;
+
+	boolean getInvAddbillSecondDetails(InvBillDetails invaddagainbill)throws SQLException;
+
+	boolean getInvEditbillDetails(InvBillDetails invaddagainbill)throws SQLException;
+
+	boolean getInvDelbillDetails(InvBillDetails invaddagainbill)throws SQLException;
 
 	
 

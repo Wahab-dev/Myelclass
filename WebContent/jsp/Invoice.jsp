@@ -22,9 +22,9 @@
 <script src="js/jquery.jqGrid.min.js" type="text/javascript"></script>		
 <script src="js/elpro/invoice.js"></script> 
 <script type="text/javascript">
-$(document).ready(function() {
-	
-});
+/*  $(function() {
+	$("#radio").buttonset();
+});  */
 </script>
 </head>
 <body>
@@ -42,14 +42,14 @@ $(document).ready(function() {
        		  <legend>Invoice Details</legend><br/> 
        			  Type: <h:select property ="inv_invoicetype"  styleId="inv_invoicetype" >
        			  		  <h:option value="0">Select Type</h:option>
-   		 				  <h:option value="1">IC-Local</h:option>
-   		 				  <h:option value="2">IC-Exports</h:option>
-   		 				  <h:option value="3">IC-Courier</h:option>
-   		 				  <h:option value="4">Other-Tanner Courier</h:option> 
-   		 				  <h:option value="5">Other-Tanner Exports</h:option> 
-   		 				  <h:option value="6">Other-Tanner Local</h:option>
-   		 				  <h:option value="7">IC-PO</h:option>  
-   		 				  <h:option value="8">IC-JW</h:option>  
+   		 				  <h:option value="IC-L">IC-Local</h:option>
+   		 				  <h:option value="IC-E">IC-Exports</h:option>
+   		 				  <h:option value="IC-C">IC-Courier</h:option>
+   		 				  <h:option value="O-C">Other-Tanner Courier</h:option> 
+   		 				  <h:option value="O-E">Other-Tanner Exports</h:option> 
+   		 				  <h:option value="O-L">Other-Tanner Local</h:option>
+   		 				  <h:option value="IC-P">IC-PO</h:option>  
+   		 				  <h:option value="IC-J">IC-JW</h:option>  
        		    		</h:select><br/>     
        		    		<div id="dv_invtype">
        		    		</div>   
@@ -140,10 +140,13 @@ $(document).ready(function() {
 			 	<fieldset>         
        				<legend>Other Charges</legend>
 				  	Courier Charges: <h:text property="inv_courierchrgs" styleId="inv_courierchrgs"> </h:text>
-				  	<br/>Discount: <h:radio property="inv_discount" value="discount" styleId="inv_discount">
-				  	Deduction:</h:radio><h:radio property="inv_deduction" value="deduct" styleId="inv_deduction"></h:radio>
-				  	<br/>CST:  <h:radio property="inv_vatcst" value="cst" styleId="inv_vatcst">
-				  	Vat: </h:radio><h:radio property="inv_vatcst" value="vat" styleId="inv_vatcst"></h:radio>
+				  	<div id="radio">	
+				  		<br/><h:radio property="inv_vatcst" value="2" styleId="inv_vatcst">CST</h:radio>
+				  		<h:radio property="inv_vatcst" value="5" styleId="inv_vatcst">VAT</h:radio>
+				  	</div>
+				  	<%-- <br/>Discount: <h:radio property="inv_discount" value="discount" styleId="inv_discount">
+				  	Deduction:</h:radio><h:radio property="inv_deduction" value="deduct" styleId="inv_deduction"></h:radio> --%>
+				 
 					<br/>Other Charges :  <h:text property="inv_courierchrgs" styleId="inv_courierchrgs"> </h:text>  <br/>
 					<br/>Total Amount :  <h:text property="inv_total" styleId="inv_total"> </h:text>  <br/>
 				</fieldset>
@@ -154,11 +157,11 @@ $(document).ready(function() {
 			   <fieldset>         
        			  <legend>Customer Details</legend>
    					 Customer Name: <h:text property="inv_customer" styleId="inv_customer"></h:text><br/>
-       				 <br/>Attn: 	   <h:text property="inv_custattn" styleId="inv_custattn"></h:text><br/> 
-					 <br/> Address:   <h:textarea property="inv_custaddr" cols="15" rows="1" styleId="inv_custaddr"></h:textarea><br/>
-   	 				 <br/>Telephone: <h:text property="inv_custtele" styleId="inv_custtele"></h:text><br/>
-       				 <br/>Fax:	   <h:text property="inv_custfax" styleId="inv_custfax"></h:text><br/>
-       				 <br/>ID:	   <h:text property="inv_custid" styleId="inv_custid"></h:text><br/>	
+       				 <br/>Attn: 	<h:text property="inv_custattn" styleId="inv_custattn"></h:text><br/> 
+					 <br/> Address: <h:textarea property="inv_custaddr" cols="15" rows="1" styleId="inv_custaddr"></h:textarea><br/>
+   	 				 <br/>Telephone:<h:text property="inv_custtele" styleId="inv_custtele"></h:text><br/>
+       				 <br/>Fax:	    <h:text property="inv_custfax" styleId="inv_custfax"></h:text><br/>
+       				 <br/>ID:	    <h:text property="inv_custid" styleId="inv_custid"></h:text><br/>	
 			   </fieldset>
 			</td>
    			<td colspan="3">

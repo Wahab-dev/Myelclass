@@ -458,12 +458,13 @@ public class InvoiceDaoImpl implements InvoiceDao {
 	}
 
 	@Override
-	public int getInvAddbillDetails(InvBillDetails invbill)
+	public boolean getInvAddbillDetails(InvBillDetails invbill)
 			throws SQLException {
 	
 		Connection con = null;
 		PreparedStatement pst = null;
 		int noofrows  = 0;
+		boolean isInserted = true;
 		try{			
 			con = DBConnection.getConnection();
 			StringBuffer sql_saveprfArticle = new StringBuffer("insert into tbl_inv_bill (ctno, artname, color, size, subs, selc, qty, pcs, rate, tc, comm,invno, invdate, qshpd, qbal, amt,articleid)");
@@ -487,7 +488,7 @@ public class InvoiceDaoImpl implements InvoiceDao {
 			
 			pst.setString(11, invbill.getInvcomm());
 			pst.setString(12, invbill.getInvno());
-			pst.setString(13, invbill.getInvdate());
+			pst.setString(13, invbill.getInvdt());
 			pst.setString(14, invbill.getInvqshpd());
 			pst.setString(15, invbill.getInvqbal());
 			pst.setString(16, invbill.getInvamt());
@@ -497,15 +498,16 @@ public class InvoiceDaoImpl implements InvoiceDao {
 	}catch(Exception e){
 		e.printStackTrace();
 		System.out.println("Customer Name ERROR RESULT");
+		isInserted = false;
 	}finally{
 		 con.close() ;
 		 pst.close();
    }	
-	return noofrows;
+	return isInserted;
 	}
 
 	@Override
-	public ArrayList<InvBillDetails> getInvBillDetails(String invno)
+	public ArrayList<InvBillDetails> getInvBillDetails(String invno, String ctno)
 			throws SQLException {
 		ArrayList<InvBillDetails> invBilllist = new ArrayList<InvBillDetails>();		
 		Connection con = null;
@@ -514,7 +516,7 @@ public class InvoiceDaoImpl implements InvoiceDao {
 		try{			
 			con = DBConnection.getConnection();
 			st = (Statement) con.createStatement();
-			String sql = "SELECT invbillid, articleid, artname, color, size, subs, selc, qty, pcs, rate, tc, comm, ctno, invno, invdate, qshpd, qbal, amt FROM elpro.tbl_inv_bill where invno in ("+invno+") order by artname";
+			String sql = "SELECT invbillid, articleid, artname, color, size, subs, selc, qty, pcs, rate, tc, comm, ctno, invno, invdate, qshpd, qbal, amt FROM elpro.tbl_inv_bill where ctno in ("+ctno+") order by invno, artname ";
 			System.out.println((sql));
 			rs = st.executeQuery(sql);
 			System.out.println((sql));
@@ -533,6 +535,7 @@ public class InvoiceDaoImpl implements InvoiceDao {
 				invbillbean.setInvtc(rs.getString("tc"));
 				invbillbean.setInvctno(rs.getString("ctno"));
 				invbillbean.setInvno(rs.getString("invno"));
+				invbillbean.setInvdt(rs.getString("invdate"));
 				invbillbean.setInvqshpd(rs.getString("qshpd"));
 				invbillbean.setInvqbal(rs.getString("qbal"));
 				invbillbean.setInvamt(rs.getString("amt"));
@@ -582,6 +585,129 @@ public class InvoiceDaoImpl implements InvoiceDao {
 		 rs.close();
    }	
 	return maxCtno;
+	}
+
+	@Override
+	public boolean getInvAddbillSecondDetails(InvBillDetails invaddagainbill)
+			throws SQLException {
+		Connection con = null;
+		PreparedStatement pst = null;
+		int noofrows  = 0;
+		boolean isInserted = true;
+		try{			
+			con = DBConnection.getConnection();
+			StringBuffer sql_saveprfArticle = new StringBuffer("insert into tbl_inv_bill (ctno, artname, color, size, subs, selc, qty, pcs, rate, tc, comm,invno, invdate, qshpd, qbal, amt,articleid)");
+			sql_saveprfArticle.append("values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+			String sqlquery_saveprfArticle = sql_saveprfArticle.toString();
+			System.out.println("Insert quert" +sqlquery_saveprfArticle);
+			pst = (PreparedStatement) con.prepareStatement(sqlquery_saveprfArticle);
+			pst.setString(1, invaddagainbill.getInvctno());
+			System.out.println("getInvctno " +invaddagainbill.getInvctno());
+			pst.setString(2, invaddagainbill.getInvartname());
+			System.out.println("getInvartname " +invaddagainbill.getInvartname());
+			pst.setString(3, invaddagainbill.getInvcolor());
+			pst.setString(4, invaddagainbill.getInvsize());
+			pst.setString(5, invaddagainbill.getInvsubs());
+			pst.setString(6, invaddagainbill.getInvselc());
+			
+			pst.setString(7, invaddagainbill.getInvqty());
+			pst.setString(8, invaddagainbill.getInvpcs());
+			pst.setString(9, invaddagainbill.getInvrate());
+			pst.setString(10, invaddagainbill.getInvtc());
+			
+			pst.setString(11, invaddagainbill.getInvcomm());
+			pst.setString(12, invaddagainbill.getInvno());
+			pst.setString(13, invaddagainbill.getInvdt());
+			pst.setString(14, invaddagainbill.getInvqshpd());
+			pst.setString(15, invaddagainbill.getInvqbal());
+			pst.setString(16, invaddagainbill.getInvamt());
+			pst.setString(17, invaddagainbill.getInvartid());
+			noofrows = pst.executeUpdate();
+			System.out.println("Sucessfully inserted the record.." + noofrows);
+	}catch(Exception e){
+		e.printStackTrace();
+		System.out.println("Customer Name ERROR RESULT");
+		isInserted = false;
+	}finally{
+		 con.close() ;
+		 pst.close();
+   }	
+	return isInserted;
+	}
+
+	@Override
+	public boolean getInvEditbillDetails(InvBillDetails invaddagainbill)throws SQLException {
+		Connection con = null;
+		PreparedStatement pst = null;
+		int noofrows  = 0;
+		boolean isupdate = true;
+		try{			
+			con = DBConnection.getConnection();
+			StringBuffer sql_saveprfArticle = new StringBuffer("UPDATE elpro.tbl_inv_bill SET articleid = ? , artname = ? , color = ? , size = ? , subs = ? , selc = ? , qty = ? , pcs = ? , rate = ? , tc = ? , comm = ? ,  ctno = ? , invno = ?, invdate = ? , qshpd = ? , qbal = ? , amt = ? WHERE invbillid = '"+invaddagainbill.getInvid()+"' ");
+			//sql_saveprfArticle.append("values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+			String sqlquery_saveprfArticle = sql_saveprfArticle.toString();
+			pst = (PreparedStatement) con.prepareStatement(sqlquery_saveprfArticle);
+			pst.setString(1, invaddagainbill.getInvartid());
+			System.out.println("getArticleid " +invaddagainbill.getInvartid());
+			pst.setString(2, invaddagainbill.getInvartname());
+			System.out.println("getArticlename " +invaddagainbill.getInvartname());
+			pst.setString(3, invaddagainbill.getInvcolor());
+			pst.setString(4, invaddagainbill.getInvsize());
+			pst.setString(5, invaddagainbill.getInvsubs());
+			pst.setString(6, invaddagainbill.getInvselc());
+			pst.setString(7, invaddagainbill.getInvqty());
+			pst.setString(8, invaddagainbill.getInvpcs());
+			pst.setString(9, invaddagainbill.getInvrate());
+			pst.setString(10, invaddagainbill.getInvtc());
+			pst.setString(11, invaddagainbill.getInvcomm());
+			pst.setString(12, invaddagainbill.getInvctno());
+			pst.setString(13, invaddagainbill.getInvno());
+			pst.setString(14, invaddagainbill.getInvdt());
+			pst.setString(15, invaddagainbill.getInvqshpd());
+			pst.setString(16, invaddagainbill.getInvqbal());
+			pst.setString(17, invaddagainbill.getInvamt());
+			//pst.setString(15, artindertdetail.getArtshform() );
+			System.out.println("INV Article ID " +invaddagainbill.getInvid());
+			noofrows = pst.executeUpdate();
+			System.out.println("Sucessfully inserted the record.." + noofrows);
+		}catch(Exception e){
+			e.printStackTrace();
+			isupdate = false;
+			System.out.println("ERROR RESULT");
+		}finally{
+			 con.close() ;
+			 pst.close();
+	   }	
+	//return noofrows;
+		return isupdate;	}
+
+	@Override
+	public boolean getInvDelbillDetails(InvBillDetails invaddagainbill)
+			throws SQLException {
+		Connection con = null;
+		PreparedStatement pst = null;
+		int noofrows  = 0;
+		boolean isdel = true;
+		try{			
+			con = DBConnection.getConnection();
+			StringBuffer sql_saveprfArticle = new StringBuffer("delete from elpro.tbl_inv_bill WHERE invbillid = '"+invaddagainbill.getInvid()+"' ");
+			//sql_saveprfArticle.append("values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+			String sqlquery_saveprfArticle = sql_saveprfArticle.toString();
+			System.out.println(sqlquery_saveprfArticle);
+			pst = (PreparedStatement) con.prepareStatement(sqlquery_saveprfArticle);
+		//	pst.setString(1, artindertdetail.getPrf_articleid());
+			noofrows = pst.executeUpdate();
+			System.out.println("Sucessfully deleted the record.." + noofrows);
+		}catch(Exception e){
+			e.printStackTrace();
+			isdel = false;
+			System.out.println("ERROR RESULT");
+		}finally{
+			 con.close() ;
+			 pst.close();
+	   }	
+	//return noofrows;
+		return isdel;
 	}
 
 	

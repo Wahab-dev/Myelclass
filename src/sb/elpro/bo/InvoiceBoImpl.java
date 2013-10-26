@@ -106,22 +106,38 @@ public class InvoiceBoImpl implements InvoiceBo {
 		return invSelCtarr;
 	}
 	@Override
-	public int getInvAddBillDetails(InvBillDetails invbill)
+	public boolean getInvAddBillDetails(InvBillDetails invbill)
 			throws Exception {
-		int invaddbillarr = invdao.getInvAddbillDetails(invbill);
-		System.out.println("111");
+		boolean invaddbillarr = invdao.getInvAddbillDetails(invbill);
 		return invaddbillarr;
 	}
 	@Override
-	public List<InvBillDetails> getInvBillDetails(String invno)
+	public List<InvBillDetails> getInvBillDetails(String invno, String ctno)
 			throws Exception {
-		ArrayList<InvBillDetails> invBillarr = invdao.getInvBillDetails(invno);
+		ArrayList<InvBillDetails> invBillarr = invdao.getInvBillDetails(invno,ctno);
 		return invBillarr;
 	}
 	@Override
 	public String getInvoiceNo(String invtype) throws Exception {
 		String invNumarr = invdao.getInvoiceNoDetails(invtype);
 		return invNumarr;
+	}
+	@Override
+	public boolean getInvBillAddDetails(InvBillDetails invaddagainbill) throws Exception {
+		boolean invaddagainbillarr = invdao.getInvAddbillSecondDetails(invaddagainbill);
+		return invaddagainbillarr;
+	}
+	@Override
+	public boolean getInvBillEditDetails(InvBillDetails invaddagainbill)
+			throws Exception {
+		boolean inveditbill = invdao.getInvEditbillDetails(invaddagainbill);
+		return inveditbill;
+	}
+	@Override
+	public boolean getInvBillDelDetails(InvBillDetails invaddagainbill)
+			throws Exception {
+		boolean invdelbill = invdao.getInvDelbillDetails(invaddagainbill);
+		return invdelbill;
 	}
 	
 	

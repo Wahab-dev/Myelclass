@@ -124,7 +124,7 @@ public class PrfInsertArticle extends Action  {
 					}else if(oper.equalsIgnoreCase("edit")){
 						boolean isPrfArticleUpdated = prfbo.editPrfArticleDetails(artindertdetail,sidx,sord);
 						if(isPrfArticleUpdated){
-							jsonobj.put("message", "Successfully Inserted The Record");
+							jsonobj.put("success", "Successfully Inserted The Record");
 						}else{
 							jsonobj.put("Error", "Error in Updating");
 						}
@@ -133,7 +133,7 @@ public class PrfInsertArticle extends Action  {
 					}else{
 						boolean isPrfArticleDel = prfbo.delPrfArticleDetails(artindertdetail,sidx,sord);
 						if(isPrfArticleDel){
-						jsonobj.put("message", "Successfully Inserted The Record");
+						jsonobj.put("success", "Successfully Inserted The Record");
 						}else{
 							jsonobj.put("Error", "Error in Deleting");
 						}
