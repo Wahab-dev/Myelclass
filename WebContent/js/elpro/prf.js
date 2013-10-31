@@ -5,9 +5,9 @@
  */
 $(document).ready(function() {
 	var grid = $("#list"); //table id artinsert
-
+	var ctno = $("#prf_contractno").val();
 	 grid.jqGrid({ 
-		url:"/Myelclass/PrfinsertArticle.do",   
+		url:"/Myelclass/PrfinsertArticle.do?ctno="+ctno,   
 		datatype:"json",
 		colNames:['Article Type','Name','Article Shform', 'Article ID','Color','Size','Size avg','Size Rem','Substance','Selection','Selp','Quantity','Unit','Pcs','Price','RateSign','Rateamt','Shipment','T c','tcamt','tcsign','tccust','Contract','Prfarticleid','User'],  
 	    colModel:[   
@@ -271,6 +271,7 @@ $(document).ready(function() {
 	         *  // edit option
 			 */
 		     { 
+		  	jqModal:true, 
 			  width : 650,
 			  top:120,
 			  left:120,
@@ -444,12 +445,12 @@ $(document).ready(function() {
 					 $.ajax({
 			                url: "/Myelclass/PrfAutocomplete.do?term="+param+"&action="+"bank",
 			                dataType: "json",
-			                type:"POST",
+			                type:"GET",
 			                success: function (data) {
 			                	 response($.map(data, function(item) {
 			                		 return { 
-			                			 label : item.label,
-			                			 value: item.value,
+			                			 label : item.bankName,
+			                			 value: item.bankName,
 			                             addr: item.bankAddress,
 			                             fone: item.bankContactNo,	
 			                             brnch : item.bankBranch,
@@ -462,7 +463,7 @@ $(document).ready(function() {
 					select: function( event, ui ) { 
 			          	  var addr = ui.item.addr; 
 			          	  var brnch = ui.item.brnch; 
-			          	  var fone = ui.item.fone; 
+			          	  var	 fone = ui.item.fone; 
 			          	  var fax = ui.item.fax; 
 			          	  $('#prf_bankaddr').val(addr);
 			          	 $('#prf_bankphone').val(fone);
@@ -477,12 +478,12 @@ $(document).ready(function() {
 					 $.ajax({
 			                url: "/Myelclass/PrfAutocomplete.do?term="+param+"&action="+"notify",
 			                dataType: "json",
-			                type:"POST",
+			                type:"GET",
 			                success: function (data) {
 			                	 response($.map(data, function(item) {
 			                		 return { 
-			                			 label : item.label,
-			                			 value: item.value,
+			                			 label : item.notifyConsigneeName,
+			                			 value: item.notifyConsigneeName,
 			                             addr: item.notifyConsigneeAddress,
 			                             fone: item.notifyConsigneeContactNo,	
 			                             attn : item.notifyConsigneeAttention,
@@ -508,7 +509,7 @@ $(document).ready(function() {
 		            source: function(request, response,term) {  
 		                var param = request.term;  
 		                $.ajax({  
-		                    url: "/Myelclass/AutoCompleteServlet.do?term="+param+"&action="+"desti",  
+		                    url: "/Myelclass/PrfAutocomplete.do?term="+param+"&action="+"desti",  
 		                    dataType: "json",  
 		                    type:"POST",  
 		                    success: function (data) {  
@@ -613,31 +614,27 @@ $(document).ready(function() {
 			
 			//Commision Add 
 				 var counter = 2;
-		  		  $("#addButton").click(function () {
-					if(counter>7){
-		           		alert("Only 8 commission are allowed");
-		            	return false;
+				    $("#addButton").click(function () {
+					if(counter>8){
+				         alert("Only 8 Commissions Allowed allow");
+				         return false;
 					}   
-					var newTextBoxDiv = $(document.createElement('div')) // Please check here  
-				     .attr("id", 'prfcommissiondiv' + counter);
-					
-					newTextBoxDiv.after().html('Commssion #'+ counter + ' : ' +
-				      '<input type="text" id="prf_commission'+ counter +'" name="prf_commission'+ counter +'" value=" ></input><br /><br/>');
-			 
-					newTextBoxDiv.appendTo("#prfcommissiongroup");
-				counter++;
-				alert(counter);
-			     });
-		  		 $("#removeButton").click(function () {
-		  			if(counter==2){
-		  		          alert("No more textbox to remove");
-		  		          return false;
-		  		       }
-		  			counter--;
-		  			alert(counter);
-		  		        $("#prfcommissiondiv" + counter).remove();
-		  		 
-		  		     });
+					var newTextBoxDiv = $(document.createElement('div'))
+					     .attr("id", 'TextBoxDiv' + counter);
+					newTextBoxDiv.after().html('<label>Commission #'+ counter + ' : </label>' +
+					      '<input type="text" name="textbox' + counter + 
+					      '" id="textbox' + counter + '" value="" >');
+					newTextBoxDiv.appendTo("#TextBoxesGroup");
+					counter++;
+				     });
+				    $("#removeButton").click(function () {
+			  			if(counter==2){
+			  		          alert("No more textbox to remove");
+			  		          return false;
+			  		       }
+			  			counter--;
+			  		        $("#TextBoxDiv" + counter).remove();
+			  		     });
  });
 
 	

@@ -29,6 +29,7 @@ public class PrfInsertArticle extends Action  {
 	PrfBo prfbo  =  new PrfBoImpl();
 		public ActionForward execute (ActionMapping map, ActionForm form, 
 				HttpServletRequest request, HttpServletResponse response) throws Exception{
+			System.out.println("In PRFINSERT ARTICLE");
 			usersession = request.getSession(false);
 			PrintWriter out = response.getWriter();
 			JSONObject jsonobj = new JSONObject();
@@ -41,6 +42,7 @@ public class PrfInsertArticle extends Action  {
                 String pag = request.getParameter("page");
                 String sidx = request.getParameter("sidx");
                 String sord = request.getParameter("sord");
+                String ctno = request.getParameter("ctno");
                 
                 System.out.println("rows "+rows); //4
                 System.out.println("page "+pag); //1
@@ -50,7 +52,7 @@ public class PrfInsertArticle extends Action  {
 				
 				if(oper == null){
 					 System.out.println(" In Article LAOD");
-					List<PrfArticle> article = prfbo.getPrfArticleDetails(sidx,sord);
+					List<PrfArticle> article = prfbo.getPrfArticleDetails(ctno,sidx,sord);
 					int records = article.size();
 					System.out.println("Reords  "+records);
 					

@@ -125,6 +125,14 @@ public class PrfAutocomplete extends Action {
 					JSONArray jsonOrdertanArray = JSONArray.fromObject(consigneelist);
 					 System.out.println(jsonOrdertanArray);
 					 out.println(jsonOrdertanArray);
+				}else if(action.equalsIgnoreCase("desti")){
+					String term = request.getParameter("term");
+					System.out.println(" Term "+term);
+					List<AutoComplete> destinationlist =  srfbo.getDestinationDetails(term);
+					System.out.println("List Value " +destinationlist.size());
+					JSONArray jsonOrderArray = JSONArray.fromObject(destinationlist);
+					 System.out.println(jsonOrderArray);
+			 		out.println(jsonOrderArray);
 				}
 				else{
 					/*

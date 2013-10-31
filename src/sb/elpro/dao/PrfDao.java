@@ -76,7 +76,7 @@ public interface PrfDao {
 	List<SelectArticle> getArticleNameList() throws SQLException;
 	int saveprfArticleList(PrfArticle prfarticlebean)throws SQLException;
 
-	ArrayList<PrfArticle> getPrfArticleDetails(String sidx, String sord)throws SQLException;
+	ArrayList<PrfArticle> getPrfArticleDetails(String ctno, String sidx, String sord)throws SQLException;
 
 	List<ArticleDetails> getPrfArticleNamelist(String term)throws SQLException;
 	
@@ -99,6 +99,14 @@ public interface PrfDao {
 			String sidx)throws SQLException;
 
 	List<ArticleDetails> getPrfArticleTypelist() throws SQLException;
+
+	
+	/*
+	 * Edit PRf Form
+	 */
+	List<ProductDetails> getEditPrfFormDetails(String ctno) throws SQLException;
+
+
 
 	
 	

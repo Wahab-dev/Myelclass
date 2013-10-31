@@ -52,6 +52,20 @@ public class DebitBoImpl implements DebitBo {
 	}
 
 
+	@Override
+	public List<RaiseDebit> getDebitInvDetails(String invno) throws Exception {
+		ArrayList<RaiseDebit> getDebInvnarr = debdao.getDebInvnolist(invno);
+		return null;
+	}
+
+
+	/*@Override
+	public List<RaiseDebit> getDebitInvDetails(String invno) throws Exception {
+		ArrayList<RaiseDebit> getDebInvnarr = debdao.getDebInvnolist(invno);
+		return null;
+	}*/
+
+
 	
 
 

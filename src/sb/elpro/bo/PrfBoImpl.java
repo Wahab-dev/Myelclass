@@ -187,12 +187,6 @@ public class PrfBoImpl implements PrfBo {
 		return rowsinserted;
 	}
 
-	@Override
-	public List<PrfArticle> getPrfArticleDetails(String sidx, String sord) throws Exception {
-		ArrayList<PrfArticle> aticlearray = prfdao.getPrfArticleDetails(sidx,sord);
-		return aticlearray;
-	}
-
 	
 	@Override
 	public List<ArticleDetails> getPrfArticleName(String term)
@@ -240,6 +234,13 @@ public class PrfBoImpl implements PrfBo {
 	}
 
 	@Override
+	public List<PrfArticle> getPrfArticleDetails(String ctno, String sidx, String sord) throws Exception {
+		ArrayList<PrfArticle> aticlearray = prfdao.getPrfArticleDetails(ctno, sidx,sord);
+		return aticlearray;
+	}
+
+	
+	@Override
 	public boolean addPrfArticleDetails(PrfArticle artindertdetail,
 			String sidx, String sord) throws Exception {
 		boolean isadded = prfdao.addprfArticle(artindertdetail, sidx, sord);
@@ -261,9 +262,18 @@ public class PrfBoImpl implements PrfBo {
 	}
 
 	
-
-
+	/*
+	 * (non-Javadoc)
+	 * @see sb.elpro.bo.PrfBo#getEditPrfArticleDetails(java.lang.String)
+	 * Edit PRf Form
+	 */
 	
+		
+	@Override
+	public List<ProductDetails> getEditPrfFormValues(String ctno) throws Exception {
+		List<ProductDetails> editprfformarray = prfdao.getEditPrfFormDetails(ctno);
+		return editprfformarray;
+	}
 
 
 

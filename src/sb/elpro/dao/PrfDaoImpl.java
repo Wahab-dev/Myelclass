@@ -3,6 +3,7 @@
  */
 package sb.elpro.dao;
 
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -51,7 +52,7 @@ public class PrfDaoImpl implements PrfDao {
 		try{			
 			con = DBConnection.getConnection();
 			st = (Statement) con.createStatement();
-			String sql = "SELECT agentid, agentname, contractno FROM elpro.tbl_agent order by agentname";
+			String sql = "SELECT agentid, agentname, contractno FROM elpro.tbl_prfctno order by agentname";
 			rs = st.executeQuery(sql);
 			while(rs.next()) {	
 				AgentDetails agentlist  = new AgentDetails();
@@ -139,108 +140,7 @@ public class PrfDaoImpl implements PrfDao {
 	   }	
 		return custrraylist;
 	}
-/*
-	@Override
-	public ArrayList<ConsigneeDetails> getConsigneeList() throws SQLException {
-		ArrayList<ConsigneeDetails> consigarrayList = new ArrayList<ConsigneeDetails>();
-		Connection con = null;
-		Statement st = null;
-		ResultSet rs = null;
-		try{			
-			con = DBConnection.getConnection();
-			st = (Statement) con.createStatement();
-			String sql = "SELECT consigid, consigname, consigattn, consigaddr, consigphone, consigfax FROM elpro.tbl_consignee";
-			rs = st.executeQuery(sql);
-			while(rs.next()) {	
-				ConsigneeDetails consigbean = new ConsigneeDetails();
-				consigbean.setConsigneeAddress(rs.getString("consigaddr"));
-				consigbean.setConsigneeAttention(rs.getString("consigattn"));
-				consigbean.setConsigneefax(rs.getString("consigfax"));
-				consigbean.setConsigneeId(rs.getString("consigid"));
-				consigbean.setConsigneeName(rs.getString("consigname"));
-				consigbean.setConsigneeContactNo(rs.getString("consigphone"));
-				System.out.println("consig  name "+consigbean.getConsigneeName());
-				consigarrayList.add(consigbean);
-				}
-			System.out.println("consig Result Added Successfully");
-		}catch(Exception e){
-			e.printStackTrace();
-			System.out.println("consig ERROR RESULT");
-		}finally{
-			 con.close() ;
-			 st.close();
-			 rs.close();
-	   }	
-		return consigarrayList;
-	}
-
-	@Override
-	public ArrayList<NotifyConsigneeDetails> getNotifyList() throws SQLException {
-		ArrayList<NotifyConsigneeDetails> notifyconsigarrayList = new ArrayList<NotifyConsigneeDetails>();
-		Connection con = null;
-		Statement st = null;
-		ResultSet rs = null;
-		try{
-			con = DBConnection.getConnection();
-			st = (Statement) con.createStatement();
-			String sql = "SELECT notifyid, notifyname, notifyattn, notifyaddr, notifyphone, notifyfax FROM elpro.tbl_notify";
-			rs = st.executeQuery(sql);
-			while(rs.next()) {	
-				NotifyConsigneeDetails notifyconsigbean = new NotifyConsigneeDetails();
-				notifyconsigbean.setNotifyConsigneeAddress(rs.getString("notifyaddr"));
-				notifyconsigbean.setNotifyConsigneeAttention(rs.getString("notifyattn"));
-				notifyconsigbean.setNotifyConsigneefax(rs.getString("notifyfax"));
-				notifyconsigbean.setNotifyConsigneeId(rs.getString("notifyid"));
-				notifyconsigbean.setNotifyConsigneeName(rs.getString("notifyname"));
-				notifyconsigbean.setNotifyConsigneeContactNo(rs.getString("notifyphone"));				
-				System.out.println("Notify  name "+notifyconsigbean.getNotifyConsigneeName());
-				notifyconsigarrayList.add(notifyconsigbean);
-			}
-			System.out.println("Notify Result Added Successfully");
-		}catch(Exception e){
-			e.printStackTrace();
-			System.out.println("ERROR RESULT");
-		}finally{
-			 con.close() ;
-			 st.close();
-			 rs.close();
-	   }	
-			return notifyconsigarrayList;
-	}
-
-	@Override
-	public ArrayList<BankDetails> getBankList() throws SQLException {
-		ArrayList<BankDetails> bankarraylist = new ArrayList<BankDetails>();
-		Connection con = null;
-		Statement st = null;
-		ResultSet rs = null;
-		try{			
-			con = DBConnection.getConnection();
-			st = (Statement) con.createStatement();
-			String sql = "SELECT bankid, bankname, bankbranch, bankaddr, bankphone, bankfax FROM elpro.tbl_bank";
-			rs = st.executeQuery(sql);
-			while(rs.next()) {	
-				BankDetails bankbean = new BankDetails();
-				bankbean.setBankAddress(rs.getString("bankaddr"));
-				bankbean.setBankBranch(rs.getString("bankbranch"));
-				bankbean.setBankId(rs.getString("bankid"));
-				bankbean.setBankName(rs.getString("bankname"));
-				bankbean.setBankContactNo(rs.getString("bankphone"));
-				System.out.println("Bank  name "+bankbean.getBankName());
-				bankarraylist.add(bankbean);
-				}
-			System.out.println("Bank Result Added Successfully");
-			}catch(Exception e){
-				e.printStackTrace();
-				System.out.println("Bank ERROR RESULT");
-			}finally{
-				 con.close() ;
-				 st.close();
-				 rs.close();
-		   }	
-		return bankarraylist;
-	}
-*/
+	
 	@Override
 	public ArrayList<DestinationDetails> getDestinationList() throws SQLException {
 		ArrayList<DestinationDetails> destarraylist = new ArrayList<DestinationDetails>();
@@ -269,7 +169,6 @@ public class PrfDaoImpl implements PrfDao {
 				 rs.close();
 		   }	
 		return destarraylist;
-			
 	}
 
 	@Override
@@ -368,7 +267,7 @@ public class PrfDaoImpl implements PrfDao {
 
 	@Override
 	public ArrayList<ProductDetails> savePrfForm() throws SQLException {
-		// TODO Auto-generated method stub
+				System.out.println("In PRF SAVE");
 		return null;
 	}
 
@@ -667,7 +566,7 @@ public class PrfDaoImpl implements PrfDao {
 	}
 
 	@Override
-	public ArrayList<PrfArticle> getPrfArticleDetails( String sidx, String sord) throws SQLException {
+	public ArrayList<PrfArticle> getPrfArticleDetails(String ctno, String sidx, String sord) throws SQLException {
 		ArrayList<PrfArticle> articlearray = new ArrayList<PrfArticle>();
 		Connection con = null;
 		Statement st = null;
@@ -675,7 +574,7 @@ public class PrfDaoImpl implements PrfDao {
 		try{			
 			con = DBConnection.getConnection();
 			st = (Statement) con.createStatement();
-			String sql = "SELECT articleid, articletype, articleshfrom, articlename, size, substance, selection, selectionpercent, color, quantity, unit, pcs, rate, tc, user, contractno, prfarticleid FROM tbl_prf_article order by "+sidx+" "+sord+"";
+			String sql = "SELECT articleid, articletype, articleshfrom, articlename, size, substance, selection, selectionpercent, color, quantity, unit, pcs, rate, tc, user, contractno, prfarticleid FROM tbl_prf_article where contractno = '"+ctno+"' order by "+sidx+" "+sord+"";
 			System.out.println(sql);
 			rs = st.executeQuery(sql);
 			while(rs.next()) {	
@@ -727,9 +626,7 @@ public class PrfDaoImpl implements PrfDao {
 		try{			
 			con = DBConnection.getConnection();
 			st = (Statement) con.createStatement();
-			//String sql = "SELECT articleid, articletype, articlename, articleshortform, size, substance, selection, color, selectionpercent, quantity, pcs, rate, tc, othername FROM elpro.tbl_article where articletype like '%"+term+"%' order by articlename";
 			String sql = "SELECT articleid, articletype, articlename, articleshortform, size, substance, selection, color, selectionpercent, quantity, pcs, rate, tc, othername FROM elpro.tbl_article where articlename like '%"+term+"%' order by articlename";
-			//String sql = "SELECT distinct articlename FROM elpro.tbl_article where articlename like '%"+term+"%'order by articlename";
 			
 			System.out.println(sql);
 			rs = st.executeQuery(sql);
@@ -1125,7 +1022,56 @@ public class PrfDaoImpl implements PrfDao {
 		return isdel;
 	}
 
-
+	@Override
+	public List<ProductDetails> getEditPrfFormDetails(String ctno)
+			throws SQLException {
+		List<ProductDetails> editprfformlist = new ArrayList<ProductDetails>() ;
+		Connection con = null;
+		Statement st = null;
+		ResultSet rs = null;
+		try{			
+			con = DBConnection.getConnection();
+			st = (Statement) con.createStatement();
+			String sql = "SELECT form.Ctno, form.agent, form.Orderdt, form.pono, form.exporterid, form.tanneryid, form.customerid, form.cdd_date, form.add_date, form.destination, form.terms, form.payment, form.ourcommission, form.commission, form.splcdn, form.inspcdn, form.consigneeid, form.notifyid, form.bankid, form.pojw FROM elpro.tbl_prfform form where form.Ctno ='"+ctno+"' ";
+			System.out.println(sql);
+			rs = st.executeQuery(sql);
+			
+			if(rs.next()) {	
+				ProductDetails editprfformbean = new ProductDetails();
+				editprfformbean.setPrf_agentname(rs.getString("agent"));
+				editprfformbean.setPrf_orderdate(rs.getString("Orderdt"));
+				editprfformbean.setPrf_poref(rs.getString("pono"));
+				System.out.println("PONONO "+editprfformbean.getPrf_poref());
+				 //editprfformbean.setPrf_poreftype(rs.getString(""));
+				editprfformbean.setPrf_exporterid(rs.getString("exporterid"));
+				editprfformbean.setPrf_tannid(rs.getString("tanneryid"));
+				editprfformbean.setPrf_custid(rs.getString("customerid"));
+				editprfformbean.setPrf_cdd(rs.getString("cdd_date"));
+				editprfformbean.setPrf_add(rs.getString("add_date"));
+				editprfformbean.setPrf_destination(rs.getString("destination"));
+				editprfformbean.setPrf_terms(rs.getString("terms"));
+				editprfformbean.setPrf_payment(rs.getString("payment"));
+				editprfformbean.setPrf_elclasscommission(rs.getString("ourcommission"));
+				editprfformbean.setPrf_commission1(rs.getString("commission"));
+				editprfformbean.setPrf_special(rs.getString("splcdn"));
+				editprfformbean.setPrf_inspcdn(rs.getString("inspcdn"));
+				editprfformbean.setPrf_consigneeid(rs.getString("consigneeid"));
+				editprfformbean.setPrf_notifyid(rs.getString("notifyid"));
+				editprfformbean.setPrf_bankid(rs.getString("bankid"));
+				editprfformbean.setPrf_pojw(rs.getString("pojw"));
+				editprfformlist.add(editprfformbean);
+				}
+			System.out.println(" dest Result Added Successfully");
+			}catch(Exception e){
+				e.printStackTrace();
+				System.out.println("dest ERROR RESULT");
+			}finally{
+				 con.close() ;
+				 st.close();
+				 rs.close();
+		   }	
+		return editprfformlist;
+	}
 
 	
 

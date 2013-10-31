@@ -16,6 +16,67 @@
 <script src="js/i18n/grid.locale-en.js" type="text/javascript"></script>
 <script src="js/jquery.jqGrid.min.js" type="text/javascript"></script>
 <script type="text/javascript">
+/*global jQuery */
+(function ($) {
+    'use strict';
+    /*jslint unparam: true */
+    $.extend($.fn.fmatter, {
+        dynamicLink: function (cellValue, options, rowData) {
+            // href, target, rel, title, onclick
+            // other attributes like media, hreflang, type are not supported currently
+            var op = {url: '#'};
+
+            if (typeof options.colModel.formatoptions !== 'undefined') {
+                op = $.extend({}, op, options.colModel.formatoptions);
+            }
+            if ($.isFunction(op.target)) {
+                op.target = op.target.call(this, cellValue, options.rowId, rowData, options);
+            }
+            if ($.isFunction(op.url)) {
+                op.url = op.url.call(this, cellValue, options.rowId, rowData, options);
+            }
+            if ($.isFunction(op.cellValue)) {
+                cellValue = op.cellValue.call(this, cellValue, options.rowId, rowData, options);
+            }
+            if ($.fmatter.isString(cellValue) || $.fmatter.isNumber(cellValue)) {
+                return '<a' +
+                    (op.target ? ' target=' + op.target : '') +
+                    (op.onClick ? ' onclick="return $.fn.fmatter.dynamicLink.onClick.call(this, arguments[0]);"' : '') +
+                    ' href="' + op.url + '">' +
+                    (cellValue || '&nbsp;') + '</a>';
+            } else {
+                return '&nbsp;';
+            }
+        }
+    });
+    $.extend($.fn.fmatter.dynamicLink, {
+        unformat: function (cellValue, options, elem) {
+            var text = $(elem).text();
+            return text === '&nbsp;' ? '' : text;
+        },
+        onClick: function (e) {
+            var $cell = $(this).closest('td'),
+                $row = $cell.closest('tr.jqgrow'),
+                $grid = $row.closest('table.ui-jqgrid-btable'),
+                p,
+                colModel,
+                iCol;
+
+            if ($grid.length === 1) {
+                p = $grid[0].p;
+                if (p) {
+                    iCol = $.jgrid.getCellIndex($cell[0]);
+                    colModel = p.colModel;
+                    colModel[iCol].formatoptions.onClick.call($grid[0],
+                        $row.attr('id'), $row[0].rowIndex, iCol, $cell.text(), e);
+                }
+            }
+            return false;
+        }
+    });
+}(jQuery));
+
+////////////////////////////////////////////////////////////////////////////////////////////////
 $(function() { 
 	//Date Format 
 	 $.extend(jQuery.jgrid.edit, {recreateForm: true,});
@@ -67,9 +128,10 @@ $(function() {
 		        url:"/Myelclass/BulkInsertAction.do", 
 		        colNames:['Status','Ct No','Agent','Order Date','PO No','Tan','Cust','Exp','Name','Color','Size','Substance','Selection','Selp','Quantity','Unit','Shipped','Balance','Comment','InvDetails','Feedback','rdd date','Price','Tc','Add','Cdd','Commission','PO/JW','Consignee','Notify','Bank','Destination','Splcdn','Represnt','Prfarticleid','User'],  
 		        colModel :[   
+				  
 				  {name: 'status', index: 'status', align:'center', width:35, editable:true, sortable: true, hidden:false,  
 					  edittype: 'select', 
-					  editoptions:{value:{0:'Select Status',P:'Pending',C:'Closed',CA:'Cancel',PS:'Partial Ship',S:'Shipped',D:'Delivered'},defaultValue: 'Pending'},
+					  editoptions:{value:{0:'Select Status',I:'Inspection', P:'Pending',C:'Closed',CA:'Cancel',PS:'Partial Ship',S:'Shipped',D:'Delivered'},defaultValue: 'Pending'},
 					  editrules :{require : true},
 					  formoptions : {
 							rowpos : 1,
@@ -78,10 +140,15 @@ $(function() {
 				  },
 				  {name: 'ctno', index: 'ctno', align:'center', width:60, editable:true, sortable: true, hidden:false, 
 					  editrules :{require : true},
-					  formoptions : {
-							rowpos : 1,
-							colpos: 2,
-						},
+					  formatter: "dynamicLink",
+					    formatoptions: {
+					        url: function (cellValue, rowId, rowData) {
+					            return '/Myelclass/LoadPrf.do'+ '?' +'action =editform&'+
+					                $.param({
+					                    ctno: rowData.ctno
+					                });
+					        }
+					    }
 				  },
 				  {name: 'agent', index: 'agent', align:'center', width:60, editable:true, sortable: true, hidden:false, 
 					  editrules :{require : true},
@@ -150,7 +217,7 @@ $(function() {
 							colpos: 1,
 						},
 				  },
-				  {name: 'substance', index: 'substance', align:'center', width:90, editable:true, sortable: true, hidden:false,  
+				  {name: 'substance', index: 'substance', align:'center', width:90, editable:true, sortable: true, hidden: false,  
 					 // editrules :{require : true},
 					  formoptions : {
 							rowpos : 6,
@@ -370,13 +437,34 @@ $(function() {
 		        });
 			bulkgrid.jqGrid('navGrid','#bulkktrackpager',{
 		 		 	edit: true,
-		 		 	add: false,
+		 		 	add: true,
 		 		 	del: true, 
 		 		 	search: true, 
 		 		 	view: true, 
 		 		 	//cloneToTop: true,
+		 		 	},
+		 		 	{
+		 		 		/*
+		 		 		* Edit 
+		 		 		*/
+		 		 		 top: 50,
+           				 left: 100,
+           				 width : 'auto',	
+           				jqModal:true, 
+		 		 	},
+		 		 	{
+		 		 		/*
+		 		 		* Add 
+		 		 		*/
+		 		 		 top: 50,
+           				 left: 100,
+           				 width : 'auto',	
+           				//modal:true,
+           				jqModal:true, 
+		 		 	},
+		 		 	{}
 		 		 	
-		 		 	}).navButtonAdd('#bulkktrackpager',{
+				);/* .navButtonAdd('#bulkktrackpager',{
 		 		 	   caption:"Status", 
 		 		 	   buttonicon:"ui-icon-lightbulb", 
 		 		 	   position:"last",
@@ -490,8 +578,8 @@ $(function() {
 								
 							});
 		 		 			 			
-						},   */
-		 		 		 beforeShowForm: function(form) { 
+						},  
+		 		 		 beforeShowForm:  function(form) { 
 		 		 			 $("#tr_agent").hide();
 		 		 			 $("#tr_pono").hide(); 
 		 		 			 $("#tr_orderdt").hide();
@@ -529,6 +617,9 @@ $(function() {
                            },
                            closeAfterEdit: true,
            				reloadAfterSubmit: true,
+           				 top: 50,
+           				 left: 100,
+           				 width : 'auto',
 		 		 	    });
 		 		 	   
 		 		 	   }
@@ -543,8 +634,7 @@ $(function() {
 			       	                   editData: {//Function to Add parameters to the edit 
 			 						 		oper: 'modify',
 			                           },
-					 		 	 });	   
-				 		 			   
+					 		 	 });		   
 			 		 	   }, 
 			 		 	   position:"centre"
 			 	   }).navButtonAdd('#bulkktrackpager',{
@@ -576,7 +666,7 @@ $(function() {
 					 		 	 });	  	   
 			 		 	   }, 
 			 		 	   position:"centre"
-			 		}); 
+			 		});  */
 });
 
 </script>

@@ -20,5 +20,7 @@ public interface DebitDao {
 
 	ArrayList<AutoComplete> getDebTanInvno(String debTaninv) throws SQLException;
 
+	ArrayList<RaiseDebit> getDebInvnolist(String invno) throws SQLException;
+
 	
 }

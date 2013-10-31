@@ -72,7 +72,7 @@ public interface PrfBo  {
 	public List<SelectArticle> getarticlename()throws Exception;
 
 	public int saveprfArticle(PrfArticle prfartbean)throws Exception;
-	public List<PrfArticle> getPrfArticleDetails( String sidx, String sord)throws Exception;
+	
 
 	//Edit Values 
 	public List<ArticleDetails> getPrfArticleName(String term) throws Exception;
@@ -87,6 +87,10 @@ public interface PrfBo  {
 
 	public List<NotifyConsigneeDetails> getnotifyDetails(String notifyterm)throws Exception;
 
+	/*
+	 * Prf Crud 
+	 */
+	public List<PrfArticle> getPrfArticleDetails(String ctno, String sidx, String sord)throws Exception;
 	
 	public boolean addPrfArticleDetails(PrfArticle artindertdetail,
 			String sord, String sidx)throws Exception;
@@ -99,19 +103,13 @@ public interface PrfBo  {
 
 	public List<ArticleDetails> getPrfArticleType()throws Exception;
 
-
-	
 	
 
 	
-
+	/*
+	 * Edit PRf Form
+	 */
 	
-
-	
-	
-	
-
-
-	//public Object getarticledetails();
+	public List<ProductDetails> getEditPrfFormValues(String ctno)throws Exception;
 
 }

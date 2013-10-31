@@ -20,4 +20,6 @@ public interface DebitBo {
 
 	List<AutoComplete> getDebInvno(String tanterm)throws Exception;
 
+	List<RaiseDebit> getDebitInvDetails(String invno)throws Exception;
+
 }

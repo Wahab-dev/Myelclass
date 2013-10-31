@@ -25,6 +25,8 @@ public class RaiseDebit implements Serializable {
 	private String deb_tanfax;
 	private String deb_taninvno;
 	private String deb_elclassrefno;
+	
+	
 	private String deb_contractno;
 	private String deb_orderdate;
 	private String deb_article;
