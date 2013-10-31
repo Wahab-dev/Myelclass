@@ -30,6 +30,25 @@ table.EditTable > tbody > tr.FormData > td.DataTD > input[type="select"] {
 <!-- <script>!window.jQuery && document.write('<script src="js/elpro/prf.js"><\/script>');</script>  -->
 <script type="text/javascript">
 
+
+/* function populate(frm, data) {   
+    $.each(editprfform, function(key, value){  
+    var $ctrl = $('[name='+key+']', frm);  
+    switch($ctrl.attr("type"))  
+    {  
+        case "text" :   
+        case "hidden":  
+        case "textarea":  
+        $ctrl.val(value);   
+        break;   
+        case "radio" : case "checkbox":   
+        $ctrl.each(function(){
+           if($(this).attr('value') == value) {  $(this).attr("checked",value); } });   
+        break;  
+    }  
+    });  
+}
+ */
 //Agent DDL
 function loadAgent(){
 	 var agentname = $("#prf_agentname").val();
@@ -70,7 +89,7 @@ function loadAgent(){
                 			<fieldset>
         							<legend>Contract Details</legend>
         							<br/>
-                     			    Agent:<h:select property="prf_agentname" styleId="prf_agentname" onchange="loadAgent()">
+                     			    Agent:<h:select property="prf_agentname" styleId="prf_agentname" onchange="loadAgent()" value="${editprfform[0].prf_agentname}">
           									  	<h:option value="0">select Agent</h:option>         	
           	 										<c:forEach var="agentList" items="${agentarray}">
           	 											<h:option value="${agentList.agentname}">
@@ -78,10 +97,15 @@ function loadAgent(){
           	 											</h:option>
           	 										</c:forEach>
           										</h:select><br /><br />
-        								Contract  No.<h:text property="prf_contractno" styleId="prf_contractno" /><br />
+        								Contract  No.<h:text property="prf_contractno" styleId="prf_contractno" value="${editprfctno}" /><br />
         								<br />
-        								Date : <h:text property="prf_orderdate" styleId="prf_orderdate" value=""></h:text> <br /><br />						    
-        								P.O reference : <h:text property="prf_poref" styleId="prf_poref"></h:text><br /><br />
+        								Date : <h:text property="prf_orderdate" styleId="prf_orderdate" value="${editprfform[0].prf_orderdate}"></h:text> <br /><br />						    
+        								P.O. reference:<h:select property="prf_poreftype" styleId="prf_poreftype">
+        								 					<h:option value="Email">Email</h:option>
+        								 					<h:option value="Phone">Telephonic </h:option>
+        								 					<h:option value="Others">Others</h:option>	
+        								 				</h:select><br />
+        								 	<h:text property="prf_poref" styleId="prf_poref" value="${editprfform[0].prf_poref}"></h:text><br /><br />
       							</fieldset>
                   			</td>
             	  		</tr>
@@ -92,10 +116,10 @@ function loadAgent(){
               			<tr>
                 			<td height="21"><fieldset>         
         							<legend>Tannery Details</legend><br/> 
-        												Name: <h:text property="prf_tanname" styleId="prf_tanname"></h:text><br />      								      
-       	 												Attn: <h:text property="prf_tanattn" styleId="prf_tanattn"></h:text><br />
-         												Address:<h:textarea property="prf_tanaddr" cols="30" rows="2" styleId="prf_tanaddr"></h:textarea><br />
-        												Telephone : <h:text property="prf_tanphone" styleId="prf_tanphone"> </h:text><br />
+        												Name: <h:text property="prf_tanname" styleId="prf_tanname" value="${editprfform[0].prf_tannid}"></h:text><br />  <br />    								      
+       	 												Attn: <h:text property="prf_tanattn" styleId="prf_tanattn"></h:text><br /><br />
+         												Address:<h:textarea property="prf_tanaddr" cols="30" rows="2" styleId="prf_tanaddr"></h:textarea><br /><br />
+        												Telephone : <h:text property="prf_tanphone" styleId="prf_tanphone"> </h:text><br /><br />
 														Fax:  <h:text property="prf_tanfax" styleId="prf_tanfax"> </h:text>  <br />  
       										</fieldset>
                   			</td>
@@ -119,9 +143,6 @@ function loadAgent(){
             	</td>
           	</tr>
           	 <tr>
-            	 <%--  <td> 	
-            	   <h:button property="artinsert" value="insert" styleId="thelink"></h:button>       	
-             	</td> --%>
           	</tr>
           	<tr>
           	<td height="53" colspan="3">
@@ -132,25 +153,27 @@ function loadAgent(){
           	</td>
           	</tr>
           	<tr>
-            	<td><fieldset><legend>Delivery Details</legend><br/> 
-        									CDD: <h:text property="prf_cdd" styleId="prf_cdd" styleClass="prf_delivrydate"></h:text><br /> <br /> 
-       	 									ADD: <h:text property="prf_add" styleId="prf_add" styleClass="prf_delivrydate"></h:text><br /><br /> 
+            	<td>
+            		<fieldset>
+            			<legend>Delivery Details</legend><br/> 
+        						CDD: <h:text property="prf_cdd" styleId="prf_cdd" styleClass="prf_delivrydate" value="${editprfform[0].prf_cdd}"></h:text><br /> <br /> 
+       	 						ADD: <h:text property="prf_add" styleId="prf_add" styleClass="prf_delivrydate" value="${editprfform[0].prf_add}"></h:text><br /><br /> 
        	 									
-         									Destination: <h:text property="prf_destination" styleId="prf_destination"></h:text><br /><br /> 
-        									Terms : <h:select  property="prf_terms" styleId="prf_terms">
-       		 													<h:option value="0">select Terms</h:option>
-          															<c:forEach items="${termsarray}" var ="termsList">
-          																<h:option value="${termsList.termName}">
-          			    													<c:out value="${termsList.termName}"></c:out>
-          																</h:option>  
-          															</c:forEach> 
-       		 											  		</h:select><br />
+         						Destination: <h:text property="prf_destination" styleId="prf_destination"  value="${editprfform[0].prf_destination}"></h:text><br /><br /> 
+        						Terms : <h:select  property="prf_terms" styleId="prf_terms" value="${editprfform[0].prf_terms}">
+       		 								<h:option value="0">select Terms</h:option>
+          										<c:forEach items="${termsarray}" var ="termsList">
+          											<h:option value="${termsList.termName}">
+          			    								<c:out value="${termsList.termName}"></c:out>
+          											</h:option>  
+          										</c:forEach> 
+       		 					  		</h:select><br />
       				</fieldset>
       			</td>
             	<td>
             	<fieldset>
             		<legend>Commission Details</legend>
-            			  Insurance:  <h:select property="prf_insurance" styleId="prf_insurance"> <br /> 
+            			  Insurance:  <h:select property="prf_insurance" styleId="prf_insurance" value=""> <br /> 
           														<h:option value="1">Will Be Covered By Consignee</h:option>     
           														<h:option value="2">Will Be Covered By Shipper</h:option>      			    													         															
        		 											</h:select><br /><br />
@@ -164,22 +187,30 @@ function loadAgent(){
        		 											  		</h:select><br /><br />
        		 											  			
         				elclass Commission : 
-        					<h:text property="prf_elclasscommission" styleId="prf_elclasscommission"></h:text>
+        					<h:text property="prf_elclasscommission" styleId="prf_elclasscommission" value="${editprfform[0].prf_elclasscommission}"></h:text>
         					<br /><br />
+        					<%-- Commission #1:<h:text property="prf_commission" styleId="prf_commission" ></h:text><br /><br/> --%>
+        					<div id='TextBoxesGroup'>
+								<div id="TextBoxDiv1">
+   									 <label>Commission #1 : </label><h:text property="prf_commission" styleId="prf_commission" value="${editprfform[0].prf_commission1}" ></h:text> </div> 	   
+								</div>	
+							<input type="button" value="Add Comm" id="addButton">
+        					<input type="button" value="Rem Comm" id="removeButton">
        		 											  		
-       		 			<!--  TRY with Dynamically Add Textbox -->
+       		 			<%-- <!--  TRY with Dynamically Add Textbox -->
        		 											  		
        		 		   <div id="prfcommissiongroup">
        		 		   		Commission :<h:text property="prf_commission" styleId="prf_commission" ></h:text><br /><br/>
        		 				<div id="prfcommissiondiv"></div> 							
        		 			</div>	
-       		 			<h:button value='Add' property='addButton' styleId="addButton"></h:button>
-						<h:button value='Remove' property='removeButton' styleId="removeButton"></h:button> 					  					  		
+       		 			<button type="button" id="addComm" name="addComm" title="addComm" value="Add">Add</button>
+       		 			<!-- <button value='Add' property='addButton' styleId="addButton"></button>
+						<button value='Remove' property='removeButton' styleId="removeButton"></button> -->  --%>					  					  		
       			</fieldset>
       			</td>
             	<td><fieldset><legend>Special Condition</legend><br/> 
-        									Condtion 1: <h:textarea property="prf_special" cols="30" rows="2" styleId="prf_special"></h:textarea><br />        
-       	 									Inspection Cdn: <h:textarea property="prf_special" cols="30" rows="2" styleId="prf_special"></h:textarea><br />
+        									Condtion 1: <h:textarea property="prf_special" cols="30" rows="2" styleId="prf_special" value="${editprfform[0].prf_special}"></h:textarea><br />        
+       	 									Inspection Cdn: <h:textarea property="prf_special" cols="30" rows="2" styleId="prf_special" value="${editprfform[0].prf_inspcdn}"></h:textarea><br />
        	 										
          			</fieldset></td>
           	</tr>
