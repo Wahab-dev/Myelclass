@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import sb.elpro.model.SampleRequest;
 import sb.elpro.model.SrfArticle;
 import sb.elpro.model.AutoComplete;
 import sb.elpro.model.CustomerDetails;
@@ -35,12 +36,14 @@ public interface SrfDao {
 
 	ArrayList<PaymentDetails> getPayment(String term)throws SQLException;
 
-	ArrayList<SrfArticle> getSrfArticleDetails(String sidx, String sord)throws SQLException;
+	ArrayList<SrfArticle> getSrfArticleDetails(String sampleno, String sidx, String sord)throws SQLException;
 
 	boolean addsrfArticle(SrfArticle artindertdetail, String sidx, String sord)throws SQLException;
 
 	boolean editsrfArticle(SrfArticle artindertdetail, String sidx, String sord)throws SQLException;
 
 	boolean delsrfArticle(SrfArticle artindertdetail, String sidx, String sord)throws SQLException;
+
+	List<SampleRequest> getEditSrfFormDetails(String sampleno)throws SQLException;
 
 }

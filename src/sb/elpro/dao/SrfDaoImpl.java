@@ -9,6 +9,8 @@ import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.PreparedStatement;
 import com.mysql.jdbc.Statement;
 
+import sb.elpro.model.ProductDetails;
+import sb.elpro.model.SampleRequest;
 import sb.elpro.model.SrfArticle;
 import sb.elpro.model.AutoComplete;
 import sb.elpro.model.CustomerDetails;
@@ -214,7 +216,7 @@ public class SrfDaoImpl implements SrfDao {
 	}
 
 	@Override
-	public ArrayList<SrfArticle> getSrfArticleDetails(String sidx, String sord)
+	public ArrayList<SrfArticle> getSrfArticleDetails(String sampleno, String sidx, String sord)
 			throws SQLException {
 		ArrayList<SrfArticle> articlearray = new ArrayList<SrfArticle>();
 		Connection con = null;
@@ -223,7 +225,7 @@ public class SrfDaoImpl implements SrfDao {
 		try{			
 			con = DBConnection.getConnection();
 			st = (Statement) con.createStatement();
-			String sql = "SELECT articleid, articletype,articleshform, articlename, color, size, substance, selection, selectionp, quantity, pcs, unit, rate, colormatching, tapetest, crockingwet, crockingdry, fourfolds, keytest, sampleno, srfarticleid, user from tbl_srf_article order by "+sidx+"  "+sord+" ";
+			String sql = "SELECT articleid, articletype,articleshform, articlename, color, size, substance, selection, selectionp, quantity, pcs, unit, rate, colormatching, tapetest, crockingwet, crockingdry, fourfolds, keytest, sampleno, srfarticleid, user from tbl_srf_article where sampleno = '"+sampleno+"' order by "+sidx+"  "+sord+" ";
 			System.out.println(sql);
 			rs = st.executeQuery(sql);
 			while(rs.next()) {	
@@ -389,6 +391,54 @@ public class SrfDaoImpl implements SrfDao {
 	   }	
 	//return noofrows;
 		return isdel;
+	}
+
+	@Override
+	public List<SampleRequest> getEditSrfFormDetails(String sampleno)
+			throws SQLException {
+		List<SampleRequest> editsrfformlist = new ArrayList<SampleRequest>() ;
+		Connection con = null;
+		Statement st = null;
+		ResultSet rs = null;
+		try{			
+			con = DBConnection.getConnection();
+			st = (Statement) con.createStatement();
+			String sql = "SELECT sampleno, agentid, orderdt, refno, priority, handledby, customerid, tanneryid, deliverid, destination, terms, add_date, cdd_date, splcdn, inspcdn, forwaderid, isinvraised FROM elpro.tbl_srfform where sampleno ='"+sampleno+"' ";
+			System.out.println(sql);
+			rs = st.executeQuery(sql);
+			
+			if(rs.next()) {	
+				SampleRequest editsrfformbean = new SampleRequest();
+				editsrfformbean.setSrf_sampleno(rs.getString("sampleno"));
+				editsrfformbean.setSrf_agentname(rs.getString("agentid"));
+				editsrfformbean.setSrf_orderdate(rs.getString("orderdt"));
+				System.out.println("DT "+editsrfformbean.getSrf_orderdate());
+				editsrfformbean.setSrf_referenceno(rs.getString("refno"));
+				editsrfformbean.setSrf_priority(rs.getString("priority"));
+				editsrfformbean.setSrf_handledby(rs.getString("handledby"));
+				editsrfformbean.setSrf_custname(rs.getString("customerid"));
+				editsrfformbean.setSrf_tanname(rs.getString("tanneryid"));
+				editsrfformbean.setSrf_deliver(rs.getString("deliverid"));
+				editsrfformbean.setSrf_destination(rs.getString("destination"));
+				editsrfformbean.setSrf_paymentterms(rs.getString("terms"));
+				editsrfformbean.setSrf_add(rs.getString("add_date"));
+				editsrfformbean.setSrf_cdd(rs.getString("cdd_date"));
+				editsrfformbean.setSrf_splcdn(rs.getString("splcdn"));
+				editsrfformbean.setSrf_inspcdn(rs.getString("inspcdn"));
+				//editsrfformbean.setSrf_(rs.getString("forwaderid"));
+				editsrfformbean.setSrf_isSample(rs.getString("isinvraised"));
+				editsrfformlist.add(editsrfformbean);
+				}
+			System.out.println(" dest Result Added Successfully");
+			}catch(Exception e){
+				e.printStackTrace();
+				System.out.println("dest ERROR RESULT");
+			}finally{
+				 con.close() ;
+				 st.close();
+				 rs.close();
+		   }	
+		return editsrfformlist;
 	}
 	
 	

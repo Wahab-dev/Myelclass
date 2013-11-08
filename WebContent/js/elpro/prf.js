@@ -359,14 +359,32 @@ $(document).ready(function() {
 			 }    
 	 	);
 		 	
-		
-			
-			
-			//Formatter 
-			/*function qtyFmatter(cellvalue, options, rowObject){
-				return rowObject.prf_quantity + " / " + rowObject.prf_unit;
-			}*/
-		//Commssion AutoComplete 		
+	//Commision Add 
+	 var counter = 2;
+	    $("#addButton").click(function () {
+	 	if(counter>8){
+	         alert("Only 8 Commissions Allowed allow");
+	         return false;
+	 	}   
+	 	var newTextBoxDiv = $(document.createElement('div'))
+	 	     .attr("id", 'TextBoxDiv' + counter);
+	 	newTextBoxDiv.after().html('<label>Commission #'+ counter + ' : </label>' +
+	 	      '<input type="text" name="prf_commission' + counter + 
+	 	      '" styleId="prf_commission' + counter + '" value="" >');
+	 	newTextBoxDiv.appendTo("#TextBoxesGroup");
+	 	counter++;
+	     });
+	    $("#removeButton").click(function () {
+	 			if(counter==2){
+	 		          alert("No more textbox to remove");
+	 		          return false;
+	 		       }
+	 			counter--;
+	 		        $("#TextBoxDiv" + counter).remove();
+	 	});		
+
+	    
+	//Commssion AutoComplete 		
 			 $('#prf_elclasscommission').autocomplete({
 					minLength: 1,
 					source: function(request, response,term) {
@@ -374,7 +392,7 @@ $(document).ready(function() {
 						 $.ajax({
 				                url: "/Myelclass/PrfAutocomplete.do?term="+param+"&action="+"commision",
 				                dataType: "json",
-				                type:"POST",
+				                type:"GET",
 				                success: function (data) {
 				                	 response($.map(data, function(item) {
 				                		 return { 
@@ -393,7 +411,7 @@ $(document).ready(function() {
 					 $.ajax({
 			                url: "/Myelclass/PrfAutocomplete.do?term="+param+"&action="+"othercommision",
 			                dataType: "json",
-			                type:"POST",
+			                type:"GET",
 			                success: function (data) {
 			                	 response($.map(data, function(item) {
 			                		 return { 
@@ -412,7 +430,7 @@ $(document).ready(function() {
 					 $.ajax({
 			                url: "/Myelclass/PrfAutocomplete.do?term="+param+"&action="+"consignee",
 			                dataType: "json",
-			                type:"POST",
+			                type:"GET",
 			                success: function (data) {
 			                	 response($.map(data, function(item) {
 			                		 return { 
@@ -511,8 +529,8 @@ $(document).ready(function() {
 		                $.ajax({  
 		                    url: "/Myelclass/PrfAutocomplete.do?term="+param+"&action="+"desti",  
 		                    dataType: "json",  
-		                    type:"POST",  
-		                    success: function (data) {  
+		                    type:"GET",  
+		                    success: function (data) { 
 		                         response($.map(data, function(item) {  
 		                             return {   
 		                                 label: item.label,  
@@ -522,11 +540,7 @@ $(document).ready(function() {
 		                             }));//END Success  
 		                        },  
 		                });//END AJAX  
-		            },  
-		            select: function( event, ui ) { //   
-		              var shortform = ui.item.shform; //On Select Pass Event   
-		              alert(shortform);  
-		            }   
+		            }, 
 		        });// End Autocomplete  
 				
 		        //DATEPICKER
@@ -554,12 +568,7 @@ $(document).ready(function() {
 				    gotoCurrent:true, 
 				});
 		        
-				
-				/* $('#addcommission').click(function (){
-					//Y dont u use Multiselect Autocomplete
-					alert("Assalamu alaikum");
-				}); */
-				 
+					 
 			 $('#prf_tanname').autocomplete({
 				 source: function(request, response) {
 						var param = request.term;  
@@ -607,36 +616,5 @@ $(document).ready(function() {
 						          	 $('#prf_custattn').val(ui.item.attn);
 						          	 $('#prf_custfax').val(ui.item.fax);
 						           } 
-						});  
-			
-			 
-			
-			
-			//Commision Add 
-				 var counter = 2;
-				    $("#addButton").click(function () {
-					if(counter>8){
-				         alert("Only 8 Commissions Allowed allow");
-				         return false;
-					}   
-					var newTextBoxDiv = $(document.createElement('div'))
-					     .attr("id", 'TextBoxDiv' + counter);
-					newTextBoxDiv.after().html('<label>Commission #'+ counter + ' : </label>' +
-					      '<input type="text" name="textbox' + counter + 
-					      '" id="textbox' + counter + '" value="" >');
-					newTextBoxDiv.appendTo("#TextBoxesGroup");
-					counter++;
-				     });
-				    $("#removeButton").click(function () {
-			  			if(counter==2){
-			  		          alert("No more textbox to remove");
-			  		          return false;
-			  		       }
-			  			counter--;
-			  		        $("#TextBoxDiv" + counter).remove();
-			  		     });
+						});  		
  });
-
-	
-	
- 

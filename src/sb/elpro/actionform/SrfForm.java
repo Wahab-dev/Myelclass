@@ -19,6 +19,7 @@ public class SrfForm extends ActionForm{
 	
 	//Form Values
 	private String srf_sampleno;
+	private String srf_agentname;
 	private String srf_orderdate;
 	private String srf_referenceno;
 	private String srf_priority;
@@ -42,7 +43,7 @@ public class SrfForm extends ActionForm{
 	private String srf_add;	
 	private String srf_deliver;
 	private String srf_splcdn;	
-	private String srf_splcdn1; 
+	private String srf_inspcdn; 
 	
 	
 	//Article Values
@@ -374,18 +375,7 @@ public class SrfForm extends ActionForm{
 	public void setSrf_splcdn(String srf_splcdn) {
 		this.srf_splcdn = srf_splcdn;
 	}
-	/**
-	 * @return the srf_splcdn1
-	 */
-	public String getSrf_splcdn1() {
-		return srf_splcdn1;
-	}
-	/**
-	 * @param srf_splcdn1 the srf_splcdn1 to set
-	 */
-	public void setSrf_splcdn1(String srf_splcdn1) {
-		this.srf_splcdn1 = srf_splcdn1;
-	}
+	
 	/**
 	 * @return the srf_articleid
 	 */
@@ -841,6 +831,30 @@ public class SrfForm extends ActionForm{
 	 */
 	public void setSrf_isSample(String srf_isSample) {
 		this.srf_isSample = srf_isSample;
+	}
+	/**
+	 * @return the srf_agentname
+	 */
+	public String getSrf_agentname() {
+		return srf_agentname;
+	}
+	/**
+	 * @param srf_agentname the srf_agentname to set
+	 */
+	public void setSrf_agentname(String srf_agentname) {
+		this.srf_agentname = srf_agentname;
+	}
+	/**
+	 * @return the srf_inspcdn
+	 */
+	public String getSrf_inspcdn() {
+		return srf_inspcdn;
+	}
+	/**
+	 * @param srf_inspcdn the srf_inspcdn to set
+	 */
+	public void setSrf_inspcdn(String srf_inspcdn) {
+		this.srf_inspcdn = srf_inspcdn;
 	}
 	
 	

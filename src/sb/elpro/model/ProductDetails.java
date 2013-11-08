@@ -106,7 +106,7 @@ public class ProductDetails implements Serializable {
 	private String prf_price;
 	private String prf_tc;
 	
-
+	private String formaction;
 	
 	//For Autocomplete
 	private String label;
@@ -1142,6 +1142,18 @@ public class ProductDetails implements Serializable {
 	 */
 	public void setPrf_pojw(String prf_pojw) {
 		this.prf_pojw = prf_pojw;
+	}
+	/**
+	 * @return the formaction
+	 */
+	public String getFormaction() {
+		return formaction;
+	}
+	/**
+	 * @param formaction the formaction to set
+	 */
+	public void setFormaction(String formaction) {
+		this.formaction = formaction;
 	}
 	
 	

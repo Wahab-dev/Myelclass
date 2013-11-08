@@ -16,6 +16,7 @@ import sb.elpro.model.CustomerDetails;
 import sb.elpro.model.EndUsageDetails;
 import sb.elpro.model.HandledByDetails;
 import sb.elpro.model.PaymentDetails;
+import sb.elpro.model.SampleRequest;
 import sb.elpro.model.TanneryDetails;
 
 /**
@@ -78,8 +79,8 @@ public class SrfBoImpl implements SrfBo {
 		return srfpaymentearray;
 	}
 	@Override
-	public List<SrfArticle> getSrfArticleDetails(String sidx, String sord) throws Exception {
-		ArrayList<SrfArticle> srfaticlearray = srfdao.getSrfArticleDetails(sidx, sord);
+	public List<SrfArticle> getSrfArticleDetails(String sampleno, String sidx, String sord) throws Exception {
+		ArrayList<SrfArticle> srfaticlearray = srfdao.getSrfArticleDetails(sampleno, sidx, sord);
 		return srfaticlearray;
 	}
 	@Override
@@ -99,6 +100,12 @@ public class SrfBoImpl implements SrfBo {
 			String sidx, String sord) throws Exception {
 		boolean isdeleted = srfdao.delsrfArticle(artindertdetail, sidx, sord);
 		return isdeleted;
+	}
+	@Override
+	public List<SampleRequest> getEditSrfFormValues(String sampleno)
+			throws Exception {
+		List<SampleRequest> editsrfformarray = srfdao.getEditSrfFormDetails(sampleno);
+		return editsrfformarray;
 	}
 	
 

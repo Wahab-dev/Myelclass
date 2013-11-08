@@ -64,7 +64,7 @@ public class DebitDaoImpl implements DebitDao {
 		try{			
 			con = DBConnection.getConnection();
 			st = (Statement) con.createStatement();
-			String sql = "SELECT invno, taninvno FROM elpro.tbl_invform";
+			String sql = "SELECT invno, taninvno FROM elpro.tbl_invform ";
 			rs = st.executeQuery(sql);
 			while(rs.next()) {	
 				AutoComplete debtaninvbean = new AutoComplete();
@@ -95,7 +95,7 @@ public class DebitDaoImpl implements DebitDao {
 		try{			
 			con = DBConnection.getConnection();
 			st = (Statement) con.createStatement();
-			String sql = "SELECT  artname, color, qty, rate, tc, comm, ctno, form.invdate, qshpd, qbal, amt, form.invno, taninvno, totalamount FROM tbl_invform form, tbl_inv_bill bill where form.invno = bill.invno";
+			String sql = "SELECT  artname, color, qty, rate, tc, comm, ctno, form.invdate, qshpd, qbal, amt, form.invno, taninvno, totalamount FROM tbl_invform form, tbl_inv_bill bill where form.invno = bill.invno and form.invno = '"+invno+"' ";
 			System.out.println(sql);
 			rs = st.executeQuery(sql);
 			while(rs.next()) {
@@ -108,7 +108,7 @@ public class DebitDaoImpl implements DebitDao {
 				Debbean.setDeb_totalquantity(rs.getString("qty"));
 				Debbean.setDeb_rate(rs.getString("rate"));
 				Debbean.setDeb_tc(rs.getString("tc"));
-				Debbean.setDeb_commission1(rs.getString("comm"));
+				Debbean.setDeb_elclasscommission(rs.getString("comm"));
 				Debbean.setDeb_qshipped(rs.getString("qshpd"));
 				Debbean.setDeb_qremain(rs.getString("qbal"));
 				Debbean.setDeb_invoiceamt(rs.getString("amt"));

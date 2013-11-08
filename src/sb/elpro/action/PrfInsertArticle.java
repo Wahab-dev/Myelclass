@@ -51,7 +51,7 @@ public class PrfInsertArticle extends Action  {
                System.out.println("action "+action);
 				
 				if(oper == null){
-					 System.out.println(" In Article LAOD");
+					 System.out.println(" In PRF Article LAOD");
 					List<PrfArticle> article = prfbo.getPrfArticleDetails(ctno,sidx,sord);
 					int records = article.size();
 					System.out.println("Reords  "+records);

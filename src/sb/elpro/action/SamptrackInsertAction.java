@@ -17,18 +17,15 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
-import sb.elpro.bo.BulkBo;
-import sb.elpro.bo.BulkBoImpl;
 import sb.elpro.bo.SampTrackBo;
 import sb.elpro.bo.SampTrackBoImpl;
-import sb.elpro.model.BulkArticle;
 import sb.elpro.model.SampleTrack;
 
 /**
  * @author Wahab
  *
  */
-public class SampleInsertAction extends Action{
+public class SamptrackInsertAction extends Action{
 	HttpSession usersession;
 	SampTrackBo samptrackbo  =  new SampTrackBoImpl();
 	public ActionForward execute (ActionMapping map, ActionForm form, 
@@ -37,7 +34,7 @@ public class SampleInsertAction extends Action{
 		PrintWriter out = response.getWriter();
 		JSONObject jsonobj = new JSONObject();
 		response.setContentType("application/json");
-		System.out.println("In Sample Track  Action ");
+		System.out.println("In Sample Track Action ");
 		 if(usersession != null){
 			 String oper =   request.getParameter("oper");
 			 System.out.println("oper "+oper);

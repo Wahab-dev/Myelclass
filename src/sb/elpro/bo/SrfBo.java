@@ -6,6 +6,7 @@ package sb.elpro.bo;
 import java.util.ArrayList;
 import java.util.List;
 
+import sb.elpro.model.SampleRequest;
 import sb.elpro.model.SrfArticle;
 import sb.elpro.model.AutoComplete;
 import sb.elpro.model.CustomerDetails;
@@ -35,7 +36,7 @@ public interface  SrfBo {
 
 	public ArrayList<PaymentDetails> getPaymentDetails(String pymntterm) throws Exception;
 
-	public List<SrfArticle> getSrfArticleDetails(String sidx, String sord) throws Exception;
+	public List<SrfArticle> getSrfArticleDetails(String sidx, String sord, String sord2) throws Exception;
 
 	public boolean addSrfArticleDetails(SrfArticle artindertdetail,
 			
@@ -46,6 +47,8 @@ public interface  SrfBo {
 
 	public boolean delPrfArticleDetails(SrfArticle artindertdetail,
 			String sidx, String sord)throws Exception;
+
+	public List<SampleRequest> getEditSrfFormValues(String sampleno)throws Exception;
 
 	
 }

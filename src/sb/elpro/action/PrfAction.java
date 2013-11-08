@@ -49,6 +49,7 @@ public class PrfAction extends DispatchAction {
 	
 	public ActionForward Logout(ActionMapping mapping, ActionForm form, 
 			HttpServletRequest request, HttpServletResponse response) throws Exception{
+		System.out.println("Logout IN PORF ");
 		usersession = request.getSession(false);
 		usersession.invalidate();			
 		return mapping.findForward("login");  

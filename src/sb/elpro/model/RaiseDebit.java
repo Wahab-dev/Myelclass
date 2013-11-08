@@ -38,9 +38,8 @@ public class RaiseDebit implements Serializable {
 	private String deb_qremain;
 	private String deb_rate;
 	private String deb_invoiceamt;
-	private String deb_commission1;
-	private String deb_commission2;
-	private String deb_commission3;
+	private String deb_elclasscommission;
+	private String deb_othercommission;
 	private String deb_tc;
 	private String deb_exchangerate;
 	private String deb_elclassamt;
@@ -291,42 +290,7 @@ public class RaiseDebit implements Serializable {
 	public void setDeb_invoiceamt(String deb_invoiceamt) {
 		this.deb_invoiceamt = deb_invoiceamt;
 	}
-	/**
-	 * @return the deb_commission1
-	 */
-	public String getDeb_commission1() {
-		return deb_commission1;
-	}
-	/**
-	 * @param deb_commission1 the deb_commission1 to set
-	 */
-	public void setDeb_commission1(String deb_commission1) {
-		this.deb_commission1 = deb_commission1;
-	}
-	/**
-	 * @return the deb_commission2
-	 */
-	public String getDeb_commission2() {
-		return deb_commission2;
-	}
-	/**
-	 * @param deb_commission2 the deb_commission2 to set
-	 */
-	public void setDeb_commission2(String deb_commission2) {
-		this.deb_commission2 = deb_commission2;
-	}
-	/**
-	 * @return the deb_commission3
-	 */
-	public String getDeb_commission3() {
-		return deb_commission3;
-	}
-	/**
-	 * @param deb_commission3 the deb_commission3 to set
-	 */
-	public void setDeb_commission3(String deb_commission3) {
-		this.deb_commission3 = deb_commission3;
-	}
+	
 	/**
 	 * @return the deb_tc
 	 */
@@ -446,6 +410,30 @@ public class RaiseDebit implements Serializable {
 	 */
 	public void setDeb_iswaived(String deb_iswaived) {
 		this.deb_iswaived = deb_iswaived;
+	}
+	/**
+	 * @return the deb_elclasscommission
+	 */
+	public String getDeb_elclasscommission() {
+		return deb_elclasscommission;
+	}
+	/**
+	 * @param deb_elclasscommission the deb_elclasscommission to set
+	 */
+	public void setDeb_elclasscommission(String deb_elclasscommission) {
+		this.deb_elclasscommission = deb_elclasscommission;
+	}
+	/**
+	 * @return the deb_othercommission
+	 */
+	public String getDeb_othercommission() {
+		return deb_othercommission;
+	}
+	/**
+	 * @param deb_othercommission the deb_othercommission to set
+	 */
+	public void setDeb_othercommission(String deb_othercommission) {
+		this.deb_othercommission = deb_othercommission;
 	}
 	
 	

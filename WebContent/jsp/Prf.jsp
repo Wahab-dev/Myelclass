@@ -16,39 +16,18 @@
 table.EditTable > tbody > tr.FormData > td.DataTD > input[type="select"] {
     width: 115px !important;
 }
-	
 </style>
 <script src="js/jquery-1.9.1.js"></script>
 <script src="js/jquery-ui.js"></script>
 <link rel="stylesheet" type="text/css" media="screen" href="css/vader/jquery-ui-1.10.3.custom.css" />
 <link rel="stylesheet" type="text/css" media="screen" href="css/ui.jqgrid.css" />
-
 <script src="js/i18n/grid.locale-en.js" type="text/javascript"></script>
-
 <script src="js/jquery.jqGrid.min.js" type="text/javascript"></script>		
 <script src="js/elpro/prf.js"></script> 
 <!-- <script>!window.jQuery && document.write('<script src="js/elpro/prf.js"><\/script>');</script>  -->
 <script type="text/javascript">
 
 
-/* function populate(frm, data) {   
-    $.each(editprfform, function(key, value){  
-    var $ctrl = $('[name='+key+']', frm);  
-    switch($ctrl.attr("type"))  
-    {  
-        case "text" :   
-        case "hidden":  
-        case "textarea":  
-        $ctrl.val(value);   
-        break;   
-        case "radio" : case "checkbox":   
-        $ctrl.each(function(){
-           if($(this).attr('value') == value) {  $(this).attr("checked",value); } });   
-        break;  
-    }  
-    });  
-}
- */
 //Agent DDL
 function loadAgent(){
 	 var agentname = $("#prf_agentname").val();
@@ -58,22 +37,69 @@ function loadAgent(){
 	 		var agentctno = "<c:out value='${agentlist.contractNo}' />" ;
 	 		if(agentctno.length == 0 )
 			{
-					agentctno = "L4501";
+						agentctno = "L4501";
 			}
 	 		$("#prf_contractno").val(agentctno);
 		}
 	 </c:forEach>
 	}
+function loadvalues(){
+	var actionform = "<c:out value='${actionform}' />";
+	if(actionform == "edit"){
+		var prfeditterms = "<c:out value='${editprfform[0].prf_terms}' />";
+		var prfeditpayment = "<c:out value='${editprfform[0].prf_payment}' />";  
+		var prfeditagentname = "<c:out value='${editprfform[0].prf_agentname}' />";
+		var prfedittanname =  "<c:out value='${editprfform[0].prf_tanname}' />";
+		var prfeditcustname =  "<c:out value='${editprfform[0].prf_custname}' />";
+		var prfeditconsigname =  "<c:out value='${editprfform[0].prf_consigneename}' />";
+		var prfeditnotifyname =  "<c:out value='${editprfform[0].prf_notifyname}' />";
+		var prfeditbankname =  "<c:out value='${editprfform[0].prf_bankname}' />";
+		
+		$("#prf_tanname").val(prfedittanname); 
+		$("#prf_custname").val(prfeditcustname); 
+		$("#prf_consigneename").val(prfeditconsigname); 
+		$("#prf_notifyname").val(prfeditnotifyname); 
+		$("#prf_bankname").val(prfeditbankname); 
+		if(prfedittanname != null){
+			//Ajax Call for Address and Other Values 
+			var url = "/Myelclass/PrfAutocomplete.do";
+			$.getJSON(url, {term: prfedittanname, action:"tan"},  
+					function(data) { 	
+					//Data Gets Returned In JSON Format but Unable to SET in HTML
+						/* var items = [];
+						 $.each( data, function( key, val ) {
+							alert("VA l"+items[val]);
+						 }); */
+					});			
+			}
+		$("#prf_terms option").filter(function() {//Set Terms Value
+		    return $(this).text() == prfeditterms; 
+		}).prop('selected', true);
+		
+		$("#prf_payment option").filter(function() {//Set Payment Value
+		    return $(this).text() == prfeditpayment; 
+		}).prop('selected', true);
+		
+		$("#prf_agentname option").filter(function() {//Set Agent Value
+		    return $(this).text() == prfeditagentname; 
+		}).prop('selected', true);
+		
+		
+		$("#Save").val("UpdatePrf");
+	}
 
-
+}  
 </script>
 </head>
-<body>
+<body onload="loadvalues();">
 	<h:form action="/Prf" method="post">
 		<table width="812" border="1" cellspacing="0" cellpadding="0" >
    		<tr>  			
    			<td>Welcome ${user.name}...</td> 
    			<h:text property="userinsession" styleId="userinsession" value="${user.name}" readonly="true" ></h:text>
+   			<td >
+   				<h:text property="formaction" styleId="formaction" value="${actionform}" readonly="true" ></h:text>
+   			</td> 
    			<td><h:submit property="prfaction" value="Logout"></h:submit></td> 
    		</tr>
    </table>
@@ -116,7 +142,7 @@ function loadAgent(){
               			<tr>
                 			<td height="21"><fieldset>         
         							<legend>Tannery Details</legend><br/> 
-        												Name: <h:text property="prf_tanname" styleId="prf_tanname" value="${editprfform[0].prf_tannid}"></h:text><br />  <br />    								      
+        												Name: <h:text property="prf_tanname" styleId="prf_tanname" ></h:text><br />  <br />    								      
        	 												Attn: <h:text property="prf_tanattn" styleId="prf_tanattn"></h:text><br /><br />
          												Address:<h:textarea property="prf_tanaddr" cols="30" rows="2" styleId="prf_tanaddr"></h:textarea><br /><br />
         												Telephone : <h:text property="prf_tanphone" styleId="prf_tanphone"> </h:text><br /><br />
@@ -195,17 +221,7 @@ function loadAgent(){
    									 <label>Commission #1 : </label><h:text property="prf_commission" styleId="prf_commission" value="${editprfform[0].prf_commission1}" ></h:text> </div> 	   
 								</div>	
 							<input type="button" value="Add Comm" id="addButton">
-        					<input type="button" value="Rem Comm" id="removeButton">
-       		 											  		
-       		 			<%-- <!--  TRY with Dynamically Add Textbox -->
-       		 											  		
-       		 		   <div id="prfcommissiongroup">
-       		 		   		Commission :<h:text property="prf_commission" styleId="prf_commission" ></h:text><br /><br/>
-       		 				<div id="prfcommissiondiv"></div> 							
-       		 			</div>	
-       		 			<button type="button" id="addComm" name="addComm" title="addComm" value="Add">Add</button>
-       		 			<!-- <button value='Add' property='addButton' styleId="addButton"></button>
-						<button value='Remove' property='removeButton' styleId="removeButton"></button> -->  --%>					  					  		
+        					<input type="button" value="Rem Comm" id="removeButton">       		 														  					  		
       			</fieldset>
       			</td>
             	<td><fieldset><legend>Special Condition</legend><br/> 

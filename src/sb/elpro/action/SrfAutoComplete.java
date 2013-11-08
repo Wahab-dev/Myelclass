@@ -36,7 +36,6 @@ public class SrfAutoComplete extends Action  {
 	HttpSession usersession;
 	public ActionForward execute(ActionMapping mapping, ActionForm form, 
 			HttpServletRequest request,  HttpServletResponse response) throws Exception{
-		System.out.println("11111");
 			response.setContentType("application/json");
 			PrintWriter out = response.getWriter();
 			usersession = request.getSession(false);

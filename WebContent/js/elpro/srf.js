@@ -5,10 +5,10 @@
  */
 $(document).ready(function() {
 	 var grid = $("#srfArticletbl");	
+	 var sampleno = $("#srf_sampleno").val();
 		grid.jqGrid({ 
 			         datatype: "json",
-				    // url:"/Myelclass/SrfinsertArticle.do",
-				     url:"/Myelclass/SrfinsertArticle.do", 
+				     url:"/Myelclass/SrfinsertArticle.do?sampleno="+sampleno, 
 			         mtype: 'GET',  
 			         colNames:['ArticleID', 'ArticleType','ArticleShForm', 'Article name','Color', 'Size','Sizeavg','Size Rem','Substance', 'Selection','Selectionp', 'Quantity','Unit','Pieces','Price','Ratesign','Rateamt','Shipment','Colormatching','Tapetest','Crockingwet','CrockingDry','Fourfolds','Keytest','SampleNo','Srfarticleid','User'],  
 			         colModel :[   

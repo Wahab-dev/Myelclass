@@ -16,11 +16,74 @@
 <script src="js/i18n/grid.locale-en.js" type="text/javascript"></script>
 <script src="js/jquery.jqGrid.min.js" type="text/javascript"></script>
 <script type="text/javascript">
+/*global jQuery */
+(function ($) {
+    'use strict';
+    /*jslint unparam: true */
+    $.extend($.fn.fmatter, {
+        dynamicLink: function (cellValue, options, rowData) {
+            // href, target, rel, title, onclick
+            // other attributes like media, hreflang, type are not supported currently
+            var op = {url: '#'};
+
+            if (typeof options.colModel.formatoptions !== 'undefined') {
+                op = $.extend({}, op, options.colModel.formatoptions);
+            }
+            if ($.isFunction(op.target)) {
+                op.target = op.target.call(this, cellValue, options.rowId, rowData, options);
+            }
+            if ($.isFunction(op.url)) {
+                op.url = op.url.call(this, cellValue, options.rowId, rowData, options);
+            }
+            if ($.isFunction(op.cellValue)) {
+                cellValue = op.cellValue.call(this, cellValue, options.rowId, rowData, options);
+            }
+            if ($.fmatter.isString(cellValue) || $.fmatter.isNumber(cellValue)) {
+                return '<a' +
+                    (op.target ? ' target=' + op.target : '') +
+                    (op.onClick ? ' onclick="return $.fn.fmatter.dynamicLink.onClick.call(this, arguments[0]);"' : '') +
+                    ' href="' + op.url + '">' +
+                    (cellValue || '&nbsp;') + '</a>';
+            } else {
+                return '&nbsp;';
+            }
+        }
+    });
+    $.extend($.fn.fmatter.dynamicLink, {
+        unformat: function (cellValue, options, elem) {
+            var text = $(elem).text();
+            return text === '&nbsp;' ? '' : text;
+        },
+        onClick: function (e) {
+            var $cell = $(this).closest('td'),
+                $row = $cell.closest('tr.jqgrow'),
+                $grid = $row.closest('table.ui-jqgrid-btable'),
+                p,
+                colModel,
+                iCol;
+
+            if ($grid.length === 1) {
+                p = $grid[0].p;
+                if (p) {
+                    iCol = $.jgrid.getCellIndex($cell[0]);
+                    colModel = p.colModel;
+                    colModel[iCol].formatoptions.onClick.call($grid[0],
+                        $row.attr('id'), $row[0].rowIndex, iCol, $cell.text(), e);
+                }
+            }
+            return false;
+        }
+    });
+}(jQuery));
+
+
+
+///////////////////////////////////////////////////////////
 $(function() { 
  var strgrid = $('#sampletracktbl');
 	strgrid.jqGrid({     
 		datatype: "json",
-   		url:"/Myelclass/SampleInsertAction.do", 
+   		url:"/Myelclass/SamptrackInsertAction.do", 
     	colNames:['Status','Sampleno','Order Date','Refno','priority','handledby','customerid','tanneryid','deliverid','agentid','destination','terms','add_date','cdd_date','splcdn','inspcdn','forwaderid','isinvraised','articleid','articletype','articleshform','articlename','color','size','substance','selection','selectionp','quantity','unit','colormatching','rate','pcs','tapetest','crockingwet','crockingdry','fourfolds','keytest','srfarticleid','rdd_date','courierdetails','reps','feedbackdetails','User'],  
     	colModel :[  
                 {name: 'status', index: 'status', align:'center', width:35, editable:true, sortable: true, hidden:false,  
@@ -28,8 +91,16 @@ $(function() {
 		 			editoptions:{value:{0:'Select Status',P:'Pending',C:'Closed',CA:'Cancel',IC:'IC',S:'Shipped',D:'Delivered'},defaultValue: 'Pending'},
 		  			editrules :{require : true},
 	  			}, 
-	  			{name: 'sampleno', index: 'sampleno', align:'center', width:60, editable:true, sortable: true, hidden:false, 
-					
+	  			{name: 'sampleno', index: 'sampleno', align:'center', width:60, editable:true, sortable: true, hidden:false, 			
+	  				 formatter: "dynamicLink",
+					    formatoptions: {
+					        url: function (cellValue, rowId, rowData) {
+					            return '/Myelclass/loadSrf.do'+ '?' +'action=editform&'+
+					                $.param({
+					                	sampleno: rowData.sampleno
+					                });
+					        }
+					    } 
 				},
 				{name: 'orderdt', index: 'orderdt', align:'center', width:60, editable:true, sortable: true, hidden:false, 
 					
@@ -172,7 +243,7 @@ $(function() {
 	sortname: 'sampleno',  
 	sortorder: 'desc',
 	scroll: 1, //Check here
-	editurl: "/Myelclass/SampleInsertAction.do",
+	editurl: "/Myelclass/SamptrackInsertAction.do",
 	emptyrecords: 'No records to display',
 	});
 	strgrid.jqGrid('navGrid','#sampletrackpager',{
@@ -253,7 +324,7 @@ $(function() {
 </script>
 </head>
 <body>
-	<form action="/Myelclass/login.do" method="post">
+<h:form action="/login" method="post" >
 		<table width="812" border="1" cellspacing="0" cellpadding="0" >
    			<tr>  			
    				<td>Welcome ${user.name}...</td> 
@@ -261,10 +332,12 @@ $(function() {
    				<td><h:submit property="straction" value="Logout"></h:submit></td> 
    			</tr>
    		</table>
+   	</h:form>	
+<h:form>   
 		<div id="blk">Sample Tracking</div> 
 			<table id="sampletracktbl">
              </table> 
 				<div id="sampletrackpager"></div> 
-	</form>  
+</h:form> 
 </body>
 </html>

@@ -3,6 +3,8 @@
  */
 package sb.elpro.action;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -16,6 +18,8 @@ import sb.elpro.bo.PrfBo;
 import sb.elpro.bo.PrfBoImpl;
 import sb.elpro.bo.SrfBo;
 import sb.elpro.bo.SrfBoImpl;
+import sb.elpro.model.ProductDetails;
+import sb.elpro.model.SampleRequest;
 
 /**
  * @author Wahab
@@ -30,13 +34,27 @@ public class SrfLoadAction extends Action  {
 			System.out.println("It is SRF Load Action");
 			usersession = request.getSession(false);
 			if(usersession != null){
-				//usersession.setAttribute("tanneryarray", srfbo.getTanneryDetails());
 				usersession.setAttribute("customerarray", srfbo.getCustomerDetails());
 				usersession.setAttribute("sampleno", srfbo.getSampleno());
-				//usersession.setAttribute("handledbyarray",srfbo.getsrfhandledby());
-				//usersession.setAttribute("endusagearray", srfbo.getsrfEndusage());
-				
-				//usersession.setAttribute("paymentarray", srfbo.getPaymentDetails());
+				String action = request.getParameter("action");
+				System.out.println("STR  action"+action);
+				if(action == null){
+					return map.findForward("srfisloaded");
+				}else if(action.equalsIgnoreCase("editform")){
+					/*
+					 * Method to Set Values for SRF FORM
+					 */
+					System.out.println("In SRF Edit Form");
+					String actionform = "edit";
+					String sampleno = request.getParameter("sampleno");
+					usersession.setAttribute("actionform", actionform);
+					usersession.setAttribute("editsrfsampleno", sampleno);
+					//usersession.setAttribute("editprfform", prfbo.getEditPrfFormValues(ctno));
+					List<SampleRequest> editSrfform = srfbo.getEditSrfFormValues(sampleno);
+					usersession.setAttribute("editprfform", editSrfform);
+					return map.findForward("srfisloaded");
+				}
+				return map.findForward("srfisloaded");
 			}
 			return map.findForward("srfisloaded");
 		}

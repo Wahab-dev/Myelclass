@@ -17,18 +17,28 @@ $(document).ready(function() {
 	});
 		 var grid = $("#tbl_debselInvDetails");
 		 grid.jqGrid({
-			 //url:"/Myelclass/DebSelInvfromCust.do?invno="+elclassrefno+"&action="+"loadGrid",
-			 datatype: "local",
-			 colNames:['Ct No','Article','Color','Size','Substance','Quantity','Rate','TC'],
+			// url:"/Myelclass/DebSelInvfromCust.do?invno="+elclassrefno+"&action="+"loadGrid",
+			 datatype: "json",
+			 colNames:['Inv No','Inv date','Ct No','Article','Color','Size','Substance','Quantity','QShipd','QBal','Rate','Inv AMount','Other Charges','Discount','Total','TC','Commission','Agent Commission'],
 			 colModel:[
-					           {name: 'prf_contractno', index:'prf_contractno',width:50},
-					           {name: 'prf_articlename', index:'prf_articlename',width:90},
-					           {name: 'prf_color', index:'prf_color',width:70},
-					           {name: 'prf_size', index:'prf_size',width:70},
-					           {name: 'prf_substance', index:'prf_substance',width:70},
-					           {name: 'prf_quantity', index:'prf_quantity',width:70},
-					           {name: 'prf_price', index:'prf_price',width:70},
-					           {name: 'prf_tc', index:'prf_tc',width:70}
+                 			   {name: 'deb_invno', index: 'deb_invno' ,width:90, },
+							   {name: 'deb_invdate', index: 'deb_invdate' ,width:70, hidden: true},
+					           {name: 'deb_contractno', index: 'deb_contractno' ,width:50, },
+					           {name: 'deb_article', index: 'deb_article' ,width:90, },
+					           {name: 'deb_color', index: 'deb_color' ,width:70, },
+					           {name: 'deb_size', index: 'deb_size' ,width:70, hidden: true},
+					           {name: 'deb_substance', index: 'deb_substance' ,width:70, hidden: true},
+					           {name: 'deb_totalquantity', index: 'deb_totalquantity' ,width:70, },
+					           {name: 'deb_qshipped', index: 'deb_qshipped' ,width:70, },
+					           {name: 'deb_qremain', index: 'deb_qremain' ,width:70, hidden: true},
+					           {name: 'deb_rate', index: 'deb_rate' ,width:70, },
+					           {name: 'deb_invoiceamt', index: 'deb_invoiceamt' ,width:70, },
+					           {name: 'deb_othercharge', index: 'deb_othercharge' ,width:50, hidden: true},
+					           {name: 'deb_discount', index: 'deb_discount' ,width:90, hidden: true},
+					           {name: 'deb_totalamt', index: 'deb_totalamt' ,width:70, hidden: true},
+					           {name: 'deb_tc', index: 'deb_tc' ,width:70, },
+					           {name: 'deb_elclasscommission', index: 'deb_elclasscommission' ,width:50, },
+					           {name: 'deb_othercommission', index: 'deb_othercommission' ,width:90, hidden: true},
 					           ],
 					  jsonReader : {  
 						  repeatitems:false,
@@ -98,7 +108,7 @@ $(document).ready(function() {
 				function(result) { 	
 			       response($.map(result, function(item) {
 			           return { 
-			              value: item.label,
+			              label: item.tanneryName,
 			              addr: item.tanneryAddress,
 			              ctno: item.tanneryContactNo,
 			              };
@@ -108,8 +118,6 @@ $(document).ready(function() {
 		 select: function(event, ui){
 			 $('#deb_tanaddr').val(ui.item.addr);
 			 $('#deb_tantelephone').val(ui.item.ctno);
-			// $('#deb_taninvno').val(ui.item.splcdn);
-			 //$('#deb_elclassrefno').val(ui.item.splcdn);	 
 		 }
 	}); 
 	
@@ -123,17 +131,16 @@ $(document).ready(function() {
 			       response($.map(result, function(item) {
 			           return { 
 			              value: item.label,
-			              addr: item.tanneryAddress,
-			              ctno: item.tanneryContactNo,
+			              taninvno: item.shform,
 			              };
 			        }));//END response
 			 });
 		 },
 		 select: function(event, ui){
-			 $('#deb_tanaddr').val(ui.item.addr);
-			 $('#deb_tantelephone').val(ui.item.ctno);
-			// $('#deb_taninvno').val(ui.item.splcdn);
-			 //$('#deb_elclassrefno').val(ui.item.splcdn);	 
+			 $('#deb_taninvno').val(ui.item.taninvno);
+			 $('#deb_elclassrefno').val(ui.item.value); 
+			 var elclassrefno = $("#deb_elclassrefno").val();
+			 grid.jqGrid('setGridParam',{url:"/Myelclass/DebSelInvfromCust.do?invno="+elclassrefno+"&action="+"loadGrid",}).trigger("reloadGrid");
 		 }
 	}); 
 });

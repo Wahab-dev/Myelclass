@@ -57,7 +57,9 @@ public class PrfLoadAction extends Action{
 				 * Method to Set Values for PRF FORM
 				 */
 				System.out.println("In Edit Form");
+				String actionform = "edit";
 				String ctno = request.getParameter("ctno");
+				usersession.setAttribute("actionform", actionform);
 				usersession.setAttribute("editprfctno", ctno);
 				//usersession.setAttribute("editprfform", prfbo.getEditPrfFormValues(ctno));
 				List<ProductDetails> editprfform = prfbo.getEditPrfFormValues(ctno);

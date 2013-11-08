@@ -49,7 +49,7 @@
 		    </td>
 		    <td>
         					<br />Debit Date: <h:text property="deb_debitdate" styleId="deb_debitdate"></h:text><br />
-        					<br />Tanner Invoice No: <h:text property="deb_elclassrefno" styleId="deb_taninvno"></h:text><br />              	 					
+        					<br />Tanner Invoice No: <h:text property="deb_taninvno" styleId="deb_taninvno"></h:text><br />              	 					
          					<br />elclass ref no : <h:text property="deb_elclassrefno" styleId="deb_elclassrefno"></h:text><br />
         					
       			

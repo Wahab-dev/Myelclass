@@ -45,17 +45,18 @@ public class SrfInsertArticle extends Action{
                 String pag = request.getParameter("page");
                 String sidx = request.getParameter("sidx");
                 String sord = request.getParameter("sord");
-                
+                String sampleno = request.getParameter("sampleno");
                 
                 System.out.println("rows "+rows); //4
                 System.out.println("page "+pag); //1
                 System.out.println("sidx "+sidx);
                 System.out.println("sord "+sord);
-               System.out.println("action "+action);
+                System.out.println("action "+action);
+                System.out.println("sampleno "+sampleno);
                 
                if(oper == null){
-            	   System.out.println(" In Article LAOD");
-					List<SrfArticle> article = srfbo.getSrfArticleDetails(sidx,sord);
+            	   System.out.println(" In SRF  Article LAOD");
+					List<SrfArticle> article = srfbo.getSrfArticleDetails(sampleno,sidx,sord);
 					int records = article.size();
 					System.out.println("Reords  "+records);
 					

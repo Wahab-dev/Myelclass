@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="h"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
@@ -123,6 +123,21 @@ $(function() {
         });
     },
 	
+     $('#chngroup').change(function(){
+		var vl = $(this).val();
+		alert(vl);
+		if(vl){
+			if(vl == "clear"){
+				$("#bulkktracktbl").jqGrid('groupingRemove',true);	
+			}else{
+				$("#bulkktracktbl").jqGrid('groupingGroupBy',vl);
+			}	
+		}else{
+			alert("Please Select field to Group");
+		}
+	});  //shows total qty error
+    
+    
 	bulkgrid.jqGrid({     
 		 		datatype: "json",
 		        url:"/Myelclass/BulkInsertAction.do", 
@@ -143,7 +158,7 @@ $(function() {
 					  formatter: "dynamicLink",
 					    formatoptions: {
 					        url: function (cellValue, rowId, rowData) {
-					            return '/Myelclass/LoadPrf.do'+ '?' +'action =editform&'+
+					            return '/Myelclass/LoadPrf.do'+ '?' +'action=editform&'+
 					                $.param({
 					                    ctno: rowData.ctno
 					                });
@@ -429,12 +444,22 @@ $(function() {
 		        sortorder: 'desc',
 		        scroll: 1, //Check here
 		        editurl: "/Myelclass/BulkInsertAction.do",
-		        //grouping:true, 
-		        // groupingView : { groupField : ['ctno','articlename'] }, //sub grouping
-		       // groupingView : { groupField : ['ctno'] },
-		       // toppager: true,
+		        grouping: false,
+		        gridview : true,
+		        footerrow: true,
+		        loadComplete: function() {
+		        	var qsum = 0;
+		        	qsum = bulkgrid.jqGrid('getCol', 'quantity', false, 'sum');  //Parameter colname, returntype, mathoperation
+		        	bulkgrid.jqGrid('footerData','set', {quantity : qsum} );
+		        },
+		      /*   groupingView : { 
+		        	groupField : ['ctno'], 
+		       	 	groupColumnShow : [true],
+		   		 	groupText : ['<b>{0} - {1} Item(s)</b>'],//{0} which mean the grouped text and {1} which mean how many items we have on this group.
+		        },  */
 		        emptyrecords: 'No records to display',
 		        });
+			
 			bulkgrid.jqGrid('navGrid','#bulkktrackpager',{
 		 		 	edit: true,
 		 		 	add: true,
@@ -672,19 +697,26 @@ $(function() {
 </script>
 </head>
 <body>
-<form action="/Myelclass/login.do" method="post">
-	<table width="812" border="1" cellspacing="0" cellpadding="0" >
+<h:form action="/login" method="post" >
+	<table style="border: thin;">
    		<tr>  			
    			<td>Welcome ${user.name}...</td> 
    			<h:text property="userinsession" styleId="userinsession" value="${user.name}" readonly="true" ></h:text>
    			<td><h:submit property="btraction" value="Logout"></h:submit></td> 
    		</tr>
    </table>
+</h:form>
+<h:form >   
 	<div id="blk">Bulk Tracking</div> 
-			<table id="bulkktracktbl">
-             </table> 
-				<div id="bulkktrackpager"></div> 
-	 <%-- <h:button property="artinsert" value="load" styleId="thelink"></h:button>    --%>
-	 </form>  
+	 Group By: <select id="chngroup"> 
+			<option value="ctno">Ct No</option> 
+			<option value="articlename">Article</option> 
+			<option value="status">Status</option>
+			<option value="color">color</option> 
+			<option value="clear">Remove Grouping</option> 
+		</select> <br/><br/> 
+			<table id="bulkktracktbl"></table> 
+			<div id="bulkktrackpager"></div> 
+	 </h:form>  
 </body>
 </html>

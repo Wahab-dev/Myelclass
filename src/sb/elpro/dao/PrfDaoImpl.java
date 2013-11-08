@@ -1044,8 +1044,8 @@ public class PrfDaoImpl implements PrfDao {
 				System.out.println("PONONO "+editprfformbean.getPrf_poref());
 				 //editprfformbean.setPrf_poreftype(rs.getString(""));
 				editprfformbean.setPrf_exporterid(rs.getString("exporterid"));
-				editprfformbean.setPrf_tannid(rs.getString("tanneryid"));
-				editprfformbean.setPrf_custid(rs.getString("customerid"));
+				editprfformbean.setPrf_tanname(rs.getString("tanneryid"));
+				editprfformbean.setPrf_custname(rs.getString("customerid"));
 				editprfformbean.setPrf_cdd(rs.getString("cdd_date"));
 				editprfformbean.setPrf_add(rs.getString("add_date"));
 				editprfformbean.setPrf_destination(rs.getString("destination"));
@@ -1055,9 +1055,9 @@ public class PrfDaoImpl implements PrfDao {
 				editprfformbean.setPrf_commission1(rs.getString("commission"));
 				editprfformbean.setPrf_special(rs.getString("splcdn"));
 				editprfformbean.setPrf_inspcdn(rs.getString("inspcdn"));
-				editprfformbean.setPrf_consigneeid(rs.getString("consigneeid"));
-				editprfformbean.setPrf_notifyid(rs.getString("notifyid"));
-				editprfformbean.setPrf_bankid(rs.getString("bankid"));
+				editprfformbean.setPrf_consigneename(rs.getString("consigneeid"));
+				editprfformbean.setPrf_notifyname(rs.getString("notifyid"));
+				editprfformbean.setPrf_bankname(rs.getString("bankid"));
 				editprfformbean.setPrf_pojw(rs.getString("pojw"));
 				editprfformlist.add(editprfformbean);
 				}
