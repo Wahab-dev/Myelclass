@@ -39,8 +39,8 @@ public class DebSelInvfromCust extends Action{
 			String action = request.getParameter("action");
 			String rows = request.getParameter("rows");
             String pag = request.getParameter("page");
-            String sidx = request.getParameter("sidx");
-            String sord = request.getParameter("sord");
+            //String sidx = request.getParameter("sidx");
+            //String sord = request.getParameter("sord");
 			String inv = request.getParameter("invno");
 			
 			System.out.println("inv N0 "+inv);
@@ -72,6 +72,15 @@ public class DebSelInvfromCust extends Action{
 				jsonobj.put("rows", debitlist);
 				System.out.println(jsonobj);		
 				out.println(jsonobj);
+			}else if(action.equalsIgnoreCase("waived")){
+				System.out.println("IN Debit Waive");
+				String invid = request.getParameter("invid");
+				boolean debitwaive = debbo.setDebitWaive(invid);
+				if(debitwaive){
+					 jsonobj.put("Success", "Successfully waived ");
+				}else{
+					jsonobj.put("Error", "Some error");
+				}
 			}
 		}else{
 			

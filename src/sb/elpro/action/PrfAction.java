@@ -3,14 +3,12 @@
  */
 package sb.elpro.action;
 
-import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -20,8 +18,6 @@ import org.apache.struts.actions.DispatchAction;
 import sb.elpro.actionform.PrfForm;
 import sb.elpro.bo.PrfBo;
 import sb.elpro.bo.PrfBoImpl;
-import sb.elpro.model.ArticleDetails;
-import sb.elpro.model.PrfArticle;
 import sb.elpro.model.ProductDetails;
 
 /**

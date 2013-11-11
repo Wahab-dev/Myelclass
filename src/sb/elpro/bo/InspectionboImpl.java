@@ -12,7 +12,6 @@ import sb.elpro.dao.InspectionDaoImpl;
 import sb.elpro.model.InspectionBean;
 import sb.elpro.model.ProductDetails;
 import sb.elpro.model.QualityCtrlrDetails;
-import sb.elpro.model.SampleTrack;
 
 /**
  * @author Wahab

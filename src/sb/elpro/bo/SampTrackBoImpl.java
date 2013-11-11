@@ -8,7 +8,6 @@ import java.util.List;
 
 import sb.elpro.dao.SampTrackDao;
 import sb.elpro.dao.SampTrackDaoImpl;
-import sb.elpro.model.BulkArticle;
 import sb.elpro.model.SampleTrack;
 
 /**

@@ -19,7 +19,6 @@ import org.apache.struts.action.ActionMapping;
 
 import sb.elpro.bo.SrfBo;
 import sb.elpro.bo.SrfBoImpl;
-import sb.elpro.model.PrfArticle;
 import sb.elpro.model.SrfArticle;
 
 /**

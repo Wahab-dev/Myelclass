@@ -18,7 +18,6 @@ import sb.elpro.bo.PrfBo;
 import sb.elpro.bo.PrfBoImpl;
 import sb.elpro.bo.SrfBo;
 import sb.elpro.bo.SrfBoImpl;
-import sb.elpro.model.ProductDetails;
 import sb.elpro.model.SampleRequest;
 
 /**

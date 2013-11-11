@@ -49,7 +49,8 @@ public class DebAutoComplete extends Action {
 				else if (action.equalsIgnoreCase("Taninv")){
 					System.out.println("In TanInv Autocomplete");
 					String tanterm = request.getParameter("term");
-					List<AutoComplete> exporterlist =  debbo.getDebInvno(tanterm);
+					String expname = request.getParameter("expname");
+					List<AutoComplete> exporterlist =  debbo.getDebInvno(tanterm, expname);
 					System.out.println("List Value " +exporterlist.size());
 					JSONArray jsonOrdertanArray = JSONArray.fromObject(exporterlist);
 					System.out.println(jsonOrdertanArray);

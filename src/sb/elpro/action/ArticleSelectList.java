@@ -4,21 +4,14 @@
 package sb.elpro.action;
 
 import java.io.PrintWriter;
-import java.io.Writer;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import net.sf.json.JSON;
-import net.sf.json.JSONArray;
-import net.sf.json.JSONObject;
-import net.sf.json.JSONString;
-import net.sf.json.JsonConfig;
-import net.sf.json.util.JSONStringer;
 
-import org.apache.catalina.connector.Request;
+import net.sf.json.JSONArray;
 import org.apache.struts.action.Action;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -26,7 +19,6 @@ import org.apache.struts.action.ActionMapping;
 
 import sb.elpro.bo.PrfBo;
 import sb.elpro.bo.PrfBoImpl;
-import sb.elpro.model.ArticleDetails;
 import sb.elpro.model.SelectArticle;
 
 /**

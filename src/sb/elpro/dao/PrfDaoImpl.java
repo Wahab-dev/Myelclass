@@ -91,9 +91,9 @@ public class PrfDaoImpl implements PrfDao {
 				tanbean.setTanneryAttention(rs.getString("tanattn"));
 				tanbean.setTanneryFax(rs.getString("tanfax"));
 				tanbean.setTanneryId(rs.getString("tanid"));
-				tanbean.setLabel(rs.getString("tanname"));
+				tanbean.setTanneryName(rs.getString("tanname"));
 				tanbean.setTanneryContactNo(rs.getString("tanphone"));
-				System.out.println("Tan name "+tanbean.getLabel());
+				System.out.println("Tan name "+tanbean.getTanneryName());
 				tanarraylist.add(tanbean);
 			}
 			System.out.println("Tannery Name Added Successfully");

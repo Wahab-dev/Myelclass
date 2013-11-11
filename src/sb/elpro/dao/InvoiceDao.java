@@ -14,9 +14,7 @@ import sb.elpro.model.DestinationDetails;
 import sb.elpro.model.ExporterDetails;
 import sb.elpro.model.InvBillDetails;
 import sb.elpro.model.InvCustContractDetails;
-import sb.elpro.model.InvoiceForm;
 import sb.elpro.model.NotifyConsigneeDetails;
-import sb.elpro.model.PrfArticle;
 
 /**
  * @author Wahab

@@ -18,9 +18,11 @@ public interface DebitDao {
 	  
 	ArrayList<TanneryDetails> getDebExporter(String debexp) throws SQLException;
 	
-	ArrayList<AutoComplete> getDebTanInvno(String debTaninv) throws SQLException;
+	ArrayList<AutoComplete> getDebTanInvno(String debTaninv, String expname) throws SQLException;
 
 	ArrayList<RaiseDebit> getDebInvnolist(String invno) throws SQLException;
+
+	boolean setDebInvnoWaived(String invid) throws SQLException;
 
 	
 	

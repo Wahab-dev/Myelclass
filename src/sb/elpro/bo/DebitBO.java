@@ -18,8 +18,10 @@ public interface DebitBo {
 
 	ArrayList<TanneryDetails> getDebExporter(String tanterm) throws Exception;
 
-	List<AutoComplete> getDebInvno(String tanterm)throws Exception;
+	List<AutoComplete> getDebInvno(String tanterm, String expname)throws Exception;
 
 	List<RaiseDebit> getDebitInvDetails(String invno)throws Exception;
+
+	boolean setDebitWaive(String invid)throws Exception;
 
 }

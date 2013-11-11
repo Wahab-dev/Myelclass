@@ -18,13 +18,10 @@
 <script src="js/jquery-ui.js"></script>
 <link rel="stylesheet" type="text/css" media="screen" href="css/pepper-grinder/jquery-ui-1.10.3.custom.css" />
 <link rel="stylesheet" type="text/css" media="screen" href="css/ui.jqgrid.css" />
-
 <script src="js/i18n/grid.locale-en.js" type="text/javascript"></script>
-
 <script src="js/jquery.jqGrid.min.js" type="text/javascript"></script>
 <script src="js/elpro/debit.js"></script> 		
 <script type="text/javascript">
-
 </script>
 </head>
 <body>

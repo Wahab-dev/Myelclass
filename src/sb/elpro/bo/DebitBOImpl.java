@@ -42,8 +42,8 @@ public class DebitBoImpl implements DebitBo {
 
 
 	@Override
-	public List<AutoComplete> getDebInvno(String invterm) throws Exception {
-		ArrayList<AutoComplete> DebTanInvnarr = debdao.getDebTanInvno(invterm);
+	public List<AutoComplete> getDebInvno(String invterm, String expname) throws Exception {
+		ArrayList<AutoComplete> DebTanInvnarr = debdao.getDebTanInvno(invterm, expname);
 		if(DebTanInvnarr.isEmpty()){
 			autocomplt.setLabel("NA");
 			DebTanInvnarr.add(autocomplt);
@@ -59,14 +59,10 @@ public class DebitBoImpl implements DebitBo {
 	}
 
 
-	/*@Override
-	public List<RaiseDebit> getDebitInvDetails(String invno) throws Exception {
-		ArrayList<RaiseDebit> getDebInvnarr = debdao.getDebInvnolist(invno);
-		return null;
-	}*/
-
-
-	
-
+	@Override
+	public boolean setDebitWaive(String invid) throws Exception {
+		boolean setDebWaived = debdao.setDebInvnoWaived(invid);
+		return setDebWaived;
+	}
 
 }

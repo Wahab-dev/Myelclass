@@ -9,7 +9,6 @@ import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.PreparedStatement;
 import com.mysql.jdbc.Statement;
 
-import sb.elpro.model.ProductDetails;
 import sb.elpro.model.SampleRequest;
 import sb.elpro.model.SrfArticle;
 import sb.elpro.model.AutoComplete;
@@ -101,9 +100,9 @@ public class SrfDaoImpl implements SrfDao {
 				tanbean.setTanneryAttention(rs.getString("tanattn"));
 				tanbean.setTanneryFax(rs.getString("tanfax"));
 				tanbean.setTanneryId(rs.getString("tanid"));
-				tanbean.setLabel(rs.getString("tanname"));
+				tanbean.setTanneryName(rs.getString("tanname"));
 				tanbean.setTanneryContactNo(rs.getString("tanphone"));
-				System.out.println("Tan name "+tanbean.getLabel());
+				System.out.println("Tan name "+tanbean.getTanneryName());
 				tanarraylist.add(tanbean);
 			}
 			System.out.println("Tannery Name Added Successfully");

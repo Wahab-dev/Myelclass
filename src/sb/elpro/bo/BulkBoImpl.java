@@ -8,10 +8,7 @@ import java.util.List;
 
 import sb.elpro.dao.BulkDaoImpl;
 import sb.elpro.dao.Bulkdao;
-import sb.elpro.dao.PrfDao;
-import sb.elpro.dao.PrfDaoImpl;
 import sb.elpro.model.BulkArticle;
-import sb.elpro.model.CustomerDetails;
 
 /**
  * @author Wahab

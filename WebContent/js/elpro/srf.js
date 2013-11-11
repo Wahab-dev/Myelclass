@@ -321,7 +321,7 @@ $(document).ready(function() {
 					function(result) { 	
 			             response($.map(result, function(item) {
 			                return { 
-			                       value: item.label,
+			                       value: item.tanneryName,
 			                       addr: item.tanneryAddress,
 			                       phone: item.tanneryContactNo,	
 			                       attn : item.tanneryAttention,
