@@ -215,13 +215,12 @@ function loadvalues(){
         				elclass Commission : 
         					<h:text property="prf_elclasscommission" styleId="prf_elclasscommission" value="${editprfform[0].prf_elclasscommission}"></h:text>
         					<br /><br />
-        					<%-- Commission #1:<h:text property="prf_commission" styleId="prf_commission" ></h:text><br /><br/> --%>
         					<div id='TextBoxesGroup'>
 								<div id="TextBoxDiv1">
    									 <label>Commission #1 : </label><h:text property="prf_commission" styleId="prf_commission" value="${editprfform[0].prf_commission1}" ></h:text> </div> 	   
 								</div>	
-							<input type="button" value="Add Comm" id="addButton">
-        					<input type="button" value="Rem Comm" id="removeButton">       		 														  					  		
+							<!-- <input type="button" value="Add Comm" id="addButton"> -->
+        					<!-- <input type="button" value="Rem Comm" id="removeButton">  -->      		 														  					  		
       			</fieldset>
       			</td>
             	<td><fieldset><legend>Special Condition</legend><br/> 

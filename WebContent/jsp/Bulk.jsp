@@ -17,6 +17,10 @@
 <script src="js/jquery.jqGrid.min.js" type="text/javascript"></script>
 <script type="text/javascript">
 /*global jQuery */
+/*
+ * Method to Add Dynamic url in Jqgrid Cell 
+ * Contributed By Oleg from GITHub
+ */
 (function ($) {
     'use strict';
     /*jslint unparam: true */

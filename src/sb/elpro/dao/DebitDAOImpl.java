@@ -94,7 +94,9 @@ public class DebitDaoImpl implements DebitDao {
 		try{			
 			con = DBConnection.getConnection();
 			st = (Statement) con.createStatement();
-			String sql = "SELECT  artname, color, qty, rate, tc, comm, ctno, form.invdate, qshpd, qbal, amt, form.invno, taninvno, totalamount FROM tbl_invform form, tbl_inv_bill bill where form.invno = bill.invno and form.invno = '"+invno+"' ";
+			
+			String sql = "SELECT  artname, color, qty, rate, tc, comm, othercomm, ctno, form.invdate, qshpd, qbal, amt, form.invno, taninvno, totalamount FROM tbl_invform form, tbl_inv_bill bill where form.invno = bill.invno and form.invno = '"+invno+"' ";
+			//String commsql = "select othercommssion, commission from tbl_prfform where where "
 			System.out.println(sql);
 			rs = st.executeQuery(sql);
 			while(rs.next()) {
@@ -108,6 +110,7 @@ public class DebitDaoImpl implements DebitDao {
 				Debbean.setDeb_rate(rs.getString("rate"));
 				Debbean.setDeb_tc(rs.getString("tc"));
 				Debbean.setDeb_elclasscommission(rs.getString("comm"));
+				Debbean.setDeb_othercommission(rs.getString("othercomm"));
 				Debbean.setDeb_qshipped(rs.getString("qshpd"));
 				Debbean.setDeb_qremain(rs.getString("qbal"));
 				Debbean.setDeb_invoiceamt(rs.getString("amt"));

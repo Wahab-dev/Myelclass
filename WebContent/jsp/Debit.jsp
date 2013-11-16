@@ -71,7 +71,7 @@
 				<br />Rate: <h:text property="deb_rate" styleId="deb_rate"> </h:text><br />
 				<br />Quantity :  <h:text property="deb_totalquantity" styleId="deb_totalquantity"> </h:text>  <br />  
 				<br />Invoice Amount: <h:text property="deb_invoiceamt" styleId="deb_invoiceamt"> </h:text><br />
-				<br />el class Commission :  <h:text property="deb_elclassamt" styleId="deb_elclassamt"> </h:text>  <br />  
+				<br />el class Amount :  <h:text property="deb_elclassamt" styleId="deb_elclassamt"> </h:text>  <br />  
 				
       		</td>
 		    <td>

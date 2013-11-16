@@ -360,7 +360,7 @@ $(document).ready(function() {
 	 	);
 		 	
 	//Commision Add 
-	 var counter = 2;
+	 /*var counter = 2;
 	    $("#addButton").click(function () {
 	 	if(counter>8){
 	         alert("Only 8 Commissions Allowed allow");
@@ -381,32 +381,41 @@ $(document).ready(function() {
 	 		       }
 	 			counter--;
 	 		        $("#TextBoxDiv" + counter).remove();
-	 	});		
+	 	});	*/	
 
 	    
 	//Commssion AutoComplete 		
-			 $('#prf_elclasscommission').autocomplete({
-					minLength: 1,
-					source: function(request, response,term) {
-						var param = request.term;
-						 $.ajax({
-				                url: "/Myelclass/PrfAutocomplete.do?term="+param+"&action="+"commision",
-				                dataType: "json",
-				                type:"GET",
-				                success: function (data) {
-				                	 response($.map(data, function(item) {
-				                		 return { 
-				                			 label : item.value,
-				                             value: item.value+", "+item.commplace+".",
-				                             };
-				                         }));//END Success
-				                    }
-				            });//END AJAX
-						},
-			 });
+	 $('#prf_elclasscommission').autocomplete({
+			minLength: 1,
+			source: function(request, response,term) {
+				var param = request.term;
+				$.ajax({
+				        url: "/Myelclass/PrfAutocomplete.do?term="+param+"&action="+"commision",
+				        dataType: "json",
+				        type:"GET",
+				        success: function (data) {
+				              response($.map(data, function(item) {
+				            	  return { 
+				                	label : item.value,
+				                    value: item.value+", "+item.commplace+".",
+				                   };
+				               }));//END Success
+				        }
+				 });//END AJAX
+		    },
+		});
+	 
+	 	 function split( val ) {
+		  return val.split( /,\s*/ );
+		 }
+		 function extractLast( term ) {
+		  return split( term ).pop();
+		 }
+	 
 		 $('#prf_commission').autocomplete({
 				minLength: 1,
-				source: function(request, response,term) {
+				source: function(request, response, term) {
+					 // delegate back to autocomplete, but extract the last term
 					var param = request.term;
 					 $.ajax({
 			                url: "/Myelclass/PrfAutocomplete.do?term="+param+"&action="+"othercommision",

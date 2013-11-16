@@ -2,7 +2,6 @@
  *
  */
 $(document).ready(function() {
-
 	 //DATEPICKER
     $("#deb_debitdate").datepicker({
 	   // changeYear: true,
@@ -49,41 +48,54 @@ $(document).ready(function() {
 			 }, 
 			 pager: '#deb_debpager',
 			 rowNum:3, 
-			// multiselect : true,
-			 toppager:true,
 			 rowList:[3,5,7],	       
 			 sortorder: 'desc',  
 			 height : 'automatic',
 			 emptyrecords: 'No records to display',
 			 caption: 'Debit Load',
-			 onSelectRow:  function(id) {
-				 	var selrowid = grid.jqGrid('getGridParam', 'selrow');
-		        	var invdetails = grid.jqGrid('getRowData', selrowid);
-		        	alert(invdetails.deb_othercommission);
+			 loadComplete: function (data){ //load complete fires immeddiately aftr server response
+				 $("#tcbtn").addClass('ui-state-disabled'); // Diable TC btn
+				 var rowdata = data.rows;
+				 $.each(rowdata, function(index, val) {
+					    var tc = val.deb_tc;
+					   var tcmt =  tc.substring(0,1);
+					   alert(" ___"+tcmt);
+					if(tcmt != 0){
+						alert("tc amt for enablein "+tcmt);
+						$("#tcbtn").removeClass('ui-state-disabled');
+					}
+				 });
+				
 			 },
-			 
-		});
-		grid.jqGrid('navGrid','#deb_debpager',{ edit: false, add: false, del: false,cloneToTop:true});
-				//top Pager Customisation
-			 	var topPagerDiv = $('#' + grid[0].id + '_toppager')[0]; // "#list_toppager"
-			    $("#search_" + grid[0].id + "_top", topPagerDiv).remove();      // "#search_list_top"
-			    $("#refresh_" + grid[0].id + "_top", topPagerDiv).remove() ;     // "#refresh_list_top"
-			    $("#" + grid[0].id + "_toppager_center", topPagerDiv).remove(); // "#list_toppager_center"
-			    $(".ui-paging-info", topPagerDiv).remove();
-
-			    //Bootom Pager Customization
-			     var bottomPagerDiv = $("div#deb_debpager")[0];
-			    $("#add_" + grid[0].id, bottomPagerDiv).remove();
-			    $("#edit_" + grid[0].id, bottomPagerDiv).remove(); 
-			    $("#del_" + grid[0].id, bottomPagerDiv).remove(); 
-			    grid.jqGrid('navButtonAdd', '#tbl_debselInvDetails'+ '_toppager_left', { // Here bulkgrid[0].id -> shows bulktable 
-			        caption: "Raise TC",
-			        buttonicon: 'ui-icon-extlink',
-			    }); 	
-			    
-			    grid.jqGrid('navButtonAdd', '#tbl_debselInvDetails'+ '_toppager_left', { // Here bulkgrid[0].id -> shows bulktable 
+			 onSelectRow:  function(rowid, status, e) {
+				 var selrowid = grid.jqGrid('getGridParam', 'selrow');
+		         var invdetails = grid.jqGrid('getRowData', selrowid);
+		         alert(invdetails.deb_contractno);
+		         $("#deb_rate").val(invdetails.deb_rate);
+		         $("#deb_totalquantity").val(invdetails.deb_qshipped);
+		         $("#deb_commission1").val(invdetails.deb_elclasscommission);
+		         $("#deb_invoiceamt").val(invdetails.deb_invoiceamt);
+			 }
+		}).navGrid('#deb_debpager',{ edit: false, add: false, del: false, refresh: true, view: false, search: true
+		}).navButtonAdd( '#deb_debpager', { 
+			        caption: "TC",
+			        buttonicon: 'ui-icon-extlink', 
+			        title:"Raise Tc",
+			        position: "last",
+			        id : "tcbtn",
+			    	onClickButton: function(){ 
+			    		alert("in Raise");
+			            var list = grid.jqGrid('getGridParam', 'selrow');
+			            var rowdata = grid.jqGrid('getRowData',list);
+			            alert(rowdata.deb_invno);
+			            window.location = "/Myelclass/gototcdebit.do?invno="+rowdata.deb_invno;
+			    	}
+		 }).navButtonAdd( '#deb_debpager',{ 
 			        caption: "Waived",
+			        title:"Debit to Waived",
 			        buttonicon: 'ui-icon-lightbulb',
+			        position: "last",
+			        id : "wvdbtn",
 			        onClickButton: function(){ 
 			        	var selrow = grid.jqGrid('getGridParam', 'selrow');
 			        	var invid = grid.jqGrid('getCell', selrow, 'deb_invno');
@@ -98,7 +110,7 @@ $(document).ready(function() {
 			        		alert("Please Select Debitnote to be Waived ..");
 			        	}
 			        }
-			    }); 
+		}); 
 			   
 			    
 	//Autocomplete 
@@ -149,6 +161,24 @@ $(document).ready(function() {
 	/*
 	 * Events for Exchange Rate 
 	 */
-	 //$("#deb_exchangerate").f
+	 $("#deb_exchangerate").focusout(function() {
+		var comm = $("#deb_commission1").val();
+		var invamt = $("#deb_invoiceamt").val();
+		var commindex = comm.indexOf('%');
+		var commpercent = comm.substring(0,commindex);
+		commpercent.trim();
+	    var elclassamt = ((commpercent * invamt)/100);
+	    $("#deb_elclassamt").val(elclassamt.toFixed(2));
+	    var amtinrs = (elclassamt * $("#deb_exchangerate").val()); 
+	    $("#deb_elclassamtinrs").val(amtinrs.toFixed(2));
+	    var tax = (amtinrs *12.36)/100;                   // Add Dynamic Tax Percentage here          
+	    $("#deb_tax").val(tax.toFixed(2));
+	    var total = amtinrs + tax; 
+	    $("#deb_total").val(total.toFixed(2));
+	    var tds = (total * 10)/100;
+	    $("#deb_tds").val(tds.toFixed(2));
+	    var due = total - tds;
+	    $("#deb_due").val(due.toFixed(2));
+	 });
 	 
 });

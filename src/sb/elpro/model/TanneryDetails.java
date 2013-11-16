@@ -25,6 +25,7 @@ public class TanneryDetails implements Serializable{
 	private String tanneryShortForm;
 	private String tanneryParentId; 
 	private String exporterId;
+	private String label;
 	
 	/**
 	 * @return the tanneryId
@@ -161,5 +162,17 @@ public class TanneryDetails implements Serializable{
 	/**
 	 * @return the exporefno
 	 */
+	/**
+	 * @return the label
+	 */
+	public String getLabel() {
+		return label;
+	}
+	/**
+	 * @param label the label to set
+	 */
+	public void setLabel(String label) {
+		this.label = label;
+	}
 	
 }

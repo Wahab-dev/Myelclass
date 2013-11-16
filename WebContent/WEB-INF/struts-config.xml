@@ -17,6 +17,7 @@
  	<form-bean name="NewUserForm" type="sb.elpro.actionform.NewUserForm"></form-bean>
  	<form-bean name="InspectionForm" type="sb.elpro.actionform.InspectionForm"></form-bean>
  	<form-bean name="SampleTrackForm" type="sb.elpro.actionform.SampleTrackForm"></form-bean>
+ 	<form-bean name="TcDebitForm" type="sb.elpro.actionform.TcDebitForm"></form-bean>
 </form-beans>
  
  <!-- GLOBAL FOWARDS -->
@@ -136,7 +137,14 @@
 	  <action path="/DebAutoComplete" name="DebitForm" type="sb.elpro.action.DebAutoComplete" input="/jsp/Debit.jsp" scope="session">
 	 </action>
 	 
-	  
+	 <!-- TC debit  -->
+	  <action path="/gototcdebit" name="TcDebitForm" type="sb.elpro.action.TcDebitLoadAction" input="/jsp/TcDebit.jsp" scope="session" parameter="action">
+	  	<forward name="tcdebitisloaded" path="/jsp/TcDebit.jsp"></forward>
+	  </action> 
+	 
+	   <action path="/savetcdebit" name="TcDebitForm" type="sb.elpro.action.TcDebitLoadAction" input="/jsp/TcDebit.jsp" scope="session" parameter="action">
+	  	<forward name="tcdebitisloaded" path="/jsp/TcDebit.jsp"></forward>
+	  </action> 
  </action-mappings> 
  
  <!-- MESSAGE RESOURCE -->
