@@ -35,18 +35,21 @@ public class BulkTrackForm extends ActionForm {
 	private String user;
 	
 	private String status;
-	private String Qtyshpd;
-	private String Qbal;
+	private String qtyshpd;
+	private String qbal;
 	private String invdetails;
+	private String reps;
 	private String comments;
 	private String feddback;
 	private String rdd_date;
 	private String statuscontractno;
 	
 	private String Ctno;
+	private String agent;
 	private String Orderdt;
 	private String pono;
 	private String tanneryid;
+	private String exporterid;
 	private String customerid;
 	private String cdd_date;
 	private String add_date;
@@ -59,8 +62,11 @@ public class BulkTrackForm extends ActionForm {
 	private String consigneeid;
 	private String notifyid ;
 	private String bankid;
+	private String pojw;
 	
-	
+	private String totqty;
+	private String totshpd;
+	private String totbal;
 	/**
 	 * @return the articleid
 	 */
@@ -277,30 +283,7 @@ public class BulkTrackForm extends ActionForm {
 	public void setStatus(String status) {
 		this.status = status;
 	}
-	/**
-	 * @return the qtyshpd
-	 */
-	public String getQtyshpd() {
-		return Qtyshpd;
-	}
-	/**
-	 * @param qtyshpd the qtyshpd to set
-	 */
-	public void setQtyshpd(String qtyshpd) {
-		Qtyshpd = qtyshpd;
-	}
-	/**
-	 * @return the qbal
-	 */
-	public String getQbal() {
-		return Qbal;
-	}
-	/**
-	 * @param qbal the qbal to set
-	 */
-	public void setQbal(String qbal) {
-		Qbal = qbal;
-	}
+	
 	/**
 	 * @return the invdetails
 	 */
@@ -552,6 +535,114 @@ public class BulkTrackForm extends ActionForm {
 	 */
 	public void setBankid(String bankid) {
 		this.bankid = bankid;
+	}
+	/**
+	 * @return the qtyshpd
+	 */
+	public String getQtyshpd() {
+		return qtyshpd;
+	}
+	/**
+	 * @param qtyshpd the qtyshpd to set
+	 */
+	public void setQtyshpd(String qtyshpd) {
+		this.qtyshpd = qtyshpd;
+	}
+	/**
+	 * @return the reps
+	 */
+	public String getReps() {
+		return reps;
+	}
+	/**
+	 * @param reps the reps to set
+	 */
+	public void setReps(String reps) {
+		this.reps = reps;
+	}
+	/**
+	 * @return the qbal
+	 */
+	public String getQbal() {
+		return qbal;
+	}
+	/**
+	 * @param qbal the qbal to set
+	 */
+	public void setQbal(String qbal) {
+		this.qbal = qbal;
+	}
+	/**
+	 * @return the agent
+	 */
+	public String getAgent() {
+		return agent;
+	}
+	/**
+	 * @param agent the agent to set
+	 */
+	public void setAgent(String agent) {
+		this.agent = agent;
+	}
+	/**
+	 * @return the exporterid
+	 */
+	public String getExporterid() {
+		return exporterid;
+	}
+	/**
+	 * @param exporterid the exporterid to set
+	 */
+	public void setExporterid(String exporterid) {
+		this.exporterid = exporterid;
+	}
+	/**
+	 * @return the pojw
+	 */
+	public String getPojw() {
+		return pojw;
+	}
+	/**
+	 * @param pojw the pojw to set
+	 */
+	public void setPojw(String pojw) {
+		this.pojw = pojw;
+	}
+	/**
+	 * @return the totqty
+	 */
+	public String getTotqty() {
+		return totqty;
+	}
+	/**
+	 * @param totqty the totqty to set
+	 */
+	public void setTotqty(String totqty) {
+		this.totqty = totqty;
+	}
+	/**
+	 * @return the totshpd
+	 */
+	public String getTotshpd() {
+		return totshpd;
+	}
+	/**
+	 * @param totshpd the totshpd to set
+	 */
+	public void setTotshpd(String totshpd) {
+		this.totshpd = totshpd;
+	}
+	/**
+	 * @return the totbal
+	 */
+	public String getTotbal() {
+		return totbal;
+	}
+	/**
+	 * @param totbal the totbal to set
+	 */
+	public void setTotbal(String totbal) {
+		this.totbal = totbal;
 	}
 		
 		

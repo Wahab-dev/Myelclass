@@ -26,9 +26,10 @@
 <script src="js/elpro/srf.js"></script> 
 </head>
 <body>
-	<h:form action="/Srf">
-	<table width="826" height="369" border="2" cellpadding="0" cellspacing="0">
-		<tr>  			
+<!--  Login Form  -->
+<h:form action="/login" method="post" >
+	<table style="border: thin;">
+   		<tr>  			
    			<td>Welcome ${user.name}...</td> 
    			<h:text property="userinsession" styleId="userinsession" value="${user.name}" readonly="true" ></h:text>
    			<td >
@@ -36,6 +37,11 @@
    			</td> 
    			<td><h:submit property="srfaction" value="logout"></h:submit></td> 
    		</tr>
+   </table>
+</h:form>
+
+<h:form action="/Srf">
+	<table width="826" height="369" border="2" cellpadding="0" cellspacing="0">
   		<tr>
    			<td width="272">
    				Sample No : <h:text property="srf_sampleno" styleId="srf_sampleno" value="${editprfform[0].srf_sampleno}"></h:text> <br /><br />

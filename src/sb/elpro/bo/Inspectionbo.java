@@ -23,7 +23,7 @@ public interface Inspectionbo {
 
 	
 	//Manual Test 
-	public List<InspectionBean> getInspectionTestDetails(String sidx, String sord)throws Exception;
+	public List<InspectionBean> getInspectionTestDetails(String sidx, String sord, String artid)throws Exception;
 
 	public boolean getInspectionTestAddDetails(InspectionBean insptest, String sidx, String sord)throws Exception;
 
@@ -34,7 +34,7 @@ public interface Inspectionbo {
 
 	//Grading test  
 	public List<InspectionBean> getInspectionGradeDetails(String sidx,
-			String sord)throws Exception;
+			String sord, String artid)throws Exception;
 	public boolean getInspectionGradeAddDetails(InspectionBean inspgrad,
 			String sidx, String sord)throws Exception;
 
@@ -46,7 +46,7 @@ public interface Inspectionbo {
 
 	//Reject test  
 	public List<InspectionBean> getInspectionRejDetails(String sidx,
-			String sord)throws Exception;
+			String sord, String artid)throws Exception;
 
 	public boolean getInspectionRejAddDetails(InspectionBean insprej,
 			String sidx, String sord)throws Exception;

@@ -12,8 +12,9 @@ $("#tcdeb_tcdebitdate").datepicker({
 	    gotoCurrent:true, 
 	});
 		 var tcgrid = $("#tbl_tcdebselInvDetails");
+		 var invno = $("#tcdeb_taninvno").val();
 		 tcgrid.jqGrid({
-			 url:"",
+			// url:"/Myelclass/TcDebInvDetails.do?invno="+invno+"&action="+"loadGrid",
 			 datatype: "json",
 			 colNames:['Inv No','Inv date','Ct No','Article','Color','Size','Substance','Quantity','QShipd','QBal','Rate','Inv AMount','Other Charges','Discount','Total','TC','Commission','Agent Commission'],
 			 colModel:[

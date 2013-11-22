@@ -126,7 +126,7 @@ $(document).ready(function() {
 			
 			}, 	
 			{name:'prf_size', index:'size', width:80, align:'center', hidden: false, editable:true,sortable:true,
-				editoptions: { 
+					editoptions: { 
 						dataEvents:[{
 							type: 'focusout',
 							fn: function(e){

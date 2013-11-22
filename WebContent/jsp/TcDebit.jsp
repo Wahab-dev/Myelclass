@@ -25,29 +25,34 @@
 </script>
 </head>
 <body>
+<!--  Login Form  -->
+<h:form action="/login" method="post" >
+	<table style="border: thin;">
+   		<tr>
+			<td>Welcome ${user.name}</td> 
+   			<td><h:submit property="action" value="Logout"></h:submit></td>
+		</tr>
+   </table>
+</h:form>
+
 
 <h:form action="/savetcdebit" focus="tcdebitno"> 	
 	<table width="800" border="2" cellspacing="0" cellpadding="0">
-		<tr>
-			<td>Welcome ${user.name}</td> 
-   			<td><h:submit property="action" value="Logout"></h:submit> 
-   			</td> 
-		</tr>
     	<tr>
 		    <td>
 		    	<fieldset>         
         				<legend>Tcdebit Details</legend> 
         					Tcdebit No: <h:text property="tcdeb_tcdebitno" styleId="tcdeb_tcdebitno"></h:text><br />
-        					<br />Tanner  : <h:text property="tcdeb_exporter" styleId="tcdeb_exporter"></h:text><br />        	 					
+        					<br />Tanner  : <h:text property="tcdeb_exporter" styleId="tcdeb_exporter" value="${invdetails[0].inv_exporter}"></h:text><br />        	 					
          					<br />Address: <h:textarea property="tcdeb_tanaddr" cols="30" rows="2" styleId="tcdeb_tanaddr"></h:textarea><br />
         					<br />Telephone : <h:text property="tcdeb_tantelephone" styleId="tcdeb_tantelephone"> </h:text><br />
 							
       		  </fieldset>
 		    </td>
 		    <td>
-        					<br />TcDebit Date: <h:text property="tcdeb_tcdebitdate" styleId="tcdeb_tcdebitdate"></h:text><br />
-        					<br />Tanner Invoice No: <h:text property="tcdeb_taninvno" styleId="tcdeb_taninvno"></h:text><br />              	 					
-         					<br />elclass ref no : <h:text property="tcdeb_elclassrefno" styleId="tcdeb_elclassrefno"></h:text><br />
+        					<br />TcDebit Date: <h:text property="tcdeb_tcdebitdate" styleId="tcdeb_tcdebitdate" ></h:text><br />
+        					<br />Tanner Invoice No: <h:text property="tcdeb_taninvno" styleId="tcdeb_taninvno" value="${invdetails[0].inv_invoiceno}"></h:text><br />              	 					
+         					<br />elclass ref no : <h:text property="tcdeb_elclassrefno" styleId="tcdeb_elclassrefno" value="${invdetails[0].inv_otherref}"></h:text><br />
         					
       			
 			</td>

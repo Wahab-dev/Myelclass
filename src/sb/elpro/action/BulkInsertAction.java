@@ -4,6 +4,7 @@
 package sb.elpro.action;
 
 import java.io.PrintWriter;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -19,7 +20,8 @@ import org.apache.struts.action.ActionMapping;
 
 import sb.elpro.bo.BulkBo;
 import sb.elpro.bo.BulkBoImpl;
-import sb.elpro.model.BulkArticle;;
+import sb.elpro.model.BulkArticle;
+import sb.elpro.model.BulkQtyDetails;
 
 /**
  * @author Wahab
@@ -51,11 +53,33 @@ public class BulkInsertAction extends Action {
 	             System.out.println("sord "+sord);
 	             System.out.println("action "+action);
 	         	 if(oper == null){
+	         		 String totqty ="";
+	         		 String totshpd = "";
+	         		 String totbal ="";
+	         		 
 					 System.out.println(" In Bulk  LAOD");
 					List<BulkArticle> article = bulkbo.getBulkDetails(sidx,sord);
 					int records = article.size();
 					System.out.println("Reords  "+records);
 					
+					List<BulkQtyDetails> bulkqty = bulkbo.getBulkTotqty(sidx,sord);
+					 Iterator<BulkQtyDetails> iter = bulkqty.iterator();  
+				        while(iter.hasNext()){                
+				        	BulkQtyDetails bulkqtyBean = (BulkQtyDetails) iter.next();
+				        	totqty  = bulkqtyBean.getQuantity();
+				        	totbal  = bulkqtyBean.getQbal();
+				        	totshpd = bulkqtyBean.getQtyshpd(); 
+				        	System.out.println("Tot QTY LIS "+totqty);
+				        	System.out.println("BAL QTY LIS "+totbal);
+				        	System.out.println("SHp QTY LIS "+totshpd);
+				        }
+					
+					
+					   JSONObject totobj = new JSONObject();
+					   totobj.put("quantity", totqty);
+					   totobj.put("qtyshpd", totshpd);
+					   totobj.put("qbal", totbal);
+						
 						int page = Integer.parseInt(pag);
 		                int totalPages = 0;
 		                int totalCount = records;
@@ -71,10 +95,14 @@ public class BulkInsertAction extends Action {
 		                }else {
 		                    totalPages = 0;
 		                }
+		                
+		                 
 					jsonobj.put("total", totalPages);
 					jsonobj.put("page", page);
 					jsonobj.put("records", records);
 					jsonobj.put("rows", article);
+					jsonobj.accumulate("userdata", totobj);
+					//jsonobj.
 					System.out.println(jsonobj);		
 					out.println(jsonobj);
 				}else {

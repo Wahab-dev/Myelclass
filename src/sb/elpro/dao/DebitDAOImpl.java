@@ -109,8 +109,8 @@ public class DebitDaoImpl implements DebitDao {
 				Debbean.setDeb_totalquantity(rs.getString("qty"));
 				Debbean.setDeb_rate(rs.getString("rate"));
 				Debbean.setDeb_tc(rs.getString("tc"));
-				Debbean.setDeb_elclasscommission(rs.getString("comm"));
-				Debbean.setDeb_othercommission(rs.getString("othercomm"));
+				Debbean.setDeb_commission1(rs.getString("comm"));
+				Debbean.setDeb_commission2(rs.getString("othercomm"));
 				Debbean.setDeb_qshipped(rs.getString("qshpd"));
 				Debbean.setDeb_qremain(rs.getString("qbal"));
 				Debbean.setDeb_invoiceamt(rs.getString("amt"));

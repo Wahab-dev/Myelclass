@@ -29,10 +29,10 @@ public class InspectionLoadAction extends Action {
 		usersession = request.getSession(false);	
 		if(usersession !=null){		   	
 				System.out.println("In iNspection Load.....");
-			}else{
+				return mapping.findForward("inspectionisloaded");		
+		}else{
 				System.out.println("Inspection is not Loaded,,,");
 				return mapping.findForward("login");
-			}				
-		return mapping.findForward("inspectionisloaded");		
+		}		
 	}
 }

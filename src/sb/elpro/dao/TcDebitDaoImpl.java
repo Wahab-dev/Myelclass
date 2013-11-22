@@ -13,8 +13,7 @@ import java.util.List;
 
 import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.Statement;
-
-import sb.elpro.model.ArticleDetails;
+ 
 import sb.elpro.model.InvoiceForm;
 import sb.elpro.utility.DBConnection;
 
@@ -36,15 +35,13 @@ public class TcDebitDaoImpl implements TcDebitDao {
 		try{			
 			con = DBConnection.getConnection();
 			st = (Statement) con.createStatement();
-			String sql = "SELECT expname, invno, articlename, articleshortform, size, substance, selection, color, selectionpercent, quantity, pcs, rate, tc, othername FROM tbl_article";
+			String sql = "SELECT expname, invno, taninvno FROM elpro.tbl_invform where invno = '"+invno+"'";
 			rs = st.executeQuery(sql);
-			
 			while(rs.next()) {	
 				InvoiceForm invbean = new InvoiceForm();
 				invbean.setInv_exporter(rs.getString("expname"));
-				invbean.setInv_exporteraddress(rs.getString(""));
 				invbean.setInv_invoiceno(rs.getString("invno"));
-				invbean.setInv_otherref(rs.getString(""));
+				invbean.setInv_otherref(rs.getString("taninvno"));
 				System.out.println("setInv_invoiceno "+invbean.getInv_exporter());
 				invarraylist.add(invbean);
 				}
@@ -53,7 +50,7 @@ public class TcDebitDaoImpl implements TcDebitDao {
 				e.printStackTrace();
 				System.out.println("Article ERROR RESULT");
 			}finally{
-				 con.close() ;
+				 con.close() ;	
 				 st.close();
 				 rs.close();
 		   }	

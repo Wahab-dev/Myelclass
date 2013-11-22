@@ -3,13 +3,11 @@
  */
 package sb.elpro.bo;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import sb.elpro.dao.TcDebitDao;
 import sb.elpro.dao.TcDebitDaoImpl;
 import sb.elpro.model.InvoiceForm;
-import sb.elpro.model.PaymentDetails;
 
 /**
  * @author Wahab

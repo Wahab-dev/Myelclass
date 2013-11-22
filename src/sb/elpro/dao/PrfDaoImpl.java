@@ -1032,7 +1032,7 @@ public class PrfDaoImpl implements PrfDao {
 		try{			
 			con = DBConnection.getConnection();
 			st = (Statement) con.createStatement();
-			String sql = "SELECT form.Ctno, form.agent, form.Orderdt, form.pono, form.exporterid, form.tanneryid, form.customerid, form.cdd_date, form.add_date, form.destination, form.terms, form.payment, form.ourcommission, form.commission, form.splcdn, form.inspcdn, form.consigneeid, form.notifyid, form.bankid, form.pojw FROM elpro.tbl_prfform form where form.Ctno ='"+ctno+"' ";
+			String sql = "SELECT form.Ctno, form.agent, form.Orderdt, form.pono, form.exporterid, form.tanneryid, form.customerid, form.cdd_date, form.add_date, form.destination, form.terms, form.payment, form.commission, form.othercommission, form.splcdn, form.inspcdn, form.consigneeid, form.notifyid, form.bankid, form.pojw FROM elpro.tbl_prfform form where form.Ctno ='"+ctno+"' ";
 			System.out.println(sql);
 			rs = st.executeQuery(sql);
 			

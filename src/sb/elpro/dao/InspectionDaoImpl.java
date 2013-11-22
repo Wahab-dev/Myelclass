@@ -147,7 +147,7 @@ public class InspectionDaoImpl implements InspectionDao {
 
 	@Override
 	public ArrayList<InspectionBean> getInspTestList(String sidx,
-			String sord) throws SQLException {
+			String sord, String artid) throws SQLException {
 		ArrayList<InspectionBean> insptestarray = new ArrayList<InspectionBean>();
 		Connection con = null;
 		Statement st = null;
@@ -155,7 +155,7 @@ public class InspectionDaoImpl implements InspectionDao {
 		try{			
 			con = DBConnection.getConnection();
 			st = (Statement) con.createStatement();
-			String sql = "SELECT id, testid, testtype,  pcstested, result, comments, articleid, color FROM tbl_insptestdetails order by "+sidx+" "+sord+"";
+			String sql = "SELECT id, testid, testtype,  pcstested, result, comments, articleid, color FROM tbl_insptestdetails where articleid = '"+artid+"' order by "+sidx+" "+sord+"";
 			System.out.println(sql);
 			rs = st.executeQuery(sql);
 			while(rs.next()) {	
@@ -196,7 +196,6 @@ public class InspectionDaoImpl implements InspectionDao {
 			
 			pst = (PreparedStatement) con.prepareStatement(sqlquery_saveinspTest);
 			pst.setString(1, insptest.getTestid());
-			System.out.println("getTestid " +insptest.getTestid());
 			pst.setString(2, insptest.getArticleid());
 			pst.setString(3, insptest.getColortest());
 			pst.setString(4, insptest.getTesttype());
@@ -281,7 +280,7 @@ public class InspectionDaoImpl implements InspectionDao {
 
 	@Override
 	public ArrayList<InspectionBean> getInspGradeList(String sidx,
-			String sord) throws SQLException {
+			String sord, String artid) throws SQLException {
 		ArrayList<InspectionBean> insptestarray = new ArrayList<InspectionBean>();
 		Connection con = null;
 		Statement st = null;
@@ -289,7 +288,7 @@ public class InspectionDaoImpl implements InspectionDao {
 		try{			
 			con = DBConnection.getConnection();
 			st = (Statement) con.createStatement();
-			String sql = "SELECT id, gradeid, articleid, color, grade, skincount, percent, comment FROM tbl_inspgradedetails order by "+sidx+" "+sord+"";
+			String sql = "SELECT id, gradeid, articleid, color, grade, skincount, grtotinspected, percent, comment FROM tbl_inspgradedetails where articleid ='"+artid+"' order by "+sidx+" "+sord+"";
 			System.out.println(sql);
 			rs = st.executeQuery(sql);
 			while(rs.next()) {	
@@ -301,6 +300,7 @@ public class InspectionDaoImpl implements InspectionDao {
 				insptestbean.setGrade(rs.getString("grade"));
 				insptestbean.setSkincount(rs.getString("skincount"));
 				insptestbean.setPercent(rs.getString("percent"));
+				insptestbean.setGrtotinspected(rs.getString("grtotinspected"));
 				insptestbean.setComment(rs.getString("comment"));
 				insptestarray.add(insptestbean);
 			}
@@ -324,8 +324,8 @@ public class InspectionDaoImpl implements InspectionDao {
 		boolean isadded = true;
 		try{			
 			con = DBConnection.getConnection();
-			StringBuffer sql_saveinspgrad = new StringBuffer("insert into tbl_inspgradedetails (gradeid, articleid, color, grade, skincount, percent, comment)");
-			sql_saveinspgrad.append("values (?,?,?,?,?,?,?)");
+			StringBuffer sql_saveinspgrad = new StringBuffer("insert into tbl_inspgradedetails (gradeid, articleid, color, grade, skincount, grtotinspected, percent, comment)");
+			sql_saveinspgrad.append("values (?,?,?,?,?,?,?,?)");
 			String sqlquery_saveinspgrad = sql_saveinspgrad.toString();
 			
 			pst = (PreparedStatement) con.prepareStatement(sqlquery_saveinspgrad);
@@ -335,8 +335,9 @@ public class InspectionDaoImpl implements InspectionDao {
 			pst.setString(3, inspgrad.getGradecolor());
 			pst.setString(4, inspgrad.getGrade());
 			pst.setString(5, inspgrad.getSkincount());
-			pst.setString(6, inspgrad.getPercent());
-			pst.setString(7, inspgrad.getComment());
+			pst.setString(6, inspgrad.getGrtotinspected());  
+			pst.setString(7, inspgrad.getPercent());
+			pst.setString(8, inspgrad.getComment());
 			
 			System.out.println("getComment " +inspgrad.getComment());
 			noofrows = pst.executeUpdate();
@@ -362,7 +363,7 @@ public class InspectionDaoImpl implements InspectionDao {
 		boolean isupdate = true;
 		try{			
 			con = DBConnection.getConnection();
-			StringBuffer sql_saveInspgrad = new StringBuffer("UPDATE elpro.tbl_inspgradedetails SET gradeid = ? , articleid = ? , color = ? , grade= ? , skincount = ? , percent = ? , comment = ?  WHERE id = '"+inspgrad.getId()+"' ");
+			StringBuffer sql_saveInspgrad = new StringBuffer("UPDATE elpro.tbl_inspgradedetails SET gradeid = ? , articleid = ? , color = ? , grade= ? , skincount = ? , grtotinspected = ? , percent = ? , comment = ?  WHERE id = '"+inspgrad.getId()+"' ");
 			String sqlquery_saveInspgrad = sql_saveInspgrad.toString();
 			pst = (PreparedStatement) con.prepareStatement(sqlquery_saveInspgrad);
 			pst.setString(1, inspgrad.getGradeid());
@@ -371,8 +372,9 @@ public class InspectionDaoImpl implements InspectionDao {
 			pst.setString(3, inspgrad.getGradecolor());
 			pst.setString(4, inspgrad.getGrade());
 			pst.setString(5, inspgrad.getSkincount());
-			pst.setString(6, inspgrad.getPercent());
-			pst.setString(7, inspgrad.getComment());
+			pst.setString(6, inspgrad.getGrtotinspected()); 
+			pst.setString(7, inspgrad.getPercent());
+			pst.setString(8, inspgrad.getComment());
 			noofrows = pst.executeUpdate();
 			System.out.println("Sucessfully inserted the record.." + noofrows);
 		}catch(Exception e){
@@ -414,7 +416,7 @@ public class InspectionDaoImpl implements InspectionDao {
 	}
 
 	@Override
-	public ArrayList<InspectionBean> getInspRejList(String sidx, String sord)
+	public ArrayList<InspectionBean> getInspRejList(String sidx, String sord, String artid)
 			throws SQLException {
 		ArrayList<InspectionBean> insprejarray = new ArrayList<InspectionBean>();
 		Connection con = null;
@@ -423,7 +425,7 @@ public class InspectionDaoImpl implements InspectionDao {
 		try{			
 			con = DBConnection.getConnection();
 			st = (Statement) con.createStatement();
-			String sql = "SELECT id, rejectid, articleid, arttype, color, totinspected, totpassed, totrejects, subsrejects, sizerejects, selecrejects, colorrejects, orgrejects, otherrejects  FROM tbl_insprejectdetails order by "+sidx+" "+sord+"";
+			String sql = "SELECT id, rejectid, articleid, arttype, color, rjtotinspected, totpassed, totrejects, subsrejects, sizerejects, selecrejects, colorrejects, orgrejects, otherrejects  FROM tbl_insprejectdetails where articleid = '"+artid+"' order by "+sidx+" "+sord+"";
 			System.out.println(sql);
 			rs = st.executeQuery(sql);
 			while(rs.next()) {	
@@ -433,7 +435,7 @@ public class InspectionDaoImpl implements InspectionDao {
 				insprejbean.setArticleid(rs.getString("articleid"));
 				insprejbean.setArttype(rs.getString("arttype"));
 				insprejbean.setRejcolor(rs.getString("color"));
-				insprejbean.setTotinspected(rs.getString("totinspected"));
+				insprejbean.setRjtotinspected(rs.getString("rjtotinspected"));
 				insprejbean.setTotpassed(rs.getString("totpassed"));
 				insprejbean.setTotrejects(rs.getString("totrejects"));
 				insprejbean.setSubsrejects(rs.getString("subsrejects"));
@@ -464,7 +466,7 @@ public class InspectionDaoImpl implements InspectionDao {
 		boolean isadded = true;
 		try{			
 			con = DBConnection.getConnection();
-			StringBuffer sql_saveinsprej = new StringBuffer("insert into tbl_insprejectdetails (rejectid, articleid, arttype,  color, totinspected, totpassed, totrejects, subsrejects, sizerejects, selecrejects, colorrejects, orgrejects, otherrejects )");
+			StringBuffer sql_saveinsprej = new StringBuffer("insert into tbl_insprejectdetails (rejectid, articleid, arttype,  color, rjtotinspected, totpassed, totrejects, subsrejects, sizerejects, selecrejects, colorrejects, orgrejects, otherrejects )");
 			sql_saveinsprej.append("values (?,?,?,?,?,?,?,?,?,?,?,?,?)");
 			String sqlquery_saveinsprejinspgrad = sql_saveinsprej.toString();
 			
@@ -474,7 +476,7 @@ public class InspectionDaoImpl implements InspectionDao {
 			pst.setString(2, insprej.getArticleid());
 			pst.setString(3, insprej.getArttype());
 			pst.setString(4, insprej.getRejcolor());
-			pst.setString(5, insprej.getTotinspected());
+			pst.setString(5, insprej.getRjtotinspected());
 			pst.setString(6, insprej.getTotpassed());
 			pst.setString(7, insprej.getTotrejects());
 			pst.setString(8, insprej.getSubsrejects());
@@ -507,7 +509,7 @@ public class InspectionDaoImpl implements InspectionDao {
 		boolean isupdate = true;
 		try{			
 			con = DBConnection.getConnection();
-			StringBuffer sql_saveInsprej = new StringBuffer("UPDATE elpro.tbl_insprejectdetails SET rejectid = ? , articleid = ? , arttype= ?, color = ? , totinspected= ? , totpassed = ? , totrejects = ? , subsrejects = ?, sizerejects = ? , selecrejects = ? , colorrejects = ? , orgrejects= ?, otherrejects = ?  WHERE id = '"+insprej.getId()+"' ");
+			StringBuffer sql_saveInsprej = new StringBuffer("UPDATE elpro.tbl_insprejectdetails SET rejectid = ? , articleid = ? , arttype= ?, color = ? , rjtotinspected= ? , totpassed = ? , totrejects = ? , subsrejects = ?, sizerejects = ? , selecrejects = ? , colorrejects = ? , orgrejects= ?, otherrejects = ?  WHERE id = '"+insprej.getId()+"' ");
 			String sqlquery_saveInsprej = sql_saveInsprej.toString();
 			pst = (PreparedStatement) con.prepareStatement(sqlquery_saveInsprej);
 			pst.setString(1, insprej.getRejectid());
@@ -515,7 +517,7 @@ public class InspectionDaoImpl implements InspectionDao {
 			pst.setString(2, insprej.getArticleid());
 			pst.setString(3, insprej.getArttype());
 			pst.setString(4, insprej.getRejcolor());
-			pst.setString(5, insprej.getTotinspected());
+			pst.setString(5, insprej.getRjtotinspected());
 			pst.setString(6, insprej.getTotpassed());
 			pst.setString(7, insprej.getTotrejects());
 			pst.setString(8, insprej.getSubsrejects());

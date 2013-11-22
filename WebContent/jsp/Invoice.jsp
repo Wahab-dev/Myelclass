@@ -28,13 +28,17 @@
 </script>
 </head>
 <body>
-<h:form action="/saveinvoice" styleId="saveinvoice">
-    <table style="width: 1072px; border: solid; ">
+<!--  Login Form  -->
+<h:form action="/login" method="post" >
+	<table style="border: thin;">
    		<tr>  			
-   			<td>Welcome ${user.name}</td> 
+   			<td>Welcome ${user.name}...</td> 	
    			<td><h:submit property="action" value="Logout"></h:submit></td> 
    		</tr>
-    </table>
+   </table>
+</h:form>
+<h:form action="/saveinvoice" styleId="saveinvoice">
+   
 	<table border="1" style="border: solid; padding: 0px; border-spacing: 0px;">
 	   <tr bordercolor="black"  >
    		  <td>

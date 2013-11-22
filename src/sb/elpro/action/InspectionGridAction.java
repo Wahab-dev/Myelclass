@@ -35,7 +35,6 @@ public class InspectionGridAction extends Action{
 		PrintWriter out = response.getWriter();
 		JSONObject jsonobj = new JSONObject();
 		response.setContentType("application/json");
-		System.out.println("In Sample Track  Action ");
 		 if(usersession != null){
 			 String oper =   request.getParameter("oper");
 			 String rows = request.getParameter("rows");
@@ -43,17 +42,21 @@ public class InspectionGridAction extends Action{
              String sidx = request.getParameter("sidx");
              String sord = request.getParameter("sord");
              String event = request.getParameter("event");
+             String artid = request.getParameter("artid");
              
              System.out.println("rows "+rows); 
              System.out.println("page "+pag); 
              System.out.println("sidx "+sidx);
              System.out.println("sord "+sord);
              System.out.println("event "+event);
+             System.out.println("artid "+artid);
+             
              if(event.equalsIgnoreCase("manualtest")){
+            	
             	 System.out.println("In INsp test ");
 		             if(oper == null){
 						System.out.println(" In Insp Test Load");
-						List<InspectionBean> testload = inspbo.getInspectionTestDetails(sidx,sord);
+						List<InspectionBean> testload = inspbo.getInspectionTestDetails(sidx,sord,artid);
 						int records = testload.size();
 						System.out.println("Reords  "+records);
 							int page = Integer.parseInt(pag);
@@ -78,8 +81,8 @@ public class InspectionGridAction extends Action{
 						System.out.println(jsonobj);		
 						out.println(jsonobj);
 		             }else {
-		            	 InspectionBean insptest = new InspectionBean();
-		            	 	insptest.setTestid(request.getParameter("testid"));
+		            	InspectionBean insptest = new InspectionBean();
+		            	    insptest.setTestid(request.getParameter("testid"));
 		            	 	insptest.setArticleid(request.getParameter("articleid"));
 		            	 	insptest.setColortest(request.getParameter("colortest"));
 		            	 	insptest.setId(request.getParameter("id"));
@@ -124,7 +127,7 @@ public class InspectionGridAction extends Action{
              		 System.out.println("In INsp GRADING---- ");
 		             if(oper == null){
 						System.out.println(" In Insp Grade Load");
-						List<InspectionBean> gradeload = inspbo.getInspectionGradeDetails(sidx,sord);
+						List<InspectionBean> gradeload = inspbo.getInspectionGradeDetails(sidx, sord, artid);
 						int records = gradeload.size();
 						System.out.println("Reords  "+records);
 							int page = Integer.parseInt(pag);
@@ -158,6 +161,7 @@ public class InspectionGridAction extends Action{
 		            	 	inspgrad.setSkincount(request.getParameter("skincount"));
 		            	 	inspgrad.setPercent(request.getParameter("percent"));
 		            	 	inspgrad.setComment(request.getParameter("comment"));
+		            	 	inspgrad.setGrtotinspected(request.getParameter("grtotinspected"));
 		            	 	
 		            		if(oper.equalsIgnoreCase("add")){
 		            			System.out.println(" In Grading Add");
@@ -195,7 +199,7 @@ public class InspectionGridAction extends Action{
              		 System.out.println("In INsp Reject---- ");
 		             if(oper == null){
 						System.out.println(" In Insp Reject Load");
-						List<InspectionBean> rejectload = inspbo.getInspectionRejDetails(sidx,sord);
+						List<InspectionBean> rejectload = inspbo.getInspectionRejDetails(sidx,sord,artid);
 						int records = rejectload.size();
 						System.out.println("Reords  "+records);
 							int page = Integer.parseInt(pag);
@@ -220,7 +224,6 @@ public class InspectionGridAction extends Action{
 						System.out.println(jsonobj);		
 						out.println(jsonobj);
 		             }else {
-		             
 		            	 InspectionBean insprej = new InspectionBean();
 		            	 	insprej.setId(request.getParameter("id"));
 		            	 	insprej.setArticleid(request.getParameter("articleid"));
@@ -233,11 +236,10 @@ public class InspectionGridAction extends Action{
 		            	 	insprej.setSelecrejects(request.getParameter("selecrejects"));
 		            	 	insprej.setSizerejects(request.getParameter("sizerejects"));
 		            	 	insprej.setSubsrejects(request.getParameter("subsrejects"));
-		            	 	insprej.setTotinspected(request.getParameter("totinspected"));
+		            	 	insprej.setRjtotinspected(request.getParameter("rjtotinspected"));
 		            	 	insprej.setTotpassed(request.getParameter("totpassed"));
 		            	 	insprej.setTotrejects(request.getParameter("totrejects"));
 		            	 	
-
 		            		if(oper.equalsIgnoreCase("add")){
 		            			System.out.println(" In Rejects Add");
 								boolean isInspRejAdded = inspbo.getInspectionRejAddDetails(insprej,sidx,sord);

@@ -15,6 +15,7 @@ public class InspectionBean {
 	private String inspdate;
 	private String inspqualityctrlr;
 	private String insp_cdn;
+	private String inspcomments;
 	
 	private String articleid;		
 	private String color;
@@ -80,6 +81,11 @@ public class InspectionBean {
 	private String colorrejects;
 	private String orgrejects;
 	private String otherrejects;
+	
+	
+	private String grtotinspected;
+	private String rjtotinspected;
+	
 	/**
 	 * @return the inspid
 	 */
@@ -583,6 +589,42 @@ public class InspectionBean {
 	 */
 	public void setId(String id) {
 		this.id = id;
+	}
+	/**
+	 * @return the rjtotinspected
+	 */
+	public String getRjtotinspected() {
+		return rjtotinspected;
+	}
+	/**
+	 * @param rjtotinspected the rjtotinspected to set
+	 */
+	public void setRjtotinspected(String rjtotinspected) {
+		this.rjtotinspected = rjtotinspected;
+	}
+	/**
+	 * @return the grtotinspected
+	 */
+	public String getGrtotinspected() {
+		return grtotinspected;
+	}
+	/**
+	 * @param grtotinspected the grtotinspected to set
+	 */
+	public void setGrtotinspected(String grtotinspected) {
+		this.grtotinspected = grtotinspected;
+	}
+	/**
+	 * @return the inspcomments
+	 */
+	public String getInspcomments() {
+		return inspcomments;
+	}
+	/**
+	 * @param inspcomments the inspcomments to set
+	 */
+	public void setInspcomments(String inspcomments) {
+		this.inspcomments = inspcomments;
 	}
 	
 

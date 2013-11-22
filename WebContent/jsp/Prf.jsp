@@ -91,21 +91,25 @@ function loadvalues(){
 }  
 </script>
 </head>
+
 <body onload="loadvalues();">
-	<h:form action="/Prf" method="post">
-		<table width="812" border="1" cellspacing="0" cellpadding="0" >
+
+
+<!--  Login Form  -->
+<h:form action="/login" method="post" >
+	<table style="border: thin;">
    		<tr>  			
    			<td>Welcome ${user.name}...</td> 
-   			<h:text property="userinsession" styleId="userinsession" value="${user.name}" readonly="true" ></h:text>
-   			<td >
-   				<h:text property="formaction" styleId="formaction" value="${actionform}" readonly="true" ></h:text>
-   			</td> 
+   			<td ><h:text property="userinsession" styleId="userinsession" value="${user.name}" readonly="true" ></h:text></td >
+   			<td ><h:text property="formaction" styleId="formaction" value="${actionform}" readonly="true" ></h:text></td> 
    			<td><h:submit property="prfaction" value="Logout"></h:submit></td> 
    		</tr>
    </table>
-   <font color="red">
-	<h:errors/>
-</font>
+</h:form>
+
+ 
+<h:form action="/Prf" method="post">
+   <font color="red"><h:errors/></font>
     <table width="800" border="1" cellspacing="0" cellpadding="0">
          	 <tr>
            		 <td width="97">

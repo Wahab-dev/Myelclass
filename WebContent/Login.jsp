@@ -23,7 +23,7 @@ size: 12.5px;
 #pwderror{
  color:red;
 }
-</style>
+</style>	
 <link rel="stylesheet" type="text/css" media="screen" href="css/ui-darkness/jquery-ui-1.10.1.custom.css" />
 <script type="text/javascript" src="js/jquery-1.9.0.min.js"></script>
 <script type="text/javascript" src="js/jquery-ui.js"></script>

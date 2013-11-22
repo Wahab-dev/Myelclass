@@ -63,6 +63,8 @@ public class BulkArticle implements Serializable{
 		private String notifyid ;
 		private String bankid;
 		private String pojw;
+		
+		
 		/**
 		 * @return the articleid
 		 */
@@ -604,6 +606,10 @@ public class BulkArticle implements Serializable{
 		public void setPojw(String pojw) {
 			this.pojw = pojw;
 		}
+		/**
+		 * @return the totqty
+		 */
+		
 		
 		
 		

@@ -8,7 +8,15 @@
 <title>Menu page</title>
 </head>
 <body onload="">
-	
+	<!--  Login Form  -->
+<h:form action="/login" method="post" >
+	<table style="border: thin;">
+   		<tr>  			
+   			<td>Welcome ${user.name}...</td> 	
+   			<td><h:submit property="action" value="Logout"></h:submit></td> 
+   		</tr>
+   </table>
+</h:form>
 	<h1>Menu Page</h1>
 	
 	Welcome ${user.name}....

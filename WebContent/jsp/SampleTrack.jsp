@@ -324,15 +324,17 @@ $(function() {
 </script>
 </head>
 <body>
+<!--  Login Form  -->
 <h:form action="/login" method="post" >
-		<table width="812" border="1" cellspacing="0" cellpadding="0" >
-   			<tr>  			
+	<table style="border: thin;">
+   		<tr>  			
    				<td>Welcome ${user.name}...</td> 
    				<h:text property="userinsession" styleId="userinsession" value="${user.name}" readonly="true" ></h:text>
    				<td><h:submit property="straction" value="Logout"></h:submit></td> 
    			</tr>
-   		</table>
-   	</h:form>	
+   </table>
+</h:form>
+
 <h:form>   
 		<div id="blk">Sample Tracking</div> 
 			<table id="sampletracktbl">

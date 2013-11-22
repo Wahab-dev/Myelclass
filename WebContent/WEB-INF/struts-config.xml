@@ -142,9 +142,12 @@
 	  	<forward name="tcdebitisloaded" path="/jsp/TcDebit.jsp"></forward>
 	  </action> 
 	 
-	   <action path="/savetcdebit" name="TcDebitForm" type="sb.elpro.action.TcDebitLoadAction" input="/jsp/TcDebit.jsp" scope="session" parameter="action">
-	  	<forward name="tcdebitisloaded" path="/jsp/TcDebit.jsp"></forward>
-	  </action> 
+	   <action path="/savetcdebit" name="TcDebitForm" type="sb.elpro.action.TcDebitLoadAction" input="/jsp/TcDebit.jsp" scope="session" parameter="action"></action> 
+	  
+	   <action path="/TcDebInvDetails" name="TcDebitForm" type="sb.elpro.action.TcDebitAction" input="/jsp/TcDebit.jsp" scope="session"></action>
+	  
+	  
+	  
  </action-mappings> 
  
  <!-- MESSAGE RESOURCE -->
@@ -152,8 +155,13 @@
  
  <plug-in className="org.apache.struts.validator.ValidatorPlugIn">
  	<set-property property="pathnames" value="/WEB-INF/validator-rules.xml, /WEB-INF/validator-user.xml" />
- 
  </plug-in>
+ 
+ 
+ 
+ 
+ 
+ 
  
  </struts-config>		
  

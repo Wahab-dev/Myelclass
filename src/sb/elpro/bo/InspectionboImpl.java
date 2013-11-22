@@ -49,9 +49,9 @@ public class InspectionboImpl implements Inspectionbo {
 
 
 	@Override
-	public List<InspectionBean> getInspectionTestDetails(String sidx, String sord)
+	public List<InspectionBean> getInspectionTestDetails(String sidx, String sord, String artid)
 			throws Exception {
-		ArrayList<InspectionBean> InspTestList = inspdao.getInspTestList(sidx,sord);
+		ArrayList<InspectionBean> InspTestList = inspdao.getInspTestList(sidx,sord,artid);
 		return InspTestList;
 	}
 
@@ -82,8 +82,8 @@ public class InspectionboImpl implements Inspectionbo {
 
 	@Override
 	public List<InspectionBean> getInspectionGradeDetails(String sidx,
-			String sord) throws Exception {
-		ArrayList<InspectionBean> InspGradeList = inspdao.getInspGradeList(sidx,sord);
+			String sord, String artid ) throws Exception {
+		ArrayList<InspectionBean> InspGradeList = inspdao.getInspGradeList(sidx, sord, artid);
 		return InspGradeList;
 	}
 
@@ -114,8 +114,8 @@ public class InspectionboImpl implements Inspectionbo {
 
 	@Override
 	public List<InspectionBean> getInspectionRejDetails(String sidx,
-			String sord) throws Exception {
-		ArrayList<InspectionBean> InspRejList = inspdao.getInspRejList(sidx,sord);
+			String sord, String artid) throws Exception {
+		ArrayList<InspectionBean> InspRejList = inspdao.getInspRejList(sidx,sord, artid);
 		return InspRejList;
 	}
 

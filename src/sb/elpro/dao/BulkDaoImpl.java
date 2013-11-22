@@ -12,6 +12,7 @@ import com.mysql.jdbc.PreparedStatement;
 import com.mysql.jdbc.Statement;
 
 import sb.elpro.model.BulkArticle;
+import sb.elpro.model.BulkQtyDetails;
 import sb.elpro.utility.DBConnection;
 
 /**
@@ -27,6 +28,7 @@ public class BulkDaoImpl implements Bulkdao {
 		Connection con = null;
 		Statement st = null;
 		ResultSet rs = null;
+	
 		try{			
 			con = DBConnection.getConnection();
 			st = (Statement) con.createStatement();
@@ -34,10 +36,7 @@ public class BulkDaoImpl implements Bulkdao {
 			System.out.println(sql);
 			rs = st.executeQuery(sql);
 			while(rs.next()) {	
-				/*String qty = rs.getString("quantity") +" "+rs.getString("unit");
-				*/
 				BulkArticle bulkbean = new BulkArticle();
-				
 				bulkbean.setCtno(rs.getString("Ctno"));
 				bulkbean.setAgent(rs.getString("agent"));
 				bulkbean.setOrderdt(rs.getString("Orderdt"));
@@ -74,7 +73,6 @@ public class BulkDaoImpl implements Bulkdao {
 				bulkbean.setRate(rs.getString("rate"));
 				bulkbean.setTc(rs.getString("tc"));
 				bulkbean.setUser(rs.getString("user"));
-				
 				bulkbean.setStatus(rs.getString("status"));
 				bulkbean.setQtyshpd(rs.getString("Qtyshpd"));
 				bulkbean.setQbal(rs.getString("Qbal"));
@@ -83,6 +81,7 @@ public class BulkDaoImpl implements Bulkdao {
 				bulkbean.setComments(rs.getString("comments"));
 				bulkbean.setFeddback(rs.getString("feddback"));
 				bulkbean.setRdd_date(rs.getString("rdd_date"));
+				
 				bulkarray.add(bulkbean);
 				}
 			}catch(Exception e){
@@ -94,6 +93,39 @@ public class BulkDaoImpl implements Bulkdao {
 				 rs.close();
 		   }	
 		return bulkarray;
+	}
+	
+	/* (non-Javadoc)
+	 * @see sb.elpro.dao.Bulkdao#getBulkQtyDetails()
+	 */
+	@Override
+	public ArrayList<BulkQtyDetails> getBulkQtyDetails(String sidx, String sord) throws SQLException {
+		Connection con = null;
+		Statement st = null;
+		ResultSet rs = null;
+		ArrayList<BulkQtyDetails> totalarray = new ArrayList<BulkQtyDetails>();
+		try{			
+			con = DBConnection.getConnection();
+			st = (Statement) con.createStatement();
+			String sql = "SELECT  sum(quantity) as qty , sum(Qtyshpd) as Qshipd, sum(Qbal) as Qbal FROM elpro.tbl_prf_article article, elpro.tbl_prfarticle_status statuse where article.prfarticleid = statuse.prfarticleid";
+			System.out.println(sql);
+			rs = st.executeQuery(sql);
+			if(rs.next()){
+				BulkQtyDetails bulqty = new BulkQtyDetails();
+				bulqty.setQbal(rs.getString("Qbal"));
+				bulqty.setQuantity(rs.getString("qty"));
+				bulqty.setQtyshpd(rs.getString("Qshipd"));
+				totalarray.add(bulqty);
+			}
+		}catch(Exception e){
+			e.printStackTrace();
+			System.out.println("ERROR RESULT");
+		}finally{
+			 con.close() ;
+			 st.close();
+			 rs.close();
+	   }	
+		return totalarray;
 	}
 
 	@Override
@@ -132,5 +164,7 @@ public class BulkDaoImpl implements Bulkdao {
 	   }	
 		return isupdate;
 	}
+
+	
 
 }

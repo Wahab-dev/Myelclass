@@ -10,7 +10,7 @@
 <title>Registration Page</title>
 </head>
 <body>
-	Registration Success >>>>>>>> please login using your Username and Password
+	Registration Success please login using your Username and Password
 	
 	
 	<h:link action="/login" >Login Pages</h:link>

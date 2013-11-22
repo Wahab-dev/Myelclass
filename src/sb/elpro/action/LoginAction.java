@@ -94,4 +94,13 @@ public class LoginAction extends DispatchAction {
 		newuserfrm.reset(map, request);
 		return map.findForward("reset");
 	}
+	
+	
+	public ActionForward Logout(ActionMapping map, ActionForm form, 
+			HttpServletRequest request, HttpServletResponse response) throws Exception{
+		System.out.println("In LOGOUT");
+		usersession = request.getSession(false);
+		usersession.invalidate();			
+		return map.findForward("login");  
+	}
 }

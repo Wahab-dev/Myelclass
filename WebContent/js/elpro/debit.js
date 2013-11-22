@@ -2,8 +2,9 @@
  *
  */
 $(document).ready(function() {
-	 //DATEPICKER
-    $("#deb_debitdate").datepicker({
+	 
+	//DATEPICKER
+    $(".dtdebit").datepicker({
 	   // changeYear: true,
 	    autoSize: true,
 	    changeMonth:false,
@@ -14,6 +15,7 @@ $(document).ready(function() {
 	    showButtonPanel: true,
 	    gotoCurrent:true, 
 	});
+    
 		 var grid = $("#tbl_debselInvDetails");
 		 grid.jqGrid({
 			 url:"",
@@ -36,8 +38,8 @@ $(document).ready(function() {
 					{name: 'deb_discount', index: 'deb_discount' ,width:90, hidden: true},
 					{name: 'deb_totalamt', index: 'deb_totalamt' ,width:70, hidden: true},
 					{name: 'deb_tc', index: 'deb_tc' ,width:70, },
-					{name: 'deb_elclasscommission', index: 'deb_elclasscommission' ,width:50, },
-					{name: 'deb_othercommission', index: 'deb_othercommission' ,width:90, hidden: true},
+					{name: 'deb_commission1', index: 'deb_commission1' ,width:50, },
+					{name: 'deb_commission2', index: 'deb_commission2' ,width:90, hidden: true},
 				],
 			 jsonReader : {  
 				 repeatitems:false,
@@ -55,25 +57,25 @@ $(document).ready(function() {
 			 caption: 'Debit Load',
 			 loadComplete: function (data){ //load complete fires immeddiately aftr server response
 				 $("#tcbtn").addClass('ui-state-disabled'); // Diable TC btn
+				 $("#tcbutton").attr('disabled' , true);
 				 var rowdata = data.rows;
 				 $.each(rowdata, function(index, val) {
 					    var tc = val.deb_tc;
 					   var tcmt =  tc.substring(0,1);
-					   alert(" ___"+tcmt);
 					if(tcmt != 0){
-						alert("tc amt for enablein "+tcmt);
 						$("#tcbtn").removeClass('ui-state-disabled');
+						//enable tc button
+						$("#tcbutton").attr('disabled' , false);
+						$("#deb_tc").val(tc);
 					}
 				 });
-				
 			 },
 			 onSelectRow:  function(rowid, status, e) {
 				 var selrowid = grid.jqGrid('getGridParam', 'selrow');
 		         var invdetails = grid.jqGrid('getRowData', selrowid);
-		         alert(invdetails.deb_contractno);
 		         $("#deb_rate").val(invdetails.deb_rate);
 		         $("#deb_totalquantity").val(invdetails.deb_qshipped);
-		         $("#deb_commission1").val(invdetails.deb_elclasscommission);
+		         $("#deb_commission1").val(invdetails.deb_commission1);
 		         $("#deb_invoiceamt").val(invdetails.deb_invoiceamt);
 			 }
 		}).navGrid('#deb_debpager',{ edit: false, add: false, del: false, refresh: true, view: false, search: true
@@ -84,12 +86,14 @@ $(document).ready(function() {
 			        position: "last",
 			        id : "tcbtn",
 			    	onClickButton: function(){ 
-			    		alert("in Raise");
-			            var list = grid.jqGrid('getGridParam', 'selrow');
-			            var rowdata = grid.jqGrid('getRowData',list);
-			            alert(rowdata.deb_invno);
-			            window.location = "/Myelclass/gototcdebit.do?invno="+rowdata.deb_invno;
-			    	}
+				        /*var list = grid.jqGrid('getGridParam', 'selrow');
+			    		var rowdata = grid.jqGrid('getRowData',list);
+				        var exp = $("#deb_exporter").val();
+				        var debno = $("#deb_debitno").val();
+				        var debdt = $("#deb_debitdate").val();*/
+			    		
+						
+			         }
 		 }).navButtonAdd( '#deb_debpager',{ 
 			        caption: "Waived",
 			        title:"Debit to Waived",
@@ -99,20 +103,21 @@ $(document).ready(function() {
 			        onClickButton: function(){ 
 			        	var selrow = grid.jqGrid('getGridParam', 'selrow');
 			        	var invid = grid.jqGrid('getCell', selrow, 'deb_invno');
-			        	alert(invid);
+			        	
 			        	if(invid){
 			        		 // Ajax call to Controller for Debit to be Waived 
 							 $.getJSON("/Myelclass/DebSelInvfromCust.do?invid="+invid+"&action="+"waived",
 								function (data) { 
-								 alert(data);
-					            });//END getJSON
+								 //hanle the Response ...
+					         });//END getJSON
 			        	}else{
 			        		alert("Please Select Debitnote to be Waived ..");
 			        	}
 			        }
 		}); 
-			   
-			    
+		
+		 
+		
 	//Autocomplete 
 	$('#deb_exporter').autocomplete({
 		 source: function(request, response) {
@@ -158,6 +163,38 @@ $(document).ready(function() {
 		 }
 	}); 
 	
+	
+	/*
+	 * Open Dialog
+	 * 
+	 */
+	 $("#tcdebit").tabs().dialog({
+			autoOpen: false,
+	        resizable: true,
+	        width: 830,
+	        height: 640,
+	        autoResize: true, 
+	        modal: true,
+	        open: function(event, ui){
+	        	$("#tcdeb_tcdebitno").val($("#deb_debitno").val());
+	        	$("#tcdeb_exporter").val($("#deb_exporter").val());
+	        	$("#tcdeb_tanaddr").val($("#deb_tanaddr").val());
+	        	$("#tcdeb_tantelephone").val($("#deb_tantelephone").val());
+	        	$("#tcdeb_tcdebitdate").val($("#deb_debitdate").val());
+	        	$("#tcdeb_taninvno").val($("#deb_taninvno").val());
+	        	$("#tcdeb_elclassrefno").val($("#deb_elclassrefno").val());
+	        	//$("#tcdeb_exchangerate").val($("#").val());
+	        	$("#tcdeb_tcamt").val($("#deb_tc").val());
+	        	$("#tcdeb_rate").val($("#deb_rate").val());
+	        	$("#tcdeb_totalquantity").val($("#deb_totalquantity").val());
+	        } 
+		});
+	 
+	$("#tcbutton").click(function(){
+		//Dialog Box 	 
+		$("#tcdebit").dialog('open');
+	});
+	
 	/*
 	 * Events for Exchange Rate 
 	 */
@@ -180,5 +217,24 @@ $(document).ready(function() {
 	    var due = total - tds;
 	    $("#deb_due").val(due.toFixed(2));
 	 });
+	 
+	 $("#tcdeb_exchangerate").focusout(function() {
+			var tc = $("#tcdeb_tcamt").val();
+			var exchngrate = $("#tcdeb_exchangerate").val();
+			var totqty = $("#tcdeb_totalquantity").val();
+			
+			
+			var tcindex = tc.indexOf(' ');
+			alert(tcindex);
+			var tcpercent = tc.substring(0,tcindex);
+			tcpercent.trim();
+			alert(tcpercent);
+			 var amt = (tcpercent * totqty) / 100;
+			 alert(amt);
+			 var amtinrs = (amt * exchngrate);
+			 alert(amtinrs);
+			 $("#tcdeb_elclassamtinrs").val(amtinrs);
+		   
+		 });
 	 
 });
