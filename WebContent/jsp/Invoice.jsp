@@ -117,8 +117,8 @@
    			  <td>
    			      <fieldset>         
        				  <legend>Dispatch Details</legend><br/> 
-       					  COG: <h:text property="inv_ctryoforigngoods" styleId="inv_ctryoforigngoods" ></h:text><br/>
-       					  <br/>LoadingPort: <h:text property="inv_loadingport" styleId="inv_loadingport" ></h:text><br/> 
+       					  COG: <h:text value="India" property="inv_ctryoforigngoods" styleId="inv_ctryoforigngoods" ></h:text><br/>
+       					  <br/>LoadingPort: <h:text value="Chennai" property="inv_loadingport" styleId="inv_loadingport" ></h:text><br/> 
 						  <br/>COF: <h:text property="inv_ctryoffinaldesti" styleId="inv_ctryoffinaldesti" ></h:text><br/> 
    	 					  <br/>Destination: <h:text property="inv_finaldesti" styleId="inv_finaldesti" styleClass="autocmplet"></h:text><br/>
        					  <br/>Dischargeport: <h:text property="inv_dischargeport" styleId="inv_dischargeport" styleClass="autocmplet"></h:text><br/> 
@@ -176,10 +176,10 @@
   			<td colspan="4">&nbsp;</td>
 	    </tr>
 		<tr>
-		    <td colspan="4">
+		  <td colspan="4">
 		     	<table id="tbl_invaddinvBill"></table>
 		        <div id="tbl_invbillpager"></div>
-		    </td>  
+		  </td>  
 		</tr>
 		<tr>
   			<td colspan="4">&nbsp;</td>

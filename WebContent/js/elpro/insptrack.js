@@ -2,101 +2,76 @@
  *
  *
  */
-$(function() { 
-	var insptrgrid = $('#insptracktbl');
-	insptrgrid.jqGrid({    //17 cols
+$(function() {
+	
+	var insptrackgrid = $("#insptracktbl");
+	
+	insptrackgrid.jqGrid({    
+		url:"/Myelclass/InspectionTrackAction.do?event=load", //17 cols
 		datatype: "json",
-   		//url:"/Myelclass/SampleInsertAction.do", 
     	colNames:['ID','Status','CtNo','InspDate','QCtlr','ArticleID','Article','Color','InspCdn','testID','GradeId','RejID','TotInspctd','comments'],  
     	colModel :[ 
-					{name: 'inspid', index: 'inspid', align:'center', width:60, editable:true, sortable: true, hidden:false, 
-					},
-					{name: 'status', index: 'status', align:'center', width:60, editable:true, sortable: true, hidden:false, 
-					},
-					{name: 'contractno', index: 'contractno', align:'center', width:60, editable:true, sortable: true, hidden:false, 
-					},
-					{name: 'inspdate', index: 'inspdate', align:'center', width:60, editable:true, sortable: true, hidden:false, 
-					},
-					{name: 'qualitycontroller', index: 'qualitycontroller', align:'center', width:60, editable:true, sortable: true, hidden:false, 
-					},
-					{name: 'articleid', index: 'articleid', align:'center', width:60, editable:true, sortable: true, hidden:false, 
-					},
-					{name: 'article', index: 'article', align:'center', width:60, editable:true, sortable: true, hidden:false, 
-					},
-					{name: 'color', index: 'color', align:'center', width:60, editable:true, sortable: true, hidden:false, 
-					},
-					{name: 'inspcdn', index: 'inspcdn', align:'center', width:60, editable:true, sortable: true, hidden:false, 
-					},
-					{name: 'testid', index: 'testid', align:'center', width:60, editable:true, sortable: true, hidden:false, 
-					},
-					{name: 'gradeid', index: 'gradeid', align:'center', width:60, editable:true, sortable: true, hidden:false, 
-					},
-					{name: 'rejectsid', index: 'rejectsid', align:'center', width:60, editable:true, sortable: true, hidden:false, 
-					},
-					{name: 'totinspected', index: 'totinspected', align:'center', width:60, editable:true, sortable: true, hidden:false, 
-					},
-					{name: 'inspcomments', index: 'inspcomments', align:'center', width:60, editable:true, sortable: true, hidden:false, 
-					},
-					/*{name: 'testtype', index: 'testtype', align:'center', width:60, editable:true, sortable: true, hidden:false, 
-					},
-					{name: 'pcstested', index: 'pcstested', align:'center', width:60, editable:true, sortable: true, hidden:false, 
-					},
-					{name: 'result', index: 'result', align:'center', width:60, editable:true, sortable: true, hidden:false, 
-					},
-					{name: 'comments', index: 'comments', align:'center', width:60, editable:true, sortable: true, hidden:false, 
-					},
-					{name: 'grade', index: 'grade', align:'center', width:60, editable:true, sortable: true, hidden:false, 
-					},
-					{name: 'skincount', index: 'skincount', align:'center', width:60, editable:true, sortable: true, hidden:false, 
-					},
-					{name: 'grtotinspected', index: 'grtotinspected', align:'center', width:60, editable:true, sortable: true, hidden:false, 
-					},
-					{name: 'percent', index: 'percent', align:'center', width:60, editable:true, sortable: true, hidden:false, 
-					},
-					{name: 'comment', index: 'comment', align:'center', width:60, editable:true, sortable: true, hidden:false, 
-					},
-					{name: 'arttype', index: 'arttype', align:'center', width:60, editable:true, sortable: true, hidden:false, 
-					},
-					{name: 'rjtotinspected', index: 'rjtotinspected', align:'center', width:60, editable:true, sortable: true, hidden:false, 
-					},
-					{name: 'totpassed', index: 'totpassed', align:'center', width:60, editable:true, sortable: true, hidden:false, 
-					},
-					{name: 'totrejects', index: 'totrejects', align:'center', width:60, editable:true, sortable: true, hidden:false, 
-					},
-					{name: 'subsrejects', index: 'subsrejects', align:'center', width:60, editable:true, sortable: true, hidden:false, 
-					},
-					{name: 'sizerejects', index: 'sizerejects', align:'center', width:60, editable:true, sortable: true, hidden:false, 
-					},
-					{name: 'selecrejects', index: 'selecrejects', align:'center', width:60, editable:true, sortable: true, hidden:false, 
-					},
-					{name: 'colorrejects', index: 'colorrejects', align:'center', width:60, editable:true, sortable: true, hidden:false, 
-					},
-					{name: 'orgrejects', index: 'orgrejects', align:'center', width:60, editable:true, sortable: true, hidden:false, 
-					},
-					{name: 'otherrejects', index: 'otherrejects', align:'center', width:60, editable:true, sortable: true, hidden:false, 
-					},*/
+			{name: 'inspid', index: 'inspid', align:'center', width:60, editable: true, sortable: true, hidden: false,edittype:'text',},
+			{name: 'status', index: 'status', align:'center', width:60, editable: true, sortable: true, hidden: false,edittype:'text',},
+			{name: 'inspContractNo', index: 'contractno', align:'center', width:60, editable: true, sortable: true, hidden: false, edittype:'text',},
+			{name: 'inspdate', index: 'inspdate', align:'center', width:60, editable: true, sortable: true, hidden: false, edittype:'text',},
+			{name: 'inspqualityctrlr', index: 'qualitycontroller', align:'center', width:60, editable: true, sortable: true, hidden: false, edittype:'text',},
+			{name: 'articleid', index: 'articleid', align:'center', width:60, editable: true, sortable: true, hidden: false, edittype:'text',},
+			{name: 'article', index: 'article', align:'center', width:60, editable: true, sortable: true, hidden: false, edittype:'text',},
+			{name: 'color', index: 'color', align:'center', width:60, editable: true, sortable: true, hidden: false, edittype:'text',},
+			{name: 'inspcdn', index: 'inspcdn', align:'center', width:60, editable: true, sortable: true, hidden: false, edittype:'text',},
+			{name: 'testid', index: 'testid', align:'center', width:60, editable: true, sortable: true, hidden: false, edittype:'text',},
+			{name: 'gradeid', index: 'gradeid', align:'center', width:60, editable: true, sortable: true, hidden: false, edittype:'text',},
+			{name: 'rejectsid', index: 'rejectsid', align:'center', width:60, editable: true, sortable: true, hidden: false, edittype:'text',},
+			{name: 'totinspected', index: 'totinspected', align:'center', width:60, editable: true, sortable: true, hidden: false, edittype:'text',},
+			{name: 'inspcomments', index: 'inspcomments', align:'center', width:60, editable: true, sortable: true, hidden: false, edittype:'text',},
     	],
     	jsonReader : {  
-    		repeatitems:false,
+    		repeatitems: false,
     		root: "rows",
-    		page: "page", //calls first
-    		total: "total" ,//calls Second
-    		records: "records" //calls Third
+    		page: "page", 
+    		total: "total" ,
+    		records: "records" 
     	},  
+    	editurl: "/Myelclass/InspectionTrackAction.do?event=edit",
     	caption: "Inspection Tracking Report",
-    	pager: '#insptrackpager',
-    	rowNum:10, 
+    	pager: "#insptrackpager",
+    	rowNum: 10, 
     	rowList:[20,30,40],
-    	loadtext: "Bow Bow",
-    	height : "auto",
-    	width:"auto",  
-    	sortname: 'contractNumber',  
-    	sortorder: 'desc',
-    	scroll: 1, //Check here
-    	editurl: '',
-    	emptyrecords: 'No records to display',
-    	}).jqGrid("navGrid",'#insptrackpager',{
-    		edit: true, add: true, del: true, 
-			search: false, refresh: true, view: true
+    	loadtext: "Bow Bow........... ",
+    	 height : "auto",
+ 	    width:"auto",
+    	sortname: "contractno", 
+    	sortorder: "desc",
+    	viewrecords: true,
+        gridview: true,
+    	
+    	emptyrecords: "No records to display",
+    	ondblClickRow: function(rowid) {
+    		alert("Double Click ");
+    		insptrackgrid.jqGrid('editGridRow', rowid); 
+    	    /*$(this).jqGrid('editGridRow', rowid);*/
+    	},
+    	
+    	onSelectRow: function (id) {
+    	    $(this).jqGrid('viewGridRow', id);
+    	}
     	});
+	insptrackgrid.jqGrid('navGrid','#insptrackpager',{
+		 	edit: true,
+ 		 	add: true,
+ 		 	del: true, 
+ 		 	search: true, 
+ 		 	refresh: true,
+ 		 	view: true, 
+ 		 	},
+ 		 {
+ 		 		/*
+ 		 		* Edit 
+ 		 		*/
+ 		 		 reloadAfterSubmit: true,
+				 closeAfterEdit: true,
+ 		 		 
+ 		 }	
+	);
 });

@@ -92,6 +92,9 @@ public class InspectionForm extends ActionForm {
 	
 	private String grtotinspected;
 	private String rjtotinspected;
+	private String status;
+	
+	
 	/**
 	 * @return the id
 	 */
@@ -631,6 +634,18 @@ public class InspectionForm extends ActionForm {
 	 */
 	public void setInspcomments(String inspcomments) {
 		this.inspcomments = inspcomments;
+	}
+	/**
+	 * @return the status
+	 */
+	public String getStatus() {
+		return status;
+	}
+	/**
+	 * @param status the status to set
+	 */
+	public void setStatus(String status) {
+		this.status = status;
 	}
 	
 	

@@ -3,18 +3,25 @@
  */
 package sb.elpro.model;
 
+import java.io.Serializable;
+
 /**
  * @author Wahab
  *
  */
-public class InspectionBean {
+public class InspectionBean implements Serializable {
 	 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -5064888768604040704L;
+	
 	private String id; 
 	private String inspid; //inspection id
 	private String inspContractNo;
 	private String inspdate;
 	private String inspqualityctrlr;
-	private String insp_cdn;
+	private String inspcdn;
 	private String inspcomments;
 	
 	private String articleid;		
@@ -48,6 +55,7 @@ public class InspectionBean {
 	private String percent;
 	private String comment;
 	
+	
 	/*private String contractno;
 	private String inspectionid;
 	private String qualityctrl;
@@ -69,7 +77,7 @@ public class InspectionBean {
 	
 	
 	// Rejects 
-	private String rejectid;
+	private String rejectsid;
 	private String arttype;
 	private String rejcolor;
 	private String totinspected;
@@ -85,6 +93,7 @@ public class InspectionBean {
 	
 	private String grtotinspected;
 	private String rjtotinspected;
+	private String status;
 	
 	/**
 	 * @return the inspid
@@ -137,14 +146,14 @@ public class InspectionBean {
 	/**
 	 * @return the insp_cdn
 	 */
-	public String getInsp_cdn() {
-		return insp_cdn;
+	public String getInspcdn() {
+		return inspcdn;
 	}
 	/**
 	 * @param insp_cdn the insp_cdn to set
 	 */
-	public void setInsp_cdn(String insp_cdn) {
-		this.insp_cdn = insp_cdn;
+	public void setInspcdn(String inspcdn) {
+		this.inspcdn = inspcdn;
 	}
 	/**
 	 * @return the articleid
@@ -434,18 +443,7 @@ public class InspectionBean {
 	public void setComment(String comment) {
 		this.comment = comment;
 	}
-	/**
-	 * @return the rejectid
-	 */
-	public String getRejectid() {
-		return rejectid;
-	}
-	/**
-	 * @param rejectid the rejectid to set
-	 */
-	public void setRejectid(String rejectid) {
-		this.rejectid = rejectid;
-	}
+	
 	/**
 	 * @return the arttype
 	 */
@@ -626,6 +624,31 @@ public class InspectionBean {
 	public void setInspcomments(String inspcomments) {
 		this.inspcomments = inspcomments;
 	}
+	/**
+	 * @return the status
+	 */
+	public String getStatus() {
+		return status;
+	}
+	/**
+	 * @param status the status to set
+	 */
+	public void setStatus(String status) {
+		this.status = status;
+	}
+	/**
+	 * @return the rejectsid
+	 */
+	public String getRejectsid() {
+		return rejectsid;
+	}
+	/**
+	 * @param rejectsid the rejectsid to set
+	 */
+	public void setRejectsid(String rejectsid) {
+		this.rejectsid = rejectsid;
+	}
+	
 	
 
 

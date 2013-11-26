@@ -126,6 +126,9 @@
 	 		<forward name="InspTrackisloaded" path="/jsp/InspectionTrack.jsp"></forward>
 	 </action>
 	 
+	 <action path="/InspectionTrackAction" name="InspectionForm" type="sb.elpro.action.InspectionTrackGridAction" input="/jsp/InspectionTrack.jsp" scope="session">
+	 </action>
+	 
 	 <!-- Debit Details -->
 	  <action path="/gotodebit" name="DebitForm" type="sb.elpro.action.DebitLoadAction" input="/jsp/Debit.jsp" scope="session" parameter="action">
 	  	<forward name="debitisloaded" path="/jsp/Debit.jsp"></forward>

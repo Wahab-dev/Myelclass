@@ -119,8 +119,9 @@ $(document).ready(function() {
 		          	  $('#inv_custattn').val(ui.item.attn);
 		          	  $('#inv_custfax').val(ui.item.fax);
 		          	 $('#inv_custid').val(ui.item.id);
-		          	 var custid = $("#inv_custid").val();
-		          	invctgrid.jqGrid('setGridParam',{url:"/Myelclass/InvSelectCtfromCust.do?custid="+custid+"&action="+"load"}).trigger("reloadGrid");				 
+		          	 var custname = ui.item.label;
+		          	 //Load First Grid Based On Selected Value
+		          	invctgrid.jqGrid('setGridParam',{url:"/Myelclass/InvSelectCtfromCust.do?custname="+custname+"&action="+"load"}).trigger("reloadGrid");				 
 				    }
 		  	 });
 			 invctgrid.jqGrid({ // MAster Grid
@@ -195,7 +196,7 @@ $(document).ready(function() {
 			 */			
 			//Load Billing Details
 			billgrid.jqGrid({
-				//url:"",
+				url:"",
 				datatype: "json",
 				colNames:['Ct No','Article','Color','Size','Substance','Selection','Quantity','unit','Rate','Q Shipped','Q Balance','Amount', 'Total','TC','articleid','Article Id'],
 			    colModel:[
@@ -227,26 +228,31 @@ $(document).ready(function() {
 							 	dataEvents:  [{
 									type: 'focusout',
 									fn: function(e){
-										 $("#qbal").val(parseFloat($("#quantity").val() - $("#qshipped").val()));
+										var qbals = parseFloat($("#quantity").val() - $("#qshipped").val());
+										var qbal = qbals.toFixed(2);
+										
+										 $("#qbal").val(qbal);
 										//Rate Calculation
 										 var rate = $("#rate").val();
-										 alert(rate);
 										 var ratemp = rate.indexOf(' ');
 										 var ratemplast = rate.lastIndexOf(' ');
 										 var rates = rate.substring(ratemp+1, ratemplast);
-										 alert(rates);
-										 $("#amount").val(parseFloat (rates * $("#qshipped").val()));
+										 var floatamt = parseFloat (rates * $("#qshipped").val());
+										 alert(floatamt);
+								    	 var fltamt = floatamt.toFixed(2);
+										 alert(fltamt);
+										 $("#amount").val(fltamt);
 									}
 								}]
 							},
 						},
 						{name:'qbal', index:'qbal',sortable:true, editable: true, width:70, 
 							//editoptions: datainit 
-							formatter : 'number', formatoptions:{decimalSeparator:".", decimalPlaces: 2,},
+							formatter : 'number', formatoptions:{decimalSeparator:".", decimalPlaces: 2, defaultValue: '0.00'},
 							
 						},
 						{name:'amount', index:'amount',sortable:true, editable: true, width:70,
-							formatter : 'number', formatoptions:{decimalSeparator:".", decimalPlaces: 2, },
+							formatter : 'number', formatoptions: {decimalSeparator:".", decimalPlaces: 2, defaultValue: '0.00'},
 						},
 						{name:'total', index:'total',hidden: true, sortable:true, editable: true, width:70},
 						{name:'tc', index:'tc',hidden: true,sortable:true, editable: true, width:70},
@@ -267,12 +273,11 @@ $(document).ready(function() {
 				sortorder: 'desc',  
 				editurl: "/Myelclass/InvSelectCtfromCust.do?action="+"addBill",
 				emptyrecords: 'No records to display',
-				//setCaption : 'Raise Invoice',
-				/* ondblClickRow: function(rowid, form) {
-				       alert(form);
-				jQuery(this).jqGrid('editGridRow', rowid);
-					   
-				} */
+				grouping:true, 
+		        groupingView : { 
+		            groupField : ['contractno'],
+		            groupOrder : ['desc'] 
+		        },
 			});	
 			billgrid.jqGrid('navGrid','#tbl_invbillpager',{
 						add : true, 
@@ -295,8 +300,26 @@ $(document).ready(function() {
 					           	if (rowid === null) {
 					             // todo: how to cancel add command here
 					             alert('Please select row');
-					             return;
+					             
 								}
+					           	/*
+					           	 * Method to diable add method not working
+					           	 */
+					          /*  var selRowId = $(this).getGridParam('selrow'),
+					            tr = $("#"+rowid);
+					            // you can use getCell or getRowData to examine the contain of
+					            // the selected row to decide whether the row is editable or not
+					            if (selRowId !== rowid && !tr.hasClass('not-editable-row')) {
+					            	// eneble the "Edit" button in the navigator
+					            	$("#edit_" + this.id).removeClass('ui-state-disabled');
+					            	$("#del_" + this.id).removeClass('ui-state-disabled');
+					            } else {
+					            	// unselect previous selected row
+					            	// disable the "Edit" and "Del" button in the navigator
+					            	$("#edit_" + this.id).addClass('ui-state-disabled');
+					            	$("#del_" + this.id).addClass('ui-state-disabled');
+					            }*/
+					           
 					           	selRowData = billgrid.jqGrid('getRowData', rowid);
 					           	alert(selRowData);
 					            $('#' + 'contractno' + '.FormElement', formID).val(selRowData.contractno);
@@ -315,6 +338,8 @@ $(document).ready(function() {
 					            $('#' + 'tc' + '.FormElement', formID).val(selRowData.tc);
 					            $('#' + 'articleid' + '.FormElement', formID).val(selRowData.articleid);
 					            $('#' + 'prfarticleid' + '.FormElement', formID).val(selRowData.prfarticleid);
+					            
+					            return true; // allow selection or unselection
 							}, //BeforeShowForm 
 						
 						
@@ -352,7 +377,6 @@ $(document).ready(function() {
 				 
 			
 			/*
-			 * 
 			 * GRID 3
 			 */			
 				//INV Billing Details
@@ -379,24 +403,30 @@ $(document).ready(function() {
 								{name: 'invqshpd', index:'invqshpd',sortable:true, editable: true, width:70,
 									formatter : 'number', formatoptions:{decimalSeparator:".", decimalPlaces: 2, },
 									edittype:'text', 
+								},
+								{name: 'invqbal', index:'qbal',hidden: false, sortable:true, editable: true, width:70,
+									formatter : 'number', formatoptions:{decimalSeparator:".", decimalPlaces: 2, },
+									edittype:'text', 
 									editoptions:{
 									 	dataEvents:  [{
 											type: 'focusout',
 											fn: function(e){
-												 $("#invqbal").val(parseFloat($("#invqbal").val() - $("#invqshpd").val()));
-												//Rate Calculation
+												 var invqbal = parseFloat($("#invqty").val() - $("#invqshpd").val());
+												 var qbals = invqbal.toFixed(2);
+												 $("#invqbal").val(qbals);
+												 //Rate Calculation
 												 var rate = $("#invrate").val();
 												 alert(rate);
 												 var ratemp = rate.indexOf(' ');
 												 var ratemplast = rate.lastIndexOf(' ');
 												 var rates = rate.substring(ratemp+1, ratemplast);
-												 alert(rates);
-												 $("#invamt").val(parseFloat (rates * $("#invqshpd").val()));
+												// alert(rates);
+												 var amt = parseFloat (rates * $("#invqshpd").val()).toFixed(2);
+												 $("#invamt").val(amt);
 											}
 										}]
-									},	
+									},		
 								},
-								{name: 'invqbal', index:'qbal',hidden: false, sortable:true, editable: true, width:70},
 								{name: 'invamt', index:'amt',hidden: false, sortable:true, editable: true, width:70,
 									formatter : 'number', formatoptions:{decimalSeparator:".", decimalPlaces: 2, },	
 								},
@@ -412,16 +442,20 @@ $(document).ready(function() {
 					rowNum:20, 
 					multiselect : false,
 					rowList:[10,20,30],	  
-					sortname: 'invartname',
+					sortname: 'invno',
 					sortorder: 'desc',  
 					height: 'automatic',
 					emptyrecords: 'No records to display',
 					editurl: "/Myelclass/InvSelectCtfromCust.do?action="+"loadBill",
-					//caption: 'BILL PAGE ',
+					grouping:true, 
+			        groupingView : { 
+			            groupField : ['invno'],
+			            groupOrder : ['desc'] 
+			        },
 				 });	
 			
 				 invgrid.jqGrid('navGrid','#invbillpager',{
-						add : true,
+						add : false,
 						edit: true, 
 						del : true,
 						view: true,
@@ -434,24 +468,24 @@ $(document).ready(function() {
 							closeAfterEdit: true,
 							reloadAfterSubmit: true,
 						},
-						{
-							/*
-							 * Add Method 
-							 */
+						/*
+						 * Remove Add Button - Bcos Qty Bal Calculates wrong
+						 * {
+							
+							 * Add Second BIll 
+							 
 							closeAfterAdd: true,
 							reloadAfterSubmit: true,
 							//Add 
 							beforeShowForm : function(formID){
-								
 								var selRowData;
 								var rowid = invgrid.jqGrid('getGridParam', 'selrow');
 					           	if (rowid === null) {
-					             // todo: how to cancel add command here
 					             alert('Please select row');
 					             return;
 								}
 					           	selRowData = invgrid.jqGrid('getRowData', rowid);
-					           	alert(selRowData);
+					           	alert(selRowData.invno);
 					           	$('#' + 'invid' + '.FormElement', formID).val(selRowData.invid);
 					            $('#' + 'invno' + '.FormElement', formID).val(selRowData.invno);
 					            $('#' + 'invdt' + '.FormElement', formID).val(selRowData.invdt);
@@ -465,12 +499,12 @@ $(document).ready(function() {
 					            $('#' + 'invqty' + '.FormElement', formID).val(selRowData.invqty); 
 					            $('#' + 'invrate' + '.FormElement', formID).val(selRowData.invrate);
 					            $('#' + 'invtc' + '.FormElement', formID).val(selRowData.invtc);
-					            $('#' + 'invqshpd' + '.FormElement', formID).val("0");
+					            $('#' + 'invqshpd' + '.FormElement', formID).val("0.00");
 					            $('#' + 'invqbal' + '.FormElement', formID).val(selRowData.invqbal);
 					            $('#' + 'invamt' + '.FormElement', formID).val(selRowData.invamt);
 					           // $('#' + 'prfarticleid' + '.FormElement', formID).val(selRowData.prfarticleid);
 						    }, 							
-						},
+						},*/
 						{
 							delData: {
 								//Function to Add parameters to the delete 
@@ -484,16 +518,30 @@ $(document).ready(function() {
 								reloadAfterSubmit: true,
 							
 						},{},
-						
 						 {
+							// In View Grid
 							/*beforeShowForm: function(form) { //  Shows the Hidden Date field @ Form LOads
 						         alert("in View Grid "); 
 						        // $('#quantity').val($('#quantity').val()+$('#unit').val());
 								},*/
 							
 						}
-						
-					);		 
+					).navButtonAdd('#invbillpager',{
+			 		 	   caption:"Add Bill", 
+			 		 	   buttonicon:"ui-icon-lightbulb", 
+			 		 	   position:"first",
+			 		 	   onClickButton: function(){ 
+			 		 		 var $self = $(this);
+				 		 	   $self.jqGrid("editGridRow", $self.jqGrid("getGridParam", "selrow"),
+				 		 	    {
+				 		 		 
+				 		 		   beforeShowForm: function(formId){
+				 		 			   alert("In BFORM");
+				 		 			 $("#invqshpd").val("0.00"); 
+				 		 		   }
+				 		 	    });
+			 		 	   }
+					});
 		//Invoice Type
 		/*$('#inv_invoicetype').change(function(){
 			var value = $('#inv_invoicetype').val();
@@ -579,9 +627,9 @@ $(document).ready(function() {
 		          	  $('#inv_exportertele').val(ui.item.fone);
 		          	  $('#inv_exporterattn').val(ui.item.attn);
 		          	  $('#inv_exporterfax').val(ui.item.fax);
-		            	$('#inv_expref').val(ui.item.ref);
+		              $('#inv_expref').val(ui.item.ref);
 				    }
-		  	});
+		  	    });
 		
 		$('#inv_ctryoforigngoods').autocomplete({
 			 source: function(request, response) {
@@ -594,8 +642,11 @@ $(document).ready(function() {
 				              };
 				        }));//END response
 				 });
-			 }
-		}); 
+			 },
+			 close: function () {
+				    $(this).removeClass("ui-corner-top").addClass("ui-corner-all");
+				  }
+		});
 		
 		$('#inv_loadingport').autocomplete({
 			 source: function(request, response) {

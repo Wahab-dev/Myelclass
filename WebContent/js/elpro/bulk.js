@@ -436,10 +436,12 @@ $(function() {
 		        grouping: true,
 		        gridview : true,
 		        footerrow: true,
+		        altRows:true,  // altrows and altclass for alternate color on grid rows
+		        altclass:'myAltRowClass',
 		        userDataOnFooter : true, //Gets Footer Total Recod from Server Side 
-		        loadComplete: function() {
-		        	
-		        },
+		       /* loadComplete: function() {
+		            $("tr.jqgrow:odd").addClass('myAltRowClass');
+		        },*/
 		      /*   groupingView : { 
 		        	groupField : ['ctno'], 
 		       	 	groupColumnShow : [true],
@@ -477,7 +479,7 @@ $(function() {
 		 		 	},
 		 		 	{}
 		 		 	
-				);/* .navButtonAdd('#bulkktrackpager',{
+				) .navButtonAdd('#bulkktrackpager',{
 		 		 	   caption:"Status", 
 		 		 	   buttonicon:"ui-icon-lightbulb", 
 		 		 	   position:"last",
@@ -591,7 +593,7 @@ $(function() {
 								
 							});
 		 		 			 			
-						},  
+						},  */
 		 		 		 beforeShowForm:  function(form) { 
 		 		 			 $("#tr_agent").hide();
 		 		 			 $("#tr_pono").hide(); 
@@ -636,7 +638,7 @@ $(function() {
 		 		 	    });
 		 		 	   
 		 		 	   }
-		 		 	}).navButtonAdd('#bulkktrackpager',{
+		 		 	});/*navButtonAdd('#bulkktrackpager',{
 			 		 	   caption:"Modify", 
 			 		 	   buttonicon:"ui-icon-tag", 
 			 		 	   onClickButton: function(){ 

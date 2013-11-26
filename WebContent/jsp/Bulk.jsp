@@ -12,6 +12,7 @@
 <link rel="stylesheet" type="text/css" media="screen" href="css/ui.jqgrid.css" />
 <style type="text/css">
 #ui-datepicker-div { font-size: 11px; } 
+.myAltRowClass { background-color: Light; background-image: none; }
 </style>
 <script src="js/i18n/grid.locale-en.js" type="text/javascript"></script>
 <script src="js/jquery.jqGrid.min.js" type="text/javascript"></script>
@@ -27,7 +28,7 @@
    		<tr>  			
    			<td>Welcome ${user.name}...</td> 
    			<h:text property="userinsession" styleId="userinsession" value="${user.name}" readonly="true" ></h:text>
-   			<td><h:submit property="btraction" value="Logout"></h:submit></td> 
+   			<td><h:submit property="action" value="Logout"></h:submit></td> 
    		</tr>
    </table>
 </h:form>

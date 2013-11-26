@@ -38,7 +38,7 @@ $(document).ready(function() {
 	$('#inspqualityctrlr').autocomplete({
 		 source: function(request, response) {
 			var param = request.term;  
-			$.getJSON("/Myelclass/InspAutocomplete.do?term="+param+"&action="+"inspQtCtr",
+			$.getJSON("/Myelclass/InspAutocomplete.do?term="+param+"&action=inspQtCtr",
 				function(result) { 	
 			       response($.map(result, function(item) {
 			           return { 

@@ -37,16 +37,16 @@ public class InvoiceDaoImpl implements InvoiceDao {
 			try{			
 				con = DBConnection.getConnection();
 				st = (Statement) con.createStatement();
-				String sql = "SELECT expname, expattn, expaddr, expphone, expfax, expref FROM elpro.tbl_exporter where expname like '%"+expterm+"%' order by expname";
+				String sql = "SELECT tanname, tanattn, tanaddr, tanphone, tanfax, expid, cstno, tinno, exprefno FROM elpro.tbl_tannery where tanname like '%"+expterm+"%' order by tanname";
 				rs = st.executeQuery(sql);
 				while(rs.next()) {	
 					ExporterDetails invexporterbean = new ExporterDetails();
-					invexporterbean.setExpname(rs.getString("expname"));
-					invexporterbean.setExpaddr(rs.getString("expaddr"));
-					invexporterbean.setExpref(rs.getString("expref"));
-					invexporterbean.setExpphone(rs.getString("expphone"));
-					invexporterbean.setExpfax(rs.getString("expfax"));
-					invexporterbean.setExpattn(rs.getString("expattn"));
+					invexporterbean.setExpname(rs.getString("tanname"));
+					invexporterbean.setExpaddr(rs.getString("tanaddr"));
+					invexporterbean.setExpref(rs.getString("exprefno"));
+					invexporterbean.setExpphone(rs.getString("tanphone"));
+					invexporterbean.setExpfax(rs.getString("tanfax"));
+					invexporterbean.setExpattn(rs.getString("tanattn"));
 					System.out.println("Exporter"+invexporterbean.getExpname());
 					invexporterarray.add(invexporterbean);
 				}

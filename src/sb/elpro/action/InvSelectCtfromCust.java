@@ -51,9 +51,9 @@ public class InvSelectCtfromCust extends Action {
            // System.out.println("ctno "+ctno);
 			System.out.println("action "+action);
 			if(action.equalsIgnoreCase("load")){
-				String custid = request.getParameter("custid");
-				System.out.println("Customer Id "+custid);			
-				List<CustomerInvoice> invctlist = invbo.getInvCustCtDetails(custid, sidx,sord);
+				String custname = request.getParameter("custname");
+				System.out.println("custname  "+custname);			
+				List<CustomerInvoice> invctlist = invbo.getInvCustCtDetails(custname, sidx,sord);
 				int records = invctlist.size();
 				
 				int page = Integer.parseInt(pag);

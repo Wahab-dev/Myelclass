@@ -232,7 +232,7 @@ public class InspectionGridAction extends Action{
 		            	 	insprej.setColorrejects(request.getParameter("colorrejects"));
 		            	 	insprej.setOrgrejects(request.getParameter("orgrejects"));
 		            	 	insprej.setOtherrejects(request.getParameter("otherrejects"));
-		            	 	insprej.setRejectid(request.getParameter("rejectid"));
+		            	 	insprej.setRejectsid(request.getParameter("rejectid"));
 		            	 	insprej.setSelecrejects(request.getParameter("selecrejects"));
 		            	 	insprej.setSizerejects(request.getParameter("sizerejects"));
 		            	 	insprej.setSubsrejects(request.getParameter("subsrejects"));

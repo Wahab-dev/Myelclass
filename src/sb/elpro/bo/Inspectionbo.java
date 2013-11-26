@@ -58,5 +58,7 @@ public interface Inspectionbo {
 			String sidx, String sord)throws Exception;
 
 	
+
+	
 	
 }
