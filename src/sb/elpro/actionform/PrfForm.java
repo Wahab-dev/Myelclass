@@ -61,15 +61,12 @@ public class PrfForm extends ActionForm{
 	private String prf_payment;
 	private String prf_paymentid;
 	private String prf_elclasscommission;	
-	private String prf_commission1;
-	private String prf_commissionid;
+	private String prf_commission;
 	private String prf_insurance;
 	private String prf_cdd;
 	private String prf_add;
 	private String prf_special;
 	private String prf_inspcdn;
-	private String prf_commission2;
-	private String prf_commission3;
 	private String prf_pojw;
 	
 	
@@ -602,18 +599,7 @@ public class PrfForm extends ActionForm{
 	}
 	
 	
-	/**
-	 * @return the prf_commissionid
-	 */
-	public String getPrf_commissionid() {
-		return prf_commissionid;
-	}
-	/**
-	 * @param prf_commissionid the prf_commissionid to set
-	 */
-	public void setPrf_commissionid(String prf_commissionid) {
-		this.prf_commissionid = prf_commissionid;
-	}
+	
 	/**
 	 * @return the prf_insurance
 	 */
@@ -662,30 +648,7 @@ public class PrfForm extends ActionForm{
 	public void setPrf_special(String prf_special) {
 		this.prf_special = prf_special;
 	}
-	/**
-	 * @return the prf_commission2
-	 */
-	public String getPrf_commission2() {
-		return prf_commission2;
-	}
-	/**
-	 * @param prf_commission2 the prf_commission2 to set
-	 */
-	public void setPrf_commission2(String prf_commission2) {
-		this.prf_commission2 = prf_commission2;
-	}
-	/**
-	 * @return the prf_commission3
-	 */
-	public String getPrf_commission3() {
-		return prf_commission3;
-	}
-	/**
-	 * @param prf_commission3 the prf_commission3 to set
-	 */
-	public void setPrf_commission3(String prf_commission3) {
-		this.prf_commission3 = prf_commission3;
-	}
+	
 	/**
 	 * @return the prf_articleid
 	 */
@@ -1086,18 +1049,7 @@ public class PrfForm extends ActionForm{
 	public void setPrf_exporterid(String prf_exporterid) {
 		this.prf_exporterid = prf_exporterid;
 	}
-	/**
-	 * @return the prf_commission1
-	 */
-	public String getPrf_commission1() {
-		return prf_commission1;
-	}
-	/**
-	 * @param prf_commission1 the prf_commission1 to set
-	 */
-	public void setPrf_commission1(String prf_commission1) {
-		this.prf_commission1 = prf_commission1;
-	}
+	
 	/**
 	 * @return the prf_inspcdn
 	 */
@@ -1133,6 +1085,18 @@ public class PrfForm extends ActionForm{
 	 */
 	public void setFormaction(String formaction) {
 		this.formaction = formaction;
+	}
+	/**
+	 * @return the prf_commission
+	 */
+	public String getPrf_commission() {
+		return prf_commission;
+	}
+	/**
+	 * @param prf_commission the prf_commission to set
+	 */
+	public void setPrf_commission(String prf_commission) {
+		this.prf_commission = prf_commission;
 	}
 	
 }

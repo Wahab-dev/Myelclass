@@ -4,16 +4,24 @@
 package sb.elpro.action;
 
 
+import java.io.PrintWriter;
+import java.util.Enumeration;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import net.sf.json.JSONObject;
+
 import org.apache.commons.beanutils.PropertyUtils;
+import org.apache.struts.action.Action;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.actions.DispatchAction;
+
+import com.sun.org.apache.bcel.internal.generic.NEW;
 
 import sb.elpro.actionform.PrfForm;
 import sb.elpro.bo.PrfBo;
@@ -24,25 +32,74 @@ import sb.elpro.model.ProductDetails;
  * @author Wahab
  *
  */
-public class PrfAction extends DispatchAction {
+public class PrfAction extends Action {
 
 	PrfBo prfbo  =  new PrfBoImpl();
 	HttpSession usersession;
 	ProductDetails prfbean = new ProductDetails();
 	
-	public ActionForward SavePrf(ActionMapping map, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception, ServletException{
-		PrfForm prfform = (PrfForm) form;
-		//BeanUtils.copyProperties(prfbean, prfform);
-		PropertyUtils.copyProperties(prfbean, prfform);
-		usersession = request.getSession(false);
-		if(!(usersession==null)){
-			usersession.setAttribute("prfform", prfbo.savePrfform(prfbean));
-		}	
-		return map.findForward("safeprf") ;
+	public ActionForward execute(ActionMapping map, ActionForm form, 
+			HttpServletRequest request, HttpServletResponse response) throws Exception{
+		 System.out.println("In Save Prf Form");
+		 PrintWriter out = response.getWriter();
+		 /*
+		  * Getting all values 
+		  * 
+		  */
+		/* Enumeration<String> paramNames = request.getParameterNames();
+		 while(paramNames.hasMoreElements())
+	        {
+			 	String paramName = (String)paramNames.nextElement();
+	            String[] paramValues = request.getParameterValues(paramName);
+	            for(int i=0; i<paramValues.length; i++)
+                {
+	            	System.out.println(paramName + paramValues[i]);
+                }
+	        }*/
+		 prfbean.setPrf_agentname(request.getParameter("prf_agentname"));
+		 prfbean.setPrf_contractno(request.getParameter("prf_contractno"));
+		 prfbean.setPrf_orderdate(request.getParameter("prf_orderdate"));
+		 prfbean.setPrf_poreftype(request.getParameter("prf_poreftype"));
+		 prfbean.setPrf_poref(request.getParameter("prf_poref"));
+		 prfbean.setPrf_tanname(request.getParameter("prf_tanname"));
+		 prfbean.setPrf_custname(request.getParameter("prf_custname"));
+		 prfbean.setPrf_cdd(request.getParameter("prf_cdd"));
+		 prfbean.setPrf_add(request.getParameter("prf_add"));
+		 prfbean.setPrf_destination(request.getParameter("prf_destination"));
+		 prfbean.setPrf_terms(request.getParameter("prf_terms"));
+		 prfbean.setPrf_insurance(request.getParameter("prf_insurance"));
+		 prfbean.setPrf_payment(request.getParameter("prf_payment"));
+		 prfbean.setPrf_elclasscommission(request.getParameter("prf_elclasscommission"));
+		 prfbean.setPrf_commission(request.getParameter("prf_commission"));
+		 prfbean.setPrf_special(request.getParameter("prf_special"));
+		 prfbean.setPrf_inspcdn(request.getParameter("prf_inspcdn"));
+		 prfbean.setPrf_consigneename(request.getParameter("prf_consigneename"));
+		 prfbean.setPrf_notifyname(request.getParameter("prf_notifyname"));
+		 prfbean.setPrf_bankname(request.getParameter("prf_bankname"));
+		 prfbean.setPrf_exporterid(request.getParameter("prf_tanname")); //Exported ID
+		 prfbean.setPrf_pojw("N/A");
+		 usersession = request.getSession(false);
+		 if(!(usersession == null)){
+			 JSONObject prfjsonobj = new JSONObject();
+			 System.out.println("usersession "+usersession.toString());
+			boolean issavedPrf = prfbo.savePrfform(prfbean);
+			if(issavedPrf){
+				prfjsonobj.put("result", issavedPrf);
+				prfjsonobj.put("success", "Successfully Saved The Form");
+			}else{
+				prfjsonobj.put("result", issavedPrf);
+				prfjsonobj.put("error", "Error in Saving The Form");
+			}
+			 System.out.println("Hola  "+prfjsonobj);
+			 out.println(prfjsonobj);
+			 return null;
+		 }	
+		
+		 return map.findForward("login");
 	}
 	
 	
-	
+	/*
 	public ActionForward Logout(ActionMapping mapping, ActionForm form, 
 			HttpServletRequest request, HttpServletResponse response) throws Exception{
 		System.out.println("Logout IN PORF ");
@@ -77,11 +134,11 @@ public class PrfAction extends DispatchAction {
 			
 			
 			
-			/*String ctno = request.getParameter("contractno"); 
+			String ctno = request.getParameter("contractno"); 
 			String prfartid = request.getParameter("prf_articleid");
 			System.out.println("Session is Valid for Article Page /+ "+ctno+ "/ /" +prfartid);
 			request.setAttribute("ctno", ctno);
-			request.setAttribute("prfartid", prfartid);*/
+			request.setAttribute("prfartid", prfartid);
 			return map.findForward("showArticlePage");
 		}else{
 			System.out.println("Session is INVALIDValid for Article Page");
@@ -91,7 +148,7 @@ public class PrfAction extends DispatchAction {
 		public ActionForward saveArticle(ActionMapping map, ActionForm form, 
 				HttpServletRequest request, HttpServletResponse response ) throws Exception{
 			System.out.println("SAVE ARTICLE Art");
-			/*String ctno = request.getParameter("prfhidd_contractno"); 
+			String ctno = request.getParameter("prfhidd_contractno"); 
 			System.out.println("CT NO = +"+ctno);
 			String prfartid = request.getQueryString();
 			System.out.println("Qury String "+prfartid);
@@ -124,12 +181,12 @@ public class PrfAction extends DispatchAction {
 				 String myctno = prfartbean.getContractno();
 				 getAllArticle(request,myctno);
 			return map.findForward("prfArticlesaved");
-			}else{*/
+			}else{
 			return map.findForward("login");
 			//}
 	}
 		
-		/*public ActionForward edit(ActionMapping mapping, ActionForm form, 
+		public ActionForward edit(ActionMapping mapping, ActionForm form, 
 				HttpServletRequest request, HttpServletResponse response) throws Exception{
 			System.out.println("In Edit Article "); 
 			PrfForm prfArticleform =(PrfForm) form;
@@ -145,14 +202,14 @@ public class PrfAction extends DispatchAction {
 				return mapping.findForward("editprfarticle");
 			}else
 				return mapping.findForward("login");
-		}*/
+		}
 			
 			
 		
-		/*private void getAllArticle(HttpServletRequest request, String myctno) throws Exception{
+		private void getAllArticle(HttpServletRequest request, String myctno) throws Exception{
 			List<ArticleDetails> article = prfbo.getPrfArticleDetails(myctno);
 			request.setAttribute("article", article);
-		}*/
-		
+		}
+		*/
 	
 }

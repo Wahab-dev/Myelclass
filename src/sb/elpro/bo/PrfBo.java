@@ -42,7 +42,7 @@ public interface PrfBo  {
 
 	public ArrayList<CustomerDetails> getCustomerDetails(String custterm) throws Exception;
 
-	public ArrayList<DestinationDetails> getDestinationDetails()throws Exception;
+//	public ArrayList<DestinationDetails> getDestinationDetails()throws Exception;
 
 	public ArrayList<PaymentDetails> getPaymentDetails()throws Exception;
 
@@ -50,7 +50,7 @@ public interface PrfBo  {
 
 	public ArrayList<CommissionDetails> getCommissionDetails(String commissnterm)throws Exception;
 
-	public ArrayList<ProductDetails> savePrfform(ProductDetails prfbean)throws Exception;
+	public boolean savePrfform(ProductDetails prfbean)throws Exception;
 
 	public ArrayList<ArticleDetails> getarticledetails()throws Exception;
 

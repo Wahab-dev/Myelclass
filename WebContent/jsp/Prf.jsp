@@ -24,9 +24,33 @@ table.EditTable > tbody > tr.FormData > td.DataTD > input[type="select"] {
 <script src="js/i18n/grid.locale-en.js" type="text/javascript"></script>
 <script src="js/jquery.jqGrid.min.js" type="text/javascript"></script>		
 <script src="js/elpro/prf.js"></script> 
+<script src="js/jquery.autosize.js"></script> 
+
 <!-- <script>!window.jQuery && document.write('<script src="js/elpro/prf.js"><\/script>');</script>  -->
 <script type="text/javascript">
+//Maintain array of dates
+var dates = new Array();
+function addDate(date) {if (jQuery.inArray(date, dates) < 0) dates.push(date);}
+function removeDate(index) {dates.splice(index, 1);}
 
+// Adds a date if we don't have it yet, else remove it
+function addOrRemoveDate(date)
+{
+  var index = jQuery.inArray(date, dates); 
+  if (index >= 0)
+    removeDate(index);
+  else 
+    addDate(date);
+}
+
+// Takes a 1-digit number and inserts a zero before it
+function padNumber(number)
+{
+  var ret = new String(number);
+  if (ret.length == 1)
+    ret = "0" + ret;
+  return ret;
+}
 
 //Agent DDL
 function loadAgent(){
@@ -96,7 +120,7 @@ function loadvalues(){
 
 
 <!--  Login Form  -->
-<h:form action="/login" method="post" >
+<%-- <h:form action="/login" method="post" >
 	<table style="border: thin;">
    		<tr>  			
    			<td>Welcome ${user.name}...</td> 
@@ -106,9 +130,9 @@ function loadvalues(){
    		</tr>
    </table>
 </h:form>
-
+ --%>
  
-<h:form action="/Prf" method="post">
+<h:form action="/Prf" method="post" styleId="savePrfForm">
    <font color="red"><h:errors/></font>
     <table width="800" border="1" cellspacing="0" cellpadding="0">
          	 <tr>
@@ -189,7 +213,7 @@ function loadvalues(){
         						CDD: <h:text property="prf_cdd" styleId="prf_cdd" styleClass="prf_delivrydate" value="${editprfform[0].prf_cdd}"></h:text><br /> <br /> 
        	 						ADD: <h:text property="prf_add" styleId="prf_add" styleClass="prf_delivrydate" value="${editprfform[0].prf_add}"></h:text><br /><br /> 
        	 									
-         						Destination: <h:text property="prf_destination" styleId="prf_destination"  value="${editprfform[0].prf_destination}"></h:text><br /><br /> 
+         						Destination: <h:textarea property="prf_destination" rows="0" styleId="prf_destination"  value="${editprfform[0].prf_destination}"></h:textarea><br /><br /> 
         						Terms : <h:select  property="prf_terms" styleId="prf_terms" value="${editprfform[0].prf_terms}">
        		 								<h:option value="0">select Terms</h:option>
           										<c:forEach items="${termsarray}" var ="termsList">
@@ -204,8 +228,8 @@ function loadvalues(){
             	<fieldset>
             		<legend>Commission Details</legend>
             			  Insurance:  <h:select property="prf_insurance" styleId="prf_insurance" value=""> <br /> 
-          														<h:option value="1">Will Be Covered By Consignee</h:option>     
-          														<h:option value="2">Will Be Covered By Shipper</h:option>      			    													         															
+          														<h:option value="Consignee">By Consignee</h:option>     
+          														<h:option value="Shipper">By Shipper</h:option>      			    													         															
        		 											</h:select><br /><br />
             			 Payment:  <h:select property="prf_payment" styleId="prf_payment">
        		 													<h:option value="0">select Payment</h:option>
@@ -221,7 +245,7 @@ function loadvalues(){
         					<br /><br />
         					<div id='TextBoxesGroup'>
 								<div id="TextBoxDiv1">
-   									 <label>Commission #1 : </label><h:text property="prf_commission" styleId="prf_commission" value="${editprfform[0].prf_commission1}" ></h:text> </div> 	   
+   									 <label> Other Commission : </label><h:textarea property="prf_commission" styleId="prf_commission" value="${editprfform[0].prf_commission1}" ></h:textarea> </div> 	   
 								</div>	
 							<!-- <input type="button" value="Add Comm" id="addButton"> -->
         					<!-- <input type="button" value="Rem Comm" id="removeButton">  -->      		 														  					  		
@@ -229,7 +253,7 @@ function loadvalues(){
       			</td>
             	<td><fieldset><legend>Special Condition</legend><br/> 
         									Condtion 1: <h:textarea property="prf_special" cols="30" rows="2" styleId="prf_special" value="${editprfform[0].prf_special}"></h:textarea><br />        
-       	 									Inspection Cdn: <h:textarea property="prf_special" cols="30" rows="2" styleId="prf_special" value="${editprfform[0].prf_inspcdn}"></h:textarea><br />
+       	 									Inspection Cdn: <h:textarea property="prf_inspcdn" cols="30" rows="2" styleId="prf_inspcdn" value="${editprfform[0].prf_inspcdn}"></h:textarea><br />
        	 										
          			</fieldset></td>
           	</tr>
@@ -292,7 +316,7 @@ function loadvalues(){
           </tr>
           <tr>
             <td></td>
-  				<td><h:submit property="prfaction" value="SavePrf" styleId="Save"></h:submit></td>
+  				<td><input type="button" id="Save" name="Save" value="Save"></td>
   				<!-- <a href="#" id="thelink">Clickme</a> -->
   				<%-- <h:link href="#" property="insert">Click me</h:link> --%>
   				<td><h:reset property="prfaction" value="Clear" styleId="Clear"></h:reset></td>

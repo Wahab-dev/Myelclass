@@ -22,7 +22,6 @@ import sb.elpro.model.ColourDetails;
 import sb.elpro.model.CommissionDetails;
 import sb.elpro.model.ConsigneeDetails;
 import sb.elpro.model.CustomerDetails;
-import sb.elpro.model.DestinationDetails;
 import sb.elpro.model.NotifyConsigneeDetails;
 import sb.elpro.model.PaymentDetails;
 import sb.elpro.model.PrfArticle;
@@ -141,7 +140,7 @@ public class PrfDaoImpl implements PrfDao {
 		return custrraylist;
 	}
 	
-	@Override
+	/*@Override
 	public ArrayList<DestinationDetails> getDestinationList() throws SQLException {
 		ArrayList<DestinationDetails> destarraylist = new ArrayList<DestinationDetails>();
 		Connection con = null;
@@ -169,7 +168,7 @@ public class PrfDaoImpl implements PrfDao {
 				 rs.close();
 		   }	
 		return destarraylist;
-	}
+	}*/
 
 	@Override
 	public ArrayList<PaymentDetails> getPaymnetList() throws SQLException {
@@ -266,9 +265,53 @@ public class PrfDaoImpl implements PrfDao {
 	}
 
 	@Override
-	public ArrayList<ProductDetails> savePrfForm() throws SQLException {
-				System.out.println("In PRF SAVE");
-		return null;
+	public boolean savePrfForm(ProductDetails prfbean) throws SQLException {
+		System.out.println("In PRF SAVE");
+		Connection con = null;
+		PreparedStatement pst = null;
+		int noofrows  = 0;
+		boolean isSaved =true;
+		try{
+			con = DBConnection.getConnection();
+			StringBuffer sql_saveprfArticle = new StringBuffer("insert into tbl_prfform (Ctno, agent, Orderdt, pono, exporterid, tanneryid, customerid, cdd_date, add_date, destination, terms, insurance, payment, commission, othercommission, splcdn, inspcdn, consigneeid, notifyid, bankid, pojw)");
+			sql_saveprfArticle.append("values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+			String sqlquery_saveprfArticle = sql_saveprfArticle.toString();
+			pst = (PreparedStatement) con.prepareStatement(sqlquery_saveprfArticle);
+			pst.setString(1, prfbean.getPrf_contractno());
+			System.out.println("getPrf_contractno " +prfbean.getPrf_contractno());
+			pst.setString(2, prfbean.getPrf_agentname());
+			System.out.println("getPrf_agentname " +prfbean.getPrf_agentname());
+			pst.setString(3, prfbean.getPrf_orderdate());
+			pst.setString(4, prfbean.getPrf_poreftype() +", "+ prfbean.getPrf_poref());
+			pst.setString(5, prfbean.getPrf_exporterid());
+			pst.setString(6, prfbean.getPrf_tanname());
+			pst.setString(7, prfbean.getPrf_custname());
+			pst.setString(8, prfbean.getPrf_cdd());
+			pst.setString(9, prfbean.getPrf_add());
+			pst.setString(10, prfbean.getPrf_destination());
+			pst.setString(11, prfbean.getPrf_terms());
+			pst.setString(12, prfbean.getPrf_insurance());
+			pst.setString(13, prfbean.getPrf_payment());
+			pst.setString(14, prfbean.getPrf_elclasscommission());
+			pst.setString(15, prfbean.getPrf_commission());
+			pst.setString(16, prfbean.getPrf_special());
+			pst.setString(17, prfbean.getPrf_inspcdn());
+			pst.setString(18, prfbean.getPrf_consigneename());
+			pst.setString(19, prfbean.getPrf_notifyname());
+			pst.setString(20, prfbean.getPrf_bankname());
+			pst.setString(21, prfbean.getPrf_pojw());
+			System.out.println("getPrf_pojw " +prfbean.getPrf_pojw());
+			noofrows = pst.executeUpdate();
+			System.out.println("Sucessfully inserted the record.." + noofrows);
+	}catch(Exception e){
+		e.printStackTrace();
+		isSaved = false;
+		System.out.println("ERROR RESULT");
+	}finally{
+		 con.close() ;
+		 pst.close();
+   }	
+		return isSaved;
 	}
 
 	@Override
@@ -1052,7 +1095,7 @@ public class PrfDaoImpl implements PrfDao {
 				editprfformbean.setPrf_terms(rs.getString("terms"));
 				editprfformbean.setPrf_payment(rs.getString("payment"));
 				editprfformbean.setPrf_elclasscommission(rs.getString("ourcommission"));
-				editprfformbean.setPrf_commission1(rs.getString("commission"));
+				editprfformbean.setPrf_commission(rs.getString("commission"));
 				editprfformbean.setPrf_special(rs.getString("splcdn"));
 				editprfformbean.setPrf_inspcdn(rs.getString("inspcdn"));
 				editprfformbean.setPrf_consigneename(rs.getString("consigneeid"));

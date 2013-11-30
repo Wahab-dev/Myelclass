@@ -42,7 +42,7 @@ public interface PrfDao {
 	ArrayList<CustomerDetails> getCustomerList(String custterm) throws SQLException;
 
 
-	ArrayList<DestinationDetails> getDestinationList() throws SQLException;
+//	ArrayList<DestinationDetails> getDestinationList() throws SQLException;
 
 	ArrayList<PaymentDetails> getPaymnetList() throws SQLException;
 
@@ -52,7 +52,7 @@ public interface PrfDao {
 	ArrayList<CommissionDetails> getOtherCommissionList(String othercomminsion) throws SQLException;
 	
 
-	ArrayList<ProductDetails> savePrfForm()throws SQLException;
+	boolean savePrfForm(ProductDetails prfbean)throws SQLException;
 
 	ArrayList<ArticleDetails> getArticleList()throws SQLException;
 

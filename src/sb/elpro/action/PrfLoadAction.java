@@ -35,7 +35,7 @@ public class PrfLoadAction extends Action{
 		usersession = request.getSession(false);
 		if(usersession != null){
 			usersession.setAttribute("agentarray", prfbo.getAgentDetails());
-			usersession.setAttribute("destiarray", prfbo.getDestinationDetails());
+			//usersession.setAttribute("destiarray", prfbo.getDestinationDetails());
 			usersession.setAttribute("paymentarray", prfbo.getPaymentDetails());
 			usersession.setAttribute("termsarray", prfbo.getTermsDetails());	
 			//usersession.setAttribute("articlearray", prfbo.getarticledetails());

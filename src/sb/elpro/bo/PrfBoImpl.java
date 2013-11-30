@@ -63,12 +63,12 @@ public class PrfBoImpl implements PrfBo {
 
 	
 
-	@Override
+	/*@Override
 	public ArrayList<DestinationDetails> getDestinationDetails()throws Exception {
 		ArrayList<DestinationDetails> destiList = prfdao.getDestinationList();
 		return destiList;
 	}
-
+*/
 	@Override
 	public ArrayList<PaymentDetails> getPaymentDetails() throws Exception {
 		ArrayList<PaymentDetails> paymentList = prfdao.getPaymnetList();
@@ -88,10 +88,10 @@ public class PrfBoImpl implements PrfBo {
 	}
 
 	@Override
-	public ArrayList<ProductDetails> savePrfform(ProductDetails prfbean)
+	public boolean savePrfform(ProductDetails prfbean)
 			throws Exception {
-		ArrayList<ProductDetails> saveprfDetails = prfdao.savePrfForm();
-		return saveprfDetails;
+		boolean isSavePrf = prfdao.savePrfForm(prfbean);
+		return isSavePrf;
 	}
 
 	@Override

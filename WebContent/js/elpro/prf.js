@@ -4,6 +4,99 @@
  * 
  */
 $(document).ready(function() {
+	
+	/*
+	 * Autocomple for Local Data Types
+	 */
+	
+		function split( val ) {
+	      return val.split( /,\s*/ );
+	    }
+	    function extractLast (term) {
+	      return split(term).pop();
+	    }
+	
+	    
+	    $( "#prf_destination" )
+	      // don't navigate away from the field on tab when selecting an item
+	      .bind( "keydown", function( event ) {
+	        if ( event.keyCode === $.ui.keyCode.TAB &&
+	            $( this ).data( "ui-autocomplete" ).menu.active ) {
+	          event.preventDefault();
+	        }
+	      })
+	      .autocomplete({
+	        minLength: 1,
+	        source: function( request, response ) {
+	        	$.getJSON("/Myelclass/PrfAutocomplete.do?&action="+"desti", 
+	        			{term : extractLast(request.term
+	        	)}).done(function(data) {
+	                    response($.map(data, function(el, index) {
+	                        return {
+	                        	label : el.label,
+	                			 value: el.label +", " +el.value,
+	                            //value: el.label, 
+	                        };
+	                    }));
+	        		});	//done
+	        	//});//End Ajax
+	        },
+	        focus: function() {
+	          // prevent value inserted on focus
+	          return false;
+	        },
+	        select: function( event, ui ) {
+	          var terms = split( this.value );
+	          // remove the current input
+	          terms.pop();
+	          // add the selected item
+	          terms.push( ui.item.value );
+	          // add placeholder to get the comma-and-space at the end
+	          terms.push( "" );
+	          this.value = terms.join( ", " );
+	          return false;
+	        }
+	      }).autosize({append: "\n"});
+	
+	    $('#prf_commission')
+	     // don't navigate away from the field on tab when selecting an item
+	      .bind( "keydown", function( event ) {
+	        if ( event.keyCode === $.ui.keyCode.TAB &&
+	            $( this ).data( "ui-autocomplete" ).menu.active ) {
+	          event.preventDefault();
+	        }
+	      }).autocomplete({
+			minLength: 1,
+			source: function(request, response, term) {
+				$.getJSON("/Myelclass/PrfAutocomplete.do?&action="+"othercommision", 
+	        			{term : extractLast(request.term
+	        	)}).done(function(data) {
+	                    response($.map(data, function(el) {
+	                        return {
+	                        	label : el.value,
+	                        	 value: el.value+", "+el.commplace,
+	                       
+	                        };
+	                    }));
+	        		});	//done
+				},
+			focus: function() {
+	  		  // prevent value inserted on focus
+			  return false;
+			},
+			select: function( event, ui ) {
+			  var terms = split( this.value );
+			   // remove the current input
+			   terms.pop();
+			   // add the selected item
+			   terms.push( ui.item.value );
+			   // add placeholder to get the comma-and-space at the end
+			   terms.push( "" );
+			   this.value = terms.join( ", " );
+			   return false;
+			} 
+	}).autosize({append: "\n"});
+	    
 	var grid = $("#list"); //table id artinsert
 	var ctno = $("#prf_contractno").val();
 	 grid.jqGrid({ 
@@ -405,33 +498,7 @@ $(document).ready(function() {
 		    },
 		});
 	 
-	 	 function split( val ) {
-		  return val.split( /,\s*/ );
-		 }
-		 function extractLast( term ) {
-		  return split( term ).pop();
-		 }
-	 
-		 $('#prf_commission').autocomplete({
-				minLength: 1,
-				source: function(request, response, term) {
-					 // delegate back to autocomplete, but extract the last term
-					var param = request.term;
-					 $.ajax({
-			                url: "/Myelclass/PrfAutocomplete.do?term="+param+"&action="+"othercommision",
-			                dataType: "json",
-			                type:"GET",
-			                success: function (data) {
-			                	 response($.map(data, function(item) {
-			                		 return { 
-			                			 label : item.value,
-			                             value: item.value+", "+item.commplace+".",
-			                             };
-			                         }));//END Success
-			                    }
-			            });//END AJAX
-					},
-		});
+	 	
 		 $('#prf_consigneename').autocomplete({
 				minLength: 1,
 				source: function(request, response,term) {
@@ -531,27 +598,7 @@ $(document).ready(function() {
 			          	 $('#prf_notifyfax').val(fax);
 			            } 
 		});
-			    $('#prf_destination').autocomplete({  
-		            minLength: 2,  
-		            source: function(request, response,term) {  
-		                var param = request.term;  
-		                $.ajax({  
-		                    url: "/Myelclass/PrfAutocomplete.do?term="+param+"&action="+"desti",  
-		                    dataType: "json",  
-		                    type:"GET",  
-		                    success: function (data) { 
-		                         response($.map(data, function(item) {  
-		                             return {   
-		                                 label: item.label,  
-		                                 shform: item.shform, //can add number of attributes here   
-		                                 value: item.label +" , "+ item.value // I am displaying both labe and value  
-		                                 };  
-		                             }));//END Success  
-		                        },  
-		                });//END AJAX  
-		            }, 
-		        });// End Autocomplete  
-				
+		
 		        //DATEPICKER
 		        $("#prf_orderdate").datepicker({
 				   // changeYear: true,
@@ -575,6 +622,26 @@ $(document).ready(function() {
 				    numberOfMonths: 2,
 				    showButtonPanel: true,
 				    gotoCurrent:true, 
+				    /*onSelect: function(dateText, inst) { 
+						addOrRemoveDate(dateText);
+					},
+					beforeShowDay: function (date){
+				         var year = date.getFullYear();
+				         // months and days are inserted into the array in the form, e.g "01/01/2009", but here the format is "1/1/2009"
+				         var month = padNumber(date.getMonth() + 1);
+				         var day = padNumber(date.getDate());
+				         // This depends on the datepicker's date format
+				         var dateString = month + "/" + day + "/" + year;
+
+				         var gotDate = jQuery.inArray(dateString, dates);
+				         if (gotDate >= 0) {
+				           // Enable date so it can be deselected. Set style to be highlighted
+				           return [true,"ui-state-highlight"]; 
+				         }
+				         // Dates not in the array are left enabled, but with no extra style
+				         return [true, ""];
+				       }
+				    */
 				});
 		        
 					 
@@ -625,5 +692,50 @@ $(document).ready(function() {
 						          	 $('#prf_custattn').val(ui.item.attn);
 						          	 $('#prf_custfax').val(ui.item.fax);
 						           } 
-						});  		
+						}); 
+				 
+				 
+	/*
+	 * Form Save
+	 * 
+	 */
+$("#Save").click(function(){	
+	var savePrfForm = $("#savePrfForm").serialize();
+	/* $.ajax({
+		 url : "/Myelclass/Prf",
+		 type: "POST",
+		 data : savePrfForm,
+		 dataType: "json",
+		 success: function(data, textStatus, jqXHR)
+		 {
+		 	alert("In Success "+textStatus);
+		 },
+		 error: function(jqXHR, textStatus, errorThrown)
+		 {
+			 alert("In Error "+textStatus);
+		 }
+	 });*/
+	alert("In Prf Fform ");
+	/*$("form[name=savePrfForm]").submit(function(){*/
+		alert("In Prf Fform "+savePrfForm);
+	    $.post("/Myelclass/Prf.do", savePrfForm, function(data) {
+	    	alert(data.result);
+	    	if(data.issavedPrf){
+	    		 alert(data.success);
+	    		 $("#savePrfForm")[0].reset();
+	    	}
+	    	else{
+	    		 alert(data.error);
+	    		 $("#savePrfForm")[0].reset();
+	    	}
+	    }, 'json');
+	    return false;
+	  });
+//});				 
+/*	$("#Save").click(function(){
+		var savePrfForm = $("#savePrfForm").serialize();
+		alert(savePrfForm);
+		 $.post("/Myelclass/Prf", savePrfForm).done( function(data, textStatus) {
+             alert(data)});
+	});*/
  });

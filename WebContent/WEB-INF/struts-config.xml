@@ -50,7 +50,8 @@
 	 <action path="/LoadPrf" name="PrfForm" type="sb.elpro.action.PrfLoadAction" input="/jsp/Menu.jsp" scope="session" >
 	 	 <forward name="prfisloaded" path="/jsp/Prf.jsp"></forward>		 
 	 </action>
-	 <action path="/Prf" name="PrfForm" type="sb.elpro.action.PrfAction" input="/jsp/Prf.jsp" parameter="prfaction" scope="session">  	 	
+	 <action path="/Prf" name="PrfForm" type="sb.elpro.action.PrfAction" input="/jsp/Prf.jsp" parameter="prfaction" scope="session">
+	   	 <forward name="prfisloaded" path="/jsp/Prf.jsp"></forward>		 
 	 </action>	 
 	 <action path="/PrfinsertArticle" name="PrfForm" type="sb.elpro.action.PrfInsertArticle" input="/jsp/Prf.jsp" scope="session">	 
 	 </action>	 
