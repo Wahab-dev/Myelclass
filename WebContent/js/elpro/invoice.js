@@ -411,7 +411,7 @@ $(document).ready(function() {
 									 	dataEvents:  [{
 											type: 'focusout',
 											fn: function(e){
-												if(billInvisInEdit){
+												if(billInvisInEdit){ //Cod efor Edit Form Qty Calculation 
 													 var invqbal = parseFloat($("#invqty").val() - $("#invqshpd").val());
 													 var qbals = invqbal.toFixed(2);
 													 $("#invqbal").val(qbals);

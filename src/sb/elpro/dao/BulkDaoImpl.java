@@ -32,7 +32,7 @@ public class BulkDaoImpl implements Bulkdao {
 		try{			
 			con = DBConnection.getConnection();
 			st = (Statement) con.createStatement();
-			String sql = "SELECT distinct article.prfarticleid, form.agent, form.Ctno, Orderdt, pono, exporterid, tanneryid, customerid, cdd_date, add_date, destination, terms, payment, commission, splcdn, inspcdn, consigneeid, notifyid,  bankid,  pojw, article.articleid, articletype, articleshfrom, articlename, color, size, substance, selection, selectionpercent, quantity , unit,pcs, rate, tc, article.prfarticleid, user, statuse.prfarticleid, status, Qtyshpd, Qbal, invdetails, reps,  comments, feddback, statuse.contractno, rdd_date FROM elpro.tbl_prfform form, elpro.tbl_prf_article article, elpro.tbl_prfarticle_status statuse where form.Ctno = article.contractno and article.prfarticleid = statuse.prfarticleid order by "+sidx+" "+sord+"";
+			String sql = "SELECT distinct article.prfarticleid, form.agent, form.Ctno, Orderdt, pono, exporterid, tanneryid, customerid, cdd_date, add_date, destination, terms, payment, commission, splcdn, inspcdn, consigneeid, notifyid,  bankid,  pojw, article.articleid, articletype, articleshfrom, articlename, color, size, substance, selection, selectionpercent, quantity , unit,pcs, rate, tc, article.prfarticleid, user, statuse.prf_articleid, status, Qtyshpd, Qbal, invdetails, reps,  comments, feddback, statuse.contractno, rdd_date FROM elpro.tbl_prfform form, elpro.tbl_prf_article article, elpro.tbl_prfarticle_status statuse where form.Ctno = article.contractno and article.prfarticleid = statuse.prf_articleid order by "+sidx+" "+sord+"";
 			System.out.println(sql);
 			rs = st.executeQuery(sql);
 			while(rs.next()) {	
@@ -107,7 +107,7 @@ public class BulkDaoImpl implements Bulkdao {
 		try{			
 			con = DBConnection.getConnection();
 			st = (Statement) con.createStatement();
-			String sql = "SELECT  sum(quantity) as qty , sum(Qtyshpd) as Qshipd, sum(Qbal) as Qbal FROM elpro.tbl_prf_article article, elpro.tbl_prfarticle_status statuse where article.prfarticleid = statuse.prfarticleid";
+			String sql = "SELECT  sum(quantity) as qty , sum(Qtyshpd) as Qshipd, sum(Qbal) as Qbal FROM elpro.tbl_prf_article article, elpro.tbl_prfarticle_status statuse where article.prfarticleid = statuse.prf_articleid";
 			System.out.println(sql);
 			rs = st.executeQuery(sql);
 			if(rs.next()){

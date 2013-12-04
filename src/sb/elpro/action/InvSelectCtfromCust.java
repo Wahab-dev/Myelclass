@@ -121,7 +121,7 @@ public class InvSelectCtfromCust extends Action {
 			   invbill.setInvqbal(request.getParameter("qbal"));
 			   invbill.setInvamt(request.getParameter("amount"));
 			   invbill.setInvtc(request.getParameter("tc"));
-			   invbill.setInvartid(request.getParameter("articleid"));
+			   invbill.setInvartid(request.getParameter("prfarticleid"));
 			   invbill.setInvno(request.getParameter("invoiceno"));
 			   invbill.setInvtype(request.getParameter("invoicetype"));
 			   invbill.setInvdt(request.getParameter("invoicedt"));
@@ -199,6 +199,9 @@ public class InvSelectCtfromCust extends Action {
 				   invaddagainbill.setInvid(request.getParameter("invid"));
 				   
 			   	   if(oper.equalsIgnoreCase("add")){
+			   		   /*
+			   		    * Add Second Shipmemnt for the same article 
+			   		    */
 			   		 boolean invbillsecondaddlist = invbo.getInvBillAddDetails(invaddagainbill);
 			   		 if(invbillsecondaddlist){
 						   jsonobj.clear();

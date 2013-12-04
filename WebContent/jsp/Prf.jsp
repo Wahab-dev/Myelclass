@@ -120,7 +120,7 @@ function loadvalues(){
 
 
 <!--  Login Form  -->
-<%-- <h:form action="/login" method="post" >
+<h:form action="/login" method="post" >
 	<table style="border: thin;">
    		<tr>  			
    			<td>Welcome ${user.name}...</td> 
@@ -130,7 +130,7 @@ function loadvalues(){
    		</tr>
    </table>
 </h:form>
- --%>
+
  
 <h:form action="/Prf" method="post" styleId="savePrfForm">
    <font color="red"><h:errors/></font>

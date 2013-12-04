@@ -424,11 +424,11 @@ public class InvoiceDaoImpl implements InvoiceDao {
 		try{			
 			con = DBConnection.getConnection();
 			st = (Statement) con.createStatement();
-			String sql = "SELECT articleid, articlename, size, substance, selection, selectionpercent, color, quantity, unit, pcs, rate, tc, contractno, prfarticleid from tbl_prf_article where contractno in ("+ctno+") order by contractno";
+			String sql = "SELECT articleid, articlename, size, substance, selection, selectionpercent, color, quantity, qshipped, qbal, unit, pcs, rate, tc, article.contractno, prfarticleid from tbl_prf_article article, elpro.tbl_prfarticle_status statuse where  prf_articleid = prfarticleid and article.contractno in ("+ctno+") order by article.contractno";
 			System.out.println((sql));
 			rs = st.executeQuery(sql);
 			System.out.println((sql));
-			while(rs.next()) {						
+			while(rs.next()) {	
 				ArticleDetails artbean = new ArticleDetails();
 				artbean.setArticleid(rs.getString("articleid"));
 				artbean.setArticlename(rs.getString("articlename"));
@@ -439,6 +439,8 @@ public class InvoiceDaoImpl implements InvoiceDao {
 				artbean.setColor(rs.getString("color"));
 				artbean.setQuantity(rs.getString("quantity"));
 				artbean.setUnit(rs.getString("unit"));
+				artbean.setQshipped(rs.getFloat("qshipped"));
+				artbean.setQbal(rs.getFloat("qbal"));
 				artbean.setRate(rs.getString("rate"));
 				artbean.setTc(rs.getString("tc"));
 				artbean.setContractno(rs.getString("contractno"));
@@ -463,7 +465,9 @@ public class InvoiceDaoImpl implements InvoiceDao {
 	
 		Connection con = null;
 		PreparedStatement pst = null;
+		PreparedStatement pst1 = null;
 		int noofrows  = 0;
+		int updtprfart = 0;
 		boolean isInserted = true;
 		try{			
 			con = DBConnection.getConnection();
@@ -495,6 +499,24 @@ public class InvoiceDaoImpl implements InvoiceDao {
 			pst.setString(17, invbill.getInvartid());
 			noofrows = pst.executeUpdate();
 			System.out.println("Sucessfully inserted the record.." + noofrows);
+			if(noofrows == 1){
+				System.out.println(" Update PRF Status QTy "+noofrows);
+				StringBuffer sql_updartqty = new StringBuffer("UPDATE elpro.tbl_prfarticle_status SET qshipped = ? , qbal = ? , invdetails = ?  WHERE prf_articleid = '"+invbill.getInvartid()+"' ");
+				String sqlquery_updartqty = sql_updartqty.toString();
+				System.out.println("Update quert" +sqlquery_updartqty);
+				pst1 = (PreparedStatement) con.prepareStatement(sqlquery_updartqty);
+				pst1.setString(1, invbill.getInvqshpd());
+				System.out.println("getInvqshpd " +invbill.getInvqshpd());
+				pst1.setString(2, invbill.getInvqbal());
+				System.out.println("getInvqbal " +invbill.getInvqbal());
+				pst1.setString(3, invbill.getInvno()+" Dt"+invbill.getInvdt());
+				System.out.println("INV invdetails " +invbill.getInvno()+" Dt"+invbill.getInvdt());
+			
+				updtprfart = pst1.executeUpdate();
+				System.out.println("Sucessfully Updated the record.." + updtprfart);
+			}
+			System.out.println("Sucessfully inserted the record.." + noofrows);
+			
 	}catch(Exception e){
 		e.printStackTrace();
 		System.out.println("Customer Name ERROR RESULT");
@@ -592,7 +614,9 @@ public class InvoiceDaoImpl implements InvoiceDao {
 			throws SQLException {
 		Connection con = null;
 		PreparedStatement pst = null;
+		PreparedStatement pst1 = null;
 		int noofrows  = 0;
+		int updtprfartsecondbill = 0;
 		boolean isInserted = true;
 		try{			
 			con = DBConnection.getConnection();
@@ -623,6 +647,23 @@ public class InvoiceDaoImpl implements InvoiceDao {
 			pst.setString(16, invaddagainbill.getInvamt());
 			pst.setString(17, invaddagainbill.getInvartid());
 			noofrows = pst.executeUpdate();
+			if(noofrows == 1){
+				System.out.println(" Second Shipment for Same Article - Update PRF Status QTy "+noofrows);
+				StringBuffer sql_updartqty = new StringBuffer("UPDATE elpro.tbl_prfarticle_status SET qshipped = ? , qbal = ? , invdetails = ?  WHERE prf_articleid = '"+invaddagainbill.getInvartid()+"' ");
+				String sqlquery_updartqty = sql_updartqty.toString();
+				System.out.println("Update quert" +sqlquery_updartqty);
+				pst1 = (PreparedStatement) con.prepareStatement(sqlquery_updartqty);
+				pst1.setString(1, invaddagainbill.getInvqshpd());
+				System.out.println("getInvqshpd " +invaddagainbill.getInvqshpd());
+				pst1.setString(2, invaddagainbill.getInvqbal());
+				System.out.println("getInvqbal " +invaddagainbill.getInvqbal());
+				pst1.setString(3, invaddagainbill.getInvno()+" Dt"+invaddagainbill.getInvdt());
+				System.out.println("INV invdetails " +invaddagainbill.getInvno()+" Dt"+invaddagainbill.getInvdt());
+			
+				updtprfartsecondbill = pst1.executeUpdate();
+				
+				System.out.println("Sucessfully Updated the record.." + updtprfartsecondbill);
+			}
 			System.out.println("Sucessfully inserted the record.." + noofrows);
 	}catch(Exception e){
 		e.printStackTrace();

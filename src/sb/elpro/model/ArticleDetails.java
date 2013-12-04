@@ -52,6 +52,8 @@ public class ArticleDetails implements Serializable {
 	private String prfarticleid;
 	private String label;
 	private String value;
+	private float qshipped;
+	private float qbal;
 	/**
 	 * @return the articleid
 	 */
@@ -483,6 +485,31 @@ public class ArticleDetails implements Serializable {
 	 */
 	public void setRateamt(String rateamt) {
 		this.rateamt = rateamt;
+	}
+	
+	/**
+	 * @return the qshipped
+	 */
+	public float getQshipped() {
+		return qshipped;
+	}
+	/**
+	 * @param qshipped the qshipped to set
+	 */
+	public void setQshipped(float qshipped) {
+		this.qshipped = qshipped;
+	}
+	/**
+	 * @return the qbal
+	 */
+	public float getQbal() {
+		return qbal;
+	}
+	/**
+	 * @param qbal the qbal to set
+	 */
+	public void setQbal(float qbal) {
+		this.qbal = qbal;
 	}
 		
 

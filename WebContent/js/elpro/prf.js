@@ -8,7 +8,6 @@ $(document).ready(function() {
 	/*
 	 * Autocomple for Local Data Types
 	 */
-	
 		function split( val ) {
 	      return val.split( /,\s*/ );
 	    }
@@ -99,6 +98,7 @@ $(document).ready(function() {
 	    
 	var grid = $("#list"); //table id artinsert
 	var ctno = $("#prf_contractno").val();
+	alert(ctno);
 	 grid.jqGrid({ 
 		url:"/Myelclass/PrfinsertArticle.do?ctno="+ctno,   
 		datatype:"json",

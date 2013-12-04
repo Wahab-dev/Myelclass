@@ -46,18 +46,44 @@ public class BulkInsertAction extends Action {
 	             String pag = request.getParameter("page");
 	             String sidx = request.getParameter("sidx");
 	             String sord = request.getParameter("sord");
+	             Boolean  search = Boolean.valueOf( request.getParameter("_search"));
+	             String filters = request.getParameter("filters");
 	                
 	             System.out.println("rows "+rows); //4
 	             System.out.println("page "+pag); //1
 	             System.out.println("sidx "+sidx);
 	             System.out.println("sord "+sord);
 	             System.out.println("action "+action);
+	             System.out.println("search  "+search);
+	             System.out.println("filters  "+filters);
+	             //System.out.println("filters  "+filters);
+	             
+	             //this parses the json
+	             JSONObject jObj = new JSONObject(); 
+	             jObj.getJSONObject(request.getParameter("filters")) ;
+	             
+				//Iterator<String> it = jObj.keys(); //gets all the keys
+	             
+	             Iterator<?> ite = jObj.keys();
+	             System.out.println("jObj.keys()"+jObj);
+	             while(ite.hasNext())
+	             {
+	                 String key = (String) ite.next(); // get key
+	                 Object o = jObj.get(key); // get value
+	                 System.out.println(key + " : " +  o); // print the key and value
+	             }
+	             
+	             
 	         	 if(oper == null){
 	         		 String totqty ="";
 	         		 String totshpd = "";
 	         		 String totbal ="";
 	         		 
 					 System.out.println(" In Bulk  LAOD");
+					/* if (search && filters.isEmpty()){ //Condition For Search 
+						 //It Is a Toolbar Search
+						 List<BulkArticle> article = bulkbo.getBulkDetails(sidx,sord);
+					 }*/
 					List<BulkArticle> article = bulkbo.getBulkDetails(sidx,sord);
 					int records = article.size();
 					System.out.println("Reords  "+records);
@@ -65,7 +91,7 @@ public class BulkInsertAction extends Action {
 					List<BulkQtyDetails> bulkqty = bulkbo.getBulkTotqty(sidx,sord);
 					 Iterator<BulkQtyDetails> iter = bulkqty.iterator();  
 				        while(iter.hasNext()){                
-				        	BulkQtyDetails bulkqtyBean = (BulkQtyDetails) iter.next();
+				        	BulkQtyDetails bulkqtyBean = iter.next();
 				        	totqty  = bulkqtyBean.getQuantity();
 				        	totbal  = bulkqtyBean.getQbal();
 				        	totshpd = bulkqtyBean.getQtyshpd(); 
