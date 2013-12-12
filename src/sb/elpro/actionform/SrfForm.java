@@ -3,7 +3,10 @@
  */
 package sb.elpro.actionform;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.struts.action.ActionForm;
+import org.apache.struts.action.ActionMapping;
 
 /**
  * @author Wahab
@@ -21,6 +24,7 @@ public class SrfForm extends ActionForm{
 	private String srf_sampleno;
 	private String srf_agentname;
 	private String srf_orderdate;
+	private String srf_poreftype;
 	private String srf_referenceno;
 	private String srf_priority;
 	private String srf_handledby;
@@ -44,6 +48,7 @@ public class SrfForm extends ActionForm{
 	private String srf_deliver;
 	private String srf_splcdn;	
 	private String srf_inspcdn; 
+	private String srf_forwarder; 
 	
 	
 	//Article Values
@@ -87,6 +92,8 @@ public class SrfForm extends ActionForm{
 	private String srf_courier;
 	private String srf_feedback;
 	private String srf_isSample;
+	
+	
 	/**
 	 * @return the srf_sampleno
 	 */
@@ -856,7 +863,65 @@ public class SrfForm extends ActionForm{
 	public void setSrf_inspcdn(String srf_inspcdn) {
 		this.srf_inspcdn = srf_inspcdn;
 	}
+	/**
+	 * @return the srf_poreftype
+	 */
+	public String getSrf_poreftype() {
+		return srf_poreftype;
+	}
+	/**
+	 * @param srf_poreftype the srf_poreftype to set
+	 */
+	public void setSrf_poreftype(String srf_poreftype) {
+		this.srf_poreftype = srf_poreftype;
+	}
+	/**
+	 * @return the srf_forwarder
+	 */
+	public String getSrf_forwarder() {
+		return srf_forwarder;
+	}
+	/**
+	 * @param srf_forwarder the srf_forwarder to set
+	 */
+	public void setSrf_forwarder(String srf_forwarder) {
+		this.srf_forwarder = srf_forwarder;
+	}
 	
 	
-		
+		/* (non-Javadoc)
+		 * @see org.apache.struts.action.ActionForm#reset(org.apache.struts.action.ActionMapping, javax.servlet.http.HttpServletRequest)
+		 */
+		@Override
+		public void reset(ActionMapping mapping, HttpServletRequest request) {
+			srf_sampleno ="";
+			srf_agentname ="";
+			srf_orderdate ="";
+			srf_poreftype ="";
+			srf_referenceno ="";
+			srf_priority ="";
+			srf_handledby ="";
+			srf_customer ="";
+			srf_tanname ="";
+			srf_tanattn ="";
+			srf_tanaddr ="";	
+			srf_tanphone ="";
+			srf_tanfax ="";
+			srf_custname ="";
+			srf_custattn ="";	
+			srf_custaddr ="";
+			srf_custphone ="";
+			srf_custfax ="";	
+			srf_custacctno ="";
+			srf_endusage ="";	
+			srf_destination ="";	
+			srf_paymentterms ="";	
+			srf_cdd ="";	
+			srf_add ="";	
+			srf_deliver ="";
+			srf_splcdn ="";	
+			srf_inspcdn =""; 
+			srf_forwarder =""; 
+			//super.reset(mapping, request);
+		}
 }

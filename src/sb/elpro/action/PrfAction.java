@@ -5,46 +5,45 @@ package sb.elpro.action;
 
 
 import java.io.PrintWriter;
-import java.util.Enumeration;
 
-import javax.servlet.ServletException;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import net.sf.json.JSONObject;
 
-import org.apache.commons.beanutils.PropertyUtils;
-import org.apache.struts.action.Action;
+import org.apache.commons.beanutils.BeanUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.actions.DispatchAction;
 
-import com.sun.org.apache.bcel.internal.generic.NEW;
 
 import sb.elpro.actionform.PrfForm;
 import sb.elpro.bo.PrfBo;
 import sb.elpro.bo.PrfBoImpl;
 import sb.elpro.model.ProductDetails;
+import sb.elpro.utility.DateConversion;
 
 /**
  * @author Wahab
  *
  */
-public class PrfAction extends Action {
+public class PrfAction extends DispatchAction {
 
 	PrfBo prfbo  =  new PrfBoImpl();
 	HttpSession usersession;
 	ProductDetails prfbean = new ProductDetails();
 	
-	public ActionForward execute(ActionMapping map, ActionForm form, 
+	public ActionForward Save(ActionMapping map, ActionForm form, 
 			HttpServletRequest request, HttpServletResponse response) throws Exception{
 		 System.out.println("In Save Prf Form");
 		 PrintWriter out = response.getWriter();
+		 PrfForm prfsaveform =(PrfForm) form;
+		 BeanUtils.copyProperties(prfbean, prfsaveform);
 		 /*
 		  * Getting all values 
-		  * 
 		  */
 		/* Enumeration<String> paramNames = request.getParameterNames();
 		 while(paramNames.hasMoreElements())
@@ -56,15 +55,39 @@ public class PrfAction extends Action {
 	            	System.out.println(paramName + paramValues[i]);
                 }
 	        }*/
-		 prfbean.setPrf_agentname(request.getParameter("prf_agentname"));
+		 
+		 /*
+		  * Function to Convert Date Format 
+		  * convert from dd/mm/yyyy to yyyy/mm/dd
+		  * update here i created a static class and passed 
+		  */
+		/* SimpleDateFormat desiredDateformat = new SimpleDateFormat("yyyy-MM-dd");
+		 String orddt = request.getParameter("prf_orderdate");
+		 String cdddt = request.getParameter("prf_cdd");
+		 String adddt = request.getParameter("prf_add");
+		 
+		 Date ordate = new SimpleDateFormat("dd-MM-yyyy").parse(orddt);
+		 Date cdddate = new SimpleDateFormat("dd-MM-yyyy").parse(cdddt);
+		 Date adddate = new SimpleDateFormat("dd-MM-yyyy").parse(adddt);
+		 
+		 String order_date = desiredDateformat.format(ordate);	
+		 String cdd_date = desiredDateformat.format(cdddate);	
+		 String add_date = desiredDateformat.format(adddate);	
+		 System.out.println(" order_date "+order_date);
+		 System.out.println(" cdd_date "+cdd_date);
+		 System.out.println(" add_date "+add_date);*/
+		 
+		 prfbean.setPrf_orderdate(DateConversion.ConverttoMysqlDate(request.getParameter("prf_orderdate")));
+		 prfbean.setPrf_cdd(DateConversion.ConverttoMysqlDate(request.getParameter("prf_cdd")));
+		 prfbean.setPrf_add(DateConversion.ConverttoMysqlDate(request.getParameter("prf_add")));
+		 prfbean.setPrf_exporterid(prfbean.getPrf_tanname());
+		
+		/* prfbean.setPrf_agentname(request.getParameter("prf_agentname"));
 		 prfbean.setPrf_contractno(request.getParameter("prf_contractno"));
-		 prfbean.setPrf_orderdate(request.getParameter("prf_orderdate"));
 		 prfbean.setPrf_poreftype(request.getParameter("prf_poreftype"));
 		 prfbean.setPrf_poref(request.getParameter("prf_poref"));
 		 prfbean.setPrf_tanname(request.getParameter("prf_tanname"));
-		 prfbean.setPrf_custname(request.getParameter("prf_custname"));
-		 prfbean.setPrf_cdd(request.getParameter("prf_cdd"));
-		 prfbean.setPrf_add(request.getParameter("prf_add"));
+		 prfbean.setPrf_custname(request.getParameter("prf_custname"));		 
 		 prfbean.setPrf_destination(request.getParameter("prf_destination"));
 		 prfbean.setPrf_terms(request.getParameter("prf_terms"));
 		 prfbean.setPrf_insurance(request.getParameter("prf_insurance"));
@@ -76,28 +99,56 @@ public class PrfAction extends Action {
 		 prfbean.setPrf_consigneename(request.getParameter("prf_consigneename"));
 		 prfbean.setPrf_notifyname(request.getParameter("prf_notifyname"));
 		 prfbean.setPrf_bankname(request.getParameter("prf_bankname"));
-		 prfbean.setPrf_exporterid(request.getParameter("prf_tanname")); //Exported ID
+		 prfbean.setPrf_exporterid(request.getParameter("prf_tanname")); *///Exported ID
 		 prfbean.setPrf_pojw("N/A");
+		 prfbean.setFormaction("edit");
 		 usersession = request.getSession(false);
 		 if(!(usersession == null)){
 			 JSONObject prfjsonobj = new JSONObject();
-			 System.out.println("usersession "+usersession.toString());
-			boolean issavedPrf = prfbo.savePrfform(prfbean);
-			if(issavedPrf){
-				prfjsonobj.put("result", issavedPrf);
-				prfjsonobj.put("success", "Successfully Saved The Form");
-			}else{
-				prfjsonobj.put("result", issavedPrf);
-				prfjsonobj.put("error", "Error in Saving The Form");
-			}
-			 System.out.println("Hola  "+prfjsonobj);
-			 out.println(prfjsonobj);
-			 return null;
+			 System.out.println("usersession "+usersession.getId());
+			 if(prfbean.getFormaction().equalsIgnoreCase("edit")){
+				 boolean isupdatePrf = prfbo.updatePrfform(prfbean);
+				 if(isupdatePrf){
+						prfjsonobj.put("result", isupdatePrf);
+						prfjsonobj.put("success", "Successfully Saved The Form");
+						prfsaveform.reset(map, request);
+						out.println(prfjsonobj);
+						return map.findForward("bulkisloaded");
+					}else{
+						prfjsonobj.put("result", isupdatePrf);
+						prfjsonobj.put("error", "Error in Saving The Form");
+						out.println(prfjsonobj);
+						return null;
+					}
+			 }else{
+				 boolean issavedPrf = prfbo.savePrfform(prfbean);
+				 if(issavedPrf){
+						prfjsonobj.put("result", issavedPrf);
+						prfjsonobj.put("success", "Successfully Saved The Form");
+						prfsaveform.reset(map, request);
+						out.println(prfjsonobj);
+						return map.findForward("prfissaved");
+					}else{
+						prfjsonobj.put("result", issavedPrf);
+						prfjsonobj.put("error", "Error in Saving The Form");
+						out.println(prfjsonobj);
+						return null;
+					}
+			 }
+			
+			
 		 }	
-		
+		System.out.println(" LOgin Credential Fails");
 		 return map.findForward("login");
 	}
 	
+	public ActionForward Clear(ActionMapping map, ActionForm form, 
+			HttpServletRequest request, HttpServletResponse response) throws Exception{
+		System.out.println("IN CLEAR ");
+		 PrfForm prfsaveform =(PrfForm) form;
+		 prfsaveform.reset(map, request);
+		return map.findForward("clearprfform");
+	}
 	
 	/*
 	public ActionForward Logout(ActionMapping mapping, ActionForm form, 

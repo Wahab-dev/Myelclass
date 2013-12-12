@@ -4,13 +4,23 @@
  * 
  */
 $(document).ready(function() {
-	 var grid = $("#srfArticletbl");	
-	 var sampleno = $("#srf_sampleno").val();
+	$.get("/Myelclass/SrfAutoComplete.do?action="+"sampleno", 
+		 	function(data){alert("Data: " + data);
+		 	$("#srf_sampleno").val(data); 
+		 	$.trim($("#srf_sampleno").val());
+		 	alert("New value "+$("#srf_handledby").val($("#srf_sampleno").val()));
+		 	},"text");
+	
+	
+	 var grid = $("#srfArticletbl"); 
 		grid.jqGrid({ 
 			         datatype: "json",
-				     url:"/Myelclass/SrfinsertArticle.do?sampleno="+sampleno, 
-			         mtype: 'GET',  
-			         colNames:['ArticleID', 'ArticleType','ArticleShForm', 'Article name','Color', 'Size','Sizeavg','Size Rem','Substance', 'Selection','Selectionp', 'Quantity','Unit','Pieces','Price','Ratesign','Rateamt','Shipment','Colormatching','Tapetest','Crockingwet','CrockingDry','Fourfolds','Keytest','SampleNo','Srfarticleid','User'],  
+				     url:"/Myelclass/SrfinsertArticle.do", 
+			         mtype: "GET",  
+			         postData: {
+			        	 sampleno: function (){return $("#srf_sampleno").val();},
+				    },
+			         colNames:['ArticleID', 'ArticleType', 'ArticleShForm', 'Article name','Color', 'Size','Sizeavg','Size Rem','Substance', 'Selection','Selectionp', 'Quantity','Unit','Pieces','Price','Ratesign','Rateamt','Shipment','Colormatching','Tapetest','Crockingwet','CrockingDry','Fourfolds','Keytest','SampleNo','Srfarticleid','User'],  
 			         colModel :[   
 			                    {name:'articleid',index:'articleid',align:'center', editable:true, sortable:true, hidden:true,
 			                    	
@@ -23,9 +33,10 @@ $(document).ready(function() {
 			                      		  	var response = jQuery.parseJSON(data);
 			                                	var s = '<select style="width: 520px">';
 			                                	if (response && response.length) {
+			                                		var obj = [{"divid":"01","longDesc":"Office of Technology and Information Services"},{"divid":"04","longDesc":"Office of Emergency Response"},{"divid":"04","longDesc":"Office of Emergency Response"}];
 			                                    	s += '<option value="0">--- Select Article Type ---</option>';
-			                                		for (var i = 0, l=response.length; i<l ; i++) {
-			                                      	var ri = response[i].value;
+			                                		for (var i = 0, l=obj.length; i<l ; i++) {
+			                                      	var ri = obj[i].divid[i] +"?";
 			                                       	s += '<option value="'+ri+'">'+ri+'</option>';
 			                                    	}
 			                                  	}
@@ -321,7 +332,7 @@ $(document).ready(function() {
 					function(result) { 	
 			             response($.map(result, function(item) {
 			                return { 
-			                       value: item.tanneryName,
+			                       value: item.label,
 			                       addr: item.tanneryAddress,
 			                       phone: item.tanneryContactNo,	
 			                       attn : item.tanneryAttention,
@@ -341,7 +352,7 @@ $(document).ready(function() {
 		  $('#srf_deliver').autocomplete({
 			 source: function(request, response) {
 				var param = request.term;  
-			 	$.getJSON("/Myelclass/PrfAutocomplete.do?term="+param+"&action="+"custname",
+			 	$.getJSON("/Myelclass/PrfAutocomplete.do?term="+param+"&action="+"deliver",
 					function(result) { 	
 			             response($.map(result, function(item) {
 			                return { 
@@ -411,23 +422,55 @@ $(document).ready(function() {
 	    }
 
 	});
-	
-	$('#srf_endusage').autocomplete({
+	/*
+	 * Implement Multi Select 
+	 */
+	function split( val ) {
+	      return val.split( /,\s*/ );
+	    }
+	    function extractLast (term) {
+	      return split(term).pop();
+	    }
+
+	$('#srf_endusage') 
+	// don't navigate away from the field on tab when selecting an item
+    .bind( "keydown", function( event ) {
+        if ( event.keyCode === $.ui.keyCode.TAB &&
+            $( this ).data( "ui-autocomplete" ).menu.active ) {
+          event.preventDefault();
+        }
+      })
+	.autocomplete({
+		 minLength: 1,
 	    source: function(request, response) {
-	    	var param = request.term;  
-	        $.getJSON("/Myelclass/SrfAutoComplete.do?term="+param+"&action="+"endusage", 
-	        		 function(result) {
-	            		response($.map(result, function(item) {
+	        $.getJSON("/Myelclass/SrfAutoComplete.do?&action="+"endusage",
+	        		{term : extractLast(request.term
+		        	)}).done(function(data) {
+	            		response($.map(data, function(item) {
 	                	return {
 	                		label: item.label,  
 	                         //can add number of attributes here   
-	                        value: item.label  // I am displaying both labe and value  
+	                        value: item.label // I am displaying both labe and value  
 	                		};
 	            }));
 	        });
-	    }
-
-	});
+	    },
+	    focus: function() {
+	          // prevent value inserted on focus
+	          return false;
+	        },
+	        select: function( event, ui ) {
+	          var terms = split( this.value );
+	          // remove the current input
+	          terms.pop();
+	          // add the selected item
+	          terms.push( ui.item.value );
+	          // add placeholder to get the comma-and-space at the end
+	          terms.push( "" );
+	          this.value = terms.join( ", " );
+	          return false;
+	        }
+	      }).autosize({append: "\n"});
 	
 	$('#srf_paymentterms').autocomplete({
 	    source: function(request, response) {
@@ -447,14 +490,30 @@ $(document).ready(function() {
 	});
 	//Date Picker
 		 $('.srf_deliverydate').datepicker({
-			 	numberOfMonths: 2,
-				formatDate:'dd/mm/y',
-			    firstDay: 1, 
+			 autoSize: true,
+			    changeMonth:false,
+			    dateFormat: "dd-mm-yy",
+			    showWeek: true,
+			    firstDay: 1,
+			    numberOfMonths: 2,
+			    showButtonPanel: false,
+			    gotoCurrent:true, 
+			    
+			   
 			});
 		$("#srf_orderdate").datepicker({
-			changeMonth:true,
-			formatDate:'dd/mm/y',
-		    firstDay: 1, 
+				 autoSize: true,
+			    changeMonth:false,
+			    dateFormat: "dd-mm-yy",
+			    showWeek: true,
+			    firstDay: 1,
+			    numberOfMonths: 1,
+			    showButtonPanel: false,
+			    gotoCurrent:true, 
+			    
 		});
-	
+		/*$("#Save").click(function(){	
+			var savePrfForm = $("#savePrfForm").serialize();
+			alert(savePrfForm);
+		});*/
 });

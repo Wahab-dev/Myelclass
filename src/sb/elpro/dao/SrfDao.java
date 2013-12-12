@@ -22,11 +22,11 @@ import sb.elpro.model.TanneryDetails;
  */
 public interface SrfDao {
 
-	int getSampleno() throws SQLException;
+	String getSampleno() throws SQLException;
 
 	ArrayList<HandledByDetails> getsrfhandledby(String term) throws SQLException;
 
-	ArrayList<EndUsageDetails> getsrfendusage(String term)throws SQLException;
+	List<AutoComplete> getsrfendusage(String term)throws SQLException;
 
 	ArrayList<TanneryDetails> getTannery(String term) throws SQLException;
 
@@ -45,5 +45,13 @@ public interface SrfDao {
 	boolean delsrfArticle(SrfArticle artindertdetail, String sidx, String sord)throws SQLException;
 
 	List<SampleRequest> getEditSrfFormDetails(String sampleno)throws SQLException;
+
+	/**  
+	 * (Method description)
+	 * @param
+	 * @return
+	 * etc
+	 */
+	boolean saveSrfForm(SampleRequest srfbean)throws SQLException;
 
 }

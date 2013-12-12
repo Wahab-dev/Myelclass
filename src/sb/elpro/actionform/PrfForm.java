@@ -5,18 +5,27 @@ package sb.elpro.actionform;
 
 
 
+
+import java.io.Serializable;
+
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.struts.action.ActionForm;
+import org.apache.struts.action.ActionMapping;
+
 
 /**
  * @author Wahab
  *
  */
-public class PrfForm extends ActionForm{
+public class PrfForm extends ActionForm implements Serializable {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -3495410020625737320L;
+	
+
 	private String prf_agentid;
 	private String prf_agentname;
 	private String prf_contractno;
@@ -103,8 +112,9 @@ public class PrfForm extends ActionForm{
 	private String prf_price;
 	private String prf_tc;
 	
-	
 	private String formaction;
+	
+	
 	/**
 	 * @return the prf_agentid
 	 */
@@ -1098,5 +1108,99 @@ public class PrfForm extends ActionForm{
 	public void setPrf_commission(String prf_commission) {
 		this.prf_commission = prf_commission;
 	}
+	
+	/* (non-Javadoc)
+	 * @see org.apache.struts.action.ActionForm#reset(org.apache.struts.action.ActionMapping, javax.servlet.ServletRequest)
+	 */
+	@Override
+	public void reset(ActionMapping map, HttpServletRequest request) {
+		System.out.println(" IN RESET IN FORM EXAMPLP");
+		prf_agentid = "";
+		prf_agentname = "";
+		prf_contractno = "";
+		prf_orderdate = "";
+		prf_poref = "";
+		prf_poreftype = "";
+		prf_exporterid  = "";
+		prf_tannid  = "";
+		prf_tanname = "";
+		prf_tanaddr = "";
+		prf_tanattn = "";
+		prf_tanphone = "";
+		prf_tanfax = "";
+		prf_custid = "";
+		prf_custname = "";
+		prf_custattn = "";
+		prf_custaddr = "";
+		prf_custphone = "";
+		prf_custfax = "";
+		prf_consigneeid = "";
+		prf_consigneename = "";
+		prf_consigneeattn = "";
+		prf_consigneeaddr = "";
+		prf_consigneephone = "";
+		prf_consigneefax = "";
+		prf_notifyid = "";
+		prf_notifyname = "";
+		prf_notifyattn = "";
+		prf_notifyaddr = "";
+		prf_notifyphone = "";
+		prf_notifyfax = "";
+		prf_bankid = "";
+		prf_bankname = "";
+		prf_bankbranch = "";
+		prf_bankaddr = "";
+		prf_bankphone = "";
+		prf_bankfax = "";
+		prf_destination = "";
+		prf_destinationid = "";
+		prf_terms = "";
+		prf_termsid = "";
+		prf_payment = "";
+		prf_paymentid = "";
+		prf_elclasscommission = "";	
+		prf_commission = "";
+		prf_insurance = "";
+		prf_cdd = "";
+		prf_add = "";
+		prf_special = "";
+		prf_inspcdn = "";
+		prf_pojw = "";
+		
+		
+		
+		//Artilce Details
+		prf_articleid = "";
+		articleid = "";
+		prf_articlename = "";
+		prf_color = "";
+		prf_substancemin = "";
+		prf_substancemax = "";
+		prf_substance = "";
+		prf_sizemin = "";
+		prf_sizemax = "";
+		prf_sizeavg = "";
+		prf_sizeremarks = "";
+		prf_articletype = "";
+		prf_selection = "";
+		prf_selectionp1 = "";
+		prf_selectionp2 = "";
+		prf_selectionp3 = "";
+		prf_selectionp4 = "";
+		prf_quantity = "";
+		prf_unit = "";
+		prf_pieces = "";
+		prf_ratesign = "";
+		prf_rate = "";	
+		prf_shipment = "";
+		prf_tcamt = "";
+		prf_tccurrency = "";
+		prf_tcagent = "";
+		prf_size = "";
+		prf_selectionp = "";
+		prf_price = "";
+		prf_tc = "";
+	}
+	 
 	
 }

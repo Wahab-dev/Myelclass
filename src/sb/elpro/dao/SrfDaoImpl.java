@@ -13,7 +13,6 @@ import sb.elpro.model.SampleRequest;
 import sb.elpro.model.SrfArticle;
 import sb.elpro.model.AutoComplete;
 import sb.elpro.model.CustomerDetails;
-import sb.elpro.model.EndUsageDetails;
 import sb.elpro.model.HandledByDetails;
 import sb.elpro.model.PaymentDetails;
 import sb.elpro.model.TanneryDetails;
@@ -21,8 +20,32 @@ import sb.elpro.utility.DBConnection;
 
 public class SrfDaoImpl implements SrfDao {
 	@Override
-	public int getSampleno() throws SQLException {
-		return 0;
+	public String getSampleno() throws SQLException {
+		Connection con = null;
+		Statement st = null;
+		ResultSet rs = null;	
+		String sampleno = null;
+		try{			
+			con = DBConnection.getConnection();
+			st = (Statement) con.createStatement();
+			String sql = "SELECT max(sampleno) as sampleno FROM elpro.tbl_srfform";
+			rs = st.executeQuery(sql);
+			while(rs.next()) {	
+				String sno = rs.getString("sampleno").trim();
+				int isample = Integer.parseInt(sno.substring(1));
+				System.out.println(" Int val "+ ++isample);
+				sampleno = "S"+isample;
+				System.out.println("SAmpleNo "+sampleno);	
+			}
+		}catch(Exception e){
+			System.out.println("Result ERROR RESULT");
+			e.printStackTrace();
+		}finally{
+			 con.close() ;
+			 st.close();
+			 rs.close();
+	   }			
+		return sampleno;
 	}
 
 	@Override
@@ -55,8 +78,8 @@ public class SrfDaoImpl implements SrfDao {
 	}
 
 	@Override
-	public ArrayList<EndUsageDetails> getsrfendusage(String term) throws SQLException {
-		ArrayList<EndUsageDetails> endusagearray = new ArrayList<EndUsageDetails>();			
+	public List<AutoComplete> getsrfendusage(String term) throws SQLException {
+		ArrayList<AutoComplete> endusagearray = new ArrayList<AutoComplete>();			
 		Connection con = null;
 		Statement st = null;
 		ResultSet rs = null;			
@@ -66,9 +89,9 @@ public class SrfDaoImpl implements SrfDao {
 			String sql = "SELECT endusagename, endusagetype FROM elpro.tbl_srfendusage where endusagename like '%"+term+"%'   order by endusagename";
 			rs = st.executeQuery(sql);
 			while(rs.next()) {	
-				EndUsageDetails endusagebean = new EndUsageDetails();
+				AutoComplete endusagebean = new AutoComplete();
 				endusagebean.setLabel(rs.getString("endusagename"));
-				endusagebean.setSrf_endusagetype(rs.getString("endusagetype"));
+				endusagebean.setValue(rs.getString("endusagetype"));
 				System.out.println("endusage name "+endusagebean.getLabel());
 				endusagearray.add(endusagebean);
 			}
@@ -438,6 +461,57 @@ public class SrfDaoImpl implements SrfDao {
 				 rs.close();
 		   }	
 		return editsrfformlist;
+	}
+
+	/* (non-Javadoc)
+	 * @see sb.elpro.dao.SrfDao#savePrfForm(sb.elpro.model.SampleRequest)
+	 */
+	@Override
+	public boolean saveSrfForm(SampleRequest srfbean) throws SQLException {
+		System.out.println("In PRF SAVE");
+		Connection con = null;
+		PreparedStatement pst = null;
+		int noofrows  = 0;
+		boolean isSaved =true;
+		
+		try{
+			con = DBConnection.getConnection();
+			StringBuffer sql_savesrfArticle = new StringBuffer("insert into tbl_srfform (sampleno, agentid, orderdt, refno, priority, handledby, customerid, tanneryid, deliverid, destination, endusage, terms, add_date, cdd_date, splcdn, inspcdn, forwaderid, isinvraised)");
+			sql_savesrfArticle.append("values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+			String sqlquery_savesrfArticle = sql_savesrfArticle.toString();
+			pst = (PreparedStatement) con.prepareStatement(sqlquery_savesrfArticle);
+			pst.setString(1, srfbean.getSrf_sampleno());
+			System.out.println("getSrf_sampleno " +srfbean.getSrf_sampleno());
+			pst.setString(2, srfbean.getSrf_agentname());
+			System.out.println("getPrf_agentname " +srfbean.getSrf_agentname());
+			pst.setString(3, srfbean.getSrf_orderdate());
+			pst.setString(4, srfbean.getSrf_poreftype() +", "+ srfbean.getSrf_referenceno());
+			pst.setString(5, srfbean.getSrf_priority());
+			pst.setString(6, srfbean.getSrf_handledby());
+			pst.setString(7, srfbean.getSrf_customer());
+			pst.setString(8, srfbean.getSrf_tanname());
+			pst.setString(9, srfbean.getSrf_deliver());
+			pst.setString(10, srfbean.getSrf_destination());
+			pst.setString(11, srfbean.getSrf_endusage());
+			pst.setString(12, srfbean.getSrf_paymentterms());
+			pst.setString(13, srfbean.getSrf_add());
+			pst.setString(14, srfbean.getSrf_cdd());
+			pst.setString(15, srfbean.getSrf_splcdn());
+			pst.setString(16, srfbean.getSrf_inspcdn());
+			pst.setString(17, srfbean.getSrf_forwarder());
+			pst.setString(18, srfbean.getSrf_isSample());
+			noofrows = pst.executeUpdate();
+			
+			System.out.println("Sucessfully inserted the record.." + noofrows);
+	}catch(Exception e){
+		e.printStackTrace();
+		isSaved = false;
+		System.out.println("ERROR RESULT");
+	}finally{
+		 con.close() ;
+		 pst.close();
+   }	
+		return isSaved;
 	}
 	
 	

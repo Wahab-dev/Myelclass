@@ -103,7 +103,7 @@ $(function() {
         $(elem).datepicker({
         	autoSize: true,
 		    changeMonth:false,
-		    dateFormat: "yy/mm/d",
+		    dateFormat: "dd-mm-yy",
 		    showWeek: true,
 		    firstDay: 1,
 		    numberOfMonths: 2,
@@ -138,10 +138,7 @@ $(function() {
 					  edittype: 'select', 
 					  editoptions:{value:{0:'Select Status',I:'Inspection', P:'Pending',C:'Closed',CA:'Cancel',PS:'Partial Ship',S:'Shipped',D:'Delivered'},defaultValue: 'Pending'},
 					  editrules :{require : true},
-					  formoptions : {
-							rowpos : 1,
-							colpos: 1,
-					   },
+					 
 				  },
 				  {name: 'ctno', index: 'ctno', align:'center', width:60, editable:true, sortable: true, hidden:false, 
 					  editrules :{require : true},
@@ -157,13 +154,10 @@ $(function() {
 				  },
 				  {name: 'agent', index: 'agent', align:'center', width:60, editable:true, sortable: true, hidden:false, search: true, stype:'text', 
 					  editrules :{require : true},
-					  formoptions : {
-							rowpos : 2,
-							colpos: 1,
-						},
+					  
 				  },
-				  {name: 'orderdt', index: 'orderdt', align:'center', width:65, editable:true, sortable: true, hidden:false, search: true, stype:'text', 
-					  searchoptions:{dataInit:datePick = function(elem)
+				  {name: 'orderdt', index: 'orderdt', align:'center', width:65, editable:true, sortable: true, hidden: false, search: true, stype:'date', 
+					 /* searchoptions:{dataInit:datePick = function(elem)
 						{
 					   jQuery(elem).datepicker();
 					}, attr:{title:'Select Date'}},
@@ -171,252 +165,120 @@ $(function() {
 					 formatter: 'date', datefmt: 'd/m/Y',formatoptions: {newformat: 'd/m/Y'}, 
 					 editoptions: { size: 12,
 			              maxlengh: 12, dataInit: initDateEdit, },
-					 editrules :{require : true,},
-					 formoptions : {
-							rowpos : 2,
-							colpos: 2,
-						},
+					 editrules :{require : true,},*/
 				  },
-				  {name: 'pono', index: 'pono', align:'center', width:90, editable:true, sortable: true, hidden:false,  
+				  {name: 'pono', index: 'pono', align:'center', width:90, editable:true, sortable: true, hidden:true,  
 					  editrules :{require : true},
-					  formoptions : {
-							rowpos : 3,
-							colpos: 1,
-						},
 				  },
 				  {name: 'tanneryid', index: 'tanneryid', align:'center', width:90, editable:true, sortable: true, hidden:false,  
 					  editrules :{require : true},
-					  formoptions : {
-							rowpos : 3,
-							colpos: 2,
-						},
 				  },
 				  {name: 'customerid', index: 'customerid', align:'center', width:90, editable:true, sortable: true, hidden:false,  
 					  editrules :{require : true},
-					  formoptions : {
-							rowpos : 4,
-							colpos: 1,
-						},
 				  },
-				  {name: 'exporterid', index: 'exprtr', align:'center', width:90, editable:true, sortable: true, hidden:false,  
+				  {name: 'exporterid', index: 'exprtr', align:'center', width:90, editable:true, sortable: true, hidden:true,  
 					  //editrules :{require : true},
-					  formoptions : {
-							rowpos : 4,
-							colpos: 2,
-						},
 				  },
 				  {name: 'articlename', index: 'articlename', align:'center', width:90, editable:true, sortable: true, hidden:false,  
 					  //editrules :{require : true},
-					  formoptions : {
-							rowpos : 5,
-							colpos: 1,
-						},
 				  },
 				  {name: 'color', index: 'color', align:'center', width:90, editable:true, sortable: true, hidden:false,  
 					 // editrules :{require : true},
-					  formoptions : {
-							rowpos : 5,
-							colpos: 2,
-						},
 				  },
-				  {name: 'size', index: 'size', align:'center', width:90, editable:true, sortable: true, hidden:false,  
+				  {name: 'size', index: 'size', align:'center', width:90, editable:true, sortable: true, hidden:true,  
 					//  editrules :{require : true},
-					  formoptions : {
-							rowpos : 6,
-							colpos: 1,
-						},
 				  },
-				  {name: 'substance', index: 'substance', align:'center', width:90, editable:true, sortable: true, hidden: false,  
+				  {name: 'substance', index: 'substance', align:'center', width:90, editable:true, sortable: true, hidden: true,  
 					 // editrules :{require : true},
-					  formoptions : {
-							rowpos : 6,
-							colpos: 2,
-						},
 				  },
-				  {name: 'selection', index: 'selection', align:'center', width:90, editable:true, sortable: true, hidden:false,  
+				  {name: 'selection', index: 'selection', align:'center', width:90, editable:true, sortable: true, hidden:true,  
 					  //editrules :{require : true},
-					  formoptions : {
-							rowpos : 7,
-							colpos: 1,
-						},
 				  },
-				  {name: 'selectionpercent', index: 'selectionpercent', align:'center', width:90, editable:true, sortable: true, hidden:false,  
+				  {name: 'selectionpercent', index: 'selectionpercent', align:'center', width:90, editable:true, sortable: true, hidden: true,  
 					  //editrules :{require : true},
-					  formoptions : {
-							rowpos : 7,
-							colpos: 2,
-						},
 				  },
 				  {name: 'quantity', index: 'quantity', align:'center', width:90, editable:true, sortable: true, hidden:false,  
 					  //editrules :{require : true},
-					  formoptions : {
-							rowpos : 8,
-							colpos: 1,
-						},
 				  },
-				  {name: 'unit', index: 'unit', align:'center', width:90, editable:true, sortable: true, hidden:false,  
+				  {name: 'unit', index: 'unit', align:'center', width:90, editable:true, sortable: true, hidden:true,  
 					  //editrules :{require : true},
-					  formoptions : {
-							rowpos : 8,
-							colpos: 2,
-						},
 				  },
-				  {name: 'qtyshpd', index: 'qtyshpd', align:'center', width:90, editable:true, sortable: true, hidden:false,  
+				  {name: 'qshipped', index: 'qshipped', align:'center', width:90, editable:true, sortable: true, hidden: true,  
 					  //editrules :{require : true},
-					  formoptions : {
-							rowpos : 9,
-							colpos: 1,
-						},
 				  },
-				  {name: 'qbal', index: 'qbal', align:'center', width:90, editable:true, sortable: true, hidden:false,  
+				  {name: 'qbal', index: 'qbal', align:'center', width:90, editable:true, sortable: true, hidden:true,  
 					//  editrules :{require : true},
-					  formoptions : {
-							rowpos : 9,
-							colpos: 2,
-						},
 				  },
-				  {name: 'comments', index: 'comments', align:'center', width:90, editable:true, sortable: true, hidden:false,  
+				  {name: 'comments', index: 'comments', align:'center', width:90, editable:true, sortable: true, hidden:true,  
 					  edittype: 'textarea', 
 					  editrules :{require : true},
-					  formoptions : {
-							rowpos : 10,
-							colpos: 1,
-						},
 				  },
-				  {name: 'invdetails', index: 'invdetails', align:'center', width:90, editable:true, sortable: true, hidden:false,  
+				  {name: 'invdetails', index: 'invdetails', align:'center', width:90, editable:true, sortable: true, hidden: true,  
 					  edittype: 'textarea',
 					  editrules :{require : true},
-					  formoptions : {
-							rowpos : 10,
-							colpos: 2,
-						},
 				  },
-				  {name: 'feddback', index: 'feddback', align:'center', width:90, editable:true, sortable: true, hidden:false,  
+				  {name: 'feddback', index: 'feddback', align:'center', width:90, editable:true, sortable: true, hidden: true,  
 					  
 					  edittype: 'textarea', 
 					  editrules :{require : true},
-					  formoptions : {
-							rowpos : 11,
-							colpos: 1,
-						},
 				  },
-				  {name: 'rdd_date', index: 'rdd_date', classes:'dategrp', align:'center', width:90, editable:true, sortable: true, hidden:false,  
+				  {name: 'rdd_date', index: 'rdd_date', align:'center', width:90, editable: true, sortable: true, hidden:true,  
 					  sorttype: 'date',
-					  formatter: 'date', datefmt: 'Y/m/d',formatoptions: {newformat: 'Y/m/d'}, 
+					//  formatter: 'date', //datefmt: 'yy/MM/d',//formatoptions: {newformat: 'd-m-y'}, 
 					  editoptions: { dataInit: DateGrpEdit },
 					  editrules :{require : true},
-					  formoptions : {
-							rowpos : 11,
-							colpos: 2,
-						},
 				  },
-				  {name: 'rate', index: 'rate', align:'center', width:90, editable:true, sortable: true, hidden:false,  
+				  {name: 'rate', index: 'rate', align:'center', width:90, editable:true, sortable: true, hidden: false,  
 					  //editrules :{require : true},
-					  formoptions : {
-							rowpos : 12,
-							colpos: 1,
-						},
 				  },
-				  {name: 'tc', index: 'tc', align:'center', width:90, editable:true, sortable: true, hidden:false,  
+				  {name: 'tc', index: 'tc', align:'center', width:90, editable:true, sortable: true, hidden: true,  
 					 // editrules :{require : true},
-					  formoptions : {
-							rowpos : 12,
-							colpos: 2,
-						},
 				  },
-				  {name: 'add_date', index: 'add_date', classes:'dategrp',align:'center', width:90, editable:true, sortable: true, hidden:false,  
+				  {name: 'add_date', index: 'add_date', align:'center', width:90, editable:true, sortable: true, hidden: true,  
 					  sorttype: 'date',
-					  formatter: 'date', datefmt: 'd/m/Y',formatoptions: {newformat: 'd/m/Y'},
-					  editoptions: { dataInit: DateGrpEdit },
+					 /* formatter: 'date', datefmt: 'd/m/Y',formatoptions: {newformat: 'd/m/Y'},
+					  editoptions: { dataInit: DateGrpEdit },*/
 					  editrules :{require : true},
-					  formoptions : {
-							rowpos : 13,
-							colpos: 1,
-						},
 				  },
-				  {name: 'cdd_date', index: 'cdd_date', classes:'dategrp', align:'center', width:90, editable:true, sortable: true, hidden:false,  
+				  {name: 'cdd_date', index: 'cdd_date', align:'center', width:90, editable:true, sortable: true, hidden: true,  
 					  sorttype: 'date',
-					  formatter: 'date', datefmt: 'd/m/Y',formatoptions: {newformat: 'd/m/Y'}, 
-					  editoptions: { dataInit: DateGrpEdit },
+					 /* formatter: 'date', datefmt: 'd/m/Y',formatoptions: {newformat: 'd/m/Y'}, 
+					  editoptions: { dataInit: DateGrpEdit },*/
 					  editrules :{require : true},
-					  formoptions : {
-							rowpos : 13,
-							colpos: 2,
-						},
 				  },
-				  {name: 'commission', index: 'commission', align:'center', width:90, editable:true, sortable: true, hidden:false,  
+				  {name: 'commission', index: 'commission', align:'center', width:90, editable:true, sortable: true, hidden: true,  
 					 // editrules :{require : true},
-					  formoptions : {
-							rowpos : 14,
-							colpos: 1,
-						},
 				  },
 				  {name: 'pojw', index: 'pojw', align:'center', width:90, editable:true, sortable: true, hidden:false,  
 					    editrules :{require : true},
-					    formoptions : {
-							rowpos : 14,
-							colpos: 2,
-						},
 				  },
-				  {name: 'consigneeid', index: 'consigneeid', align:'center', width:90, editable:true, sortable: true, hidden:false,  
+				  {name: 'consigneeid', index: 'consigneeid', align:'center', width:90, editable:true, sortable: true, hidden: true,  
 					 // editrules :{require : true},
-					  formoptions : {
-							rowpos : 15,
-							colpos: 1,
-						},
 				  },
-				  {name: 'notifyid', index: 'notifyid', align:'center', width:90, editable:true, sortable: true, hidden:false,  
+				  {name: 'notifyid', index: 'notifyid', align:'center', width:90, editable:true, sortable: true, hidden: true,  
 					 // editrules :{require : true},
-					  formoptions : {
-							rowpos : 15,
-							colpos: 2,
-						},
 				  },
-				  {name: 'bankid', index: 'bankid', align:'center', width:90, editable:true, sortable: true, hidden:false,  
+				  {name: 'bankid', index: 'bankid', align:'center', width:90, editable:true, sortable: true, hidden: true,  
 					  //editrules :{require : true},
-					  formoptions : {
-							rowpos : 16,
-							colpos: 1,
-						},
 				  },
-				  {name: 'destination', index: 'destination', align:'center', width:90, editable:true, sortable: true, hidden:false,  
+				  {name: 'destination', index: 'destination', align:'center', width:90, editable:true, sortable: true, hidden: true,  
 					 //editrules :{require : true},formoptions : {
-					formoptions : {
-						rowpos : 16, 
-						colpos: 2,
-					},
 				  },
 				  
-				  {name: 'splcdn', index: 'splcdn', align:'center', width:90, editable:true, sortable: true, hidden:false,  
+				  {name: 'splcdn', index: 'splcdn', align:'center', width:90, editable:true, sortable: true, hidden: true,  
 					  
 					  edittype: 'textarea', 
 					  editrules :{require : true},
-					  formoptions : {
-							rowpos : 17, 
-							colpos: 1,
-						},
 				  },
-				  {name: 'reps', index: 'reps', align:'center', width:90, editable:true, sortable: true, hidden:false,  
+				  {name: 'reps', index: 'reps', align:'center', width:90, editable:true, sortable: true, hidden: true,  
 					  editrules :{require : true},
-					  formoptions : {
-							rowpos : 17, 
-							colpos: 2,
-						},
 				  },
 				 
-				  {name: 'prfarticleid', index: 'prfarticleid', align:'center', width:90, editable:true, sortable: true, hidden:false,  
+				  {name: 'prfarticleid', index: 'prfarticleid', align:'center', width:90, editable:true, sortable: true, hidden: true,  
 					 // editrules :{require : true},
-					  formoptions : {
-							rowpos : 18, 
-							colpos: 1,
-						},
 				  },
-				  {name: 'user', index: 'user', align:'center', width:90, editable:true, sortable: true, hidden:false,  
+				  {name: 'user', index: 'user', align:'center', width:90, editable:true, sortable: true, hidden: true,  
 					 // editrules :{require : true},
-					  formoptions : {
-							rowpos : 18, 
-							colpos: 2,
-						},
 				  },
 		         
 		        ],  
@@ -429,11 +291,11 @@ $(function() {
 				},  
 		       	caption: "Bulk Tracking Report",
 		    	pager: '#bulkktrackpager',
-		    	rowNum:20, 
-		    	rowList:[20,30,40],
+		    	rowNum: 5, 
+		    	rowList: [5,10,15],
 		        loadtext: "Bow Bow",
 		        height : "auto",
-		        width:"auto",  
+		        width: "auto",  
 		        sortname: 'Ctno',  
 		        sortorder: 'desc',
 		        scroll: 1, //Check here
@@ -442,16 +304,16 @@ $(function() {
 		        grouping: true,
 		        gridview : true,
 		        rownumbers: true, // not working Check 
-		        rownumWidth :55,
+		        rownumWidth: 55,
 		        viewrecords: true,
 		        footerrow: true,
-		        altRows:true,  // altrows and altclass for alternate color on grid rows
-		        altclass:'myAltRowClass',
+		        altRows: true,  // altrows and altclass for alternate color on grid rows
+		        altclass:  'myAltRowClass',
 		        userDataOnFooter : true, //Gets Footer Total Recod from Server Side 
-		       /* loadComplete: function() {
+		      /*loadComplete: function() {
 		            $("tr.jqgrow:odd").addClass('myAltRowClass');
 		        },*/
-		      /*   groupingView : { 
+		      /*groupingView : { 
 		        	groupField : ['ctno'], 
 		       	 	groupColumnShow : [true],
 		   		 	groupText : ['<b>{0} - {1} Item(s)</b>'],//{0} which mean the grouped text and {1} which mean how many items we have on this group.
@@ -608,6 +470,8 @@ $(function() {
 		 		 			 $("#tr_agent").hide();
 		 		 			 $("#tr_pono").hide(); 
 		 		 			 $("#tr_orderdt").hide();
+		 		 			 $("#tr_tanneryid").hide(); 
+		 		 			 $("#tr_customerid").hide(); 
 		 		 			 $("#tr_exporterid").hide(); 
 		 		 			 $("#tr_substance").hide();
 		 		 			 $("#tr_selection").hide(); 
@@ -622,30 +486,26 @@ $(function() {
 		 		 			 $("#tr_destination").hide();
 		 		 			 $("#tr_prfarticleid").hide(); 
 		 		 			 $("#tr_user").hide();
-		 		 			 $("#tr_qtyshpd").hide(); 
+		 		 			 $("#tr_qshipped").hide(); 
 		 		 			 $("#tr_qbal").hide(); 
 		 		 			 $("#tr_pojw").hide();
 		 		 			 
 		 		 			 $("#ctno").attr("readonly","readonly"); 
-		 		 			 $("#agent").attr("readonly","readonly"); 
 		 		 			 $("#articlename").attr("readonly","readonly"); 
 		 		 			 $("#color").attr("readonly","readonly"); 
-		 		 			 $("#tanneryid").attr("readonly","readonly"); 
-		 		 			 $("#customerid").attr("readonly","readonly"); 
 		 		 			 $("#size").attr("readonly","readonly"); 
-		 		 			 $("#quantity").attr("readonly","readonly");  
-		 		 			//$("#quantity").attr("readonly","readonly"); 
+		 		 			 $("#quantity").attr("readonly","readonly");
 		 		 		 },
        	                   recreateForm: true,
        	                   editData: {//Function to Add parameters to the status 
  						 		oper: 'status',
                            },
-                           closeAfterEdit: true,
+                        closeAfterEdit: true,
            				reloadAfterSubmit: true,
-           				 top: 50,
-           				 left: 100,
-           				 width : 'auto',
-		 		 	    });
+           				top: 50,
+           				left: 100,
+           				width : 'auto',
+		 		 	  });
 		 		 	   
 		 		 	   }
 		 		 	});

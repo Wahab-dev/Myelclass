@@ -33,15 +33,18 @@ public class SrfLoadAction extends Action  {
 			System.out.println("It is SRF Load Action");
 			usersession = request.getSession(false);
 			if(usersession != null){
-				usersession.setAttribute("customerarray", srfbo.getCustomerDetails());
-				usersession.setAttribute("sampleno", srfbo.getSampleno());
+				//usersession.setAttribute("customerarray", srfbo.getCustomerDetails());
+				//usersession.setAttribute("sampleno", srfbo.getSampleno());
 				String action = request.getParameter("action");
 				System.out.println("STR  action"+action);
 				if(action == null){
+					//System.out.println("Sample Number "+sampleno.toString());
+					
 					return map.findForward("srfisloaded");
 				}else if(action.equalsIgnoreCase("editform")){
 					/*
 					 * Method to Set Values for SRF FORM
+					 * 
 					 */
 					System.out.println("In SRF Edit Form");
 					String actionform = "edit";

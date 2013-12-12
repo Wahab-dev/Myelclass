@@ -15,7 +15,6 @@ import sb.elpro.model.ColourDetails;
 import sb.elpro.model.CommissionDetails;
 import sb.elpro.model.ConsigneeDetails;
 import sb.elpro.model.CustomerDetails;
-import sb.elpro.model.DestinationDetails;
 import sb.elpro.model.NotifyConsigneeDetails;
 import sb.elpro.model.PaymentDetails;
 import sb.elpro.model.PrfArticle;
@@ -35,7 +34,7 @@ import sb.elpro.model.TermsDetails;
  */
 public interface PrfDao {
 
-	ArrayList<AgentDetails> getAgentList() throws SQLException;
+	ArrayList<AgentDetails> getAgentList(String term) throws SQLException;
 
 	ArrayList<TanneryDetails> getTanneryList(String tanterm) throws SQLException;
 	
@@ -74,9 +73,12 @@ public interface PrfDao {
 	 * Article Page
 	 */
 	List<SelectArticle> getArticleNameList() throws SQLException;
+	/*
+	 * Load Article dDetails Based on Article Name
+	 */
 	int saveprfArticleList(PrfArticle prfarticlebean)throws SQLException;
 
-	ArrayList<PrfArticle> getPrfArticleDetails(String ctno, String sidx, String sord)throws SQLException;
+	ArrayList<PrfArticle> getPrfArticleDetails( String ctno, String sidx, String sord)throws SQLException;
 
 	List<ArticleDetails> getPrfArticleNamelist(String term)throws SQLException;
 	
@@ -105,6 +107,14 @@ public interface PrfDao {
 	 * Edit PRf Form
 	 */
 	List<ProductDetails> getEditPrfFormDetails(String ctno) throws SQLException;
+
+	/**  
+	 * (Method description)
+	 * @param
+	 * @return
+	 * etc
+	 */
+	boolean updatePrfForm(ProductDetails prfbean) throws SQLException;
 
 
 

@@ -14,7 +14,6 @@ import sb.elpro.model.ColourDetails;
 import sb.elpro.model.CommissionDetails;
 import sb.elpro.model.ConsigneeDetails;
 import sb.elpro.model.CustomerDetails;
-import sb.elpro.model.DestinationDetails;
 import sb.elpro.model.NotifyConsigneeDetails;
 import sb.elpro.model.PaymentDetails;
 import sb.elpro.model.PrfArticle;
@@ -36,13 +35,11 @@ public interface PrfBo  {
 
 	
 
-	public ArrayList<AgentDetails> getAgentDetails() throws Exception;
+	public ArrayList<AgentDetails> getAgentDetails(String term) throws Exception;
 
 	public ArrayList<TanneryDetails> getTanneryDetails(String tanterm) throws Exception;
 
 	public ArrayList<CustomerDetails> getCustomerDetails(String custterm) throws Exception;
-
-//	public ArrayList<DestinationDetails> getDestinationDetails()throws Exception;
 
 	public ArrayList<PaymentDetails> getPaymentDetails()throws Exception;
 
@@ -109,7 +106,16 @@ public interface PrfBo  {
 	/*
 	 * Edit PRf Form
 	 */
-	
 	public List<ProductDetails> getEditPrfFormValues(String ctno)throws Exception;
+
+	
+	/**  
+	 * (Method description)
+	 * @param
+	 * @return 
+	 * etc
+	 */
+	public boolean updatePrfform(ProductDetails prfbean)throws Exception;
+	
 
 }

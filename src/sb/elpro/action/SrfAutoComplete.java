@@ -21,6 +21,7 @@ import sb.elpro.bo.PrfBo;
 import sb.elpro.bo.PrfBoImpl;
 import sb.elpro.bo.SrfBo;
 import sb.elpro.bo.SrfBoImpl;
+import sb.elpro.model.AutoComplete;
 import sb.elpro.model.EndUsageDetails;
 import sb.elpro.model.HandledByDetails;
 import sb.elpro.model.PaymentDetails;
@@ -40,7 +41,6 @@ public class SrfAutoComplete extends Action  {
 			PrintWriter out = response.getWriter();
 			usersession = request.getSession(false);
 			if(usersession != null){
-				System.out.println("122222");
 				String action = request.getParameter("action");
 				if(action.equalsIgnoreCase("handlby")){
 					String handlbyterm = request.getParameter("term");
@@ -52,9 +52,9 @@ public class SrfAutoComplete extends Action  {
 					
 				}else if(action.equalsIgnoreCase("endusage")){
 					String endusageterm = request.getParameter("term");
-					List<EndUsageDetails> consigneelist =  srfbo.getsrfEndusage(endusageterm);
-					System.out.println("List Value " +consigneelist.size());
-					JSONArray jsonOrdertanArray = JSONArray.fromObject(consigneelist);
+					List<AutoComplete> endusagelist =  srfbo.getsrfEndusage(endusageterm);
+					System.out.println("List Value " +endusagelist.size());
+					JSONArray jsonOrdertanArray = JSONArray.fromObject(endusagelist);
 					 System.out.println(jsonOrdertanArray);
 					 out.println(jsonOrdertanArray);
 				}else if(action.equalsIgnoreCase("pymttrms")){
@@ -64,7 +64,14 @@ public class SrfAutoComplete extends Action  {
 					JSONArray jsonOrdertanArray = JSONArray.fromObject(consigneelist);
 					 System.out.println(jsonOrdertanArray);
 					 out.println(jsonOrdertanArray);
+				}else if(action.equalsIgnoreCase("sampleno")){
+					String sampleno =  srfbo.getSampleno();
+					System.out.println("sampleno Value " +sampleno);
+					//JSONArray jsonOrdertanArray = JSONArray.fromObject(consigneelist);
+					 System.out.println(sampleno);
+					 out.println(sampleno);
 				}
+		
 		
 			}
 		

@@ -14,6 +14,7 @@ import com.mysql.jdbc.Statement;
 import sb.elpro.model.BulkArticle;
 import sb.elpro.model.BulkQtyDetails;
 import sb.elpro.utility.DBConnection;
+import sb.elpro.utility.DateConversion;
 
 /**
  * @author Wahab
@@ -32,20 +33,20 @@ public class BulkDaoImpl implements Bulkdao {
 		try{			
 			con = DBConnection.getConnection();
 			st = (Statement) con.createStatement();
-			String sql = "SELECT distinct article.prfarticleid, form.agent, form.Ctno, Orderdt, pono, exporterid, tanneryid, customerid, cdd_date, add_date, destination, terms, payment, commission, splcdn, inspcdn, consigneeid, notifyid,  bankid,  pojw, article.articleid, articletype, articleshfrom, articlename, color, size, substance, selection, selectionpercent, quantity , unit,pcs, rate, tc, article.prfarticleid, user, statuse.prf_articleid, status, Qtyshpd, Qbal, invdetails, reps,  comments, feddback, statuse.contractno, rdd_date FROM elpro.tbl_prfform form, elpro.tbl_prf_article article, elpro.tbl_prfarticle_status statuse where form.Ctno = article.contractno and article.prfarticleid = statuse.prf_articleid order by "+sidx+" "+sord+"";
+			String sql = "SELECT distinct article.prfarticleid, form.agent, form.Ctno, Orderdt, pono, exporterid, tanneryid, customerid, cdd_date, add_date, destination, terms, payment, commission, splcdn, inspcdn, consigneeid, notifyid,  bankid,  pojw, article.articleid, articletype, articleshfrom, articlename, color, size, substance, selection, selectionpercent, quantity , unit,pcs, rate, tc, article.prfarticleid, user, statuse.prf_articleid, status, qshipped, qbal, invdetails, reps,  comments, feddback, statuse.contractno, rdd_date FROM elpro.tbl_prfform form, elpro.tbl_prf_article article, elpro.tbl_prfarticle_status statuse where form.Ctno = article.contractno and article.prfarticleid = statuse.prf_articleid order by "+sidx+" "+sord+"";
 			System.out.println(sql);
 			rs = st.executeQuery(sql);
 			while(rs.next()) {	
 				BulkArticle bulkbean = new BulkArticle();
 				bulkbean.setCtno(rs.getString("Ctno"));
 				bulkbean.setAgent(rs.getString("agent"));
-				bulkbean.setOrderdt(rs.getString("Orderdt"));
+				bulkbean.setOrderdt(DateConversion.ConverttoNormalDate(rs.getString("Orderdt")));
 				bulkbean.setPono(rs.getString("pono"));
 				bulkbean.setTanneryid(rs.getString("tanneryid"));
 				bulkbean.setExporterid(rs.getString("exporterid"));
 				bulkbean.setCustomerid(rs.getString("customerid"));
-				bulkbean.setCdd_date(rs.getString("cdd_date"));
-				bulkbean.setAdd_date(rs.getString("add_date"));
+				bulkbean.setCdd_date(DateConversion.ConverttoNormalDate(rs.getString("cdd_date")));
+				bulkbean.setAdd_date(DateConversion.ConverttoNormalDate(rs.getString("add_date")));
 				bulkbean.setDestination(rs.getString("destination"));
 				bulkbean.setTerms(rs.getString("terms"));
 				bulkbean.setPayment(rs.getString("payment"));
@@ -74,13 +75,13 @@ public class BulkDaoImpl implements Bulkdao {
 				bulkbean.setTc(rs.getString("tc"));
 				bulkbean.setUser(rs.getString("user"));
 				bulkbean.setStatus(rs.getString("status"));
-				bulkbean.setQtyshpd(rs.getString("Qtyshpd"));
-				bulkbean.setQbal(rs.getString("Qbal"));
+				bulkbean.setQshipped(rs.getString("qshipped"));
+				bulkbean.setQbal(rs.getString("qbal"));
 				bulkbean.setInvdetails(rs.getString("invdetails"));
 				bulkbean.setReps(rs.getString("reps"));
 				bulkbean.setComments(rs.getString("comments"));
 				bulkbean.setFeddback(rs.getString("feddback"));
-				bulkbean.setRdd_date(rs.getString("rdd_date"));
+				bulkbean.setRdd_date(DateConversion.ConverttoNormalDate(rs.getString("rdd_date")));
 				
 				bulkarray.add(bulkbean);
 				}
@@ -107,7 +108,7 @@ public class BulkDaoImpl implements Bulkdao {
 		try{			
 			con = DBConnection.getConnection();
 			st = (Statement) con.createStatement();
-			String sql = "SELECT  sum(quantity) as qty , sum(Qtyshpd) as Qshipd, sum(Qbal) as Qbal FROM elpro.tbl_prf_article article, elpro.tbl_prfarticle_status statuse where article.prfarticleid = statuse.prf_articleid";
+			String sql = "SELECT  sum(quantity) as qty , sum(qshipped) as Qshipd, sum(qbal) as Qbal FROM elpro.tbl_prf_article article, elpro.tbl_prfarticle_status statuse where article.prfarticleid = statuse.prf_articleid";
 			System.out.println(sql);
 			rs = st.executeQuery(sql);
 			if(rs.next()){
@@ -136,14 +137,14 @@ public class BulkDaoImpl implements Bulkdao {
 		boolean isupdate = true;
 		try{			
 			con = DBConnection.getConnection();
-			StringBuffer sql_updateBtrStatus = new StringBuffer("UPDATE elpro.tbl_prfarticle_status SET artname =?, status = ? , Qtyshpd = ? , Qbal = ? , invdetails = ? , reps = ? , comments = ? , feddback = ? , contractno = ? , rdd_date = ? WHERE prfarticleid = '"+bulkmodel.getPrfarticleid()+"' ");
+			StringBuffer sql_updateBtrStatus = new StringBuffer("UPDATE elpro.tbl_prfarticle_status SET artname =?, status = ? , qshipped = ? , qbal = ? , invdetails = ? , reps = ? , comments = ? , feddback = ? , contractno = ? , rdd_date = ? WHERE prf_articleid = '"+bulkmodel.getPrfarticleid()+"' ");
 			String sqlquery_updateBtrStatus = sql_updateBtrStatus.toString();
 			pst = (PreparedStatement) con.prepareStatement(sqlquery_updateBtrStatus);
 			pst.setString(1, bulkmodel.getArticlename());
 			System.out.println("getArticlename " +bulkmodel.getArticlename());
 			pst.setString(2, bulkmodel.getStatus());
 			System.out.println("getStatus " +bulkmodel.getStatus());
-			pst.setString(3, bulkmodel.getQtyshpd());
+			pst.setString(3, bulkmodel.getQshipped());
 			pst.setString(4, bulkmodel.getQbal());
 			pst.setString(5, bulkmodel.getInvdetails());
 			pst.setString(6, bulkmodel.getReps());

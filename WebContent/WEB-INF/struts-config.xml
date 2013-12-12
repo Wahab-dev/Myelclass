@@ -47,19 +47,31 @@
  	
 		 
 	 <!-- All Action in Prf page-->	 
-	 <action path="/LoadPrf" name="PrfForm" type="sb.elpro.action.PrfLoadAction" input="/jsp/Menu.jsp" scope="session" >
+	
+	 <action path="/Prf" name="PrfForm" type="sb.elpro.action.PrfAction" input="/jsp/Prf.jsp" parameter="prfaction" scope="session">
+	   	 <forward name="prfissaved" path="/jsp/Prf.jsp"></forward>	
+	   		 <forward name="clearprfform" path="/jsp/Prf.jsp"></forward>
+	   	  	<forward name="bulkisloaded" path="/jsp/Bulk.jsp"></forward>			 
+	 </action>	 
+	 
+	 
+	  <action path="/LoadPrf" name="PrfForm" type="sb.elpro.action.PrfLoadAction" input="/jsp/Menu.jsp" scope="session">
 	 	 <forward name="prfisloaded" path="/jsp/Prf.jsp"></forward>		 
 	 </action>
-	 <action path="/Prf" name="PrfForm" type="sb.elpro.action.PrfAction" input="/jsp/Prf.jsp" parameter="prfaction" scope="session">
-	   	 <forward name="prfisloaded" path="/jsp/Prf.jsp"></forward>		 
-	 </action>	 
-	 <action path="/PrfinsertArticle" name="PrfForm" type="sb.elpro.action.PrfInsertArticle" input="/jsp/Prf.jsp" scope="session">	 
-	 </action>	 
+	<!--  <action path="/UpdatePrf" name="PrfForm" type="sb.elpro.action.PrfLoadAction" input="/jsp/Bulk.jsp" scope="session" parameter="action">
+	 	 <forward name="prfisloaded" path="/jsp/Prf.jsp"></forward>		 
+	 </action>
+	  -->
+	 
+	 
 	 <action path="/ArticleSelectList" name="PrfForm" type="sb.elpro.action.ArticleSelectList" input="/jsp/Prf.jsp" scope="session">	 
 	 </action>	 
 	 <action path="/PrfAutocomplete" name="PrfForm" type="sb.elpro.action.PrfAutocomplete" input="/jsp/Prf.jsp" scope="session">	 
 	 </action>
-	  
+	   <action path="/PrfinsertArticle" name="PrfForm" type="sb.elpro.action.PrfInsertArticle" input="/jsp/Prf.jsp" scope="session">	 
+	 </action>	 
+	 
+	
 	  <!-- Bulk Tracking Page  -->
 	   <action path="/gotoBulkTracking" name="BulkTrackForm" type="sb.elpro.action.BulkTrackAction" input="/jsp/Bulk.jsp" scope="session" parameter="action"> 
 	   <forward name="bulkisloaded" path="/jsp/Bulk.jsp"></forward>	
@@ -71,11 +83,12 @@
 	  
 	  
 	<!--   SRF	-->	  
-	 <action path="/loadSrf" type="sb.elpro.action.SrfLoadAction" input="/jsp/Menu.jsp" scope="session">
+	 <action path="/loadSrf" type="sb.elpro.action.SrfLoadAction" input="/jsp/Menu.jsp" scope="session" parameter="srfaction">
 	  	 <forward name="srfisloaded" path="/jsp/Srf.jsp"></forward>	
 	  </action>	  
 	 <action path="/Srf" name="SrfForm" type="sb.elpro.action.SrfAction" input="/jsp/Srf.jsp" parameter="srfaction" scope="session">  
-	 	<forward name="invoiceisloaded" path="/jsp/Invoice.jsp"></forward>
+	 	<forward name="srfissaved" path="/jsp/Srf.jsp"></forward>	
+	 	 <forward name="clearsrfform" path="/jsp/Srf.jsp"></forward>
 	 </action>	 
 	  <action path="/SrfinsertArticle" name="SrfForm" type="sb.elpro.action.SrfInsertArticle" input="/jsp/Srf.jsp" scope="session">	 
 	 </action>	 

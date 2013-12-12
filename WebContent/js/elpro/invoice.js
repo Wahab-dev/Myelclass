@@ -152,6 +152,7 @@ $(document).ready(function() {
 				   autoheight: true,
 				   rowNum: 5, 
 				   multiselect : true,
+				   multiboxonly: true, // what is this ??
 				   rowList:[5,10,15],	 
 				   //pagerpos: 'right',
 				   // toppager: true,
@@ -218,10 +219,8 @@ $(document).ready(function() {
 							formatter : 'number', formatoptions:{decimalSeparator:".", decimalPlaces: 2, }
 						},
 						{name:'unit', index:'unit',sortable:true, editable: true, hidden : true, width:70,
-							
 						},
 						{name:'rate', index:'rate',sortable:true, editable: true, width:70,
-							
 						},
 						{name:'qshipped', index:'qshipped',sortable:true, editable: true, width:70, 
 							formatter : 'number', formatoptions:{decimalSeparator:".", decimalPlaces: 2, },

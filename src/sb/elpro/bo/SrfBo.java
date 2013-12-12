@@ -22,11 +22,11 @@ import sb.elpro.model.TanneryDetails;
  */
 public interface  SrfBo {
 
-	public int getSampleno()throws Exception;
+	public String getSampleno()throws Exception;
 
 	public ArrayList<HandledByDetails> getsrfhandledby(String handlbyterm) throws Exception;
 
-	public ArrayList<EndUsageDetails> getsrfEndusage(String endusageterm) throws Exception;
+	public List<AutoComplete> getsrfEndusage(String endusageterm) throws Exception;
 
 	public ArrayList<TanneryDetails> getTanneryDetails(String term) throws Exception;
 
@@ -49,6 +49,14 @@ public interface  SrfBo {
 			String sidx, String sord)throws Exception;
 
 	public List<SampleRequest> getEditSrfFormValues(String sampleno)throws Exception;
+
+	/**  
+	 * (Method description)
+	 * @param
+	 * @return
+	 * etc
+	 */
+	public boolean saveSrfform(SampleRequest srfbean) throws Exception;
 
 	
 }

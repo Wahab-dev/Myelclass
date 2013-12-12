@@ -21,6 +21,7 @@ import sb.elpro.bo.PrfBo;
 import sb.elpro.bo.PrfBoImpl;
 import sb.elpro.bo.SrfBo;
 import sb.elpro.bo.SrfBoImpl;
+import sb.elpro.model.AgentDetails;
 import sb.elpro.model.ArticleDetails;
 import sb.elpro.model.AutoComplete;
 import sb.elpro.model.BankDetails;
@@ -66,10 +67,14 @@ public class PrfAutocomplete extends Action {
 					List<ArticleDetails> articlelist =  prfbo.getPrfArticleType();
 					System.out.println("List Value " +articlelist.size());
 					JSONArray jsonOrdertanArray = JSONArray.fromObject(articlelist);
+					/*
+					 * Get teh Value of the JSon data 
+					 * {"rows":[{"divid":["01"],"longDesc":["Office of Technology and Information Services"]},{"divid":["04"],"longDesc":["Office of Emergency Response"]},{"divid":["05"]}]}
+					 */
+				
 					 System.out.println(jsonOrdertanArray);
 			 		out.println(jsonOrdertanArray);
-				}
-				else if (action.equalsIgnoreCase("color")){
+				}else if (action.equalsIgnoreCase("color")){
 					String term = request.getParameter("term");
 					List<AutoComplete> articlelist =  prfbo.getPrfColor(term);
 					System.out.println("List Value " +articlelist.size());
@@ -83,6 +88,13 @@ public class PrfAutocomplete extends Action {
 					JSONArray jsonOrdertanArray = JSONArray.fromObject(customerlist);
 					 System.out.println(jsonOrdertanArray);
 					 out.println(jsonOrdertanArray);
+				}else if(action.equalsIgnoreCase("deliver")){
+					String delivterm = request.getParameter("term");
+					List<CustomerDetails> customerlist =  prfbo.getCustomerDetails(delivterm);
+					System.out.println("List Value " +customerlist.size());
+					JSONArray jsonOrdertanArray = JSONArray.fromObject(customerlist);
+					System.out.println(jsonOrdertanArray);
+					out.println(jsonOrdertanArray);
 				}else if(action.equalsIgnoreCase("commision")){
 					String commissnterm = request.getParameter("term");
 					List<CommissionDetails> commssionlist =  prfbo.getCommissionDetails(commissnterm);
@@ -133,8 +145,14 @@ public class PrfAutocomplete extends Action {
 					JSONArray jsonOrderArray = JSONArray.fromObject(destinationlist);
 					 System.out.println(jsonOrderArray);
 			 		out.println(jsonOrderArray);
-				}
-				else{
+				}else if (action.equalsIgnoreCase("agent")){
+					String term = request.getParameter("term");
+					List<AgentDetails> articlelist =  prfbo.getAgentDetails(term);
+					System.out.println("List Value " +articlelist.size());
+					JSONArray jsonOrdertanArray = JSONArray.fromObject(articlelist);
+					 System.out.println(jsonOrdertanArray);
+			 		out.println(jsonOrdertanArray);
+				}else{
 					/*
 					 * Here i am using first letter enter from the Entry using request .getparamanter 
 					 * and passing the value

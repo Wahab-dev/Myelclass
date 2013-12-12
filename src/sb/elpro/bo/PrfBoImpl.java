@@ -16,7 +16,6 @@ import sb.elpro.model.ColourDetails;
 import sb.elpro.model.CommissionDetails;
 import sb.elpro.model.ConsigneeDetails;
 import sb.elpro.model.CustomerDetails;
-import sb.elpro.model.DestinationDetails;
 import sb.elpro.model.NotifyConsigneeDetails;
 import sb.elpro.model.PaymentDetails;
 import sb.elpro.model.PrfArticle;
@@ -44,8 +43,8 @@ public class PrfBoImpl implements PrfBo {
 	}
 	
 	@Override
-	public ArrayList<AgentDetails> getAgentDetails() throws Exception {
-		ArrayList<AgentDetails> agentList = prfdao.getAgentList();
+	public ArrayList<AgentDetails> getAgentDetails(String term) throws Exception {
+		ArrayList<AgentDetails> agentList = prfdao.getAgentList(term);
 		return agentList;
 	}
 
@@ -87,12 +86,7 @@ public class PrfBoImpl implements PrfBo {
 		return commissionList;
 	}
 
-	@Override
-	public boolean savePrfform(ProductDetails prfbean)
-			throws Exception {
-		boolean isSavePrf = prfdao.savePrfForm(prfbean);
-		return isSavePrf;
-	}
+	
 
 	@Override
 	public ArrayList<ArticleDetails> getarticledetails() throws Exception {
@@ -235,7 +229,7 @@ public class PrfBoImpl implements PrfBo {
 
 	@Override
 	public List<PrfArticle> getPrfArticleDetails(String ctno, String sidx, String sord) throws Exception {
-		ArrayList<PrfArticle> aticlearray = prfdao.getPrfArticleDetails(ctno, sidx,sord);
+		ArrayList<PrfArticle> aticlearray = prfdao.getPrfArticleDetails(ctno,sidx,sord);
 		return aticlearray;
 	}
 
@@ -273,6 +267,22 @@ public class PrfBoImpl implements PrfBo {
 	public List<ProductDetails> getEditPrfFormValues(String ctno) throws Exception {
 		List<ProductDetails> editprfformarray = prfdao.getEditPrfFormDetails(ctno);
 		return editprfformarray;
+	}
+
+	@Override
+	public boolean savePrfform(ProductDetails prfbean)
+			throws Exception {
+		boolean isSavePrf = prfdao.savePrfForm(prfbean);
+		return isSavePrf;
+	}
+	
+	/* (non-Javadoc)
+	 * @see sb.elpro.bo.PrfBo#updatePrfform(sb.elpro.model.ProductDetails)
+	 */
+	@Override
+	public boolean updatePrfform(ProductDetails prfbean) throws Exception {
+		boolean isUpdatePrf = prfdao.updatePrfForm(prfbean);
+		return isUpdatePrf;
 	}
 
 

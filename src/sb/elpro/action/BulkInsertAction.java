@@ -22,6 +22,7 @@ import sb.elpro.bo.BulkBo;
 import sb.elpro.bo.BulkBoImpl;
 import sb.elpro.model.BulkArticle;
 import sb.elpro.model.BulkQtyDetails;
+import sb.elpro.utility.DateConversion;
 
 /**
  * @author Wahab
@@ -121,8 +122,6 @@ public class BulkInsertAction extends Action {
 		                }else {
 		                    totalPages = 0;
 		                }
-		                
-		                 
 					jsonobj.put("total", totalPages);
 					jsonobj.put("page", page);
 					jsonobj.put("records", records);
@@ -133,11 +132,11 @@ public class BulkInsertAction extends Action {
 					out.println(jsonobj);
 				}else {
 					BulkArticle bulkmodel = new BulkArticle();
-					bulkmodel.setAdd_date(request.getParameter("add_date"));
+					bulkmodel.setAdd_date(DateConversion.ConverttoMysqlDate(request.getParameter("add_date")));
 					bulkmodel.setAgent(request.getParameter("agent"));
 					bulkmodel.setArticlename(request.getParameter("articlename"));
 					bulkmodel.setBankid(request.getParameter("bankid"));
-					bulkmodel.setCdd_date(request.getParameter("cdd_date"));
+					bulkmodel.setCdd_date(DateConversion.ConverttoMysqlDate(request.getParameter("cdd_date")));
 					bulkmodel.setColor(request.getParameter("color"));
 					bulkmodel.setComments(request.getParameter("comments"));
 					bulkmodel.setCommission(request.getParameter("commission"));
@@ -154,10 +153,10 @@ public class BulkInsertAction extends Action {
 					bulkmodel.setPono(request.getParameter("pono"));
 					bulkmodel.setPrfarticleid(request.getParameter("prfarticleid"));
 					bulkmodel.setQbal(request.getParameter("qbal"));
-					bulkmodel.setQtyshpd(request.getParameter("qtyshpd"));
+					bulkmodel.setQshipped(request.getParameter("qshipped"));
 					bulkmodel.setQuantity(request.getParameter("quantity"));
 					bulkmodel.setRate(request.getParameter("rate"));
-					bulkmodel.setRdd_date(request.getParameter("rdd_date"));
+					bulkmodel.setRdd_date(DateConversion.ConverttoMysqlDate(request.getParameter("rdd_date")));
 					bulkmodel.setReps(request.getParameter("reps"));
 					bulkmodel.setSelection(request.getParameter("selection"));
 					bulkmodel.setSelectionpercent(request.getParameter("selectionpercent"));

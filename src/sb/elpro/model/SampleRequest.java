@@ -20,6 +20,7 @@ public class SampleRequest implements Serializable {
 	private String srf_agentname;
 	private String srf_orderdate;
 	private String srf_referenceno;
+	private String srf_poreftype;
 	private String srf_priority;
 	private String srf_handledby;
 	private String srf_customer;
@@ -42,6 +43,7 @@ public class SampleRequest implements Serializable {
 	private String srf_deliver;
 	private String srf_splcdn;	
 	private String srf_inspcdn; 
+	private String srf_forwarder; 
 	
 	
 	//Article Values
@@ -853,6 +855,30 @@ public class SampleRequest implements Serializable {
 	 */
 	public void setSrf_agentname(String srf_agentname) {
 		this.srf_agentname = srf_agentname;
+	}
+	/**
+	 * @return the srf_poreftype
+	 */
+	public String getSrf_poreftype() {
+		return srf_poreftype;
+	}
+	/**
+	 * @param srf_poreftype the srf_poreftype to set
+	 */
+	public void setSrf_poreftype(String srf_poreftype) {
+		this.srf_poreftype = srf_poreftype;
+	}
+	/**
+	 * @return the srf_forwarder
+	 */
+	public String getSrf_forwarder() {
+		return srf_forwarder;
+	}
+	/**
+	 * @param srf_forwarder the srf_forwarder to set
+	 */
+	public void setSrf_forwarder(String srf_forwarder) {
+		this.srf_forwarder = srf_forwarder;
 	}
 
 }

@@ -67,9 +67,8 @@ public class ProductDetails implements Serializable {
 	private String prf_special;
 	private String prf_inspcdn;
 	private String prf_pojw;
+	private String prf_status;
 	private String checkboxValue;
-	
-	
 	
 	//Artilce Details
 	private String prf_articleid;
@@ -1124,8 +1123,21 @@ public class ProductDetails implements Serializable {
 	public void setPrf_commission(String prf_commission) {
 		this.prf_commission = prf_commission;
 	}
-	
-	
+	/**
+	 * @return the prf_status
+	 */
+	public String getPrf_status() {
+		return prf_status;
+	}
+	/**
+	 * @param prf_status the prf_status to set
+	 */
+	public void setPrf_status(String prf_status) {
+		this.prf_status = prf_status;
+	}
+	/**
+	 * @return the formactn
+	 */
 	
 
 }

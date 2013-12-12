@@ -13,6 +13,7 @@ public class BulkArticle implements Serializable{
 
 	/**
 	 * 
+	 * 
 	 */
 	private static final long serialVersionUID = 4413495456147456763L;
 
@@ -35,7 +36,7 @@ public class BulkArticle implements Serializable{
 		private String user;
 		
 		private String status;
-		private String qtyshpd;
+		private String qshipped;
 		private String qbal;
 		private String invdetails;
 		private String reps;
@@ -546,18 +547,7 @@ public class BulkArticle implements Serializable{
 		public void setExporterid(String exporterid) {
 			this.exporterid = exporterid;
 		}
-		/**
-		 * @return the qtyshpd
-		 */
-		public String getQtyshpd() {
-			return qtyshpd;
-		}
-		/**
-		 * @param qtyshpd the qtyshpd to set
-		 */
-		public void setQtyshpd(String qtyshpd) {
-			this.qtyshpd = qtyshpd;
-		}
+		
 		/**
 		 * @return the qbal
 		 */
@@ -609,6 +599,18 @@ public class BulkArticle implements Serializable{
 		/**
 		 * @return the totqty
 		 */
+		/**
+		 * @return the qshipped
+		 */
+		public String getQshipped() {
+			return qshipped;
+		}
+		/**
+		 * @param qshipped the qshipped to set
+		 */
+		public void setQshipped(String qshipped) {
+			this.qshipped = qshipped;
+		}
 		
 		
 		

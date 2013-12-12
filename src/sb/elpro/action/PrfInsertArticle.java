@@ -1,5 +1,5 @@
 /**
- * 
+ *                  
  */
 package sb.elpro.action;
 
@@ -22,7 +22,6 @@ import sb.elpro.model.PrfArticle;
 
 /**
  * @author Wahab
- *
  */
 public class PrfInsertArticle extends Action  {
 	HttpSession usersession;
@@ -48,14 +47,15 @@ public class PrfInsertArticle extends Action  {
                 System.out.println("page "+pag); //1
                 System.out.println("sidx "+sidx);
                 System.out.println("sord "+sord);
-               System.out.println("action "+action);
+                System.out.println("action "+action);
+                System.out.println("ctno "+ctno);
 				
 				if(oper == null){
 					 System.out.println(" In PRF Article LAOD");
 					List<PrfArticle> article = prfbo.getPrfArticleDetails(ctno,sidx,sord);
 					int records = article.size();
 					System.out.println("Reords  "+records);
-					
+																
 						int page = Integer.parseInt(pag);
 		                int totalPages = 0;
 		                int totalCount = records;
@@ -114,7 +114,7 @@ public class PrfInsertArticle extends Action  {
 					 artindertdetail.setPrf_substance(request.getParameter("prf_substance"));
 					 artindertdetail.setUser(request.getParameter("user"));
 					if(oper.equalsIgnoreCase("add")){
-						System.out.println(" In Inspection test Add");
+						System.out.println(" In Prf Add");
 						boolean isPrfArticleAdded = prfbo.addPrfArticleDetails(artindertdetail,sidx,sord);
 						if(isPrfArticleAdded){
 							jsonobj.put("success", "Successfully Inserted The Record");
