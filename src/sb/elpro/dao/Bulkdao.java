@@ -15,7 +15,7 @@ import sb.elpro.model.BulkQtyDetails;
  */
 public interface Bulkdao {
 
-	ArrayList<BulkArticle> getBulkDetailList(String sidx, String sord) throws SQLException;
+	ArrayList<BulkArticle> getBulkDetailList(String sidx, String sord, String rows, String pag) throws SQLException;
 
 	boolean updateBtrStatus(BulkArticle bulkmodel, String sidx, String sord) throws SQLException;
 

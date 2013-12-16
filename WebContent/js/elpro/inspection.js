@@ -157,7 +157,7 @@ $(document).ready(function() {
 					{name:'testtype', index:'testtype', align:'center', width:120, editable:true, sortable: true, hidden:false, 
 						edittype: 'select', 
 						editoptions: {value: {Color:'Color',Substance:'Substance',TearStrength:'Tear Strength',GrainBreak:'Grain Break',CrockingWet:'Crocking Wet',CrockingDry:'Crocking Dry',
-							FinishAdhension:'Finish Adhension',FourFolds:'Four Folds',CrossSection:'Cross Section',Organoleptic:'Organoleptic'}},						
+							FinishAdhension:'Finish Adhension',FourFolds:'Four Folds',DyeThru:'Dye Thru',Organoleptic:'Organoleptic'}},						
 					
 					},
 					{name:'testedpcs', index:'testedpcs', align:'center', width:130, editable:true, sortable: true, hidden:false, 

@@ -47,6 +47,8 @@ public class PrfLoadAction extends DispatchAction{
 			usersession.setAttribute("sizeremarkarray", prfbo.getSizeremarksDetails());
 			usersession.setAttribute("tcagentarray", prfbo.getTcAgentDetails());
 			if(action == null){
+				usersession.setAttribute("actionform", "add");
+				System.out.println("IN PRF IS LOADED");
 				return map.findForward("prfisloaded");
 			}else if(action.equalsIgnoreCase("editform")){
 				/*
@@ -54,13 +56,12 @@ public class PrfLoadAction extends DispatchAction{
 				 */
 				System.out.println("Session value");
 				System.out.println("In Edit Form");
-				String actionform = "edit";
 				String ctno = request.getParameter("ctno");
-				request.setAttribute("actionform", actionform);
+				usersession.setAttribute("actionform", "edit");
 				request.setAttribute("editprfctno", ctno);
-				//usersession.setAttribute("editprfform", prfbo.getEditPrfFormValues(ctno));
 				List<ProductDetails> editprfform = prfbo.getEditPrfFormValues(ctno);
 				usersession.setAttribute("editprfform", editprfform);
+				
 				return map.findForward("prfisloaded");
 			}
 			return map.findForward("prfisloaded");

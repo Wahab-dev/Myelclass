@@ -8,11 +8,13 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import com.mysql.jdbc.Connection;
+import com.mysql.jdbc.PreparedStatement;
 import com.mysql.jdbc.Statement;
 
 
 import sb.elpro.model.SampleTrack;
 import sb.elpro.utility.DBConnection;
+import sb.elpro.utility.DateConversion;
 
 /**
  * @author Wahab
@@ -46,8 +48,8 @@ public class SampTrackDaoImpl implements SampTrackDao {
 			 	samptrackbean.setDeliverid(rs.getString("deliverid"));
 			 	samptrackbean.setDestination(rs.getString("destination"));
 			 	samptrackbean.setTerms(rs.getString("terms"));
-			 	samptrackbean.setAdd_date(rs.getString("add_date"));
-			 	samptrackbean.setCdd_date(rs.getString("cdd_date"));
+			 	samptrackbean.setAdd_date(DateConversion.ConverttoNormalDate(rs.getString("add_date")));
+			 	samptrackbean.setCdd_date(DateConversion.ConverttoNormalDate(rs.getString("cdd_date")));
 			 	samptrackbean.setSplcdn(rs.getString("splcdn"));
 			 	samptrackbean.setInspcdn(rs.getString("inspcdn"));
 			 	samptrackbean.setForwaderid(rs.getString("forwaderid"));
@@ -76,7 +78,7 @@ public class SampTrackDaoImpl implements SampTrackDao {
 			 	samptrackbean.setUser(rs.getString("user"));
 			 	
 			 	samptrackbean.setStatus(rs.getString("status"));
-			 	samptrackbean.setRdd_date(rs.getString("rdd_date"));
+			 	samptrackbean.setRdd_date(DateConversion.ConverttoNormalDate(rs.getString("rdd_date")));
 			 	samptrackbean.setCourierdetails(rs.getString("courierdetails"));
 			 	samptrackbean.setReps(rs.getString("reps"));
 			 	samptrackbean.setFeedbackdetails(rs.getString("feedbackdetails"));
@@ -95,5 +97,45 @@ public class SampTrackDaoImpl implements SampTrackDao {
 			 rs.close();
 	   }	
 	return sampletrackarray;
+	}
+
+	/* (non-Javadoc)
+	 * @see sb.elpro.dao.SampTrackDao#updateSrStatus(sb.elpro.model.SampleTrack, java.lang.String, java.lang.String)
+	 */
+	@Override
+	public boolean updateSrStatus(SampleTrack samplemodel, String sidx,
+			String sord) throws SQLException {
+		Connection con = null;
+		PreparedStatement pst = null;
+		int noofrows  = 0;
+		boolean isupdate = true;
+		try{			
+			con = DBConnection.getConnection();
+			System.out.println("SRF Article ID "+samplemodel.getSrfarticleid());
+			StringBuffer sql_updateBtrStatus = new StringBuffer("UPDATE elpro.tbl_srfarticle_status SET  artname=?, status = ? , courierdetails = ? , reps = ? ,  feedbackdetails = ? , sampleno = ? , rdd_date = ? WHERE srfarticleid  = '"+samplemodel.getSrfarticleid()+"' ");
+			String sqlquery_updateBtrStatus = sql_updateBtrStatus.toString();
+			pst = (PreparedStatement) con.prepareStatement(sqlquery_updateBtrStatus);
+			pst.setString(1, samplemodel.getArticlename());
+			System.out.println("SNo " +samplemodel.getArticlename());
+			pst.setString(2, samplemodel.getStatus());
+			System.out.println("STATUS " +samplemodel.getStatus());
+			pst.setString(3, samplemodel.getCourierdetails());
+			System.out.println("getCourierdetails " +samplemodel.getCourierdetails());
+			pst.setString(4, samplemodel.getReps());
+			pst.setString(5, samplemodel.getFeedbackdetails());
+			pst.setString(6, samplemodel.getSampleno());
+			pst.setString(7, samplemodel.getRdd_date());
+			
+			noofrows = pst.executeUpdate();
+			System.out.println("Sucessfully inserted the record.." + noofrows);
+		}catch(Exception e){
+			e.printStackTrace();
+			isupdate = false;
+			System.out.println("ERROR RESULT");
+		}finally{
+			 con.close() ;
+			 pst.close();
+	   }	
+		return isupdate;
 	}
 }

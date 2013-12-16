@@ -20,6 +20,7 @@ import org.apache.struts.action.ActionMapping;
 import sb.elpro.bo.SampTrackBo;
 import sb.elpro.bo.SampTrackBoImpl;
 import sb.elpro.model.SampleTrack;
+import sb.elpro.utility.DateConversion;
 
 /**
  * @author Wahab
@@ -54,6 +55,7 @@ public class SamptrackInsertAction extends Action{
              if(oper == null){
 				 System.out.println(" In Sample  LAOD");
 				List<SampleTrack> sampletrack = samptrackbo.getSampleTrackDetails(sidx,sord);
+				
 				int records = sampletrack.size();
 				System.out.println("Reords  "+records);
 					int page = Integer.parseInt(pag);
@@ -77,6 +79,34 @@ public class SamptrackInsertAction extends Action{
 				jsonobj.put("rows", sampletrack);
 				System.out.println(jsonobj);		
 				out.println(jsonobj);
+             }else{
+            	 SampleTrack samplemodel = new SampleTrack();
+            	 samplemodel.setStatus(request.getParameter("status"));
+            	 samplemodel.setSampleno(request.getParameter("sampleno"));
+            	 samplemodel.setArticlename(request.getParameter("articlename"));
+            	 samplemodel.setColor(request.getParameter("color"));
+            	 samplemodel.setSize(request.getParameter("size"));
+            	 samplemodel.setSubstance(request.getParameter("substance"));
+            	 samplemodel.setQuantity(request.getParameter("quantity"));
+            	 samplemodel.setSrfarticleid(request.getParameter("srfarticleid"));
+            	/* samplemodel.setUnit(request.getParameter("unit"));
+            	 samplemodel.setRate(request.getParameter("rate"));
+            	 samplemodel.setPcs(request.getParameter("pcs")); */
+            	 samplemodel.setRdd_date(DateConversion.ConverttoMysqlDate(request.getParameter("rdd_date")));
+            	 samplemodel.setCourierdetails(request.getParameter("courierdetails"));
+            	 samplemodel.setReps(request.getParameter("reps"));
+            	 
+            	 if(oper.equalsIgnoreCase("status")){
+						System.out.println(" In STR STATUS");
+						boolean isBulkStatusUpdated = samptrackbo.addStrStatus(samplemodel,sidx,sord);
+						if(isBulkStatusUpdated){
+							jsonobj.put("success", "Successfully Inserted The Record");
+						}else{
+							jsonobj.put("Error", "Error in Inserrting");
+						}
+						System.out.println(jsonobj);		
+						out.println(jsonobj);
+					}
              }
 		 }else{
 			 System.out.println("Error Invalid Session");

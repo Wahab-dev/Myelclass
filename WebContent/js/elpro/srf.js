@@ -8,7 +8,6 @@ $(document).ready(function() {
 		 	function(data){alert("Data: " + data);
 		 	$("#srf_sampleno").val(data); 
 		 	$.trim($("#srf_sampleno").val());
-		 	alert("New value "+$("#srf_handledby").val($("#srf_sampleno").val()));
 		 	},"text");
 	
 	
@@ -33,11 +32,10 @@ $(document).ready(function() {
 			                      		  	var response = jQuery.parseJSON(data);
 			                                	var s = '<select style="width: 520px">';
 			                                	if (response && response.length) {
-			                                		var obj = [{"divid":"01","longDesc":"Office of Technology and Information Services"},{"divid":"04","longDesc":"Office of Emergency Response"},{"divid":"04","longDesc":"Office of Emergency Response"}];
 			                                    	s += '<option value="0">--- Select Article Type ---</option>';
-			                                		for (var i = 0, l=obj.length; i<l ; i++) {
-			                                      	var ri = obj[i].divid[i] +"?";
-			                                       	s += '<option value="'+ri+'">'+ri+'</option>';
+			                          	            for (var i = 0, l=response.length; i<l ; i++) {
+			                                          var ri = response[i].value;
+			                                       	  s += '<option value="'+ri+'">'+ri+'</option>';
 			                                    	}
 			                                  	}
 			                                 	return s + "</select>";
@@ -188,7 +186,7 @@ $(document).ready(function() {
 			                    {name:'srf_price', index:'price',  align:'center', width:80, editable:true, sortable:true, hidden:false,
 			                    	
 			                    },   
-			                    {name:'srf_ratesign', index:'ratesign',  align:'center', editable:true, sortable:true, hidden:true, 
+			                    {name:'srf_ratesign', index:'currency',  align:'center', editable:true, sortable:true, hidden:true, 
 			                    	 edittype:'select',
 			       				     editoptions:{value:{0:'--- Select Currency --- ',$:'$',Rs:'Rs',Euro:'Euro',NA:' Not Available'}},
 			       				     //editoptions:{value:"0:--- Select Currency --- ; $:Dollar; Rs:Rupees; €:Euro; NA:Not Available"},
@@ -209,27 +207,27 @@ $(document).ready(function() {
 			                    },   
 			                    {name:'srf_tapetest', index:'tapetest', align:'center', editable:true, sortable:true, hidden:true, 
 			                    	 edittype:'select',
-				       			      editoptions:{value:{0:'--- Select tapetest --- ',APC:'As per Cutting',APS:'As per swatch',Good:'Good',Medium:'Medium'}},
+				       			      editoptions:{value:{0:'--- Select tapetest --- ',APC:'As per Cutting',APS:'As per swatch',Good:'Good',Medium:'Medium',NA :'NA'}},
 				       			      editrules:{edithidden:true},	
 			                    },  
 			                    {name:'srf_crockwet', index:'crockingwet', align:'center', editable:true, sortable:true, hidden:true, 
 			                    	 edittype:'select',
-				       			      editoptions:{value:{0:'--- Select crockingwet --- ',APC:'As per Cutting',APS:'As per swatch',Good:'Good',}},
+				       			      editoptions:{value:{0:'--- Select crockingwet --- ',APC:'As per Cutting',APS:'As per swatch',Good:'Good',NA :'NA'}},
 				       			      editrules:{edithidden:true},	
 			                    },  
 			                    {name:'srf_crockdry', index:'crockingdry', align:'center', editable:true, sortable:true, hidden:true, 
 			                    	 edittype:'select',
-				       			      editoptions:{value:{0:'--- Select crockingdry --- ',APC:'As per Cutting',APS:'As per swatch',Good:'Good',}},
+				       			      editoptions:{value:{0:'--- Select crockingdry --- ',APC:'As per Cutting',APS:'As per swatch',Good:'Good',NA :'NA'}},
 				       			      editrules:{edithidden:true},	
 			                    }, 
 			                    {name:'srf_fourfold', index:'fourfolds',  align:'center', editable:true, sortable:true, hidden:true, 
 			                    	 edittype:'select',
-				       			      editoptions:{value:{0:'--- Select fourfolds --- ',True:'True',False:'False'}},
+				       			      editoptions:{value:{0:'--- Select fourfolds --- ',Required:'Required',NA:'NA'}},
 				       			      editrules:{edithidden:true},	
 			                    },  
 			                    {name:'srf_keytest', index:'keytest',  align:'center', editable:true, sortable:true, hidden:true, 
 			                    	 edittype:'select',
-				       			      editoptions:{value:{0:'--- Select keytest --- ',True:'True',False:'False'}},
+				       			      editoptions:{value:{0:'--- Select keytest --- ',Required:'Required',NA:'NA'}},
 				       			      editrules:{edithidden:true},	
 			                    }, 
 			                    {name:'srf_samplenum', index:'samplenum', align:'center', width:80, editable:true, sortable:true, hidden:false, 

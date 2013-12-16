@@ -15,4 +15,12 @@ public interface SampTrackBo {
 
 	List<SampleTrack> getSampleTrackDetails(String sidx, String sord) throws Exception;
 
+	/**  
+	 * (Method description)
+	 * @param
+	 * @return
+	 * etc
+	 */
+	boolean addStrStatus(SampleTrack samplemodel, String sidx, String sord) throws Exception;
+
 }

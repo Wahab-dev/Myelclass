@@ -28,7 +28,8 @@
    		<tr>  			
    			<td>Welcome ${user.name}...</td> 
    			<h:text property="userinsession" styleId="userinsession" value="${user.name}" readonly="true" ></h:text>
-   			<td><h:submit property="action" value="Logout"></h:submit></td> 
+   			<td><h:submit property="action" value="Logout"></h:submit></td>
+   			<h:link action="/LoadPrf" scope="request">PrfScreen</h:link> 
    		</tr>
    </table>
 </h:form>

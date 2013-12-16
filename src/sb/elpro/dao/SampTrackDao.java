@@ -16,4 +16,12 @@ public interface SampTrackDao {
 
 	ArrayList<SampleTrack> getSampleTrackDetailList(String sidx, String sord) throws SQLException;
 
+	/**  
+	 * (Method description)
+	 * @param
+	 * @return
+	 * etc
+	 */
+	boolean updateSrStatus(SampleTrack samplemodel, String sidx, String sord)throws SQLException;
+
 }

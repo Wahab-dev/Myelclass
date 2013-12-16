@@ -23,21 +23,24 @@ import sb.elpro.utility.DateConversion;
 public class BulkDaoImpl implements Bulkdao {
 
 	@Override
-	public ArrayList<BulkArticle> getBulkDetailList(String sidx, String sord)
+	public ArrayList<BulkArticle> getBulkDetailList(String sidx, String sord, String rows, String pag)
 			throws SQLException {
 		ArrayList<BulkArticle> bulkarray = new ArrayList<BulkArticle>();
 		Connection con = null;
 		Statement st = null;
 		ResultSet rs = null;
 	
-		try{			
+		try{	
+			
 			con = DBConnection.getConnection();
-			st = (Statement) con.createStatement();
-			String sql = "SELECT distinct article.prfarticleid, form.agent, form.Ctno, Orderdt, pono, exporterid, tanneryid, customerid, cdd_date, add_date, destination, terms, payment, commission, splcdn, inspcdn, consigneeid, notifyid,  bankid,  pojw, article.articleid, articletype, articleshfrom, articlename, color, size, substance, selection, selectionpercent, quantity , unit,pcs, rate, tc, article.prfarticleid, user, statuse.prf_articleid, status, qshipped, qbal, invdetails, reps,  comments, feddback, statuse.contractno, rdd_date FROM elpro.tbl_prfform form, elpro.tbl_prf_article article, elpro.tbl_prfarticle_status statuse where form.Ctno = article.contractno and article.prfarticleid = statuse.prf_articleid order by "+sidx+" "+sord+"";
+			st = (Statement) con.createStatement();// limit "+pag+", "+rows+" 
+			String sql = "SELECT distinct article.prfarticleid, form.agent, form.Ctno, Orderdt, pono, exporterid, tanneryid, customerid, cdd_date, add_date, destination, terms, payment, commission, splcdn, inspcdn, consigneeid, notifyid,  bankid,  pojw, article.articleid, articletype, articleshfrom, articlename, color, size, substance, selection, selectionpercent, quantity , unit,pcs, rate, tc, article.prfarticleid, user, statuse.prf_articleid, status, qshipped, qbal, invdetails, reps,  comments, feddback, statuse.contractno, rdd_date FROM elpro.tbl_prfform form, elpro.tbl_prf_article article, elpro.tbl_prfarticle_status statuse where form.Ctno = article.contractno and article.prfarticleid = statuse.prf_articleid order by "+sidx+" "+sord+" ";
 			System.out.println(sql);
+			System.out.println(" Rows "+rows);
+			System.out.println(" Page "+pag);
 			rs = st.executeQuery(sql);
 			while(rs.next()) {	
-				BulkArticle bulkbean = new BulkArticle();
+			BulkArticle bulkbean = new BulkArticle();
 				bulkbean.setCtno(rs.getString("Ctno"));
 				bulkbean.setAgent(rs.getString("agent"));
 				bulkbean.setOrderdt(DateConversion.ConverttoNormalDate(rs.getString("Orderdt")));
@@ -82,7 +85,7 @@ public class BulkDaoImpl implements Bulkdao {
 				bulkbean.setComments(rs.getString("comments"));
 				bulkbean.setFeddback(rs.getString("feddback"));
 				bulkbean.setRdd_date(DateConversion.ConverttoNormalDate(rs.getString("rdd_date")));
-				
+				System.out.println("RDD DAte "+ DateConversion.ConverttoNormalDate(rs.getString("rdd_date")));
 				bulkarray.add(bulkbean);
 				}
 			}catch(Exception e){

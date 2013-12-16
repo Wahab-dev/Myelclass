@@ -28,9 +28,9 @@ public class BulkBoImpl implements BulkBo {
 		}
 
 	@Override
-	public List<BulkArticle> getBulkDetails(String sidx, String sord)
+	public List<BulkArticle> getBulkDetails(String sidx, String sord, String rows, String pag)
 			throws Exception {
-		ArrayList<BulkArticle> customerList = bulkdao.getBulkDetailList(sidx, sord);
+		ArrayList<BulkArticle> customerList = bulkdao.getBulkDetailList(sidx, sord, rows, pag);
 	//	
 		return customerList;
 	}

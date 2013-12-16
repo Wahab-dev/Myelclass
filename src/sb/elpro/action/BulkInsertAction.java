@@ -85,7 +85,7 @@ public class BulkInsertAction extends Action {
 						 //It Is a Toolbar Search
 						 List<BulkArticle> article = bulkbo.getBulkDetails(sidx,sord);
 					 }*/
-					List<BulkArticle> article = bulkbo.getBulkDetails(sidx,sord);
+					List<BulkArticle> article = bulkbo.getBulkDetails(sidx, sord, rows, pag );
 					int records = article.size();
 					System.out.println("Reords  "+records);
 					
@@ -104,14 +104,14 @@ public class BulkInsertAction extends Action {
 					
 					   JSONObject totobj = new JSONObject();
 					   totobj.put("quantity", totqty);
-					   totobj.put("qtyshpd", totshpd);
+					   totobj.put("qshipped", totshpd);
 					   totobj.put("qbal", totbal);
 						
-						int page = Integer.parseInt(pag);
-		                int totalPages = 0;
-		                int totalCount = records;
+						int page = Integer.parseInt(pag);  //1
+		                int totalPages = 0; //0
+		                int totalCount = records; //100
 		                if (totalCount > 0) {
-		                	 if (totalCount % Integer.parseInt(rows) == 0) {
+		                	 if (totalCount % Integer.parseInt(rows) == 0) { //10
 		                		 System.out.println("STEP 1 "+totalCount % Integer.parseInt(rows) );
 		                         totalPages = totalCount / Integer.parseInt(rows);
 		                         System.out.println("STEP 2 "+totalPages);

@@ -131,6 +131,14 @@ function loadvalues(){
    			<td ><h:text property="userinsession" styleId="userinsession" value="${user.name}" readonly="true" ></h:text></td >
    			<td ><h:text property="formaction" styleId="formaction" value="${actionform}"></h:text></td> 
    			<td><h:submit property="prfaction" value="Logout"></h:submit></td> 
+   			<h:link action='/gotoBulkTracking'>Bulk Tacking</h:link>
+   		</tr>
+   </table>
+</h:form>
+<h:form action="/login" method="post" >
+	<table style="border: thin;">
+   		<tr>  			
+   			<td><h:submit property="prfaction" value="Logout"></h:submit></td> 
    		</tr>
    </table>
 </h:form>
@@ -243,8 +251,7 @@ function loadvalues(){
 								<div id="TextBoxDiv1">
    									 <label> Other Commission : </label><h:textarea property="prf_commission" styleId="prf_commission" value="${editprfform[0].prf_commission}" ></h:textarea> </div> 	   
 								</div>	
-							<!-- <input type="button" value="Add Comm" id="addButton"> -->
-        					<!-- <input type="button" value="Rem Comm" id="removeButton">  -->      		 														  					  		
+							   		 														  					  		
       			</fieldset>
       			</td>
             	<td><fieldset><legend>Special Condition</legend><br/> 

@@ -612,7 +612,4 @@ public class BulkArticle implements Serializable{
 			this.qshipped = qshipped;
 		}
 		
-		
-		
-		
 }

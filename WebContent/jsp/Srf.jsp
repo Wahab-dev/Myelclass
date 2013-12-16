@@ -71,7 +71,8 @@
 						Fax:  <h:text property="srf_tanfax" styleId="srf_tanfax" value=""> </h:text> <br /><br />
 						Type  :<h:select property="srf_isSample" styleId="srf_isSample" value="">
    								<h:option value="N">Free</h:option>
-   								<h:option value="Y">Raise Invoice</h:option>  								
+   								<h:option value="Y">Chargeable</h:option>  	
+   								<h:option value="NA">To Clarify</h:option>  								
    							 </h:select> <br /><br />	 
       			</fieldset>
       		</td>

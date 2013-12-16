@@ -14,7 +14,7 @@ import sb.elpro.model.BulkQtyDetails;
  */
 public interface BulkBo {
 
-	List<BulkArticle> getBulkDetails(String sidx, String sord) throws Exception;
+	List<BulkArticle> getBulkDetails(String sidx, String sord, String rows, String pag) throws Exception;
 
 	boolean addBtrStatus(BulkArticle bulkmodel, String sidx, String sord)throws Exception;
 

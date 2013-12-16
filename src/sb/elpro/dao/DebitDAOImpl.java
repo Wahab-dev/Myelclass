@@ -94,7 +94,6 @@ public class DebitDaoImpl implements DebitDao {
 		try{			
 			con = DBConnection.getConnection();
 			st = (Statement) con.createStatement();
-			
 			String sql = "SELECT  artname, color, qty, rate, tc, comm, othercomm, ctno, form.invdate, qshpd, qbal, amt, form.invno, taninvno, totalamount FROM tbl_invform form, tbl_inv_bill bill where form.invno = bill.invno and form.invno = '"+invno+"' ";
 			//String commsql = "select othercommssion, commission from tbl_prfform where where "
 			System.out.println(sql);

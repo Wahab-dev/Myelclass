@@ -143,7 +143,7 @@
 			<td width="250"> 
 			 	<fieldset>         
        				<legend>Other Charges</legend>
-				  	Courier Charges: <h:text property="inv_courierchrgs" styleId="inv_courierchrgs"> </h:text>
+				  	Courier Discount: <h:text property="inv_courierchrgs" styleId="inv_courierchrgs"> </h:text>
 				  	<div id="radio">	
 				  		<br/><h:radio property="inv_vatcst" value="2" styleId="inv_vatcst">CST</h:radio>
 				  		<h:radio property="inv_vatcst" value="5" styleId="inv_vatcst">VAT</h:radio>

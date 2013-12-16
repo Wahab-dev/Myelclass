@@ -39,7 +39,8 @@ public class SrfLoadAction extends Action  {
 				System.out.println("STR  action"+action);
 				if(action == null){
 					//System.out.println("Sample Number "+sampleno.toString());
-					
+					usersession.setAttribute("srfactionform", "add");
+					System.out.println("IN SRF IS LOADED");
 					return map.findForward("srfisloaded");
 				}else if(action.equalsIgnoreCase("editform")){
 					/*

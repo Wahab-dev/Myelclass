@@ -710,10 +710,10 @@ $(document).ready(function() {
 					        	$.getJSON("/Myelclass/PrfAutocomplete.do?&action="+"desti", 
 					        			{term : extractLast(request.term
 					        	)}).done(function(data) {
-					                    response($.map(result, function(item) {
+					                    response($.map(data, function(item) {
 					                        return {
-					                        	label : el.label,
-					                			 value: el.label +", " +el.value
+					                        	label : item.label,
+					                			 value: item.label +", " +item.value
 					                            //value: el.label, 
 					                        };
 					                    }));

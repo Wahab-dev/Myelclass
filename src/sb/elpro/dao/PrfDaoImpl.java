@@ -286,6 +286,7 @@ public class PrfDaoImpl implements PrfDao {
 			sql_saveprfArticle.append("values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
 			String sqlquery_saveprfArticle = sql_saveprfArticle.toString();
 			pst = (PreparedStatement) con.prepareStatement(sqlquery_saveprfArticle);
+			System.out.println(" IN PRF SAVE IN THE ");
 			pst.setString(1, prfbean.getPrf_contractno());
 			System.out.println("getPrf_contractno " +prfbean.getPrf_contractno());
 			pst.setString(2, prfbean.getPrf_agentname());
@@ -963,28 +964,26 @@ public class PrfDaoImpl implements PrfDao {
 			noofrows = pst.executeUpdate();
 			if(noofrows == 1){
 				System.out.println(" Save for Status table "+noofrows);
-				StringBuffer sql_saveprfArticlestatus = new StringBuffer("insert into elpro.tbl_prfarticle_status (prf_articleid, artname, status, qshipped, qbal, invdetails, reps, comments, feddback, contractno, rdd_date) ");
-				sql_saveprfArticlestatus.append("values (?,?,?,?,?,?,?,?,?,?,?)");
+				StringBuffer sql_saveprfArticlestatus = new StringBuffer("insert into elpro.tbl_prfarticle_status (artname, status, qshipped, qbal, invdetails, reps, comments, feddback, contractno, rdd_date) ");
+				sql_saveprfArticlestatus.append("values (?,?,?,?,?,?,?,?,?,?)");
 				String sqlquery_saveprfArticlestatus = sql_saveprfArticlestatus.toString();
 				System.out.println("Save quert" +sqlquery_saveprfArticlestatus);
 				pst1 = (PreparedStatement) con.prepareStatement(sqlquery_saveprfArticlestatus);
-				pst1.setString(1, artindertdetail.getPrf_articleid());
-				System.out.println("getPrf_articleid " +artindertdetail.getPrf_articleid());
-				pst1.setString(2, artindertdetail.getPrf_articlename());
+				//int prfarticleid = Integer.parseInt(artindertdetail.getPrf_articleid());
+				pst1.setString(1, artindertdetail.getPrf_articlename());
 				System.out.println("getPrf_articlename " +artindertdetail.getPrf_articlename());
-				pst1.setString(3, "P");
-				pst1.setString(4, "0");
-				pst1.setString(5, artindertdetail.getPrf_quantity());
+				pst1.setString(2, "P");
+				pst1.setString(3, "0");
+				pst1.setString(4, artindertdetail.getPrf_quantity());
+				pst1.setString(5, "NA");
 				pst1.setString(6, "NA");
 				pst1.setString(7, "NA");
 				pst1.setString(8, "NA");
-				pst1.setString(9, "NA");
-				pst1.setString(10, artindertdetail.getPrf_contractnum());
-				pst1.setString(11, "2013-12-30");
+				pst1.setString(9, artindertdetail.getPrf_contractnum());
+				pst1.setString(10, "2013-12-30");
 				addstatusrow = pst1.executeUpdate();
 				System.out.println("Sucessfully Inseerter in Status Table." + addstatusrow);
 			}
-			
 			System.out.println("Sucessfully inserted the record.." + noofrows);
 		}catch(Exception e){
 			e.printStackTrace();
@@ -1037,7 +1036,9 @@ public class PrfDaoImpl implements PrfDao {
 			String sidx, String sord) throws SQLException {
 		Connection con = null;
 		PreparedStatement pst = null;
+		PreparedStatement pst1 = null;
 		int noofrows  = 0;
+		int updatestatusrow = 0;
 		boolean isupdate = true;
 		try{			
 			con = DBConnection.getConnection();
@@ -1063,6 +1064,19 @@ public class PrfDaoImpl implements PrfDao {
 			pst.setString(15, artindertdetail.getArtshform() );
 			System.out.println("Prf Article ID " +artindertdetail.getPrf_articleid());
 			noofrows = pst.executeUpdate();
+			if(noofrows == 1){
+				System.out.println(" Update for Status table "+noofrows);
+				StringBuffer sql_updateprfArticlestatus = new StringBuffer("UPDATE elpro.tbl_prfarticle_status set artname = ? WHERE prf_articleid = '"+artindertdetail.getPrf_articleid()+"' ");
+				String sqlquery_updateprfArticlestatus = sql_updateprfArticlestatus.toString();
+				System.out.println("Save quert" +sqlquery_updateprfArticlestatus);
+				pst1 = (PreparedStatement) con.prepareStatement(sqlquery_updateprfArticlestatus);
+				//int prfarticleid = Integer.parseInt(artindertdetail.getPrf_articleid());
+				pst1.setString(1, artindertdetail.getPrf_articlename());
+				
+				updatestatusrow = pst1.executeUpdate();
+				System.out.println("Sucessfully Inseerter in Status Table." + updatestatusrow);
+			}
+			System.out.println("Sucessfully inserted the record.." + noofrows);
 			System.out.println("Sucessfully inserted the record.." + noofrows);
 		}catch(Exception e){
 			e.printStackTrace();
@@ -1080,7 +1094,9 @@ public class PrfDaoImpl implements PrfDao {
 			String sord) throws SQLException {
 		Connection con = null;
 		PreparedStatement pst = null;
+		PreparedStatement pst1 = null;
 		int noofrows  = 0;
+		int delstatusrow  = 0;
 		boolean isdel = true;
 		try{			
 			con = DBConnection.getConnection();
@@ -1089,6 +1105,18 @@ public class PrfDaoImpl implements PrfDao {
 			System.out.println(sqlquery_saveprfArticle);
 			pst = (PreparedStatement) con.prepareStatement(sqlquery_saveprfArticle);
 			noofrows = pst.executeUpdate();
+			if(noofrows == 1){
+				System.out.println(" Delete for Status table "+noofrows);
+				StringBuffer sql_delprfArticlestatus = new StringBuffer("delete from  elpro.tbl_prfarticle_status WHERE prf_articleid = '"+artindertdetail.getPrf_articleid()+"' ");
+				String sqlquery_delprfArticlestatus = sql_delprfArticlestatus.toString();
+				System.out.println("Save quert" +sqlquery_delprfArticlestatus);
+				pst1 = (PreparedStatement) con.prepareStatement(sqlquery_delprfArticlestatus);
+				
+				delstatusrow = pst1.executeUpdate();
+				System.out.println("Sucessfully Inseerter in Status Table." + delstatusrow);
+			}
+			System.out.println("Sucessfully inserted the record.." + noofrows);
+			System.out.println("Sucessfully inserted the record.." + noofrows);
 			System.out.println("Sucessfully deleted the record.." + noofrows);
 		}catch(Exception e){
 			e.printStackTrace();
@@ -1137,6 +1165,7 @@ public class PrfDaoImpl implements PrfDao {
 				editprfformbean.setPrf_notifyname(rs.getString("notifyid"));
 				editprfformbean.setPrf_bankname(rs.getString("bankid"));
 				editprfformbean.setPrf_pojw(rs.getString("pojw"));
+				editprfformbean.setFormaction("edit");
 				editprfformlist.add(editprfformbean);
 				}
 			System.out.println(" dest Result Added Successfully");

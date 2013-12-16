@@ -42,40 +42,6 @@ public class PrfAction extends DispatchAction {
 		 PrintWriter out = response.getWriter();
 		 PrfForm prfsaveform =(PrfForm) form;
 		 BeanUtils.copyProperties(prfbean, prfsaveform);
-		 /*
-		  * Getting all values 
-		  */
-		/* Enumeration<String> paramNames = request.getParameterNames();
-		 while(paramNames.hasMoreElements())
-	        {
-			 	String paramName = (String)paramNames.nextElement();
-	            String[] paramValues = request.getParameterValues(paramName);
-	            for(int i=0; i<paramValues.length; i++)
-                {
-	            	System.out.println(paramName + paramValues[i]);
-                }
-	        }*/
-		 
-		 /*
-		  * Function to Convert Date Format 
-		  * convert from dd/mm/yyyy to yyyy/mm/dd
-		  * update here i created a static class and passed 
-		  */
-		/* SimpleDateFormat desiredDateformat = new SimpleDateFormat("yyyy-MM-dd");
-		 String orddt = request.getParameter("prf_orderdate");
-		 String cdddt = request.getParameter("prf_cdd");
-		 String adddt = request.getParameter("prf_add");
-		 
-		 Date ordate = new SimpleDateFormat("dd-MM-yyyy").parse(orddt);
-		 Date cdddate = new SimpleDateFormat("dd-MM-yyyy").parse(cdddt);
-		 Date adddate = new SimpleDateFormat("dd-MM-yyyy").parse(adddt);
-		 
-		 String order_date = desiredDateformat.format(ordate);	
-		 String cdd_date = desiredDateformat.format(cdddate);	
-		 String add_date = desiredDateformat.format(adddate);	
-		 System.out.println(" order_date "+order_date);
-		 System.out.println(" cdd_date "+cdd_date);
-		 System.out.println(" add_date "+add_date);*/
 		 
 		 prfbean.setPrf_orderdate(DateConversion.ConverttoMysqlDate(request.getParameter("prf_orderdate")));
 		 prfbean.setPrf_cdd(DateConversion.ConverttoMysqlDate(request.getParameter("prf_cdd")));
@@ -101,26 +67,13 @@ public class PrfAction extends DispatchAction {
 		 prfbean.setPrf_bankname(request.getParameter("prf_bankname"));
 		 prfbean.setPrf_exporterid(request.getParameter("prf_tanname")); *///Exported ID
 		 prfbean.setPrf_pojw("N/A");
-		 prfbean.setFormaction("edit");
+		// prfbean.setFormaction("edit");
 		 usersession = request.getSession(false);
 		 if(!(usersession == null)){
 			 JSONObject prfjsonobj = new JSONObject();
 			 System.out.println("usersession "+usersession.getId());
-			 if(prfbean.getFormaction().equalsIgnoreCase("edit")){
-				 boolean isupdatePrf = prfbo.updatePrfform(prfbean);
-				 if(isupdatePrf){
-						prfjsonobj.put("result", isupdatePrf);
-						prfjsonobj.put("success", "Successfully Saved The Form");
-						prfsaveform.reset(map, request);
-						out.println(prfjsonobj);
-						return map.findForward("bulkisloaded");
-					}else{
-						prfjsonobj.put("result", isupdatePrf);
-						prfjsonobj.put("error", "Error in Saving The Form");
-						out.println(prfjsonobj);
-						return null;
-					}
-			 }else{
+			 System.out.println("request  "+usersession.getAttribute("actionform"));
+			 if(usersession.getAttribute("actionform").equals("add")){
 				 boolean issavedPrf = prfbo.savePrfform(prfbean);
 				 if(issavedPrf){
 						prfjsonobj.put("result", issavedPrf);
@@ -134,9 +87,23 @@ public class PrfAction extends DispatchAction {
 						out.println(prfjsonobj);
 						return null;
 					}
+			 }else{
+				 boolean isupdatePrf = prfbo.updatePrfform(prfbean);
+				 if(isupdatePrf){
+						prfjsonobj.put("result", isupdatePrf);
+						prfjsonobj.put("success", "Successfully Saved The Form");
+						prfsaveform.reset(map, request);
+						out.println(prfjsonobj);
+						return map.findForward("bulkisloaded");
+					}else{
+						prfjsonobj.put("result", isupdatePrf);
+						prfjsonobj.put("error", "Error in Saving The Form");
+						out.println(prfjsonobj);
+						return null;
+					}
+				
 			 }
-			
-			
+			 
 		 }	
 		System.out.println(" LOgin Credential Fails");
 		 return map.findForward("login");
