@@ -13,7 +13,7 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.actions.DispatchAction;
 
 
-import sb.elpro.bo.InspectionboImpl;
+import sb.elpro.bo.InspectionBoImpl;
 
 /**
  * @author ADMIN_WIN7
@@ -21,7 +21,7 @@ import sb.elpro.bo.InspectionboImpl;
  */
 public class InspectionAction extends DispatchAction {
 	HttpSession usersession;
-	InspectionboImpl invbo = new InspectionboImpl();
+	InspectionBoImpl inspbo = new InspectionBoImpl();
 	
 		public ActionForward Save(ActionMapping mapping, ActionForm form, 
 									HttpServletRequest request, HttpServletResponse response) throws Exception{

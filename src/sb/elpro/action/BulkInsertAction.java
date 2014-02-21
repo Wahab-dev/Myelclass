@@ -31,7 +31,22 @@ import sb.elpro.utility.DateConversion;
 public class BulkInsertAction extends Action {
 
 	HttpSession usersession;
-	BulkBo bulkbo  =  new BulkBoImpl();
+	BulkBo bulkbo =new BulkBoImpl();
+		/* (non-Javadoc)
+		 * @see org.apache.struts.action.Action#execute(org.apache.struts.action.ActionMapping, org.apache.struts.action.ActionForm, javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)
+		 */
+		/* (non-Javadoc)
+		 * @see org.apache.struts.action.Action#execute(org.apache.struts.action.ActionMapping, org.apache.struts.action.ActionForm, javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)
+		 */
+		/* (non-Javadoc)
+		 * @see org.apache.struts.action.Action#execute(org.apache.struts.action.ActionMapping, org.apache.struts.action.ActionForm, javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)
+		 */
+		/* (non-Javadoc)
+		 * @see org.apache.struts.action.Action#execute(org.apache.struts.action.ActionMapping, org.apache.struts.action.ActionForm, javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)
+		 */
+		/* (non-Javadoc)
+		 * @see org.apache.struts.action.Action#execute(org.apache.struts.action.ActionMapping, org.apache.struts.action.ActionForm, javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)
+		 */
 		public ActionForward execute (ActionMapping map, ActionForm form, 
 				HttpServletRequest request, HttpServletResponse response) throws Exception{
 			usersession = request.getSession(false);
@@ -85,10 +100,17 @@ public class BulkInsertAction extends Action {
 						 //It Is a Toolbar Search
 						 List<BulkArticle> article = bulkbo.getBulkDetails(sidx,sord);
 					 }*/
+					 
+					 /*
+					  * Method to Call the Bulk details
+					  */				 
 					List<BulkArticle> article = bulkbo.getBulkDetails(sidx, sord, rows, pag );
 					int records = article.size();
 					System.out.println("Reords  "+records);
 					
+					/*
+					 * Method to call the Total QTy , Shipped And Balance 
+					 */
 					List<BulkQtyDetails> bulkqty = bulkbo.getBulkTotqty(sidx,sord);
 					 Iterator<BulkQtyDetails> iter = bulkqty.iterator();  
 				        while(iter.hasNext()){                
@@ -127,7 +149,6 @@ public class BulkInsertAction extends Action {
 					jsonobj.put("records", records);
 					jsonobj.put("rows", article);
 					jsonobj.accumulate("userdata", totobj);
-					//jsonobj.
 					System.out.println(jsonobj);		
 					out.println(jsonobj);
 				}else {
@@ -197,7 +218,6 @@ public class BulkInsertAction extends Action {
 						System.out.println(jsonobj);		
 						out.println(jsonobj);
 					}*/
-					
 				}
 			 }else{
 				 System.out.println("Error Invalid Session");

@@ -18,6 +18,8 @@
  	<form-bean name="InspectionForm" type="sb.elpro.actionform.InspectionForm"></form-bean>
  	<form-bean name="SampleTrackForm" type="sb.elpro.actionform.SampleTrackForm"></form-bean>
  	<form-bean name="TcDebitForm" type="sb.elpro.actionform.TcDebitForm"></form-bean>
+ 	<form-bean name="GeneratePrfForm" type="sb.elpro.actionform.GeneratePrfForm"></form-bean>
+ 	<form-bean name="MasterTrackForm" type="sb.elpro.actionform.MasterTrackForm"></form-bean>
 </form-beans>
  
  <!-- GLOBAL FOWARDS -->
@@ -51,10 +53,16 @@
 	 <action path="/Prf" name="PrfForm" type="sb.elpro.action.PrfAction" input="/jsp/Prf.jsp" parameter="prfaction" scope="session">
 	   	 <forward name="prfissaved" path="/jsp/Prf.jsp"></forward>	
 	   		 <forward name="clearprfform" path="/jsp/Prf.jsp"></forward>
-	   	  	<forward name="bulkisloaded" path="/jsp/Bulk.jsp"></forward>			 
+	   	  	<forward name="bulkisloaded" path="/jsp/Bulk.jsp"></forward>
+	   	  	<forward name="prinprfform" path="/jsp/Print/Prfform.jsp"></forward>	
 	 </action>	 
 	 
-	 
+	 <action path="/generateprfform"
+				type="sb.elpro.action.GeneratePrfFormAction"
+				name="GeneratePrfForm"
+				scope="request"
+				input="/jsp/Print/Prfform.jsp">
+	</action>
 	  <action path="/LoadPrf" name="PrfForm" type="sb.elpro.action.PrfLoadAction" input="/jsp/Menu.jsp" scope="session">
 	 	 <forward name="prfisloaded" path="/jsp/Prf.jsp"></forward>		 
 	 </action>
@@ -163,8 +171,14 @@
 	  
 	   <action path="/TcDebInvDetails" name="TcDebitForm" type="sb.elpro.action.TcDebitAction" input="/jsp/TcDebit.jsp" scope="session"></action>
 	  
-	  
-	  
+	   <!-- MAster Form-->	 
+	  <action path="/gotoMasterTracking" name="MasterTrackForm" type="sb.elpro.action.MasterTrackAction" input="/jsp/Menu.jsp" scope="request" parameter="action" >
+	  	<forward name="masterisloaded" path="/jsp/Master.jsp"></forward>
+	  </action>
+	  <action path="/MasterInsertAction" name="MasterTrackForm" type="sb.elpro.action.MasterInsertAction"  input="/jsp/Master.jsp" scope="session">  
+	  </action>
+	 <action path="/MasterInsertAction/PrintReports" name="MasterTrackForm" type="sb.elpro.action.MasterPrintAction"  input="/jsp/Master.jsp" scope="session">  
+	  </action> 
  </action-mappings> 
  
  <!-- MESSAGE RESOURCE -->

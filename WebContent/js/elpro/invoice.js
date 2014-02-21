@@ -4,7 +4,7 @@
  */
 
 $(document).ready(function() {
-	var billInvisInEdit ;
+	var billInvisInEdit = null ; //boolean value need to Check High Priority 
 	
 	 //Radiio Box Chercked b
 	$("#inv_vatcst").click(function() { 
@@ -126,7 +126,16 @@ $(document).ready(function() {
 		          	invctgrid.jqGrid('setGridParam',{url:"/Myelclass/InvSelectCtfromCust.do?custname="+custname+"&action="+"load"}).trigger("reloadGrid");				 
 				    }
 		  	 });
-			 invctgrid.jqGrid({ // MAster Grid
+		 
+		 
+		 	/*
+		 	 * Grid 1 - Loads Data Based on the Customer Selected Value
+		 	 *  fields -ctno, orderdt, pono, cdd_date, add_date, destination, customerid
+		 	 *  MultiSelect to Selec the Ct Number
+		 	 *  Just Two Methods .  Select CT Number, Reload - Client Side
+		 	 *  
+		 	 */
+			 invctgrid.jqGrid({ 
 				 url: "",
 				 datatype: "json",
 				 loadonce: false,
@@ -192,12 +201,15 @@ $(document).ready(function() {
 	 		 	   position:"last",
 			});
 	
+			/* 
+			 * SubGrid 1 - Load Billing Details
+		 	 *  Grid 2 - Loads Data Based on the Grid 1 Selected Ct 
+		 	 *  fields -contractno, articlename, color, size, substance, selection, quantity,, unit 
+		 	 *  Raise Invoice for Ct 
+		 	 *  Methods .  Add Bill Methods + Search ... 
+		 	 * 
+		 	 */
 			
-			
-			/*
-			 * GRID 2
-			 */			
-			//Load Billing Details
 			billgrid.jqGrid({
 				url:"",
 				datatype: "json",
@@ -374,11 +386,14 @@ $(document).ready(function() {
 						},
 					});
 				 
+			/* 
+			 * SubGrid 2 - Show Billed Contracts 
+		 	 *  Grid 3 - Loads Raised Invoice based on the Grid 2 Raised Bills
+		 	 *  fields -contractno, articlename, color, size, substance, selection, quantity,, unit 
+		 	 *  Raise Invoice for Ct + Old Cts 
+		 	 *  Methods .  Crud Methods + Search ... 
+		 	 */
 			
-			/*
-			 * GRID 3
-			 */			
-				//INV Billing Details
 				 invgrid.jqGrid({
 					 url:"",
 					 datatype: "json",
@@ -410,7 +425,7 @@ $(document).ready(function() {
 									 	dataEvents:  [{
 											type: 'focusout',
 											fn: function(e){
-												if(billInvisInEdit){ //Cod efor Edit Form Qty Calculation 
+												if(billInvisInEdit){ //Code for Edit Form Qty Calculation 
 													 var invqbal = parseFloat($("#invqty").val() - $("#invqshpd").val());
 													 var qbals = invqbal.toFixed(2);
 													 $("#invqbal").val(qbals);
@@ -460,7 +475,9 @@ $(document).ready(function() {
 					emptyrecords: 'No records to display',
 					editurl: "/Myelclass/InvSelectCtfromCust.do?action="+"loadBill",
 					grouping:true, 
-			        groupingView : { 
+					footerrow: true, //footer row Enabled
+					userDataOnFooter : true,
+					groupingView : { 
 			            groupField : ['invno'],
 			            groupOrder : ['desc'] 
 			        },

@@ -21,11 +21,11 @@
 <script src="js/i18n/grid.locale-en.js" type="text/javascript"></script>
 <script src="js/jquery.jqGrid.min.js" type="text/javascript"></script>		
 <script src="js/elpro/invoice.js"></script> 
-<script type="text/javascript">
-/*  $(function() {
+<!-- <script type="text/javascript">
+ $(function() {
 	$("#radio").buttonset();
-});  */
-</script>
+ });  
+</script> -->
 </head>
 <body>
 <!--  Login Form  -->
@@ -144,9 +144,10 @@
 			 	<fieldset>         
        				<legend>Other Charges</legend>
 				  	Courier Discount: <h:text property="inv_courierchrgs" styleId="inv_courierchrgs"> </h:text>
-				  	<div id="radio">	
-				  		<br/><h:radio property="inv_vatcst" value="2" styleId="inv_vatcst">CST</h:radio>
-				  		<h:radio property="inv_vatcst" value="5" styleId="inv_vatcst">VAT</h:radio>
+				  	<div id="localsalesradio">	
+				  		<br/><h:radio property="inv_vatcst" value="2" styleId="inv_cst" onclick="alert(document.getElementById('inv_cst').value)">CST</h:radio>
+				  		<h:radio property="inv_vatcst" value="5" styleId="inv_vat" onclick="alert(document.getElementById('inv_vat').value)">VAT</h:radio>
+				  		<%-- <h:radio property="inv_vatcst" value="0" styleId="inv_vat"  onclick="alert(document.getElementById('inv_vat').value)">VAT</h:radio> --%>
 				  	</div>
 				  	<%-- <br/>Discount: <h:radio property="inv_discount" value="discount" styleId="inv_discount">
 				  	Deduction:</h:radio><h:radio property="inv_deduction" value="deduct" styleId="inv_deduction"></h:radio> --%>

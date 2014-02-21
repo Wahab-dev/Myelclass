@@ -21,7 +21,7 @@ import org.apache.struts.action.ActionMapping;
 public class BulkTrackAction extends Action {
 		public ActionForward execute(ActionMapping map, ActionForm form,  
 				HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException{
-					
+					System.out.println("In Bulk Action");
 			return map.findForward("bulkisloaded");			
 		}
 }

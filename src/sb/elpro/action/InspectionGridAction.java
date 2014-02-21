@@ -17,8 +17,8 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
-import sb.elpro.bo.Inspectionbo;
-import sb.elpro.bo.InspectionboImpl;
+import sb.elpro.bo.InspectionBo;
+import sb.elpro.bo.InspectionBoImpl;
 import sb.elpro.model.InspectionBean;
 import sb.elpro.model.ProductDetails;
 
@@ -28,7 +28,7 @@ import sb.elpro.model.ProductDetails;
  */
 public class InspectionGridAction extends Action{
 	HttpSession usersession;
-	Inspectionbo inspbo  =  new InspectionboImpl();
+	InspectionBo inspbo  =  new InspectionBoImpl();
 	public ActionForward execute (ActionMapping map, ActionForm form, 
 			HttpServletRequest request, HttpServletResponse response) throws Exception{
 		usersession = request.getSession(false);

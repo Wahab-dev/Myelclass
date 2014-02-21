@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version last-->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Bulk" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="b9f9d6ce-3cc5-489e-8a03-24cd6bf02b9f">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="MySql"/>
+	<subDataset name="Chartdata" uuid="a304ce41-d488-4bed-aa84-84299d234e04">
+		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="MySql"/>
+		<queryString>
+			<![CDATA[SELECT Tannery_Name,  Quantity  FROM elclass.tab_prf form
+inner join  elclass.tab_prf_article article
+  ON  article.Contract_number = form.Contract_Number
+and article.status = 'PENDING'
+    order by form.Contract_number]]>
+		</queryString>
+		<field name="Tannery_Name" class="java.lang.String">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="Quantity" class="java.lang.String">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+	</subDataset>
+	<queryString language="SQL">
+		<![CDATA[SELECT AGENT, form.Contract_Number, Order_date, Tannery_Name, Customer_Name, Description, Color,  Quantity, concat(Rate_sign,Rate,' ', Shipment) as rate, Quantity_Shipped as Shipped, Remaining_Quantity as Bal, Comments  FROM elclass.tab_prf form
+inner join  elclass.tab_prf_article article
+  ON  article.Contract_number = form.Contract_Number
+and article.status = 'PENDING'
+    order by form.Contract_number]]>
+	</queryString>
+	<field name="AGENT" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Contract_Number" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Order_date" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Tannery_Name" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Customer_Name" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Description" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Color" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Quantity" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="rate" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Shipped" class="java.lang.String"/>
+	<field name="Bal" class="java.lang.String"/>
+	<field name="Comments" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="39"/>
+	</title>
+	<columnHeader>
+		<band height="40">
+			<staticText>
+				<reportElement x="0" y="2" width="40" height="30" uuid="b0662b71-7eb2-400f-9388-8a5e013d559a"/>
+				<text><![CDATA[AGENT]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="40" y="2" width="50" height="30" uuid="89fa5936-08ec-493e-a119-dfa1324474c0"/>
+				<text><![CDATA[CT No]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="90" y="2" width="60" height="30" uuid="9e3e3973-e923-49b1-aedc-93e4812228f4"/>
+				<text><![CDATA[Date]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="150" y="2" width="66" height="30" uuid="5494d675-8d6b-4772-bf5a-1385fc0b0571"/>
+				<text><![CDATA[Tannery ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="274" y="2" width="66" height="30" uuid="d1df1fad-c3f6-4b82-aef1-4c0963faaa11"/>
+				<text><![CDATA[Customer]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="340" y="2" width="66" height="30" uuid="0e9b984d-0ae4-42c9-9a3f-92ce404a49f2"/>
+				<text><![CDATA[Article]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="406" y="2" width="66" height="30" uuid="dfbf6366-5e54-4c47-a47d-92ecfdbc6f84"/>
+				<text><![CDATA[Color]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="472" y="2" width="66" height="30" uuid="49f90581-2aa1-424c-9685-c157e30c0e5e"/>
+				<text><![CDATA[Quantity]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="538" y="2" width="66" height="30" uuid="1d135b93-4120-42b4-a0b0-7e9987cf25a8"/>
+				<text><![CDATA[rate]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="604" y="2" width="66" height="30" uuid="1cd952cb-ea41-4c92-b8ad-521c5e8c0abe"/>
+				<text><![CDATA[Shipped]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="670" y="2" width="66" height="30" uuid="8e2affd4-8459-40f1-bdab-ca1c1a1ac32f"/>
+				<text><![CDATA[Bal]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="736" y="2" width="66" height="30" uuid="532b6a84-f272-499e-b7df-32d1149fcb52"/>
+				<text><![CDATA[Comments]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="33">
+			<textField>
+				<reportElement x="0" y="0" width="40" height="30" uuid="36343a47-9941-4375-a073-856281cf57c4"/>
+				<textFieldExpression><![CDATA[$F{AGENT}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="40" y="0" width="50" height="30" uuid="cf58d750-c50d-42b8-9fe1-aa026d9fdabd"/>
+				<textFieldExpression><![CDATA[$F{Contract_Number}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="90" y="0" width="60" height="30" uuid="4ff1a2e5-dd35-4678-a97d-a5ae69f5f00c"/>
+				<textFieldExpression><![CDATA[$F{Order_date}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="150" y="0" width="124" height="30" uuid="7ae702bd-e3ab-4d3f-98e0-e16afb2a9023"/>
+				<textFieldExpression><![CDATA[$F{Tannery_Name}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="274" y="0" width="66" height="30" uuid="1b7ebef7-ab93-4be5-89a7-4479aef12d73"/>
+				<textFieldExpression><![CDATA[$F{Customer_Name}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="340" y="0" width="66" height="30" uuid="c3745067-fba0-4d3d-8a70-8992bc8fbe07"/>
+				<textFieldExpression><![CDATA[$F{Description}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="406" y="0" width="66" height="30" uuid="0d3ba4ca-0ef2-46a2-88c5-c1621ee77824"/>
+				<textFieldExpression><![CDATA[$F{Color}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="472" y="0" width="66" height="30" uuid="7320ece7-c262-4145-8fe4-122bd26414fb"/>
+				<textFieldExpression><![CDATA[$F{Quantity}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="538" y="0" width="66" height="30" uuid="505a5cbb-b8b1-4751-a171-fb80d5cfc3aa"/>
+				<textFieldExpression><![CDATA[$F{rate}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="604" y="0" width="66" height="30" uuid="407b9814-4af9-4eba-92bb-56b22717f354"/>
+				<textFieldExpression><![CDATA[$F{Shipped}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="670" y="0" width="66" height="30" uuid="c46c3081-c3f1-4ead-93b5-85de0cb2a016"/>
+				<textFieldExpression><![CDATA[$F{Bal}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="736" y="0" width="66" height="30" uuid="b4021d04-bda4-4f9a-aec5-2776a248f1c0"/>
+				<textFieldExpression><![CDATA[$F{Comments}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<summary>
+		<band height="360">
+			<pie3DChart>
+				<chart evaluationTime="Report">
+					<reportElement x="20" y="0" width="769" height="359" uuid="0897efc5-cd0f-4abb-ae08-ea4dfaf66f34"/>
+					<chartTitle/>
+					<chartSubtitle/>
+					<chartLegend/>
+				</chart>
+				<pieDataset maxCount="35" minPercentage="0.1">
+					<keyExpression><![CDATA[$F{Tannery_Name}]]></keyExpression>
+					<valueExpression><![CDATA[FLOAT_VALUE( $F{Quantity})]]></valueExpression>
+					<labelExpression><![CDATA[$F{Quantity} +"sqft"]]></labelExpression>
+					<otherKeyExpression><![CDATA[]]></otherKeyExpression>
+					<otherLabelExpression><![CDATA[]]></otherLabelExpression>
+				</pieDataset>
+				<pie3DPlot>
+					<plot/>
+					<itemLabel/>
+				</pie3DPlot>
+			</pie3DChart>
+		</band>
+	</summary>
+</jasperReport>

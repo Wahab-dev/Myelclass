@@ -4,13 +4,19 @@
 package sb.elpro.action;
 
 
+import java.io.InputStream;
 import java.io.PrintWriter;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.util.HashMap;
 
 
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import net.sf.jasperreports.engine.JasperRunManager;
 import net.sf.json.JSONObject;
 
 import org.apache.commons.beanutils.BeanUtils;
@@ -18,6 +24,8 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.actions.DispatchAction;
+
+
 
 
 import sb.elpro.actionform.PrfForm;
@@ -115,6 +123,27 @@ public class PrfAction extends DispatchAction {
 		 PrfForm prfsaveform =(PrfForm) form;
 		 prfsaveform.reset(map, request);
 		return map.findForward("clearprfform");
+	}
+	
+	public ActionForward Print(ActionMapping map, ActionForm form, 
+			HttpServletRequest request, HttpServletResponse response) throws Exception{
+		System.out.println("IN Print  ");
+		/*System.out.println("1 .0 "); 
+		//Connection connection = null;
+		ServletOutputStream servletOutputStream = response.getOutputStream();
+		InputStream reportStream = getServlet().getServletConfig().getServletContext().getResourceAsStream("/jasper/prf.jasper");
+		System.out.println("1 .1"); 
+		response.setContentType("application/pdf");
+		//Class.forName("com.mysql.jdbc.Driver");
+		System.out.println("1 .2 "); 
+		//connection = DriverManager.getConnection("jdbc:mysql://localhost:8080/elpro?user=root&password=tiger");
+		JasperRunManager.runReportToPdfStream(reportStream, servletOutputStream, new HashMap());
+		//connection.close();
+		System.out.println("1 .3 "); 
+		servletOutputStream.flush();
+		servletOutputStream.close();
+		return map.getInputForward();*/
+		return map.findForward("prinprfform");
 	}
 	
 	/*

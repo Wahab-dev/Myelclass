@@ -17,11 +17,13 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
+import sb.elpro.bo.BulkBo;
 import sb.elpro.bo.InvoiceBo;
 import sb.elpro.bo.InvoiceBoImpl;
 import sb.elpro.model.ArticleDetails;
 import sb.elpro.model.CustomerInvoice;
 import sb.elpro.model.InvBillDetails;
+import sb.elpro.model.InvoiceTotAmtDetails;
 /**
  * @author Wahab
  *
@@ -50,6 +52,11 @@ public class InvSelectCtfromCust extends Action {
             System.out.println("sord "+sord);
            // System.out.println("ctno "+ctno);
 			System.out.println("action "+action);
+			
+			/*
+			 *  Grid  -1 - invctgrid 
+			 *  Loads the Customers Ct Details 
+			 */
 			if(action.equalsIgnoreCase("load")){
 				String custname = request.getParameter("custname");
 				System.out.println("custname  "+custname);			
@@ -78,7 +85,7 @@ public class InvSelectCtfromCust extends Action {
 				jsonobj.put("rows", invctlist);
 				System.out.println(jsonobj);		
 				out.println(jsonobj);				
-			}else if(action.equalsIgnoreCase("loadsubgrid")){
+			}else if(action.equalsIgnoreCase("loadsubgrid")){ //Grid 2 -  loads the Subgrid. based on Selected Ct Details
 				String ctno = request.getParameter("ctno");
 				System.out.println("ctno Id "+ctno);			
 				List<ArticleDetails> invctlist = invbo.getInvSelCtDetails(ctno);
@@ -106,7 +113,7 @@ public class InvSelectCtfromCust extends Action {
 				jsonobj.put("rows", invctlist);
 				System.out.println(jsonobj);		
 				out.println(jsonobj);	
-		   }else if(action.equalsIgnoreCase("addBill")){
+		   }else if(action.equalsIgnoreCase("addBill")){ //Grid 2 - Load Ct Details.
 			   System.out.println(" In Add Bill Details s");
 			   InvBillDetails invbill = new InvBillDetails();
 			   invbill.setInvctno(request.getParameter("contractno"));
@@ -130,7 +137,7 @@ public class InvSelectCtfromCust extends Action {
 				   /*
 				    * Perform Edit Function
 				    */
-			   }else if(oper.equalsIgnoreCase("add")){
+			   }else if(oper.equalsIgnoreCase("add")){//Grid 2 - Add Bill. For the 1 Grade 
 				   boolean invbilllist = invbo.getInvAddBillDetails(invbill);
 				   if(invbilllist){
 					   jsonobj.clear();
@@ -150,17 +157,22 @@ public class InvSelectCtfromCust extends Action {
                
    			 
 				
-		   }else if(action.equalsIgnoreCase("loadBill")){ // nOt USed Use for 3 grrid
+		   }else if(action.equalsIgnoreCase("loadBill")){ //Loads Grid 3 - Calls Immediately after Load 2 Add Method 
 			   String invno = request.getParameter("invno");
 			   String ctno = request.getParameter("ctno");
 			   String oper = request.getParameter("oper");
 			   /*  String invtype = request.getParameter("invoicetype");*/
-			   if(oper == null){
+			   if(oper == null){ // Load Operation
 					List<InvBillDetails> invbilllist = invbo.getInvBillDetails(invno,ctno);
 			   		int records = invbilllist.size();
 			   		int page = Integer.parseInt(pag);
 		            int totalPages = 0;
 		            int totalCount = records;
+		            
+		            
+		            List<InvoiceTotAmtDetails> invtotamt = invbo.getInvBillTotAmt(invno);
+		            
+		            
 		            if (totalCount > 0) {
 		               	 if(totalCount % Integer.parseInt(rows) == 0) {
 		               		 	System.out.println("STEP 1 "+totalCount % Integer.parseInt(rows) );
@@ -179,7 +191,7 @@ public class InvSelectCtfromCust extends Action {
 					jsonobj.put("rows", invbilllist);
 					System.out.println(jsonobj);		
 					out.println(jsonobj);	
-			   }else{ 
+			   }else{ // Option For Add, Edit , Del
 				   InvBillDetails invaddagainbill = new InvBillDetails();
 				   invaddagainbill.setInvctno(request.getParameter("invctno"));
 				   invaddagainbill.setInvcolor(request.getParameter("invcolor"));
@@ -213,6 +225,9 @@ public class InvSelectCtfromCust extends Action {
 							out.println(jsonobj);	
 					}	
 			   	   }else if(oper.equalsIgnoreCase("edit")){
+			   		/*
+			   		    * Edit Second Shipmemnt for the same article 
+			   		    */
 			   		 boolean invbilleditlist = invbo.getInvBillEditDetails(invaddagainbill);
 			   		 if(invbilleditlist){
 						   jsonobj.clear();

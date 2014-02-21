@@ -14,6 +14,7 @@ import sb.elpro.model.DestinationDetails;
 import sb.elpro.model.ExporterDetails;
 import sb.elpro.model.InvBillDetails;
 import sb.elpro.model.InvCustContractDetails;
+import sb.elpro.model.InvoiceTotAmtDetails;
 import sb.elpro.model.NotifyConsigneeDetails;
 
 /**
@@ -60,6 +61,14 @@ public interface InvoiceDao {
 	boolean getInvEditbillDetails(InvBillDetails invaddagainbill)throws SQLException;
 
 	boolean getInvDelbillDetails(InvBillDetails invaddagainbill)throws SQLException;
+
+	/**  
+	 * (Method description)
+	 * @param
+	 * @return
+	 * etc
+	 */
+	ArrayList<InvoiceTotAmtDetails> getBulkQtyDetails(String invno)throws SQLException;
 
 	
 

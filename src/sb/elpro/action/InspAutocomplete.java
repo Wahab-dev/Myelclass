@@ -17,8 +17,8 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
-import sb.elpro.bo.Inspectionbo;
-import sb.elpro.bo.InspectionboImpl;
+import sb.elpro.bo.InspectionBo;
+import sb.elpro.bo.InspectionBoImpl;
 import sb.elpro.model.ProductDetails;
 import sb.elpro.model.QualityCtrlrDetails;
 
@@ -29,7 +29,7 @@ import sb.elpro.model.QualityCtrlrDetails;
  *  All Autocomplete in Insp Screen ll be handled by this servlet
  */
 public class InspAutocomplete extends Action {
-	Inspectionbo inspbo = new InspectionboImpl();
+	InspectionBo inspbo = new InspectionBoImpl();
 	HttpSession usersession;
 	public ActionForward execute(ActionMapping mapping, ActionForm form, 
 			HttpServletRequest request,  HttpServletResponse response) throws Exception{

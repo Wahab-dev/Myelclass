@@ -11,12 +11,14 @@ import sb.elpro.dao.InvoiceDao;
 import sb.elpro.dao.InvoiceDaoImpl;
 import sb.elpro.model.ArticleDetails;
 import sb.elpro.model.BankDetails;
+import sb.elpro.model.BulkQtyDetails;
 import sb.elpro.model.CustomerDetails;
 import sb.elpro.model.CustomerInvoice;
 import sb.elpro.model.DestinationDetails;
 import sb.elpro.model.ExporterDetails;
 import sb.elpro.model.InvBillDetails;
 import sb.elpro.model.InvCustContractDetails;
+import sb.elpro.model.InvoiceTotAmtDetails;
 import sb.elpro.model.NotifyConsigneeDetails;
 
 /**
@@ -138,6 +140,15 @@ public class InvoiceBoImpl implements InvoiceBo {
 			throws Exception {
 		boolean invdelbill = invdao.getInvDelbillDetails(invaddagainbill);
 		return invdelbill;
+	}
+	/* (non-Javadoc)
+	 * @see sb.elpro.bo.InvoiceBo#getInvBillTotAmt(java.lang.String)
+	 */
+	@Override
+	public List<InvoiceTotAmtDetails> getInvBillTotAmt(String invno)
+			throws Exception {
+		ArrayList<InvoiceTotAmtDetails> invamtdetails = invdao.getBulkQtyDetails(invno);
+		return invamtdetails;
 	}
 	
 	

@@ -49,6 +49,9 @@ public interface PrfBo  {
 
 	public boolean savePrfform(ProductDetails prfbean)throws Exception;
 
+	/*
+	 * Article 
+	 */
 	public ArrayList<ArticleDetails> getarticledetails()throws Exception;
 
 	public ArrayList<ColourDetails> getColorDetails()throws Exception;

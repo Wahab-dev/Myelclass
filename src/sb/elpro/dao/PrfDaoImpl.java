@@ -52,21 +52,26 @@ public class PrfDaoImpl implements PrfDao {
 		try{			
 			con = DBConnection.getConnection();
 			st = (Statement) con.createStatement();
-			String sql = "SELECT max(Ctno)as ctno, agent from  elpro.tbl_prfform where agent like '%"+agenterm+"%' group by agent order by agent";
+			String sql = "SELECT agentid, agentname, contractno FROM elpro.tbl_prfctno where agentname like '%"+agenterm+"%' order by agentname;";
+			//String sql = "SELECT max(Ctno)as ctno, agent from  elpro.tbl_prfform where agent like '%"+agenterm+"%' group by agent order by agent";
 			rs = st.executeQuery(sql);
 			while(rs.next()) {	
-				String ctno = rs.getString("ctno");
+				
+				/*
+				 * Query for Selecting MAx CT from Prf Table 
+				 */
+				/*String ctno = rs.getString("ctno");
 				int ictno = Integer.parseInt(ctno.substring(1));
 				System.out.println(" Int val "+ ++ictno);
 				String ctnowithL = "L"+ictno;
 				System.out.println("ctnowithL "+ctnowithL);	
-				
+				*/
 				
 				AgentDetails agentlist  = new AgentDetails();
-				agentlist.setAgentname(rs.getString("agent"));
+				agentlist.setAgentname(rs.getString("agentname"));
 				//agentlist.setAgentId(rs.getString("agentid"));
-				agentlist.setContractNo(ctnowithL);	
-				System.out.println("Agent name "+agentlist.getContractNo());
+				agentlist.setContractNo(rs.getString("contractno"));	
+				System.out.println("Agent name "+agentlist.getAgentname());
 				agentarraylist.add(agentlist);
 			}
 			System.out.println("Agent List Added Successfully");
@@ -312,7 +317,11 @@ public class PrfDaoImpl implements PrfDao {
 			pst.setString(21, prfbean.getPrf_pojw());
 			System.out.println("getPrf_pojw " +prfbean.getPrf_pojw());
 			noofrows = pst.executeUpdate();
-			
+			if(noofrows == 1){
+				/*
+				 * Call the STored Procedure for the prfctno table update 
+				 */
+			}
 			System.out.println("Sucessfully inserted the record.." + noofrows);
 	}catch(Exception e){
 		e.printStackTrace();

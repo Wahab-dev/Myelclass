@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import sb.elpro.dao.BulkDaoImpl;
-import sb.elpro.dao.Bulkdao;
+import sb.elpro.dao.BulkDao;
 import sb.elpro.model.BulkArticle;
 import sb.elpro.model.BulkQtyDetails;
 
@@ -18,11 +18,11 @@ import sb.elpro.model.BulkQtyDetails;
 
 public class BulkBoImpl implements BulkBo {
 	
-	 private Bulkdao bulkdao;
+	 private BulkDao bulkdao;
 
 	 /**
-		 * 
-		 */
+	  *
+	  */
 		public BulkBoImpl() {
 			this.bulkdao = new BulkDaoImpl();
 		}
@@ -31,7 +31,6 @@ public class BulkBoImpl implements BulkBo {
 	public List<BulkArticle> getBulkDetails(String sidx, String sord, String rows, String pag)
 			throws Exception {
 		ArrayList<BulkArticle> customerList = bulkdao.getBulkDetailList(sidx, sord, rows, pag);
-	//	
 		return customerList;
 	}
 
@@ -52,4 +51,6 @@ public class BulkBoImpl implements BulkBo {
 		ArrayList<BulkQtyDetails> qtydetails = bulkdao.getBulkQtyDetails(sidx, sord);
 		return qtydetails;
 	}
+
+	
 }

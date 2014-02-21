@@ -13,7 +13,7 @@ import sb.elpro.model.BulkQtyDetails;
  * @author Wahab
  *
  */
-public interface Bulkdao {
+public interface BulkDao {
 
 	ArrayList<BulkArticle> getBulkDetailList(String sidx, String sord, String rows, String pag) throws SQLException;
 

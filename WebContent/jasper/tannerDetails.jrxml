@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version last-->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="tannerDetails" pageWidth="520" pageHeight="842" columnWidth="520" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="289bfb47-5ec6-453c-9c44-a758cf2ad8a2">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="MySql"/>
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.topMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.bottomMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.leftMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
+	<parameter name="tanname" class="java.lang.String"/>
+	<queryString language="SQL">
+		<![CDATA[SELECT Tannery_Name, Tannery_Attn, Tannery_Address, Debit_Seq 
+	FROM elclass.tab_srf_prf_tannery where Tannery_Name = $P{tanname}]]>
+	</queryString>
+	<field name="Tannery_Name" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Tannery_Attn" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Tannery_Address" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Debit_Seq" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch"/>
+	</title>
+	<detail>
+		<band height="52" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="10" width="130" height="30" uuid="40c4af18-5845-41ae-aa36-ef4e11369994"/>
+				<textFieldExpression><![CDATA[$F{Tannery_Name}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="130" y="10" width="80" height="30" uuid="60240cda-2bb2-4a70-90a5-5093aba1eadc"/>
+				<textFieldExpression><![CDATA[$F{Tannery_Attn}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="260" y="10" width="170" height="30" uuid="9abc2cc9-f2ba-41b0-bc6c-e53d6a9c6312"/>
+				<textFieldExpression><![CDATA[$F{Tannery_Address}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="440" y="10" width="80" height="30" uuid="8357e36f-ddd1-41db-9bb8-0ccd032a9a68"/>
+				<textFieldExpression><![CDATA[$F{Debit_Seq}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

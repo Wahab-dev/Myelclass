@@ -12,8 +12,8 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
-import sb.elpro.bo.Inspectionbo;
-import sb.elpro.bo.InspectionboImpl;
+import sb.elpro.bo.InspectionBo;
+import sb.elpro.bo.InspectionBoImpl;
 
 /**
  * @author Wahab
@@ -22,10 +22,10 @@ import sb.elpro.bo.InspectionboImpl;
 public class InspectionLoadAction extends Action {
 
 	HttpSession usersession;
-	Inspectionbo  inspbo = new InspectionboImpl();
-	
+	//InspectionBo  inspbo = new InspectionBoImpl();
 	public ActionForward execute(ActionMapping mapping, ActionForm form, 
 			HttpServletRequest request, HttpServletResponse response)throws Exception{
+		System.out.println("Sacre Soutane ");
 		usersession = request.getSession(false);	
 		if(usersession !=null){		   	
 				System.out.println("In iNspection Load.....");

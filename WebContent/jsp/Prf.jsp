@@ -12,6 +12,46 @@
 <script src="js/jquery-1.9.0.js"></script>
 <script src="js/jquery-1.9.0.min.js"></script> --%>
 <style type="text/css">
+.myPrintButton {
+	-moz-box-shadow: 0px 10px 14px -7px #1c1b18;
+	-webkit-box-shadow: 0px 10px 14px -7px #1c1b18;
+	box-shadow: 0px 10px 14px -7px #1c1b18;
+	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #eae0c2), color-stop(1, #ccc2a6));
+	background:-moz-linear-gradient(top, #eae0c2 5%, #ccc2a6 100%);
+	background:-webkit-linear-gradient(top, #eae0c2 5%, #ccc2a6 100%);
+	background:-o-linear-gradient(top, #eae0c2 5%, #ccc2a6 100%);
+	background:-ms-linear-gradient(top, #eae0c2 5%, #ccc2a6 100%);
+	background:linear-gradient(to bottom, #eae0c2 5%, #ccc2a6 100%);
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#eae0c2', endColorstr='#ccc2a6',GradientType=0);
+	background-color:#eae0c2;
+	-moz-border-radius:5px;
+	-webkit-border-radius:5px;
+	border-radius:5px;
+	display:inline-block;
+	cursor:pointer;
+	color:#505739;
+	font-family:Times New Roman;
+	font-size:12px;
+	font-weight:bold;
+	padding:2px 9px;
+	text-decoration:none;
+	text-shadow:0px 1px 9px #ffffff;
+}
+.myPrintButton:hover {
+	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #ccc2a6), color-stop(1, #eae0c2));
+	background:-moz-linear-gradient(top, #ccc2a6 5%, #eae0c2 100%);
+	background:-webkit-linear-gradient(top, #ccc2a6 5%, #eae0c2 100%);
+	background:-o-linear-gradient(top, #ccc2a6 5%, #eae0c2 100%);
+	background:-ms-linear-gradient(top, #ccc2a6 5%, #eae0c2 100%);
+	background:linear-gradient(to bottom, #ccc2a6 5%, #eae0c2 100%);
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#ccc2a6', endColorstr='#eae0c2',GradientType=0);
+	background-color:#ccc2a6;
+}
+.myPrintButton:active {
+	position:relative;
+	top:1px;
+}
+
 #ui-datepicker-div { font-size: 11px; } 
 table.EditTable > tbody > tr.FormData > td.DataTD > input[type="select"] {
     width: 115px !important;
@@ -318,11 +358,11 @@ function loadvalues(){
             <td>&nbsp;</td>
           </tr>
           <tr>
-            <td></td>
-  				<td><h:submit  property="prfaction" styleId="Save" value="Save"></h:submit></td>
+  				<td><h:submit  property="prfaction" styleId="Save" value="Save" styleClass="myPrintButton" ></h:submit></td>
   				<!-- <a href="#" id="thelink">Clickme</a> -->
   				<%-- <h:link href="#" property="insert">Click me</h:link> --%>
-  				<td><h:reset property="prfaction" styleId="Clear" value="Clear" ></h:reset></td>
+  				<td><h:reset property="prfaction" styleId="Clear" value="Clear" styleClass="myPrintButton" ></h:reset></td>
+  				<td><h:submit property="prfaction" styleId="Print" value="Print" styleClass="myPrintButton" ></h:submit></td>
   				<%-- <h:button property="insert" >Insert</h:button> --%>
   			<td></td>
           </tr>

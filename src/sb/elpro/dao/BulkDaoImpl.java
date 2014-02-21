@@ -20,7 +20,7 @@ import sb.elpro.utility.DateConversion;
  * @author Wahab
  *
  */
-public class BulkDaoImpl implements Bulkdao {
+public class BulkDaoImpl implements BulkDao {
 
 	@Override
 	public ArrayList<BulkArticle> getBulkDetailList(String sidx, String sord, String rows, String pag)

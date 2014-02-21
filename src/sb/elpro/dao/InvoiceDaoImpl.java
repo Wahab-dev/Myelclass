@@ -13,12 +13,14 @@ import com.mysql.jdbc.Statement;
 
 import sb.elpro.model.ArticleDetails;
 import sb.elpro.model.BankDetails;
+import sb.elpro.model.BulkQtyDetails;
 import sb.elpro.model.CustomerDetails;
 import sb.elpro.model.CustomerInvoice;
 import sb.elpro.model.DestinationDetails;
 import sb.elpro.model.ExporterDetails;
 import sb.elpro.model.InvBillDetails;
 import sb.elpro.model.InvCustContractDetails;
+import sb.elpro.model.InvoiceTotAmtDetails;
 import sb.elpro.model.NotifyConsigneeDetails;
 import sb.elpro.utility.DBConnection;
 
@@ -749,6 +751,41 @@ public class InvoiceDaoImpl implements InvoiceDao {
 	   }	
 	//return noofrows;
 		return isdel;
+	}
+
+	/* (non-Javadoc)
+	 * @see sb.elpro.dao.InvoiceDao#getBulkQtyDetails(java.lang.String)
+	 */
+	@Override
+	public ArrayList<InvoiceTotAmtDetails> getBulkQtyDetails(String invno)
+			throws SQLException {
+		Connection con = null;
+		Statement st = null;
+		ResultSet rs = null;
+		ArrayList<InvoiceTotAmtDetails> totalamtarray = new ArrayList<InvoiceTotAmtDetails>();
+		try{			
+			con = DBConnection.getConnection();
+			st = (Statement) con.createStatement();
+			String sql = "SELECT  sum(quantity) as qty , sum(qshipped) as Qshipd, sum(qbal) as Qbal FROM elpro.tbl_prf_article article, elpro.tbl_prfarticle_status statuse where article.prfarticleid = statuse.prf_articleid";
+			System.out.println(sql);
+			rs = st.executeQuery(sql);
+			if(rs.next()){
+				InvoiceTotAmtDetails bulqty = new InvoiceTotAmtDetails();
+				bulqty.setAmount(rs.getString("Qbal"));
+				bulqty.setDiscount(rs.getString("qty"));
+				bulqty.setOthercharge(rs.getString("Qshipd"));
+				bulqty.setTotalamount(rs.getString("Qshipd"));
+				totalamtarray.add(bulqty);
+			}
+		}catch(Exception e){
+			e.printStackTrace();
+			System.out.println("ERROR RESULT");
+		}finally{
+			 con.close() ;
+			 st.close();
+			 rs.close();
+	   }	
+		return totalamtarray;
 	}
 
 	

@@ -13,6 +13,12 @@ import sb.elpro.model.InvoiceForm;
  */
 public interface TcDebitBo  {
 
+	/**
+	 * Method to Return the COmplerte Invoice Details of the Contract  
+	 * @param
+	 * @return 
+	 * etc
+	 */
 	List<InvoiceForm> getinvDetails(String invno) throws Exception;
 
 	

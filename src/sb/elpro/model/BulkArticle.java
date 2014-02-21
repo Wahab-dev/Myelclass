@@ -10,7 +10,6 @@ import java.io.Serializable;
  *
  */
 public class BulkArticle implements Serializable{
-
 	/**
 	 * 
 	 * 
@@ -58,6 +57,7 @@ public class BulkArticle implements Serializable{
 		private String terms;
 		private String payment;
 		private String commission;
+		private String othercommission;
 		private String splcdn ;
 		private String inspcdn;
 		private String consigneeid;
@@ -610,6 +610,18 @@ public class BulkArticle implements Serializable{
 		 */
 		public void setQshipped(String qshipped) {
 			this.qshipped = qshipped;
+		}
+		/**
+		 * @return the othercommission
+		 */
+		public String getOthercommission() {
+			return othercommission;
+		}
+		/**
+		 * @param othercommission the othercommission to set
+		 */
+		public void setOthercommission(String othercommission) {
+			this.othercommission = othercommission;
 		}
 		
 }

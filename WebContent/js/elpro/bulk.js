@@ -45,7 +45,7 @@
             return text === '&nbsp;' ? '' : text;
         },
         onClick: function (e) {
-            var $cell = $(this).closest('td'),
+            var $cell = $(this).closest('td'),	
                 $row = $cell.closest('tr.jqgrow'),
                 $grid = $row.closest('table.ui-jqgrid-btable'),
                 p,
@@ -137,7 +137,11 @@ $(function() {
 	bulkgrid.jqGrid({     
 		 		datatype: 'json',
 		        url:"/Myelclass/BulkInsertAction.do", 
-		        colNames:['Status','Ct No','Agent','Order Date','PO No','Tan','Cust','Exp','Name','Color','Size','Substance','Selection','Selp','Quantity','Unit','Shipped','Balance','Comment','InvDetails','Feedback','rdd date','Price','Tc','Add','Cdd','Commission','PO/JW','Consignee','Notify','Bank','Destination','Splcdn','Represnt','Prfarticleid','User'],  
+		        colNames:['Status', 'Ct No', 'Agent', 'Order Date', 'PO No', 'Tan', 'Cust', 'Exp', 'Name', 'Color', 'Size', 
+		                  	'Substance', 'Selection', 'Selp', 'Quantity', 'Unit', 'Shipped', 'Balance', 'Comment', 'InvDetails', 
+		                  	'Feedback', 'rdd date', 'Price', 'Tc', 'Add', 'Cdd', 'Commission', 'PO/JW', 'Consignee', 'Notify', 
+		                  	'Bank', 'Destination', 'Splcdn', 'Represnt', 'Prfarticleid', 'User'
+		                  	],     
 		        colModel :[   
 				  
 				  {name: 'status', index: 'status', align:'center', width:35, editable:true, sortable: true, hidden:false, 
@@ -298,8 +302,8 @@ $(function() {
 */				},  
 		       	caption: "Bulk Tracking Report",
 		    	pager: '#bulkktrackpager',
-		    	rowNum: 10, 
-		    	rowList: [10,15,20],
+		    	rowNum: 2, 
+		    	rowList: [2,5,7,9,11,13,15,17,19],
 		        loadtext: "Bow Bow",
 		        height : "auto",
 		        width: "auto",  
@@ -352,13 +356,13 @@ $(function() {
            				 left: 100,
            				 width : 'auto',	
 		 		 	},
-		 		 	{},{
+		 		 	{},
+		 		 	{
 		 		 		multipleSearch:true,
 		 		 		stringResult  :true,
-		 		 		 multipleGroup:true,
-		 		 	}
-		 		 	
-				) .navButtonAdd('#bulkktrackpager',{
+		 		 		multipleGroup:true,
+		 		 	}		 		 	
+				).navButtonAdd('#bulkktrackpager',{
 		 		 	   caption:"Status", 
 		 		 	   buttonicon:"ui-icon-lightbulb", 
 		 		 	   position:"last",
@@ -507,10 +511,10 @@ $(function() {
        	                   editData: {//Function to Add parameters to the status 
  						 		oper: 'status',
                            },
-                        closeAfterEdit: true,
-           				reloadAfterSubmit: true,
-           				top: 50,
-           				left: 100,
+                        closeAfterEdit : true,
+           				reloadAfterSubmit : true,
+           				top : 50,
+           				left : 100,
            				width : 'auto',
 		 		 	  });
 		 		 	   

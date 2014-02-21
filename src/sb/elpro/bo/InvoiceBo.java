@@ -13,6 +13,7 @@ import sb.elpro.model.DestinationDetails;
 import sb.elpro.model.ExporterDetails;
 import sb.elpro.model.InvBillDetails;
 import sb.elpro.model.InvCustContractDetails;
+import sb.elpro.model.InvoiceTotAmtDetails;
 import sb.elpro.model.NotifyConsigneeDetails;
 /**
  * @author Wahab
@@ -63,6 +64,14 @@ public interface InvoiceBo {
 	public boolean getInvBillEditDetails(InvBillDetails invaddagainbill)throws Exception;
 
 	public boolean getInvBillDelDetails(InvBillDetails invaddagainbill)throws Exception;
+
+	/**  
+	 * (Method description)
+	 * @param
+	 * @return
+	 * etc
+	 */
+	public List<InvoiceTotAmtDetails> getInvBillTotAmt(String invno)throws Exception;
 
 	
 

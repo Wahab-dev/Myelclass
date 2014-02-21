@@ -17,12 +17,12 @@ import sb.elpro.model.QualityCtrlrDetails;
  * @author Wahab
  *
  */
-public class InspectionboImpl implements Inspectionbo {
+public class InspectionBoImpl implements InspectionBo {
 	private InspectionDao inspdao;
 	InspectionBean insploadbean = new InspectionBean();
 	
 	
-	public InspectionboImpl(){
+	public InspectionBoImpl(){
 		this.inspdao = new InspectionDaoImpl(); 			
 	}
 	
