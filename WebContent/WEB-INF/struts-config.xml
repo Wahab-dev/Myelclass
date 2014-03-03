@@ -20,6 +20,8 @@
  	<form-bean name="TcDebitForm" type="sb.elpro.actionform.TcDebitForm"></form-bean>
  	<form-bean name="GeneratePrfForm" type="sb.elpro.actionform.GeneratePrfForm"></form-bean>
  	<form-bean name="MasterTrackForm" type="sb.elpro.actionform.MasterTrackForm"></form-bean>
+ 	<form-bean name="UserInputForm" type="sb.elpro.actionform.UserInputForm"></form-bean>
+ 	
 </form-beans>
  
  <!-- GLOBAL FOWARDS -->
@@ -179,7 +181,20 @@
 	  </action>
 	 <action path="/MasterInsertAction/PrintReports" name="MasterTrackForm" type="sb.elpro.action.MasterPrintAction"  input="/jsp/Master.jsp" scope="session">  
 	  </action> 
+	  
+	  
+	   <!-- User input Settings-->	 
+	  <action path="/gotoUserInput" name="UserInputForm" type="sb.elpro.action.UserInputLoadAction" input="/jsp/Menu.jsp" scope="request" >
+	  	<forward name="userinputisloaded" path="/jsp/UserInput.jsp"></forward>
+	  </action>
+	  
+	   <action path="/userinput/loadvalues" name="UserInputForm" type="sb.elpro.action.UserInputAction" input="/jsp/Prf.jsp" scope="session">	 
+	 </action>	 
+	  
  </action-mappings> 
+ 
+ 
+ 
  
  <!-- MESSAGE RESOURCE -->
  <message-resources  parameter="ApplicationResources"></message-resources>

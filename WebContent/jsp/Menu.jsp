@@ -31,6 +31,7 @@
 	Go to Sample Trackig <h:link action='/gotoSampleTracking'>Sample Tacking</h:link><br /><br />
 	Go to Inspection Trackig <h:link action='/gotoInspectionTracking'>Inspection Tacking</h:link><br /><br />
 	Go to Master Trackig <h:link action='/gotoMasterTracking'>Master Tacking</h:link><br /><br />
+	Go to User input Settings <h:link action='/gotoUserInput'>User Input Settingss</h:link><br /><br />
 
 </body>
 </html>

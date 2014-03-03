@@ -1101,41 +1101,41 @@ public class PrfDaoImpl implements PrfDao {
 	@Override
 	public boolean delprfArticle(PrfArticle artindertdetail, String sidx, 
 			String sord) throws SQLException {
-		Connection con = null;
-		PreparedStatement pst = null;
-		PreparedStatement pst1 = null;
-		int noofrows  = 0;
-		int delstatusrow  = 0;
-		boolean isdel = true;
-		try{			
-			con = DBConnection.getConnection();
-			StringBuffer sql_saveprfArticle = new StringBuffer("delete from elpro.tbl_prf_article WHERE prfarticleid = '"+artindertdetail.getPrf_articleid()+"' ");
-			String sqlquery_saveprfArticle = sql_saveprfArticle.toString();
-			System.out.println(sqlquery_saveprfArticle);
-			pst = (PreparedStatement) con.prepareStatement(sqlquery_saveprfArticle);
-			noofrows = pst.executeUpdate();
-			if(noofrows == 1){
-				System.out.println(" Delete for Status table "+noofrows);
-				StringBuffer sql_delprfArticlestatus = new StringBuffer("delete from  elpro.tbl_prfarticle_status WHERE prf_articleid = '"+artindertdetail.getPrf_articleid()+"' ");
-				String sqlquery_delprfArticlestatus = sql_delprfArticlestatus.toString();
-				System.out.println("Save quert" +sqlquery_delprfArticlestatus);
-				pst1 = (PreparedStatement) con.prepareStatement(sqlquery_delprfArticlestatus);
-				
-				delstatusrow = pst1.executeUpdate();
-				System.out.println("Sucessfully Inseerter in Status Table." + delstatusrow);
-			}
-			System.out.println("Sucessfully inserted the record.." + noofrows);
-			System.out.println("Sucessfully inserted the record.." + noofrows);
-			System.out.println("Sucessfully deleted the record.." + noofrows);
-		}catch(Exception e){
-			e.printStackTrace();
-			isdel = false;
-			System.out.println("ERROR RESULT");
-		}finally{
-			 con.close() ;
-			 pst.close();
-	   }	
-		return isdel;
+			Connection con = null;
+			PreparedStatement pst = null;
+			PreparedStatement pst1 = null;
+			int noofrows  = 0;
+			int delstatusrow  = 0;
+			boolean isdel = true;
+			try{			
+				con = DBConnection.getConnection();
+				StringBuffer sql_saveprfArticle = new StringBuffer("delete from elpro.tbl_prf_article WHERE prfarticleid = '"+artindertdetail.getPrf_articleid()+"' ");
+				String sqlquery_saveprfArticle = sql_saveprfArticle.toString();
+				System.out.println(sqlquery_saveprfArticle);
+				pst = (PreparedStatement) con.prepareStatement(sqlquery_saveprfArticle);
+				noofrows = pst.executeUpdate();
+				if(noofrows == 1){
+					System.out.println(" Delete for Status table "+noofrows);
+					StringBuffer sql_delprfArticlestatus = new StringBuffer("delete from  elpro.tbl_prfarticle_status WHERE prf_articleid = '"+artindertdetail.getPrf_articleid()+"' ");
+					String sqlquery_delprfArticlestatus = sql_delprfArticlestatus.toString();
+					System.out.println("Save quert" +sqlquery_delprfArticlestatus);
+					pst1 = (PreparedStatement) con.prepareStatement(sqlquery_delprfArticlestatus);
+					
+					delstatusrow = pst1.executeUpdate();
+					System.out.println("Sucessfully Inseerter in Status Table." + delstatusrow);
+				}
+				System.out.println("Sucessfully inserted the record.." + noofrows);
+				System.out.println("Sucessfully inserted the record.." + noofrows);
+				System.out.println("Sucessfully deleted the record.." + noofrows);
+			}catch(Exception e){
+				e.printStackTrace();
+				isdel = false;
+				System.out.println("ERROR RESULT");
+			}finally{
+				 con.close() ;
+				 pst.close();
+		   }	
+			return isdel;
 	}
 
 	@Override

@@ -34,8 +34,6 @@
 	font-size:12px;
 	font-weight:bold;
 	padding:2px 9px;
-	text-decoration:none;
-	text-shadow:0px 1px 9px #ffffff;
 }
 .myPrintButton:hover {
 	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #ccc2a6), color-stop(1, #eae0c2));
