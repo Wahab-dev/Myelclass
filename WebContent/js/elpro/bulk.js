@@ -121,12 +121,15 @@ $(function() {
 	
      $('#chngroup').change(function(){
 		var vl = $(this).val();
-		alert(vl);
 		if(vl){
 			if(vl == "clear"){
-				$("#bulkktracktbl").jqGrid('groupingRemove',true);	
+				bulkgrid.jqGrid('groupingRemove',true);	
 			}else{
-				$("#bulkktracktbl").jqGrid('groupingGroupBy',vl);
+				bulkgrid.jqGrid('groupingGroupBy', vl, {
+		            groupOrder : ['desc'],
+		            groupColumnShow: [false],
+		            groupCollapse: [true],
+		        });
 			}	
 		}else{
 			alert("Please Select field to Group");
@@ -140,7 +143,7 @@ $(function() {
 		        colNames:['Status', 'Ct No', 'Agent', 'Order Date', 'PO No', 'Tan', 'Cust', 'Exp', 'Name', 'Color', 'Size', 
 		                  	'Substance', 'Selection', 'Selp', 'Quantity', 'Unit', 'Shipped', 'Balance', 'Comment', 'InvDetails', 
 		                  	'Feedback', 'rdd date', 'Price', 'Tc', 'Add', 'Cdd', 'Commission', 'PO/JW', 'Consignee', 'Notify', 
-		                  	'Bank', 'Destination', 'Splcdn', 'Represnt', 'Prfarticleid', 'User'
+		                  	'Bank', 'Destination', 'Splcdn', 'Represnt', 'Prfarticleid', 'User','isupdtarticle'
 		                  	],     
 		        colModel :[   
 				  
@@ -276,8 +279,7 @@ $(function() {
 					 //editrules :{require : true},formoptions : {
 				  },
 				  
-				  {name: 'splcdn', index: 'splcdn', align:'center', width:90, editable:true, sortable: true, hidden: true,  
-					  
+				  {name: 'splcdn', index: 'splcdn', align:'center', width:90, editable:true, sortable: true, hidden: true,  					  
 					  edittype: 'textarea', 
 					  editrules :{require : true},
 				  },
@@ -291,7 +293,9 @@ $(function() {
 				  {name: 'user', index: 'user', align:'center', width:90, editable:true, sortable: true, hidden: false,  
 					 // editrules :{require : true},
 				  },
-		         
+				  {name: 'isupdtar', index: 'isupdtart', align:'center', width:60, editable:true, sortable: true, hidden: true, 
+						edittype: 'checkbox',  editoptions: { value:"True:False" },
+				  },
 		        ],  
 		        jsonReader : {  
 				  	repeatitems:false,
@@ -302,8 +306,8 @@ $(function() {
 */				},  
 		       	caption: "Bulk Tracking Report",
 		    	pager: '#bulkktrackpager',
-		    	rowNum: 2, 
-		    	rowList: [2,5,7,9,11,13,15,17,19],
+		    	rowNum: 15, 
+		    	rowList: [15,25,50],
 		        loadtext: "Bow Bow",
 		        height : "auto",
 		        width: "auto",  
@@ -370,6 +374,8 @@ $(function() {
 		 		 	    var $self = $(this);
 		 		 	   $self.jqGrid("editGridRow", $self.jqGrid("getGridParam", "selrow"),
 		 		 	    {
+		 		 		   
+		 		 	
 		 		 		 /* beforeInitData: function(formid) {
 		 		 			bulkgrid.setColProp('status', {
 		 		 				formoptions : {
@@ -500,6 +506,8 @@ $(function() {
 		 		 			 $("#tr_qshipped").hide(); 
 		 		 			 $("#tr_qbal").hide(); 
 		 		 			 $("#tr_pojw").hide();
+		 		 			 $("#tr_isupdtar").show();
+		 		 			 
 		 		 			 
 		 		 			 $("#ctno").attr("readonly","readonly"); 
 		 		 			 $("#articlename").attr("readonly","readonly"); 

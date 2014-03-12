@@ -17,6 +17,7 @@ import sb.elpro.model.HandledByDetails;
 import sb.elpro.model.PaymentDetails;
 import sb.elpro.model.TanneryDetails;
 import sb.elpro.utility.DBConnection;
+import sb.elpro.utility.DateConversion;
 
 public class SrfDaoImpl implements SrfDao {
 	@Override
@@ -293,7 +294,9 @@ public class SrfDaoImpl implements SrfDao {
 			String sord) throws SQLException {
 		Connection con = null;
 		PreparedStatement pst = null;
+		PreparedStatement pststatus = null;
 		int noofrows  = 0;
+		int addstatusrow  = 0;
 		boolean isadded = true;
 		try{			
 			con = DBConnection.getConnection();
@@ -324,9 +327,29 @@ public class SrfDaoImpl implements SrfDao {
 			pst.setString(19, artindertdetail.getSrf_keytest());
 			pst.setString(20, artindertdetail.getSrf_samplenum());
 			pst.setString(21, artindertdetail.getUser());
-			
 			System.out.println("getSrf_samplenum " +artindertdetail.getSrf_samplenum());
 			noofrows = pst.executeUpdate();
+			if(noofrows == 1){
+				System.out.println(" Save for Status table "+noofrows);
+				StringBuffer sql_savesrfArticlestatus = new StringBuffer("insert into elpro.tbl_srfarticle_status (sampleno, artname, qty, shpd, bal, status, rdd_date, courierdetails, reps, feedbackdetails) ");
+				sql_savesrfArticlestatus.append("values (?,?,?,?,?,?,?,?,?,?)");
+				String sqlquery_savesrfArticlestatus = sql_savesrfArticlestatus.toString();
+				System.out.println("Save quert" +sqlquery_savesrfArticlestatus);
+				pststatus = (PreparedStatement) con.prepareStatement(sqlquery_savesrfArticlestatus);
+				//int prfarticleid = Integer.parseInt(artindertdetail.getPrf_articleid());
+				pststatus.setString(1, artindertdetail.getSrf_samplenum());
+				pststatus.setString(2, artindertdetail.getSrf_articlename());
+				pststatus.setString(3, artindertdetail.getSrf_qty());
+				pststatus.setString(4, "0");
+				pststatus.setString(5, artindertdetail.getSrf_qty());
+				pststatus.setString(6, "P");
+				pststatus.setString(7, DateConversion.ConverttoMysqlDate("01-01-2013"));
+				pststatus.setString(8, artindertdetail.getSrf_courier());
+				pststatus.setString(9, "");
+				pststatus.setString(10, "");
+				addstatusrow = pststatus.executeUpdate();
+				System.out.println("Sucessfully Inseerter in Status Table." + addstatusrow);
+			}
 			System.out.println("Sucessfully inserted the record.." + noofrows);
 		}catch(Exception e){
 			e.printStackTrace();
@@ -344,7 +367,9 @@ public class SrfDaoImpl implements SrfDao {
 			String sord) throws SQLException {
 			Connection con = null;
 			PreparedStatement pst = null;
+			PreparedStatement pstedit = null;
 			int noofrows  = 0;
+			int updatestatusrow = 0;
 			boolean isupdate = true;
 			try{			
 				con = DBConnection.getConnection();
@@ -372,9 +397,19 @@ public class SrfDaoImpl implements SrfDao {
 				pst.setString(19, artindertdetail.getSrf_keytest());
 				pst.setString(20, artindertdetail.getSrf_samplenum());
 				pst.setString(21, artindertdetail.getUser());
-				
-				
 				noofrows = pst.executeUpdate();
+				if(noofrows == 1){
+					System.out.println(" Update for Status table "+noofrows);
+					StringBuffer sql_updatesrfArticlestatus = new StringBuffer("UPDATE elpro.tbl_srfarticle_status set artname = ?, qty = ? WHERE srfarticleid = '"+artindertdetail.getSrf_articleid()+"' ");
+					String sqlquery_updatesrfArticlestatus = sql_updatesrfArticlestatus.toString();
+					System.out.println("Save quert" +sqlquery_updatesrfArticlestatus);
+					pstedit = (PreparedStatement) con.prepareStatement(sqlquery_updatesrfArticlestatus);
+					//int srfArticleid = Integer.parseInt(artindertdetail.getPrf_articleid());
+					pstedit.setString(1, artindertdetail.getSrf_articlename());
+					pstedit.setString(2, artindertdetail.getSrf_qty());
+					updatestatusrow = pstedit.executeUpdate();
+					System.out.println("Sucessfully Inseerter in Status Table." + updatestatusrow);
+				}
 				System.out.println("Sucessfully inserted the record.." + noofrows);
 			}catch(Exception e){
 				e.printStackTrace();
@@ -393,7 +428,9 @@ public class SrfDaoImpl implements SrfDao {
 			String sord) throws SQLException {
 		Connection con = null;
 		PreparedStatement pst = null;
+		PreparedStatement pstdel = null;
 		int noofrows  = 0;
+		int delstatusrow  = 0;
 		boolean isdel = true;
 		try{			
 			con = DBConnection.getConnection();
@@ -402,6 +439,15 @@ public class SrfDaoImpl implements SrfDao {
 			System.out.println(sqlquery_delsrfArticle);
 			pst = (PreparedStatement) con.prepareStatement(sqlquery_delsrfArticle);
 			noofrows = pst.executeUpdate();
+			if(noofrows == 1){
+				System.out.println(" Delete for Status table "+noofrows);
+				StringBuffer sql_delprfArticlestatus = new StringBuffer("delete from  elpro.tbl_srfarticle_status WHERE srfarticleid = '"+artindertdetail.getSrf_articleid()+"' ");
+				String sqlquery_delprfArticlestatus = sql_delprfArticlestatus.toString();
+				pstdel = (PreparedStatement) con.prepareStatement(sqlquery_delprfArticlestatus);
+				
+				delstatusrow = pstdel.executeUpdate();
+				System.out.println("Sucessfully Inseerter in Status Table." + delstatusrow);
+			}
 			System.out.println("Sucessfully deleted the record.." + noofrows);
 		}catch(Exception e){
 			e.printStackTrace();
@@ -411,7 +457,6 @@ public class SrfDaoImpl implements SrfDao {
 			 con.close() ;
 			 pst.close();
 	   }	
-	//return noofrows;
 		return isdel;
 	}
 

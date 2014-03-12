@@ -12,8 +12,7 @@ import com.mysql.jdbc.PreparedStatement;
 import com.mysql.jdbc.Statement;
 
 import sb.elpro.model.ArticleDetails;
-import sb.elpro.model.BankDetails;
-import sb.elpro.model.BulkQtyDetails;
+import sb.elpro.model.BankDetails;	
 import sb.elpro.model.CustomerDetails;
 import sb.elpro.model.CustomerInvoice;
 import sb.elpro.model.DestinationDetails;
@@ -141,8 +140,8 @@ public class InvoiceDaoImpl implements InvoiceDao {
 			rs = st.executeQuery(sql);
 			while(rs.next()) {	
 				DestinationDetails InvDestiCountrybean = new DestinationDetails();
-				InvDestiCountrybean.setDestinationCountry(rs.getString("destcountry"));
-				System.out.println("destcountry"+InvDestiCountrybean.getDestinationCountry());
+				InvDestiCountrybean.setDestictry(rs.getString("destcountry"));
+				System.out.println("destcountry"+InvDestiCountrybean.getDestictry());
 				InvDestiCountryarray.add(InvDestiCountrybean);
 			}
 		}catch(Exception e){
@@ -169,8 +168,8 @@ public class InvoiceDaoImpl implements InvoiceDao {
 			rs = st.executeQuery(sql);
 			while(rs.next()) {	
 				DestinationDetails InvFinalDestibean = new DestinationDetails();
-				InvFinalDestibean.setDestination(rs.getString("destname"));
-				System.out.println("destname"+InvFinalDestibean.getDestination());
+				InvFinalDestibean.setDestiname(rs.getString("destname"));
+				System.out.println("destname"+InvFinalDestibean.getDestiname());
 				InvFinalDestiarray.add(InvFinalDestibean);
 			}
 		}catch(Exception e){
@@ -285,30 +284,38 @@ public class InvoiceDaoImpl implements InvoiceDao {
 }
 
 	@Override
-	public ArrayList<CustomerInvoice> getInvCustCtlist(String custid, String sortname, String sortorder) throws SQLException {
+	public ArrayList<CustomerInvoice> getInvCustCtlist(String custid, String type, String sortname, String sortorder) throws SQLException {
 		ArrayList<CustomerInvoice> invcustctrraylist = new ArrayList<CustomerInvoice>();			
 		Connection con = null;
 		Statement st = null;
 		ResultSet rs = null;	
+		String sql = null;
 		try{			
 			con = DBConnection.getConnection();
 			st = (Statement) con.createStatement();
-			String sql = "SELECT Ctno, Orderdt, pono, customerid, cdd_date, add_date, destination, commission FROM elpro.tbl_prfform where customerid like '%"+custid+"%' order by "+sortname+" "+sortorder+" ";
+			if(type.equalsIgnoreCase("ct")){
+				sql = "SELECT Ctno, Orderdt as Dt, pono as refno, customerid as cust,  tanneryid, consigneeid, destination, add_date, cdd_date, commission, othercommission FROM elpro.tbl_prfform where customerid like '%"+custid+"%' order by "+sortname+" "+sortorder+" ";
+			}else{
+				 sql = "(SELECT Ctno, Orderdt as Dt, pono as refno, customerid as cust,  tanneryid, consigneeid, destination, add_date, cdd_date, commission, othercommission FROM elpro.tbl_prfform where customerid like '%"+custid+"%') union (SELECT Sampleno, orderdt, refno, customerid,  tanneryid, deliverid, destination,add_date, cdd_date, handledby, isinvraised FROM elpro.tbl_srfform where customerid like '%"+custid+"%') order by "+sortname+" "+sortorder+" ";
+			}
+			
 			System.out.println("SQL + "+sql);
 			rs = st.executeQuery(sql);
 			while(rs.next()) {						
-				CustomerInvoice InvCustCtbean = new CustomerInvoice();
-					InvCustCtbean.setCtno(rs.getString("Ctno"));
-					InvCustCtbean.setOrderdt(rs.getString("Orderdt"));
-					InvCustCtbean.setPono(rs.getString("pono")); //
-					InvCustCtbean.setCustomerid(rs.getString("customerid"));
-					InvCustCtbean.setCdd_date(rs.getString("cdd_date"));
-					InvCustCtbean.setAdd_date(rs.getString("add_date"));
-					InvCustCtbean.setDestination(rs.getString("destination"));
-					InvCustCtbean.setCommission(rs.getString("commission"));
-					
-					System.out.println("Cust Name "+InvCustCtbean.getCustomerid());
-					invcustctrraylist.add(InvCustCtbean);
+			 CustomerInvoice InvCustCtbean = new CustomerInvoice();
+			  InvCustCtbean.setCtno(rs.getString("Ctno"));
+			  InvCustCtbean.setOrderdt(rs.getString("Dt"));
+			  InvCustCtbean.setPono(rs.getString("refno")); //
+			  InvCustCtbean.setCustomer(rs.getString("cust"));
+			  InvCustCtbean.setTannery(rs.getString("tanneryid"));
+			  InvCustCtbean.setConsignee(rs.getString("consigneeid"));
+			  InvCustCtbean.setDestination(rs.getString("destination"));
+			  InvCustCtbean.setCommission(rs.getString("commission"));
+			  InvCustCtbean.setOthercommission(rs.getString("othercommission"));
+			  InvCustCtbean.setCdd_date(rs.getString("cdd_date"));
+			  InvCustCtbean.setAdd_date(rs.getString("add_date"));
+			  System.out.println("etCtno "+InvCustCtbean.getCtno());
+			 invcustctrraylist.add(InvCustCtbean);
 			}
 	}catch(Exception e){
 		e.printStackTrace();
@@ -320,7 +327,49 @@ public class InvoiceDaoImpl implements InvoiceDao {
    }	
 	return invcustctrraylist;
 	}
-
+	/*  Not Necessary - merged Sample with CT
+	 * (non-Javadoc)
+	 * @see sb.elpro.dao.InvoiceDao#getinvCustSampleDetails(java.lang.String, java.lang.String, java.lang.String)
+	 
+	@Override
+	public ArrayList<CustomerInvoice> getinvCustSampleDetails(String custname,
+			String sidx, String sord) throws SQLException {
+		ArrayList<CustomerInvoice> invcustctrraylist = new ArrayList<CustomerInvoice>();			
+		Connection con = null;
+		Statement st = null;
+		ResultSet rs = null;	
+		try{			
+			con = DBConnection.getConnection();
+			st = (Statement) con.createStatement();
+			String sql = "SELECT Sampleno, orderdt, refno, priority, handledby, customerid, tanneryid, deliverid, add_date, cdd_date, isinvraised FROM elpro.tbl_srfform  where customerid like '%"+custname+"%' order by "+sidx+" "+sord+" ";
+			System.out.println("SQL + "+sql);
+			rs = st.executeQuery(sql);
+			while(rs.next()) {						
+			 CustomerInvoice InvCustCtbean = new CustomerInvoice();
+			  InvCustCtbean.setSampleno(rs.getString("Sampleno"));
+			  InvCustCtbean.setOrderdt(rs.getString("orderdt"));
+			  InvCustCtbean.setRefno(rs.getString("refno"));
+			  InvCustCtbean.setPriority(rs.getString("priority")); //
+			  InvCustCtbean.setHandledby(rs.getString("handledby"));
+			  InvCustCtbean.setScustomerid(rs.getString("customerid"));
+			  InvCustCtbean.setStanneryid(rs.getString("tanneryid"));
+			  InvCustCtbean.setDeliverid(rs.getString("deliverid"));
+			  InvCustCtbean.setSadd_date(rs.getString("add_date"));
+			  InvCustCtbean.setScdd_date(rs.getString("cdd_date"));
+			  InvCustCtbean.setIsinvraised(rs.getString("isinvraised"));
+			  System.out.println("Sampleno "+InvCustCtbean.getSampleno());
+			 invcustctrraylist.add(InvCustCtbean);
+			}
+	}catch(Exception e){
+		e.printStackTrace();
+		System.out.println("Customer Name ERROR RESULT");
+	}finally{
+		 con.close() ;
+		 st.close();
+		 rs.close();
+   }	
+	return invcustctrraylist;
+	}*/
 	@Override
 	public ArrayList<CustomerDetails> getInvCustlist(String custterm)
 			throws SQLException {
@@ -370,8 +419,8 @@ public class InvoiceDaoImpl implements InvoiceDao {
 			rs = st.executeQuery(sql);
 			while(rs.next()) {						
 				DestinationDetails InvCtrybean = new DestinationDetails();
-				InvCtrybean.setDestination(rs.getString("CountryName"));
-				InvCtrybean.setDestinationId(rs.getString("CountryId"));
+				InvCtrybean.setDestiname(rs.getString("CountryName"));
+				InvCtrybean.setDestiid(rs.getString("CountryId"));
 				System.out.println("Cust CT List"+InvCtrybean);
 				invcustarraylist.add(InvCtrybean);
 			}
@@ -400,8 +449,8 @@ public class InvoiceDaoImpl implements InvoiceDao {
 			rs = st.executeQuery(sql);
 			while(rs.next()) {						
 				DestinationDetails Invloadportbean = new DestinationDetails();
-				Invloadportbean.setDestination(rs.getString("LoadingName"));
-				Invloadportbean.setDestinationId(rs.getString("LoadingId"));
+				Invloadportbean.setDestiname(rs.getString("LoadingName"));
+				Invloadportbean.setDestiid(rs.getString("LoadingId"));
 				System.out.println("Cust CT List"+Invloadportbean);
 				invloadportarraylist.add(Invloadportbean);
 			}
@@ -417,36 +466,47 @@ public class InvoiceDaoImpl implements InvoiceDao {
 	}
 
 	@Override
-	public ArrayList<ArticleDetails> getInvDelContractDetails(String ctno)
+	public ArrayList<ArticleDetails> getInvSelContractDetails(String ctno, String type)
 			throws SQLException {
 		ArrayList<ArticleDetails> invloadportarraylist = new ArrayList<ArticleDetails>();			
 		Connection con = null;
 		Statement st = null;
 		ResultSet rs = null;	
+		String sql = null;
 		try{			
 			con = DBConnection.getConnection();
 			st = (Statement) con.createStatement();
-			String sql = "SELECT articleid, articlename, size, substance, selection, selectionpercent, color, quantity, qshipped, qbal, unit, pcs, rate, tc, article.contractno, prfarticleid from tbl_prf_article article, elpro.tbl_prfarticle_status statuse where  prf_articleid = prfarticleid and article.contractno in ("+ctno+") order by article.contractno";
+			if(type.equalsIgnoreCase("ct")){
+				sql =  "SELECT articletype, articlename, color, size, substance, selection, quantity, unit, pcs, qshipped, qbal, rate, tc, article.contractno, prfarticleid, status, rdd_date, comments, reps, feddback from tbl_prf_article article, elpro.tbl_prfarticle_status statuse  where prf_articleid = prfarticleid and article.contractno in ("+ctno+") order by article.contractno";
+			}else{
+				sql = "(SELECT articletype, articlename, color, size, substance, selection, quantity, unit, pcs, qshipped, qbal, rate, tc, article.contractno, prfarticleid, status, rdd_date, comments, reps, feddback from tbl_prf_article article, elpro.tbl_prfarticle_status statuse  where prf_articleid = prfarticleid and article.contractno in ("+ctno+")) union (SELECT articletype, articlename, color, size, substance, selection , quantity ,unit, pcs, shpd, bal,  rate, articleid,  art.sampleno, art.srfarticleid, status, rdd_date, courierdetails, reps, feedbackdetails FROM elpro.tbl_srf_article art, elpro.tbl_srfarticle_status statuse Where  art.srfarticleid = statuse.srfarticleid and art.sampleno in ("+ctno+") order by article.contractno)";
+			}
+			//String sql = "SELECT articleid, articlename, size, substance, selection, selectionpercent, color, quantity, qshipped, qbal, unit, pcs, rate, tc, article.contractno, prfarticleid from tbl_prf_article article, elpro.tbl_prfarticle_status statuse where  prf_articleid = prfarticleid and article.contractno in ("+ctno+") order by article.contractno";
 			System.out.println((sql));
 			rs = st.executeQuery(sql);
 			System.out.println((sql));
 			while(rs.next()) {	
 				ArticleDetails artbean = new ArticleDetails();
-				artbean.setArticleid(rs.getString("articleid"));
+				artbean.setArticletype(rs.getString("articletype"));
 				artbean.setArticlename(rs.getString("articlename"));
 				artbean.setSize(rs.getString("size"));
 				artbean.setSubstance(rs.getString("substance"));
 				artbean.setSelection(rs.getString("selection"));
-				artbean.setSelp(rs.getString("selectionpercent"));
 				artbean.setColor(rs.getString("color"));
 				artbean.setQuantity(rs.getString("quantity"));
 				artbean.setUnit(rs.getString("unit"));
+				artbean.setPieces(rs.getString("pcs"));
 				artbean.setQshipped(rs.getFloat("qshipped"));
 				artbean.setQbal(rs.getFloat("qbal"));
 				artbean.setRate(rs.getString("rate"));
 				artbean.setTc(rs.getString("tc"));
 				artbean.setContractno(rs.getString("contractno"));
 				artbean.setPrfarticleid(rs.getString("prfarticleid"));
+				artbean.setStatus(rs.getString("status"));
+				artbean.setComments(rs.getString("comments"));
+				artbean.setRdd(rs.getString("rdd_date"));
+				artbean.setReps(rs.getString("reps"));
+				artbean.setFeedback(rs.getString("feddback"));
 				System.out.println("Art CT List"+artbean.getContractno());
 				invloadportarraylist.add(artbean);
 			}
@@ -469,7 +529,7 @@ public class InvoiceDaoImpl implements InvoiceDao {
 		PreparedStatement pst = null;
 		PreparedStatement pst1 = null;
 		int noofrows  = 0;
-		int updtprfart = 0;
+		int updtart = 0;
 		boolean isInserted = true;
 		try{			
 			con = DBConnection.getConnection();
@@ -502,20 +562,38 @@ public class InvoiceDaoImpl implements InvoiceDao {
 			noofrows = pst.executeUpdate();
 			System.out.println("Sucessfully inserted the record.." + noofrows);
 			if(noofrows == 1){
-				System.out.println(" Update PRF Status QTy "+noofrows);
-				StringBuffer sql_updartqty = new StringBuffer("UPDATE elpro.tbl_prfarticle_status SET qshipped = ? , qbal = ? , invdetails = ?  WHERE prf_articleid = '"+invbill.getInvartid()+"' ");
-				String sqlquery_updartqty = sql_updartqty.toString();
-				System.out.println("Update quert" +sqlquery_updartqty);
-				pst1 = (PreparedStatement) con.prepareStatement(sqlquery_updartqty);
-				pst1.setString(1, invbill.getInvqshpd());
-				System.out.println("getInvqshpd " +invbill.getInvqshpd());
-				pst1.setString(2, invbill.getInvqbal());
-				System.out.println("getInvqbal " +invbill.getInvqbal());
-				pst1.setString(3, invbill.getInvno()+" Dt"+invbill.getInvdt());
-				System.out.println("INV invdetails " +invbill.getInvno()+" Dt"+invbill.getInvdt());
-			
-				updtprfart = pst1.executeUpdate();
-				System.out.println("Sucessfully Updated the record.." + updtprfart);
+				if(invbill.getInvctno().startsWith("L")){
+					System.out.println(" Update PRF Status QTy "+noofrows);
+					StringBuffer sql_updartqty = new StringBuffer("UPDATE elpro.tbl_prfarticle_status SET qshipped = ? , qbal = ? , invdetails = ?  WHERE prf_articleid = '"+invbill.getInvartid()+"' ");
+					String sqlquery_updartqty = sql_updartqty.toString();
+					System.out.println("Update quert" +sqlquery_updartqty);
+					pst1 = (PreparedStatement) con.prepareStatement(sqlquery_updartqty);
+					pst1.setString(1, invbill.getInvqshpd());
+					System.out.println("getInvqshpd " +invbill.getInvqshpd());
+					pst1.setString(2, invbill.getInvqbal());
+					System.out.println("getInvqbal " +invbill.getInvqbal());
+					pst1.setString(3, invbill.getInvno()+" Dt"+invbill.getInvdt());
+					System.out.println("INV invdetails " +invbill.getInvno()+" Dt"+invbill.getInvdt());
+				
+					updtart = pst1.executeUpdate();
+					System.out.println("Sucessfully Updated the record.." + updtart);
+				}else{
+					//Code to Update the status of the Sample Article 
+					System.out.println(" Update SRF Status QTy "+noofrows);
+					StringBuffer sql_updartqty = new StringBuffer("UPDATE elpro.tbl_srfarticle_status SET shpd = ? , bal = ? , courierdetails = ?  WHERE srfarticleid = '"+invbill.getInvartid()+"' ");
+					String sqlquery_updartqty = sql_updartqty.toString();
+					System.out.println("Update quert" +sqlquery_updartqty);
+					pst1 = (PreparedStatement) con.prepareStatement(sqlquery_updartqty);
+					pst1.setString(1, invbill.getInvqshpd());
+					System.out.println("getInvqshpd " +invbill.getInvqshpd());
+					pst1.setString(2, invbill.getInvqbal());
+					System.out.println("getInvqbal " +invbill.getInvqbal());
+					pst1.setString(3, invbill.getInvno()+" Dt"+invbill.getInvdt());
+					System.out.println("INV invdetails " +invbill.getInvno()+" Dt"+invbill.getInvdt());
+					updtart = pst1.executeUpdate();
+					System.out.println("Sucessfully Updated the record.." + updtart);
+				}
+				
 			}
 			System.out.println("Sucessfully inserted the record.." + noofrows);
 			
@@ -531,7 +609,7 @@ public class InvoiceDaoImpl implements InvoiceDao {
 	}
 
 	@Override
-	public ArrayList<InvBillDetails> getInvBillDetails(String invno, String ctno)
+	public ArrayList<InvBillDetails> getInvBillDetails(String invno, String ctno,String type)
 			throws SQLException {
 		ArrayList<InvBillDetails> invBilllist = new ArrayList<InvBillDetails>();		
 		Connection con = null;
@@ -787,6 +865,8 @@ public class InvoiceDaoImpl implements InvoiceDao {
 	   }	
 		return totalamtarray;
 	}
+
+	
 
 	
 

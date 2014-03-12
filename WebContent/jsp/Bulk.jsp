@@ -40,12 +40,11 @@
 <h:form >   
 	<div id="blk">Bulk Tracking</div> 
 	 Group By: <select id="chngroup"> 
-			 <option value="clear">Remove Grouping</option>
+			<option value="clear" selected="selected">Remove Grouping</option>
 			<option value="ctno">Ct No</option> 
 			<option value="articlename">Article</option> 
 			<option value="status">Status</option>
 			<option value="color">color</option> 
-			<option value="clear">Remove Grouping</option> 
 		</select> <br/><br/> 
 			<table id="bulkktracktbl"></table> 
 			<div id="bulkktrackpager"></div> 

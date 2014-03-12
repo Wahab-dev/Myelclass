@@ -972,6 +972,7 @@ public class PrfDaoImpl implements PrfDao {
 			System.out.println("getContractno " +artindertdetail.getPrf_contractnum());
 			noofrows = pst.executeUpdate();
 			if(noofrows == 1){
+				System.out.println(" ID "+artindertdetail.getPrf_articleid());
 				System.out.println(" Save for Status table "+noofrows);
 				StringBuffer sql_saveprfArticlestatus = new StringBuffer("insert into elpro.tbl_prfarticle_status (artname, status, qshipped, qbal, invdetails, reps, comments, feddback, contractno, rdd_date) ");
 				sql_saveprfArticlestatus.append("values (?,?,?,?,?,?,?,?,?,?)");

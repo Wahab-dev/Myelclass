@@ -12,7 +12,19 @@ $(document).ready(function() {
 	var gradgrid = $('#inspgradtbl'); 
 	var rejgrid = $('#insprejtbl');
    
-   
+	 $("#format").buttonset();
+	 $("#format input[type=radio]").change(function() {
+		 alert(this.value);  
+		 if(this.value === 'Sample'){
+			 //set action to Insp sample
+			// var actn = "";
+		 }else{
+			 alert(value);
+			 //set action to Insp Ct 
+			// var actn = "";
+		 }
+		});
+	 
 	/*
 	 * AUTOCOMPLETE	
 	 */

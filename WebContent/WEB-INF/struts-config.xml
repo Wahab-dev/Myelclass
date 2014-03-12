@@ -115,6 +115,8 @@
 	  </action>
 	  <action path="/SamptrackInsertAction" name="SampleTrackForm" type="sb.elpro.action.SamptrackInsertAction"  input="/jsp/SampleTrack.jsp" scope="session">  
 	  </action>
+	  <action path="/SamptrackInsertAction/PrintReports" name="SampleTrackForm" type="sb.elpro.action.SamplePrintAction"  input="/jsp/SampleTrack.jsp" scope="session">  
+	  </action> 
 	 
 	 <!--   INVOICE	-->	   	  
 	  <action path="/gotoinvoice" type="sb.elpro.action.InvoiceLoadAction" input="/jsp/Menu.jsp" scope="session">

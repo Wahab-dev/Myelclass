@@ -32,13 +32,12 @@ public class SampTrackDaoImpl implements SampTrackDao {
 		try{			
 			con = DBConnection.getConnection();
 			st = (Statement) con.createStatement();
-			String sql = "SELECT form.sampleno, form.agentid,  form.orderdt, form.refno, form.priority, form.handledby, form.customerid, form.tanneryid, form.deliverid, form.destination, form.terms, form.add_date, form.cdd_date, form.splcdn, form.inspcdn, form.forwaderid, form.isinvraised, article.articleid, article.articletype, article.articleshform, article.articlename, article.color, article.size, article.substance, article.selection, article.selectionp, article.quantity, article.unit, article.pcs, article.rate, article.colormatching, article.tapetest, article.crockingwet, article.crockingdry, article.fourfolds, article.keytest, article.srfarticleid, article.user, status.status, status.rdd_date, status.courierdetails, status.reps, status.feedbackdetails FROM elpro.tbl_srfform form, tbl_srf_article article, tbl_srfarticle_status status where form.sampleno = article.sampleno and article.srfarticleid = status.srfarticleid order by "+sidx+" "+sord+"";
+			String sql = "SELECT  form.sampleno, agentid, orderdt, refno, priority, handledby, customerid, tanneryid,  deliverid, destination, endusage, terms, add_date, cdd_date, splcdn, inspcdn,  forwaderid, isinvraised, articleid, articletype, articleshform, articlename, color, size,  substance, selection, selectionp, concat (quantity,' ',unit) as quantity, unit, pcs, rate, colormatching, tapetest,  crockingwet, crockingdry, fourfolds, keytest, article.srfarticleid, user, shpd, bal, status, rdd_date, courierdetails, reps, feedbackdetails FROM  elpro.tbl_srfform form, elpro.tbl_srf_article article, elpro.tbl_srfarticle_status status where  form.sampleno = article.sampleno and form.sampleno = article.sampleno and article.srfarticleid = status.srfarticleid order by "+sidx+" "+sord+"";
 			System.out.println(sql);
 			rs = st.executeQuery(sql);
 			while(rs.next()) {	
 			 SampleTrack samptrackbean = new SampleTrack();
 			 	samptrackbean.setSampleno(rs.getString("sampleno"));
-			 	samptrackbean.setAgentid(rs.getString("agentid"));
 			 	samptrackbean.setOrderdt(rs.getString("orderdt"));
 			 	samptrackbean.setRefno(rs.getString("refno"));
 			 	samptrackbean.setPriority(rs.getString("priority"));
@@ -47,6 +46,7 @@ public class SampTrackDaoImpl implements SampTrackDao {
 			 	samptrackbean.setTanneryid(rs.getString("tanneryid"));
 			 	samptrackbean.setDeliverid(rs.getString("deliverid"));
 			 	samptrackbean.setDestination(rs.getString("destination"));
+			 	samptrackbean.setEndusage(rs.getString("endusage")); //==
 			 	samptrackbean.setTerms(rs.getString("terms"));
 			 	samptrackbean.setAdd_date(DateConversion.ConverttoNormalDate(rs.getString("add_date")));
 			 	samptrackbean.setCdd_date(DateConversion.ConverttoNormalDate(rs.getString("cdd_date")));
@@ -65,7 +65,6 @@ public class SampTrackDaoImpl implements SampTrackDao {
 			 	samptrackbean.setSelectionp(rs.getString("selectionp"));
 			 	samptrackbean.setSelection(rs.getString("selection"));
 			 	samptrackbean.setQuantity(rs.getString("quantity"));
-			 	samptrackbean.setUnit(rs.getString("unit"));
 			 	samptrackbean.setPcs(rs.getString("pcs"));
 			 	samptrackbean.setRate(rs.getString("rate"));
 			 	samptrackbean.setColormatching(rs.getString("colormatching"));
@@ -76,17 +75,16 @@ public class SampTrackDaoImpl implements SampTrackDao {
 			 	samptrackbean.setKeytest(rs.getString("keytest"));
 			 	samptrackbean.setSrfarticleid(rs.getString("srfarticleid"));
 			 	samptrackbean.setUser(rs.getString("user"));
-			 	
+
+			 	samptrackbean.setShpd(rs.getString("shpd")); // 
+			 	samptrackbean.setBal(rs.getString("bal")); //
 			 	samptrackbean.setStatus(rs.getString("status"));
 			 	samptrackbean.setRdd_date(DateConversion.ConverttoNormalDate(rs.getString("rdd_date")));
 			 	samptrackbean.setCourierdetails(rs.getString("courierdetails"));
 			 	samptrackbean.setReps(rs.getString("reps"));
 			 	samptrackbean.setFeedbackdetails(rs.getString("feedbackdetails"));
-			 
-			 
-			 
-				//samptrackbean.setAdd_date(add_date);
-			sampletrackarray.add(samptrackbean);
+			    //samptrackbean.setAdd_date(add_date);
+			    sampletrackarray.add(samptrackbean);
 			}
 		}catch(Exception e){
 			e.printStackTrace();
@@ -109,10 +107,17 @@ public class SampTrackDaoImpl implements SampTrackDao {
 		PreparedStatement pst = null;
 		int noofrows  = 0;
 		boolean isupdate = true;
+		StringBuffer sql_updateBtrStatus  = null;
 		try{			
 			con = DBConnection.getConnection();
 			System.out.println("SRF Article ID "+samplemodel.getSrfarticleid());
-			StringBuffer sql_updateBtrStatus = new StringBuffer("UPDATE elpro.tbl_srfarticle_status SET  artname=?, status = ? , courierdetails = ? , reps = ? ,  feedbackdetails = ? , sampleno = ? , rdd_date = ? WHERE srfarticleid  = '"+samplemodel.getSrfarticleid()+"' ");
+			String isupdtar = samplemodel.getIsupdtar();
+			System.out.println("isupdtar " +isupdtar);
+			if(isupdtar.equalsIgnoreCase("true")){
+				 sql_updateBtrStatus = new StringBuffer("UPDATE elpro.tbl_srfarticle_status SET  artname=?, status = ? , courierdetails = ? , reps = ? ,  feedbackdetails = ? , sampleno = ? , rdd_date = ? WHERE artname   = '"+samplemodel.getArticlename()+"' and sampleno = '"+samplemodel.getSampleno() +"' ");
+			}else{
+				 sql_updateBtrStatus = new StringBuffer("UPDATE elpro.tbl_srfarticle_status SET  artname=?, status = ? , courierdetails = ? , reps = ? ,  feedbackdetails = ? , sampleno = ? , rdd_date = ? WHERE srfarticleid  = '"+samplemodel.getSrfarticleid()+"' ");
+			}
 			String sqlquery_updateBtrStatus = sql_updateBtrStatus.toString();
 			pst = (PreparedStatement) con.prepareStatement(sqlquery_updateBtrStatus);
 			pst.setString(1, samplemodel.getArticlename());

@@ -86,10 +86,20 @@ public class InvoiceBoImpl implements InvoiceBo {
 		return invCustomerctarr;
 	}
 	
+	/* (non-Javadoc)
+	 * @see sb.elpro.bo.InvoiceBo#getInvCustSampleDetails(java.lang.String, java.lang.String, java.lang.String)
+	 
+	@Override
+	public List<CustomerInvoice> getInvCustSampleDetails(String custname,
+			String sidx, String sord)throws Exception {
+		ArrayList<CustomerInvoice> invCustomersamarr = invdao.getinvCustSampleDetails( custname, sidx, sord);
+		return invCustomersamarr;
+	}*/
+
 	///GRID LOAD CUSTOMER CT DETAILS
 	@Override
-	public List<CustomerInvoice> getInvCustCtDetails(String custid, String sortname, String sortord) throws Exception {
-		ArrayList<CustomerInvoice> invCustomerctlist = invdao.getInvCustCtlist(custid, sortname,sortord );
+	public List<CustomerInvoice> getInvCustCtDetails(String custid, String type, String sortname, String sortord) throws Exception {
+		ArrayList<CustomerInvoice> invCustomerctlist = invdao.getInvCustCtlist(custid, type, sortname,sortord );
 		return invCustomerctlist;
 	}
 	//Autocomplete Customer
@@ -102,9 +112,9 @@ public class InvoiceBoImpl implements InvoiceBo {
 	
 	
 	@Override
-	public List<ArticleDetails> getInvSelCtDetails(String ctno)
+	public List<ArticleDetails> getInvSelCtDetails(String ctno, String type)
 			throws Exception {
-		ArrayList<ArticleDetails> invSelCtarr = invdao.getInvDelContractDetails(ctno);
+		ArrayList<ArticleDetails> invSelCtarr = invdao.getInvSelContractDetails(ctno,type);
 		return invSelCtarr;
 	}
 	@Override
@@ -114,9 +124,9 @@ public class InvoiceBoImpl implements InvoiceBo {
 		return invaddbillarr;
 	}
 	@Override
-	public List<InvBillDetails> getInvBillDetails(String invno, String ctno)
+	public List<InvBillDetails> getInvBillDetails(String invno, String ctno,String type)
 			throws Exception {
-		ArrayList<InvBillDetails> invBillarr = invdao.getInvBillDetails(invno,ctno);
+		ArrayList<InvBillDetails> invBillarr = invdao.getInvBillDetails(invno,ctno,type);
 		return invBillarr;
 	}
 	@Override
@@ -150,6 +160,7 @@ public class InvoiceBoImpl implements InvoiceBo {
 		ArrayList<InvoiceTotAmtDetails> invamtdetails = invdao.getBulkQtyDetails(invno);
 		return invamtdetails;
 	}
+	
 	
 	
 	

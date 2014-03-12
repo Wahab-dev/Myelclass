@@ -22,7 +22,7 @@ var nameRegExpression = /^[a-zA-Z\s]*$/; // Name  validation
 var shformRegExpression = /^[a-zA-Z0-9-()]*$/;   /*short form  validation*/
 var telephoneRegExpression = /[0]|[+]\d{3}-\d{3}-\d{6}$/ ; /*Telephone validation*/
 var addrRegExpression = /^[a-zA-Z0-9-()#,.\s]*$/;
-var attnRegExpression = /^[a-zA-Z.-\s]*$/;
+var attnRegExpression = /^[a-zA-Z-\s]*$/;
 
  //Name Check 
 function namecheck(value, colName) {
@@ -99,7 +99,7 @@ $(function() {
 		colNames:['tanid','tanname','tanattn','tanaddr','tanphone','tanfax','shfrom'],  
 	    colModel:[
 				   {name: 'tanneryId',index :'tanneryId', editable:true, hidden:true,
-					     
+					   editoptions: { readonly: 'readonly'},
 				   },
 	               {name: 'tanneryName',index :'tanneryName', editable:true, 
 					   editrules :{custom:true, custom_func : namecheck},   
@@ -141,7 +141,7 @@ $(function() {
       gridview: true, // if used cant use subgrid, treegrid and aftertInsertRow 
       emptyrecords: 'No records to display',
       editurl: "/Myelclass/userinput/loadvalues.do?actn=tan",
-	}).jqGrid('navGrid','#tannerpager',{add:true, edit:true, del:true, search: true,  beforeRefresh: function(){
+	}).jqGrid('navGrid','#tannerpager',{add:true, edit:true, del: false, search: true,  beforeRefresh: function(){
         tangrid.jqGrid('setGridParam',{datatype:'json'}).trigger('reloadGrid');
     }},			
 	{//edit 
@@ -174,7 +174,7 @@ $(function() {
 		colNames:['custid','custname','custattn','custaddr','custphone','custfax','shfrom'],  
 	    colModel:[
 				   {name: 'customerId',index :'customerId', editable:true, hidden:true,
-					   
+					   editoptions: { readonly: 'readonly'},
 				   },
 	               {name: 'customerName',index :'customerName', editable:true, 
 					   editrules :{custom:true, custom_func : namecheck},
@@ -212,10 +212,11 @@ $(function() {
       sortorder: 'desc', 
       hiddengrid : true,
       viewrecords: true,
+      loadonce: true,
       gridview: true, // if used cant use subgrid, treegrid and aftertInsertRow 
       emptyrecords: 'No records to display',
       editurl: "/Myelclass/userinput/loadvalues.do?actn=cust",
-	}).jqGrid('navGrid','#customerpager',{add:true, edit:true, del:true, search: true,   beforeRefresh: function(){
+	}).jqGrid('navGrid','#customerpager',{add:true, edit:true, del: false, search: true,   beforeRefresh: function(){
 		custgrid.jqGrid('setGridParam',{datatype:'json'}).trigger('reloadGrid');
     }},			
 	{//edit 
@@ -246,7 +247,7 @@ $(function() {
 		colNames:['consigid','consigname','consigattn','consigaddr','consigphone','consigfax','shfrom'],  
 	    colModel:[
 				   {name: 'consigneeId',index :'consigneeId', editable:true, hidden:true,
-					   
+					   editoptions: { readonly: 'readonly'},
 				   },
 	               {name: 'consigneeName',index :'consigneeName', editable:true, 
 					   editrules :{custom:true, custom_func : namecheck},  
@@ -281,13 +282,14 @@ $(function() {
 		rowList:[10,20,30],
       loadtext: "Bow Bow........... ",
       sortname: 'consigneeName',  
-      sortorder: 'desc', 
+      sortorder: 'desc',
+      loadonce: true,
       hiddengrid : true,
       viewrecords: true,
       gridview: true, // if used cant use subgrid, treegrid and aftertInsertRow 
       emptyrecords: 'No records to display',
       editurl: "/Myelclass/userinput/loadvalues.do?actn=consig",
-	}).jqGrid('navGrid','#consigpager',{add:true, edit:true, del:true, search: true, beforeRefresh: function(){
+	}).jqGrid('navGrid','#consigpager',{add:true, edit:true, del: false, search: true, beforeRefresh: function(){
 		consiggrid.jqGrid('setGridParam',{datatype:'json'}).trigger('reloadGrid');
     }},			
 	{//edit 
@@ -319,7 +321,7 @@ $(function() {
 		colNames:['consigid','consigname','consigattn','consigaddr','consigphone','consigfax','shfrom'],  
 	    colModel:[
 				   {name: 'notifyConsigneeId',index :'notifyConsigneeId', editable:true, hidden:true,
-					   
+					   editoptions: { readonly: 'readonly'},
 				   },
 	               {name: 'notifyConsigneeName',index :'notifyConsigneeName', editable:true, 
 					   editrules :{custom:true, custom_func : namecheck},  
@@ -356,11 +358,12 @@ $(function() {
       sortname: 'notifyConsigneeName',  
       sortorder: 'desc', 
       hiddengrid : true,
+      loadonce: true,
       viewrecords: true,
       gridview: true, // if used cant use subgrid, treegrid and aftertInsertRow 
       emptyrecords: 'No records to display',
       editurl: "/Myelclass/userinput/loadvalues.do?actn=notify",
-	}).jqGrid('navGrid','#notifypager',{add:true, edit:true, del:true, search: true, beforeRefresh: function(){
+	}).jqGrid('navGrid','#notifypager',{add:true, edit:true, del: false, search: true, beforeRefresh: function(){
 		notifygrid.jqGrid('setGridParam',{datatype:'json'}).trigger('reloadGrid');
     }},			
 	{//edit 
@@ -391,8 +394,8 @@ $(function() {
 		datatype:'json',
 		colNames:['bankId','bankName','bankAddress','bankBranch','bankSwiftCode','bankAcctNo','bankContactNo','bankFax','accountholderName','bankIfsc'],  
 	    colModel:[
-				   {name: 'bankId',index :'bankId', editable:true, hidden:true,
-					   
+				   {name: 'bankId',index :'bankId', editable:true,  hidden:true,
+					   editoptions: { readonly: 'readonly'},
 				   },
 	               {name: 'bankName',index :'bankName', editable:true, 
 					   editrules :{custom:true, custom_func : namecheck}, 
@@ -438,11 +441,12 @@ $(function() {
       sortname: 'bankName',  
       sortorder: 'desc', 
       hiddengrid : true,
+      loadonce: true,
       viewrecords: true,
       gridview: true, // if used cant use subgrid, treegrid and aftertInsertRow 
       emptyrecords: 'No records to display',
       editurl: "/Myelclass/userinput/loadvalues.do?actn=bank",
-	}).jqGrid('navGrid','#bankpager',{add:true, edit:true, del:true, search: true, beforeRefresh: function(){
+	}).jqGrid('navGrid','#bankpager',{add:true, edit:true, del: false, search: true, beforeRefresh: function(){
 		bankgrid.jqGrid('setGridParam',{datatype:'json'}).trigger('reloadGrid');
     }},			
 	{//edit 
@@ -472,8 +476,8 @@ $(function() {
 		datatype:'json',
 		colNames:['articleid','type','name','size','substance','rate','tc','shform'],  
 	    colModel:[
-				   {name: 'articleid',index :'articleid', editable:true, hidden:true,
-					   
+				   {name: 'articleid',index :'articleid', editable:true,  hidden:true,
+					   editoptions: { readonly: 'readonly'},
 				   },
 	               {name: 'articletype',index :'articletype', editable:true, edittype:'select',
 					   editoptions: { 
@@ -527,11 +531,12 @@ $(function() {
       sortname: 'articlename',  
       sortorder: 'desc', 
       hiddengrid : true,
+      loadonce: true,
       viewrecords: true,
       gridview: true, // if used cant use subgrid, treegrid and aftertInsertRow 
       emptyrecords: 'No records to display',
       editurl: "/Myelclass/userinput/loadvalues.do?actn=article",
-	}).jqGrid('navGrid','#articlepager',{add:true, edit:true, del:true, search: true, beforeRefresh: function(){
+	}).jqGrid('navGrid','#articlepager',{add:true, edit:true, del: false, search: true, beforeRefresh: function(){
 		bankgrid.jqGrid('setGridParam',{datatype:'json'}).trigger('reloadGrid');
     }},			
 	{//edit 
@@ -564,7 +569,8 @@ $(function() {
 		datatype:'json',
 		colNames:['Commid','Commname','commagent','commplace','commtype','agenttype'],  
 	    colModel:[
-				   {name: 'commid',index :'commid', editable:true, 
+				   {name: 'commid',index :'commid', editable: true, hidden: false,
+					   editoptions: { readonly: 'readonly'}, 
 				   },
 	               {name: 'commname',index :'commname', editable:true, sortable:true, 
 					   editrules :{required : true}, 
@@ -597,11 +603,12 @@ $(function() {
       sortname: 'commname',  
       sortorder: 'desc', 
       hiddengrid : true,
+      loadonce: true,
       viewrecords: true,
       gridview: true, // if used cant use subgrid, treegrid and aftertInsertRow 
       emptyrecords: 'No records to display',
       editurl: "/Myelclass/userinput/loadvalues.do?actn=comm",
-	}).jqGrid('navGrid','#commissionpager',{add:true, edit:true, del:true, search: true, beforeRefresh: function(){
+	}).jqGrid('navGrid','#commissionpager',{add:true, edit:true, del: false, search: true, beforeRefresh: function(){
 		commgrid.jqGrid('setGridParam',{datatype:'json'}).trigger('reloadGrid');
     }},			
 	{//edit 
@@ -613,7 +620,7 @@ $(function() {
 	},
 	{//Add Option
 		 beforeShowForm: function(form) {   		   
-         //    $("#tr_commid").hide(); 
+            $("#tr_commid").hide(); 
          },	
         closeAfterAdd: true,
 	 	reloadAfterSubmit: true,
@@ -626,6 +633,153 @@ $(function() {
      	 		},		
 		}
 	});
+	 
+	//Destination Details 
+	 var destigrid = $("#destidetails");
+	 destigrid.jqGrid({ 
+		url :'/Myelclass/userinput/loadvalues.do?actn=desti',
+		datatype:'json',
+		colNames:['Destid','Destname','Country','Shortform','DestiPort','Destiplace'],  
+	    colModel:[
+				   {name: 'destiid',index :'destiid', editable: true, hidden: false, 
+					   editoptions: { readonly: 'readonly'},
+				   },
+	               {name: 'destiname',index :'destiname', editable:true, sortable:true, 
+					   editrules :{required : true}, 
+	               },
+	               {name: 'destictry',index :'destictry', editable:true,
+	            	   editrules :{custom:true, custom_func : namecheck}, 
+	               },	 
+	               {name: 'destishform',commplace :'destishform', editable:true,
+	            	   editrules :{custom:true, custom_func : namecheck},  
+	               },
+	               {name: 'destiport',index :'destiport', editable:true,
+	            	  // editrules :{required : true}, 
+	               },
+	               {name: 'destiplace',index :'destiplace', editable:true,
+	            	   //editrules :{required : true}, 
+	               },
+	              ],
+	    jsonReader : {  
+		  	repeatitems:false,
+	        root: "rows",
+	      	page: "page", //calls first
+	      	total: "total" ,//calls Second
+	      	records: "records" //calls Third 
+		},
+		caption: "Destination Details",
+		pager: '#destipager',
+		rowNum:10, 
+		rowList:[10,20,30],
+      loadtext: "Bow Bow........... ",
+      sortname: 'destiname',  
+      sortorder: 'desc', 
+      loadonce: true,
+      hiddengrid : true,
+      viewrecords: true,
+      gridview: true, // if used cant use subgrid, treegrid and aftertInsertRow 
+      emptyrecords: 'No records to display',
+      editurl: "/Myelclass/userinput/loadvalues.do?actn=desti",
+	}).jqGrid('navGrid','#destipager',{add:true, edit:true, del: false, search: true, beforeRefresh: function(){
+		destigrid.jqGrid('setGridParam',{datatype:'json'}).trigger('reloadGrid');
+    }},			
+	{//edit 
+	 closeAfterEdit: true,
+	 reloadAfterSubmit: true,	
+	 beforeShowForm: function(form) {    		   
+	         //   $("#tr_destiid").show(); 
+     },	
+	},
+	{//Add Option
+		 beforeShowForm: function(form) {   		   
+            $("#tr_destiid").hide(); 
+         },	
+        closeAfterAdd: true,
+	 	reloadAfterSubmit: true,
+	},
+	{	//delete
+		delData: {	destiid: function() {
+            	var sel_id = destigrid.jqGrid('getGridParam', 'selrow');
+            	var value = destigrid.jqGrid('getCell', sel_id, 'destiid');
+            	 return value;
+     	 		},		
+		}
+	});	
+	 
+	//Sample Article  Details 
+	 var tcgrid = $("#tcdetails");
+	 tcgrid.jqGrid({ 
+		url :'/Myelclass/userinput/loadvalues.do?actn=tc',
+		datatype:'json',
+		colNames:['tcid','tccurrency','tcname','agentname','agenttype','otherdetails'],  
+	    colModel:[
+				   {name: 'destiid' ,index :'destiid', editable: true, hidden: false, 
+					   editoptions: { readonly: 'readonly'},
+				   },
+	               {name: 'destiname',index :'destiname', editable:true, sortable:true, 
+					   editrules :{required : true}, 
+	               },
+	               {name: 'destictry',index :'destictry', editable:true,
+	            	   editrules :{custom:true, custom_func : namecheck}, 
+	               },	 
+	               {name: 'destishform',commplace :'destishform', editable:true,
+	            	   editrules :{custom:true, custom_func : namecheck},  
+	               },
+	               {name: 'destiport',index :'destiport', editable:true,
+	            	  // editrules :{required : true}, 
+	               },
+	               {name: 'destiplace',index :'destiplace', editable:true,
+	            	   //editrules :{required : true}, 
+	               },
+	              ],
+	    jsonReader : {  
+		  	repeatitems:false,
+	        root: "rows",
+	      	page: "page", //calls first
+	      	total: "total" ,//calls Second
+	      	records: "records" //calls Third 
+		},
+		caption: "Sampel Artcile  Details",
+		pager: '#tcpager',
+		rowNum:10, 
+		rowList:[10,20,30],
+      loadtext: "Bow Bow........... ",
+      sortname: 'destiname',  
+      sortorder: 'desc', 
+      loadonce: true,
+      hiddengrid : true,
+      viewrecords: true,
+      gridview: true, // if used cant use subgrid, treegrid and aftertInsertRow 
+      emptyrecords: 'No records to display',
+      editurl: "/Myelclass/userinput/loadvalues.do?actn=tc",
+	}).jqGrid('navGrid','#tcpager',{add:true, edit:true, del: false, search: true, beforeRefresh: function(){
+		tcgrid.jqGrid('setGridParam',{datatype:'json'}).trigger('reloadGrid');
+    }},			
+	{//edit 
+	 closeAfterEdit: true,
+	 reloadAfterSubmit: true,	
+	 beforeShowForm: function(form) {    		   
+	         //   $("#tr_destiid").show(); 
+     },	
+	},
+	{//Add Option
+		 beforeShowForm: function(form) {   		   
+            $("#tr_destiid").hide(); 
+         },	
+        closeAfterAdd: true,
+	 	reloadAfterSubmit: true,
+	},
+	{	//delete
+		delData: {	destiid: function() {
+            	var sel_id = tcgrid.jqGrid('getGridParam', 'selrow');
+            	var value = tcgrid.jqGrid('getCell', sel_id, 'destiid');
+            	 return value;
+     	 		},		
+		}
+	});	
+	  
+	 
+	 
 });
 </script>
 </head>
@@ -665,10 +819,18 @@ $(function() {
 	<table id="articledetails"></table>
 	<div id="articlepager"></div>
 </div>
-<div id="Commssion Details">
+<div id="Commission Details">
 	<table id="commissiondetails"></table>
 	<div id="commissionpager"></div>
 </div>
+<div id="Destination Details">
+	<table id="destidetails"></table>
+	<div id="destipager"></div>
+</div>
 
+<div id="TC Details">
+	<table id="tcdetails"></table>
+	<div id="tcpager"></div>
+</div>
 </body>
 </html>

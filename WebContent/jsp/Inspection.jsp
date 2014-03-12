@@ -4,18 +4,19 @@
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="b"%>
 <%@ taglib uri="http://struts.apache.org/tags-logic-el" prefix="l"%>
 <%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c" %>
-<!DOCTYPE html>
-<html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<h:html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Insert title here</title>
 <link type="text/css" href="css/ui-lightness/jquery-ui-1.7.3.custom.css" rel="Stylesheet" />
 <style type="text/css">
-#ui-datepicker-div { font-size: 11px; } 	
+#ui-datepicker-div { font-size: 11px; } 
+
 </style>	
 <script src="js/jquery-1.9.1.js"></script>
 <script src="js/jquery-ui.js"></script>
-<link rel="stylesheet" type="text/css" media="screen" href="css/pepper-grinder/jquery-ui-1.10.3.custom.css" />
+<link rel="stylesheet" type="text/css" media="screen" href="css/ui-darkness/jquery-ui-1.10.1.custom.css" />
 <link rel="stylesheet" type="text/css" media="screen" href="css/ui.jqgrid.css" />
 
 <script src="js/i18n/grid.locale-en.js" type="text/javascript"></script>
@@ -36,15 +37,22 @@
 
 
 <h:form action="/saveinspection" styleId="saveInspection">
-	<table style="border: 2 px">
+
+
+	<table width="800" border="1" cellspacing="0" cellpadding="0">
 	  	<tr>
 		   <td>
+		   
+		   <div id="format">
+				<input type="radio" id="check1" name="radio" class="radio" checked="checked" value="Ct"><label for="check1">Contract</label>
+				<input type="radio" id="check2" name="radio" class="radio" value="Sample"><label for="check2">Sample</label>
+			</div>
 		     <fieldset> 	
 		     <legend>Basic Details</legend>  
 		       <table>
 		     	 <tr>
 		     	    <td>
-		     		 Contract Number :
+		     		 <label for="Contract" id="ctno">Contract Number :</label>
 		     		 <h:text property="inspContractNo" styleId="inspContractNo"></h:text><br />	         												
 		     		</td>
 		     		<td>
@@ -118,4 +126,4 @@
 	</table>
 </h:form>
 </body>
-</html>
+</h:html>

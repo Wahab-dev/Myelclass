@@ -43,16 +43,23 @@ public interface InvoiceDao {
 
 	ArrayList<InvCustContractDetails> getinvCustContracttDetails()throws SQLException;
 
-	ArrayList<CustomerInvoice> getInvCustCtlist(String custid, String sortname, String sortord)throws SQLException;
+	ArrayList<CustomerInvoice> getInvCustCtlist(String custid, String sortname, String type, String sortord)throws SQLException;
+	/**  
+	 * (Method description)
+	 * @param
+	 * @return
+	 * etc
+	 */
+//	ArrayList<CustomerInvoice> getinvCustSampleDetails(String custname, String sidx, String sord)throws SQLException;
 
 	ArrayList<CustomerDetails> getInvCustlist(String custterm)throws SQLException;
 
 	
-	ArrayList<ArticleDetails> getInvDelContractDetails(String ctno)throws SQLException;
+	ArrayList<ArticleDetails> getInvSelContractDetails(String ctno, String type)throws SQLException;
 
 	boolean getInvAddbillDetails(InvBillDetails invbill)throws SQLException;
 
-	ArrayList<InvBillDetails> getInvBillDetails(String invno, String ctno)throws SQLException;
+	ArrayList<InvBillDetails> getInvBillDetails(String invno, String ctno, String type)throws SQLException;
 
 	String getInvoiceNoDetails(String invtype)throws SQLException;
 
@@ -69,6 +76,8 @@ public interface InvoiceDao {
 	 * etc
 	 */
 	ArrayList<InvoiceTotAmtDetails> getBulkQtyDetails(String invno)throws SQLException;
+
+	
 
 	
 

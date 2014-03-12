@@ -189,6 +189,7 @@ public class BulkInsertAction extends Action {
 					bulkmodel.setTc(request.getParameter("tc"));
 					bulkmodel.setUnit(request.getParameter("unit"));
 					bulkmodel.setUser(request.getParameter("user"));
+					bulkmodel.setIsupdtar(request.getParameter("isupdtar"));
 					if(oper.equalsIgnoreCase("status")){
 						System.out.println(" In BTR STATUS");
 						boolean isBulkStatusUpdated = bulkbo.addBtrStatus(bulkmodel,sidx,sord);

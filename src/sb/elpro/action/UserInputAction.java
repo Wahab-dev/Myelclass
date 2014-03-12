@@ -27,6 +27,7 @@ import sb.elpro.model.BankDetails;
 import sb.elpro.model.CommissionDetails;
 import sb.elpro.model.ConsigneeDetails;
 import sb.elpro.model.CustomerDetails;
+import sb.elpro.model.DestinationDetails;
 import sb.elpro.model.NotifyConsigneeDetails;
 import sb.elpro.model.TanneryDetails;
 
@@ -524,9 +525,73 @@ public class UserInputAction extends Action{
 						out.println(jsonobj);
 						}
 				}
+			}else if (actn.equalsIgnoreCase("desti")){
+				if(oper == null){
+					List<DestinationDetails> destidetails = userinputbo.getDestiDetails();
+					int records = destidetails.size();
+					System.out.println("Reords  "+records);						
+					String rows = request.getParameter("rows");
+	                String pag = request.getParameter("page");
+	                int page = Integer.parseInt(pag);
+	                int totalPages = 0;
+	                int totalCount = records;
+	                if (totalCount > 0) {
+	                	 if (totalCount % Integer.parseInt(rows) == 0) {
+	                		 System.out.println("STEP 1 "+totalCount % Integer.parseInt(rows) );
+	                         totalPages = totalCount / Integer.parseInt(rows);
+	                         System.out.println("STEP 2 "+totalPages);
+	                     } else { 
+	                         totalPages = (totalCount / Integer.parseInt(rows)) + 1;
+	                         System.out.println("STEP 3 "+totalPages);
+	                     }
+	                }else {
+	                    totalPages = 0;
+	                }
+					jsonobj.put("total", totalPages);
+					jsonobj.put("page", page);
+					jsonobj.put("records", records);
+					jsonobj.put("rows", destidetails);
+					System.out.println(jsonobj);		
+					out.println(jsonobj);
+				}else{
+				  DestinationDetails adddestidetail = new DestinationDetails();
+					 adddestidetail.setDestiid(request.getParameter("destiid"));
+					 adddestidetail.setDestiname(request.getParameter("destiname")) ;
+					 adddestidetail.setDestictry(request.getParameter("destictry")) ;
+					 adddestidetail.setDestishform(request.getParameter("destishform"));
+					 adddestidetail.setDestiport(request.getParameter("destiport"));
+					 adddestidetail.setDestiplace(request.getParameter("destiplace"));
+					 System.out.println("destiname "+request.getParameter("destiname"));
+					 if(oper.equalsIgnoreCase("add")){
+						boolean isaddeddestidetails = userinputbo.addDestidetails(adddestidetail);
+						if(isaddeddestidetails){
+							jsonobj.put("success", "Successfully Inserted The Record");
+						}else{
+							jsonobj.put("Error", "Error in Inserrting");
+						}
+						System.out.println(jsonobj);		
+						out.println(jsonobj);
+					}else if(oper.equalsIgnoreCase("edit")){
+						boolean isupdateddestidetails = userinputbo.editDestiDetails(adddestidetail);
+						if(isupdateddestidetails){
+						jsonobj.put("success", "Successfully Edited The Record");
+						}else{
+							jsonobj.put("Error", "Error in edititng");
+						}
+						System.out.println(jsonobj);		
+						out.println(jsonobj);
+					}else{
+						boolean isdeletedestidetails = userinputbo.delDestiDetails(adddestidetail);
+						if(isdeletedestidetails){
+							jsonobj.put("success", "Successfully deleted The Record");
+						}else{
+							jsonobj.put("Error", "Error in deleteing");
+						}
+						System.out.println(jsonobj);		
+						out.println(jsonobj);
+					}
+				}
 			}else{
-			
-				
 				
 			}
             return null;

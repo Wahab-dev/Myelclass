@@ -12,48 +12,90 @@ import java.io.Serializable;
 public class DestinationDetails implements Serializable {
 	
 	
-		/**
+   /**
 	 * 
 	 */
 	private static final long serialVersionUID = 1183888154180959707L;
-		private String destinationId;
-		private String destination;
-		private String destinationCountry;
+		private String destiid;
+		private String destiname;
+		private String destictry;
+		private String destishform;
+		private String destiport;
+		private String destiplace;
+		
+		
+	
 		/**
-		 * @return the destinationId
+		 * @return the destishform
 		 */
-		public String getDestinationId() {
-			return destinationId;
+		public String getDestishform() {
+			return destishform;
 		}
 		/**
-		 * @param destinationId the destinationId to set
+		 * @param destishform the destishform to set
 		 */
-		public void setDestinationId(String destinationId) {
-			this.destinationId = destinationId;
+		public void setDestishform(String destishform) {
+			this.destishform = destishform;
 		}
 		/**
-		 * @return the destination
+		 * @return the destiport
 		 */
-		public String getDestination() {
-			return destination;
+		public String getDestiport() {
+			return destiport;
 		}
 		/**
-		 * @param destination the destination to set
+		 * @param destiport the destiport to set
 		 */
-		public void setDestination(String destination) {
-			this.destination = destination;
+		public void setDestiport(String destiport) {
+			this.destiport = destiport;
 		}
 		/**
-		 * @return the destinationCountry
+		 * @return the destiplace
 		 */
-		public String getDestinationCountry() {
-			return destinationCountry;
+		public String getDestiplace() {
+			return destiplace;
 		}
 		/**
-		 * @param destinationCountry the destinationCountry to set
+		 * @param destiplace the destiplace to set
 		 */
-		public void setDestinationCountry(String destinationCountry) {
-			this.destinationCountry = destinationCountry;
+		public void setDestiplace(String destiplace) {
+			this.destiplace = destiplace;
+		}
+		/**
+		 * @return the destiid
+		 */
+		public String getDestiid() {
+			return destiid;
+		}
+		/**
+		 * @param destiid the destiid to set
+		 */
+		public void setDestiid(String destiid) {
+			this.destiid = destiid;
+		}
+		/**
+		 * @return the destiname
+		 */
+		public String getDestiname() {
+			return destiname;
+		}
+		/**
+		 * @param destiname the destiname to set
+		 */
+		public void setDestiname(String destiname) {
+			this.destiname = destiname;
+		}
+		/**
+		 * @return the destictry
+		 */
+		public String getDestictry() {
+			return destictry;
+		}
+		/**
+		 * @param destictry the destictry to set
+		 */
+		public void setDestictry(String destictry) {
+			this.destictry = destictry;
 		}
 		
 		

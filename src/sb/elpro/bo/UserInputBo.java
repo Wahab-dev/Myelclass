@@ -13,6 +13,7 @@ import sb.elpro.model.BankDetails;
 import sb.elpro.model.CommissionDetails;
 import sb.elpro.model.ConsigneeDetails;
 import sb.elpro.model.CustomerDetails;
+import sb.elpro.model.DestinationDetails;
 import sb.elpro.model.NotifyConsigneeDetails;
 import sb.elpro.model.TanneryDetails;
 
@@ -269,6 +270,42 @@ public interface UserInputBo {
 	 * etc
 	 */
 	boolean delCommDetails(CommissionDetails addcommdetail)throws Exception;
+	/*
+	 * Destination  
+	 * 
+	 * -----------------------------------------------------------------------------------------------------
+	 */
+	/**  
+	 * (Method description)
+	 * @param
+	 * @return
+	 * etc
+	 */
+	List<DestinationDetails> getDestiDetails()throws Exception;
+
+	/**  
+	 * (Method description)
+	 * @param
+	 * @return
+	 * etc
+	 */
+	boolean addDestidetails(DestinationDetails adddestidetail)throws Exception;
+
+	/**  
+	 * (Method description)
+	 * @param
+	 * @return
+	 * etc
+	 */
+	boolean editDestiDetails(DestinationDetails adddestidetail)throws Exception;
+
+	/**  
+	 * (Method description)
+	 * @param
+	 * @return
+	 * etc
+	 */
+	boolean delDestiDetails(DestinationDetails adddestidetail)throws Exception;
 
 
 

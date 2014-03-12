@@ -52,10 +52,10 @@
         						</h:select><br />
    					<h:textarea property="srf_referenceno" styleId="srf_referenceno" cols="20" rows="2" value="${editprfform[0].srf_referenceno}"></h:textarea>  <br /><br />
    				Priority   : <h:select property="srf_priority" styleId="srf_priority">
-   								<h:option value="0">low</h:option>
-          						<h:option value="1">medium</h:option>
-          						<h:option value="2">High</h:option>
-          						<h:option value="3">Top Urgent</h:option>
+   								<h:option value="low">low</h:option>
+          						<h:option value="medium">medium</h:option>
+          						<h:option value="High">High</h:option>
+          						<h:option value="Top Urgent">Top Urgent</h:option>
        		 					</h:select><br /><br /> 
    				Handled By : <h:text property="srf_handledby" styleId="srf_handledby" value="${editprfform[0].srf_handledby}"></h:text><br /><br />	
    				Customer : <h:text property="srf_customer" styleId="srf_customer" style="width:180px" value="${editprfform[0].srf_customer}"></h:text><br /> 			 	         

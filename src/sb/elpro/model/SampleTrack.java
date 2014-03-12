@@ -24,6 +24,7 @@ public class SampleTrack implements Serializable {
 	private String tanneryid;
 	private String deliverid;
 	private String agentid;
+	private String endusage;
 	private String destination ;
 	private String terms;
 	private String add_date;
@@ -58,11 +59,13 @@ public class SampleTrack implements Serializable {
 	
 	
 	private String status;
+	private String shpd;
+	private String bal;
 	private String rdd_date;
 	private String courierdetails;
 	private String reps	;
 	private String feedbackdetails;
-	
+	private String isupdtar;
 	
 	/**
 	 * @return the sampleno
@@ -580,5 +583,53 @@ public class SampleTrack implements Serializable {
 	 */
 	public void setFeedbackdetails(String feedbackdetails) {
 		this.feedbackdetails = feedbackdetails;
+	}
+	/**
+	 * @return the bal
+	 */
+	public String getBal() {
+		return bal;
+	}
+	/**
+	 * @param bal the bal to set
+	 */
+	public void setBal(String bal) {
+		this.bal = bal;
+	}
+	/**
+	 * @return the shpd
+	 */
+	public String getShpd() {
+		return shpd;
+	}
+	/**
+	 * @param shpd the shpd to set
+	 */
+	public void setShpd(String shpd) {
+		this.shpd = shpd;
+	}
+	/**
+	 * @return the endusage
+	 */
+	public String getEndusage() {
+		return endusage;
+	}
+	/**
+	 * @param endusage the endusage to set
+	 */
+	public void setEndusage(String endusage) {
+		this.endusage = endusage;
+	}
+	/**
+	 * @return the isupdtar
+	 */
+	public String getIsupdtar() {
+		return isupdtar;
+	}
+	/**
+	 * @param isupdtar the isupdtar to set
+	 */
+	public void setIsupdtar(String isupdtar) {
+		this.isupdtar = isupdtar;
 	}
 }

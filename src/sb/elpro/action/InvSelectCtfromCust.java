@@ -17,13 +17,12 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
-import sb.elpro.bo.BulkBo;
 import sb.elpro.bo.InvoiceBo;
 import sb.elpro.bo.InvoiceBoImpl;
 import sb.elpro.model.ArticleDetails;
 import sb.elpro.model.CustomerInvoice;
 import sb.elpro.model.InvBillDetails;
-import sb.elpro.model.InvoiceTotAmtDetails;
+
 /**
  * @author Wahab
  *
@@ -59,9 +58,17 @@ public class InvSelectCtfromCust extends Action {
 			 */
 			if(action.equalsIgnoreCase("load")){
 				String custname = request.getParameter("custname");
+				String type = request.getParameter("type");
 				System.out.println("custname  "+custname);			
-				List<CustomerInvoice> invctlist = invbo.getInvCustCtDetails(custname, sidx,sord);
+				System.out.println("type"+type);
+				
+				List<CustomerInvoice> invctlist = invbo.getInvCustCtDetails(custname, type, sidx,sord);
 				int records = invctlist.size();
+				
+				/*if(type.equalsIgnoreCase("ctsam")){
+					List<CustomerInvoice> invsamlist = invbo.getInvCustSampleDetails(custname, sidx,sord);
+					int samplerecords = invsamlist.size();
+				}*/
 				
 				int page = Integer.parseInt(pag);
                 int totalPages = 0;
@@ -87,8 +94,11 @@ public class InvSelectCtfromCust extends Action {
 				out.println(jsonobj);				
 			}else if(action.equalsIgnoreCase("loadsubgrid")){ //Grid 2 -  loads the Subgrid. based on Selected Ct Details
 				String ctno = request.getParameter("ctno");
-				System.out.println("ctno Id "+ctno);			
-				List<ArticleDetails> invctlist = invbo.getInvSelCtDetails(ctno);
+				System.out.println("ctno Id "+ctno);		
+				String type = request.getParameter("type");
+				System.out.println("type))))))"+type);
+				
+				List<ArticleDetails> invctlist = invbo.getInvSelCtDetails(ctno,type);
 				int records = invctlist.size();
 				
 				int page = Integer.parseInt(pag);
@@ -128,6 +138,9 @@ public class InvSelectCtfromCust extends Action {
 			   invbill.setInvqbal(request.getParameter("qbal"));
 			   invbill.setInvamt(request.getParameter("amount"));
 			   invbill.setInvtc(request.getParameter("tc"));
+			   invbill.setInvpcs(request.getParameter("pieces"));
+			   System.out.println("TC"+request.getParameter("tc"));
+			   System.out.println("pieces"+request.getParameter("pieces"));
 			   invbill.setInvartid(request.getParameter("prfarticleid"));
 			   invbill.setInvno(request.getParameter("invoiceno"));
 			   invbill.setInvtype(request.getParameter("invoicetype"));
@@ -161,16 +174,20 @@ public class InvSelectCtfromCust extends Action {
 			   String invno = request.getParameter("invno");
 			   String ctno = request.getParameter("ctno");
 			   String oper = request.getParameter("oper");
+			   String type = request.getParameter("type");
+				System.out.println("type00000000s"+type);
 			   /*  String invtype = request.getParameter("invoicetype");*/
 			   if(oper == null){ // Load Operation
-					List<InvBillDetails> invbilllist = invbo.getInvBillDetails(invno,ctno);
+					List<InvBillDetails> invbilllist = invbo.getInvBillDetails(invno,ctno,type);
 			   		int records = invbilllist.size();
 			   		int page = Integer.parseInt(pag);
 		            int totalPages = 0;
 		            int totalCount = records;
 		            
-		            
-		            List<InvoiceTotAmtDetails> invtotamt = invbo.getInvBillTotAmt(invno);
+		            /*
+		             * For tot Amt
+		             */
+		            //List<InvoiceTotAmtDetails> invtotamt = invbo.getInvBillTotAmt(invno);
 		            
 		            
 		            if (totalCount > 0) {

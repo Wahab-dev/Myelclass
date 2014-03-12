@@ -161,17 +161,24 @@
 		    <td width="250">
 			   <fieldset>         
        			  <legend>Customer Details</legend>
-   					 Customer Name: <h:text property="inv_customer" styleId="inv_customer"></h:text><br/>
+       			   <br/>Include Sample:<h:select property ="inv_includeSample"  styleId="inv_includeSample" > 
+       				 						<h:option value="ct" >Contract only</h:option>
+       				 						<h:option value="sample" >include sample</h:option>
+       				 					</h:select><br/>
+   					 <br/>Customer Name: <h:text property="inv_customer" styleId="inv_customer"></h:text><br/>
        				 <br/>Attn: 	<h:text property="inv_custattn" styleId="inv_custattn"></h:text><br/> 
 					 <br/> Address: <h:textarea property="inv_custaddr" cols="15" rows="1" styleId="inv_custaddr"></h:textarea><br/>
    	 				 <br/>Telephone:<h:text property="inv_custtele" styleId="inv_custtele"></h:text><br/>
        				 <br/>Fax:	    <h:text property="inv_custfax" styleId="inv_custfax"></h:text><br/>
        				 <br/>ID:	    <h:text property="inv_custid" styleId="inv_custid"></h:text><br/>	
+       					
 			   </fieldset>
 			</td>
    			<td colspan="3">
            	    <table id="tbl_invListCustomerContract" > </table>   
-           		<div id="tbl_invpager"></div>            	 
+           		<div id="tbl_invpager"></div> 
+           		<!-- <table id="tbl_invListCustomerSample" > </table>   
+           		<div id="tbl_invsamplepager"></div>  -->             	 
            	</td>	      	  
 		<tr>
   			<td colspan="4">&nbsp;</td>

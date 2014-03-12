@@ -45,17 +45,25 @@ public interface InvoiceBo {
 
 	public List<InvCustContractDetails> getInvCustContract()throws Exception;
 
-	public List<CustomerInvoice> getInvCustCtDetails(String cust, String sord, String sord2)throws Exception;
+	public List<CustomerInvoice> getInvCustCtDetails(String cust, String type, String sidx, String sord)throws Exception;
+	/**  
+	 * (Method description)
+	 * @param
+	 * @return
+	 * etc
+	 */
+	//public List<CustomerInvoice> getInvCustSampleDetails(String custname,String sidx, String sord)throws Exception;
+
 
 	public List<CustomerDetails> getCustomerDetails(String tanterm)throws Exception;
 
 	
 
-	public List<ArticleDetails> getInvSelCtDetails(String ctno)throws Exception;
+	public List<ArticleDetails> getInvSelCtDetails(String ctno, String type)throws Exception;
 
 	public boolean getInvAddBillDetails(InvBillDetails invbill)throws Exception;
 
-	public List<InvBillDetails> getInvBillDetails(String invno, String ctno)throws Exception;
+	public List<InvBillDetails> getInvBillDetails(String invno, String ctno, String type)throws Exception;
 
 	public String getInvoiceNo(String invtype)throws Exception;
 
@@ -73,6 +81,7 @@ public interface InvoiceBo {
 	 */
 	public List<InvoiceTotAmtDetails> getInvBillTotAmt(String invno)throws Exception;
 
+	
 	
 
 	

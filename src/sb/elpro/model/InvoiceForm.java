@@ -107,7 +107,7 @@ public class InvoiceForm implements Serializable {
 	private String inv_type;
 	private String inv_total;
 	
-	
+	private boolean inv_includeSample;
 	
 	/**
 	 * @return the inv_invoicetype
@@ -1056,5 +1056,17 @@ public class InvoiceForm implements Serializable {
 	 */
 	public void setInv_total(String inv_total) {
 		this.inv_total = inv_total;
+	}
+	/**
+	 * @return the inv_includeSample
+	 */
+	public boolean isInv_includeSample() {
+		return inv_includeSample;
+	}
+	/**
+	 * @param inv_includeSample the inv_includeSample to set
+	 */
+	public void setInv_includeSample(boolean inv_includeSample) {
+		this.inv_includeSample = inv_includeSample;
 	}
 }

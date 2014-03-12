@@ -19,6 +19,7 @@ import sb.elpro.model.BankDetails;
 import sb.elpro.model.CommissionDetails;
 import sb.elpro.model.ConsigneeDetails;
 import sb.elpro.model.CustomerDetails;
+import sb.elpro.model.DestinationDetails;
 import sb.elpro.model.NotifyConsigneeDetails;
 import sb.elpro.model.TanneryDetails;
 import sb.elpro.utility.DBConnection;
@@ -1006,6 +1007,150 @@ public class UserInputDaoImpl implements UserInputDao {
 			String sqlquery_delcommdetails = sql_delcommdetails.toString();
 			System.out.println(sqlquery_delcommdetails);
 			pst = (PreparedStatement) con.prepareStatement(sqlquery_delcommdetails);
+			noofrows = pst.executeUpdate();
+			System.out.println("Sucessfully deleted the record.." + noofrows);
+		}catch(Exception e){
+			e.printStackTrace();
+			isdel = false;
+			System.out.println("ERROR RESULT");
+		}finally{
+			 con.close() ;
+			 pst.close();
+	   }	
+		return isdel;
+	}
+
+	/* (non-Javadoc)
+	 * @see sb.elpro.dao.UserInputDao#getDestiList()
+	 */
+	@Override
+	public ArrayList<DestinationDetails> getDestiList() throws SQLException {
+		ArrayList<DestinationDetails> destiarraylist = new ArrayList<DestinationDetails>();			
+		Connection con = null;
+		Statement st = null;
+		ResultSet rs = null;	
+		try{			
+			con = DBConnection.getConnection();
+			st = (Statement) con.createStatement();
+			String sql = "SELECT destid, destname, destcountry, shortform, destiport, destiplace  FROM elpro.tbl_destination order by destname";
+			rs = st.executeQuery(sql);
+			while(rs.next()) {	
+				DestinationDetails destibean = new DestinationDetails();
+				destibean.setDestiid(rs.getString("destid"));
+				destibean.setDestiname(rs.getString("destname"));
+				destibean.setDestictry(rs.getString("destcountry"));
+				destibean.setDestishform(rs.getString("shortform"));
+				destibean.setDestiport(rs.getString("destiport"));
+				destibean.setDestiplace(rs.getString("destiplace"));
+				System.out.println("desti name "+destibean.getDestiname());
+				destiarraylist.add(destibean);
+			}
+			System.out.println("desti Name Added Successfully");
+		}catch(Exception e){
+			e.printStackTrace();
+			System.out.println("desti Result ERROR RESULT");
+		}finally{
+			 con.close() ;
+			 st.close();
+			 rs.close();
+	   }			
+		return destiarraylist;
+	}
+
+	/* (non-Javadoc)
+	 * @see sb.elpro.dao.UserInputDao#addDestiList(sb.elpro.model.DestinationDetails)
+	 */
+	@Override
+	public boolean addDestiList(DestinationDetails adddestidetail)
+			throws SQLException {
+		Connection con = null;
+		PreparedStatement pst = null;
+		int noofrows  = 0;
+		boolean isadded = true;
+		try{			
+			con = DBConnection.getConnection();
+			StringBuffer sql_adddesti= new StringBuffer("insert into tbl_destination ( destid, destname, destcountry, shortform, destiport, destiplace)");
+			sql_adddesti.append("values (?,?,?,?,?,?)");
+			String sqlquery_adddesti = sql_adddesti.toString();
+			pst = (PreparedStatement) con.prepareStatement(sqlquery_adddesti);
+			pst.setString(1, adddestidetail.getDestiid());
+			System.out.println("destid " +adddestidetail.getDestiid());
+			pst.setString(2, adddestidetail.getDestiname());
+			System.out.println("destname " +adddestidetail.getDestiname());
+			pst.setString(3, adddestidetail.getDestictry());
+			pst.setString(4, adddestidetail.getDestishform());
+			pst.setString(5, adddestidetail.getDestiport());
+			pst.setString(6, adddestidetail.getDestiplace());
+			System.out.println("getdestiomerShortForm " +adddestidetail.getDestiplace());
+			noofrows = pst.executeUpdate();
+			System.out.println(" IN destname ADD "+noofrows);
+		}catch(Exception e){
+			e.printStackTrace();
+			isadded = false;
+			System.out.println("ERROR RESULT");
+		}finally{
+			 con.close() ;
+			 pst.close();
+	   }	
+		return isadded;
+	}
+
+	/* (non-Javadoc)
+	 * @see sb.elpro.dao.UserInputDao#editDestiList(sb.elpro.model.DestinationDetails)
+	 */
+	@Override
+	public boolean editDestiList(DestinationDetails editdestidetail)
+			throws SQLException {
+		Connection con = null;
+		PreparedStatement pst = null;
+		int noofrows  = 0;
+		boolean isupdate = true;
+		try{			
+			con = DBConnection.getConnection();
+			StringBuffer sql_updtdesti = new StringBuffer("UPDATE elpro.tbl_destination SET destname = ? , destcountry = ? , shortform = ? , destiport = ? , destiplace = ?  WHERE destid = '"+editdestidetail.getDestiid()+"' ");
+			String sqlquery_updtdesti  = sql_updtdesti.toString();
+			pst = (PreparedStatement) con.prepareStatement(sqlquery_updtdesti);
+			pst.setString(1, editdestidetail.getDestiname());
+			System.out.println("getDestiname " +editdestidetail.getDestiname());
+			pst.setString(2, editdestidetail.getDestictry());
+			System.out.println("getDestictry " +editdestidetail.getDestictry());
+			pst.setString(3, editdestidetail.getDestishform());
+			System.out.println("getDestishform " +editdestidetail.getDestishform());
+			pst.setString(4, editdestidetail.getDestiport());
+			System.out.println("getDestiport " +editdestidetail.getDestiport());
+			pst.setString(5, editdestidetail.getDestiplace());
+			System.out.println("getDestiplace " +editdestidetail.getDestiplace());
+			System.out.println(" getDestiid"+editdestidetail.getDestiid());
+			noofrows = pst.executeUpdate();
+			System.out.println("executeUpdate"+pst.executeUpdate());
+			System.out.println("Sucessfully inserted the record.." + noofrows);		
+		}catch(Exception e){
+			e.printStackTrace();
+			isupdate = false;
+			System.out.println("ERROR RESULT");
+		}finally{
+			con.close() ;
+			pst.close();
+		}	
+		return isupdate;
+	}
+
+	/* (non-Javadoc)
+	 * @see sb.elpro.dao.UserInputDao#delDestiList(sb.elpro.model.DestinationDetails)
+	 */
+	@Override
+	public boolean delDestiList(DestinationDetails deldestidetail)
+			throws SQLException {
+		Connection con = null;
+		PreparedStatement pst = null;
+		int noofrows  = 0;
+		boolean isdel = true;
+		try{			
+			con = DBConnection.getConnection();
+			StringBuffer sql_deldestidetails = new StringBuffer("delete from elpro.tbl_destination WHERE destid = '"+deldestidetail.getDestiid()+"' ");
+			String sqlquery_deldestidetails = sql_deldestidetails.toString();
+			System.out.println(sqlquery_deldestidetails);
+			pst = (PreparedStatement) con.prepareStatement(sqlquery_deldestidetails);
 			noofrows = pst.executeUpdate();
 			System.out.println("Sucessfully deleted the record.." + noofrows);
 		}catch(Exception e){

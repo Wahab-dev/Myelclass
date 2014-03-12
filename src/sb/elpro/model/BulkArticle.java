@@ -64,7 +64,7 @@ public class BulkArticle implements Serializable{
 		private String notifyid ;
 		private String bankid;
 		private String pojw;
-		
+		private String isupdtar;
 		
 		/**
 		 * @return the articleid
@@ -622,6 +622,18 @@ public class BulkArticle implements Serializable{
 		 */
 		public void setOthercommission(String othercommission) {
 			this.othercommission = othercommission;
+		}
+		/**
+		 * @return the isupdtar
+		 */
+		public String getIsupdtar() {
+			return isupdtar;
+		}
+		/**
+		 * @param isupdtar the isupdtar to set
+		 */
+		public void setIsupdtar(String isupdtar) {
+			this.isupdtar = isupdtar;
 		}
 		
 }

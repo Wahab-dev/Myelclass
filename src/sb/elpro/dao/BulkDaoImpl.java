@@ -138,9 +138,16 @@ public class BulkDaoImpl implements BulkDao {
 		PreparedStatement pst = null;
 		int noofrows  = 0;
 		boolean isupdate = true;
+		StringBuffer sql_updateBtrStatus  = null;
 		try{			
 			con = DBConnection.getConnection();
-			StringBuffer sql_updateBtrStatus = new StringBuffer("UPDATE elpro.tbl_prfarticle_status SET artname =?, status = ? , qshipped = ? , qbal = ? , invdetails = ? , reps = ? , comments = ? , feddback = ? , contractno = ? , rdd_date = ? WHERE prf_articleid = '"+bulkmodel.getPrfarticleid()+"' ");
+			String isupdtar = bulkmodel.getIsupdtar();
+			System.out.println("isupdtar " +isupdtar);
+			if(isupdtar.equalsIgnoreCase("true")){
+				 sql_updateBtrStatus = new StringBuffer("UPDATE elpro.tbl_prfarticle_status SET artname =?, status = ? , qshipped = ? , qbal = ? , invdetails = ? , reps = ? , comments = ? , feddback = ? , contractno = ? , rdd_date = ? WHERE contractno = '"+bulkmodel.getCtno()+"' and artname = '"+bulkmodel.getArticlename()+"' ");
+			}else{
+				 sql_updateBtrStatus = new StringBuffer("UPDATE elpro.tbl_prfarticle_status SET artname =?, status = ? , qshipped = ? , qbal = ? , invdetails = ? , reps = ? , comments = ? , feddback = ? , contractno = ? , rdd_date = ? WHERE prf_articleid = '"+bulkmodel.getPrfarticleid()+"' ");
+			}
 			String sqlquery_updateBtrStatus = sql_updateBtrStatus.toString();
 			pst = (PreparedStatement) con.prepareStatement(sqlquery_updateBtrStatus);
 			pst.setString(1, bulkmodel.getArticlename());
@@ -152,7 +159,10 @@ public class BulkDaoImpl implements BulkDao {
 			pst.setString(5, bulkmodel.getInvdetails());
 			pst.setString(6, bulkmodel.getReps());
 			pst.setString(7, bulkmodel.getComments());
+			System.out.println("getComments "+bulkmodel.getComments());
 			pst.setString(8, bulkmodel.getFeddback());
+			System.out.println("getFeddback "+bulkmodel.getFeddback());
+			System.out.println("getContracts "+bulkmodel.getCtno());
 			pst.setString(9, bulkmodel.getCtno());
 			pst.setString(10, bulkmodel.getRdd_date());
 			

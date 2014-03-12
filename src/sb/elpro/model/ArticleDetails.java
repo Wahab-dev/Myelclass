@@ -18,9 +18,10 @@ public class ArticleDetails implements Serializable {
 	
 	private String articleid;
 	private String articlename;
-	private String color;
 	private String articletype;
 	private String articlefamily;
+	private String articleshortform;
+	private String color;
 	private String size;
 	private String size_min;
 	private String size_max;
@@ -37,6 +38,8 @@ public class ArticleDetails implements Serializable {
 	private String selp;
 	private String quantity;
 	private String unit;
+	private float qshipped;
+	private float qbal;
 	private String rate_sign;
 	private String rate;
 	private String pieces;
@@ -46,14 +49,112 @@ public class ArticleDetails implements Serializable {
 	private String tc_currency;
 	private String tc_amount;
 	private String tc_agent;
-	private String articleshortform;
 	private String price;
 	private String contractno;
 	private String prfarticleid;
+	private String status;
+	private String rdd;
+	private String comments;
+	private String reps;
+	private String feedback;
+	
+	
+	// Future combine SRFARticle and Article model class
+	private String srf_colormatch;
+	private String srf_tapetest;
+	private String srf_crockwet;
+	private String srf_crockdry;
+	private String srf_fourfold;
+	private String srf_keytest;
+	private String srf_samplenum;
+	
+	
+	/**
+	 * @return the srf_colormatch
+	 */
+	public String getSrf_colormatch() {
+		return srf_colormatch;
+	}
+	/**
+	 * @param srf_colormatch the srf_colormatch to set
+	 */
+	public void setSrf_colormatch(String srf_colormatch) {
+		this.srf_colormatch = srf_colormatch;
+	}
+	/**
+	 * @return the srf_tapetest
+	 */
+	public String getSrf_tapetest() {
+		return srf_tapetest;
+	}
+	/**
+	 * @param srf_tapetest the srf_tapetest to set
+	 */
+	public void setSrf_tapetest(String srf_tapetest) {
+		this.srf_tapetest = srf_tapetest;
+	}
+	/**
+	 * @return the srf_crockwet
+	 */
+	public String getSrf_crockwet() {
+		return srf_crockwet;
+	}
+	/**
+	 * @param srf_crockwet the srf_crockwet to set
+	 */
+	public void setSrf_crockwet(String srf_crockwet) {
+		this.srf_crockwet = srf_crockwet;
+	}
+	/**
+	 * @return the srf_crockdry
+	 */
+	public String getSrf_crockdry() {
+		return srf_crockdry;
+	}
+	/**
+	 * @param srf_crockdry the srf_crockdry to set
+	 */
+	public void setSrf_crockdry(String srf_crockdry) {
+		this.srf_crockdry = srf_crockdry;
+	}
+	/**
+	 * @return the srf_fourfold
+	 */
+	public String getSrf_fourfold() {
+		return srf_fourfold;
+	}
+	/**
+	 * @param srf_fourfold the srf_fourfold to set
+	 */
+	public void setSrf_fourfold(String srf_fourfold) {
+		this.srf_fourfold = srf_fourfold;
+	}
+	/**
+	 * @return the srf_keytest
+	 */
+	public String getSrf_keytest() {
+		return srf_keytest;
+	}
+	/**
+	 * @param srf_keytest the srf_keytest to set
+	 */
+	public void setSrf_keytest(String srf_keytest) {
+		this.srf_keytest = srf_keytest;
+	}
+	/**
+	 * @return the srf_samplenum
+	 */
+	public String getSrf_samplenum() {
+		return srf_samplenum;
+	}
+	/**
+	 * @param srf_samplenum the srf_samplenum to set
+	 */
+	public void setSrf_samplenum(String srf_samplenum) {
+		this.srf_samplenum = srf_samplenum;
+	}
 	private String label;
 	private String value;
-	private float qshipped;
-	private float qbal;
 	/**
 	 * @return the articleid
 	 */
@@ -510,6 +611,66 @@ public class ArticleDetails implements Serializable {
 	 */
 	public void setQbal(float qbal) {
 		this.qbal = qbal;
+	}
+	/**
+	 * @return the status
+	 */
+	public String getStatus() {
+		return status;
+	}
+	/**
+	 * @param status the status to set
+	 */
+	public void setStatus(String status) {
+		this.status = status;
+	}
+	/**
+	 * @return the rdd
+	 */
+	public String getRdd() {
+		return rdd;
+	}
+	/**
+	 * @param rdd the rdd to set
+	 */
+	public void setRdd(String rdd) {
+		this.rdd = rdd;
+	}
+	/**
+	 * @return the reps
+	 */
+	public String getReps() {
+		return reps;
+	}
+	/**
+	 * @param reps the reps to set
+	 */
+	public void setReps(String reps) {
+		this.reps = reps;
+	}
+	/**
+	 * @return the feedback
+	 */
+	public String getFeedback() {
+		return feedback;
+	}
+	/**
+	 * @param feedback the feedback to set
+	 */
+	public void setFeedback(String feedback) {
+		this.feedback = feedback;
+	}
+	/**
+	 * @return the comments
+	 */
+	public String getComments() {
+		return comments;
+	}
+	/**
+	 * @param comments the comments to set
+	 */
+	public void setComments(String comments) {
+		this.comments = comments;
 	}
 		
 

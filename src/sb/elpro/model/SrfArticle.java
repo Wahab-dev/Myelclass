@@ -17,6 +17,7 @@ public class SrfArticle implements Serializable {
 	private static final long serialVersionUID = -5536348849073275603L;
 
 	private String articleid; 
+	private String srf_articleid;
 	private String srf_articletype;
 	private String srf_articleshform;
 	private String srf_articlename;
@@ -29,6 +30,8 @@ public class SrfArticle implements Serializable {
 	private String srf_selection;
 	private String srf_selectionp;
 	private String srf_qty;
+	private String srf_qtyshpd;
+	private String srf_qtybal;
 	private String srf_unit;
 	private String srf_price;
 	private String srf_ratesign;
@@ -41,7 +44,97 @@ public class SrfArticle implements Serializable {
 	private String srf_fourfold;
 	private String srf_keytest;
 	private String srf_samplenum;
-	private String srf_articleid;
+	private String srf_status;
+	private String srf_rdd;
+	private String srf_courier;
+	private String srf_represenative;
+	private String srf_feedback;
+	
+	
+	/**
+	 * @return the srf_qtyshpd
+	 */
+	public String getSrf_qtyshpd() {
+		return srf_qtyshpd;
+	}
+	/**
+	 * @param srf_qtyshpd the srf_qtyshpd to set
+	 */
+	public void setSrf_qtyshpd(String srf_qtyshpd) {
+		this.srf_qtyshpd = srf_qtyshpd;
+	}
+	/**
+	 * @return the srf_qtybal
+	 */
+	public String getSrf_qtybal() {
+		return srf_qtybal;
+	}
+	/**
+	 * @param srf_qtybal the srf_qtybal to set
+	 */
+	public void setSrf_qtybal(String srf_qtybal) {
+		this.srf_qtybal = srf_qtybal;
+	}
+	/**
+	 * @return the srf_status
+	 */
+	public String getSrf_status() {
+		return srf_status;
+	}
+	/**
+	 * @param srf_status the srf_status to set
+	 */
+	public void setSrf_status(String srf_status) {
+		this.srf_status = srf_status;
+	}
+	/**
+	 * @return the srf_rdd
+	 */
+	public String getSrf_rdd() {
+		return srf_rdd;
+	}
+	/**
+	 * @param srf_rdd the srf_rdd to set
+	 */
+	public void setSrf_rdd(String srf_rdd) {
+		this.srf_rdd = srf_rdd;
+	}
+	/**
+	 * @return the srf_courier
+	 */
+	public String getSrf_courier() {
+		return srf_courier;
+	}
+	/**
+	 * @param srf_courier the srf_courier to set
+	 */
+	public void setSrf_courier(String srf_courier) {
+		this.srf_courier = srf_courier;
+	}
+	/**
+	 * @return the srf_represenative
+	 */
+	public String getSrf_represenative() {
+		return srf_represenative;
+	}
+	/**
+	 * @param srf_represenative the srf_represenative to set
+	 */
+	public void setSrf_represenative(String srf_represenative) {
+		this.srf_represenative = srf_represenative;
+	}
+	/**
+	 * @return the srf_feedback
+	 */
+	public String getSrf_feedback() {
+		return srf_feedback;
+	}
+	/**
+	 * @param srf_feedback the srf_feedback to set
+	 */
+	public void setSrf_feedback(String srf_feedback) {
+		this.srf_feedback = srf_feedback;
+	}
 	private String user;
 	
 	

@@ -37,6 +37,21 @@
 </h:form>
 <h:form>
 	<h5> Welcome Buddy ! 1 am in Master Form .. . </h5>
+	<div>
+	 Group By: <select id="chngroup"> 
+			<option value="clear" selected="selected">Remove Grouping</option>
+			<option value="ctno">Ct No</option> 
+			<option value="agent">Agent</option> 
+			<option value="exporterid">Exporter</option>
+			<option value="tanneryid">Tannery</option> 
+			<option value="customerid">Customer</option> 
+			<option value="articlename">Article</option> 
+			<option value="color">Color</option>
+			<option value="status">Status</option> 
+			<option value="invno">Invno</option> 
+			<option value="debitno">Debitno</option> 
+		</select> <br/><br/> 
+	</div>	
 	<div id="Master Grid Details ">
 		<table id="mastertarckgrid"></table>
 		<div id="masterpager"></div>

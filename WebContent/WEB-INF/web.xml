@@ -24,4 +24,9 @@
   <welcome-file-list>
     <welcome-file>/Home.jsp</welcome-file>
   </welcome-file-list>
+  
+  
+  <listener>
+		<listener-class>sb.elpro.utility.Config</listener-class>	
+	</listener>
 </web-app>

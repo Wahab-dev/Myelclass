@@ -12,6 +12,9 @@
 <link rel="stylesheet" type="text/css" media="screen" href="css/ui.jqgrid.css" />
 <style type="text/css">
 #ui-datepicker-div { font-size: 11px; } 
+.myAltRowClass { background-color: Light; background-image: none; }
+
+
 </style>
 <script src="js/i18n/grid.locale-en.js" type="text/javascript"></script>
 <script src="js/jquery.jqGrid.min.js" type="text/javascript"></script>
@@ -33,9 +36,25 @@
 </h:form>
 
 <h:form>   
-		<div id="sampletrack">Sample Tracking
-			<table id="sampletracktbl"></table> 
-			<div id="sampletrackpager"></div> 
+
+	<div id="blk">Sample Tracking</div> 
+	 Group By: <select id="chngroup"> 
+			<option value="clear" selected="selected">Remove Grouping</option>
+			<option value="sampleno">Sampleno No</option> 
+			<option value="status">Status</option> 
+			<option value="handledby">Handled By</option>
+			<option value="customerid">Customer</option> 
+			<option value="tanneryid">Tannery</option>
+			<option value="deliverid">Deliver</option> 
+			<option value="isinvraised">Free / Invoice</option>
+			<option value="articlename">Article</option> 
+			<option value="color">Color</option> 
+			<option value="reps">Agent</option> 
+			<!-- <option value="user">color</option>  -->
+		</select> <br/><br/> 
+		<div id="sampletracking grid">Sample Tracking
+			<table id="sampletrack"></table> 
+			<div id="sampletrackpgr"></div> 
 		</div> 
 </h:form> 
 </body>

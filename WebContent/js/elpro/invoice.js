@@ -5,7 +5,7 @@
 
 $(document).ready(function() {
 	var billInvisInEdit = null ; //boolean value need to Check High Priority 
-	
+	var type =null;//get whether the inv for only ct or sample included
 	 //Radiio Box Chercked b
 	$("#inv_vatcst").click(function() { 
 		var val = "";
@@ -94,6 +94,7 @@ $(document).ready(function() {
 	var invgrid = $("#invBill");
 	var billgrid = $("#tbl_invaddinvBill");
 	var invctgrid = $("#tbl_invListCustomerContract"); 
+	//var invsamplegrid = $("#tbl_invListCustomerSample"); 
 		 
 		// var billbtn = $("#loadBill");
 		 $('#inv_customer').autocomplete({
@@ -117,13 +118,15 @@ $(document).ready(function() {
 				},
 				select: function( event, ui ) { 
 					 $('#inv_custaddr').val(ui.item.addr);
-		          	  $('#inv_custtele').val(ui.item.fone);
-		          	  $('#inv_custattn').val(ui.item.attn);
-		          	  $('#inv_custfax').val(ui.item.fax);
+		          	 $('#inv_custtele').val(ui.item.fone);
+		          	 $('#inv_custattn').val(ui.item.attn);
+		          	 $('#inv_custfax').val(ui.item.fax);
 		          	 $('#inv_custid').val(ui.item.id);
 		          	 var custname = ui.item.label;
 		          	 //Load First Grid Based On Selected Value
-		          	invctgrid.jqGrid('setGridParam',{url:"/Myelclass/InvSelectCtfromCust.do?custname="+custname+"&action="+"load"}).trigger("reloadGrid");				 
+		          	type = $('#inv_includeSample').val();
+					alert("asd"+type);
+		          	invctgrid.jqGrid('setGridParam',{url:"/Myelclass/InvSelectCtfromCust.do?custname="+custname+"&type="+type+"&action="+"load"}).trigger("reloadGrid");				 
 				    }
 		  	 });
 		 
@@ -140,15 +143,20 @@ $(document).ready(function() {
 				 datatype: "json",
 				 loadonce: false,
 				 mtype: 'GET', 
-				 colNames:['Ct No','Date','Po NO','CDD','ADD','Desti','Cust Id'],
+				 colNames:['Ct No','Date','Po NO','Customer','Tannery','Consignee','Desti','CDD','ADD','Commission','Other Commi'],
 				 colModel:[
-				           {name: 'ctno', index:'ctno',editable: true,}, 
-				           {name: 'orderdt', index:'orderdt',width:90},
-				           {name: 'pono', index:'color',width:70},
-				           {name: 'cdd_date', index:'size',width:70},
-				           {name: 'add_date', index:'substance',width:70},
-				           {name: 'destination', index:'quantity',width:70},
-				           {name: 'customerid', index:'tc',width:70}
+				           {name: 'ctno', index:'ctno',hidden: false, sortable: true,}, 
+				           {name: 'orderdt', index:'orderdt', hidden: false, sortable: true,},
+				           {name: 'pono', index:'pono',hidden: false, sortable: true,},
+				           {name: 'customer', index:'customer',hidden:true, sortable: true,},
+				           {name: 'tannery', index:'tannery',hidden:true, sortable: true,},
+				           {name: 'consignee', index:'consignee',hidden: false, sortable: true,},
+				           {name: 'destination', index:'destination',hidden: false, sortable: true,},
+				           {name: 'cdd_date', index:'cdd_date',hidden: true, sortable: true,},
+				           {name: 'add_date', index:'add_date',hidden: true, sortable: true,},
+				           {name: 'commission', index:'commission',hidden: true, sortable: true,},
+				           {name: 'othercommission', index:'othercommission',hidden: true, sortable: true,},		           
+				           
 				          ],
 				  jsonReader : {  
 					       repeatitems:false,
@@ -180,10 +188,91 @@ $(document).ready(function() {
 				view: false,
 				search : false,
 				reload: true		
-			}).navButtonAdd('#tbl_invpager',{
-	 		 	   caption:"Select", 
-	 		 	   buttonicon:"ui-icon-add", 
-	 		 	   onClickButton: function(){
+			}).jqGrid('navButtonAdd', '#tbl_invpager', {
+	 		 	   caption:"Click Here",    
+	 		 	   buttonicon: "ui-icon-print",
+	 		       title: "Click here to load",	 		 	   
+	 		       onClickButton: function(){
+	 		 		 var selctnos="";
+	 		 		 var ids = invctgrid.jqGrid('getGridParam','selarrrow');
+	 		 		 for (var i=0; i<ids.length;i++){
+	 		 		     var rowData = invctgrid.jqGrid('getRowData',ids[i]);
+	 		 			 var ctno = " '"+rowData.ctno+"',";
+	 		 			 selctnos = selctnos+ctno;
+	 		 		   }
+	 		 		 var itemp =selctnos.lastIndexOf(",");
+					 var ctnoselc = selctnos.substring(0, itemp);
+					 alert("ctnoselc"+ctnoselc);
+					 type = $('#inv_includeSample').val();
+					 alert("asd"+type);
+					 //var ctnowoquote = ctnoselc.replace(/'/g, "");
+	 				 billgrid.jqGrid('setGridParam',{url:"/Myelclass/InvSelectCtfromCust.do?ctno="+ctnoselc+"&type="+type+"&action="+"loadsubgrid",page:1});
+	 				 billgrid.jqGrid('setCaption',"Raise Invoice").trigger('reloadGrid');
+	 				 invgrid.jqGrid('setGridParam',{url:"/Myelclass/InvSelectCtfromCust.do?action="+"loadBill&ctno="+ctnoselc+"&type="+type ,page:1}).trigger('reloadGrid');
+	 		 	   },
+	 		 	
+			});
+			/*
+		 	 * Grid 1 -a  - Loads Sample Data Based on the Customer Selected Value
+		 	 *  fields -samno, orderdt, pono, cdd_date, add_date, destination, customerid
+		 	 *  MultiSelect to Selec the Ct Number
+		 	 *  Just Two Methods .  Select Sample Number, Reload - Client Side
+		 	 *  
+		 	 
+			invsamplegrid.jqGrid({ 
+				 url: "",
+				 datatype: "json",
+				 loadonce: false,
+				 colNames:['Sample No','Date','Ref no','Priority','Handled By','Customer','Tannery','Deliver','ADD','CDD','Desti','IsInv Raised'],
+				 colModel:[
+				           {name: 'ctno', index:'ctno',hidden: false, sortable: true,}, 
+				           {name: 'orderdt', index:'orderdt',hidden: false, sortable: true,},
+				           {name: 'pono', index:'color',hidden: false, sortable: true,},
+				           {name: 'cdd_date', index:'size',hidden: false, sortable: true,},
+				           {name: 'add_date', index:'substance',hidden: true, sortable: true,},
+				           {name: 'destination', index:'quantity',hidden: true, sortable: true,},
+				           {name: 'customerid', index:'tc',hidden: false, sortable: true,},
+				           {name: 'ctno', index:'ctno', hidden: false, sortable: true,}, 
+				           {name: 'orderdt', index:'orderdt',hidden: false, sortable: true,},
+				           {name: 'pono', index:'color',hidden: false, sortable: true,},
+				           {name: 'cdd_date', index:'size',hidden: false, sortable: true,},
+				           {name: 'add_date', index:'substance',hidden: false, sortable: true,},
+				          ],
+				  jsonReader : {  
+					       repeatitems:false,
+					       root: "rows",
+					       page: "page", //calls first
+					       total: "total" ,//calls Second
+					       records: "records", //calls Third
+					       },
+				   pager : '#tbl_invsamplepager',
+				   autoheight: true,
+				   rowNum: 5, 
+				   multiselect : true,
+				   multiboxonly: true, // what is this ??
+				   rowList:[5,10,15],	 
+				   //pagerpos: 'right',
+				   // toppager: true,
+				   //toolbar:[true,"top"],
+				   sortname: 'Ctno',
+				   sortorder: 'desc',  
+				   height: 'auto',	
+				   hiddengrid : true,
+			       emptyrecords: 'No records to display',
+			       caption  : "Select Sample From List",
+			       });
+			invctgrid.jqGrid('navGrid','#tbl_invsamplepager',{
+				add : false,
+				edit: false, 
+				del : false,
+				view: false,
+				search : false,
+				reload: true		
+			}).jqGrid('navButtonAdd', '#tbl_invsamplepager', {
+	 		 	   caption:"Click Here",    
+	 		 	   buttonicon: "ui-icon-print",
+	 		       title: "Click here to load",	 		 	   
+	 		       onClickButton: function(){
 	 		 		 var selctnos="";
 	 		 		 var ids = invctgrid.jqGrid('getGridParam','selarrrow');
 	 		 		 for (var i=0; i<ids.length;i++){
@@ -198,9 +287,9 @@ $(document).ready(function() {
 	 				 billgrid.jqGrid('setCaption',"Raise Invoice").trigger('reloadGrid');
 	 				 invgrid.jqGrid('setGridParam',{url:"/Myelclass/InvSelectCtfromCust.do?action="+"loadBill&ctno="+ctnoselc ,page:1}).trigger('reloadGrid');
 	 		 	   },
-	 		 	   position:"last",
+	 		 	
 			});
-	
+	*/
 			/* 
 			 * SubGrid 1 - Load Billing Details
 		 	 *  Grid 2 - Loads Data Based on the Grid 1 Selected Ct 
@@ -213,59 +302,112 @@ $(document).ready(function() {
 			billgrid.jqGrid({
 				url:"",
 				datatype: "json",
-				colNames:['Ct No','Article','Color','Size','Substance','Selection','Quantity','unit','Rate','Q Shipped','Q Balance','Amount', 'Total','TC','articleid','Article Id'],
+				colNames:['Status','Ct No','Art Id','Type','Article','Color','Size','Substance','Selection','Pcs','Quantity','Unit','Shipped','Balance','Rate','RDD','Comments','Reps','Feedback','Amount','Total','TC'],
 			    colModel:[
-			            {name:'contractno', index:'contractno',sortable:true, editable: true, width:50,
+			              {name:'status', index:'status',align:'center', width :40, editable:false, sortable: true, hidden:false, search: true, 
+			            	 
+			              },
+			              {name:'contractno', index:'contractno',align:'center', width :40, editable:true, sortable: true, hidden:false, search: true,
+			            	  editoptions: { readonly: 'readonly' },
 			  				/*formoptions:{
 				        	   	elmprefix:"(<span class='mystar' style='color:red'>*</span>)&nbsp;",
 				        	    	elmsuffix:"&nbsp;yyyy-mm-dd",
 				        	    label: "<span>Date<span><span style='float:right'>XXX</span>"
 				        	    }, */
-						},
-						{name:'articlename', index:'articlename',sortable:true, editable: true, width:70},
-						{name:'color', index:'color',sortable:true, editable: true, width:70},
-						{name:'size', index:'size',sortable:true, editable: true, width:70},
-						{name:'substance', index:'substance',sortable:true, editable: true, width:90},
-						{name:'selection', index:'selection',sortable:true, editable: true, width:90},
-						{name:'quantity', index:'quantity',sortable:true, editable: true, width:70,
-							formatter : 'number', formatoptions:{decimalSeparator:".", decimalPlaces: 2, }
-						},
-						{name:'unit', index:'unit',sortable:true, editable: true, hidden : true, width:70,
-						},
-						{name:'rate', index:'rate',sortable:true, editable: true, width:70,
-						},
-						{name:'qshipped', index:'qshipped',sortable:true, editable: true, width:70, 
-							formatter : 'number', formatoptions:{decimalSeparator:".", decimalPlaces: 2, },
-							edittype:'text', 
-							editoptions:{
-							 	dataEvents:  [{
-									type: 'focusout',
-									fn: function(e){
-										var qbals = parseFloat($("#quantity").val() - $("#qshipped").val()).toFixed(2);
-										$("#qbal").val(qbals);
-										//Rate Calculation
-										var rate = $("#rate").val();
-										var ratemp = rate.indexOf(' ');
-										var ratemplast = rate.lastIndexOf(' ');
-										var rates = rate.substring(ratemp+1, ratemplast);
-										var floatamt = parseFloat (rates * $("#qshipped").val()).toFixed(2);
-										$("#amount").val(floatamt);
-									}
-								}]
-							},
-						},
-						{name:'qbal', index:'qbal',sortable:true, editable: true, width:70, 
-							//editoptions: datainit 
-							formatter : 'number', formatoptions:{decimalSeparator:".", decimalPlaces: 2, defaultValue: '0.00'},
+						  },
+						  {name:'prfarticleid', index:'prfarticleid',align:'center', width :40, editable:true, sortable: true, hidden:true, search: true,
+							  
+
+						  },
+						  {name:'articletype', index:'articletype',align:'center', width :60, editable:true, sortable: true, hidden:false, search: true,
+							  editoptions: { readonly: 'readonly' },
+						   
+						  },
+						  {name:'articlename', index:'articlename',align:'center', width :80, editable:true, sortable: true, hidden:false, search: true,
+							  editoptions: { readonly: 'readonly' }, 
+						  
+						  },
+						  {name:'color', index:'color',align:'center', width :70, editable:true, sortable: true, hidden:false, search: true,
+							  editoptions: { readonly: 'readonly' },
 							
-						},
-						{name:'amount', index:'amount',sortable:true, editable: true, width:70,
-							formatter : 'number', formatoptions: {decimalSeparator:".", decimalPlaces: 2, defaultValue: '0.00'},
-						},
-						{name:'total', index:'total',hidden: true, sortable:true, editable: true, width:70},
-						{name:'tc', index:'tc',hidden: true,sortable:true, editable: true, width:70},
-						{name:'articleid', index:'articleid',hidden: true,sortable:true, editable: true, width:70},
-						{name:'prfarticleid', index:'prfarticleid',hidden: true,ssortable:true, editable: true, width:90},
+						  },
+						  {name:'size', index:'size',align:'center', width :60, editable:true, sortable: true, hidden:false, search: true,
+							  editoptions: { readonly: 'readonly' },
+							  
+						  },
+						  {name:'substance', index:'substance',align:'center', width :60, editable:true, sortable: true, hidden:false, search: true,
+							  editoptions: { readonly: 'readonly' },
+							  
+						  },
+						  {name:'selection', index:'selection',align:'center', width :40, editable:true, sortable: true, hidden:false, search: true,
+							  editoptions: { readonly: 'readonly' }, 
+							  
+						  },
+						  {name:'pieces', index:'pieces',align:'center', width :40, editable:true, sortable: true, hidden:false, search: true,
+							  
+						  },
+						  {name:'quantity', index:'quantity',align:'center', width :60, editable:true, sortable: true, hidden:false, search: true,
+							  editoptions: { readonly: 'readonly' }, 
+							  
+							  formatter : 'number', formatoptions:{decimalSeparator:".", decimalPlaces: 2, }
+						  },
+						  {name:'unit', index:'unit',align:'center', width :40, editable:true, sortable: true, hidden:false, search: true,
+							  
+						  },
+						 
+						  {name:'qshipped', index:'qshipped',align:'center', width :60, editable:true, sortable: true, hidden:false, search: true,
+							  
+							  formatter : 'number', formatoptions:{decimalSeparator:".", decimalPlaces: 2, },
+							  edittype:'text', 
+							  editoptions:{
+								  dataEvents:  [{
+									  type: 'focusout',
+									  fn: function(e){
+										  var qbals = parseFloat($("#quantity").val() - $("#qshipped").val()).toFixed(2);
+										  $("#qbal").val(qbals);
+										  //Rate Calculation
+										  var rate = $("#rate").val();
+										  var ratemp = rate.indexOf(' ');
+										  var ratemplast = rate.lastIndexOf(' ');
+										  var rates = rate.substring(ratemp+1, ratemplast);
+										  var floatamt = parseFloat (rates * $("#qshipped").val()).toFixed(2);
+										  $("#amount").val(floatamt);
+									  }
+								  }]
+							  },
+						  },
+						  {name:'qbal', index:'qbal',align:'center', width :60, editable:true, sortable: true, hidden:false, search: true,
+ 
+							  //editoptions: datainit 
+							  formatter : 'number', formatoptions:{decimalSeparator:".", decimalPlaces: 2, defaultValue: '0.00'},
+							
+						  },
+						  {name:'rate', index:'rate',align:'center', width :70, editable:true, sortable: true, hidden:false, search: true,
+							  
+						  },
+						  {name:'rdd', index:'rdd',align:'center', width :70, editable:false, sortable: true, hidden:false, search: true,
+							  
+						  },
+						  {name:'comments', index:'comments',align:'center', width :70, editable:false, sortable: true, hidden:false, search: true,
+							  
+						  },
+						  {name:'reps', index:'reps',align:'center', width :50, editable:false, sortable: true, hidden:true, search: true,
+							  
+						  },
+						  {name:'feedback', index:'feedback',align:'center', width :50, editable:false, sortable: true, hidden:false, search: true,
+							  
+						  },
+						  {name:'amount', index:'amount',align:'center', width :50, editable:true, sortable: true, hidden:false, search: true,
+							  
+							  formatter : 'number', formatoptions: {decimalSeparator:".", decimalPlaces: 2, defaultValue: '0.00'},
+						  },
+						  {name:'total', index:'total',align:'center', width :50, editable:true, sortable: true, hidden:true, search: true,
+							  
+						  },
+						  {name:'tc', index:'tc',align:'center', width :80, editable:true, sortable: true, hidden:false, search: true,
+							 
+						  },
+						  
 			          ],
 				jsonReader : {  
 						repeatitems:false,
@@ -327,33 +469,41 @@ $(document).ready(function() {
 									alert("Calls B$ Form ");
 								}
 							},*/
-							
+							beforeInitData : function(formid) {
+								var rowid = billgrid.jqGrid('getGridParam', 'selrow');
+					         	if (rowid === null) {
+					           		alert('Please select row ');
+					           		return false;
+								}else{	
+									return true;
+								}
+							},
 							//Add 
 							beforeShowForm : function(formID){
+							
+								$('#tr_tc').hide();
 								var selRowData;
-								var rowid = billgrid.jqGrid('getGridParam', 'selrow');
-					           	if (rowid === null) {
-					             alert('Please select row');
-								}
-					           	selRowData = billgrid.jqGrid('getRowData', rowid);
-					           	alert(selRowData);
-					            $('#' + 'contractno' + '.FormElement', formID).val(selRowData.contractno);
-					            $('#' + 'articlename' + '.FormElement', formID).val(selRowData.articlename);
-					            $('#' + 'color' + '.FormElement', formID).val(selRowData.color);
-					            $('#' + 'size' + '.FormElement', formID).val(selRowData.size);
-					            $('#' + 'substance' + '.FormElement', formID).val(selRowData.substance);
-					            $('#' + 'selection' + '.FormElement', formID).val(selRowData.selection);
-					            $('#' + 'quantity' + '.FormElement', formID).val(selRowData.quantity);
-					            $('#' + 'unit' + '.FormElement', formID).val(selRowData.unit);
-					            $('#' + 'rate' + '.FormElement', formID).val(selRowData.rate);
-					            $('#' + 'qshipped' + '.FormElement', formID).val(selRowData.qshipped); 
-					            $('#' + 'qbal' + '.FormElement', formID).val(selRowData.qbal);
-					            $('#' + 'amount' + '.FormElement', formID).val(selRowData.amount);
-					            $('#' + 'total' + '.FormElement', formID).val(selRowData.total);
-					            $('#' + 'tc' + '.FormElement', formID).val(selRowData.tc);
-					            $('#' + 'articleid' + '.FormElement', formID).val(selRowData.articleid);
-					            $('#' + 'prfarticleid' + '.FormElement', formID).val(selRowData.prfarticleid);
-					            return true;
+								var rowids = billgrid.jqGrid('getGridParam', 'selrow');
+						           	selRowData = billgrid.jqGrid('getRowData', rowids);
+						            $('#' + 'contractno' + '.FormElement', formID).val(selRowData.contractno);
+						            $('#' + 'articletype' + '.FormElement', formID).val(selRowData.articletype);
+						            $('#' + 'articlename' + '.FormElement', formID).val(selRowData.articlename);
+						            $('#' + 'color' + '.FormElement', formID).val(selRowData.color);
+						            $('#' + 'size' + '.FormElement', formID).val(selRowData.size);
+						            $('#' + 'substance' + '.FormElement', formID).val(selRowData.substance);
+						            $('#' + 'selection' + '.FormElement', formID).val(selRowData.selection);
+						            $('#' + 'quantity' + '.FormElement', formID).val(selRowData.quantity);
+						            $('#' + 'unit' + '.FormElement', formID).val(selRowData.unit);
+						            $('#' + 'pieces' + '.FormElement', formID).val(selRowData.pieces);
+						            $('#' + 'rate' + '.FormElement', formID).val(selRowData.rate);
+						            $('#' + 'qshipped' + '.FormElement', formID).val(selRowData.qshipped); 
+						            $('#' + 'qbal' + '.FormElement', formID).val(selRowData.qbal);
+						            $('#' + 'amount' + '.FormElement', formID).val(selRowData.amount);
+						            $('#' + 'total' + '.FormElement', formID).val(selRowData.total);
+						            $('#' + 'tc' + '.FormElement', formID).val(selRowData.tc);
+						            $('#' + 'articleid' + '.FormElement', formID).val(selRowData.articleid);
+						            $('#' + 'prfarticleid' + '.FormElement', formID).val(selRowData.prfarticleid);
+						            
 							}, 
 							/*
 							 * Add Parameter 
@@ -399,32 +549,58 @@ $(document).ready(function() {
 					 datatype: "json",
 					 colNames:['Inv Id','Inv No','InvDt','articleid','Ct No','Article','Color','Size','Substance','Selection','Quantity','Rate','TC','Q Shipped','Q Balance','amount'],
 					 colModel:[
-					           	{name: 'invid', index:'invid',sortable:true, editable: true, width:50},
-								{name: 'invno', index:'invno',sortable:true, editable: true, width:50},
-								{name: 'invdt', index:'invdt',sortable:true, editable: true, width:50},
-								{name: 'invartid', index:'invartid',sortable:true, editable: true, width:70},
-								{name: 'invctno', index:'invctno',sortable:true, editable: true, width:50},
-								{name: 'invartname', index:'invartname',sortable:true, editable: true, width:70},
-								{name: 'invcolor', index:'invcolor',sortable:true, editable: true, width:70},
-								{name: 'invsize', index:'invsize',sortable:true, editable: true, width:70},
-								{name: 'invsubs', index:'invsubs',sortable:true, editable: true, width:90},
-								{name: 'invselc', index:'invselc',sortable:true, editable: true, width:90},
-								{name: 'invqty', index:'invqty',sortable:true, editable: true, width:70,
+					           	{name: 'invid', index:'invid',align:'center', width :80, editable:true, sortable: true, hidden:false, search: true,
+					           		editoptions: { readonly: 'readonly' },
+					           	},
+								{name: 'invno', index:'invno',align:'center', width :80, editable:true, sortable: true, hidden:false, search: true,
+					           		editoptions: { readonly: 'readonly' },
+								},
+								{name: 'invdt', index:'invdt',align:'center', width :80, editable:true, sortable: true, hidden:false, search: true,
+									editoptions: { readonly: 'readonly' },
+								},
+								{name: 'invartid', index:'invartid',align:'center', width :80, editable:true, sortable: true, hidden:false, search: true,
+									editoptions: { readonly: 'readonly' },
+								},
+								{name: 'invctno', index:'invctno',align:'center', width :80, editable:true, sortable: true, hidden:false, search: true,
+									editoptions: { readonly: 'readonly' },
+								},
+								{name: 'invartname', index:'invartname',align:'center', width :80, editable:true, sortable: true, hidden:false, search: true,
+									editoptions: { readonly: 'readonly' },
+								},
+								{name: 'invcolor', index:'invcolor',align:'center', width :80, editable:true, sortable: true, hidden:false, search: true,
+									editoptions: { readonly: 'readonly' },
+								},
+								{name: 'invsize', index:'invsize',align:'center', width :80, editable:true, sortable: true, hidden:false, search: true,
+									editoptions: { readonly: 'readonly' },
+								},
+								{name: 'invsubs', index:'invsubs',align:'center', width :80, editable:true, sortable: true, hidden:false, search: true,
+									editoptions: { readonly: 'readonly' },
+								},
+								{name: 'invselc', index:'invselc',align:'center', width :80, editable:true, sortable: true, hidden:false, search: true,
+									editoptions: { readonly: 'readonly' },
+								},
+								{name: 'invqty', index:'invqty',align:'center', width :80, editable:true, sortable: true, hidden:false, search: true,
+									editoptions: { readonly: 'readonly' },
 									formatter : 'number', formatoptions:{decimalSeparator:".", decimalPlaces: 2, },
 								},
-								{name: 'invrate', index:'invrate',sortable:true, editable: true, width:70},
-								{name: 'invtc', index:'invtc',sortable:true, width:70, editable: true},
+								{name: 'invrate', index:'invrate',align:'center', width :80, editable:true, sortable: true, hidden:false, search: true,
+									
+								},
+								{name: 'invtc', index:'invtc',align:'center', width :80, editable:true, sortable: true, hidden:false, search: true,
+									editoptions: { readonly: 'readonly' },
+								},
 								{name: 'invqshpd', index:'invqshpd',sortable:true, editable: true, width:70,
 									formatter : 'number', formatoptions:{decimalSeparator:".", decimalPlaces: 2, },
 									edittype:'text', 
 								},
-								{name: 'invqbal', index:'qbal',hidden: false, sortable:true, editable: true, width:70,
+								{name: 'invqbal', index:'qbal',align:'center', width :80, editable:true, sortable: true, hidden:false, search: true,
 									formatter : 'number', formatoptions:{decimalSeparator:".", decimalPlaces: 2, },
 									edittype:'text', 
 									editoptions:{
 									 	dataEvents:  [{
 											type: 'focusout',
 											fn: function(e){
+												alert("IS this Edit BILL Calculation"+billInvisInEdit);
 												if(billInvisInEdit){ //Code for Edit Form Qty Calculation 
 													 var invqbal = parseFloat($("#invqty").val() - $("#invqshpd").val());
 													 var qbals = invqbal.toFixed(2);
@@ -454,11 +630,11 @@ $(document).ready(function() {
 										}]
 									},		
 								},
-								{name: 'invamt', index:'amt',hidden: false, sortable:true, editable: true, width:70,
+								{name: 'invamt', index:'amt',align:'center', width :80, editable:true, sortable: true, hidden:false, search: true,
 									formatter : 'number', formatoptions:{decimalSeparator:".", decimalPlaces: 2, },	
 								},
-								 ],
-					jsonReader : {  
+							  ],
+					 jsonReader : {  
 						   repeatitems:false,
 					       root: "rows",
 					       page: "page", //calls first
@@ -494,12 +670,18 @@ $(document).ready(function() {
 							/*
 							 * Edit Method 
 							 */
+							recreateForm: true,
 							closeAfterEdit: true,
 							reloadAfterSubmit: true,
 							beforeInintData: function ()
 							{
+								alert("in B4 init data");
 								billInvisInEdit = true;
 							},
+							/*beforeShowForm : function(formID){
+								
+								$('#tr_invtc').hide();
+							}*/
 						},
 						/*
 						 * 

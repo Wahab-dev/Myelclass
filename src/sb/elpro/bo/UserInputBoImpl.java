@@ -16,6 +16,7 @@ import sb.elpro.model.BankDetails;
 import sb.elpro.model.CommissionDetails;
 import sb.elpro.model.ConsigneeDetails;
 import sb.elpro.model.CustomerDetails;
+import sb.elpro.model.DestinationDetails;
 import sb.elpro.model.NotifyConsigneeDetails;
 import sb.elpro.model.TanneryDetails;
 
@@ -324,6 +325,49 @@ private UserInputDao userinputdao;
 			throws Exception {
 		boolean isdeltdcommList = userinputdao.delCommList(delcommdetail);
 		return isdeltdcommList;
+	}
+
+
+	/* (non-Javadoc)
+	 * @see sb.elpro.bo.UserInputBo#getDestiDetails()
+	 */
+	@Override
+	public List<DestinationDetails> getDestiDetails() throws Exception {
+		ArrayList<DestinationDetails> destiList = userinputdao.getDestiList();
+		return destiList;
+	}
+
+
+	/* (non-Javadoc)
+	 * @see sb.elpro.bo.UserInputBo#addDestidetails(sb.elpro.model.DestinationDetails)
+	 */
+	@Override
+	public boolean addDestidetails(DestinationDetails adddestidetail)
+			throws Exception {
+		boolean isaddeddestiList = userinputdao.addDestiList(adddestidetail);
+		return isaddeddestiList;
+	}
+
+
+	/* (non-Javadoc)
+	 * @see sb.elpro.bo.UserInputBo#editDestiDetails(sb.elpro.model.DestinationDetails)
+	 */
+	@Override
+	public boolean editDestiDetails(DestinationDetails editdestidetail)
+			throws Exception {
+		boolean isupdtddestiList = userinputdao.editDestiList(editdestidetail);
+		return isupdtddestiList;
+	}
+
+
+	/* (non-Javadoc)
+	 * @see sb.elpro.bo.UserInputBo#delDestiDetails(sb.elpro.model.DestinationDetails)
+	 */
+	@Override
+	public boolean delDestiDetails(DestinationDetails deldestidetail)
+			throws Exception {
+		boolean isdeltddestiList = userinputdao.delDestiList(deldestidetail);
+		return isdeltddestiList;
 	}
 
 

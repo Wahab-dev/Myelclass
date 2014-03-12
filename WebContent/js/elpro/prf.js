@@ -4,7 +4,24 @@
  * 
  */
 $(document).ready(function() {  
-	
+	/*
+     * Function To disabe Specific Dates
+     */ 
+     natDays = [
+                [1, 26, 'au'], [2, 6, 'nz'], [3, 17, 'ie'],
+                [4, 27, 'za'], [5, 25, 'ar'], [6, 6, 'se'],
+                [7, 4, 'us'], [8, 17, 'id'], [9, 7, 'br'],
+                [10, 1, 'cn'], [11, 22, 'lb'], [12, 12, 'ke']
+              ];
+
+     function noWeekendsOrHolidays(date) {
+           for (var i = 0; i < natDays.length; i++) {
+              if (date.getMonth() == natDays[i][0] - 1 && date.getDate() == natDays[i][1]) {
+                   return [false, natDays[i][2] + '_day'];
+               }
+            }
+            return [true, ''];
+     }
 	$.extend($.jgrid.edit, {
 	    bSubmit: "Save",
 	    bCancel: "Cancel",
@@ -136,32 +153,30 @@ $(document).ready(function() {
 		    },
 			{name:'prf_color', index:'color', width:90, align:'center', sortable:true, hidden: false, editable:true, edittype:'text',
 				 editoptions:{
-						dataInit:function (elem) { 
-							$(elem).autocomplete({
-								minLength: 2,
-								source: function(request, response,term) {
-									var param = request.term;
-						            $.ajax({
-						                url: "/Myelclass/PrfAutocomplete.do?term="+param+"&action="+"color",
-						                dataType: "json",
-						                type:"POST",
-						                success: function (data) {
-						                	 response($.map(data, function(item) {
-						                		 return { 
-						                             label: item.value,
-						                             //shform: item.shform, //can add number of attributes here 
-						                             value: item.value // I am displaying both labe and value
-						                             };
-						                         }));//END Response
-	
-						                },//END Success
-						            });//END AJAX
-								},
-								
-							});
-							$('.ui-autocomplete').css('zIndex',1000); // z index for jqgfrid and autocomplete has been misalignment so we are manually setting it 
-							}
-						   },editrules :{required : true},
+					dataInit:function (elem) { 
+						$(elem).autocomplete({
+							minLength: 2,
+							source: function(request, response,term) {
+								var param = request.term;
+						        $.ajax({
+						           url: "/Myelclass/PrfAutocomplete.do?term="+param+"&action="+"color",
+						           dataType: "json",
+						           type:"POST",
+						           success: function (data) {
+						           	 response($.map(data, function(item) {
+						            	 return { 
+						                    label: item.value,
+						                    value: item.value // I am displaying both labe and value
+						                 };
+						             }));//END Response
+						           },//END Success
+						        });//END AJAX
+							},
+						});
+					$('.ui-autocomplete').css('zIndex',1000); // z index for jqgfrid and autocomplete has been misalignment so we are manually setting it 
+					}
+				 },
+			     editrules :{required : true},
 			}, 	
 			{name:'prf_size', index:'size', width:80, align:'center', hidden: false, editable:true,sortable:true,
 					editoptions: { 
@@ -293,7 +308,7 @@ $(document).ready(function() {
 			    checked:false,
 			    edittype:'checkbox',
 			    align:"center",
-			  //  hidden : adminHide,
+			  //hidden : adminHide,
 			    editoptions: { value:"True:False"},
 			    formatter: "checkbox",
 			    formatoptions: {disabled : false,checked:false}
@@ -567,6 +582,7 @@ $(document).ready(function() {
 		        //DATEPICKER
 		        $("#prf_orderdate").datepicker({
 				   // changeYear: true,
+		        	//beforeShowDay: noWeekendsOrHolidays,
 				    autoSize: true,
 				    changeMonth:false,
 				    dateFormat: "dd-mm-yy",
@@ -576,7 +592,8 @@ $(document).ready(function() {
 				    showButtonPanel: false,
 				    gotoCurrent:true, 
 				});
-		        
+		       
+		                 
 		        $(".prf_delivrydate").datepicker({
 				   // changeYear: true,
 				    autoSize: true,

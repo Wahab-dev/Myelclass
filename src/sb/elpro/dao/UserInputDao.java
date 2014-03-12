@@ -14,6 +14,7 @@ import sb.elpro.model.BankDetails;
 import sb.elpro.model.CommissionDetails;
 import sb.elpro.model.ConsigneeDetails;
 import sb.elpro.model.CustomerDetails;
+import sb.elpro.model.DestinationDetails;
 import sb.elpro.model.NotifyConsigneeDetails;
 import sb.elpro.model.TanneryDetails;
 
@@ -258,6 +259,37 @@ public interface UserInputDao {
 	 * etc
 	 */
 	boolean delCommList(CommissionDetails delcommdetail)throws SQLException;
+	// ----------------------------Destination Details -------------------------------------//
+	/**  
+	 * (Method description)
+	 * @param
+	 * @return
+	 * etc
+	 */
+	ArrayList<DestinationDetails> getDestiList()throws SQLException;
+
+	/**  
+	 * (Method description)
+	 * @param
+	 * @return
+	 * etc
+	 */
+	boolean addDestiList(DestinationDetails adddestidetail)throws SQLException;
+
+	/**  
+	 * (Method description)
+	 * @param
+	 * @return
+	 * etc
+	 */
+	boolean editDestiList(DestinationDetails editdestidetail)throws SQLException;
+	/**  
+	 * (Method description)
+	 * @param
+	 * @return
+	 * etc
+	 */
+	boolean delDestiList(DestinationDetails deldestidetail)throws SQLException;
 
 
 

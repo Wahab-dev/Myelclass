@@ -51,9 +51,8 @@ public class SamptrackInsertAction extends Action{
              System.out.println("sidx "+sidx);
              System.out.println("sord "+sord);
              System.out.println("action "+action);
-             
              if(oper == null){
-				 System.out.println(" In Sample  LAOD");
+				 System.out.println(" In Sample  LOAD");
 				List<SampleTrack> sampletrack = samptrackbo.getSampleTrackDetails(sidx,sord);
 				
 				int records = sampletrack.size();
@@ -89,24 +88,21 @@ public class SamptrackInsertAction extends Action{
             	 samplemodel.setSubstance(request.getParameter("substance"));
             	 samplemodel.setQuantity(request.getParameter("quantity"));
             	 samplemodel.setSrfarticleid(request.getParameter("srfarticleid"));
-            	/* samplemodel.setUnit(request.getParameter("unit"));
-            	 samplemodel.setRate(request.getParameter("rate"));
-            	 samplemodel.setPcs(request.getParameter("pcs")); */
             	 samplemodel.setRdd_date(DateConversion.ConverttoMysqlDate(request.getParameter("rdd_date")));
             	 samplemodel.setCourierdetails(request.getParameter("courierdetails"));
+            	 samplemodel.setFeedbackdetails(request.getParameter("feedbackdetails"));
             	 samplemodel.setReps(request.getParameter("reps"));
-            	 
+            	 samplemodel.setIsupdtar(request.getParameter("isupdtar"));
             	 if(oper.equalsIgnoreCase("status")){
-						System.out.println(" In STR STATUS");
-						boolean isBulkStatusUpdated = samptrackbo.addStrStatus(samplemodel,sidx,sord);
-						if(isBulkStatusUpdated){
-							jsonobj.put("success", "Successfully Inserted The Record");
-						}else{
-							jsonobj.put("Error", "Error in Inserrting");
-						}
-						System.out.println(jsonobj);		
-						out.println(jsonobj);
+            		boolean isBulkStatusUpdated = samptrackbo.addStrStatus(samplemodel,sidx,sord);
+					if(isBulkStatusUpdated){
+						jsonobj.put("success", "Successfully Inserted The Record");
+					}else{
+						jsonobj.put("Error", "  Error in Inserrting");
 					}
+					System.out.println(jsonobj);		
+					out.println(jsonobj);
+				}
              }
 		 }else{
 			 System.out.println("Error Invalid Session");

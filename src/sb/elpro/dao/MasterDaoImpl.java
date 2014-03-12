@@ -47,13 +47,13 @@ public class MasterDaoImpl implements MasterDao {
 			while(rs.next()) {	
 			 Masterbean masterbean= new Masterbean();
 			 	masterbean.setCtno(rs.getString("Ctno"));
-			 	masterbean.setAgent(rs.getString("agent"));
+			 	masterbean.setAgent(rs.getString("agent")); 
 			 	masterbean.setOrderdt(rs.getString("Orderdt"));
 			 	masterbean.setPono(rs.getString("pono"));
 			 	masterbean.setTanneryid(rs.getString("tanneryid"));
 			 	masterbean.setExporterid(rs.getString("exporterid"));
 			 	masterbean.setCustomerid(rs.getString("customerid"));
-			 	masterbean.setAdd_date(DateConversion.ConverttoNormalDate(rs.getString("add_date")));
+			 	masterbean.setAdd_date(rs.getString("add_date"));
 				masterbean.setRdd_date(DateConversion.ConverttoNormalDate(rs.getString("rdd_date")));
 				masterbean.setDestination(rs.getString("destination"));
 				masterbean.setCommission(rs.getString("commission"));

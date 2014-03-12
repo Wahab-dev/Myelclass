@@ -36,7 +36,7 @@ import org.apache.struts.action.ActionMapping;
  * @author Wahab
  *
  */
-public class MasterPrintAction extends Action{
+public class SamplePrintAction extends Action{
 	
 		/* (non-Javadoc)
 		 * @see org.apache.struts.action.Action#execute(org.apache.struts.action.ActionMapping, org.apache.struts.action.ActionForm, javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)
