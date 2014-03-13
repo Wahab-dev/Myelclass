@@ -140,10 +140,10 @@ public class InvoiceBoImpl implements InvoiceBo {
 		return invaddagainbillarr;
 	}
 	@Override
-	public boolean getInvBillEditDetails(InvBillDetails invaddagainbill)
+	public boolean getInvBillEditDetails(InvBillDetails inveditbill)
 			throws Exception {
-		boolean inveditbill = invdao.getInvEditbillDetails(invaddagainbill);
-		return inveditbill;
+		boolean inveditbillarr = invdao.getInvEditbillDetails(inveditbill);
+		return inveditbillarr;
 	}
 	@Override
 	public boolean getInvBillDelDetails(InvBillDetails invaddagainbill)
@@ -155,10 +155,18 @@ public class InvoiceBoImpl implements InvoiceBo {
 	 * @see sb.elpro.bo.InvoiceBo#getInvBillTotAmt(java.lang.String)
 	 */
 	@Override
-	public List<InvoiceTotAmtDetails> getInvBillTotAmt(String invno)
+	public List<InvBillDetails> getInvBillTotAmt(String invno)
 			throws Exception {
-		ArrayList<InvoiceTotAmtDetails> invamtdetails = invdao.getBulkQtyDetails(invno);
+		ArrayList<InvBillDetails> invamtdetails = invdao.getInvBillTotAmtDetails(invno);
 		return invamtdetails;
+	}
+	/* (non-Javadoc)
+	 * @see sb.elpro.bo.InvoiceBo#getSampleInvoiceNo(java.lang.String)
+	 */
+	@Override
+	public String getSampleInvoiceNo(String saminvtype) throws Exception {
+		String saminvNumarr = invdao.getSampleInvoiceNoDetails(saminvtype);
+		return saminvNumarr;
 	}
 	
 	

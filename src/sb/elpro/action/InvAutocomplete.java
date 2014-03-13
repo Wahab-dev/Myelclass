@@ -21,6 +21,8 @@ import sb.elpro.bo.InvoiceBo;
 import sb.elpro.bo.InvoiceBoImpl;
 import sb.elpro.bo.PrfBo;
 import sb.elpro.bo.PrfBoImpl;
+import sb.elpro.bo.SampleInvoiceBo;
+import sb.elpro.bo.SampleInvoiceBoImpl;
 import sb.elpro.model.BankDetails;
 import sb.elpro.model.CustomerDetails;
 import sb.elpro.model.DestinationDetails;
@@ -33,6 +35,7 @@ import sb.elpro.model.NotifyConsigneeDetails;
  */
 public class InvAutocomplete extends Action {
 	InvoiceBo invbo = new InvoiceBoImpl();
+	SampleInvoiceBo saminvbo = new SampleInvoiceBoImpl();
 	PrfBo prfbo = new PrfBoImpl();
 	HttpSession usersession;
 	public ActionForward execute(ActionMapping mapping, ActionForm form, 
@@ -118,21 +121,21 @@ public class InvAutocomplete extends Action {
 						System.out.println(invtypelist);
 						out.println(invtypelist);
 					}
-				}
-				else{
-					/*
-					 * Here i am using first letter enter from the Entry using request .getparamanter 
-					 * and passing the value
-					 * 
-					 */
-					/*String term = request.getParameter("term");
-					System.out.println(" Term "+term);
-				//	List<AutoComplete> destinationlist =  invbo.getDestinationDetails(term);
-					System.out.println("List Value " +destinationlist.size());
-					JSONArray jsonOrderArray = JSONArray.fromObject(destinationlist);
-					 System.out.println(jsonOrderArray);
-			 		out.println(jsonOrderArray);*/
+				}else if (action.equalsIgnoreCase("saminvtype")){
+					System.out.println("In Sam Inv ");
+					String saminvtype = request.getParameter("term");
+					String saminvtypelist =  invbo.getSampleInvoiceNo(saminvtype);
+					if(saminvtypelist.isEmpty()){
+						//Check for null and filter i                                                  
+					}else{
+						System.out.println(saminvtypelist);
+						out.println(saminvtypelist);
 					}
+				}else{
+					/*
+					 * Failed All Condition
+					 */
+				}
 				 out.close();
 			}else{
 				System.out.println("Invalid User pls Login Again");

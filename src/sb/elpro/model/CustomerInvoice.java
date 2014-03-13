@@ -34,7 +34,7 @@ public class CustomerInvoice implements Serializable {
 	 * Actually not Necessary . Combined Ct and Sample as One
 	 */
 	//Sample
-	private String Sampleno;
+	private String sampleno;
 	private String sorderdt;
 	private String refno;
 	private String priority;
@@ -48,18 +48,7 @@ public class CustomerInvoice implements Serializable {
 
 	
 	
-	/**
-	 * @return the sampleno
-	 */
-	public String getSampleno() {
-		return Sampleno;
-	}
-	/**
-	 * @param sampleno the sampleno to set
-	 */
-	public void setSampleno(String sampleno) {
-		Sampleno = sampleno;
-	}
+	
 	/**
 	 * @return the sorderdt
 	 */
@@ -336,6 +325,18 @@ public class CustomerInvoice implements Serializable {
 	 */
 	public void setCustomer(String customer) {
 		this.customer = customer;
+	}
+	/**
+	 * @return the sampleno
+	 */
+	public String getSampleno() {
+		return sampleno;
+	}
+	/**
+	 * @param sampleno the sampleno to set
+	 */
+	public void setSampleno(String sampleno) {
+		this.sampleno = sampleno;
 	} 
 	
 

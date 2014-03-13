@@ -13,6 +13,7 @@ import com.mysql.jdbc.Statement;
 
 import sb.elpro.model.ArticleDetails;
 import sb.elpro.model.BankDetails;	
+import sb.elpro.model.BulkQtyDetails;
 import sb.elpro.model.CustomerDetails;
 import sb.elpro.model.CustomerInvoice;
 import sb.elpro.model.DestinationDetails;
@@ -165,6 +166,7 @@ public class InvoiceDaoImpl implements InvoiceDao {
 			con = DBConnection.getConnection();
 			st = (Statement) con.createStatement();
 			String sql = "SELECT destname, destcountry FROM elpro.tbl_destination where destcountry like '%"+destictryvalterm+"%' and destname like '%"+destictryterm+"%' order by destname";
+			System.out.println("SQL  "+sql);
 			rs = st.executeQuery(sql);
 			while(rs.next()) {	
 				DestinationDetails InvFinalDestibean = new DestinationDetails();
@@ -522,8 +524,7 @@ public class InvoiceDaoImpl implements InvoiceDao {
 	}
 
 	@Override
-	public boolean getInvAddbillDetails(InvBillDetails invbill)
-			throws SQLException {
+	public boolean getInvAddbillDetails(InvBillDetails invbill) throws SQLException {
 	
 		Connection con = null;
 		PreparedStatement pst = null;
@@ -533,8 +534,8 @@ public class InvoiceDaoImpl implements InvoiceDao {
 		boolean isInserted = true;
 		try{			
 			con = DBConnection.getConnection();
-			StringBuffer sql_saveprfArticle = new StringBuffer("insert into tbl_inv_bill (ctno, artname, color, size, subs, selc, qty, pcs, rate, tc, comm,invno, invdate, qshpd, qbal, amt,articleid)");
-			sql_saveprfArticle.append("values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+			StringBuffer sql_saveprfArticle = new StringBuffer("insert into tbl_inv_bill (ctno, artname, color, size, subs, selc, unit, qty, pcs, rate, tc, comm, invno, invdate, qshpd, qbal, amt,articleid)");
+			sql_saveprfArticle.append("values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
 			String sqlquery_saveprfArticle = sql_saveprfArticle.toString();
 			System.out.println("Insert quert" +sqlquery_saveprfArticle);
 			pst = (PreparedStatement) con.prepareStatement(sqlquery_saveprfArticle);
@@ -546,19 +547,18 @@ public class InvoiceDaoImpl implements InvoiceDao {
 			pst.setString(4, invbill.getInvsize());
 			pst.setString(5, invbill.getInvsubs());
 			pst.setString(6, invbill.getInvselc());
-			
-			pst.setString(7, invbill.getInvqty());
-			pst.setString(8, invbill.getInvpcs());
-			pst.setString(9, invbill.getInvrate());
-			pst.setString(10, invbill.getInvtc());
-			
-			pst.setString(11, invbill.getInvcomm());
-			pst.setString(12, invbill.getInvno());
-			pst.setString(13, invbill.getInvdt());
-			pst.setString(14, invbill.getInvqshpd());
-			pst.setString(15, invbill.getInvqbal());
-			pst.setString(16, invbill.getInvamt());
-			pst.setString(17, invbill.getInvartid());
+			pst.setString(7, invbill.getInvunit());
+			pst.setString(8, invbill.getInvqty());
+			pst.setString(9, invbill.getInvpcs());
+			pst.setString(10, invbill.getInvrate());
+			pst.setString(11, invbill.getInvtc());
+			pst.setString(12, invbill.getInvcomm());
+			pst.setString(13, invbill.getInvno());
+			pst.setString(14, invbill.getInvdt());
+			pst.setString(15, invbill.getInvqshpd());
+			pst.setString(16, invbill.getInvqbal());
+			pst.setString(17, invbill.getInvamt());
+			pst.setString(18, invbill.getInvartid());
 			noofrows = pst.executeUpdate();
 			System.out.println("Sucessfully inserted the record.." + noofrows);
 			if(noofrows == 1){
@@ -618,7 +618,7 @@ public class InvoiceDaoImpl implements InvoiceDao {
 		try{			
 			con = DBConnection.getConnection();
 			st = (Statement) con.createStatement();
-			String sql = "SELECT invbillid, articleid, artname, color, size, subs, selc, qty, pcs, rate, tc, comm, ctno, invno, invdate, qshpd, qbal, amt FROM elpro.tbl_inv_bill where ctno in ("+ctno+") order by invno, artname ";
+			String sql = "SELECT invbillid, articleid, artname, color, size, subs, selc, unit,  qty, pcs, rate, tc, comm, ctno, invno, invdate, qshpd, qbal, amt FROM elpro.tbl_inv_bill where ctno in ("+ctno+") order by invno, artname ";
 			System.out.println((sql));
 			rs = st.executeQuery(sql);
 			System.out.println((sql));
@@ -632,7 +632,8 @@ public class InvoiceDaoImpl implements InvoiceDao {
 				invbillbean.setInvsubs(rs.getString("subs"));
 				invbillbean.setInvselc(rs.getString("selc"));
 				invbillbean.setInvqty(rs.getString("qty"));
-				//invbillbean.setUnit(rs.getString("pcs"));
+				invbillbean.setInvunit(rs.getString("unit"));
+				invbillbean.setInvpcs(rs.getString("pcs"));
 				invbillbean.setInvrate(rs.getString("rate"));
 				invbillbean.setInvtc(rs.getString("tc"));
 				invbillbean.setInvctno(rs.getString("ctno"));
@@ -687,21 +688,21 @@ public class InvoiceDaoImpl implements InvoiceDao {
 		 rs.close();
    }	
 	return maxCtno;
-	}
+   }
 
 	@Override
 	public boolean getInvAddbillSecondDetails(InvBillDetails invaddagainbill)
 			throws SQLException {
 		Connection con = null;
 		PreparedStatement pst = null;
-		PreparedStatement pst1 = null;
+		PreparedStatement pstadd2tart = null;
 		int noofrows  = 0;
-		int updtprfartsecondbill = 0;
+		int isadd2art = 0;
 		boolean isInserted = true;
 		try{			
 			con = DBConnection.getConnection();
-			StringBuffer sql_saveprfArticle = new StringBuffer("insert into tbl_inv_bill (ctno, artname, color, size, subs, selc, qty, pcs, rate, tc, comm,invno, invdate, qshpd, qbal, amt,articleid)");
-			sql_saveprfArticle.append("values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+			StringBuffer sql_saveprfArticle = new StringBuffer("insert into tbl_inv_bill (ctno, artname, color, size, subs, selc, qty, unit, pcs, rate, tc, comm,invno, invdate, qshpd, qbal, amt,articleid)");
+			sql_saveprfArticle.append("values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
 			String sqlquery_saveprfArticle = sql_saveprfArticle.toString();
 			System.out.println("Insert quert" +sqlquery_saveprfArticle);
 			pst = (PreparedStatement) con.prepareStatement(sqlquery_saveprfArticle);
@@ -713,36 +714,52 @@ public class InvoiceDaoImpl implements InvoiceDao {
 			pst.setString(4, invaddagainbill.getInvsize());
 			pst.setString(5, invaddagainbill.getInvsubs());
 			pst.setString(6, invaddagainbill.getInvselc());
-			
 			pst.setString(7, invaddagainbill.getInvqty());
-			pst.setString(8, invaddagainbill.getInvpcs());
-			pst.setString(9, invaddagainbill.getInvrate());
-			pst.setString(10, invaddagainbill.getInvtc());
-			
-			pst.setString(11, invaddagainbill.getInvcomm());
-			pst.setString(12, invaddagainbill.getInvno());
-			pst.setString(13, invaddagainbill.getInvdt());
-			pst.setString(14, invaddagainbill.getInvqshpd());
-			pst.setString(15, invaddagainbill.getInvqbal());
-			pst.setString(16, invaddagainbill.getInvamt());
-			pst.setString(17, invaddagainbill.getInvartid());
+			pst.setString(8, invaddagainbill.getInvunit());
+			pst.setString(9, invaddagainbill.getInvpcs());
+			pst.setString(10, invaddagainbill.getInvrate());
+			pst.setString(11, invaddagainbill.getInvtc());
+		
+			pst.setString(12, invaddagainbill.getInvcomm());
+			pst.setString(13, invaddagainbill.getInvno());
+			pst.setString(14, invaddagainbill.getInvdt());
+			pst.setString(15, invaddagainbill.getInvqshpd());
+			pst.setString(16, invaddagainbill.getInvqbal());
+			pst.setString(17, invaddagainbill.getInvamt());
+			pst.setString(18, invaddagainbill.getInvartid());
 			noofrows = pst.executeUpdate();
 			if(noofrows == 1){
-				System.out.println(" Second Shipment for Same Article - Update PRF Status QTy "+noofrows);
-				StringBuffer sql_updartqty = new StringBuffer("UPDATE elpro.tbl_prfarticle_status SET qshipped = ? , qbal = ? , invdetails = ?  WHERE prf_articleid = '"+invaddagainbill.getInvartid()+"' ");
-				String sqlquery_updartqty = sql_updartqty.toString();
-				System.out.println("Update quert" +sqlquery_updartqty);
-				pst1 = (PreparedStatement) con.prepareStatement(sqlquery_updartqty);
-				pst1.setString(1, invaddagainbill.getInvqshpd());
-				System.out.println("getInvqshpd " +invaddagainbill.getInvqshpd());
-				pst1.setString(2, invaddagainbill.getInvqbal());
-				System.out.println("getInvqbal " +invaddagainbill.getInvqbal());
-				pst1.setString(3, invaddagainbill.getInvno()+" Dt"+invaddagainbill.getInvdt());
-				System.out.println("INV invdetails " +invaddagainbill.getInvno()+" Dt"+invaddagainbill.getInvdt());
-			
-				updtprfartsecondbill = pst1.executeUpdate();
+				if(invaddagainbill.getInvctno().startsWith("L")){
+					System.out.println(" Update PRF Status QTy "+noofrows);
+					StringBuffer sql_updartqty = new StringBuffer("UPDATE elpro.tbl_prfarticle_status SET qshipped = ? , qbal = ? , invdetails = ?  WHERE prf_articleid = '"+invaddagainbill.getInvartid()+"' ");
+					String sqlquery_updartqty = sql_updartqty.toString();
+					System.out.println("Update quert" +sqlquery_updartqty);
+					pstadd2tart = (PreparedStatement) con.prepareStatement(sqlquery_updartqty);
+					pstadd2tart.setString(1, invaddagainbill.getInvqshpd());
+					System.out.println("getInvqshpd " +invaddagainbill.getInvqshpd());
+					pstadd2tart.setString(2, invaddagainbill.getInvqbal());
+					System.out.println("getInvqbal " +invaddagainbill.getInvqbal());
+					pstadd2tart.setString(3, invaddagainbill.getInvno()+" Dt"+invaddagainbill.getInvdt());
+					System.out.println("INV invdetails " +invaddagainbill.getInvno()+" Dt"+invaddagainbill.getInvdt());
 				
-				System.out.println("Sucessfully Updated the record.." + updtprfartsecondbill);
+					isadd2art = pstadd2tart.executeUpdate();
+					System.out.println("Sucessfully Updated the record.." + isadd2art);
+				}else{
+					//Code to Update the status of the Sample Article 
+					System.out.println(" Update SRF Status QTy "+noofrows);
+					StringBuffer sql_updartqty = new StringBuffer("UPDATE elpro.tbl_srfarticle_status SET shpd = ? , bal = ? , courierdetails = ?  WHERE srfarticleid = '"+invaddagainbill.getInvartid()+"' ");
+					String sqlquery_updartqty = sql_updartqty.toString();
+					System.out.println("Update quert" +sqlquery_updartqty);
+					pstadd2tart = (PreparedStatement) con.prepareStatement(sqlquery_updartqty);
+					pstadd2tart.setString(1, invaddagainbill.getInvqshpd());
+					System.out.println("getInvqshpd " +invaddagainbill.getInvqshpd());
+					pstadd2tart.setString(2, invaddagainbill.getInvqbal());
+					System.out.println("getInvqbal " +invaddagainbill.getInvqbal());
+					pstadd2tart.setString(3, invaddagainbill.getInvno()+" Dt"+invaddagainbill.getInvdt());
+					System.out.println("INV invdetails " +invaddagainbill.getInvno()+" Dt"+invaddagainbill.getInvdt());
+					isadd2art = pstadd2tart.executeUpdate();
+					System.out.println("Sucessfully Updated the record.." + isadd2art);
+				}
 			}
 			System.out.println("Sucessfully inserted the record.." + noofrows);
 	}catch(Exception e){
@@ -757,39 +774,61 @@ public class InvoiceDaoImpl implements InvoiceDao {
 	}
 
 	@Override
-	public boolean getInvEditbillDetails(InvBillDetails invaddagainbill)throws SQLException {
+	public boolean getInvEditbillDetails(InvBillDetails inveditbill)throws SQLException {
 		Connection con = null;
 		PreparedStatement pst = null;
+		PreparedStatement pstupdtart = null;
 		int noofrows  = 0;
+		int isupdart = 0;
 		boolean isupdate = true;
+		
 		try{			
 			con = DBConnection.getConnection();
-			StringBuffer sql_saveprfArticle = new StringBuffer("UPDATE elpro.tbl_inv_bill SET articleid = ? , artname = ? , color = ? , size = ? , subs = ? , selc = ? , qty = ? , pcs = ? , rate = ? , tc = ? , comm = ? ,  ctno = ? , invno = ?, invdate = ? , qshpd = ? , qbal = ? , amt = ? WHERE invbillid = '"+invaddagainbill.getInvid()+"' ");
-			//sql_saveprfArticle.append("values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+			StringBuffer sql_saveprfArticle = new StringBuffer("UPDATE elpro.tbl_inv_bill SET rate = ? , qshpd = ? , qbal = ? , amt = ? WHERE invbillid = '"+inveditbill.getInvid()+"' ");
 			String sqlquery_saveprfArticle = sql_saveprfArticle.toString();
 			pst = (PreparedStatement) con.prepareStatement(sqlquery_saveprfArticle);
-			pst.setString(1, invaddagainbill.getInvartid());
-			System.out.println("getArticleid " +invaddagainbill.getInvartid());
-			pst.setString(2, invaddagainbill.getInvartname());
-			System.out.println("getArticlename " +invaddagainbill.getInvartname());
-			pst.setString(3, invaddagainbill.getInvcolor());
-			pst.setString(4, invaddagainbill.getInvsize());
-			pst.setString(5, invaddagainbill.getInvsubs());
-			pst.setString(6, invaddagainbill.getInvselc());
-			pst.setString(7, invaddagainbill.getInvqty());
-			pst.setString(8, invaddagainbill.getInvpcs());
-			pst.setString(9, invaddagainbill.getInvrate());
-			pst.setString(10, invaddagainbill.getInvtc());
-			pst.setString(11, invaddagainbill.getInvcomm());
-			pst.setString(12, invaddagainbill.getInvctno());
-			pst.setString(13, invaddagainbill.getInvno());
-			pst.setString(14, invaddagainbill.getInvdt());
-			pst.setString(15, invaddagainbill.getInvqshpd());
-			pst.setString(16, invaddagainbill.getInvqbal());
-			pst.setString(17, invaddagainbill.getInvamt());
+			pst.setString(1, inveditbill.getInvrate());
+			System.out.println("getInvrate " +inveditbill.getInvrate());
+			pst.setString(2, inveditbill.getInvqshpd());
+			System.out.println("getInvqshpd " +inveditbill.getInvqshpd());
+			pst.setString(3, inveditbill.getInvqbal());
+			pst.setString(4, inveditbill.getInvamt());
 			//pst.setString(15, artindertdetail.getArtshform() );
-			System.out.println("INV Article ID " +invaddagainbill.getInvid());
+			System.out.println("INV Article ID " +inveditbill.getInvid());
 			noofrows = pst.executeUpdate();
+			if(noofrows == 1){
+				if(inveditbill.getInvctno().startsWith("L")){
+					System.out.println(" Update PRF Status QTy "+noofrows);
+					StringBuffer sql_updartqty = new StringBuffer("UPDATE elpro.tbl_prfarticle_status SET qshipped = ? , qbal = ? , invdetails = ?  WHERE prf_articleid = '"+inveditbill.getInvartid()+"' ");
+					String sqlquery_updartqty = sql_updartqty.toString();
+					System.out.println("Update quert" +sqlquery_updartqty);
+					pstupdtart = (PreparedStatement) con.prepareStatement(sqlquery_updartqty);
+					pstupdtart.setString(1, inveditbill.getInvqshpd());
+					System.out.println("getInvqshpd " +inveditbill.getInvqshpd());
+					pstupdtart.setString(2, inveditbill.getInvqbal());
+					System.out.println("getInvqbal " +inveditbill.getInvqbal());
+					pstupdtart.setString(3, inveditbill.getInvno()+" Dt"+inveditbill.getInvdt());
+					System.out.println("INV invdetails " +inveditbill.getInvno()+" Dt"+inveditbill.getInvdt());
+				
+					isupdart = pstupdtart.executeUpdate();
+					System.out.println("Sucessfully Updated the record.." + isupdart);
+				}else{
+					//Code to Update the status of the Sample Article 
+					System.out.println(" Update SRF Status QTy "+noofrows);
+					StringBuffer sql_updartqty = new StringBuffer("UPDATE elpro.tbl_srfarticle_status SET shpd = ? , bal = ? , courierdetails = ?  WHERE srfarticleid = '"+inveditbill.getInvartid()+"' ");
+					String sqlquery_updartqty = sql_updartqty.toString();
+					System.out.println("Update quert" +sqlquery_updartqty);
+					pstupdtart = (PreparedStatement) con.prepareStatement(sqlquery_updartqty);
+					pstupdtart.setString(1, inveditbill.getInvqshpd());
+					System.out.println("getInvqshpd " +inveditbill.getInvqshpd());
+					pstupdtart.setString(2, inveditbill.getInvqbal());
+					System.out.println("getInvqbal " +inveditbill.getInvqbal());
+					pstupdtart.setString(3, inveditbill.getInvno()+" Dt"+inveditbill.getInvdt());
+					System.out.println("INV invdetails " +inveditbill.getInvno()+" Dt"+inveditbill.getInvdt());
+					isupdart = pstupdtart.executeUpdate();
+					System.out.println("Sucessfully Updated the record.." + isupdart);
+				}
+			}
 			System.out.println("Sucessfully inserted the record.." + noofrows);
 		}catch(Exception e){
 			e.printStackTrace();
@@ -800,7 +839,8 @@ public class InvoiceDaoImpl implements InvoiceDao {
 			 pst.close();
 	   }	
 	//return noofrows;
-		return isupdate;	}
+		return isupdate;	
+	}
 
 	@Override
 	public boolean getInvDelbillDetails(InvBillDetails invaddagainbill)
@@ -835,25 +875,23 @@ public class InvoiceDaoImpl implements InvoiceDao {
 	 * @see sb.elpro.dao.InvoiceDao#getBulkQtyDetails(java.lang.String)
 	 */
 	@Override
-	public ArrayList<InvoiceTotAmtDetails> getBulkQtyDetails(String invno)
-			throws SQLException {
+	public ArrayList<InvBillDetails> getInvBillTotAmtDetails(String invno) throws SQLException {
 		Connection con = null;
 		Statement st = null;
 		ResultSet rs = null;
-		ArrayList<InvoiceTotAmtDetails> totalamtarray = new ArrayList<InvoiceTotAmtDetails>();
+		ArrayList<InvBillDetails> totalamtarray = new ArrayList<InvBillDetails>();
 		try{			
 			con = DBConnection.getConnection();
 			st = (Statement) con.createStatement();
-			String sql = "SELECT  sum(quantity) as qty , sum(qshipped) as Qshipd, sum(qbal) as Qbal FROM elpro.tbl_prf_article article, elpro.tbl_prfarticle_status statuse where article.prfarticleid = statuse.prf_articleid";
+			String sql = "SELECT  sum(qshpd) as qshpd , sum(pcs) as pcs, sum(amt) as totamt FROM elpro.tbl_inv_bill where invno = '"+invno+"'";
 			System.out.println(sql);
 			rs = st.executeQuery(sql);
 			if(rs.next()){
-				InvoiceTotAmtDetails bulqty = new InvoiceTotAmtDetails();
-				bulqty.setAmount(rs.getString("Qbal"));
-				bulqty.setDiscount(rs.getString("qty"));
-				bulqty.setOthercharge(rs.getString("Qshipd"));
-				bulqty.setTotalamount(rs.getString("Qshipd"));
-				totalamtarray.add(bulqty);
+				InvBillDetails invbilltot = new InvBillDetails();
+				 invbilltot.setInvqty(rs.getString("qshpd"));
+				 invbilltot.setInvpcs(rs.getString("pcs"));
+				 invbilltot.setInvamt(rs.getString("totamt"));
+				 totalamtarray.add(invbilltot);
 			}
 		}catch(Exception e){
 			e.printStackTrace();
@@ -864,6 +902,43 @@ public class InvoiceDaoImpl implements InvoiceDao {
 			 rs.close();
 	   }	
 		return totalamtarray;
+	}
+
+	/* (non-Javadoc)
+	 * @see sb.elpro.dao.InvoiceDao#getSampleInvoiceNoDetails(java.lang.String)
+	 */
+	@Override
+	public String getSampleInvoiceNoDetails(String saminvtype)
+			throws SQLException {
+		String maxsampinvno= "";
+		Connection con = null;
+		Statement st = null;
+		ResultSet rs = null;	
+		try{			
+			con = DBConnection.getConnection();
+			st = (Statement) con.createStatement();
+			String sql = "SELECT id, invtype, maxinvno FROM elpro.tbl_sampleinvno where invtype in ('"+saminvtype+"')";
+			System.out.println((sql));
+			rs = st.executeQuery(sql);
+			System.out.println((sql));
+			while(rs.next()) {
+				maxsampinvno = rs.getString("maxinvno");
+				/*InvoiceForm invNobean = new InvoiceForm();
+				//invNobean.setInvid(rs.getString("id"));
+				invNobean.setInv_type(rs.getString("invtype"));
+				invNobean.setInv_invoiceno(rs.getString("maxinvno"));
+				System.out.println("INV NO"+invNobean.getInv_invoiceno());*/
+				
+			}
+	}catch(Exception e){
+		e.printStackTrace();
+		System.out.println("Customer Name ERROR RESULT");
+	}finally{
+		 con.close() ;
+		 st.close();
+		 rs.close();
+   }	
+	return maxsampinvno;
 	}
 
 	

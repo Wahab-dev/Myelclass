@@ -4,7 +4,8 @@
  */
 
 $(document).ready(function() {
-	var billInvisInEdit = null ; //boolean value need to Check High Priority 
+	
+	var billInvisInEdit = false; //boolean value need to Check High Priority 
 	var type =null;//get whether the inv for only ct or sample included
 	 //Radiio Box Chercked b
 	$("#inv_vatcst").click(function() { 
@@ -36,7 +37,7 @@ $(document).ready(function() {
 	            error: function (data) {
 	                console.log("error");
 	            } 
-				});
+		});
 			
 		});
 		 $("#dv_invtype").text(str);
@@ -95,7 +96,7 @@ $(document).ready(function() {
 	var billgrid = $("#tbl_invaddinvBill");
 	var invctgrid = $("#tbl_invListCustomerContract"); 
 	//var invsamplegrid = $("#tbl_invListCustomerSample"); 
-		 
+	
 		// var billbtn = $("#loadBill");
 		 $('#inv_customer').autocomplete({
 			minLength: 1,
@@ -205,7 +206,6 @@ $(document).ready(function() {
 					 alert("ctnoselc"+ctnoselc);
 					 type = $('#inv_includeSample').val();
 					 alert("asd"+type);
-					 //var ctnowoquote = ctnoselc.replace(/'/g, "");
 	 				 billgrid.jqGrid('setGridParam',{url:"/Myelclass/InvSelectCtfromCust.do?ctno="+ctnoselc+"&type="+type+"&action="+"loadsubgrid",page:1});
 	 				 billgrid.jqGrid('setCaption',"Raise Invoice").trigger('reloadGrid');
 	 				 invgrid.jqGrid('setGridParam',{url:"/Myelclass/InvSelectCtfromCust.do?action="+"loadBill&ctno="+ctnoselc+"&type="+type ,page:1}).trigger('reloadGrid');
@@ -356,7 +356,7 @@ $(document).ready(function() {
 						  },
 						 
 						  {name:'qshipped', index:'qshipped',align:'center', width :60, editable:true, sortable: true, hidden:false, search: true,
-							  
+							  editrules: { required: true}, 
 							  formatter : 'number', formatoptions:{decimalSeparator:".", decimalPlaces: 2, },
 							  edittype:'text', 
 							  editoptions:{
@@ -496,7 +496,7 @@ $(document).ready(function() {
 						            $('#' + 'unit' + '.FormElement', formID).val(selRowData.unit);
 						            $('#' + 'pieces' + '.FormElement', formID).val(selRowData.pieces);
 						            $('#' + 'rate' + '.FormElement', formID).val(selRowData.rate);
-						            $('#' + 'qshipped' + '.FormElement', formID).val(selRowData.qshipped); 
+						            $('#' + 'qshipped' + '.FormElement', formID).val(" "); 
 						            $('#' + 'qbal' + '.FormElement', formID).val(selRowData.qbal);
 						            $('#' + 'amount' + '.FormElement', formID).val(selRowData.amount);
 						            $('#' + 'total' + '.FormElement', formID).val(selRowData.total);
@@ -547,18 +547,18 @@ $(document).ready(function() {
 				 invgrid.jqGrid({
 					 url:"",
 					 datatype: "json",
-					 colNames:['Inv Id','Inv No','InvDt','articleid','Ct No','Article','Color','Size','Substance','Selection','Quantity','Rate','TC','Q Shipped','Q Balance','amount'],
+					 colNames:['Inv Id','Inv No','InvDt','articleid','Ct No','Article','Color','Size','Substance','Selection','Unit','Quantity','Pcs','Rate','TC','Q Shipped','Q Balance','amount'],
 					 colModel:[
-					           	{name: 'invid', index:'invid',align:'center', width :80, editable:true, sortable: true, hidden:false, search: true,
+					           	{name: 'invid', index:'invid',align:'center', width :80, editable:true, sortable: true, hidden:true, search: true,
 					           		editoptions: { readonly: 'readonly' },
 					           	},
-								{name: 'invno', index:'invno',align:'center', width :80, editable:true, sortable: true, hidden:false, search: true,
+								{name: 'invno', index:'invno',align:'center', width :80, editable:true, sortable: true, hidden:true, search: true,
 					           		editoptions: { readonly: 'readonly' },
 								},
 								{name: 'invdt', index:'invdt',align:'center', width :80, editable:true, sortable: true, hidden:false, search: true,
 									editoptions: { readonly: 'readonly' },
 								},
-								{name: 'invartid', index:'invartid',align:'center', width :80, editable:true, sortable: true, hidden:false, search: true,
+								{name: 'invartid', index:'invartid',align:'center', width :80, editable:true, sortable: true, hidden:true, search: true,
 									editoptions: { readonly: 'readonly' },
 								},
 								{name: 'invctno', index:'invctno',align:'center', width :80, editable:true, sortable: true, hidden:false, search: true,
@@ -576,34 +576,43 @@ $(document).ready(function() {
 								{name: 'invsubs', index:'invsubs',align:'center', width :80, editable:true, sortable: true, hidden:false, search: true,
 									editoptions: { readonly: 'readonly' },
 								},
-								{name: 'invselc', index:'invselc',align:'center', width :80, editable:true, sortable: true, hidden:false, search: true,
+								{name: 'invselc', index:'invselc',align:'center', width :80, editable:true, sortable: true, hidden:true, search: true,
+									editoptions: { readonly: 'readonly' },
+								},
+								{name: 'invunit', index:'invunit',align:'center', width :80, editable:true, sortable: true, hidden:false, search: true,
 									editoptions: { readonly: 'readonly' },
 								},
 								{name: 'invqty', index:'invqty',align:'center', width :80, editable:true, sortable: true, hidden:false, search: true,
 									editoptions: { readonly: 'readonly' },
 									formatter : 'number', formatoptions:{decimalSeparator:".", decimalPlaces: 2, },
 								},
+								{name: 'invpcs', index:'invpcs',align:'center', width :80, editable:true, sortable: true, hidden:false, search: true,
+									editoptions: { readonly: 'readonly' },
+								},
 								{name: 'invrate', index:'invrate',align:'center', width :80, editable:true, sortable: true, hidden:false, search: true,
 									
 								},
-								{name: 'invtc', index:'invtc',align:'center', width :80, editable:true, sortable: true, hidden:false, search: true,
+								{name: 'invtc', index:'invtc',align:'center', width :80, editable:true, sortable: true, hidden:true, search: true,
 									editoptions: { readonly: 'readonly' },
 								},
 								{name: 'invqshpd', index:'invqshpd',sortable:true, editable: true, width:70,
 									formatter : 'number', formatoptions:{decimalSeparator:".", decimalPlaces: 2, },
-									edittype:'text', 
+									edittype:'text',   editrules: { required: true}, 
 								},
 								{name: 'invqbal', index:'qbal',align:'center', width :80, editable:true, sortable: true, hidden:false, search: true,
 									formatter : 'number', formatoptions:{decimalSeparator:".", decimalPlaces: 2, },
-									edittype:'text', 
+									edittype: 'text', 
 									editoptions:{
 									 	dataEvents:  [{
 											type: 'focusout',
 											fn: function(e){
 												alert("IS this Edit BILL Calculation"+billInvisInEdit);
-												if(billInvisInEdit){ //Code for Edit Form Qty Calculation 
-													 var invqbal = parseFloat($("#invqty").val() - $("#invqshpd").val());
+												if(billInvisInEdit){
+													alert( "WTH"+$("#invqbal").val());
+													//Code for Edit Form Qty Calculation 
+													 var invqbal = parseFloat($("#invqbal").val() - $("#invqshpd").val());
 													 var qbals = invqbal.toFixed(2);
+													 alert(qbals+"Qbalance.. ");
 													 $("#invqbal").val(qbals);
 													 //Rate Calculation
 													 var rate = $("#invrate").val();
@@ -657,8 +666,7 @@ $(document).ready(function() {
 			            groupField : ['invno'],
 			            groupOrder : ['desc'] 
 			        },
-				 });	
-			
+				 });			
 				 invgrid.jqGrid('navGrid','#invbillpager',{
 						add : true,
 						edit: true, 
@@ -673,31 +681,46 @@ $(document).ready(function() {
 							recreateForm: true,
 							closeAfterEdit: true,
 							reloadAfterSubmit: true,
-							beforeInintData: function ()
+							beforeInitData: function ()
 							{
-								alert("in B4 init data");
+								alert(" In B4 Init EDITTTT"+billInvisInEdit);
 								billInvisInEdit = true;
 							},
-							/*beforeShowForm : function(formID){
-								
+							beforeShowForm : function(formID){
+								$('#tr_invid').hide();
+								$('#tr_invno').hide();
+								$('#tr_invdt').hide();
+								$('#tr_invartid').hide();
 								$('#tr_invtc').hide();
-							}*/
+								
+								var invqbal = parseFloat( $("#invqshpd").val()) + parseFloat ($("#invqbal").val() );
+								var qbals = invqbal.toFixed(2);
+								alert(qbals+"Qbalance.. ");
+								$("#invqbal").val(qbals);
+								$('#invqshpd').val("");
+							}
 						},
-						/*
-						 * 
-						 * Remove Add Button - Bcos Qty Bal Calculates wrong
-						 */{
+					   /*
+						* Remove Add Button - Bcos Qty Bal Calculates wrong
+						*/
+						{
 							
-							// * Add Second BIll 
+							// * Add BIll 
 							recreateForm: true,
 							closeAfterAdd: true,
 							reloadAfterSubmit: true,
 							//Add 
-							beforeInintData: function ()
+							beforeInitData: function ()
 							{
+								alert(" In B4 Init ADDD"+billInvisInEdit);
 								billInvisInEdit = false;
 							},
 							beforeShowForm : function(formID){
+								 $("#invno").val($("#inv_invoiceno").val());
+								 $("#invdt").val($("#inv_invdate").val());
+								 $('#tr_invid').hide();
+								 $('#tr_invtc').hide();
+								
 								var selRowData;
 								var rowid = invgrid.jqGrid('getGridParam', 'selrow');
 					           	if (rowid === null) {
@@ -706,17 +729,16 @@ $(document).ready(function() {
 								}
 					           	selRowData = invgrid.jqGrid('getRowData', rowid);
 					           	alert(selRowData.invno);
-					           	$('#' + 'invid' + '.FormElement', formID).val(selRowData.invid);
-					            $('#' + 'invno' + '.FormElement', formID).val(selRowData.invno);
-					            $('#' + 'invdt' + '.FormElement', formID).val(selRowData.invdt);
-					            $('#' + 'invartid' + '.FormElement', formID).val(selRowData.invartid);
-					            $('#' + 'invctno' + '.FormElement', formID).val(selRowData.invctno);
+					           	$('#' + 'invctno' + '.FormElement', formID).val(selRowData.invctno);
+					         	$('#' + 'invartid' + '.FormElement', formID).val(selRowData.invartid);
 					            $('#' + 'invartname' + '.FormElement', formID).val(selRowData.invartname);
 					            $('#' + 'invcolor' + '.FormElement', formID).val(selRowData.invcolor);
 					            $('#' + 'invsize' + '.FormElement', formID).val(selRowData.invsize);
 					            $('#' + 'invsubs' + '.FormElement', formID).val(selRowData.invsubs);
 					            $('#' + 'invselc' + '.FormElement', formID).val(selRowData.invselc);
+					            $('#' + 'invunit' + '.FormElement', formID).val(selRowData.invunit);
 					            $('#' + 'invqty' + '.FormElement', formID).val(selRowData.invqty); 
+					            $('#' + 'invpcs' + '.FormElement', formID).val(selRowData.invpcs);
 					            $('#' + 'invrate' + '.FormElement', formID).val(selRowData.invrate);
 					            $('#' + 'invtc' + '.FormElement', formID).val(selRowData.invtc);
 					            $('#' + 'invqshpd' + '.FormElement', formID).val("0.00");
@@ -859,7 +881,7 @@ $(document).ready(function() {
 					function(result) { 	
 				       response($.map(result, function(item) {
 				           return { 
-				              value: item.destination,
+				              value: item.destictry,
 				              };
 				        }));//END response
 				 });
@@ -890,7 +912,7 @@ $(document).ready(function() {
 					function(result) { 	
 				       response($.map(result, function(item) {
 				           return { 
-				              value: item.destinationCountry,
+				              value: item.destictry,
 				              };
 				        }));//END response
 				 });
@@ -904,7 +926,7 @@ $(document).ready(function() {
 					function(result) { 	
 				       response($.map(result, function(item) {
 				           return { 
-				              value: item.destination,
+				              value: item.destiname,
 				              };
 				        }));//END response
 				 });

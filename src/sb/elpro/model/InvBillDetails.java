@@ -29,6 +29,7 @@ public class InvBillDetails implements Serializable{
 	private String invsubs;
 	private String invselc;
 	private String invqty;
+	private String invunit;
 	private String invpcs;
 	private String invrate;
 	private String invqshpd;
@@ -321,6 +322,18 @@ public class InvBillDetails implements Serializable{
 	 */
 	public void setInvdt(String invdt) {
 		this.invdt = invdt;
+	}
+	/**
+	 * @return the invunit
+	 */
+	public String getInvunit() {
+		return invunit;
+	}
+	/**
+	 * @param invunit the invunit to set
+	 */
+	public void setInvunit(String invunit) {
+		this.invunit = invunit;
 	}
 	
 		

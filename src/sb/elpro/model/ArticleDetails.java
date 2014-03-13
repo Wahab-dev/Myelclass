@@ -57,104 +57,94 @@ public class ArticleDetails implements Serializable {
 	private String comments;
 	private String reps;
 	private String feedback;
+	private String label;
+	private String value;
 	
 	
 	// Future combine SRFARticle and Article model class
-	private String srf_colormatch;
-	private String srf_tapetest;
-	private String srf_crockwet;
-	private String srf_crockdry;
-	private String srf_fourfold;
-	private String srf_keytest;
-	private String srf_samplenum;
+	private String colormatch;
+	private String tapetest;
+	private String crockwet;
+	private String crockdry;
+	private String fourfold;
+	private String keytest;
+	private String sampleno;
+	private String srfarticleid;
 	
 	
 	/**
-	 * @return the srf_colormatch
+	 * @return the colormatch
 	 */
-	public String getSrf_colormatch() {
-		return srf_colormatch;
+	public String getColormatch() {
+		return colormatch;
 	}
 	/**
-	 * @param srf_colormatch the srf_colormatch to set
+	 * @param colormatch the colormatch to set
 	 */
-	public void setSrf_colormatch(String srf_colormatch) {
-		this.srf_colormatch = srf_colormatch;
+	public void setColormatch(String colormatch) {
+		this.colormatch = colormatch;
 	}
 	/**
-	 * @return the srf_tapetest
+	 * @return the tapetest
 	 */
-	public String getSrf_tapetest() {
-		return srf_tapetest;
+	public String getTapetest() {
+		return tapetest;
 	}
 	/**
-	 * @param srf_tapetest the srf_tapetest to set
+	 * @param tapetest the tapetest to set
 	 */
-	public void setSrf_tapetest(String srf_tapetest) {
-		this.srf_tapetest = srf_tapetest;
+	public void setTapetest(String tapetest) {
+		this.tapetest = tapetest;
 	}
 	/**
-	 * @return the srf_crockwet
+	 * @return the crockwet
 	 */
-	public String getSrf_crockwet() {
-		return srf_crockwet;
+	public String getCrockwet() {
+		return crockwet;
 	}
 	/**
-	 * @param srf_crockwet the srf_crockwet to set
+	 * @param crockwet the crockwet to set
 	 */
-	public void setSrf_crockwet(String srf_crockwet) {
-		this.srf_crockwet = srf_crockwet;
+	public void setCrockwet(String crockwet) {
+		this.crockwet = crockwet;
 	}
 	/**
-	 * @return the srf_crockdry
+	 * @return the crockdry
 	 */
-	public String getSrf_crockdry() {
-		return srf_crockdry;
+	public String getCrockdry() {
+		return crockdry;
 	}
 	/**
-	 * @param srf_crockdry the srf_crockdry to set
+	 * @param crockdry the crockdry to set
 	 */
-	public void setSrf_crockdry(String srf_crockdry) {
-		this.srf_crockdry = srf_crockdry;
+	public void setCrockdry(String crockdry) {
+		this.crockdry = crockdry;
 	}
 	/**
-	 * @return the srf_fourfold
+	 * @return the fourfold
 	 */
-	public String getSrf_fourfold() {
-		return srf_fourfold;
+	public String getFourfold() {
+		return fourfold;
 	}
 	/**
-	 * @param srf_fourfold the srf_fourfold to set
+	 * @param fourfold the fourfold to set
 	 */
-	public void setSrf_fourfold(String srf_fourfold) {
-		this.srf_fourfold = srf_fourfold;
+	public void setFourfold(String fourfold) {
+		this.fourfold = fourfold;
 	}
 	/**
-	 * @return the srf_keytest
+	 * @return the keytest
 	 */
-	public String getSrf_keytest() {
-		return srf_keytest;
+	public String getKeytest() {
+		return keytest;
 	}
 	/**
-	 * @param srf_keytest the srf_keytest to set
+	 * @param keytest the keytest to set
 	 */
-	public void setSrf_keytest(String srf_keytest) {
-		this.srf_keytest = srf_keytest;
+	public void setKeytest(String keytest) {
+		this.keytest = keytest;
 	}
-	/**
-	 * @return the srf_samplenum
-	 */
-	public String getSrf_samplenum() {
-		return srf_samplenum;
-	}
-	/**
-	 * @param srf_samplenum the srf_samplenum to set
-	 */
-	public void setSrf_samplenum(String srf_samplenum) {
-		this.srf_samplenum = srf_samplenum;
-	}
-	private String label;
-	private String value;
+	
 	/**
 	 * @return the articleid
 	 */
@@ -671,6 +661,30 @@ public class ArticleDetails implements Serializable {
 	 */
 	public void setComments(String comments) {
 		this.comments = comments;
+	}
+	/**
+	 * @return the sampleno
+	 */
+	public String getSampleno() {
+		return sampleno;
+	}
+	/**
+	 * @param sampleno the sampleno to set
+	 */
+	public void setSampleno(String sampleno) {
+		this.sampleno = sampleno;
+	}
+	/**
+	 * @return the srfarticleid
+	 */
+	public String getSrfarticleid() {
+		return srfarticleid;
+	}
+	/**
+	 * @param srfarticleid the srfarticleid to set
+	 */
+	public void setSrfarticleid(String srfarticleid) {
+		this.srfarticleid = srfarticleid;
 	}
 		
 

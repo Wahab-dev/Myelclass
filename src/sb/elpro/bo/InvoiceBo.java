@@ -69,7 +69,7 @@ public interface InvoiceBo {
 
 	public boolean getInvBillAddDetails(InvBillDetails invaddagainbill)throws Exception; // Second Add
 
-	public boolean getInvBillEditDetails(InvBillDetails invaddagainbill)throws Exception;
+	public boolean getInvBillEditDetails(InvBillDetails inveditbill)throws Exception;
 
 	public boolean getInvBillDelDetails(InvBillDetails invaddagainbill)throws Exception;
 
@@ -79,7 +79,15 @@ public interface InvoiceBo {
 	 * @return
 	 * etc
 	 */
-	public List<InvoiceTotAmtDetails> getInvBillTotAmt(String invno)throws Exception;
+	public List<InvBillDetails> getInvBillTotAmt(String invno)throws Exception;
+
+	/**  
+	 * (Method description)
+	 * @param
+	 * @return
+	 * etc
+	 */
+	public String getSampleInvoiceNo(String saminvtype)throws Exception;
 
 	
 	

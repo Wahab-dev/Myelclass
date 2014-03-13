@@ -32,6 +32,7 @@
 	Go to Inspection Trackig <h:link action='/gotoInspectionTracking'>Inspection Tacking</h:link><br /><br />
 	Go to Master Trackig <h:link action='/gotoMasterTracking'>Master Tacking</h:link><br /><br />
 	Go to User input Settings <h:link action='/gotoUserInput'>User Input Settingss</h:link><br /><br />
+	Go to Sample Invoice Screen <h:link action='/gotoSampleInvoice'>Sample Invoice Screen</h:link><br /><br />
 
 </body>
 </html>

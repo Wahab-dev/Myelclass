@@ -65,9 +65,18 @@ public interface InvoiceDao {
 
 	boolean getInvAddbillSecondDetails(InvBillDetails invaddagainbill)throws SQLException;
 
-	boolean getInvEditbillDetails(InvBillDetails invaddagainbill)throws SQLException;
+	boolean getInvEditbillDetails(InvBillDetails inveditbill)throws SQLException;
 
 	boolean getInvDelbillDetails(InvBillDetails invaddagainbill)throws SQLException;
+
+	
+	/**  
+	 * (Method description)
+	 * @param
+	 * @return
+	 * etc
+	 */
+	ArrayList<InvBillDetails> getInvBillTotAmtDetails(String invno)throws SQLException;
 
 	/**  
 	 * (Method description)
@@ -75,7 +84,7 @@ public interface InvoiceDao {
 	 * @return
 	 * etc
 	 */
-	ArrayList<InvoiceTotAmtDetails> getBulkQtyDetails(String invno)throws SQLException;
+	String getSampleInvoiceNoDetails(String saminvtype)throws SQLException;
 
 	
 

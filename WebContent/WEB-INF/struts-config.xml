@@ -21,6 +21,7 @@
  	<form-bean name="GeneratePrfForm" type="sb.elpro.actionform.GeneratePrfForm"></form-bean>
  	<form-bean name="MasterTrackForm" type="sb.elpro.actionform.MasterTrackForm"></form-bean>
  	<form-bean name="UserInputForm" type="sb.elpro.actionform.UserInputForm"></form-bean>
+ 	<form-bean name="SampleInvoiceForm" type="sb.elpro.actionform.SampleInvoiceForm"></form-bean>
  	
 </form-beans>
  
@@ -192,6 +193,16 @@
 	  
 	   <action path="/userinput/loadvalues" name="UserInputForm" type="sb.elpro.action.UserInputAction" input="/jsp/Prf.jsp" scope="session">	 
 	 </action>	 
+	 
+	 <!-- Sample Invoice Screen  -->
+	   <action path="/gotoSampleInvoice" type="sb.elpro.action.SampleInvoiceLoadAction" input="/jsp/Menu.jsp" scope="session">
+	  	<forward name="sampleinvoiceisloaded" path="/jsp/SampleInvoice.jsp"></forward>
+	    </action> 
+	  <action path="/savesampleinvoice" name="SampleInvoiceForm" type="sb.elpro.action.SampleInvoiceAction" input="/jsp/SampleInvoice.jsp" scope="session" parameter="action">
+	  	<forward name="invoiceisloaded" path="/jsp/SampleInvoice.jsp"></forward>
+	    </action> 
+	  <action path="/sampleInvSelectCtfromCust" name="SampleInvoiceForm" type="sb.elpro.action.SampleInvSelectCtfromCust" input="/jsp/SampleInvoice.jsp" scope="session">
+	   </action>
 	  
  </action-mappings> 
  

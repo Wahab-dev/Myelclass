@@ -28,15 +28,11 @@ public class InvoiceLoadAction extends Action {
 				HttpServletRequest request, HttpServletResponse response) throws Exception, ServletException{
 			usersession = request.getSession(false);
 			if(usersession != null){
-				//usersession.setAttribute("InvExporterarray",invbo.getInvExporter());
-				//usersession.setAttribute("InvNotifyarray",invbo.getInvNotify());
-				//usersession.setAttribute("invBankarray",invbo.getInvBank());
-				//usersession.setAttribute("invCustomerarray",invbo.getInvCustomer());
-				//usersession.setAttribute("invCustContract", invbo.getInvCustContract());
-				//usersession.setAttribute("invoiceno",invbo.getInvoiceNo());
+				return map.findForward("invoiceisloaded");
 			}else{
 				System.out.println("Error");
+				return map.findForward("login");
 			}
-			return map.findForward("invoiceisloaded");
+			
 		}
 }

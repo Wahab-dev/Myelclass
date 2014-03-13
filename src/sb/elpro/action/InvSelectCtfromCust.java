@@ -4,6 +4,7 @@
 package sb.elpro.action;
 
 import java.io.PrintWriter;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -20,6 +21,7 @@ import org.apache.struts.action.ActionMapping;
 import sb.elpro.bo.InvoiceBo;
 import sb.elpro.bo.InvoiceBoImpl;
 import sb.elpro.model.ArticleDetails;
+import sb.elpro.model.BulkQtyDetails;
 import sb.elpro.model.CustomerInvoice;
 import sb.elpro.model.InvBillDetails;
 
@@ -132,6 +134,7 @@ public class InvSelectCtfromCust extends Action {
 			   invbill.setInvsize(request.getParameter("size"));
 			   invbill.setInvsubs(request.getParameter("substance"));
 			   invbill.setInvselc(request.getParameter("selection"));
+			   invbill.setInvunit(request.getParameter("unit"));
 			   invbill.setInvqty(request.getParameter("quantity"));
 			   invbill.setInvrate(request.getParameter("rate"));
 			   invbill.setInvqshpd(request.getParameter("qshipped"));
@@ -166,10 +169,7 @@ public class InvSelectCtfromCust extends Action {
 				   /*
 				    * Perform Delete Function
 				    */
-			   }
-               
-   			 
-				
+			   }			 				
 		   }else if(action.equalsIgnoreCase("loadBill")){ //Loads Grid 3 - Calls Immediately after Load 2 Add Method 
 			   String invno = request.getParameter("invno");
 			   String ctno = request.getParameter("ctno");
@@ -178,6 +178,9 @@ public class InvSelectCtfromCust extends Action {
 				System.out.println("type00000000s"+type);
 			   /*  String invtype = request.getParameter("invoicetype");*/
 			   if(oper == null){ // Load Operation
+				   	 String totqtyshpd ="";
+	         		 String totpcs = "";
+	         		 String totamt ="";
 					List<InvBillDetails> invbilllist = invbo.getInvBillDetails(invno,ctno,type);
 			   		int records = invbilllist.size();
 			   		int page = Integer.parseInt(pag);
@@ -187,17 +190,28 @@ public class InvSelectCtfromCust extends Action {
 		            /*
 		             * For tot Amt
 		             */
-		            //List<InvoiceTotAmtDetails> invtotamt = invbo.getInvBillTotAmt(invno);
-		            
-		            
+		            List<InvBillDetails> invtotamt = invbo.getInvBillTotAmt(invno);
+		            Iterator<InvBillDetails> iter = invtotamt.iterator();  
+		            while(iter.hasNext()){                
+		            	InvBillDetails invtotamtBean = iter.next();
+		            	totqtyshpd  = invtotamtBean.getInvqty();
+			        	totpcs  = invtotamtBean.getInvpcs();
+			        	totamt = invtotamtBean.getInvamt(); 
+			        	System.out.println("Tot QTY LIS "+totqtyshpd);
+			        	System.out.println("Tot PCs LIS "+totpcs);
+			        	System.out.println("Tot Amt LIS "+totamt);
+			        }
+				
+				
+				   JSONObject totobj = new JSONObject();
+				   totobj.put("invqshpd", totqtyshpd);
+				   totobj.put("invpcs", totpcs);
+				   totobj.put("invamt", totamt);
 		            if (totalCount > 0) {
 		               	 if(totalCount % Integer.parseInt(rows) == 0) {
-		               		 	System.out.println("STEP 1 "+totalCount % Integer.parseInt(rows) );
-		                        totalPages = totalCount / Integer.parseInt(rows);
-		                        System.out.println("STEP 2 "+totalPages);
+		               		 	totalPages = totalCount / Integer.parseInt(rows);
 		                  } else {
 		                        totalPages = (totalCount / Integer.parseInt(rows)) + 1;
-		                        System.out.println("STEP 3 "+totalPages);
 		                  }
 		             }else {
 		                   totalPages = 0;
@@ -206,6 +220,7 @@ public class InvSelectCtfromCust extends Action {
 					jsonobj.put("page", page);
 					jsonobj.put("records", records);
 					jsonobj.put("rows", invbilllist);
+					jsonobj.accumulate("userdata", totobj);
 					System.out.println(jsonobj);		
 					out.println(jsonobj);	
 			   }else{ // Option For Add, Edit , Del
@@ -216,7 +231,9 @@ public class InvSelectCtfromCust extends Action {
 				   invaddagainbill.setInvsize(request.getParameter("invsize"));
 				   invaddagainbill.setInvsubs(request.getParameter("invsubs"));
 				   invaddagainbill.setInvselc(request.getParameter("invselc"));
+				   invaddagainbill.setInvunit(request.getParameter("invunit"));
 				   invaddagainbill.setInvqty(request.getParameter("invqty"));
+				   invaddagainbill.setInvpcs(request.getParameter("invpcs"));
 				   invaddagainbill.setInvrate(request.getParameter("invrate"));
 				   invaddagainbill.setInvqshpd(request.getParameter("invqshpd"));
 				   invaddagainbill.setInvqbal(request.getParameter("invqbal"));
@@ -266,11 +283,14 @@ public class InvSelectCtfromCust extends Action {
 								jsonobj.put("Error", "Error in Deleted the Record ");	
 								out.println(jsonobj);	
 						}	
-				   	   }
+				   }
 		   }
 		   }else if(action.equalsIgnoreCase("editBill")) {
 			   System.out.println("In EDit MOde OF ADD BILLL ");
 		   }
+		}else{
+			System.out.println("Invalid User pls Login Again");
+			return map.findForward("login");
 		}
 		
 		return null;

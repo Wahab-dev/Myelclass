@@ -326,14 +326,14 @@ $(document).ready(function() {
 		pager: '#pager',
 		rowNum:6, 
 		rowList:[6,8,10],
-      loadtext: "Bow Bow........... ",
-      sortname: 'articlename',  
-      sortorder: 'desc', 
-      viewrecords: true,
-      gridview: true, // if used cant use subgrid, treegrid and aftertInsertRow 
-      height: "100%", 
-      emptyrecords: 'No records to display',
-      editurl: "/Myelclass/PrfinsertArticle.do",
+        loadtext: "Bow Bow........... ",
+        sortname: 'articlename',  
+        sortorder: 'desc', 
+        viewrecords: true,
+        gridview: true, // if used cant use subgrid, treegrid and aftertInsertRow 
+        height: "100%", 
+        emptyrecords: 'No records to display',
+      	editurl: "/Myelclass/PrfinsertArticle.do",
 		}).jqGrid('navGrid','#pager',{add:true, edit:true, del:true, search: false}, 
 			/*
 	         *  // edit option
