@@ -33,6 +33,7 @@ public class SrfInsertArticle extends Action{
 		public ActionForward execute(ActionMapping map, ActionForm form, 
 				HttpServletRequest request, HttpServletResponse response) throws Exception{			
 			response.setContentType("application/json");
+			response.setCharacterEncoding("UTF-8");
 			PrintWriter out = response.getWriter();
 			usersession = request.getSession(false);
 			JSONObject jsonobj = new JSONObject();

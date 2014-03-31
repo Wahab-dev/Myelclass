@@ -37,6 +37,37 @@ public class RaiseDebit implements Serializable {
 	private String deb_rate;
 	private String deb_invoiceamt;
 	private String deb_commission1;
+	private String deb_commission2;
+	private String deb_commission3;
+	private String deb_tc;
+	private String deb_exchangerate;
+	private String deb_elclassamt;
+	private String deb_elclassamtinrs;
+	private String deb_tax;
+	private String deb_total;
+	private String deb_tds;
+	private String deb_due;
+	private String deb_deduction;
+	private String deb_iswaived;
+	
+	//TcDebit 
+
+	private String tcdeb_tcdebitno;
+	private String tcdeb_exporter;
+	private String tcdeb_tanaddr;
+	private String tcdeb_tantelephone;
+	private String tcdeb_tcdebitdate;
+	private String tcdeb_taninvno;
+	private String tcdeb_elclassrefno;
+	private String tcdeb_exchangerate;
+	private String tcdeb_commission1;
+	private String tcdeb_tcamt;
+	private String tcdeb_rate;
+	private String tcdeb_totalquantity;
+	private String tcdeb_invoiceamt;
+	private String tcdeb_elclassamt;
+	private String tcdeb_elclassamtinrs;
+	
 	/**
 	 * @return the deb_commission1
 	 */
@@ -253,36 +284,6 @@ public class RaiseDebit implements Serializable {
 	public void setTcdeb_elclassamtinrs(String tcdeb_elclassamtinrs) {
 		this.tcdeb_elclassamtinrs = tcdeb_elclassamtinrs;
 	}
-	private String deb_commission2;
-	private String deb_commission3;
-	private String deb_tc;
-	private String deb_exchangerate;
-	private String deb_elclassamt;
-	private String deb_elclassamtinrs;
-	private String deb_tax;
-	private String deb_total;
-	private String deb_tds;
-	private String deb_due;
-	private String deb_deduction;
-	private String deb_iswaived;
-	
-	//TcDebit 
-
-	private String tcdeb_tcdebitno;
-	private String tcdeb_exporter;
-	private String tcdeb_tanaddr;
-	private String tcdeb_tantelephone;
-	private String tcdeb_tcdebitdate;
-	private String tcdeb_taninvno;
-	private String tcdeb_elclassrefno;
-	private String tcdeb_exchangerate;
-	private String tcdeb_commission1;
-	private String tcdeb_tcamt;
-	private String tcdeb_rate;
-	private String tcdeb_totalquantity;
-	private String tcdeb_invoiceamt;
-	private String tcdeb_elclassamt;
-	private String tcdeb_elclassamtinrs;
 	
 	
 	/**

@@ -431,7 +431,7 @@ public class InspectionDaoImpl implements InspectionDao {
 			while(rs.next()) {	
 				InspectionBean insprejbean = new InspectionBean();
 				insprejbean.setId(rs.getString("id"));
-			    insprejbean.setRejectsid(rs.getString("rejectid"));
+			    insprejbean.setRejectid(rs.getString("rejectid"));
 				insprejbean.setArticleid(rs.getString("articleid"));
 				insprejbean.setArttype(rs.getString("arttype"));
 				insprejbean.setRejcolor(rs.getString("color"));
@@ -471,8 +471,8 @@ public class InspectionDaoImpl implements InspectionDao {
 			String sqlquery_saveinsprejinspgrad = sql_saveinsprej.toString();
 			
 			pst = (PreparedStatement) con.prepareStatement(sqlquery_saveinsprejinspgrad);
-			pst.setString(1, insprej.getRejectsid());
-			System.out.println("getRejectid " +insprej.getRejectsid());
+			pst.setString(1, insprej.getRejectid());
+			System.out.println("getRejectid " +insprej.getRejectid());
 			pst.setString(2, insprej.getArticleid());
 			pst.setString(3, insprej.getArttype());
 			pst.setString(4, insprej.getRejcolor());
@@ -512,8 +512,8 @@ public class InspectionDaoImpl implements InspectionDao {
 			StringBuffer sql_saveInsprej = new StringBuffer("UPDATE elpro.tbl_insprejectdetails SET rejectid = ? , articleid = ? , arttype= ?, color = ? , rjtotinspected= ? , totpassed = ? , totrejects = ? , subsrejects = ?, sizerejects = ? , selecrejects = ? , colorrejects = ? , orgrejects= ?, otherrejects = ?  WHERE id = '"+insprej.getId()+"' ");
 			String sqlquery_saveInsprej = sql_saveInsprej.toString();
 			pst = (PreparedStatement) con.prepareStatement(sqlquery_saveInsprej);
-			pst.setString(1, insprej.getRejectsid());
-			System.out.println("getRejectid " +insprej.getRejectsid());
+			pst.setString(1, insprej.getRejectid());
+			System.out.println("getRejectid " +insprej.getRejectid());
 			pst.setString(2, insprej.getArticleid());
 			pst.setString(3, insprej.getArttype());
 			pst.setString(4, insprej.getRejcolor());
@@ -564,6 +564,52 @@ public class InspectionDaoImpl implements InspectionDao {
 	   }	
 	//return noofrows;
 		return isdel;
+	}
+
+	/* (non-Javadoc)
+	 * @see sb.elpro.dao.InspectionDao#saveInspectionForm(sb.elpro.model.InspectionBean)
+	 */
+	@Override
+	public boolean saveInspectionForm(InspectionBean inspbean)
+			throws SQLException {
+		System.out.println("In Sample Invoice SAVE");
+		Connection con = null;
+		PreparedStatement pst = null;
+		int noofrows  = 0;
+		boolean isSaved =true;
+		try{
+			con = DBConnection.getConnection();
+			StringBuffer sql_savinspform = new StringBuffer("insert into tbl_inspform ( status, inspdate, qualitycontroller, contractno, articleid, article, color, inspcdn, testid, gradeid, rejectsid, totinspected, inspcomments)");
+			sql_savinspform.append("values (?,?,?,?,?,?,?,?,?,?,?,?,?)");
+			String sqlquery_savinspform = sql_savinspform.toString();
+			pst = (PreparedStatement) con.prepareStatement(sqlquery_savinspform);
+			pst.setString(1, inspbean.getStatus());
+			System.out.println("getStatus " +inspbean.getStatus());
+			pst.setString(2, inspbean.getInspdate());
+			System.out.println("getInspdate " +inspbean.getInspdate());
+			pst.setString(3, inspbean.getInspqualityctrlr());
+			pst.setString(4, inspbean.getInspContractNo());
+			pst.setString(5, inspbean.getArtidhidden());
+			pst.setString(6, inspbean.getArticle());
+			pst.setString(7, inspbean.getColor());
+			pst.setString(8, inspbean.getInsp_cdn());
+			pst.setString(9, inspbean.getTestid());
+			pst.setString(10, inspbean.getGradeid());
+			pst.setString(11, inspbean.getRejectid());
+			pst.setString(12, inspbean.getTotinspected());
+			pst.setString(13, inspbean.getInspcomments());
+			System.out.println("getComments " +inspbean.getComments());
+			noofrows = pst.executeUpdate();
+		System.out.println("Sucessfully inserted the record.." + noofrows);
+		}catch(Exception e){
+			e.printStackTrace();
+			isSaved = false;
+			System.out.println("ERROR RESULT");
+		}finally{
+			con.close() ;
+			pst.close();
+		}	
+	return isSaved;
 	}
 
 }

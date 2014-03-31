@@ -71,6 +71,12 @@ public class ArticleDetails implements Serializable {
 	private String sampleno;
 	private String srfarticleid;
 	
+	//color details 
+	private String colorid;
+	private String pantoneshade;
+	private String colorothername;
+	private String colorrefno;
+	
 	
 	/**
 	 * @return the colormatch
@@ -685,6 +691,54 @@ public class ArticleDetails implements Serializable {
 	 */
 	public void setSrfarticleid(String srfarticleid) {
 		this.srfarticleid = srfarticleid;
+	}
+	/**
+	 * @return the colorid
+	 */
+	public String getColorid() {
+		return colorid;
+	}
+	/**
+	 * @param colorid the colorid to set
+	 */
+	public void setColorid(String colorid) {
+		this.colorid = colorid;
+	}
+	/**
+	 * @return the pantoneshade
+	 */
+	public String getPantoneshade() {
+		return pantoneshade;
+	}
+	/**
+	 * @param pantoneshade the pantoneshade to set
+	 */
+	public void setPantoneshade(String pantoneshade) {
+		this.pantoneshade = pantoneshade;
+	}
+	/**
+	 * @return the colorothername
+	 */
+	public String getColorothername() {
+		return colorothername;
+	}
+	/**
+	 * @param colorothername the colorothername to set
+	 */
+	public void setColorothername(String colorothername) {
+		this.colorothername = colorothername;
+	}
+	/**
+	 * @return the colorrefno
+	 */
+	public String getColorrefno() {
+		return colorrefno;
+	}
+	/**
+	 * @param colorrefno the colorrefno to set
+	 */
+	public void setColorrefno(String colorrefno) {
+		this.colorrefno = colorrefno;
 	}
 		
 

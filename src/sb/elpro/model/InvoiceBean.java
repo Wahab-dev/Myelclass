@@ -9,7 +9,7 @@ import java.io.Serializable;
  * @author Wahab
  *
  */
-public class InvoiceForm implements Serializable {
+public class InvoiceBean implements Serializable {
 	/**
 	 * 
 	 */

@@ -87,6 +87,8 @@ public class SampleRequest implements Serializable {
 	private String srf_courier;
 	private String srf_feedback;
 	private String srf_isSample;
+
+	private String srfactionform;
 	/**
 	 * @return the srf_sampleno
 	 */
@@ -879,6 +881,18 @@ public class SampleRequest implements Serializable {
 	 */
 	public void setSrf_forwarder(String srf_forwarder) {
 		this.srf_forwarder = srf_forwarder;
+	}
+	/**
+	 * @return the srfactionform
+	 */
+	public String getSrfactionform() {
+		return srfactionform;
+	}
+	/**
+	 * @param srfactionform the srfactionform to set
+	 */
+	public void setSrfactionform(String srfactionform) {
+		this.srfactionform = srfactionform;
 	}
 
 }

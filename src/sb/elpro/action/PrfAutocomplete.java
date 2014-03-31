@@ -43,6 +43,7 @@ public class PrfAutocomplete extends Action {
 	public ActionForward execute(ActionMapping mapping, ActionForm form, 
 			HttpServletRequest request,  HttpServletResponse response) throws Exception{
 		 response.setContentType("application/json");
+		 response.setCharacterEncoding("UTF-8");
 			PrintWriter out = response.getWriter();
 			usersession = request.getSession(false);
 			if(usersession != null){

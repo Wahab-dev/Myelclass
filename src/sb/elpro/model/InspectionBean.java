@@ -15,18 +15,24 @@ public class InspectionBean implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = -5064888768604040704L;
-	
 	private String id; 
 	private String inspid; //inspection id
 	private String inspContractNo;
 	private String inspdate;
 	private String inspqualityctrlr;
-	private String inspcdn;
+	private String insp_cdn;
 	private String inspcomments;
 	
-	private String articleid;		
+	private String articleid;	
+	private String artidhidden;	
 	private String color;
-	
+	private String size;
+	private String substance;
+	private String sel;
+	private String quantity;
+	private String cust;
+	private String tan;
+	private String ctdt;
 	//Manual test 
 	private String testid;
 	private String testtype;
@@ -55,7 +61,6 @@ public class InspectionBean implements Serializable {
 	private String percent;
 	private String comment;
 	
-	
 	/*private String contractno;
 	private String inspectionid;
 	private String qualityctrl;
@@ -77,7 +82,7 @@ public class InspectionBean implements Serializable {
 	
 	
 	// Rejects 
-	private String rejectsid;
+	private String rejectid;
 	private String arttype;
 	private String rejcolor;
 	private String totinspected;
@@ -143,18 +148,7 @@ public class InspectionBean implements Serializable {
 	public void setInspqualityctrlr(String inspqualityctrlr) {
 		this.inspqualityctrlr = inspqualityctrlr;
 	}
-	/**
-	 * @return the insp_cdn
-	 */
-	public String getInspcdn() {
-		return inspcdn;
-	}
-	/**
-	 * @param insp_cdn the insp_cdn to set
-	 */
-	public void setInspcdn(String inspcdn) {
-		this.inspcdn = inspcdn;
-	}
+
 	/**
 	 * @return the articleid
 	 */
@@ -636,20 +630,126 @@ public class InspectionBean implements Serializable {
 	public void setStatus(String status) {
 		this.status = status;
 	}
-	/**
-	 * @return the rejectsid
-	 */
-	public String getRejectsid() {
-		return rejectsid;
+	
+	public String getRejectid() {
+		return rejectid;
 	}
 	/**
-	 * @param rejectsid the rejectsid to set
+	 * @param rejectid the rejectid to set
 	 */
-	public void setRejectsid(String rejectsid) {
-		this.rejectsid = rejectsid;
+	public void setRejectid(String rejectid) {
+		this.rejectid = rejectid;
+	}
+	/**
+	 * @return the insp_cdn
+	 */
+	public String getInsp_cdn() {
+		return insp_cdn;
+	}
+	/**
+	 * @param insp_cdn the insp_cdn to set
+	 */
+	public void setInsp_cdn(String insp_cdn) {
+		this.insp_cdn = insp_cdn;
+	}
+	/**
+	 * @return the ctdt
+	 */
+	public String getCtdt() {
+		return ctdt;
+	}
+	/**
+	 * @param ctdt the ctdt to set
+	 */
+	public void setCtdt(String ctdt) {
+		this.ctdt = ctdt;
 	}
 	
-	
+
+	/**
+	 * @return the size
+	 */
+	public String getSize() {
+		return size;
+	}
+	/**
+	 * @param size the size to set
+	 */
+	public void setSize(String size) {
+		this.size = size;
+	}
+	/**
+	 * @return the substance
+	 */
+	public String getSubstance() {
+		return substance;
+	}
+	/**
+	 * @param substance the substance to set
+	 */
+	public void setSubstance(String substance) {
+		this.substance = substance;
+	}
+	/**
+	 * @return the sel
+	 */
+	public String getSel() {
+		return sel;
+	}
+	/**
+	 * @param sel the sel to set
+	 */
+	public void setSel(String sel) {
+		this.sel = sel;
+	}
+	/**
+	 * @return the quantity
+	 */
+	public String getQuantity() {
+		return quantity;
+	}
+	/**
+	 * @param quantity the quantity to set
+	 */
+	public void setQuantity(String quantity) {
+		this.quantity = quantity;
+	}
+	/**
+	 * @return the cust
+	 */
+	public String getCust() {
+		return cust;
+	}
+	/**
+	 * @param cust the cust to set
+	 */
+	public void setCust(String cust) {
+		this.cust = cust;
+	}
+	/**
+	 * @return the tan
+	 */
+	public String getTan() {
+		return tan;
+	}
+	/**
+	 * @param tan the tan to set
+	 */
+	public void setTan(String tan) {
+		this.tan = tan;
+	}
+	/**
+	 * @return the artidhidden
+	 */
+	public String getArtidhidden() {
+		return artidhidden;
+	}
+	/**
+	 * @param artidhidden the artidhidden to set
+	 */
+	public void setArtidhidden(String artidhidden) {
+		this.artidhidden = artidhidden;
+	}
 
 
 }

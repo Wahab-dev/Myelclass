@@ -4,10 +4,18 @@
  * 
  */
 $(document).ready(function() {
+	
 	$.get("/Myelclass/SrfAutoComplete.do?action="+"sampleno", 
-		 	function(data){alert("Data: " + data);
-		 	$("#srf_sampleno").val(data); 
-		 	$.trim($("#srf_sampleno").val());
+		 	function(data){
+				alert("Data: " + data);
+			 	alert($("#srfactionform").val()); 
+			 	if($("#srfactionform").val().toLowerCase() == "edit" ){
+			 		
+			 	}else{
+			 		$("#srf_sampleno").val(data); 
+			 		$.trim($("#srf_sampleno").val());
+			 	}
+			 	
 		 	},"text");
 	
 	
@@ -15,7 +23,8 @@ $(document).ready(function() {
 		grid.jqGrid({ 
 			         datatype: "json",
 				     url:"/Myelclass/SrfinsertArticle.do", 
-			         mtype: "GET",  
+			         mtype: "GET", 
+			     	autoencode: true,
 			         postData: {
 			        	 sampleno: function (){return $("#srf_sampleno").val();},
 				    },
@@ -93,6 +102,7 @@ $(document).ready(function() {
 			      						          	 $('#srf_selection').val(ui.item.selec);
 			      						          	 $('#srf_selectionp').val(ui.item.selp);
 			      						          	 $('#srf_ratesign').val(ui.item.ratesign);
+			      						          	 alert("val " +$('#srf_ratesign').val());
 			      						          	 $('#srf_rateamt').val(ui.item.rateamt);
 			      						          	 $('#srf_shipment').val(ui.item.shipment);
 			      						            } 
@@ -202,8 +212,8 @@ $(document).ready(function() {
 			                    },   
 			                    {name:'srf_ratesign', index:'currency',  align:'center', editable:true, sortable:true, hidden:true, 
 			                    	 edittype:'select',
-			       				     editoptions:{value:{0:'--- Select Currency --- ',$:'$',Rs:'Rs',Euro:'Euro',NA:' Not Available'}},
-			       				     //editoptions:{value:"0:--- Select Currency --- ; $:Dollar; Rs:Rupees; €:Euro; NA:Not Available"},
+			       				     editoptions:{value:{0:'--- Select Currency --- ',$:'$',Rs:'Rs',Euro:'€',NA:' Not Available'}},
+			                    	//   editoptions:{value:  "TBA:TBA;$:$; €:€; NA:NA;"},
 			       				     editrules:{edithidden:true},	
 			       				  formoptions:{rowpos: 8, colpos: 1},
 			                    },  
@@ -213,7 +223,7 @@ $(document).ready(function() {
 			                    },   
 			                    {name:'srf_shipment', index:'shipment',  align:'center', editable:true, sortable:true, hidden:true, 
 			                    	 edittype:'select',
-			       			      editoptions:{value:{0:'--- Select Shipment --- ',Air:'Air',Sea:'Sea',Courier:'Courier',Truck:'Truck'}},
+			       			      editoptions:{value:{0:'--- Select Shipment --- ',Air:'Air',Sea:'Sea',Courier:'Courier',Truck:'Truck',Train:'Train'}},
 			       			      editrules:{edithidden:true},	
 			       			      formoptions:{rowpos: 8, colpos: 3},
 			                    },  
@@ -287,6 +297,7 @@ $(document).ready(function() {
 		  top: 150,
 		  left: 200,
 		  width : 850,
+		  recreateForm: true,
 		  beforeShowForm: function(form) { 
 			  //Size Calculation
 			  var sizec = $("#srf_size").val();
@@ -311,15 +322,23 @@ $(document).ready(function() {
 			  $("#srf_shipment").val(ratec.substring(ratemplast+1));
 				 
 			  $("#tr_srf_price").hide();
-		  },
+			  // Add Button i n Edit Form
+			   /*   $('<a href="#">Edit save<span class="ui-icon ui-icon-disk"></span></a>')
+		                .click(function() {
+		                	grid.jqGrid('editGridRow', "new", properties );
+		                }).addClass("fm-button ui-state-default ui-corner-all fm-button-icon-left")
+		                  .prependTo("#Act_Buttons>td.EditButton");*/
+		        
+		        },
 		        closeAfterEdit: true,
 				reloadAfterSubmit: true,
-		      	  
 			
 		},		
 		{
 			//Add
 			beforeShowForm: function(form) { 
+				
+				 
 	           	 $("#srf_samplenum").val($("#srf_sampleno").val());
 	           	 $("#user").val($("#userinsession").val());
 	            	$("#tr_srf_price").hide(); // hide the tr prf_rate
@@ -416,7 +435,7 @@ $(document).ready(function() {
 			                	return {
 			                		label: item.label,  //can add number of attributes here   
 			                        value: item.label  // I am displaying both labe and value  
-			                		};
+			                	};
 			            }));
 			        });
 			    }
@@ -432,7 +451,7 @@ $(document).ready(function() {
 	                		label: item.label,  
 	                        shform: item.shform, //can add number of attributes here   
 	                        value: item.label +" , "+ item.value // I am displaying both labe and value  
-	                		};
+	                	};
 	            }));
 	        });
 	    }
@@ -521,6 +540,16 @@ $(document).ready(function() {
 	    }
 
 	});
+	 var unavailableDates = ["14-04-2014", "01-01-2014", "14-01-2014", "01-05-2014", "01-01-2014", "15-08-2014"];
+	 function unavailable(date) {
+	        dmy = date.getDate() + "-" + (date.getMonth() + 1) + "-" + date.getFullYear();
+	        if ($.inArray(dmy, unavailableDates) == -1) {
+	            return [true, ""];
+	        } else {
+	            return [false, "", "Unavailable"];
+	        }
+	    }
+	 
 	//Date Picker
 		 $('.srf_deliverydate').datepicker({
 			 autoSize: true,
@@ -531,7 +560,7 @@ $(document).ready(function() {
 			    numberOfMonths: 2,
 			    showButtonPanel: false,
 			    gotoCurrent:true, 
-			    
+		 		beforeShowDay:unavailable
 			   
 			});
 		$("#srf_orderdate").datepicker({
@@ -543,6 +572,10 @@ $(document).ready(function() {
 			    numberOfMonths: 1,
 			    showButtonPanel: false,
 			    gotoCurrent:true, 
+			    beforeShowDay: function(date) {
+			        var day = date.getDay();              // Disable only SUndays
+			        return [(day != 0), ''];
+			    } 
 			    
 		});
 		/*$("#Save").click(function(){	

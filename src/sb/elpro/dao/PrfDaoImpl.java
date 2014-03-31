@@ -196,9 +196,9 @@ public class PrfDaoImpl implements PrfDao {
 			rs = st.executeQuery(sql);
 			while(rs.next()) {	
 				PaymentDetails paybean = new PaymentDetails();
-				paybean.setPayment(rs.getString("payname"));
-				paybean.setPaymentId(rs.getString("payid"));
-				System.out.println("Payment name "+paybean.getPayment());
+				paybean.setPaymentname(rs.getString("payname"));
+				paybean.setPaymentid(rs.getString("payid"));
+				System.out.println("Payment name "+paybean.getPaymentname());
 				payarraylist.add(paybean);
 				}
 			System.out.println("payname Added Successfully");
@@ -226,9 +226,9 @@ public class PrfDaoImpl implements PrfDao {
 			rs = st.executeQuery(sql);
 			while(rs.next()) {	
 				TermsDetails termsbean = new TermsDetails();
-				termsbean.setTermName(rs.getString("termname"));
-				termsbean.setTermId(rs.getString("termid"));
-				System.out.println("Terms name "+termsbean.getTermName());
+				termsbean.setTermname(rs.getString("termname"));
+				termsbean.setTermid(rs.getString("termid"));
+				System.out.println("Terms name "+termsbean.getTermname());
 				termsarray.add(termsbean);
 				}
 			System.out.println("termname Result Added Successfully");
@@ -669,7 +669,7 @@ public class PrfDaoImpl implements PrfDao {
 				System.out.println(" shipmntindex"+shipmntindex);
 				String ratesign = rat.substring(0,shipmntindex).trim();
 				System.out.println(" ratesign"+ratesign);
-				String rateamt = rat.substring(shipmntindex+1,shipmntindexlst-1).trim();
+				String rateamt = rat.substring(shipmntindex+1,shipmntindexlst).trim();
 				System.out.println(" rateamt"+rateamt);
 				String shipment = rat.substring(shipmntindexlst+1).trim();
 				System.out.println(" shipment"+shipment);
@@ -1121,7 +1121,7 @@ public class PrfDaoImpl implements PrfDao {
 					String sqlquery_delprfArticlestatus = sql_delprfArticlestatus.toString();
 					System.out.println("Save quert" +sqlquery_delprfArticlestatus);
 					pst1 = (PreparedStatement) con.prepareStatement(sqlquery_delprfArticlestatus);
-					
+
 					delstatusrow = pst1.executeUpdate();
 					System.out.println("Sucessfully Inseerter in Status Table." + delstatusrow);
 				}
@@ -1176,7 +1176,10 @@ public class PrfDaoImpl implements PrfDao {
 				editprfformbean.setPrf_bankname(rs.getString("bankid"));
 				editprfformbean.setPrf_pojw(rs.getString("pojw"));
 				editprfformbean.setFormaction("edit");
+				 
+				
 				editprfformlist.add(editprfformbean);
+				
 				}
 			System.out.println(" dest Result Added Successfully");
 			}catch(Exception e){

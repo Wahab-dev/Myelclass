@@ -53,6 +53,7 @@ public class BulkInsertAction extends Action {
 			PrintWriter out = response.getWriter();
 			JSONObject jsonobj = new JSONObject();
 			response.setContentType("application/json");
+			response.setCharacterEncoding("UTF-8");
 			System.out.println("In Bulk Action ");
 			 if(usersession != null){	
 				 String oper =   request.getParameter("oper");

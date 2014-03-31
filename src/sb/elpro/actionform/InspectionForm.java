@@ -3,7 +3,10 @@
  */
 package sb.elpro.actionform;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.struts.action.ActionForm;
+import org.apache.struts.action.ActionMapping;
 
 /**
  * @author Wahab
@@ -24,8 +27,16 @@ public class InspectionForm extends ActionForm {
 	private String insp_cdn;
 	private String inspcomments;
 	
-	private String articleid;		
+	private String articleid;	
+	private String artidhidden;	
 	private String color;
+	private String size;
+	private String substance;
+	private String sel;
+	private String quantity;
+	private String cust;
+	private String tan;
+	private String ctdt;
 	
 	//Manual test 
 	private String testid;
@@ -648,5 +659,184 @@ public class InspectionForm extends ActionForm {
 		this.status = status;
 	}
 	
-	
+	/* (non-Javadoc)
+	 * @see org.apache.struts.action.ActionForm#reset(org.apache.struts.action.ActionMapping, javax.servlet.http.HttpServletRequest)
+	 */
+	@Override
+	public void reset(ActionMapping mapping, HttpServletRequest request) {
+		id=""; 
+		inspid=""; //inspection id
+		inspContractNo="";
+		inspdate="";
+		inspqualityctrlr="";
+		insp_cdn="";
+		inspcomments="";
+		
+		articleid="";		
+		color="";
+		
+		//Manual test 
+		testid="";
+		testtype="";
+		
+		testedpcs=""; 
+		result="";
+		comments="";
+		
+		article="";
+		colortest="";
+		subs="";
+		tearstrength="";
+		grainbreak="";
+		crockingdry="";
+		crockingwet="";
+		finishadhension="";
+		fourfold="";
+		crosssection="";
+		organoleptic="";
+		
+		//Grade
+		gradeid="";
+		gradecolor="";
+		grade="";
+		skincount="";
+		percent="";
+		comment="";
+		
+		/*contractno="";
+		inspectionid="";
+		qualityctrl="";
+		grade1skincount="";
+		grade2skincount="";
+		grade3skincount="";
+		grade4skincount="";
+		grade5skincount="";
+		grade1percent="";
+		grade2percent="";
+		grade3percent="";
+		grade4percent="";
+		grade5percent="";
+		grade1comments="";
+		grade2comments="";
+		grade3comments="";
+		grade4comments="";
+		grade5comments="";*/
+		
+		
+		// Rejects 
+		rejectid="";
+		arttype="";
+		rejcolor="";
+		totinspected="";
+		totpassed="";
+		totrejects="";
+		subsrejects="";
+		sizerejects="";
+		selecrejects="";
+		colorrejects="";
+		orgrejects="";
+		otherrejects="";
+		
+		
+		grtotinspected="";
+		rjtotinspected="";
+		status="";
+	}
+	/**
+	 * @return the tan
+	 */
+	public String getTan() {
+		return tan;
+	}
+	/**
+	 * @param tan the tan to set
+	 */
+	public void setTan(String tan) {
+		this.tan = tan;
+	}
+	/**
+	 * @return the cust
+	 */
+	public String getCust() {
+		return cust;
+	}
+	/**
+	 * @param cust the cust to set
+	 */
+	public void setCust(String cust) {
+		this.cust = cust;
+	}
+	/**
+	 * @return the quantity
+	 */
+	public String getQuantity() {
+		return quantity;
+	}
+	/**
+	 * @param quantity the quantity to set
+	 */
+	public void setQuantity(String quantity) {
+		this.quantity = quantity;
+	}
+	/**
+	 * @return the sel
+	 */
+	public String getSel() {
+		return sel;
+	}
+	/**
+	 * @param sel the sel to set
+	 */
+	public void setSel(String sel) {
+		this.sel = sel;
+	}
+	/**
+	 * @return the substance
+	 */
+	public String getSubstance() {
+		return substance;
+	}
+	/**
+	 * @param substance the substance to set
+	 */
+	public void setSubstance(String substance) {
+		this.substance = substance;
+	}
+	/**
+	 * @return the size
+	 */
+	public String getSize() {
+		return size;
+	}
+	/**
+	 * @param size the size to set
+	 */
+	public void setSize(String size) {
+		this.size = size;
+	}
+	/**
+	 * @return the ctdt
+	 */
+	public String getCtdt() {
+		return ctdt;
+	}
+	/**
+	 * @param ctdt the ctdt to set
+	 */
+	public void setCtdt(String ctdt) {
+		this.ctdt = ctdt;
+	}
+	/**
+	 * @return the artidhidden
+	 */
+	public String getArtidhidden() {
+		return artidhidden;
+	}
+	/**
+	 * @param artidhidden the artidhidden to set
+	 */
+	public void setArtidhidden(String artidhidden) {
+		this.artidhidden = artidhidden;
+	}
 }
+

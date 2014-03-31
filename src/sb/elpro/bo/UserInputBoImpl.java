@@ -18,7 +18,9 @@ import sb.elpro.model.ConsigneeDetails;
 import sb.elpro.model.CustomerDetails;
 import sb.elpro.model.DestinationDetails;
 import sb.elpro.model.NotifyConsigneeDetails;
+import sb.elpro.model.PaymentDetails;
 import sb.elpro.model.TanneryDetails;
+import sb.elpro.model.TermsDetails;
 
 /**
  * @author Wahab
@@ -370,6 +372,134 @@ private UserInputDao userinputdao;
 		return isdeltddestiList;
 	}
 
+
+	/* (non-Javadoc)
+	 * @see sb.elpro.bo.UserInputBo#getColorDetails()
+	 */
+	@Override
+	public List<ArticleDetails> getColorDetails() throws Exception {
+		ArrayList<ArticleDetails> colorList = userinputdao.getColorList();
+		return colorList;
+	}
+
+
+	/* (non-Javadoc)
+	 * @see sb.elpro.bo.UserInputBo#addColordetails(sb.elpro.model.ArticleDetails)
+	 */
+	@Override
+	public boolean addColordetails(ArticleDetails addcolorbean)
+			throws Exception {
+		boolean isaddedcolorList = userinputdao.addColorList(addcolorbean);
+		return isaddedcolorList;
+	}
+
+
+	/* (non-Javadoc)
+	 * @see sb.elpro.bo.UserInputBo#editColorDetails(sb.elpro.model.ArticleDetails)
+	 */
+	@Override
+	public boolean editColorDetails(ArticleDetails editcolorbean)
+			throws Exception {
+		boolean isupdtdcolorList = userinputdao.editColorList(editcolorbean);
+		return isupdtdcolorList;
+	}
+
+
+	/* (non-Javadoc)
+	 * @see sb.elpro.bo.UserInputBo#delColorDetails(sb.elpro.model.ArticleDetails)
+	 */
+	@Override
+	public boolean delColorDetails(ArticleDetails delcolorbean)
+			throws Exception {
+		boolean isdeltdcolorList = userinputdao.delColorList(delcolorbean);
+		return isdeltdcolorList;
+	}
+
+
+	/* (non-Javadoc)
+	 * @see sb.elpro.bo.UserInputBo#getTermDetails()
+	 */
+	@Override
+	public List<TermsDetails> getTermDetails() throws Exception {
+		ArrayList<TermsDetails> termList = userinputdao.getTermList();
+		return termList;
+	}
+
+
+	/* (non-Javadoc)
+	 * @see sb.elpro.bo.UserInputBo#addTermdetails(sb.elpro.model.TermsDetails)
+	 */
+	@Override
+	public boolean addTermdetails(TermsDetails addtermbean) throws Exception {
+		boolean isaddedtermList = userinputdao.addTermList(addtermbean);
+		return isaddedtermList;
+	}
+
+
+
+	/* (non-Javadoc)
+	 * @see sb.elpro.bo.UserInputBo#editTermDetails(sb.elpro.model.TermsDetails)
+	 */
+	@Override
+	public boolean editTermDetails(TermsDetails edittermbean) throws Exception {
+		boolean isupdtdtermList = userinputdao.editTermList(edittermbean);
+		return isupdtdtermList;
+		
+	}
+
+
+	/* (non-Javadoc)
+	 * @see sb.elpro.bo.UserInputBo#delTermDetails(sb.elpro.model.TermsDetails)
+	 */
+	@Override
+	public boolean delTermDetails(TermsDetails deltermbean) throws Exception {
+		
+		boolean isdeltdtermList = userinputdao.delTermList(deltermbean);
+		return isdeltdtermList;
+	}
+
+
+	/* (non-Javadoc)
+	 * @see sb.elpro.bo.UserInputBo#getPaymntDetails()
+	 */
+	@Override
+	public List<PaymentDetails> getPaymntDetails() throws Exception {
+		ArrayList<PaymentDetails> paymntList = userinputdao.getPaymntList();
+		return paymntList;
+	}
+
+
+	/* (non-Javadoc)
+	 * @see sb.elpro.bo.UserInputBo#addPaymntdetails(sb.elpro.model.PaymentDetails)
+	 */
+	@Override
+	public boolean addPaymntdetails(PaymentDetails addpaymntbean)
+			throws Exception {
+		boolean isaddedpaymntList = userinputdao.addPaymntList(addpaymntbean);
+		return isaddedpaymntList;
+	}
+
+
+	/* (non-Javadoc)
+	 * @see sb.elpro.bo.UserInputBo#editPaymntDetails(sb.elpro.model.PaymentDetails)
+	 */
+	@Override
+	public boolean editPaymntDetails(PaymentDetails editpaymntbean)
+			throws Exception {
+		boolean isupdtdpaymntList = userinputdao.editPaymntList(editpaymntbean);
+		return isupdtdpaymntList;
+	}
+
+
+	/* (non-Javadoc)
+	 * @see sb.elpro.bo.UserInputBo#delPaymntDetails(sb.elpro.model.PaymentDetails)
+	 */
+	@Override
+	public boolean delPaymntDetails(PaymentDetails delpaymntbean)
+			throws Exception {
+		boolean isdeltdpaymntList = userinputdao.delPaymntList(delpaymntbean);
+		return isdeltdpaymntList;
+	}
 
 	
 	

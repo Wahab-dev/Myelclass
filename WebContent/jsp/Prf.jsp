@@ -6,62 +6,22 @@
 <%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c"%>
 <h:html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>PRF PAGE</title> 
-<%-- <link rel="stylesheet" href="js/jquery-ui.css" />
-<script src="js/jquery-1.9.0.js"></script>
-<script src="js/jquery-1.9.0.min.js"></script> --%>
 <style type="text/css">
-.myPrintButton {
-	-moz-box-shadow: 0px 10px 14px -7px #1c1b18;
-	-webkit-box-shadow: 0px 10px 14px -7px #1c1b18;
-	box-shadow: 0px 10px 14px -7px #1c1b18;
-	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #eae0c2), color-stop(1, #ccc2a6));
-	background:-moz-linear-gradient(top, #eae0c2 5%, #ccc2a6 100%);
-	background:-webkit-linear-gradient(top, #eae0c2 5%, #ccc2a6 100%);
-	background:-o-linear-gradient(top, #eae0c2 5%, #ccc2a6 100%);
-	background:-ms-linear-gradient(top, #eae0c2 5%, #ccc2a6 100%);
-	background:linear-gradient(to bottom, #eae0c2 5%, #ccc2a6 100%);
-	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#eae0c2', endColorstr='#ccc2a6',GradientType=0);
-	background-color:#eae0c2;
-	-moz-border-radius:5px;
-	-webkit-border-radius:5px;
-	border-radius:5px;
-	display:inline-block;
-	cursor:pointer;
-	color:#505739;
-	font-family:Times New Roman;
-	font-size:12px;
-	font-weight:bold;
-	padding:2px 9px;
-}
-.myPrintButton:hover {
-	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #ccc2a6), color-stop(1, #eae0c2));
-	background:-moz-linear-gradient(top, #ccc2a6 5%, #eae0c2 100%);
-	background:-webkit-linear-gradient(top, #ccc2a6 5%, #eae0c2 100%);
-	background:-o-linear-gradient(top, #ccc2a6 5%, #eae0c2 100%);
-	background:-ms-linear-gradient(top, #ccc2a6 5%, #eae0c2 100%);
-	background:linear-gradient(to bottom, #ccc2a6 5%, #eae0c2 100%);
-	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#ccc2a6', endColorstr='#eae0c2',GradientType=0);
-	background-color:#ccc2a6;
-}
-.myPrintButton:active {
-	position:relative;
-	top:1px;
-}
-
-#ui-datepicker-div { font-size: 11px; } 
+	#ui-datepicker-div { font-size: 11px; } 
 table.EditTable > tbody > tr.FormData > td.DataTD > input[type="select"] {
     width: 115px !important;
 }
 #toolbar a { font-weight: bold; border: 1px solid #aaa; padding: 2px; }
 #toolbar a:hover { color: white; background-color: #aaa; }
+
 </style>
 <script src="js/jquery-1.9.1.js"></script>
 <script src="js/jquery-ui.js"></script>
 <script src="js/jquery.dialogextend.1_0_1.js"></script>
 <link rel="stylesheet" type="text/css" media="screen" href="css/pepper-grinder/jquery-ui-1.10.3.custom.css" />
-<%-- <link rel="stylesheet" type="text/css" media="screen" href="css/vader/jquery-ui-1.10.3.custom.css" /> --%>
+<link rel="stylesheet" type="text/css" media="screen" href="css/jquerywidgetstyle.css" />
 <link rel="stylesheet" type="text/css" media="screen" href="css/ui.jqgrid.css" />
 <script src="js/i18n/grid.locale-en.js" type="text/javascript"></script>
 <script src="js/jquery.jqGrid.min.js" type="text/javascript"></script>		
@@ -70,6 +30,19 @@ table.EditTable > tbody > tr.FormData > td.DataTD > input[type="select"] {
 
 <!-- <script>!window.jQuery && document.write('<script src="js/elpro/prf.js"><\/script>');</script>  -->
 <script type="text/javascript">
+$(function() {
+	 var icons = {
+			 header: "ui-icon-circle-arrow-e",
+			 activeHeader: "ui-icon-circle-arrow-s"
+	};
+	$(".accordionmenu").accordion({
+		heightStyle: "content",
+		 icons: icons,
+		 active: false,
+		 collapsible: true ,
+		 heightStyle: "content"
+	});
+});
 /*
 //Maintain array of dates
 var dates = new Array();
@@ -95,22 +68,7 @@ function padNumber(number)
   return ret;
 } */
 
-/* //Agent DDL
-function loadAgent(){
-	 var agentname = $("#prf_agentname").val();
-	<c:forEach items="${agentarray}" var="agentlist"> 	
-	 	var selectedagent = "<c:out value='${agentlist.agentname}' />" ;
-	 	if(agentname == selectedagent){		 		
-	 		var agentctno = "<c:out value='${agentlist.contractNo}' />" ;
-	 		if(agentctno.length == 0 )
-			{
-						agentctno = "L4501";
-			}
-	 		$("#prf_contractno").val(agentctno);
-	 		
-		}
-	 </c:forEach>
-	} */
+
 function loadvalues(){
 	var actionform = "<c:out value='${actionform}' />";
 	if(actionform == "edit"){
@@ -162,28 +120,55 @@ function loadvalues(){
 
 <body onload="loadvalues();">
 <!--  Login Form  -->
-<h:form action="/login" method="post" >
-	<table style="border: thin;">
-   		<tr>  			
-   			<td>Welcome ${user.name}...</td> 
-   			<td ><h:text property="userinsession" styleId="userinsession" value="${user.name}" readonly="true" ></h:text></td >
-   			<td ><h:text property="formaction" styleId="formaction" value="${actionform}"></h:text></td> 
-   			<td><h:submit property="prfaction" value="Logout"></h:submit></td> 
-   			<h:link action='/gotoBulkTracking'>Bulk Tacking</h:link>
+<div id="accordionwidth" style="width: 1100px">
+<table  style="border: thin;">
+   		<tr>  
+   			<td>		
+			<div id="accordionmenu1" class="accordionmenu">
+			  <h3>Samples </h3>
+			        <ul>
+			             <li> <h:link action='/loadSrf' scope="request">SrfScreen</h:link></li>
+							<li> <h:link action='/gotoSampleTracking'>Sample Tacking</h:link></li>
+							<li> <h:link action='/gotoSampleInvoice'>Sample Invoice Screen</h:link></li>
+							  <li> <h:link action='/sit'>Sample Invoice Tracking</h:link></li>
+							 <li> <h:link action='/gotoSampleDebit'>Sample Debit</h:link></li>
+			        </ul>
+			        </div>
+			    </td>
+				<td>
+				<div id="accordionmenu2" class="accordionmenu">
+					<h3>Contracts</h3>
+			        <ul>
+			            <li><h:link action='/LoadPrf' scope="request">Prf Screen</h:link></li>
+							 <li><h:link action='/gotoBulkTracking'>Bulk Tacking</h:link></li>
+							<li><h:link action='/loadInspection'>Inspection Screen</h:link></li>
+							<li><h:link action='/gotoInspectionTracking'>Inspection Tacking</h:link></li>
+							<li><h:link action='/gotoinvoice'>Invoice Screen</h:link></li>
+							<li><h:link action='/InvoiceTracking'>Invoice Tracking</h:link></li>
+							<li><h:link action='/gotodebit'>Debit Screen</h:link></li>
+							<li><h:link action='/gotodebittracking'>Debit Tacking</h:link></li>
+							<li><h:link action='/gotopayment'>Payment Screen</h:link></li>
+							<li><h:link action='/gotoMasterTracking'>Master Tacking</h:link></li>
+			        </ul>
+			        </div>
+			   </td>
+			 <td>
+			 <div id="accordionmenu3" class="accordionmenu">
+			  <h3>UserInput Screen</h3>
+			        <ul>
+			            <li><h:link action='/gotoUserInput'>User Input Settingss</h:link></li>
+			        </ul>
+			</div>
+   			</td>
    		</tr>
    </table>
-</h:form>
-<h:form action="/login" method="post" >
-	<table style="border: thin;">
-   		<tr>  			
-   			<td><h:submit property="prfaction" value="Logout"></h:submit></td> 
-   		</tr>
-   </table>
-</h:form>
+   </div>
 
 <!-- <div id="prfform" title="PR Form"> -->
 <h:form action="/Prf.do" method="post" styleId="savePrfForm" onreset="">
-   <font color="red"><h:errors/></font>
+	   				<td >Welcome<h:text property="userinsession" styleId="userinsession" value="${user.name}" readonly="true" ></h:text></td >
+	   				<td ><h:text property="formaction" styleId="formaction" value="${actionform}"></h:text></td> 
+	   				<td><h:submit property="prfaction" value="Logout"></h:submit></td> 
     <table width="800" border="1" cellspacing="0" cellpadding="0">
          	 <tr>
            		 <td width="97">
@@ -213,11 +198,11 @@ function loadvalues(){
               			<tr>
                 			<td height="21"><fieldset>         
         							<legend>Tannery Details</legend><br/> 
-        												Name: <h:text property="prf_tanname" styleId="prf_tanname" value="${editprfform[0].prf_agentname}"></h:text><br />  <br />    								      
-       	 												Attn: <h:text property="prf_tanattn" styleId="prf_tanattn" value="${editprfform[0].prf_agentname}"></h:text><br /><br />
-         												Address:<h:textarea property="prf_tanaddr" cols="30" rows="2" styleId="prf_tanaddr" value="${editprfform[0].prf_agentname}"></h:textarea><br /><br />
-        												Telephone : <h:text property="prf_tanphone" styleId="prf_tanphone" value="${editprfform[0].prf_agentname}"> </h:text><br /><br />
-														Fax:  <h:text property="prf_tanfax" styleId="prf_tanfax" value="${editprfform[0].prf_agentname}"> </h:text>  <br />  
+        												Name: <h:text property="prf_tanname" styleId="prf_tanname" ></h:text><br />  <br />    								      
+       	 												Attn: <h:text property="prf_tanattn" styleId="prf_tanattn" ></h:text><br /><br />
+         												Address:<h:textarea property="prf_tanaddr" cols="30" rows="2" styleId="prf_tanaddr" ></h:textarea><br /><br />
+        												Telephone : <h:text property="prf_tanphone" styleId="prf_tanphone" > </h:text><br /><br />
+														Fax:  <h:text property="prf_tanfax" styleId="prf_tanfax" > </h:text>  <br />  
       										</fieldset>
                   			</td>
              		 	</tr>
@@ -228,11 +213,11 @@ function loadvalues(){
               			<tr>
                 			<td height="21"><fieldset>
        								<legend>Customer Details</legend><br/> 
-       									Name:<h:text property="prf_custname" styleId="prf_custname" value="${editprfform[0].prf_agentname}"></h:text><br /><br />        
-        								Attn: <h:text property="prf_custattn" styleId="prf_custattn" value="${editprfform[0].prf_agentname}"></h:text><br />
-         								Address:<h:textarea property="prf_custaddr" cols="30" rows="2" styleId="prf_custaddr" value="${editprfform[0].prf_agentname}"> </h:textarea><br />
-        								Telephone : <h:text property="prf_custphone" styleId="prf_custphone" value="${editprfform[0].prf_agentname}"> </h:text><br />
-										Fax:  <h:text property="prf_custfax" styleId="prf_custfax" value="${editprfform[0].prf_agentname}"> </h:text>  <br />  
+       									Name:<h:text property="prf_custname" styleId="prf_custname" ></h:text><br /><br />        
+        								Attn: <h:text property="prf_custattn" styleId="prf_custattn" ></h:text><br />
+         								Address:<h:textarea property="prf_custaddr" cols="30" rows="2" styleId="prf_custaddr" > </h:textarea><br />
+        								Telephone : <h:text property="prf_custphone" styleId="prf_custphone" > </h:text><br />
+										Fax:  <h:text property="prf_custfax" styleId="prf_custfax" > </h:text>  <br />  
       							</fieldset>
                   			</td>
               			</tr>
@@ -259,8 +244,8 @@ function loadvalues(){
         						Terms : <h:select  property="prf_terms" styleId="prf_terms" value="${editprfform[0].prf_terms}">
        		 								<h:option value="0">select Terms</h:option>
           										<c:forEach items="${termsarray}" var ="termsList">
-          											<h:option value="${termsList.termName}">
-          			    								<c:out value="${termsList.termName}"></c:out>
+          											<h:option value="${termsList.termname}">
+          			    								<c:out value="${termsList.termname}"></c:out>
           											</h:option>  
           										</c:forEach> 
        		 					  		</h:select><br />
@@ -276,8 +261,8 @@ function loadvalues(){
             			 Payment:  <h:select property="prf_payment" styleId="prf_payment" >
        		 													<h:option value="0">select Payment</h:option>
           															<c:forEach items="${paymentarray}" var ="paymList">
-          																<h:option value="${paymList.payment}">
-          			    													<c:out value="${paymList.payment}"></c:out>
+          																<h:option value="${paymList.paymentname}">
+          			    													<c:out value="${paymList.paymentname}"></c:out>
           																</h:option>        		
           															</c:forEach>
        		 											  		</h:select><br /><br />
@@ -309,11 +294,11 @@ function loadvalues(){
                 		<tr>
                   			<td height="21"><fieldset>
        											<legend>Consignee Details</legend><br/> 
-       													Name: <h:text property="prf_consigneename" styleId="prf_consigneename" value="${editprfform[0].prf_agentname}"></h:text><br />        
-        												Attn: <h:text property="prf_consigneeattn" styleId="prf_consigneeattn" value="${editprfform[0].prf_agentname}"></h:text><br />
-         												Address:<h:textarea property="prf_consigneeaddr" cols="30" rows="2" styleId="prf_consigneeaddr" value="${editprfform[0].prf_agentname}"></h:textarea><br />
-        												Telephone : <h:text property="prf_consigneephone" styleId="prf_consigneephone" value="${editprfform[0].prf_agentname}"> </h:text><br />
-														Fax:  <h:text property="prf_consigneefax" styleId="prf_consigneefax" value="${editprfform[0].prf_agentname}"> </h:text>  <br />  
+       													Name: <h:text property="prf_consigneename" styleId="prf_consigneename" ></h:text><br />        
+        												Attn: <h:text property="prf_consigneeattn" styleId="prf_consigneeattn" ></h:text><br />
+         												Address:<h:textarea property="prf_consigneeaddr" cols="30" rows="2" styleId="prf_consigneeaddr" ></h:textarea><br />
+        												Telephone : <h:text property="prf_consigneephone" styleId="prf_consigneephone" > </h:text><br />
+														Fax:  <h:text property="prf_consigneefax" styleId="prf_consigneefax" > </h:text>  <br />  
       										</fieldset>
                     		</td>
                 	   </tr>
@@ -324,11 +309,11 @@ function loadvalues(){
               			<tr>
                 			<td height="21"><fieldset>
        								<legend>Notify Details</legend><br/> 
-       													Name: <h:text property="prf_notifyname" styleId="prf_notifyname" value="${editprfform[0].prf_agentname}"></h:text><br />        
-        												Attn: <h:text property="prf_notifyattn" styleId="prf_notifyattn" value="${editprfform[0].prf_agentname}"></h:text><br />
-         												Address:<h:textarea property="prf_notifyaddr" cols="30" rows="2" styleId="prf_notifyaddr" value="${editprfform[0].prf_agentname}"></h:textarea><br />
-        												Telephone : <h:text property="prf_notifyphone" styleId="prf_notifyphone" value="${editprfform[0].prf_agentname}"> </h:text><br />
-														Fax:  <h:text property="prf_notifyfax" styleId="prf_notifyfax" value="${editprfform[0].prf_agentname}"> </h:text>  <br />  
+       													Name: <h:text property="prf_notifyname" styleId="prf_notifyname" ></h:text><br />        
+        												Attn: <h:text property="prf_notifyattn" styleId="prf_notifyattn" ></h:text><br />
+         												Address:<h:textarea property="prf_notifyaddr" cols="30" rows="2" styleId="prf_notifyaddr" ></h:textarea><br />
+        												Telephone : <h:text property="prf_notifyphone" styleId="prf_notifyphone" > </h:text><br />
+														Fax:  <h:text property="prf_notifyfax" styleId="prf_notifyfax" > </h:text>  <br />  
       										</fieldset>
                   			</td>
               			</tr>
@@ -339,11 +324,11 @@ function loadvalues(){
               			<tr>
                				<td height="21"><fieldset>
        							<legend>Bank Details</legend><br/> 
-       									Name: <h:text property="prf_bankname" styleId="prf_bankname" value="${editprfform[0].prf_agentname}"></h:text><br />        
-        						 		Branch: <h:text property="prf_bankbranch" styleId="prf_bankbranch" value="${editprfform[0].prf_agentname}"></h:text><br />
-         								Address:<h:textarea property="prf_bankaddr" cols="30" rows="2" styleId="prf_bankaddr" value="${editprfform[0].prf_agentname}"></h:textarea><br />
-        								Telephone : <h:text property="prf_bankphone" styleId="prf_bankphone" value="${editprfform[0].prf_agentname}"> </h:text><br />
-										Fax:  <h:text property="prf_bankfax" styleId="prf_bankfax" value="${editprfform[0].prf_agentname}"> </h:text>  <br />  
+       									Name: <h:text property="prf_bankname" styleId="prf_bankname" ></h:text><br />        
+        						 		Branch: <h:text property="prf_bankbranch" styleId="prf_bankbranch" ></h:text><br />
+         								Address:<h:textarea property="prf_bankaddr" cols="30" rows="2" styleId="prf_bankaddr" ></h:textarea><br />
+        								Telephone : <h:text property="prf_bankphone" styleId="prf_bankphone" > </h:text><br />
+										Fax:  <h:text property="prf_bankfax" styleId="prf_bankfax" > </h:text>  <br />  
       							</fieldset>
                   			</td>
              			</tr>
@@ -361,7 +346,7 @@ function loadvalues(){
   				<%-- <h:link href="#" property="insert">Click me</h:link> --%>
   				<td><h:reset property="prfaction" styleId="Clear" value="Clear" styleClass="myPrintButton" ></h:reset></td>
   				<td><h:submit property="prfaction" styleId="Print" value="Print" styleClass="myPrintButton" ></h:submit></td>
-  				<%-- <h:button property="insert" >Insert</h:button> --%>
+  				<td><input type="button" id="Print" style="myPrintButton"></input></td>
   			<td></td>
           </tr>
         </table>

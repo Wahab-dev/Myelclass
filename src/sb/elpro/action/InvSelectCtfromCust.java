@@ -39,6 +39,7 @@ public class InvSelectCtfromCust extends Action {
 		usersession = request.getSession(false);
 		PrintWriter out = response.getWriter();
 		response.setContentType("application/json");
+		response.setCharacterEncoding("UTF-8");
 		if(usersession != null){	
 			//String ctno = request.getParameter("ctno");
 			String action = request.getParameter("action");

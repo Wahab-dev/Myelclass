@@ -16,33 +16,47 @@ public class PaymentDetails implements Serializable {
 	 */
 	private static final long serialVersionUID = -4357664970444053326L;
 	
-	private String paymentId;
-	private String payment;
+	private String paymentid;
+	private String paymentname;
+	private String otherdetails;
 	private String label;
 	
+
 	/**
-	 * @return the paymentId
+	 * @return the paymentid
 	 */
-	public String getPaymentId() {
-		return paymentId;
+	public String getPaymentid() {
+		return paymentid;
 	}
 	/**
-	 * @param paymentId the paymentId to set
+	 * @param paymentid the paymentid to set
 	 */
-	public void setPaymentId(String paymentId) {
-		this.paymentId = paymentId;
+	public void setPaymentid(String paymentid) {
+		this.paymentid = paymentid;
 	}
 	/**
-	 * @return the payment
+	 * @return the paymentname
 	 */
-	public String getPayment() {
-		return payment;
+	public String getPaymentname() {
+		return paymentname;
 	}
 	/**
-	 * @param payment the payment to set
+	 * @param paymentname the paymentname to set
 	 */
-	public void setPayment(String payment) {
-		this.payment = payment;
+	public void setPaymentname(String paymentname) {
+		this.paymentname = paymentname;
+	}
+	/**
+	 * @return the otherdetails
+	 */
+	public String getOtherdetails() {
+		return otherdetails;
+	}
+	/**
+	 * @param otherdetails the otherdetails to set
+	 */
+	public void setOtherdetails(String otherdetails) {
+		this.otherdetails = otherdetails;
 	}
 	/**
 	 * @return the label

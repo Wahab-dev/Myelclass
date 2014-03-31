@@ -33,6 +33,7 @@ public class DebAutoComplete extends Action {
 	public ActionForward execute(ActionMapping mapping, ActionForm form, 
 			HttpServletRequest request,  HttpServletResponse response) throws Exception{
 		 response.setContentType("application/json");
+		 response.setCharacterEncoding("UTF-8");
 			PrintWriter out = response.getWriter();
 			usersession = request.getSession(false);
 			if(usersession != null){
@@ -55,9 +56,22 @@ public class DebAutoComplete extends Action {
 					JSONArray jsonOrdertanArray = JSONArray.fromObject(exporterlist);
 					System.out.println(jsonOrdertanArray);
 					out.println(jsonOrdertanArray);
+				}else if(action.equalsIgnoreCase("debno")){
+					System.out.println("In debno Autocomplete");
+					String tanterm = request.getParameter("term");
+					String debno  =  debbo.getDebno(tanterm);
+					System.out.println(debno);
+					out.println(debno);
+				}else if(action.equalsIgnoreCase("payno")){
+					System.out.println("In Payno Autocomplete");
+					String tanterm = request.getParameter("term");
+					String payno  =  debbo.getPayno(tanterm);
+					System.out.println(payno);
+					out.println(payno);
 				}
-			}else{
-				
+			}else {
+				System.out.println("Invalid User ");
+				mapping.findForward("login");
 			}
 			return null;
 	}

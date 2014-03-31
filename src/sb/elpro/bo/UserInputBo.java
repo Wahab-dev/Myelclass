@@ -15,7 +15,9 @@ import sb.elpro.model.ConsigneeDetails;
 import sb.elpro.model.CustomerDetails;
 import sb.elpro.model.DestinationDetails;
 import sb.elpro.model.NotifyConsigneeDetails;
+import sb.elpro.model.PaymentDetails;
 import sb.elpro.model.TanneryDetails;
+import sb.elpro.model.TermsDetails;
 
 /**
  * @author Wahab
@@ -306,6 +308,104 @@ public interface UserInputBo {
 	 * etc
 	 */
 	boolean delDestiDetails(DestinationDetails adddestidetail)throws Exception;
+
+	/**  
+	 * (Method description)
+	 * @param
+	 * @return
+	 * etc
+	 */
+	List<ArticleDetails> getColorDetails()throws Exception;
+
+	/**  
+	 * (Method description)
+	 * @param
+	 * @return
+	 * etc
+	 */
+	boolean addColordetails(ArticleDetails addcolorbean)throws Exception;
+
+	/**  
+	 * (Method description)
+	 * @param
+	 * @return
+	 * etc
+	 */
+	boolean editColorDetails(ArticleDetails editcolorbean)throws Exception;
+
+	/**  
+	 * (Method description)
+	 * @param
+	 * @return
+	 * etc
+	 */
+	boolean delColorDetails(ArticleDetails delcolorbean)throws Exception;
+
+	/**  
+	 * (Method description)
+	 * @param
+	 * @return
+	 * etc
+	 */
+	List<TermsDetails> getTermDetails()throws Exception;
+
+	/**  
+	 * (Method description)
+	 * @param
+	 * @return
+	 * etc
+	 */
+	boolean addTermdetails(TermsDetails addtermbean)throws Exception;
+
+	
+
+	/**  
+	 * (Method description)
+	 * @param
+	 * @return
+	 * etc
+	 */
+	boolean editTermDetails(TermsDetails addtermbean)throws Exception;
+	/**  
+	 * (Method description)
+	 * @param
+	 * @return
+	 * etc
+	 */
+	boolean delTermDetails(TermsDetails addtermbean)throws Exception;
+
+	/**  
+	 * (Method description)
+	 * @param
+	 * @return
+	 * etc
+	 */
+	List<PaymentDetails> getPaymntDetails()throws Exception;
+
+	/**  
+	 * (Method description)
+	 * @param
+	 * @return
+	 * etc
+	 */
+	boolean addPaymntdetails(PaymentDetails addpaymntbean)throws Exception;
+
+	/**  
+	 * (Method description)
+	 * @param
+	 * @return
+	 * etc
+	 */
+	boolean editPaymntDetails(PaymentDetails addpaymntbean)throws Exception;
+
+	/**  
+	 * (Method description)
+	 * @param
+	 * @return
+	 * etc
+	 */
+	boolean delPaymntDetails(PaymentDetails addpaymntbean)throws Exception;
+
 
 
 

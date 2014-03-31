@@ -41,7 +41,7 @@ public class SrfLoadAction extends Action  {
 					//System.out.println("Sample Number "+sampleno.toString());
 					usersession.setAttribute("srfactionform", "add");
 					System.out.println("IN SRF IS LOADED");
-					return map.findForward("srfisloaded");
+					
 				}else if(action.equalsIgnoreCase("editform")){
 					/*
 					 * Method to Set Values for SRF FORM
@@ -50,15 +50,17 @@ public class SrfLoadAction extends Action  {
 					System.out.println("In SRF Edit Form");
 					String actionform = "edit";
 					String sampleno = request.getParameter("sampleno");
-					usersession.setAttribute("actionform", actionform);
+					usersession.setAttribute("srfactionform", actionform);
 					usersession.setAttribute("editsrfsampleno", sampleno);
 					//usersession.setAttribute("editprfform", prfbo.getEditPrfFormValues(ctno));
 					List<SampleRequest> editSrfform = srfbo.getEditSrfFormValues(sampleno);
-					usersession.setAttribute("editprfform", editSrfform);
-					return map.findForward("srfisloaded");
+					usersession.setAttribute("editsrfform", editSrfform);
+					
 				}
 				return map.findForward("srfisloaded");
+			}else{
+				return map.findForward("login");
 			}
-			return map.findForward("srfisloaded");
+		
 		}
 }

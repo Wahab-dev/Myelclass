@@ -152,6 +152,15 @@ public interface InspectionBo {
 	public boolean getInspectionGradeRejDetails(InspectionBean insprej,
 			String sidx, String sord)throws Exception;
 
+
+	/**  
+	 * (Method description)
+	 * @param
+	 * @return
+	 * etc
+	 */
+	public boolean saveInspectionform(InspectionBean inspbean)throws Exception;
+
 	
 
 	

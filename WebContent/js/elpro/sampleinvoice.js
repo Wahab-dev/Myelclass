@@ -3,7 +3,14 @@
  */
 
 $(document).ready(function() {
-	
+	$("#saminv_total").focusout(function() {
+		var discnt = $("#saminv_deduction").val();
+		var courchrg = $("#saminv_courierchrgs").val();
+		var tot = $("#saminv_total").val();
+		totamt = (parseFloat (tot) - parseFloat (discnt)) + parseFloat (courchrg);
+		alert("totamt"+totamt);
+		$("#saminv_total").val(totamt);
+	});
 	var billInvisInEdit = false; //boolean value need to Check High Priority 
 	var type =null;//get whether the inv for only ct or sample included
 	var saminvgrid = $("#saminvBill");
@@ -37,10 +44,13 @@ $(document).ready(function() {
 		 });
 	});
 	 $(".dateclass").datepicker({
-		    autoSize: true,
+		 	autoSize: true,
 		    changeMonth:false,
-		    dateFormat: "dd/mm/yy",
+		    dateFormat: "dd-mm-yy",
+		    showWeek: true,
 		    firstDay: 1,
+		    numberOfMonths: 1,
+		    showButtonPanel: false,
 		    gotoCurrent:true, 
 		});
 	 
@@ -77,12 +87,12 @@ $(document).ready(function() {
 	 $('#saminv_loadingport').autocomplete({
 		 source: function(request, response) {
 			var param = request.term;  
-			var ctryval = $('#saminv_ctryoffinaldesti').val();
+			var ctryval = $('#saminv_ctryoforigngoods').val();
 			$.getJSON("/Myelclass/InvAutocomplete.do?term="+param+"&action="+"loadport&ctryval="+ctryval,
 				function(result) { 	
 			       response($.map(result, function(item) {
 			           return { 
-			              value: item.destination,
+			              value: item.destiname,
 			              };
 			        }));//END response
 			 });
@@ -96,7 +106,7 @@ $(document).ready(function() {
 				function(result) { 	
 			       response($.map(result, function(item) {
 			           return { 
-			              value: item.destictry,
+			              value: item.destiname,
 			              };
 			        }));//END response
 			 });
@@ -224,7 +234,25 @@ $(document).ready(function() {
 					saminvctgrid.jqGrid('setGridParam',{url:"/Myelclass/sampleInvSelectCtfromCust.do?custname="+custname+"&type="+type+"&action="+"load"}).trigger("reloadGrid");				 
 				    }
 		  	 });
-	 
+function clickheremethod(){
+	 var selsamnos="";
+	 var ids = saminvctgrid.jqGrid('getGridParam','selarrrow');
+	 for (var i=0; i<ids.length;i++){
+	     var rowData = saminvctgrid.jqGrid('getRowData',ids[i]);
+		 var sam = " '"+rowData.sampleno+"',";
+		selsamnos = selsamnos+sam;
+	   }
+	 var itemp = selsamnos.lastIndexOf(",");
+	 var samnoselc = selsamnos.substring(0, itemp);
+	 alert("samnoselc"+samnoselc);
+	 type = $('#saminv_includeSample').val();
+	 alert("asd"+type);
+	 sambillgrid.jqGrid('setGridParam',{url:"/Myelclass/sampleInvSelectCtfromCust.do?samno="+samnoselc+"&type="+type+"&action="+"loadsubgrid",page:1});
+	 sambillgrid.jqGrid('setCaption',"Raise Invoice").trigger('reloadGrid');
+	 saminvgrid.jqGrid('setGridParam',{url:"/Myelclass/sampleInvSelectCtfromCust.do?action="+"loadBill&samno="+samnoselc+"&type="+type ,page:1}).trigger('reloadGrid');
+ 
+}
+
 		/*
 	 	 * Grid 1 - Loads Data Based on the Customer Selected Value
 	 	 *  fields -ctno, orderdt, pono, cdd_date, add_date, destination, customerid
@@ -283,7 +311,8 @@ $(document).ready(function() {
 		 	   buttonicon: "ui-icon-print",
 		       title: "Click here to load",	 		 	   
 		       onClickButton: function(){
-		 		 var selsamnos="";
+		    	   clickheremethod();
+		 		 /*var selsamnos="";
 		 		 var ids = saminvctgrid.jqGrid('getGridParam','selarrrow');
 		 		 for (var i=0; i<ids.length;i++){
 		 		     var rowData = saminvctgrid.jqGrid('getRowData',ids[i]);
@@ -297,7 +326,7 @@ $(document).ready(function() {
 				 alert("asd"+type);
 				 sambillgrid.jqGrid('setGridParam',{url:"/Myelclass/sampleInvSelectCtfromCust.do?samno="+samnoselc+"&type="+type+"&action="+"loadsubgrid",page:1});
 				 sambillgrid.jqGrid('setCaption',"Raise Invoice").trigger('reloadGrid');
-				 saminvgrid.jqGrid('setGridParam',{url:"/Myelclass/sampleInvSelectCtfromCust.do?action="+"loadBill&samno="+samnoselc+"&type="+type ,page:1}).trigger('reloadGrid');
+				 saminvgrid.jqGrid('setGridParam',{url:"/Myelclass/sampleInvSelectCtfromCust.do?action="+"loadBill&samno="+samnoselc+"&type="+type ,page:1}).trigger('reloadGrid');*/
 		 	   },
 		 	
 		});
@@ -432,6 +461,9 @@ $(document).ready(function() {
 	            groupField : ['sampleno'],
 	            groupOrder : ['desc'] 
 	        },
+	        loadComplete: function () {
+	        
+	        }
 		});		
 	 	sambillgrid.jqGrid('navGrid','#tbl_saminvbillpager',{
 			add : true, addCaption :"Raise Bill",
@@ -501,11 +533,11 @@ $(document).ready(function() {
                  },
 			},
 			afterSubmit: function (response, postdata) {
-				var saminvno = $('#saminv_invoiceno').val();
+				/*var saminvno = $('#saminv_invoiceno').val();
 				var samno = $("#sampleno").val();
 				samno = "'"+samno+"'";
-				sambillgrid.jqGrid('setGridParam',{url:"/Myelclass/sampleInvSelectCtfromCust.do?action="+"loadBill&saminvno="+saminvno+"&samno="+samno ,page:1}).trigger('reloadGrid');
-				
+				sambillgrid.jqGrid('setGridParam',{url:"/Myelclass/sampleInvSelectCtfromCust.do?action="+"loadBill&saminvno="+saminvno+"&samno="+samno ,page:1}).trigger('reloadGrid');*/
+				 clickheremethod();
 				if(response.responseText != ""){
 					return [true,"Success"];
                 }else{
@@ -569,7 +601,7 @@ $(document).ready(function() {
 						{name: 'invrate', index:'invrate',align:'center', width :80, editable:true, sortable: true, hidden:false, search: true,
 							
 						},
-						{name: 'invqshpd', index:'invqshpd',sortable:true, editable: true, width:70,
+						{name: 'invqshpd',  index:'invqshpd',sortable:true, editable: true, width:70,
 							formatter : 'number', formatoptions:{decimalSeparator:".", decimalPlaces: 2, },
 							edittype:'text',   editrules: { required: true}, 
 						},
@@ -625,7 +657,7 @@ $(document).ready(function() {
 			       records: "records", //calls Third
 					}, 
 			pager: '#saminvbillpager',
-			rowNum:20, 
+			rowNum: 20, 
 			multiselect : false,
 			rowList:[10,20,30],	  
 			sortname: 'invno',
@@ -634,12 +666,22 @@ $(document).ready(function() {
 			emptyrecords: 'No records to display',
 			editurl: "/Myelclass/sampleInvSelectCtfromCust.do?action="+"loadBill",
 			grouping:true, 
-			footerrow: true, //footer row Enabled
+			footerrow: true, 
 			userDataOnFooter : true,
 			groupingView : { 
 	            groupField : ['invno'],
 	            groupOrder : ['desc'] 
 	        },
+	        loadComplete: function () {
+	        	
+	            var $self = $(this);
+	            var qshpdsum = $self.jqGrid("getCol", "invqshpd", false, "sum");
+	            var amtsum 	 = $self.jqGrid("getCol", "invamt", false, "sum");
+	            $self.jqGrid("footerData", "set", { invqshpd: qshpdsum});
+	            $self.jqGrid("footerData", "set", { invamt: amtsum});
+	           $("#saminv_total").val(amtsum);
+	           
+	        }
 		 });
 	 	
 	 	saminvgrid.jqGrid('navGrid','#saminvbillpager',{
@@ -729,10 +771,36 @@ $(document).ready(function() {
                              var sel_id = saminvgrid.jqGrid('getGridParam', 'selrow');
                              var value = saminvgrid.jqGrid('getCell', sel_id, 'invid');
                              return value;
-                          }
-                      },
-						reloadAfterSubmit: true,
-					
-				},{},{}
+                        },
+                        invqty: function() {
+		                    var sel_id = saminvgrid.jqGrid('getGridParam', 'selrow');
+		                    var value = saminvgrid.jqGrid('getCell', sel_id, 'invqty');
+		                    return value;
+		                },
+		                invqbal: function() {
+			                    var sel_id = saminvgrid.jqGrid('getGridParam', 'selrow');
+			                    var value = saminvgrid.jqGrid('getCell', sel_id, 'invqbal');
+			                    return value;
+			            },
+			            invqshpd: function() {
+		                    var sel_id = saminvgrid.jqGrid('getGridParam', 'selrow');
+		                    var value = saminvgrid.jqGrid('getCell', sel_id, 'invqshpd');
+		                    return value;
+			            },
+			            invctno: function() {
+		                    var sel_id = saminvgrid.jqGrid('getGridParam', 'selrow');
+		                    var value = saminvgrid.jqGrid('getCell', sel_id, 'invctno');
+		                    return value;
+			            },
+			            invartid: function() {
+		                    var sel_id = saminvgrid.jqGrid('getGridParam', 'selrow');
+		                    var value = saminvgrid.jqGrid('getCell', sel_id, 'invartid');
+		                    return value;
+			            },
+                    },
+					reloadAfterSubmit: true,				
+				},
+				{},
+				{}
 			);
 });

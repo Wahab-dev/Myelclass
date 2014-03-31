@@ -144,6 +144,16 @@ public class InspectionBoImpl implements InspectionBo {
 	}
 
 
+	/* (non-Javadoc)
+	 * @see sb.elpro.bo.InspectionBo#saveInspectionform(sb.elpro.model.InspectionBean)
+	 */
+	@Override
+	public boolean saveInspectionform(InspectionBean inspbean) throws Exception {
+		boolean isSaveInspection =  inspdao.saveInspectionForm(inspbean);
+		return isSaveInspection;
+	}
+
+
 	
 	
 	

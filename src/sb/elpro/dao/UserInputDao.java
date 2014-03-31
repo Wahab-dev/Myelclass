@@ -16,7 +16,9 @@ import sb.elpro.model.ConsigneeDetails;
 import sb.elpro.model.CustomerDetails;
 import sb.elpro.model.DestinationDetails;
 import sb.elpro.model.NotifyConsigneeDetails;
+import sb.elpro.model.PaymentDetails;
 import sb.elpro.model.TanneryDetails;
+import sb.elpro.model.TermsDetails;
 
 /**
  * @author Wahab
@@ -291,6 +293,102 @@ public interface UserInputDao {
 	 */
 	boolean delDestiList(DestinationDetails deldestidetail)throws SQLException;
 
+	/**  
+	 * (Method description)
+	 * @param
+	 * @return
+	 * etc
+	 */
+	ArrayList<ArticleDetails> getColorList()throws SQLException;
+
+	/**  
+	 * (Method description)
+	 * @param
+	 * @return
+	 * etc
+	 */
+	boolean addColorList(ArticleDetails addcolorbean) throws SQLException;
+	
+	/**  
+	 * (Method description)
+	 * @param
+	 * @return
+	 * etc
+	 */
+	boolean editColorList(ArticleDetails editcolorbean)throws SQLException;
+
+
+	/**  
+	 * (Method description)
+	 * @param
+	 * @return
+	 * etc
+	 */
+	boolean delColorList(ArticleDetails delcolorbean) throws SQLException;
+
+	/**  
+	 * (Method description)
+	 * @param
+	 * @return
+	 * etc
+	 */
+	ArrayList<TermsDetails> getTermList()throws SQLException;
+
+	/**  
+	 * (Method description)
+	 * @param
+	 * @return
+	 * etc
+	 */
+	boolean addTermList(TermsDetails addtermbean)throws SQLException;
+
+	/**  
+	 * (Method description)
+	 * @param
+	 * @return
+	 * etc
+	 */
+	boolean editTermList(TermsDetails edittermbean)throws SQLException;
+
+	/**  
+	 * (Method description)
+	 * @param
+	 * @return
+	 * etc
+	 */
+	boolean delTermList(TermsDetails deltermbean)throws SQLException;
+
+	/**  
+	 * (Method description)
+	 * @param
+	 * @return
+	 * etc
+	 */
+	ArrayList<PaymentDetails> getPaymntList()throws SQLException;
+
+	/**  
+	 * (Method description)
+	 * @param
+	 * @return
+	 * etc
+	 */
+	boolean addPaymntList(PaymentDetails addpaymntbean)throws SQLException;
+
+	/**  
+	 * (Method description)
+	 * @param
+	 * @return
+	 * etc
+	 */
+	boolean editPaymntList(PaymentDetails editpaymntbean)throws SQLException;
+
+	/**  
+	 * (Method description)
+	 * @param
+	 * @return
+	 * etc
+	 */
+	boolean delPaymntList(PaymentDetails delpaymntbean)throws SQLException;
 
 
 

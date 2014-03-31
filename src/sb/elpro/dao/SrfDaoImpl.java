@@ -222,8 +222,8 @@ public class SrfDaoImpl implements SrfDao {
 			while(rs.next()) {	
 				PaymentDetails paybean = new PaymentDetails();
 				paybean.setLabel(rs.getString("payname"));
-				paybean.setPaymentId(rs.getString("payid"));
-				System.out.println("Payment name "+paybean.getPayment());
+				paybean.setPaymentid(rs.getString("payid"));
+				System.out.println("Payment name "+paybean.getPaymentname());
 				payarraylist.add(paybean);
 				}
 			System.out.println("payname Added Successfully");
@@ -470,7 +470,7 @@ public class SrfDaoImpl implements SrfDao {
 		try{			
 			con = DBConnection.getConnection();
 			st = (Statement) con.createStatement();
-			String sql = "SELECT sampleno, agentid, orderdt, refno, priority, handledby, customerid, tanneryid, deliverid, destination, terms, add_date, cdd_date, splcdn, inspcdn, forwaderid, isinvraised FROM elpro.tbl_srfform where sampleno ='"+sampleno+"' ";
+			String sql = "SELECT sampleno, agentid, orderdt, refno, priority, handledby, customerid, tanneryid, deliverid, destination, terms, add_date, cdd_date, endusage, splcdn, inspcdn, forwaderid, isinvraised FROM elpro.tbl_srfform where sampleno ='"+sampleno+"' ";
 			System.out.println(sql);
 			rs = st.executeQuery(sql);
 			
@@ -478,7 +478,7 @@ public class SrfDaoImpl implements SrfDao {
 				SampleRequest editsrfformbean = new SampleRequest();
 				editsrfformbean.setSrf_sampleno(rs.getString("sampleno"));
 				editsrfformbean.setSrf_agentname(rs.getString("agentid"));
-				editsrfformbean.setSrf_orderdate(rs.getString("orderdt"));
+				editsrfformbean.setSrf_orderdate(DateConversion.ConverttoNormalDate(rs.getString("orderdt")));
 				System.out.println("DT "+editsrfformbean.getSrf_orderdate());
 				editsrfformbean.setSrf_referenceno(rs.getString("refno"));
 				editsrfformbean.setSrf_priority(rs.getString("priority"));
@@ -487,13 +487,15 @@ public class SrfDaoImpl implements SrfDao {
 				editsrfformbean.setSrf_tanname(rs.getString("tanneryid"));
 				editsrfformbean.setSrf_deliver(rs.getString("deliverid"));
 				editsrfformbean.setSrf_destination(rs.getString("destination"));
+				editsrfformbean.setSrf_endusage(rs.getString("endusage"));
 				editsrfformbean.setSrf_paymentterms(rs.getString("terms"));
-				editsrfformbean.setSrf_add(rs.getString("add_date"));
-				editsrfformbean.setSrf_cdd(rs.getString("cdd_date"));
+				editsrfformbean.setSrf_add(DateConversion.ConverttoNormalDate(rs.getString("add_date")));
+				editsrfformbean.setSrf_cdd(DateConversion.ConverttoNormalDate(rs.getString("cdd_date")));
 				editsrfformbean.setSrf_splcdn(rs.getString("splcdn"));
 				editsrfformbean.setSrf_inspcdn(rs.getString("inspcdn"));
 				//editsrfformbean.setSrf_(rs.getString("forwaderid"));
 				editsrfformbean.setSrf_isSample(rs.getString("isinvraised"));
+				
 				editsrfformlist.add(editsrfformbean);
 				}
 			System.out.println(" dest Result Added Successfully");
@@ -557,6 +559,50 @@ public class SrfDaoImpl implements SrfDao {
 		 pst.close();
    }	
 		return isSaved;
+	}
+
+	/* (non-Javadoc)
+	 * @see sb.elpro.dao.SrfDao#updtSrfForm(sb.elpro.model.SampleRequest)
+	 */
+	@Override
+	public boolean updtSrfForm(SampleRequest srfbean) throws SQLException {
+		System.out.println("In SRF UPDT");
+		Connection con = null;
+		PreparedStatement pst = null;
+		int noofrows  = 0;
+		boolean isUpdt =true;
+		try{
+			con = DBConnection.getConnection();
+			StringBuffer sql_uptsrf = new StringBuffer("Update tbl_srfform SET orderdt = ? , refno = ? , priority  = ? , handledby = ? , customerid = ?, tanneryid = ?, deliverid = ? , destination = ? , endusage = ? , terms = ? , add_date = ? , cdd_date = ? , splcdn = ? , inspcdn = ? , forwaderid = ? , isinvraised = ? where sampleno = '"+srfbean.getSrf_sampleno()+ "'");
+			String sqlquery_uptsrf = sql_uptsrf.toString();
+			pst = (PreparedStatement) con.prepareStatement(sqlquery_uptsrf);
+			pst.setString(1, srfbean.getSrf_orderdate());
+			pst.setString(2, srfbean.getSrf_referenceno());
+			pst.setString(3, srfbean.getSrf_priority());
+			pst.setString(4, srfbean.getSrf_handledby());
+			pst.setString(5, srfbean.getSrf_customer());
+			pst.setString(6, srfbean.getSrf_tanname());
+			pst.setString(7, srfbean.getSrf_deliver());
+			pst.setString(8, srfbean.getSrf_destination());
+			pst.setString(9, srfbean.getSrf_endusage());
+			pst.setString(10, srfbean.getSrf_paymentterms());
+			pst.setString(11, srfbean.getSrf_add());
+			pst.setString(12, srfbean.getSrf_cdd());
+			pst.setString(13, srfbean.getSrf_splcdn());
+			pst.setString(14, srfbean.getSrf_inspcdn());
+			pst.setString(15, srfbean.getSrf_forwarder());
+			pst.setString(16, srfbean.getSrf_isSample());
+			noofrows = pst.executeUpdate();
+			System.out.println("Sucessfully UPDATED  the SRF FORM WHOAAAAA!.." + noofrows);
+		}catch(Exception e){
+			e.printStackTrace();
+			isUpdt = false;
+			System.out.println("ERROR RESULT");
+		}finally{
+			 con.close() ;
+			 pst.close();
+	   }	
+			return isUpdt;
 	}
 	
 	

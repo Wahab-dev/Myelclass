@@ -3,7 +3,10 @@
  */
 package sb.elpro.actionform;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.struts.action.ActionForm;
+import org.apache.struts.action.ActionMapping;
 
 /**
  * @author Wahab
@@ -36,9 +39,8 @@ public class DebitForm extends ActionForm{
 	private String deb_qremain;
 	private String deb_rate;
 	private String deb_invoiceamt;
-	private String deb_commission1;
-	private String deb_commission2;
-	private String deb_commission3;
+	private String deb_commission;
+	private String deb_othercommission;
 	private String deb_tc;
 	private String deb_exchangerate;
 	private String deb_elclassamt;
@@ -467,40 +469,7 @@ public class DebitForm extends ActionForm{
 	}
 	/**
 	 * @return the deb_commission1
-	 */
-	public String getDeb_commission1() {
-		return deb_commission1;
-	}
-	/**
-	 * @param deb_commission1 the deb_commission1 to set
-	 */
-	public void setDeb_commission1(String deb_commission1) {
-		this.deb_commission1 = deb_commission1;
-	}
-	/**
-	 * @return the deb_commission2
-	 */
-	public String getDeb_commission2() {
-		return deb_commission2;
-	}
-	/**
-	 * @param deb_commission2 the deb_commission2 to set
-	 */
-	public void setDeb_commission2(String deb_commission2) {
-		this.deb_commission2 = deb_commission2;
-	}
-	/**
-	 * @return the deb_commission3
-	 */
-	public String getDeb_commission3() {
-		return deb_commission3;
-	}
-	/**
-	 * @param deb_commission3 the deb_commission3 to set
-	 */
-	public void setDeb_commission3(String deb_commission3) {
-		this.deb_commission3 = deb_commission3;
-	}
+	
 	/**
 	 * @return the deb_tc
 	 */
@@ -647,6 +616,88 @@ public class DebitForm extends ActionForm{
 	}
 	
 	
-	
+	/* (non-Javadoc)
+	 * @see org.apache.struts.action.ActionForm#reset(org.apache.struts.action.ActionMapping, javax.servlet.ServletRequest)
+	 */
+	@Override
+	public void reset(ActionMapping map, HttpServletRequest request) {
+		deb_debitno= "";
+		deb_debitdate ="";
+		deb_exporter="";
+		deb_tanaddr="";
+		deb_tanattn="";
+		deb_tantelephone="";
+		deb_tanfax="";
+		deb_taninvno="";
+		deb_elclassrefno="";
+		deb_contractno="";
+		deb_orderdate="";
+		deb_article="";
+		deb_color="";
+		deb_invno="";
+		deb_invdate="";
+		deb_totalquantity="";
+		deb_qshipped="";
+		deb_qremain="";
+		deb_rate="";
+		deb_invoiceamt="";
+		deb_commission="";
+		deb_othercommission="";
+		deb_tc="";
+		deb_exchangerate="";
+		deb_elclassamt="";
+		deb_elclassamtinrs="";
+		deb_tax="";
+		deb_total="";
+		deb_tds="";
+		deb_due="";
+		deb_deduction="";
+		deb_iswaived="";
+		
+		//TcDebit 
+
+		tcdeb_tcdebitno="";
+		tcdeb_exporter="";
+		tcdeb_tanaddr="";
+		tcdeb_tantelephone="";
+		tcdeb_tcdebitdate="";
+		tcdeb_taninvno="";
+		tcdeb_elclassrefno="";
+		tcdeb_exchangerate="";
+		tcdeb_commission1="";
+		tcdeb_tcamt="";
+		tcdeb_rate="";
+		tcdeb_totalquantity="";
+		tcdeb_invoiceamt="";
+		tcdeb_elclassamt="";
+		tcdeb_elclassamtinrs="";
+		
+		
+		
+	}
+	/**
+	 * @return the deb_commission
+	 */
+	public String getDeb_commission() {
+		return deb_commission;
+	}
+	/**
+	 * @param deb_commission the deb_commission to set
+	 */
+	public void setDeb_commission(String deb_commission) {
+		this.deb_commission = deb_commission;
+	}
+	/**
+	 * @return the deb_othercommission
+	 */
+	public String getDeb_othercommission() {
+		return deb_othercommission;
+	}
+	/**
+	 * @param deb_othercommission the deb_othercommission to set
+	 */
+	public void setDeb_othercommission(String deb_othercommission) {
+		this.deb_othercommission = deb_othercommission;
+	}
 
 }

@@ -37,6 +37,7 @@ public class TcDebitAction extends Action {
 		usersession = request.getSession(false);
 		PrintWriter out = response.getWriter();
 		response.setContentType("application/json");
+		response.setCharacterEncoding("UTF-8");
 		if(usersession != null){	
 			String action = request.getParameter("action");
 			String invno = request.getParameter("invno");

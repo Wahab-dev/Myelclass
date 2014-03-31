@@ -44,6 +44,7 @@ public class SampleInvSelectCtfromCust extends Action {
 		usersession = request.getSession(false);
 		PrintWriter out = response.getWriter();
 		response.setContentType("application/json");
+		response.setCharacterEncoding("UTF-8");
 		if(usersession != null){
 			String action = request.getParameter("action");
 			String rows = request.getParameter("rows");
@@ -275,6 +276,7 @@ public class SampleInvSelectCtfromCust extends Action {
 								out.println(jsonobj);	
 						}	
 				   	   }else{
+				   		   System.out.println("In Invoice Del  ");
 					   		 boolean saminvbilldellist = saminvbo.getSamInvBillDelDetails(saminvaddagainbill);
 					   		 if(saminvbilldellist){
 								   jsonobj.clear();

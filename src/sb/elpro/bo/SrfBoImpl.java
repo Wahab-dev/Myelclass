@@ -31,19 +31,17 @@ public class SrfBoImpl implements SrfBo {
 	@Override
 	public String getSampleno() throws Exception {
 		String maxsampleno = srfdao.getSampleno();
-		/*if(sampleno == 0){
-			String sampleno= "S0001";
-		}*/		
+		if(maxsampleno.isEmpty() || maxsampleno.equalsIgnoreCase("Null")){
+			 maxsampleno = "S0001";
+		}		
 		return maxsampleno;
 	}
 	@Override
 	public ArrayList<HandledByDetails> getsrfhandledby(String term) throws Exception {
 		ArrayList<HandledByDetails> srfhandledbyarray = srfdao.getsrfhandledby(term);
-		//HandledByDetails srfhandledby = new HandledByDetails();
 		/*if(srfhandledbyarray.isEmpty()){
-			srfhandledbyarray.setHandledbyname("NA");
-			srfhandledbyarray.add(srfhandledby);
-		}	*/	
+			srfhandledbyarray.s
+		}*/
 		return srfhandledbyarray;
 	}
 	@Override
@@ -114,6 +112,14 @@ public class SrfBoImpl implements SrfBo {
 	public boolean saveSrfform(SampleRequest srfbean) throws Exception {
 		boolean isSaveSrf = srfdao.saveSrfForm(srfbean);
 		return isSaveSrf;
+	}
+	/* (non-Javadoc)
+	 * @see sb.elpro.bo.SrfBo#updtSrfform(sb.elpro.model.SampleRequest)
+	 */
+	@Override
+	public boolean updtSrfform(SampleRequest srfbean) throws Exception {
+		boolean isUpdtSrf = srfdao.updtSrfForm(srfbean);
+		return isUpdtSrf;
 	}
 	
 

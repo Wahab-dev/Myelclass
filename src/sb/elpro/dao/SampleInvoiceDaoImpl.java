@@ -9,6 +9,7 @@ package sb.elpro.dao;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.PreparedStatement;
@@ -17,7 +18,9 @@ import com.mysql.jdbc.Statement;
 import sb.elpro.model.ArticleDetails;
 import sb.elpro.model.CustomerInvoice;
 import sb.elpro.model.InvBillDetails;
+import sb.elpro.model.SampleInvoiceBean;
 import sb.elpro.utility.DBConnection;
+import sb.elpro.utility.DateConversion;
 
 /**
  * @author Wahab
@@ -486,10 +489,303 @@ public class SampleInvoiceDaoImpl implements SampleInvoiceDao{
 	 * @see sb.elpro.dao.SampleInvoiceDao#getInvDelbillDetails(sb.elpro.model.InvBillDetails)
 	 */
 	@Override
-	public boolean getSamInvDelbillDetails(InvBillDetails saminvdelabill)
+	public boolean getSamInvDelbillDetails(InvBillDetails saminvdelabill) throws SQLException {
+		Connection con = null;
+		PreparedStatement pst = null;
+		PreparedStatement pstdelart = null;
+		int noofrows  = 0;
+		int isdelart  = 0;
+		boolean isdel = true;
+		try{			
+			con = DBConnection.getConnection();
+			StringBuffer sql_delinvbill = new StringBuffer("delete from elpro.tbl_sampleinv_bill WHERE invbillid = '"+saminvdelabill.getInvid()+"' ");
+			String sqlquery_delinvbill = sql_delinvbill.toString();
+			System.out.println(sqlquery_delinvbill);
+			pst = (PreparedStatement) con.prepareStatement(sqlquery_delinvbill);
+			noofrows = pst.executeUpdate();
+			System.out.println("Sucessfully deleted the record.." + noofrows);
+			if(noofrows == 1){
+				if(saminvdelabill.getInvctno().startsWith("L")){
+					System.out.println(" Revert PRF Status QTy "+noofrows);
+					float qbal = (Float.parseFloat(saminvdelabill.getInvqshpd()) + (Float.parseFloat(saminvdelabill.getInvqbal())));
+					float qshped = (Float.parseFloat(saminvdelabill.getInvqty()) - qbal);
+					System.out.println("qshped "+qshped);
+					System.out.println("qbal "+qbal);
+					String qshiped = String.valueOf(qshped);
+					String qbalc = String.valueOf(qbal);
+					StringBuffer sql_updartqty = new StringBuffer("UPDATE elpro.tbl_prfarticle_status SET qshipped = ? , qbal = ? , invdetails = ?  WHERE prf_articleid = '"+saminvdelabill.getInvartid()+"' ");
+					String sqlquery_updartqty = sql_updartqty.toString();
+					System.out.println("Update quert" +sqlquery_updartqty);
+					pstdelart = (PreparedStatement) con.prepareStatement(sqlquery_updartqty);
+					pstdelart.setString(1, qshiped);
+					System.out.println("getInvqshpd " +qshiped);
+					pstdelart.setString(2, qbalc);
+					System.out.println("getInvqbal " +qbalc);
+					pstdelart.setString(3, "");
+					System.out.println("INV invdetails " +saminvdelabill.getInvno()+" Dt"+saminvdelabill.getInvdt());
+				
+					isdelart = pstdelart.executeUpdate();
+					System.out.println("Sucessfully Updated the record.." + isdelart);
+				}else{
+					//Code to Update the status of the Sample Article 
+					System.out.println(" Revert SRF Status QTy "+noofrows);
+					float qshped = (Float.parseFloat(saminvdelabill.getInvqshpd()) + (Float.parseFloat(saminvdelabill.getInvqbal())));
+					float qbal = (Float.parseFloat(saminvdelabill.getInvqty()) - (Float.parseFloat(saminvdelabill.getInvqshpd())));
+					System.out.println("qshped "+qshped);
+					System.out.println("qbal "+qbal);
+					String qshiped = String.valueOf(qshped);
+					String qbalc = String.valueOf(qbal);
+					StringBuffer sql_updartqty = new StringBuffer("UPDATE elpro.tbl_srfarticle_status SET shpd = ? , bal = ? , courierdetails = ?  WHERE srfarticleid = '"+saminvdelabill.getInvartid()+"' ");
+					String sqlquery_updartqty = sql_updartqty.toString();
+					System.out.println("Update quert" +sqlquery_updartqty);
+					pstdelart = (PreparedStatement) con.prepareStatement(sqlquery_updartqty);
+					pstdelart.setString(1, qshiped);
+					System.out.println("getInvqshpd " +qshiped);
+					pstdelart.setString(2, qbalc);
+					System.out.println("getInvqbal " +qbalc);
+					pstdelart.setString(3, " ");
+					System.out.println("INV invdetails " +"");
+					isdelart = pstdelart.executeUpdate();
+					System.out.println("Sucessfully Updated the record.." + isdelart);
+				}
+			}
+			
+		}catch(Exception e){
+			e.printStackTrace();
+			isdel = false;
+			System.out.println("ERROR RESULT");
+		}finally{
+			 con.close() ;
+			 pst.close();
+	   }	
+	//return noofrows;
+		return isdel;
+	}
+
+	/* (non-Javadoc)
+	 * @see sb.elpro.dao.SampleInvoiceDao#saveSampleInvoiceForm(sb.elpro.model.SampleInvoiceBean)
+	 */
+	@Override
+	public boolean saveSampleInvoiceForm(SampleInvoiceBean sampinvbean)
 			throws SQLException {
-		// TODO Auto-generated method stub
-		return false;
+		System.out.println("In Sample Invoice SAVE");
+		Connection con = null;
+		PreparedStatement pst = null;
+		PreparedStatement pstdischrg = null;
+		int noofrows  = 0;
+		int rowsdischrg = 0;
+		boolean isSaved =true;
+		try{
+			con = DBConnection.getConnection();
+			StringBuffer sql_savesaminvform = new StringBuffer("insert into tbl_sampleinvform (invtype, invno, invdate, exportersref, expname, taninvno, customer, consignee, notify, amount, otherref, buyer, bank, AWBillNo, AWBillDate, othercharges, discounts, totamt)");
+			sql_savesaminvform.append("values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+			String sqlquery_savesaminvform = sql_savesaminvform.toString();
+			pst = (PreparedStatement) con.prepareStatement(sqlquery_savesaminvform);
+			pst.setString(1, sampinvbean.getSaminv_invoicetype());
+			System.out.println("getInv_invoicetype " +sampinvbean.getSaminv_invoicetype());
+			pst.setString(2, sampinvbean.getSaminv_invoiceno());
+			System.out.println("getInv_invoiceno " +sampinvbean.getSaminv_invoiceno());
+			pst.setString(3, sampinvbean.getSaminv_invdate());
+			pst.setString(4, sampinvbean.getSaminv_expref());
+			pst.setString(5, sampinvbean.getSaminv_exporter());
+			pst.setString(6, sampinvbean.getSaminv_otherref());
+			pst.setString(7, sampinvbean.getSaminv_customer());
+			pst.setString(8, sampinvbean.getSaminv_buyer());
+			pst.setString(9, sampinvbean.getSaminv_notify());
+			pst.setString(10, "NA");
+			pst.setString(11, "NA");
+			pst.setString(12, "NA");
+			pst.setString(13, sampinvbean.getSaminv_bank());
+			pst.setString(14, sampinvbean.getSaminv_awbillno());
+			pst.setString(15, sampinvbean.getSaminv_awbilldate());
+			pst.setString(16, sampinvbean.getSaminv_courierchrgs());
+			pst.setString(17, sampinvbean.getSaminv_deduction());
+			pst.setString(18, sampinvbean.getSaminv_total());
+			System.out.println("getInv_total " +sampinvbean.getSaminv_total());
+			noofrows = pst.executeUpdate();
+			if(noofrows == 1){
+				/*
+				 *Insert into the Dispatch Table
+				 */
+				StringBuffer sql_savesaminvdispform = new StringBuffer("insert into tbl_sampleinv_dispatchdetails (invno, invdate, ctryoforigin, loadingport, ctryofdesti, destination, dischargeport, precarriage, dimension, marks, grosswt, netwt, container, noofpackages, packno)");
+				sql_savesaminvdispform.append("values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+				String sqlquery_savesaminvdispform = sql_savesaminvdispform.toString();
+				pstdischrg = (PreparedStatement) con.prepareStatement(sqlquery_savesaminvdispform);
+				System.out.println(" IN PRF SAVE IN THE ");
+				pstdischrg.setString(1, sampinvbean.getSaminv_invoiceno());
+				System.out.println("getInv_invoiceno " +sampinvbean.getSaminv_invoiceno());
+				pstdischrg.setString(2, sampinvbean.getSaminv_invdate());
+				System.out.println("getInv_invdate " +sampinvbean.getSaminv_invdate());
+				pstdischrg.setString(3, sampinvbean.getSaminv_ctryoforigngoods());
+				pstdischrg.setString(4, sampinvbean.getSaminv_loadingport());
+				pstdischrg.setString(5, sampinvbean.getSaminv_ctryoffinaldesti());
+				pstdischrg.setString(6, sampinvbean.getSaminv_finaldesti());
+				pstdischrg.setString(7, sampinvbean.getSaminv_dischargeport());
+				pstdischrg.setString(8, sampinvbean.getSaminv_precarriageby());
+				pstdischrg.setString(9, sampinvbean.getSaminv_dimension());
+				pstdischrg.setString(10,  sampinvbean.getSaminv_marksno());
+				pstdischrg.setString(11, sampinvbean.getSaminv_grosswt());
+				pstdischrg.setString(12, sampinvbean.getSaminv_netwt());
+				pstdischrg.setString(13, sampinvbean.getSaminv_precarriageby());
+				pstdischrg.setString(14, sampinvbean.getSaminv_noofpackages());
+				pstdischrg.setString(15, sampinvbean.getSaminv_packno());
+				System.out.println("getInv_packno " +sampinvbean.getSaminv_packno());
+				rowsdischrg = pstdischrg.executeUpdate();
+			}
+			System.out.println("Sucessfully inserted the record.." + rowsdischrg);
+		}catch(Exception e){
+			e.printStackTrace();
+			isSaved = false;
+			System.out.println("ERROR RESULT");
+		}finally{
+			con.close() ;
+			pst.close();
+			pstdischrg.close();
+		}	
+		return isSaved;
+	}
+
+	/* (non-Javadoc)
+	 * @see sb.elpro.dao.SampleInvoiceDao#getEditSamInvFormDetails(java.lang.String)
+	 */
+	@Override
+	public List<SampleInvoiceBean> getEditSamInvFormDetails(String saminvno)
+			throws SQLException {
+		List<SampleInvoiceBean> editsaminvformlist = new ArrayList<SampleInvoiceBean>() ;
+		Connection con = null;
+		Statement st = null;
+		ResultSet rs = null;
+		try{			
+			con = DBConnection.getConnection();
+			st = (Statement) con.createStatement();
+			String sql = "SELECT * FROM elpro.tbl_sampleinvform form , tbl_sampleinv_dispatchdetails dispatch where form.invno= dispatch.invno and form.invno = '"+saminvno+"' ";
+			System.out.println(sql);
+			rs = st.executeQuery(sql);
+			
+			if(rs.next()) {	
+				SampleInvoiceBean editsinvformbean = new SampleInvoiceBean();
+				editsinvformbean.setSaminv_invoicetype(rs.getString("invtype"));
+				editsinvformbean.setSaminv_invoiceno(rs.getString("invno"));
+				editsinvformbean.setSaminv_invdate(DateConversion.ConverttoNormalDate(rs.getString("invdate")));
+				System.out.println("DT "+editsinvformbean.getSaminv_invdate());
+				editsinvformbean.setSaminv_expref(rs.getString("exportersref"));
+				editsinvformbean.setSaminv_exporter(rs.getString("expname"));
+				editsinvformbean.setSaminv_otherref(rs.getString("taninvno"));
+				editsinvformbean.setSaminv_customer(rs.getString("customer"));
+				editsinvformbean.setSaminv_buyer(rs.getString("consignee"));
+				editsinvformbean.setSaminv_notify(rs.getString("notify"));
+				//editsinvformbean.setSaminv_destination(rs.getString("amount"));
+				//editsinvformbean.setSaminv_endusage(rs.getString("otherref"));
+				//editsinvformbean.setSaminv_paymentterms(rs.getString("buyer"));
+				editsinvformbean.setSaminv_awbilldate(DateConversion.ConverttoNormalDate(rs.getString("AWBillDate")));
+				editsinvformbean.setSaminv_bank(rs.getString("bank"));
+				editsinvformbean.setSaminv_courierchrgs(rs.getString("othercharges"));
+				editsinvformbean.setSaminv_deduction(rs.getString("discounts"));
+				editsinvformbean.setSaminv_total(rs.getString("totamt"));
+				editsinvformbean.setSaminv_ctryoforigngoods(rs.getString("ctryoforigin"));
+				editsinvformbean.setSaminv_loadingport(rs.getString("loadingport"));
+				editsinvformbean.setSaminv_ctryoffinaldesti(rs.getString("ctryofdesti"));
+				editsinvformbean.setSaminv_finaldesti(rs.getString("destination"));
+				editsinvformbean.setSaminv_dischargeport(rs.getString("dischargeport"));
+				editsinvformbean.setSaminv_precarriageby(rs.getString("precarriage"));
+				editsinvformbean.setSaminv_dimension(rs.getString("dimension"));
+				editsinvformbean.setSaminv_marksno(rs.getString("marks"));
+				editsinvformbean.setSaminv_grosswt(rs.getString("grosswt"));
+				editsinvformbean.setSaminv_netwt(rs.getString("netwt"));
+				editsinvformbean.setSaminv_precarriageby(rs.getString("container"));
+				editsinvformbean.setSaminv_noofpackages(rs.getString("noofpackages"));
+				editsinvformbean.setSaminv_packno(rs.getString("packno"));
+				
+				editsaminvformlist.add(editsinvformbean);
+				}
+			System.out.println(" dest Result Added Successfully");
+			}catch(Exception e){
+				e.printStackTrace();
+				System.out.println("dest ERROR RESULT");
+			}finally{
+				 con.close() ;
+				 st.close();
+				 rs.close();
+		   }	
+		return editsaminvformlist;
+	}
+
+	/* (non-Javadoc)
+	 * @see sb.elpro.dao.SampleInvoiceDao#updtSamInvFormDetails(sb.elpro.model.SampleInvoiceBean)
+	 */
+	@Override
+	public boolean updtSamInvFormDetails(SampleInvoiceBean sampinvbean)
+			throws SQLException {
+		System.out.println("In Sample Invoice EDIT SAVE");
+		Connection con = null;
+		PreparedStatement pst = null;
+		PreparedStatement pstdischrg = null;
+		int noofrows  = 0;
+		int rowsdischrg = 0;
+		boolean isUpdtd =true;
+		try{
+			con = DBConnection.getConnection();
+			StringBuffer sql_updtsaminvform = new StringBuffer("update tbl_sampleinvform set invtype = ? ,  invdate= ? , exportersref= ? , expname= ? , taninvno= ? , customer= ? , consignee= ? , notify= ? , amount= ? , otherref= ? , buyer= ? , bank= ? , AWBillNo= ? , AWBillDate= ? , othercharges= ? , discounts= ? , totamt = ? where invno ='"+sampinvbean.getSaminv_invoiceno()+"' ");
+			String sqlquery_updtsaminvform = sql_updtsaminvform.toString();
+			pst = (PreparedStatement) con.prepareStatement(sqlquery_updtsaminvform);
+			pst.setString(1, sampinvbean.getSaminv_invoicetype());
+			System.out.println("getInv_invoicetype " +sampinvbean.getSaminv_invoicetype());
+			pst.setString(2, sampinvbean.getSaminv_invdate());
+			pst.setString(3, sampinvbean.getSaminv_expref());
+			pst.setString(4, sampinvbean.getSaminv_exporter());
+			pst.setString(5, sampinvbean.getSaminv_otherref());
+			pst.setString(6, sampinvbean.getSaminv_customer());
+			pst.setString(7, sampinvbean.getSaminv_buyer());
+			pst.setString(8, sampinvbean.getSaminv_notify());
+			pst.setString(9, "NA");
+			pst.setString(10, "NA");
+			pst.setString(11, "NA");
+			pst.setString(12, sampinvbean.getSaminv_bank());
+			pst.setString(13, sampinvbean.getSaminv_awbillno());
+			pst.setString(14, sampinvbean.getSaminv_awbilldate());
+			pst.setString(15, sampinvbean.getSaminv_courierchrgs());
+			pst.setString(16, sampinvbean.getSaminv_deduction());
+			pst.setString(17, sampinvbean.getSaminv_total());
+			System.out.println("getInv_total " +sampinvbean.getSaminv_total());
+			noofrows = pst.executeUpdate();
+			if(noofrows == 1){
+				/*
+				 *Insert into the Dispatch Table
+				 */
+				StringBuffer sql_updtsaminvdispform = new StringBuffer("update tbl_sampleinv_dispatchdetails set invdate = ?, ctryoforigin = ?, loadingport = ?, ctryofdesti = ?, destination = ?, dischargeport = ?, precarriage = ?, dimension = ?, marks = ?, grosswt = ?, netwt = ?, container = ?, noofpackages = ?, packno = ?  where invno ='"+sampinvbean.getSaminv_invoiceno()+"' ");
+				
+				String sqlquery_sql_updtsaminvdispform = sql_updtsaminvdispform.toString();
+				pstdischrg = (PreparedStatement) con.prepareStatement(sqlquery_sql_updtsaminvdispform);
+				System.out.println(" IN Sample Inv UPDT Dischrg Form ");
+				pstdischrg.setString(1, sampinvbean.getSaminv_invdate());
+				System.out.println("getInv_invdate " +sampinvbean.getSaminv_invdate());
+				pstdischrg.setString(2, sampinvbean.getSaminv_ctryoforigngoods());
+				pstdischrg.setString(3, sampinvbean.getSaminv_loadingport());
+				pstdischrg.setString(4, sampinvbean.getSaminv_ctryoffinaldesti());
+				pstdischrg.setString(5, sampinvbean.getSaminv_finaldesti());
+				pstdischrg.setString(6, sampinvbean.getSaminv_dischargeport());
+				pstdischrg.setString(7, sampinvbean.getSaminv_precarriageby());
+				pstdischrg.setString(8, sampinvbean.getSaminv_dimension());
+				pstdischrg.setString(9,  sampinvbean.getSaminv_marksno());
+				pstdischrg.setString(10, sampinvbean.getSaminv_grosswt());
+				pstdischrg.setString(11, sampinvbean.getSaminv_netwt());
+				pstdischrg.setString(12, sampinvbean.getSaminv_precarriageby());
+				pstdischrg.setString(13, sampinvbean.getSaminv_noofpackages());
+				pstdischrg.setString(14, sampinvbean.getSaminv_packno());
+				System.out.println("geInv_packno " +sampinvbean.getSaminv_packno());
+				rowsdischrg = pstdischrg.executeUpdate();
+			}
+			System.out.println("Sucessfully inserted the record.." + rowsdischrg);
+		}catch(Exception e){
+			e.printStackTrace();
+			isUpdtd = false;
+			System.out.println("ERROR RESULT");
+		}finally{
+			con.close() ;
+			pst.close();
+			pstdischrg.close();
+		}	
+		return isUpdtd;
 	}
 
 }

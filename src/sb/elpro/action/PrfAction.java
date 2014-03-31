@@ -8,7 +8,10 @@ import java.io.InputStream;
 import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 
 import javax.servlet.ServletOutputStream;
@@ -16,7 +19,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JRExporterParameter;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.JasperRunManager;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
+import net.sf.jasperreports.engine.data.JRMapCollectionDataSource;
+import net.sf.jasperreports.engine.export.JRPdfExporter;
 import net.sf.json.JSONObject;
 
 import org.apache.commons.beanutils.BeanUtils;
@@ -43,11 +55,14 @@ public class PrfAction extends DispatchAction {
 	PrfBo prfbo  =  new PrfBoImpl();
 	HttpSession usersession;
 	ProductDetails prfbean = new ProductDetails();
+	ProductDetails prfprintbean = new ProductDetails();
 	
 	public ActionForward Save(ActionMapping map, ActionForm form, 
 			HttpServletRequest request, HttpServletResponse response) throws Exception{
 		 System.out.println("In Save Prf Form");
 		 PrintWriter out = response.getWriter();
+		 response.setContentType("application/json");
+		 response.setCharacterEncoding("UTF-8");
 		 PrfForm prfsaveform =(PrfForm) form;
 		 BeanUtils.copyProperties(prfbean, prfsaveform);
 		 
@@ -99,13 +114,13 @@ public class PrfAction extends DispatchAction {
 				 boolean isupdatePrf = prfbo.updatePrfform(prfbean);
 				 if(isupdatePrf){
 						prfjsonobj.put("result", isupdatePrf);
-						prfjsonobj.put("success", "Successfully Saved The Form");
+						prfjsonobj.put("success", "Successfully Updated The Form");
 						prfsaveform.reset(map, request);
 						out.println(prfjsonobj);
 						return map.findForward("bulkisloaded");
 					}else{
 						prfjsonobj.put("result", isupdatePrf);
-						prfjsonobj.put("error", "Error in Saving The Form");
+						prfjsonobj.put("error", "Error in Updated The Form");
 						out.println(prfjsonobj);
 						return null;
 					}
@@ -127,7 +142,55 @@ public class PrfAction extends DispatchAction {
 	
 	public ActionForward Print(ActionMapping map, ActionForm form, 
 			HttpServletRequest request, HttpServletResponse response) throws Exception{
-		System.out.println("IN Print  ");
+		/*System.out.println("IN Print  ");
+		 PrfForm prfprintform =(PrfForm) form;
+		 BeanUtils.copyProperties(prfprintbean, prfprintform);
+		 System.out.println("Ct No  "+prfprintform.getPrf_contractno());
+		
+		Connection conn = null;
+		
+		
+		try {
+            Class.forName("com.mysql.jdbc.Driver");
+            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/elpro","root","tiger");
+            System.out.println("conn "+conn.getCatalog());
+            } catch (SQLException ex) {
+            } catch (ClassNotFoundException ex) {
+            }
+		response.setContentType("application/pdf");
+        ServletOutputStream out = response.getOutputStream();
+        
+        
+        JasperReport report = JasperCompileManager.compileReport("C:/Users/meetw_000/Desktop/report/SubreportTest/Blank_A4.jrxml");
+        //JasperReport subreportcust = JasperCompileManager.compileReport("C:/Users/meetw_000/Desktop/report/SubreportTest/address.jrxml");
+        JRBeanCollectionDataSource beanColDataSource = new
+        		JRBeanCollectionDataSource(prfprintbean);
+        
+        
+        List<ProductDetails> reportRows = new ArrayList<ProductDetails>;
+        HashMap<String, Object> params = new HashMap<String, Object>(); 
+        params.put("prf_contractno", prfprintform.getPrf_contractno());
+        JRMapCollectionDataSource dataSource = new JRMapCollectionDataSource(params);
+        //params.put("$F{customerid}", subreportcust);
+       
+        	System.out.println("zzzzz"+params.toString());
+        	//System.out.println("zzzzz"+subreportcust.getName());
+            JasperPrint jasperPrint = JasperFillManager.fillReport(report, params, conn);
+            
+            //Pdf Converter           
+            JRPdfExporter exporter = new JRPdfExporter();
+            exporter.setParameter(JRExporterParameter.JASPER_PRINT, jasperPrint);
+            exporter.setParameter(JRExporterParameter.OUTPUT_STREAM, out);
+            try {
+    			exporter.exportReport();
+    			
+    		} catch (JRException e) {
+    			throw new RuntimeException(e);
+    		}catch (Exception e) {
+       			e.printStackTrace();
+    		}
+		*/
+		
 		/*System.out.println("1 .0 "); 
 		//Connection connection = null;
 		ServletOutputStream servletOutputStream = response.getOutputStream();
@@ -143,10 +206,12 @@ public class PrfAction extends DispatchAction {
 		servletOutputStream.flush();
 		servletOutputStream.close();
 		return map.getInputForward();*/
-		return map.findForward("prinprfform");
+		
+		
+		return null;
 	}
 	
-	/*
+	
 	public ActionForward Logout(ActionMapping mapping, ActionForm form, 
 			HttpServletRequest request, HttpServletResponse response) throws Exception{
 		System.out.println("Logout IN PORF ");
@@ -154,7 +219,7 @@ public class PrfAction extends DispatchAction {
 		usersession.invalidate();			
 		return mapping.findForward("login");  
 	}
-
+	/*
 	public ActionForward insertArticle(ActionMapping map , ActionForm form, 
 			HttpServletRequest request, HttpServletResponse response ) throws Exception{
 		System.out.println("In Load Article");

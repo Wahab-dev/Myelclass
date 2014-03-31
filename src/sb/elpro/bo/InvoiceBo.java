@@ -5,6 +5,7 @@ package sb.elpro.bo;
 
 import java.util.List;
 
+import sb.elpro.actionform.InvoiceForm;
 import sb.elpro.model.ArticleDetails;
 import sb.elpro.model.BankDetails;
 import sb.elpro.model.CustomerDetails;
@@ -13,6 +14,7 @@ import sb.elpro.model.DestinationDetails;
 import sb.elpro.model.ExporterDetails;
 import sb.elpro.model.InvBillDetails;
 import sb.elpro.model.InvCustContractDetails;
+import sb.elpro.model.InvoiceBean;
 import sb.elpro.model.InvoiceTotAmtDetails;
 import sb.elpro.model.NotifyConsigneeDetails;
 /**
@@ -88,6 +90,30 @@ public interface InvoiceBo {
 	 * etc
 	 */
 	public String getSampleInvoiceNo(String saminvtype)throws Exception;
+
+	/**  
+	 * (Method description)
+	 * @param
+	 * @return
+	 * etc
+	 */
+	public boolean saveInvoiceform(InvoiceBean invbean)throws Exception;
+
+	/**  
+	 * (Method description)
+	 * @param
+	 * @return
+	 * etc
+	 */
+	public List<InvoiceBean> getEditInvFormValues(String invno)throws Exception;
+
+	/**  
+	 * (Method description)
+	 * @param
+	 * @return
+	 * etc
+	 */
+	public boolean updtInvoiceform(InvoiceBean invbean)throws Exception;
 
 	
 	

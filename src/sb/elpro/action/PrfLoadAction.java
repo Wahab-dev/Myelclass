@@ -17,6 +17,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.actions.DispatchAction;
 
+import sb.elpro.actionform.PrfForm;
 import sb.elpro.bo.PrfBo;
 import sb.elpro.bo.PrfBoImpl;
 import sb.elpro.model.ProductDetails;
@@ -47,8 +48,10 @@ public class PrfLoadAction extends DispatchAction{
 			usersession.setAttribute("sizeremarkarray", prfbo.getSizeremarksDetails());
 			usersession.setAttribute("tcagentarray", prfbo.getTcAgentDetails());
 			if(action == null){
+				PrfForm prfsaveform =(PrfForm) form;
 				usersession.setAttribute("actionform", "add");
 				System.out.println("IN PRF IS LOADED");
+				prfsaveform.reset(map, request);
 				return map.findForward("prfisloaded");
 			}else if(action.equalsIgnoreCase("editform")){
 				/*

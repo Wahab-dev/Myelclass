@@ -5,6 +5,7 @@ package sb.elpro.dao;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 import sb.elpro.model.ArticleDetails;
 import sb.elpro.model.BankDetails;
@@ -14,6 +15,7 @@ import sb.elpro.model.DestinationDetails;
 import sb.elpro.model.ExporterDetails;
 import sb.elpro.model.InvBillDetails;
 import sb.elpro.model.InvCustContractDetails;
+import sb.elpro.model.InvoiceBean;
 import sb.elpro.model.InvoiceTotAmtDetails;
 import sb.elpro.model.NotifyConsigneeDetails;
 
@@ -85,6 +87,30 @@ public interface InvoiceDao {
 	 * etc
 	 */
 	String getSampleInvoiceNoDetails(String saminvtype)throws SQLException;
+
+	/**  
+	 * (Method description)
+	 * @param
+	 * @return
+	 * etc
+	 */
+	boolean saveInvoiceForm(InvoiceBean invbean)throws SQLException;
+
+	/**  
+	 * (Method description)
+	 * @param
+	 * @return
+	 * etc
+	 */
+	List<InvoiceBean> getEditInvFormDetails(String invno)throws SQLException;
+
+	/**  
+	 * (Method description)
+	 * @param
+	 * @return
+	 * etc
+	 */
+	boolean updtInvFormDetails(InvoiceBean invbean)throws SQLException;
 
 	
 

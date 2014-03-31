@@ -59,7 +59,15 @@ public interface InspectionDao {
 			String sord)throws SQLException;
 
 	boolean getInspRejDelList(InspectionBean insprej, String sidx,
-			String sord)throws SQLException;	
+			String sord)throws SQLException;
+
+	/**  
+	 * (Method description)
+	 * @param
+	 * @return
+	 * etc
+	 */
+	boolean saveInspectionForm(InspectionBean inspbean)throws SQLException;	
 
 
 	

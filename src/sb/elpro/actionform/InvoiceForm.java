@@ -2,7 +2,10 @@ package sb.elpro.actionform;
 
 import java.io.Serializable;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.struts.action.ActionForm;
+import org.apache.struts.action.ActionMapping;
 
 public class InvoiceForm extends ActionForm implements Serializable{
 
@@ -1058,4 +1061,104 @@ public class InvoiceForm extends ActionForm implements Serializable{
 		this.inv_includeSample = inv_includeSample;
 	}
 
+	/* (non-Javadoc)
+	 * @see org.apache.struts.action.ActionForm#reset(org.apache.struts.action.ActionMapping, javax.servlet.http.HttpServletRequest)
+	 */
+	@Override
+	public void reset(ActionMapping mapping, HttpServletRequest request) {
+		//Inovice Details 
+		inv_invoicetype="";
+		inv_invoiceno="";
+		inv_invdate="";
+		inv_expref="";		
+		inv_otherref="";
+		
+		inv_exporter=""; //Exporter
+		inv_exporterattn="";
+		inv_exporteraddress="";
+		inv_exportertele="";
+		inv_exporterfax="";
+		inv_notify="";  //Notify
+		inv_notifyattn="";
+		inv_notifyaddress="";
+		inv_notifyfax="";
+		inv_notifytele="";
+		inv_bank="";  //Bank
+		inv_bankbranch="";
+		inv_bankaddress="";
+		inv_banktele="";
+		inv_bankfax="";
+		inv_bankswiftcode="";
+		inv_bankacno="";
+		inv_custid="";  // Cust
+		inv_customer="";		
+		inv_custaddr="";
+		inv_custattn="";
+		inv_custtele="";
+		inv_custfax="";
+		inv_buyerid="";// buyer
+		inv_buyer="";
+		inv_buyeraddr="";
+		inv_buyerattn="";
+		inv_buyertele="";
+		inv_buyerfax="";
+		
+		inv_terms="";
+		inv_payment="";
+		
+		//Dispatch Info
+		inv_ctryoforigngoods="";
+		inv_loadingport="";
+		inv_ctryoffinaldesti="";
+		inv_dischargeport="";
+		inv_finaldesti="";
+		inv_awbillno="";
+		inv_precarriageby="";
+		inv_placeofreciept="";
+		inv_vesselno="";
+		inv_marksno="";
+		inv_noofpackages="";
+		inv_packno="";
+		inv_awbilldate="";
+		
+		//Dimension 
+		inv_grosswt="";
+		inv_dimension="";
+		inv_netwt="";
+		
+		//Other Chrgs
+		inv_discount="";
+		inv_deduction="";
+		inv_courierchrgs="";
+		inv_vatcst="";
+		othercharges="";
+		
+		///pojw
+		inv_pojwno="";
+		inv_pojwtannery="";
+		inv_pojwprice="";	
+		
+		//Article Details 	
+		inv_article="";
+		inv_ctrno="";
+		inv_ctrdate="";
+		inv_pono="";
+		inv_color="";
+		inv_size="";
+		inv_substance="";
+		inv_selection="";
+		inv_selectionp="";
+		inv_quantity="";
+		inv_pieces="";
+		inv_rate="";
+		inv_shipment="";
+		inv_qsend="";
+		inv_qremain="";
+		inv_amount="";
+		inv_tc="";
+		inv_type="";
+		inv_total="";
+		
+		//inv_includeSample="";
+	}
 }

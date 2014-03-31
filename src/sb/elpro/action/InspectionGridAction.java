@@ -35,6 +35,7 @@ public class InspectionGridAction extends Action{
 		PrintWriter out = response.getWriter();
 		JSONObject jsonobj = new JSONObject();
 		response.setContentType("application/json");
+		response.setCharacterEncoding("UTF-8");
 		 if(usersession != null){
 			 String oper =   request.getParameter("oper");
 			 String rows = request.getParameter("rows");
@@ -232,7 +233,8 @@ public class InspectionGridAction extends Action{
 		            	 	insprej.setColorrejects(request.getParameter("colorrejects"));
 		            	 	insprej.setOrgrejects(request.getParameter("orgrejects"));
 		            	 	insprej.setOtherrejects(request.getParameter("otherrejects"));
-		            	 	insprej.setRejectsid(request.getParameter("rejectid"));
+		            	 	insprej.setRejectid(request.getParameter("rejectid"));
+		            	 	System.out.println("rejectid"+insprej.getRejectid());
 		            	 	insprej.setSelecrejects(request.getParameter("selecrejects"));
 		            	 	insprej.setSizerejects(request.getParameter("sizerejects"));
 		            	 	insprej.setSubsrejects(request.getParameter("subsrejects"));

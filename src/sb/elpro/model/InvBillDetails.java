@@ -41,8 +41,227 @@ public class InvBillDetails implements Serializable{
 	private String invtotamount;
 	private String invtc;
 	private String invcomm;
+	private String invothercomm;
 	private String invctno;
+	private String taninvno;
 	
+	private String exporter;
+	private String exporterref;
+	private String otherref;
+	private String customer;
+	private String awbillno;
+	private String awbilldate;
+	private String consignee;
+	private String notify;
+	private String buyer;
+	private String bank;
+	
+	//Debit Details
+	private String debid;
+	private String bankcharge;
+	private String realizedamt;
+	private String exchngrate;
+	private String amtininr;
+	private String debdt;
+	private String remarks;
+	
+	
+	
+	/**
+	 * @return the bankcharge
+	 */
+	public String getBankcharge() {
+		return bankcharge;
+	}
+	/**
+	 * @param bankcharge the bankcharge to set
+	 */
+	public void setBankcharge(String bankcharge) {
+		this.bankcharge = bankcharge;
+	}
+	/**
+	 * @return the realizedamt
+	 */
+	public String getRealizedamt() {
+		return realizedamt;
+	}
+	/**
+	 * @param realizedamt the realizedamt to set
+	 */
+	public void setRealizedamt(String realizedamt) {
+		this.realizedamt = realizedamt;
+	}
+	/**
+	 * @return the exchngrate
+	 */
+	public String getExchngrate() {
+		return exchngrate;
+	}
+	/**
+	 * @param exchngrate the exchngrate to set
+	 */
+	public void setExchngrate(String exchngrate) {
+		this.exchngrate = exchngrate;
+	}
+	/**
+	 * @return the amtininr
+	 */
+	public String getAmtininr() {
+		return amtininr;
+	}
+	/**
+	 * @param amtininr the amtininr to set
+	 */
+	public void setAmtininr(String amtininr) {
+		this.amtininr = amtininr;
+	}
+	/**
+	 * @return the debdt
+	 */
+	public String getDebdt() {
+		return debdt;
+	}
+	/**
+	 * @param debdt the debdt to set
+	 */
+	public void setDebdt(String debdt) {
+		this.debdt = debdt;
+	}
+	/**
+	 * @return the remarks
+	 */
+	public String getRemarks() {
+		return remarks;
+	}
+	/**
+	 * @param remarks the remarks to set
+	 */
+	public void setRemarks(String remarks) {
+		this.remarks = remarks;
+	}
+	
+	
+	
+	/**
+	 * @return the exporter
+	 */
+	public String getExporter() {
+		return exporter;
+	}
+	/**
+	 * @param exporter the exporter to set
+	 */
+	public void setExporter(String exporter) {
+		this.exporter = exporter;
+	}
+	/**
+	 * @return the exporterref
+	 */
+	public String getExporterref() {
+		return exporterref;
+	}
+	/**
+	 * @param exporterref the exporterref to set
+	 */
+	public void setExporterref(String exporterref) {
+		this.exporterref = exporterref;
+	}
+	/**
+	 * @return the otherref
+	 */
+	public String getOtherref() {
+		return otherref;
+	}
+	/**
+	 * @param otherref the otherref to set
+	 */
+	public void setOtherref(String otherref) {
+		this.otherref = otherref;
+	}
+	/**
+	 * @return the customer
+	 */
+	public String getCustomer() {
+		return customer;
+	}
+	/**
+	 * @param customer the customer to set
+	 */
+	public void setCustomer(String customer) {
+		this.customer = customer;
+	}
+	/**
+	 * @return the awbillno
+	 */
+	public String getAwbillno() {
+		return awbillno;
+	}
+	/**
+	 * @param awbillno the awbillno to set
+	 */
+	public void setAwbillno(String awbillno) {
+		this.awbillno = awbillno;
+	}
+	/**
+	 * @return the awbilldate
+	 */
+	public String getAwbilldate() {
+		return awbilldate;
+	}
+	/**
+	 * @param awbilldate the awbilldate to set
+	 */
+	public void setAwbilldate(String awbilldate) {
+		this.awbilldate = awbilldate;
+	}
+	/**
+	 * @return the consignee
+	 */
+	public String getConsignee() {
+		return consignee;
+	}
+	/**
+	 * @param consignee the consignee to set
+	 */
+	public void setConsignee(String consignee) {
+		this.consignee = consignee;
+	}
+	/**
+	 * @return the notify
+	 */
+	public String getNotify() {
+		return notify;
+	}
+	/**
+	 * @param notify the notify to set
+	 */
+	public void setNotify(String notify) {
+		this.notify = notify;
+	}
+	/**
+	 * @return the buyer
+	 */
+	public String getBuyer() {
+		return buyer;
+	}
+	/**
+	 * @param buyer the buyer to set
+	 */
+	public void setBuyer(String buyer) {
+		this.buyer = buyer;
+	}
+	/**
+	 * @return the bank
+	 */
+	public String getBank() {
+		return bank;
+	}
+	/**
+	 * @param bank the bank to set
+	 */
+	public void setBank(String bank) {
+		this.bank = bank;
+	}
 	
 	
 	/**
@@ -334,6 +553,42 @@ public class InvBillDetails implements Serializable{
 	 */
 	public void setInvunit(String invunit) {
 		this.invunit = invunit;
+	}
+	/**
+	 * @return the invothercomm
+	 */
+	public String getInvothercomm() {
+		return invothercomm;
+	}
+	/**
+	 * @param invothercomm the invothercomm to set
+	 */
+	public void setInvothercomm(String invothercomm) {
+		this.invothercomm = invothercomm;
+	}
+	/**
+	 * @return the taninvno
+	 */
+	public String getTaninvno() {
+		return taninvno;
+	}
+	/**
+	 * @param taninvno the taninvno to set
+	 */
+	public void setTaninvno(String taninvno) {
+		this.taninvno = taninvno;
+	}
+	/**
+	 * @return the debid
+	 */
+	public String getDebid() {
+		return debid;
+	}
+	/**
+	 * @param debid the debid to set
+	 */
+	public void setDebid(String debid) {
+		this.debid = debid;
 	}
 	
 		

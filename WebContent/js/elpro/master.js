@@ -255,8 +255,15 @@ $(function() {
 	    height: "100%",
 	    footerrow: true,
         loadonce: true,
-	    userDataOnFooter : true,   
+	   // userDataOnFooter : true,   
 	    emptyrecords: 'No records to display',
+	    loadComplete: function () {
+            var $self = $(this),
+                sum = $self.jqGrid("getCol", "quantity", false, "sum");
+
+            $self.jqGrid("footerData", "set", {selection: "Total:", quantity: sum});
+        }
+
 	 
 	 });
 	mastergrid.jqGrid('navGrid','#masterpager',{
@@ -268,10 +275,10 @@ $(function() {
 	 },
 	 {},{},{},{
 		 //advance Search 
-		 sFilter : true,
+	/*	 sFilter : true,
 		 multipleSearch:true,
 	 	stringResult  :true,
-	 	multipleGroup:true,
+	 	multipleGroup:true,*/
 	 		
 	 }).jqGrid('filterToolbar', {
 		autosearch : true, searchOnEnter:true, stringResult: false

@@ -7,7 +7,7 @@ import java.util.List;
 
 import sb.elpro.dao.TcDebitDao;
 import sb.elpro.dao.TcDebitDaoImpl;
-import sb.elpro.model.InvoiceForm;
+import sb.elpro.model.InvoiceBean;
 
 /**
  * @author Wahab
@@ -25,8 +25,8 @@ public class TcDebitBoImpl implements TcDebitBo {
 	 * @see sb.elpro.bo.TcDebitBo#getinvDetails(java.lang.String)
 	 */
 	@Override
-	public List<InvoiceForm> getinvDetails(String invno) throws Exception {
-		List<InvoiceForm> tcgetInvDetailslist = tcdebitdao.getinvDetails(invno);
+	public List<InvoiceBean> getinvDetails(String invno) throws Exception {
+		List<InvoiceBean> tcgetInvDetailslist = tcdebitdao.getinvDetails(invno);
 		return tcgetInvDetailslist;
 	}
 	

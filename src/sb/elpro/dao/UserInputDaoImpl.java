@@ -21,7 +21,9 @@ import sb.elpro.model.ConsigneeDetails;
 import sb.elpro.model.CustomerDetails;
 import sb.elpro.model.DestinationDetails;
 import sb.elpro.model.NotifyConsigneeDetails;
+import sb.elpro.model.PaymentDetails;
 import sb.elpro.model.TanneryDetails;
+import sb.elpro.model.TermsDetails;
 import sb.elpro.utility.DBConnection;
 
 /**
@@ -748,8 +750,8 @@ public class UserInputDaoImpl implements UserInputDao {
 		try{			
 			con = DBConnection.getConnection();
 			st = (Statement) con.createStatement();
-			String sql = "SELECT articleid, articletype, articlename, articleshortform, size, substance, rate, tc  FROM elpro.tbl_article order by articlename";
-			rs = st.executeQuery(sql);
+			String sql = "SELECT articleid, articletype, articlename, articleshortform, size, substance, selection, rate, tc  FROM elpro.tbl_article order by articlename";
+			rs = st.executeQuery(sql); 
 			while(rs.next()) {	
 				ArticleDetails artbean = new ArticleDetails();
 				artbean.setArticleid(rs.getString("articleid"));
@@ -758,7 +760,8 @@ public class UserInputDaoImpl implements UserInputDao {
 				artbean.setArticleshortform(rs.getString("articleshortform"));
 				artbean.setSize(rs.getString("size"));
 				artbean.setSubstance(rs.getString("substance"));
-				artbean.setRate(rs.getString("rate"));
+				artbean.setSelection(rs.getString("selection"));
+				artbean.setPrice(rs.getString("rate"));
 				artbean.setTc(rs.getString("tc"));
 				System.out.println("articlename name "+artbean.getArticlename());
 				artarraylist.add(artbean);
@@ -787,8 +790,8 @@ public class UserInputDaoImpl implements UserInputDao {
 		boolean isadded = true;
 		try{			
 			con = DBConnection.getConnection();
-			StringBuffer sql_addarticle= new StringBuffer("insert into tbl_article ( articletype, articlename, articleshortform, size, substance, rate, tc )");
-			sql_addarticle.append("values (?,?,?,?,?,?,?)");
+			StringBuffer sql_addarticle= new StringBuffer("insert into tbl_article ( articletype, articlename, articleshortform, size, substance, selection, rate, tc )");
+			sql_addarticle.append("values (?,?,?,?,?,?,?,?)");
 			String sqlquery_addarticle = sql_addarticle.toString();
 			pst = (PreparedStatement) con.prepareStatement(sqlquery_addarticle);
 			pst.setString(1, addarticledetail.getArticletype());
@@ -797,8 +800,9 @@ public class UserInputDaoImpl implements UserInputDao {
 			pst.setString(3, addarticledetail.getArticleshortform());
 			pst.setString(4, addarticledetail.getSize());
 			pst.setString(5, addarticledetail.getSubstance());
-			pst.setString(6, addarticledetail.getRate());
-			pst.setString(7, addarticledetail.getTc());
+			pst.setString(6, addarticledetail.getSelection());
+			pst.setString(7, addarticledetail.getRate());
+			pst.setString(8, addarticledetail.getTc());
 			System.out.println("getArticlename " +addarticledetail.getArticlename());
 			noofrows = pst.executeUpdate();
 			System.out.println(" IN articlename ADD "+noofrows);
@@ -825,7 +829,7 @@ public class UserInputDaoImpl implements UserInputDao {
 		boolean isupdate = true;
 		try{			
 			con = DBConnection.getConnection();
-			StringBuffer sql_updtarticle = new StringBuffer("UPDATE elpro.tbl_article SET articletype = ? , articlename = ? , articleshortform = ? , size = ? , substance = ? , rate = ? , tc = ?  WHERE articleid = '"+editarticledetail.getArticleid()+"' ");
+			StringBuffer sql_updtarticle = new StringBuffer("UPDATE elpro.tbl_article SET articletype = ? , articlename = ? , articleshortform = ? , size = ? , substance = ? , selection = ?,  rate = ? , tc = ?  WHERE articleid = '"+editarticledetail.getArticleid()+"' ");
 			String sqlquery_updtarticle  = sql_updtarticle.toString();
 			pst = (PreparedStatement) con.prepareStatement(sqlquery_updtarticle);
 			pst.setString(1, editarticledetail.getArticletype());
@@ -835,8 +839,9 @@ public class UserInputDaoImpl implements UserInputDao {
 			pst.setString(3, editarticledetail.getArticleshortform());
 			pst.setString(4, editarticledetail.getSize());
 			pst.setString(5, editarticledetail.getSubstance());
-			pst.setString(6, editarticledetail.getRate());
-			pst.setString(7, editarticledetail.getTc());
+			pst.setString(6, editarticledetail.getSelection());
+			pst.setString(7, editarticledetail.getRate());
+			pst.setString(8, editarticledetail.getTc());
 			System.out.println(" getRate"+editarticledetail.getRate());
 			noofrows = pst.executeUpdate();
 			System.out.println("Sucessfully inserted the record.." + noofrows);		
@@ -929,18 +934,16 @@ public class UserInputDaoImpl implements UserInputDao {
 		boolean isadded = true;
 		try{			
 			con = DBConnection.getConnection();
-			StringBuffer sql_addcust= new StringBuffer("insert into tbl_commission ( commid, commname, commagent, commplace, commtype, agenttype)");
-			sql_addcust.append("values (?,?,?,?,?,?)");
+			StringBuffer sql_addcust= new StringBuffer("insert into tbl_commission (  commname, commagent, commplace, commtype, agenttype)");
+			sql_addcust.append("values (?,?,?,?,?)");
 			String sqlquery_addcust = sql_addcust.toString();
 			pst = (PreparedStatement) con.prepareStatement(sqlquery_addcust);
-			pst.setString(1, addcommdetail.getCommid());
-			System.out.println("getCommid " +addcommdetail.getCommid());
-			pst.setString(2, addcommdetail.getCommname());
+			pst.setString(1, addcommdetail.getCommname());
 			System.out.println("getCommname " +addcommdetail.getCommname());
-			pst.setString(3, addcommdetail.getCommagent());
-			pst.setString(4, addcommdetail.getCommplace());
-			pst.setString(5, addcommdetail.getCommtype());
-			pst.setString(6, addcommdetail.getAgenttype());
+			pst.setString(2, addcommdetail.getCommagent());
+			pst.setString(3, addcommdetail.getCommplace());
+			pst.setString(4, addcommdetail.getCommtype());
+			pst.setString(5, addcommdetail.getAgenttype());
 			System.out.println("getCustomerShortForm " +addcommdetail.getAgenttype());
 			noofrows = pst.executeUpdate();
 			System.out.println(" IN Comm ADD "+noofrows);
@@ -1069,18 +1072,16 @@ public class UserInputDaoImpl implements UserInputDao {
 		boolean isadded = true;
 		try{			
 			con = DBConnection.getConnection();
-			StringBuffer sql_adddesti= new StringBuffer("insert into tbl_destination ( destid, destname, destcountry, shortform, destiport, destiplace)");
-			sql_adddesti.append("values (?,?,?,?,?,?)");
+			StringBuffer sql_adddesti= new StringBuffer("insert into tbl_destination ( destname, destcountry, shortform, destiport, destiplace)");
+			sql_adddesti.append("values (?,?,?,?,?)");
 			String sqlquery_adddesti = sql_adddesti.toString();
 			pst = (PreparedStatement) con.prepareStatement(sqlquery_adddesti);
-			pst.setString(1, adddestidetail.getDestiid());
-			System.out.println("destid " +adddestidetail.getDestiid());
-			pst.setString(2, adddestidetail.getDestiname());
+			pst.setString(1, adddestidetail.getDestiname());
 			System.out.println("destname " +adddestidetail.getDestiname());
-			pst.setString(3, adddestidetail.getDestictry());
-			pst.setString(4, adddestidetail.getDestishform());
-			pst.setString(5, adddestidetail.getDestiport());
-			pst.setString(6, adddestidetail.getDestiplace());
+			pst.setString(2, adddestidetail.getDestictry());
+			pst.setString(3, adddestidetail.getDestishform());
+			pst.setString(4, adddestidetail.getDestiport());
+			pst.setString(5, adddestidetail.getDestiplace());
 			System.out.println("getdestiomerShortForm " +adddestidetail.getDestiplace());
 			noofrows = pst.executeUpdate();
 			System.out.println(" IN destname ADD "+noofrows);
@@ -1151,6 +1152,396 @@ public class UserInputDaoImpl implements UserInputDao {
 			String sqlquery_deldestidetails = sql_deldestidetails.toString();
 			System.out.println(sqlquery_deldestidetails);
 			pst = (PreparedStatement) con.prepareStatement(sqlquery_deldestidetails);
+			noofrows = pst.executeUpdate();
+			System.out.println("Sucessfully deleted the record.." + noofrows);
+		}catch(Exception e){
+			e.printStackTrace();
+			isdel = false;
+			System.out.println("ERROR RESULT");
+		}finally{
+			 con.close() ;
+			 pst.close();
+	   }	
+		return isdel;
+	}
+
+	/* (non-Javadoc)
+	 * @see sb.elpro.dao.UserInputDao#getColorList()
+	 */
+	@Override
+	public ArrayList<ArticleDetails> getColorList() throws SQLException {
+		ArrayList<ArticleDetails> colorarraylist = new ArrayList<ArticleDetails>();			
+		Connection con = null;
+		Statement st = null;
+		ResultSet rs = null;	
+		try{			
+			con = DBConnection.getConnection();
+			st = (Statement) con.createStatement();
+			String sql = "SELECT colorid, colorname, pantoneshades, othername, referenceno  FROM elpro.tbl_color order by colorname";
+			rs = st.executeQuery(sql);
+			while(rs.next()) {	
+				ArticleDetails colorbean = new ArticleDetails();
+				colorbean.setColorid(rs.getString("colorid"));
+				colorbean.setColor(rs.getString("colorname"));
+				colorbean.setPantoneshade(rs.getString("pantoneshades"));
+				colorbean.setColorothername(rs.getString("othername"));
+				colorbean.setColorrefno(rs.getString("referenceno"));
+				
+				System.out.println("color name "+colorbean.getColor());
+				colorarraylist.add(colorbean);
+			}
+			System.out.println("colorname  Added Successfully");
+		}catch(Exception e){
+			e.printStackTrace();
+			System.out.println("colorname Result ERROR RESULT");
+		}finally{
+			 con.close() ;
+			 st.close();
+			 rs.close();
+	   }			
+		return colorarraylist;
+	}
+
+	/* (non-Javadoc)
+	 * @see sb.elpro.dao.UserInputDao#addColorList(sb.elpro.model.ArticleDetails)
+	 */
+	@Override
+	public boolean addColorList(ArticleDetails addcolorbean)
+			throws SQLException {
+		Connection con = null;
+		PreparedStatement pst = null;
+		int noofrows  = 0;
+		boolean isadded = true;
+		try{			
+			con = DBConnection.getConnection();
+			StringBuffer sql_addcolor= new StringBuffer("insert into tbl_color ( colorname, pantoneshades, othername, referenceno)");
+			sql_addcolor.append("values (?,?,?,?)");
+			String sqlquery_addcolor = sql_addcolor.toString();
+			pst = (PreparedStatement) con.prepareStatement(sqlquery_addcolor);
+			pst.setString(1, addcolorbean.getColor());
+			System.out.println("getColor " +addcolorbean.getColor());
+			pst.setString(2, addcolorbean.getPantoneshade());
+			pst.setString(3, addcolorbean.getColorothername());
+			pst.setString(4, addcolorbean.getColorrefno());
+			noofrows = pst.executeUpdate();
+			System.out.println(" IN getColor ADD "+noofrows);
+		}catch(Exception e){
+			e.printStackTrace();
+			isadded = false;
+			System.out.println("ERROR RESULT");
+		}finally{
+			 con.close() ;
+			 pst.close();
+	   }	
+		return isadded;
+	}
+
+	/* (non-Javadoc)
+	 * @see sb.elpro.dao.UserInputDao#editColorList(sb.elpro.model.ArticleDetails)
+	 */
+	@Override
+	public boolean editColorList(ArticleDetails editcolorbean)
+			throws SQLException {
+		Connection con = null;
+		PreparedStatement pst = null;
+		int noofrows  = 0;
+		boolean isupdate = true;
+		try{			
+			con = DBConnection.getConnection();
+			StringBuffer sql_updtcolor = new StringBuffer("UPDATE elpro.tbl_color SET colorname = ? , pantoneshades = ? , othername = ? , referenceno = ? WHERE colorid = '"+editcolorbean.getColorid()+"' ");
+			String sqlquery_updtcolor  = sql_updtcolor.toString();
+			pst = (PreparedStatement) con.prepareStatement(sqlquery_updtcolor);
+			pst.setString(1, editcolorbean.getColor());
+			System.out.println("getColor " +editcolorbean.getColor());
+			pst.setString(2, editcolorbean.getPantoneshade());
+			pst.setString(3, editcolorbean.getColorothername());
+			pst.setString(4, editcolorbean.getColorrefno());
+			System.out.println(" getColorid"+editcolorbean.getColorid());
+			noofrows = pst.executeUpdate();
+			System.out.println("executeUpdate"+pst.executeUpdate());
+			System.out.println("Sucessfully inserted the record.." + noofrows);		
+		}catch(Exception e){
+			e.printStackTrace();
+			isupdate = false;
+			System.out.println("ERROR RESULT");
+		}finally{
+			con.close() ;
+			pst.close();
+		}	
+		return isupdate;
+	}
+
+	/* (non-Javadoc)
+	 * @see sb.elpro.dao.UserInputDao#delColorList(sb.elpro.model.ArticleDetails)
+	 */
+	@Override
+	public boolean delColorList(ArticleDetails delcolorbean)
+			throws SQLException {
+		Connection con = null;
+		PreparedStatement pst = null;
+		int noofrows  = 0;
+		boolean isdel = true;
+		try{			
+			con = DBConnection.getConnection();
+			StringBuffer sql_delcolordetails = new StringBuffer("delete from elpro.tbl_color WHERE colorid = '"+delcolorbean.getColorid()+"' ");
+			String sqlquery_delcolordetails = sql_delcolordetails.toString();
+			System.out.println(sqlquery_delcolordetails);
+			pst = (PreparedStatement) con.prepareStatement(sqlquery_delcolordetails);
+			noofrows = pst.executeUpdate();
+			System.out.println("Sucessfully deleted the record.." + noofrows);
+		}catch(Exception e){
+			e.printStackTrace();
+			isdel = false;
+			System.out.println("ERROR RESULT");
+		}finally{
+			 con.close() ;
+			 pst.close();
+	   }	
+		return isdel;
+	}
+
+	/* (non-Javadoc)
+	 * @see sb.elpro.dao.UserInputDao#getTermList()
+	 */
+	@Override
+	public ArrayList<TermsDetails> getTermList() throws SQLException {
+		ArrayList<TermsDetails> termarraylist = new ArrayList<TermsDetails>();			
+		Connection con = null;
+		Statement st = null;
+		ResultSet rs = null;	
+		try{			
+			con = DBConnection.getConnection();
+			st = (Statement) con.createStatement();
+			String sql = "SELECT termid, termname, otherdetails  FROM elpro.tbl_terms order by termname";
+			rs = st.executeQuery(sql);
+			while(rs.next()) {	
+				TermsDetails termbean = new TermsDetails();
+				termbean.setTermid(rs.getString("termid"));
+				termbean.setTermname(rs.getString("termname"));
+				termbean.setOtherdetails(rs.getString("otherdetails"));
+				
+				System.out.println("term name "+termbean.getTermname());
+				termarraylist.add(termbean);
+			}
+			System.out.println("termname  Added Successfully");
+		}catch(Exception e){
+			e.printStackTrace();
+			System.out.println("termname Result ERROR RESULT");
+		}finally{
+			 con.close() ;
+			 st.close();
+			 rs.close();
+	   }			
+		return termarraylist;
+	}
+
+	/* (non-Javadoc)
+	 * @see sb.elpro.dao.UserInputDao#addTermList(sb.elpro.model.TermsDetails)
+	 */
+	@Override
+	public boolean addTermList(TermsDetails addtermbean) throws SQLException {
+		Connection con = null;
+		PreparedStatement pst = null;
+		int noofrows  = 0;
+		boolean isadded = true;
+		try{			
+			con = DBConnection.getConnection();
+			StringBuffer sql_addterm= new StringBuffer("insert into tbl_terms ( termname, otherdetails)");
+			sql_addterm.append("values (?,?)");
+			String sqlquery_addterm = sql_addterm.toString();
+			pst = (PreparedStatement) con.prepareStatement(sqlquery_addterm);
+			pst.setString(1, addtermbean.getTermname());
+			System.out.println("getterm " +addtermbean.getTermname());
+			pst.setString(2, addtermbean.getOtherdetails());
+			noofrows = pst.executeUpdate();
+			System.out.println(" IN getterm ADD "+noofrows);
+		}catch(Exception e){
+			e.printStackTrace();
+			isadded = false;
+			System.out.println("ERROR RESULT");
+		}finally{
+			 con.close() ;
+			 pst.close();
+	   }	
+		return isadded;
+	}
+
+	/* (non-Javadoc)
+	 * @see sb.elpro.dao.UserInputDao#editTermList(sb.elpro.model.TermsDetails)
+	 */
+	@Override
+	public boolean editTermList(TermsDetails edittermbean) throws SQLException {
+		Connection con = null;
+		PreparedStatement pst = null;
+		int noofrows  = 0;
+		boolean isupdate = true;
+		try{			
+			con = DBConnection.getConnection();
+			StringBuffer sql_updtterm = new StringBuffer("UPDATE elpro.tbl_terms SET termname = ? , otherdetails = ? WHERE termid = '"+edittermbean.getTermid()+"' ");
+			String sqlquery_updtterm  = sql_updtterm.toString();
+			pst = (PreparedStatement) con.prepareStatement(sqlquery_updtterm);
+			pst.setString(1, edittermbean.getTermname());
+			System.out.println("getterm " +edittermbean.getTermname());
+			pst.setString(2, edittermbean.getOtherdetails());
+			System.out.println("getOtherdetails " +edittermbean.getOtherdetails());
+			noofrows = pst.executeUpdate();
+			System.out.println("executeUpdate"+pst.executeUpdate());
+			System.out.println("Sucessfully inserted the record.." + noofrows);		
+		}catch(Exception e){
+			e.printStackTrace();
+			isupdate = false;
+			System.out.println("ERROR RESULT");
+		}finally{
+			con.close() ;
+			pst.close();
+		}	
+		return isupdate;
+	}
+
+	/* (non-Javadoc)
+	 * @see sb.elpro.dao.UserInputDao#delTermList(sb.elpro.model.TermsDetails)
+	 */
+	@Override
+	public boolean delTermList(TermsDetails deltermbean) throws SQLException {
+		Connection con = null;
+		PreparedStatement pst = null;
+		int noofrows  = 0;
+		boolean isdel = true;
+		try{			
+			con = DBConnection.getConnection();
+			StringBuffer sql_deltermdetails = new StringBuffer("delete from elpro.tbl_terms WHERE termid = '"+deltermbean.getTermid()+"' ");
+			String sqlquery_deltermdetails = sql_deltermdetails.toString();
+			System.out.println(sqlquery_deltermdetails);
+			pst = (PreparedStatement) con.prepareStatement(sqlquery_deltermdetails);
+			noofrows = pst.executeUpdate();
+			System.out.println("Sucessfully deleted the record.." + noofrows);
+		}catch(Exception e){
+			e.printStackTrace();
+			isdel = false;
+			System.out.println("ERROR RESULT");
+		}finally{
+			 con.close() ;
+			 pst.close();
+	   }	
+		return isdel;
+	}
+
+	/* (non-Javadoc)
+	 * @see sb.elpro.dao.UserInputDao#getPaymntList()
+	 */
+	@Override
+	public ArrayList<PaymentDetails> getPaymntList() throws SQLException {
+		ArrayList<PaymentDetails> paymntarraylist = new ArrayList<PaymentDetails>();			
+		Connection con = null;
+		Statement st = null;
+		ResultSet rs = null;	
+		try{			
+			con = DBConnection.getConnection();
+			st = (Statement) con.createStatement();
+			String sql = "SELECT payid, payname, otherdetails  FROM elpro.tbl_payment order by payname";
+			rs = st.executeQuery(sql);
+			while(rs.next()) {	
+				PaymentDetails paymntbean = new PaymentDetails();
+				paymntbean.setPaymentid(rs.getString("payid"));
+				paymntbean.setPaymentname(rs.getString("payname"));
+				paymntbean.setOtherdetails(rs.getString("otherdetails"));
+				
+				System.out.println("paymnt name "+paymntbean.getPaymentname());
+				paymntarraylist.add(paymntbean);
+			}
+			System.out.println("paymntname  Added Successfully");
+		}catch(Exception e){
+			e.printStackTrace();
+			System.out.println("paymntname Result ERROR RESULT");
+		}finally{
+			 con.close() ;
+			 st.close();
+			 rs.close();
+	   }			
+		return paymntarraylist;
+	}
+
+	/* (non-Javadoc)
+	 * @see sb.elpro.dao.UserInputDao#addPaymntList(sb.elpro.model.PaymentDetails)
+	 */
+	@Override
+	public boolean addPaymntList(PaymentDetails addpaymntbean)
+			throws SQLException {
+		Connection con = null;
+		PreparedStatement pst = null;
+		int noofrows  = 0;
+		boolean isadded = true;
+		try{			
+			con = DBConnection.getConnection();
+			StringBuffer sql_addpaymnt= new StringBuffer("insert into tbl_payment ( payname, otherdetails)");
+			sql_addpaymnt.append("values (?,?)");
+			String sqlquery_addpaymnt = sql_addpaymnt.toString();
+			pst = (PreparedStatement) con.prepareStatement(sqlquery_addpaymnt);
+			pst.setString(1, addpaymntbean.getPaymentname());
+			System.out.println("getpaymnt " +addpaymntbean.getPaymentname());
+			pst.setString(2, addpaymntbean.getOtherdetails());
+			noofrows = pst.executeUpdate();
+			System.out.println(" IN getpaymnt ADD "+noofrows);
+		}catch(Exception e){
+			e.printStackTrace();
+			isadded = false;
+			System.out.println("ERROR RESULT");
+		}finally{
+			 con.close() ;
+			 pst.close();
+	   }	
+		return isadded;
+	}
+
+	/* (non-Javadoc)
+	 * @see sb.elpro.dao.UserInputDao#editPaymntList(sb.elpro.model.PaymentDetails)
+	 */
+	@Override
+	public boolean editPaymntList(PaymentDetails editpaymntbean)
+			throws SQLException {
+		Connection con = null;
+		PreparedStatement pst = null;
+		int noofrows  = 0;
+		boolean isupdate = true;
+		try{			
+			con = DBConnection.getConnection();
+			StringBuffer sql_updtpaymnt = new StringBuffer("UPDATE elpro.tbl_payment SET payname = ? , otherdetails = ? WHERE payid = '"+editpaymntbean.getPaymentid()+"' ");
+			String sqlquery_updtpaymnt  = sql_updtpaymnt.toString();
+			pst = (PreparedStatement) con.prepareStatement(sqlquery_updtpaymnt);
+			pst.setString(1, editpaymntbean.getPaymentname());
+			System.out.println("getpaymnt " +editpaymntbean.getPaymentname());
+			pst.setString(2, editpaymntbean.getOtherdetails());
+			System.out.println("getOtherdetails " +editpaymntbean.getOtherdetails());
+			noofrows = pst.executeUpdate();
+			System.out.println("executeUpdate"+pst.executeUpdate());
+			System.out.println("Sucessfully inserted the record.." + noofrows);		
+		}catch(Exception e){
+			e.printStackTrace();
+			isupdate = false;
+			System.out.println("ERROR RESULT");
+		}finally{
+			con.close() ;
+			pst.close();
+		}	
+		return isupdate;
+	}
+
+	/* (non-Javadoc)
+	 * @see sb.elpro.dao.UserInputDao#delPaymntList(sb.elpro.model.PaymentDetails)
+	 */
+	@Override
+	public boolean delPaymntList(PaymentDetails delpaymntbean)
+			throws SQLException {
+		Connection con = null;
+		PreparedStatement pst = null;
+		int noofrows  = 0;
+		boolean isdel = true;
+		try{			
+			con = DBConnection.getConnection();
+			StringBuffer sql_delpaymntdetails = new StringBuffer("delete from elpro.tbl_payment WHERE payid = '"+delpaymntbean.getPaymentid()+"' ");
+			String sqlquery_delpaymntdetails = sql_delpaymntdetails.toString();
+			System.out.println(sqlquery_delpaymntdetails);
+			pst = (PreparedStatement) con.prepareStatement(sqlquery_delpaymntdetails);
 			noofrows = pst.executeUpdate();
 			System.out.println("Sucessfully deleted the record.." + noofrows);
 		}catch(Exception e){

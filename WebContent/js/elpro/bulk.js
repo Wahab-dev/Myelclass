@@ -302,12 +302,12 @@ $(function() {
 			      	/*root: "rows",
 			      	page: "page", //calls first
 			      	total: "total" ,//calls Second
-			      	records: "records" //calls Third
-*/				},  
+			      	records: "records" //calls Third*/
+				},  
 		       	caption: "Bulk Tracking Report",
 		    	pager: '#bulkktrackpager',
-		    	rowNum: 15, 
-		    	rowList: [15,25,50],
+		    	rowNum: 50, 
+		    	rowList: [50,75,100],
 		        loadtext: "Bow Bow",
 		        height : "auto",
 		        width: "auto",  
@@ -318,21 +318,23 @@ $(function() {
 		        editurl: "/Myelclass/BulkInsertAction.do",
 		        sortable: true,
 		        grouping: true,
+		        toppager:true,
 		        gridview : true,
 		        rownumbers: true, // not working Check 
 		        viewrecords: true,
 		        footerrow: true,
 		        altRows: true,  // altrows and altclass for alternate color on grid rows
 		        altclass:  'myAltRowClass',
-		        userDataOnFooter : true, //Gets Footer Total Recod from Server Side 
-		      /*loadComplete: function() {
-		            $("tr.jqgrow:odd").addClass('myAltRowClass');
-		        },*/
-		      /*groupingView : { 
-		        	groupField : ['ctno'], 
-		       	 	groupColumnShow : [true],
-		   		 	groupText : ['<b>{0} - {1} Item(s)</b>'],//{0} which mean the grouped text and {1} which mean how many items we have on this group.
-		        },  */
+		        //userDataOnFooter : true, //Gets Footer Total Recod from Server Side 
+		        loadComplete: function() {
+		        	 var $self = $(this),
+		        	 qty = $self.jqGrid("getCol", "quantity", false, "sum"),
+		        	 qshpd = $self.jqGrid("getCol", "qshipped", false, "sum"),
+		        	 bal = (parseFloat(qty) - parseFloat(qshpd));
+		        	 $self.jqGrid("footerData", "set", {quantity: qty});
+		        	 $self.jqGrid("footerData", "set", { qshipped: qshpd});
+		        	 $self.jqGrid("footerData", "set", { qbal: bal});
+		        },
 		        emptyrecords: 'No records to display',
 		        });
 			
@@ -539,6 +541,51 @@ $(function() {
 				} 
 			});
 			bulkgrid.jqGrid('filterToolbar', {autosearch : true, searchOnEnter:false, stringResult: true});  //To Enable AutoSearch please comment Search on Enter to False
+			
+			bulkgrid.jqGrid('navButtonAdd', '#bulkktrackpager', {
+		        caption: "Pdf",
+		        buttonicon: "ui-icon-print",
+		        title: "Print in PDF Format",
+		        onClickButton: downloadPdf,
+		    }).jqGrid('navButtonAdd', '#bulkktrackpager', {
+		        caption: "Excel",
+		        buttonicon: "ui-icon-print",
+		        title: "Print in Excel Format",
+		        onClickButton: downloadExcel,
+		    });
+			/*
+			*  Function to print the Master Page 
+			*/
+			
+			function downloadPdf() 
+			{
+			download('pdf');
+			}
+			function downloadExcel() 
+			{
+			download('xls');
+			}
+			function download(type){
+				//var data = mastergrid.jqGrid('getGridParam', 'postData');
+				//alert(data);
+				printurl = "/Myelclass/BulkAction/PrintReports.do?&type="+type;
+				alert(printurl);
+				//start the Download
+				window.location = printurl;
+				
+				
+				// Show progress dialog
+				$('#msgbox').text('Processing download...');
+				$('#msgbox').dialog({	
+					title: 'Download',
+					modal: true,
+					buttons: {"Close": function()  {
+								$(this).dialog("close");
+							} 
+						}
+				});
+			}	
+			
 			/*navButtonAdd('#bulkktrackpager',{ 
 			 		 	   caption:"Modify", 
 			 		 	   buttonicon:"ui-icon-tag", 

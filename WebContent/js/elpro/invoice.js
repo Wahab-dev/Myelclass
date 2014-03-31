@@ -4,6 +4,13 @@
  */
 
 $(document).ready(function() {
+	$("#inv_total").focusout(function() {
+		alert("in focus out ");
+		var totamt = (parseFloat ($("#inv_total").val()) - parseFloat ($("#inv_discount").val())) + parseFloat ($("#othercharges").val());
+		alert("totamt"+totamt);
+		$("#inv_total").val(totamt);
+	});
+	
 	
 	var billInvisInEdit = false; //boolean value need to Check High Priority 
 	var type =null;//get whether the inv for only ct or sample included
@@ -130,7 +137,23 @@ $(document).ready(function() {
 		          	invctgrid.jqGrid('setGridParam',{url:"/Myelclass/InvSelectCtfromCust.do?custname="+custname+"&type="+type+"&action="+"load"}).trigger("reloadGrid");				 
 				    }
 		  	 });
-		 
+		 function clickheremethod(){
+			 var selctnos="";
+		 		 var ids = invctgrid.jqGrid('getGridParam','selarrrow');
+		 		 for (var i=0; i<ids.length;i++){
+		 		     var rowData = invctgrid.jqGrid('getRowData',ids[i]);
+		 			 var ctno = " '"+rowData.ctno+"',";
+		 			 selctnos = selctnos+ctno;
+		 		   }
+		 		 var itemp =selctnos.lastIndexOf(",");
+			 var ctnoselc = selctnos.substring(0, itemp);
+			 alert("ctnoselc"+ctnoselc);
+			 type = $('#inv_includeSample').val();
+			 alert("asd"+type);
+				 billgrid.jqGrid('setGridParam',{url:"/Myelclass/InvSelectCtfromCust.do?ctno="+ctnoselc+"&type="+type+"&action="+"loadsubgrid",page:1});
+				 billgrid.jqGrid('setCaption',"Raise Invoice").trigger('reloadGrid');
+				 invgrid.jqGrid('setGridParam',{url:"/Myelclass/InvSelectCtfromCust.do?action="+"loadBill&ctno="+ctnoselc+"&type="+type ,page:1}).trigger('reloadGrid');
+		 }
 		 
 		 	/*
 		 	 * Grid 1 - Loads Data Based on the Customer Selected Value
@@ -156,8 +179,7 @@ $(document).ready(function() {
 				           {name: 'cdd_date', index:'cdd_date',hidden: true, sortable: true,},
 				           {name: 'add_date', index:'add_date',hidden: true, sortable: true,},
 				           {name: 'commission', index:'commission',hidden: true, sortable: true,},
-				           {name: 'othercommission', index:'othercommission',hidden: true, sortable: true,},		           
-				           
+				           {name: 'othercommission', index:'othercommission',hidden: true, sortable: true,},
 				          ],
 				  jsonReader : {  
 					       repeatitems:false,
@@ -194,7 +216,8 @@ $(document).ready(function() {
 	 		 	   buttonicon: "ui-icon-print",
 	 		       title: "Click here to load",	 		 	   
 	 		       onClickButton: function(){
-	 		 		 var selctnos="";
+	 		    	  clickheremethod();
+	 		 		 /*var selctnos="";
 	 		 		 var ids = invctgrid.jqGrid('getGridParam','selarrrow');
 	 		 		 for (var i=0; i<ids.length;i++){
 	 		 		     var rowData = invctgrid.jqGrid('getRowData',ids[i]);
@@ -208,7 +231,7 @@ $(document).ready(function() {
 					 alert("asd"+type);
 	 				 billgrid.jqGrid('setGridParam',{url:"/Myelclass/InvSelectCtfromCust.do?ctno="+ctnoselc+"&type="+type+"&action="+"loadsubgrid",page:1});
 	 				 billgrid.jqGrid('setCaption',"Raise Invoice").trigger('reloadGrid');
-	 				 invgrid.jqGrid('setGridParam',{url:"/Myelclass/InvSelectCtfromCust.do?action="+"loadBill&ctno="+ctnoselc+"&type="+type ,page:1}).trigger('reloadGrid');
+	 				 invgrid.jqGrid('setGridParam',{url:"/Myelclass/InvSelectCtfromCust.do?action="+"loadBill&ctno="+ctnoselc+"&type="+type ,page:1}).trigger('reloadGrid');*/
 	 		 	   },
 	 		 	
 			});
@@ -450,25 +473,6 @@ $(document).ready(function() {
 							 */
 							closeAfterAdd: true,
 							reloadAfterSubmit: true,
-							/*afterShowForm: function () {
-								//if($("#inv_invoiceno").val().length == '' &&  $("#inv_invdate").val().length == ''){
-									var idSelector = $.jgrid.jqID(billgrid);
-									alert(idSelector);
-									$.jgrid.hideModal("#editmod" + idSelector, {gbox: "#gbox_" + idSelector});
-									alert("Error!!!");
-								//}
-								alert($("#inv_invoiceno").val());
-								alert($("#inv_invdate").val());
-			                },*/
-							/*beforeInitData: function ()
-							{
-								if($("#inv_invoiceno").val().length != '' &&  $("#inv_invdate").val().length != ''){
-									alert("Calls A$ Form ");
-									alert($("#inv_invoiceno").val());
-								}else{
-									alert("Calls B$ Form ");
-								}
-							},*/
 							beforeInitData : function(formid) {
 								var rowid = billgrid.jqGrid('getGridParam', 'selrow');
 					         	if (rowid === null) {
@@ -523,11 +527,12 @@ $(document).ready(function() {
                              },
 						},
 						afterSubmit: function (response, postdata) {
-							var invno = $('#inv_invoiceno').val();
+							/*var invno = $('#inv_invoiceno').val();
 							var ctno = $("#contractno").val();
 							ctno = "'"+ctno+"'";
 							invgrid.jqGrid('setGridParam',{url:"/Myelclass/InvSelectCtfromCust.do?action="+"loadBill&invno="+invno+"&ctno="+ctno ,page:1}).trigger('reloadGrid');
-							
+							*/
+							 clickheremethod();
 							if(response.responseText != ""){
 								return [true,"Success"];
 			                }else{
@@ -748,16 +753,48 @@ $(document).ready(function() {
 						    }, 							
 						},
 						{
+							beforeInitData: function ()
+							{
+								alert("In ddele ");
+							},
+							beforeShowForm : function(formID){
+								alert("In ddele ");
+							},
 							delData: {
 								//Function to Add parameters to the delete 
 								//Here i am passing artid with val 
 								invid: function() {
-		                                var sel_id = invgrid.jqGrid('getGridParam', 'selrow');
-		                                var value = invgrid.jqGrid('getCell', sel_id, 'invid');
-		                                return value;
-		                             }
-		                         },
-								reloadAfterSubmit: true,
+		                             var sel_id = invgrid.jqGrid('getGridParam', 'selrow');
+		                             var value = invgrid.jqGrid('getCell', sel_id, 'invid');
+		                             return value;
+		                        },
+		                        invqty: function() {
+				                    var sel_id = invgrid.jqGrid('getGridParam', 'selrow');
+				                    var value = invgrid.jqGrid('getCell', sel_id, 'invqty');
+				                    return value;
+				                },
+				                invqbal: function() {
+					                    var sel_id = invgrid.jqGrid('getGridParam', 'selrow');
+					                    var value = invgrid.jqGrid('getCell', sel_id, 'invqbal');
+					                    return value;
+					            },
+					            invqshpd: function() {
+				                    var sel_id = invgrid.jqGrid('getGridParam', 'selrow');
+				                    var value = invgrid.jqGrid('getCell', sel_id, 'invqshpd');
+				                    return value;
+					            },
+					            invctno: function() {
+				                    var sel_id = invgrid.jqGrid('getGridParam', 'selrow');
+				                    var value = invgrid.jqGrid('getCell', sel_id, 'invctno');
+				                    return value;
+					            },
+					            invartid: function() {
+				                    var sel_id = invgrid.jqGrid('getGridParam', 'selrow');
+				                    var value = invgrid.jqGrid('getCell', sel_id, 'invartid');
+				                    return value;
+					            },
+							},
+							reloadAfterSubmit: true,
 							
 						},{},
 						 {
@@ -881,7 +918,7 @@ $(document).ready(function() {
 					function(result) { 	
 				       response($.map(result, function(item) {
 				           return { 
-				              value: item.destictry,
+				              value: item.destiname,
 				              };
 				        }));//END response
 				 });
@@ -899,7 +936,7 @@ $(document).ready(function() {
 					function(result) { 	
 				       response($.map(result, function(item) {
 				           return { 
-				              value: item.destination,
+				              value: item.destiname,
 				              };
 				        }));//END response
 				 });
@@ -949,10 +986,13 @@ $(document).ready(function() {
 		
 		
 		 $(".dateclass").datepicker({
-			    autoSize: true,
+			 autoSize: true,
 			    changeMonth:false,
-			    dateFormat: "dd/mm/yy",
+			    dateFormat: "dd-mm-yy",
+			    showWeek: true,
 			    firstDay: 1,
+			    numberOfMonths: 1,
+			    showButtonPanel: false,
 			    gotoCurrent:true, 
 			});
 		

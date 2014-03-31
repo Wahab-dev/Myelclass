@@ -313,8 +313,8 @@ $(function() {
 	},  
 	caption : 'Sample Tracking Report',
 	pager : '#sampletrackpgr',
-	rowNum : 15, 
-	rowList : [15,25,40],
+	rowNum : 50, 
+	rowList : [50,100,200],
     height : "auto",
     width : "auto",  
     sortname : 'sampleno',  
@@ -324,19 +324,29 @@ $(function() {
     sortable : true,
     gridview : true,
     viewrecords: true,
+    footerrow: true,
+    loadonce: true,
+    emptyrecords: 'No records to display',
+    loadComplete: function () {
+        var $self = $(this),
+            sum = $self.jqGrid("getCol", "pcs", false, "sum");
+
+        $self.jqGrid("footerData", "set", {quantity: "Total:", pcs: sum});
+    }
     }).jqGrid('navGrid','#sampletrackpgr',{
-	 edit: true,
+    	edit: true,
 	 	add: true,
 	 	del: true, 
 	 	search: true, 
-	 	view: true, 
+	 	view: true, beforeRefresh: function(){
+	 		sampletrackgrid.jqGrid('setGridParam',{datatype:'json'}).trigger('reloadGrid');
+	    }
 	}).navButtonAdd('#sampletrackpgr',{
-		
 	   caption:"Status", 
 	   buttonicon:"ui-icon-lightbulb", 
 	   position:"last",
 	   onClickButton: function(){ 
-	    var $self = $(this);
+	   var $self = $(this);
 	   $self.jqGrid("editGridRow", $self.jqGrid("getGridParam", "selrow"),
 	    {
 		 beforeShowForm: function(form) {
@@ -444,18 +454,7 @@ $(function() {
 				}
 		});
 	}	
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
+  
  /*.navButtonAdd('#sampletrackpgr',{
 	   caption:"Modify", 
 	   buttonicon:"ui-icon-tag", 

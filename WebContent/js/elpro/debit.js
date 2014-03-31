@@ -2,13 +2,24 @@
  *
  */
 $(document).ready(function() {
-	 
+	$.get("/Myelclass/DebAutoComplete.do?action="+"debno", 
+		 	function(data){
+			 	if($("#debactionform").val().toLowerCase() == "edit" ){
+			 		
+			 	}else{
+			 		$("#deb_debitno").val(data); 
+			 		$.trim($("#deb_debitno").val());
+			 	}
+			 	
+		 	},"text"); 
+	
+	
 	//DATEPICKER
     $(".dtdebit").datepicker({
 	   // changeYear: true,
 	    autoSize: true,
 	    changeMonth:false,
-	    dateFormat: "dd/mm/y",
+	    dateFormat: "dd-mm-yy",
 	    showWeek: true,
 	    firstDay: 1,
 	    numberOfMonths: 1,
@@ -20,26 +31,26 @@ $(document).ready(function() {
 		 grid.jqGrid({
 			 url:"",
 			 datatype: "json",
-			 colNames:['Inv No','Inv date','Ct No','Article','Color','Size','Substance','Quantity','QShipd','QBal','Rate','Inv AMount','Other Charges','Discount','Total','TC','Commission','Agent Commission'],
+			 colNames:['Inv No','Inv date','Ct No','Article','Color','Size','Substance','Quantity','QShipd','QBal','Rate','Inv AMount','Other Charges','Discount','Total','TC','Comm','Other'],
 			 colModel:[
-                 	{name: 'deb_invno', index: 'deb_invno' ,width:90, },
-					{name: 'deb_invdate', index: 'deb_invdate' ,width:70, hidden: true},
-					{name: 'deb_contractno', index: 'deb_contractno' ,width:50, },
-					{name: 'deb_article', index: 'deb_article' ,width:90, },
-					{name: 'deb_color', index: 'deb_color' ,width:70, },
-					{name: 'deb_size', index: 'deb_size' ,width:70, hidden: true},
-					{name: 'deb_substance', index: 'deb_substance' ,width:70, hidden: true},
-					{name: 'deb_totalquantity', index: 'deb_totalquantity' ,width:70, },
-					{name: 'deb_qshipped', index: 'deb_qshipped' ,width:70, },
-					{name: 'deb_qremain', index: 'deb_qremain' ,width:70, hidden: true},
-					{name: 'deb_rate', index: 'deb_rate' ,width:70, },
-					{name: 'deb_invoiceamt', index: 'deb_invoiceamt' ,width:70, },
-					{name: 'deb_othercharge', index: 'deb_othercharge' ,width:50, hidden: true},
-					{name: 'deb_discount', index: 'deb_discount' ,width:90, hidden: true},
-					{name: 'deb_totalamt', index: 'deb_totalamt' ,width:70, hidden: true},
-					{name: 'deb_tc', index: 'deb_tc' ,width:70, },
-					{name: 'deb_commission1', index: 'deb_commission1' ,width:50, },
-					{name: 'deb_commission2', index: 'deb_commission2' ,width:90, hidden: true},
+                 	{name: 'invno', index: 'invno' ,width:90, hidden: false, },
+					{name: 'invdt', index: 'invdt' ,width:70, hidden: true,},
+					{name: 'invctno', index: 'invctno' ,width:50, hidden: false, },
+					{name: 'invartname', index: 'invartname' ,width:90,  hidden: false,},
+					{name: 'invcolor', index: 'invcolor' ,width:70, hidden: false, },
+					{name: 'invsize', index: 'invsize' ,width:70, hidden: true,},
+					{name: 'invsubs', index: 'invsubs' ,width:70, hidden: true,},
+					{name: 'invqty', index: 'invqty' ,width:70,  hidden: false,},
+					{name: 'invqshpd', index: 'invqshpd' ,width:70,  hidden: false,},
+					{name: 'invqbal', index: 'invqbal' ,width:70, hidden: false,},
+					{name: 'invrate', index: 'invrate' ,width:70,  hidden: false,},
+					{name: 'invamt', index: 'invamt' ,width:70,  hidden: false,},
+					{name: 'invothercrg', index: 'invothercrg' ,width:50, hidden: true,},
+					{name: 'invclaim', index: 'invclaim' ,width:90, hidden: true,},
+					{name: 'invtotamount', index: 'invtotamount' ,width:70, hidden: false,},
+					{name: 'invtc', index: 'invtc' ,width:70,  hidden: false,},
+					{name: 'invcomm', index: 'invcomm' ,width:50,  hidden: false,},
+					{name: 'invothercomm', index: 'invothercomm' ,width:90, hidden: false,},
 				],
 			 jsonReader : {  
 				 repeatitems:false,
@@ -55,46 +66,40 @@ $(document).ready(function() {
 			 height : 'automatic',
 			 emptyrecords: 'No records to display',
 			 caption: 'Debit Load',
+			 //multiselect : true,
 			 loadComplete: function (data){ //load complete fires immeddiately aftr server response
 				 $("#tcbtn").addClass('ui-state-disabled'); // Diable TC btn
 				 $("#tcbutton").attr('disabled' , true);
-				 var rowdata = data.rows;
-				 $.each(rowdata, function(index, val) {
-					    var tc = val.deb_tc;
-					   var tcmt =  tc.substring(0,1);
-					if(tcmt != 0){
-						$("#tcbtn").removeClass('ui-state-disabled');
-						//enable tc button
-						$("#tcbutton").attr('disabled' , false);
-						$("#deb_tc").val(tc);
-					}
-				 });
 			 },
 			 onSelectRow:  function(rowid, status, e) {
+				 
+				 var qshippedsum = grid.jqGrid('getCol', 'invqshpd', false, 'sum');
 				 var selrowid = grid.jqGrid('getGridParam', 'selrow');
 		         var invdetails = grid.jqGrid('getRowData', selrowid);
-		         $("#deb_rate").val(invdetails.deb_rate);
-		         $("#deb_totalquantity").val(invdetails.deb_qshipped);
-		         $("#deb_commission1").val(invdetails.deb_commission1);
-		         $("#deb_invoiceamt").val(invdetails.deb_invoiceamt);
+		         
+		         alert(" Alpha  "+qshippedsum);
+		         $("#deb_rate").val(invdetails.invrate);
+		         $("#deb_totalquantity").val(qshippedsum);
+		         $("#deb_commission1").val(invdetails.invcomm);
+		         $("#deb_invoiceamt").val(invdetails.invtotamount);
+		         var tc = invdetails.invtc;
+		         $("#deb_tc").val(tc);
+		         var tcmt =  tc.substring(0,1);
+				   alert("tcmt"+tcmt);
+				   if(tcmt != 0){
+						//enable tc button
+						$("#tcbutton").attr('disabled' , false);
+						$("#invtc").val(tc);
+						//disable save button
+						$("#Btndebitsave").attr('disabled' , true);
+					}else{
+						$("#Btndebitsave").attr('disabled' , false);
+						$("#tcbutton").attr('disabled' , true);
+					}
+		         
 			 }
-		}).navGrid('#deb_debpager',{ edit: false, add: false, del: false, refresh: true, view: false, search: true
-		}).navButtonAdd( '#deb_debpager', { 
-			        caption: "TC",
-			        buttonicon: 'ui-icon-extlink', 
-			        title:"Raise Tc",
-			        position: "last",
-			        id : "tcbtn",
-			    	onClickButton: function(){ 
-				        /*var list = grid.jqGrid('getGridParam', 'selrow');
-			    		var rowdata = grid.jqGrid('getRowData',list);
-				        var exp = $("#deb_exporter").val();
-				        var debno = $("#deb_debitno").val();
-				        var debdt = $("#deb_debitdate").val();*/
-			    		
-						
-			         }
-		 }).navButtonAdd( '#deb_debpager',{ 
+		}).navGrid('#deb_debpager',{ edit: false, add: false, del: false, refresh: true, view: false, search: true,
+		}).navButtonAdd( '#deb_debpager',{ 
 			        caption: "Waived",
 			        title:"Debit to Waived",
 			        buttonicon: 'ui-icon-lightbulb',
@@ -102,7 +107,7 @@ $(document).ready(function() {
 			        id : "wvdbtn",
 			        onClickButton: function(){ 
 			        	var selrow = grid.jqGrid('getGridParam', 'selrow');
-			        	var invid = grid.jqGrid('getCell', selrow, 'deb_invno');
+			        	var invid = grid.jqGrid('getCell', selrow, 'invno');
 			        	
 			        	if(invid){
 			        		 // Ajax call to Controller for Debit to be Waived 
@@ -110,6 +115,7 @@ $(document).ready(function() {
 								function (data) { 
 								 //hanle the Response ...
 					         });//END getJSON
+							 grid.jqGrid('setGridParam',{url:"/Myelclass/DebSelInvfromCust.do?invno="+null+"&action="+"loadGrid",}).trigger("reloadGrid");
 			        	}else{
 			        		alert("Please Select Debitnote to be Waived ..");
 			        	}
@@ -172,22 +178,53 @@ $(document).ready(function() {
 			autoOpen: false,
 	        resizable: true,
 	        width: 830,
-	        height: 640,
+	        height: 500,
 	        autoResize: true, 
 	        modal: true,
 	        open: function(event, ui){
-	        	$("#tcdeb_tcdebitno").val($("#deb_debitno").val());
+	        	var debitno = $("#deb_debitno").val()+"-A";
+	        	$("#tcdeb_tcdebitno").val(debitno);
+	        	$("#tcdeb_tcdebitdate").val($("#deb_debitdate").val());
 	        	$("#tcdeb_exporter").val($("#deb_exporter").val());
 	        	$("#tcdeb_tanaddr").val($("#deb_tanaddr").val());
 	        	$("#tcdeb_tantelephone").val($("#deb_tantelephone").val());
 	        	$("#tcdeb_tcdebitdate").val($("#deb_debitdate").val());
 	        	$("#tcdeb_taninvno").val($("#deb_taninvno").val());
 	        	$("#tcdeb_elclassrefno").val($("#deb_elclassrefno").val());
-	        	//$("#tcdeb_exchangerate").val($("#").val());
 	        	$("#tcdeb_tcamt").val($("#deb_tc").val());
 	        	$("#tcdeb_rate").val($("#deb_rate").val());
 	        	$("#tcdeb_totalquantity").val($("#deb_totalquantity").val());
-	        } 
+	        },
+	        buttons:{
+	        	"Save": function () {
+	        		var formdata = $('#tcdebitform').serialize();
+	        		alert("Form Data"+formdata);
+	        		//$.post( "/Myelclass/TcDebit.do", $(".tcdebitform" ).serialize() );
+	        		$.ajax({
+	    				url: "/Myelclass/TcDebit.do",
+	    				type: "POST",
+	    				async: true,
+	    				dataType: "text",
+	    				data: formdata,
+	    				contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+	    				success: function (data) {
+	    					alert("S"+data);
+	    	                console.log("success"+data);
+	    	                $(this).dialog("close");
+	    	            }, 
+	    	            error: function (data) {
+	    	            	alert("F "+data);
+	    	                console.log("error");
+	    	            } 
+	    			});
+				},
+				"Clear" : function () {
+					alert("T");
+				},
+				"Close" : function () {
+					 $(this).dialog("close");
+				},
+	        },
 		});
 	 
 	$("#tcbutton").click(function(){
@@ -199,7 +236,7 @@ $(document).ready(function() {
 	 * Events for Exchange Rate 
 	 */
 	 $("#deb_exchangerate").focusout(function() {
-		var comm = $("#deb_commission1").val();
+		var comm = $("#deb_commission").val();
 		var invamt = $("#deb_invoiceamt").val();
 		var commindex = comm.indexOf('%');
 		var commpercent = comm.substring(0,commindex);
@@ -222,7 +259,6 @@ $(document).ready(function() {
 			var tc = $("#tcdeb_tcamt").val();
 			var exchngrate = $("#tcdeb_exchangerate").val();
 			var totqty = $("#tcdeb_totalquantity").val();
-			
 			
 			var tcindex = tc.indexOf(' ');
 			alert(tcindex);

@@ -19,6 +19,7 @@ import org.apache.struts.action.ActionMapping;
 
 import sb.elpro.bo.DebitBo;
 import sb.elpro.bo.DebitBoImpl;
+import sb.elpro.model.InvBillDetails;
 import sb.elpro.model.RaiseDebit;
 
 /**
@@ -35,6 +36,7 @@ public class DebSelInvfromCust extends Action{
 		usersession = request.getSession(false);
 		PrintWriter out = response.getWriter();
 		response.setContentType("application/json");
+		response.setCharacterEncoding("UTF-8");
 		if(usersession != null){	
 			String action = request.getParameter("action");
 			String rows = request.getParameter("rows");
@@ -48,7 +50,7 @@ public class DebSelInvfromCust extends Action{
 			if(action.equalsIgnoreCase("loadGrid")){
 				System.out.println("IN Debit LOAD GRID");
 				String invno = request.getParameter("invno");
-				List<RaiseDebit> debitlist = debbo.getDebitInvDetails(invno);
+				List<InvBillDetails> debitlist = debbo.getDebitInvDetails(invno);
 				int records = debitlist.size();
 				int page = Integer.parseInt(pag);
                 int totalPages = 0;

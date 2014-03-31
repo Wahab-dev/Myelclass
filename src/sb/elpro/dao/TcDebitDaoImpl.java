@@ -14,7 +14,7 @@ import java.util.List;
 import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.Statement;
  
-import sb.elpro.model.InvoiceForm;
+import sb.elpro.model.InvoiceBean;
 import sb.elpro.utility.DBConnection;
 
 /**
@@ -27,8 +27,8 @@ public class TcDebitDaoImpl implements TcDebitDao {
 	 * @see sb.elpro.dao.TcDebitDao#getinvDetails(java.lang.String)
 	 */
 	@Override
-	public List<InvoiceForm> getinvDetails(String invno) throws SQLException {
-		ArrayList<InvoiceForm> invarraylist = new ArrayList<InvoiceForm>();
+	public List<InvoiceBean> getinvDetails(String invno) throws SQLException {
+		ArrayList<InvoiceBean> invarraylist = new ArrayList<InvoiceBean>();
 		Connection con = null;
 		Statement st = null;
 		ResultSet rs = null;
@@ -38,7 +38,7 @@ public class TcDebitDaoImpl implements TcDebitDao {
 			String sql = "SELECT expname, invno, taninvno FROM elpro.tbl_invform where invno = '"+invno+"'";
 			rs = st.executeQuery(sql);
 			while(rs.next()) {	
-				InvoiceForm invbean = new InvoiceForm();
+				InvoiceBean invbean = new InvoiceBean();
 				invbean.setInv_exporter(rs.getString("expname"));
 				invbean.setInv_invoiceno(rs.getString("invno"));
 				invbean.setInv_otherref(rs.getString("taninvno"));

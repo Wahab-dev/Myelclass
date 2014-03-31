@@ -14,6 +14,8 @@ import sb.elpro.dao.SampleInvoiceDaoImpl;
 import sb.elpro.model.ArticleDetails;
 import sb.elpro.model.CustomerInvoice;
 import sb.elpro.model.InvBillDetails;
+import sb.elpro.model.SampleInvoiceBean;
+import sb.elpro.model.SampleRequest;
 
 
 /**
@@ -97,6 +99,33 @@ public class SampleInvoiceBoImpl implements SampleInvoiceBo {
 			throws Exception {
 		boolean saminvdelbill = sampleinvdao.getSamInvDelbillDetails(saminvdelabill);
 		return saminvdelbill;
+	}
+	/* (non-Javadoc)
+	 * @see sb.elpro.bo.SampleInvoiceBo#saveSampleInvoiceform(sb.elpro.model.SampleInvoiceBean)
+	 */
+	@Override
+	public boolean saveSampleInvoiceform(SampleInvoiceBean sampinvbean)
+			throws Exception {
+		boolean isSaveSampleInvoice =  sampleinvdao.saveSampleInvoiceForm(sampinvbean);
+		return isSaveSampleInvoice;
+	}
+	/* (non-Javadoc)
+	 * @see sb.elpro.bo.SampleInvoiceBo#getEditSamInvFormValues(java.lang.String)
+	 */
+	@Override
+	public List<SampleInvoiceBean> getEditSamInvFormValues(String saminvno)
+			throws Exception {
+		List<SampleInvoiceBean> saminvgeteditForm = sampleinvdao.getEditSamInvFormDetails(saminvno);
+		return saminvgeteditForm;
+	}
+	/* (non-Javadoc)
+	 * @see sb.elpro.bo.SampleInvoiceBo#updtSampleInvoiceform(sb.elpro.model.SampleInvoiceBean)
+	 */
+	@Override
+	public boolean updtSampleInvoiceform(SampleInvoiceBean sampinvbean)
+			throws Exception {
+		boolean isupdtsaminvForm = sampleinvdao.updtSamInvFormDetails(sampinvbean);
+		return isupdtsaminvForm;
 	}
 	
 }

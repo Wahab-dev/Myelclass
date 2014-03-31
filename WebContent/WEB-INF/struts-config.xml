@@ -22,6 +22,8 @@
  	<form-bean name="MasterTrackForm" type="sb.elpro.actionform.MasterTrackForm"></form-bean>
  	<form-bean name="UserInputForm" type="sb.elpro.actionform.UserInputForm"></form-bean>
  	<form-bean name="SampleInvoiceForm" type="sb.elpro.actionform.SampleInvoiceForm"></form-bean>
+ 	<form-bean name="SampleDebitForm" type="sb.elpro.actionform.SampleDebitForm"></form-bean>
+ 	<form-bean name="PaymentForm" type="sb.elpro.actionform.PaymentForm"></form-bean>
  	
 </form-beans>
  
@@ -33,14 +35,15 @@
 
  <!-- ACTION MAPPING DEFINITIONS -->
  <action-mappings>
- 
- 	 	<!-- Login Action  -->
+<!-- ======================================================================================================================================================================================= -->
+<!-- ====Login Action======================================================================================================================================================================= -->
+<!-- ======================================================================================================================================================================================= -->
 	<action path="/login" name="LoginForm" type="sb.elpro.action.LoginAction"  input="/Login.jsp" validate="true" parameter="loginaction" scope="session">
 		<forward name="gotoMenu" path="/jsp/Menu.jsp"></forward>
 		<forward name="failure" path="/jsp/WrongUser.jsp"></forward>
  		<forward name="reset" path="/Login.jsp"></forward>
  	</action> 	 	
- 	 <action path="/Registernewuser" name="NewUserForm" type="sb.elpro.action.LoginAction"  input="/Login.jsp" parameter="loginaction" scope="session">
+ 	<action path="/Registernewuser" name="NewUserForm" type="sb.elpro.action.LoginAction"  input="/Login.jsp" parameter="loginaction" scope="session">
  	 	<forward name="newuser" path="/jsp/Registration.jsp"></forward>	
  	 	<forward name="reset" path="/Login.jsp"></forward>	
  	</action>	
@@ -48,180 +51,223 @@
  		<forward name="setpwd" path="/jsp/Setpassword.jsp"></forward>	
  	 	<forward name="reset" path="/Login.jsp"></forward>			
  	</action>
- 	 	
- 	
-		 
-	 <!-- All Action in Prf page-->	 
 	
-	 <action path="/Prf" name="PrfForm" type="sb.elpro.action.PrfAction" input="/jsp/Prf.jsp" parameter="prfaction" scope="session">
+<!-- ==== Contract Action ==================================================================================================================================================================== -->	
+	<action path="/Prf" name="PrfForm" type="sb.elpro.action.PrfAction" input="/jsp/Prf.jsp" parameter="prfaction" scope="session">
 	   	 <forward name="prfissaved" path="/jsp/Prf.jsp"></forward>	
-	   		 <forward name="clearprfform" path="/jsp/Prf.jsp"></forward>
-	   	  	<forward name="bulkisloaded" path="/jsp/Bulk.jsp"></forward>
-	   	  	<forward name="prinprfform" path="/jsp/Print/Prfform.jsp"></forward>	
-	 </action>	 
+	 	 <forward name="clearprfform" redirect="true" path="/jsp/Prf.jsp"></forward>
+	   	 <forward name="bulkisloaded" path="/jsp/Bulk.jsp"></forward>
+	   	 <forward name="prinprfform" path="/jsp/Print/Prfform.jsp"></forward>	
+	   	 <forward name="login" redirect="true" path="/Login.jsp"></forward>
+	</action>	 
 	 
-	 <action path="/generateprfform"
-				type="sb.elpro.action.GeneratePrfFormAction"
-				name="GeneratePrfForm"
-				scope="request"
-				input="/jsp/Print/Prfform.jsp">
-	</action>
-	  <action path="/LoadPrf" name="PrfForm" type="sb.elpro.action.PrfLoadAction" input="/jsp/Menu.jsp" scope="session">
-	 	 <forward name="prfisloaded" path="/jsp/Prf.jsp"></forward>		 
-	 </action>
-	<!--  <action path="/UpdatePrf" name="PrfForm" type="sb.elpro.action.PrfLoadAction" input="/jsp/Bulk.jsp" scope="session" parameter="action">
-	 	 <forward name="prfisloaded" path="/jsp/Prf.jsp"></forward>		 
-	 </action>
-	  -->
-	 
-	 
-	 <action path="/ArticleSelectList" name="PrfForm" type="sb.elpro.action.ArticleSelectList" input="/jsp/Prf.jsp" scope="session">	 
-	 </action>	 
-	 <action path="/PrfAutocomplete" name="PrfForm" type="sb.elpro.action.PrfAutocomplete" input="/jsp/Prf.jsp" scope="session">	 
-	 </action>
-	   <action path="/PrfinsertArticle" name="PrfForm" type="sb.elpro.action.PrfInsertArticle" input="/jsp/Prf.jsp" scope="session">	 
-	 </action>	 
-	 
+	<action path="/generateprfform" type="sb.elpro.action.GeneratePrfFormAction" name="GeneratePrfForm" scope="request" input="/jsp/Print/Prfform.jsp"></action>
 	
-	  <!-- Bulk Tracking Page  -->
-	   <action path="/gotoBulkTracking" name="BulkTrackForm" type="sb.elpro.action.BulkTrackAction" input="/jsp/Bulk.jsp" scope="session" parameter="action"> 
+	<action path="/LoadPrf" name="PrfForm" type="sb.elpro.action.PrfLoadAction" input="/jsp/Menu.jsp" scope="session">
+	 	 <forward name="prfisloaded" path="/jsp/Prf.jsp"></forward>		 
+	</action>
+	 
+	<action path="/ArticleSelectList" name="PrfForm" type="sb.elpro.action.ArticleSelectList" input="/jsp/Prf.jsp" scope="session"></action>	 
+	 
+	<action path="/PrfAutocomplete" name="PrfForm" type="sb.elpro.action.PrfAutocomplete" input="/jsp/Prf.jsp" scope="session"></action>
+	 
+	<action path="/PrfinsertArticle" name="PrfForm" type="sb.elpro.action.PrfInsertArticle" input="/jsp/Prf.jsp" scope="session"></action>	 
+	 
+<!-- ==== Bulk Tracking ==================================================================================================================================================================== -->
+	<action path="/gotoBulkTracking" name="BulkTrackForm" type="sb.elpro.action.BulkTrackAction" input="/jsp/Bulk.jsp" scope="session" parameter="action"> 
 	   <forward name="bulkisloaded" path="/jsp/Bulk.jsp"></forward>	
-	  </action>
-	  <action path="/BulkAction" name="BulkTrackForm" type="sb.elpro.action.BulkAction" parameter="btraction" scope="session">  
-	  </action>
-	  <action path="/BulkInsertAction" name="BulkTrackForm" type="sb.elpro.action.BulkInsertAction"  input="/jsp/Bulk.jsp" scope="session">  
-	  </action>
-	  
-	  
-	<!--   SRF	-->	  
-	 <action path="/loadSrf" type="sb.elpro.action.SrfLoadAction" input="/jsp/Menu.jsp" scope="session" parameter="srfaction">
+	</action>
+	
+	<action path="/BulkAction" name="BulkTrackForm" type="sb.elpro.action.BulkAction" parameter="btraction" scope="session">
+		<forward name="login" redirect="true" path="/Login.jsp"></forward>
+	</action>
+	
+	<action path="/BulkInsertAction" name="BulkTrackForm" type="sb.elpro.action.BulkInsertAction"  input="/jsp/Bulk.jsp" scope="session"></action>
+	
+	<action path="/BulkAction/PrintReports" name="BulkTrackForm" type="sb.elpro.action.BulkPrintAction"  input="/jsp/Bulk.jsp" scope="session"></action> 
+	
+<!-- ====================================================================================================================================================================================== -->	 
+<!-- ==== SAMPLE Action =================================================================================================================================================================== -->
+<!-- ====================================================================================================================================================================================== -->  
+	<action path="/loadSrf" type="sb.elpro.action.SrfLoadAction" input="/jsp/Menu.jsp" scope="session" parameter="srfaction">
 	  	 <forward name="srfisloaded" path="/jsp/Srf.jsp"></forward>	
-	  </action>	  
-	 <action path="/Srf" name="SrfForm" type="sb.elpro.action.SrfAction" input="/jsp/Srf.jsp" parameter="srfaction" scope="session">  
-	 	<forward name="srfissaved" path="/jsp/Srf.jsp"></forward>	
-	 	 <forward name="clearsrfform" path="/jsp/Srf.jsp"></forward>
+	</action>	  
+	  
+	<action path="/Srf" name="SrfForm" type="sb.elpro.action.SrfAction" input="/jsp/Srf.jsp" parameter="srfaction" scope="session">  
+		<forward name="srfissaved" path="/jsp/Srf.jsp"></forward>	
+	 	<forward name="sampletrackisloaded" path="/jsp/SampleTrack.jsp"></forward>
+	 	<forward name="clearsrfform" path="/jsp/Menu.jsp"></forward>
+	 	<forward name="login" redirect="true" path="/Login.jsp"></forward>
 	 </action>	 
-	  <action path="/SrfinsertArticle" name="SrfForm" type="sb.elpro.action.SrfInsertArticle" input="/jsp/Srf.jsp" scope="session">	 
-	 </action>	 
-	   <action path="/AutoCompleteServlet" name="SrfForm" type="sb.elpro.action.AutoCompleteServlet" input="/jsp/Srf.jsp" scope="session">	 
-	 </action>	
-	  <action path="/SrfAutoComplete" name="SrfForm" type="sb.elpro.action.SrfAutoComplete" input="/jsp/Srf.jsp" scope="session">	 
-	 </action>
+
+	<action path="/SrfinsertArticle" name="SrfForm" type="sb.elpro.action.SrfInsertArticle" input="/jsp/Srf.jsp" scope="session"></action>	
+	  
+	<action path="/AutoCompleteServlet" name="SrfForm" type="sb.elpro.action.AutoCompleteServlet" input="/jsp/Srf.jsp" scope="session"></action>	
 	 
-	  <!-- Sample Tracking Page  -->
-	  <action path="/gotoSampleTracking" name="SampleTrackForm" type="sb.elpro.action.SampleTrackAction" input="/jsp/SampleTrack.jsp" scope="session" parameter="action"> 
+	<action path="/SrfAutoComplete" name="SrfForm" type="sb.elpro.action.SrfAutoComplete" input="/jsp/Srf.jsp" scope="session"></action>
+	
+
+  
+
+<!-- ==== Sample Tracking ==================================================================================================================================================================== -->
+	<action path="/gotoSampleTracking" name="SampleTrackForm" type="sb.elpro.action.SampleTrackAction" input="/jsp/SampleTrack.jsp" scope="session" parameter="straction"> 
 	   <forward name="sampletrackisloaded" path="/jsp/SampleTrack.jsp"></forward>	
-	  </action>
-	  <action path="/SampleAction" name="SampleTrackForm" type="sb.elpro.action.SampleAction"  parameter="straction" input="/jsp/SampleTrack.jsp" scope="session">  
-	  </action>
-	  <action path="/SamptrackInsertAction" name="SampleTrackForm" type="sb.elpro.action.SamptrackInsertAction"  input="/jsp/SampleTrack.jsp" scope="session">  
-	  </action>
-	  <action path="/SamptrackInsertAction/PrintReports" name="SampleTrackForm" type="sb.elpro.action.SamplePrintAction"  input="/jsp/SampleTrack.jsp" scope="session">  
-	  </action> 
+	</action>
+	
+	<action path="/SampleAction" name="SampleTrackForm" type="sb.elpro.action.SampleAction"  parameter="straction" input="/jsp/SampleTrack.jsp" scope="session">
+		<forward name="login" redirect="true" path="/Login.jsp"></forward>
+	</action>
+	
+	<action path="/SamptrackInsertAction" name="SampleTrackForm" type="sb.elpro.action.SamptrackInsertAction"  input="/jsp/SampleTrack.jsp" scope="session"></action>
+	
+	<action path="/SamptrackInsertAction/PrintReports" name="SampleTrackForm" type="sb.elpro.action.SamplePrintAction"  input="/jsp/SampleTrack.jsp" scope="session"></action> 
 	 
-	 <!--   INVOICE	-->	   	  
-	  <action path="/gotoinvoice" type="sb.elpro.action.InvoiceLoadAction" input="/jsp/Menu.jsp" scope="session">
-	  	<forward name="invoiceisloaded" path="/jsp/Invoice.jsp"></forward>
-	  </action> 
-	  <action path="/saveinvoice" name="InvoiceForm" type="sb.elpro.action.InvoiceAction" input="/jsp/Invoice.jsp" scope="session" parameter="action">
-	  	<forward name="invoiceisloaded" path="/jsp/Invoice.jsp"></forward>
-	  </action> 	  
-	   <action path="/InvSelectCtfromCust" name="InvoiceForm" type="sb.elpro.action.InvSelectCtfromCust" input="/jsp/Invoice.jsp" scope="session">
-	 </action>
-	  <action path="/InvAutocomplete" name="InvoiceForm" type="sb.elpro.action.InvAutocomplete" input="/jsp/Invoice.jsp" scope="session">	 
-	 </action>
-	 
-	 
-	 
-	 
-	 <!-- Inspection Details Screen -->
-	 
-	 <action path="/loadInspection" type="sb.elpro.action.InspectionLoadAction" input="/jsp/Menu.jsp" scope="session" >
+
+<!-- ==== Inspection Details ==================================================================================================================================================================== -->
+	<action path="/loadInspection" type="sb.elpro.action.InspectionLoadAction" input="/jsp/Menu.jsp" scope="session"  parameter="inspaction">
 	  	<forward name="inspectionisloaded" path="/jsp/Inspection.jsp"></forward>
-	 </action>
-	 <action path="/saveinspection" name="InspectionForm" type="sb.elpro.action.InspectionAction" input="/jsp/Inspection.jsp" scope="session" parameter="action">
+	</action>
+	
+	<action path="/saveinspection" name="InspectionForm" type="sb.elpro.action.InspectionAction" input="/jsp/Inspection.jsp" scope="session" parameter="inspaction">
 	  	<forward name="invoiceisloaded" path="/jsp/Invoice.jsp"></forward>
-	  </action> 
-	   <action path="/InspAutocomplete" name="InspectionForm" type="sb.elpro.action.InspAutocomplete" input="/jsp/Inspection.jsp" scope="session">	 
-	 </action>
-	  <action path="/InspectionAction" name="InspectionForm" type="sb.elpro.action.InspectionGridAction" input="/jsp/Inspection.jsp" scope="session">	 
-	 </action>
+	  	<forward name="inspissaved" path="/jsp/Inspection.jsp"></forward>
+	  	<forward name="inspectionisloaded" path="/jsp/Inspection.jsp"></forward>
+	  	<forward name="login" redirect="true" path="/Login.jsp"></forward>
+	</action> 
+	
+	<action path="/InspAutocomplete" name="InspectionForm" type="sb.elpro.action.InspAutocomplete" input="/jsp/Inspection.jsp" scope="session"></action>
+	
+	<action path="/InspectionAction" name="InspectionForm" type="sb.elpro.action.InspectionGridAction" input="/jsp/Inspection.jsp" scope="session"></action>
 	  
-	 <!-- Inspection Track Screen -->
+
+<!-- ==== Inspection Track ==================================================================================================================================================================== -->
+	<action path="/gotoInspectionTracking" name="InspectionForm" type="sb.elpro.action.InspTrackAction" input="/jsp/Menu.jsp" scope="session">	 
+		<forward name="InspTrackisloaded" path="/jsp/InspectionTrack.jsp"></forward>
+	</action>
 	 
-	 <action path="/gotoInspectionTracking" name="InspectionForm" type="sb.elpro.action.InspTrackAction" input="/jsp/Menu.jsp" scope="session">	 
-	 		<forward name="InspTrackisloaded" path="/jsp/InspectionTrack.jsp"></forward>
-	 </action>
+	<action path="/InspectionTracGridAction" name="InspectionForm" type="sb.elpro.action.InspectionTrackGridAction" input="/jsp/InspectionTrack.jsp" scope="session" >
+	
+	<forward name="InspTrackisloaded" path="/jsp/InspectionTrack.jsp"></forward>
+	</action>
 	 
-	 <action path="/InspectionTrackAction" name="InspectionForm" type="sb.elpro.action.InspectionTrackGridAction" input="/jsp/InspectionTrack.jsp" scope="session">
-	 </action>
-	 
-	 <!-- Debit Details -->
-	  <action path="/gotodebit" name="DebitForm" type="sb.elpro.action.DebitLoadAction" input="/jsp/Debit.jsp" scope="session" parameter="action">
+ 	<action path="/InspectionTracGridAction/PrintReports" name="InspectionForm" type="sb.elpro.action.InspectionTrackPrintAction" input="/jsp/InspectionTrack.jsp" scope="session" ></action>
+<!-- ==== INVOICE Screen ==================================================================================================================================================================== --> 	  
+	<action path="/gotoinvoice" name="InvoiceForm" type="sb.elpro.action.InvoiceLoadAction" input="/jsp/Menu.jsp" scope="session" parameter="invaction">
+	 	<forward name="invoiceisloaded" path="/jsp/Invoice.jsp"></forward>
+	</action> 
+	<action path="/saveinvoice" name="InvoiceForm" type="sb.elpro.action.InvoiceAction" input="/jsp/Invoice.jsp" scope="session" parameter="invaction">
+	 	<forward name="invoiceisloaded" path="/jsp/Invoice.jsp"></forward>
+	  	<forward name="invissaved" path="/jsp/Invoice.jsp"></forward>
+	  	<forward name="invoicetrackisloaded" path="/jsp/InvoiceTrack.jsp"></forward>
+	  	<forward name="login" redirect="true" path="/Login.jsp"></forward>
+	  	<forward name="clear" redirect="true" path="/jsp/Invoice.jsp"></forward>
+	</action> 	  
+	<action path="/InvSelectCtfromCust" name="InvoiceForm" type="sb.elpro.action.InvSelectCtfromCust" input="/jsp/Invoice.jsp" scope="session"></action>
+	<action path="/InvAutocomplete" name="InvoiceForm" type="sb.elpro.action.InvAutocomplete" input="/jsp/Invoice.jsp" scope="session"></action>
+
+<!-- ==== INVOICE Track =================================================================================================================================================================== -->	   	 
+	<action path="/InvoiceTracking" name="InvoiceForm" type="sb.elpro.action.InvTrackLoadAction" input="/jsp/Menu.jsp" scope="session">
+	 	<forward name="invtrackisloaded" path="/jsp/InvoiceTrack.jsp"></forward>
+	</action> 
+	<action path="/InvTrackAction" name="InvoiceForm" type="sb.elpro.action.InvTrackAction" input="/jsp/InvoiceTrack.jsp" scope="session"></action>
+	 <action path="/InvTrackAction/PrintReports" name="InvoiceForm" type="sb.elpro.action.InvTrackActionPrint" input="/jsp/InvoiceTrack.jsp" scope="session"></action>
+
+<!-- ==== Debit Screen ==================================================================================================================================================================== -->
+	<action path="/gotodebit" name="DebitForm" type="sb.elpro.action.DebitLoadAction" input="/jsp/Debit.jsp" scope="session" parameter="debitaction">
 	  	<forward name="debitisloaded" path="/jsp/Debit.jsp"></forward>
-	  </action> 
-	   <action path="/savedebit" name="DebitForm" type="sb.elpro.action.DebitAction" input="/jsp/Debit.jsp" scope="session" parameter="action">
-	  	<forward name="debitisloaded" path="/jsp/Debit.jsp"></forward>
-	  </action> 
-	  <action path="/DebSelInvfromCust" name="DebitForm" type="sb.elpro.action.DebSelInvfromCust" input="/jsp/Debit.jsp" scope="session"></action>
-	  <action path="/DebAutoComplete" name="DebitForm" type="sb.elpro.action.DebAutoComplete" input="/jsp/Debit.jsp" scope="session">
-	 </action>
+	</action> 
+	<action path="/Debit" name="DebitForm" type="sb.elpro.action.DebitAction" input="/jsp/Debit.jsp" parameter="debitaction" scope="session" >
+	 	<forward name="debissaved" path="/jsp/Debit.jsp"></forward>
+	 	<forward name="gotodebittracking" path="/jsp/DebitTrack.jsp"></forward>
+	 	<forward name="login" redirect="true" path="/Login.jsp"></forward>
+	</action> 
+	<action path="/DebSelInvfromCust" name="DebitForm" type="sb.elpro.action.DebSelInvfromCust" input="/jsp/Debit.jsp" scope="session" parameter="debitaction" ></action>
+	<action path="/DebAutoComplete" name="DebitForm" type="sb.elpro.action.DebAutoComplete" input="/jsp/Debit.jsp" scope="session" parameter="debitaction" ></action>
 	 
-	 <!-- TC debit  -->
-	  <action path="/gototcdebit" name="TcDebitForm" type="sb.elpro.action.TcDebitLoadAction" input="/jsp/TcDebit.jsp" scope="session" parameter="action">
+	<!-- Debit Tracking  -->
+	<action path="/gotodebittracking" name="DebitForm" type="sb.elpro.action.DebitTrackAction" input="/jsp/Menu.jsp" scope="session" parameter="debittrackaction">
+		<forward name="debittrackisloaded" path="/jsp/DebitTrack.jsp"></forward>
+	</action> 
+	<action path="/DebitTrackInsertAction" name="DebitForm" type="sb.elpro.action.DebitTrackInsertAction" input="/jsp/DebitTrack.jsp" scope="session" parameter="debittrackaction">
+	 	<forward name="debittrackisloaded" path="/jsp/DebitTrack.jsp"></forward>
+	</action> 
+	<!--   -->
+	 
+
+<!-- ==== TC Debit Screen ==================================================================================================================================================================== -->
+	<action path="/gototcdebit" name="TcDebitForm" type="sb.elpro.action.TcDebitLoadAction" input="/jsp/TcDebit.jsp" scope="session" parameter="action">
 	  	<forward name="tcdebitisloaded" path="/jsp/TcDebit.jsp"></forward>
-	  </action> 
+	</action> 
 	 
-	   <action path="/savetcdebit" name="TcDebitForm" type="sb.elpro.action.TcDebitLoadAction" input="/jsp/TcDebit.jsp" scope="session" parameter="action"></action> 
+	<action path="/TcDebit" name="TcDebitForm" type="sb.elpro.action.TcDebitLoadAction" input="/jsp/TcDebit.jsp" scope="session" parameter="action"></action> 
 	  
-	   <action path="/TcDebInvDetails" name="TcDebitForm" type="sb.elpro.action.TcDebitAction" input="/jsp/TcDebit.jsp" scope="session"></action>
-	  
-	   <!-- MAster Form-->	 
-	  <action path="/gotoMasterTracking" name="MasterTrackForm" type="sb.elpro.action.MasterTrackAction" input="/jsp/Menu.jsp" scope="request" parameter="action" >
+	<action path="/TcDebInvDetails" name="TcDebitForm" type="sb.elpro.action.TcDebitAction" input="/jsp/TcDebit.jsp" scope="session"></action>
+<!-- ==== Payment Screen ==================================================================================================================================================================== -->	  
+	<action path="/gotopayment" name="PaymentForm" type="sb.elpro.action.PaymentLoadAction" input="/jsp/Menu.jsp" scope="session" parameter="paymntaction">
+	  	<forward name="paymntisloaded" path="/jsp/Payment.jsp"></forward>
+	</action> 
+	<action path="/Payment" name="PaymentForm" type="sb.elpro.action.PaymentAction" input="/jsp/Payment.jsp" scope="session" parameter="paymntaction">
+	  	<forward name="paymntisloaded" path="/jsp/Payment.jsp"></forward>
+	  	<forward name="paymntissaved" path="/jsp/Payment.jsp"></forward>
+	  	<forward name="login" redirect="true" path="/Login.jsp"></forward>
+	</action> 
+	<action path="/PaymentGridAction" name="PaymentForm" type="sb.elpro.action.PaymentGridAction" input="/jsp/Payment.jsp" scope="session">
+	  	<!-- <forward name="paymntisloaded" path="/jsp/Payment.jsp"></forward> -->
+	</action> 
+	
+	 
+<!-- ==== Master Screen ==================================================================================================================================================================== --> 
+	<action path="/gotoMasterTracking" name="MasterTrackForm" type="sb.elpro.action.MasterTrackAction" input="/jsp/Menu.jsp" scope="request" parameter="action" >
 	  	<forward name="masterisloaded" path="/jsp/Master.jsp"></forward>
-	  </action>
-	  <action path="/MasterInsertAction" name="MasterTrackForm" type="sb.elpro.action.MasterInsertAction"  input="/jsp/Master.jsp" scope="session">  
-	  </action>
-	 <action path="/MasterInsertAction/PrintReports" name="MasterTrackForm" type="sb.elpro.action.MasterPrintAction"  input="/jsp/Master.jsp" scope="session">  
-	  </action> 
-	  
-	  
-	   <!-- User input Settings-->	 
-	  <action path="/gotoUserInput" name="UserInputForm" type="sb.elpro.action.UserInputLoadAction" input="/jsp/Menu.jsp" scope="request" >
-	  	<forward name="userinputisloaded" path="/jsp/UserInput.jsp"></forward>
-	  </action>
-	  
-	   <action path="/userinput/loadvalues" name="UserInputForm" type="sb.elpro.action.UserInputAction" input="/jsp/Prf.jsp" scope="session">	 
-	 </action>	 
+	</action>
+	<action path="/MasterInsertAction" name="MasterTrackForm" type="sb.elpro.action.MasterInsertAction"  input="/jsp/Master.jsp" scope="session"></action>
+	<action path="/MasterInsertAction/PrintReports" name="MasterTrackForm" type="sb.elpro.action.MasterPrintAction"  input="/jsp/Master.jsp" scope="session"></action> 
 	 
-	 <!-- Sample Invoice Screen  -->
-	   <action path="/gotoSampleInvoice" type="sb.elpro.action.SampleInvoiceLoadAction" input="/jsp/Menu.jsp" scope="session">
-	  	<forward name="sampleinvoiceisloaded" path="/jsp/SampleInvoice.jsp"></forward>
-	    </action> 
-	  <action path="/savesampleinvoice" name="SampleInvoiceForm" type="sb.elpro.action.SampleInvoiceAction" input="/jsp/SampleInvoice.jsp" scope="session" parameter="action">
-	  	<forward name="invoiceisloaded" path="/jsp/SampleInvoice.jsp"></forward>
-	    </action> 
-	  <action path="/sampleInvSelectCtfromCust" name="SampleInvoiceForm" type="sb.elpro.action.SampleInvSelectCtfromCust" input="/jsp/SampleInvoice.jsp" scope="session">
-	   </action>
+	  
+
+<!-- ==== User input Settings ==================================================================================================================================================================== -->	 
+	<action path="/gotoUserInput" name="UserInputForm" type="sb.elpro.action.UserInputLoadAction" input="/jsp/Menu.jsp" scope="request" >
+	 	<forward name="userinputisloaded" path="/jsp/UserInput.jsp"></forward>
+	</action>
+	  
+	<action path="/userinput/loadvalues" name="UserInputForm" type="sb.elpro.action.UserInputAction" input="/jsp/Prf.jsp" scope="session"></action>	 
+	 
+
+<!-- ==== Sample Invoice Screen ==================================================================================================================================================================== -->
+	<action path="/gotoSampleInvoice" name="SampleInvoiceForm" type="sb.elpro.action.SampleInvoiceLoadAction" input="/jsp/Menu.jsp" scope="session" parameter="sampleinvoiceaction">
+	 	 	<forward name="sampleinvoiceisloaded" path="/jsp/SampleInvoice.jsp"></forward>
+	</action> 
+	<action path="/savesampleinvoice" name="SampleInvoiceForm" type="sb.elpro.action.SampleInvoiceAction" input="/jsp/SampleInvoice.jsp" scope="session" parameter="sampleinvoiceaction">
+	  	<forward name="sampleinvissaved" path="/jsp/SampleInvoice.jsp"></forward>
+	  	<forward name="login" redirect="true" path="/Login.jsp"></forward>
+	  	<forward name="sampleinvoicetrackisloaded" path="/jsp/SampleInvoiceTrack.jsp"></forward>
+	  	<forward name="clearsaminvform"  path="/jsp/Menu.jsp"></forward>
+	</action> 
+	<action path="/sampleInvSelectCtfromCust" name="SampleInvoiceForm" type="sb.elpro.action.SampleInvSelectCtfromCust" input="/jsp/SampleInvoice.jsp" scope="session"></action>
+	  
+
+<!-- ==== Sample Invoice Tracking ==================================================================================================================================================================== -->
+	<action path="/sit" type="sb.elpro.action.SampleInvoiceTrackLoadAction" input="/jsp/Menu.jsp" scope="session">
+	  	<forward name="sampleinvoicetrackisloaded" path="/jsp/SampleInvoiceTrack.jsp"></forward>
+	</action> 
+	<action path="/sita" name="InvoiceForm" type="sb.elpro.action.SampleInvoiceTrackAction" input="/jsp/SampleInvoiceTrack.jsp" scope="session"></action> 
+	<action path="/sita/PrintReports" name="InvoiceForm" type="sb.elpro.action.SampleInvoiceTrackPrintAction"  input="/jsp/SampleInvoiceTrack.jsp" scope="session"></action> 
+
+<!-- ==== Sample Debit Details ==================================================================================================================================================================== -->
+	<action path="/gotoSampleDebit" name="SampleDebitForm" type="sb.elpro.action.SampleDebitLoadAction" input="/jsp/Debit.jsp" scope="session" parameter="sampledebitaction">
+	 	<forward name="sampledebitisloaded" path="/jsp/SampleDebit.jsp"></forward>
+	</action> 
+	<action path="/sid" name="SampleDebitForm" type="sb.elpro.action.SampleDebitAction" input="/jsp/SampleDebit.jsp" scope="session"></action> 
 	  
  </action-mappings> 
  
- 
- 
- 
- <!-- MESSAGE RESOURCE -->
+<!-- ==== MESSAGE RESOURC ==================================================================================================================================================================== -->
  <message-resources  parameter="ApplicationResources"></message-resources>
  
  <plug-in className="org.apache.struts.validator.ValidatorPlugIn">
  	<set-property property="pathnames" value="/WEB-INF/validator-rules.xml, /WEB-INF/validator-user.xml" />
  </plug-in>
  
- 
- 
- 
- 
- 
- 
- </struts-config>		
+</struts-config>		
  
  

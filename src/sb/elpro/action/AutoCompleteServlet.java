@@ -38,6 +38,7 @@ public class AutoCompleteServlet extends Action{
 			HttpServletRequest request, HttpServletResponse response) throws Exception{
 		//response.setContentType("application/json");
 		 response.setContentType("application/json");
+		 response.setCharacterEncoding("UTF-8");
 		PrintWriter out = response.getWriter();
 		usersession = request.getSession(false);
 		if(usersession != null){

@@ -12,7 +12,7 @@ $("#tcdeb_tcdebitdate").datepicker({
 	    gotoCurrent:true, 
 	});
 		 var tcgrid = $("#tbl_tcdebselInvDetails");
-		 var invno = $("#tcdeb_taninvno").val();
+	/*	 var invno = $("#tcdeb_taninvno").val();*/
 		 tcgrid.jqGrid({
 			// url:"/Myelclass/TcDebInvDetails.do?invno="+invno+"&action="+"loadGrid",
 			 datatype: "json",

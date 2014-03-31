@@ -6,7 +6,10 @@
 
 package sb.elpro.actionform;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.struts.action.ActionForm;
+import org.apache.struts.action.ActionMapping;
 
 /**
  * @author Wahab
@@ -78,7 +81,9 @@ public class SampleInvoiceForm extends ActionForm{
 	private String saminv_custtele;
 	private String saminv_custfax;
 	private String saminv_custid;
+	private String saminv_deduction;
 	
+	private String sampleinvactionform;
 	
 	/**
 	 * @return the saminv_invoicetype
@@ -719,7 +724,92 @@ public class SampleInvoiceForm extends ActionForm{
 	public void setSaminv_finaldesti(String saminv_finaldesti) {
 		this.saminv_finaldesti = saminv_finaldesti;
 	}
+	/**
+	 * @return the saminv_deduction
+	 */
+	public String getSaminv_deduction() {
+		return saminv_deduction;
+	}
+	/**
+	 * @param saminv_deduction the saminv_deduction to set
+	 */
+	public void setSaminv_deduction(String saminv_deduction) {
+		this.saminv_deduction = saminv_deduction;
+	}
 	
 	
-	
+	/* (non-Javadoc)
+	 * @see org.apache.struts.action.ActionForm#reset(org.apache.struts.action.ActionMapping, javax.servlet.http.HttpServletRequest)
+	 */
+	@Override
+	public void reset(ActionMapping mapping, HttpServletRequest request) {
+		 saminv_invoicetype= "";
+		 saminv_invoiceno= "";
+		 saminv_invdate= "";
+		 saminv_expref= "";
+		 saminv_otherref= "";
+		 saminv_exporter= "";
+		 saminv_exporterattn= "";
+		 saminv_exporteraddress= ""; 
+		 saminv_exportertele= "";
+		 saminv_exporterfax= "";
+		 saminv_notify= "";
+		 saminv_notifyattn= "";
+		 saminv_notifyaddress= "";
+		 saminv_notifytele= "";
+		 saminv_notifyfax= "";
+		
+		 saminv_buyer= "";
+		 saminv_buyerattn= "";
+		 saminv_buyeraddr= "";
+		 saminv_buyertele= "";
+		 saminv_buyerfax= "";
+		 saminv_buyerid= "";
+		 saminv_bank= "";
+		 saminv_bankbranch= "";
+		 saminv_bankaddress= "";
+		 saminv_bankswiftcode= "";
+		 saminv_bankacno= "";
+		 saminv_banktele= "";
+		 saminv_bankfax= "";
+		 saminv_ctryoforigngoods= "";
+		 saminv_loadingport= "";
+		 saminv_ctryoffinaldesti= "";
+		 saminv_finaldesti= "";
+		 saminv_dischargeport= "";
+		 saminv_vesselno= "";
+		 saminv_awbilldate= "";
+		 saminv_awbillno= "";
+		 saminv_precarriageby= "";
+		 saminv_marksno= "";
+		 saminv_noofpackages= "";
+		 saminv_packno= "";
+		 saminv_netwt= "";
+		 saminv_grosswt= "";
+		 saminv_dimension= "";
+		 saminv_courierchrgs= "";
+		 saminv_vatcst= "";
+		 saminv_total= "";
+		
+		 saminv_includeSample= "";
+		 saminv_customer= "";
+		 saminv_custattn= "";
+		 saminv_custaddr= "";
+		 saminv_custtele= "";
+		 saminv_custfax= "";
+		 saminv_custid= "";
+		 saminv_deduction= "";
+	}
+	/**
+	 * @return the sampleinvactionform
+	 */
+	public String getSampleinvactionform() {
+		return sampleinvactionform;
+	}
+	/**
+	 * @param sampleinvactionform the sampleinvactionform to set
+	 */
+	public void setSampleinvactionform(String sampleinvactionform) {
+		this.sampleinvactionform = sampleinvactionform;
+	}
 }

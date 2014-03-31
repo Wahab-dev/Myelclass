@@ -12,7 +12,7 @@ $(document).ready(function() {
 	var gradgrid = $('#inspgradtbl'); 
 	var rejgrid = $('#insprejtbl');
    
-	 $("#format").buttonset();
+	/* $("#format").buttonset();
 	 $("#format input[type=radio]").change(function() {
 		 alert(this.value);  
 		 if(this.value === 'Sample'){
@@ -23,7 +23,7 @@ $(document).ready(function() {
 			 //set action to Insp Ct 
 			// var actn = "";
 		 }
-		});
+		});*/
 	 
 	/*
 	 * AUTOCOMPLETE	
@@ -66,15 +66,13 @@ $(document).ready(function() {
 	}); 
 	 //DATEPICKER
      $("#inspdate").datepicker({
-	   // changeYear: true,
-	    autoSize: true,
-	    changeMonth:false,
-	    dateFormat: "dd/mm/y",
-	    showWeek: true,
-	    firstDay: 1,
-	    numberOfMonths: 1,
-	    showButtonPanel: true,
-	    gotoCurrent:true, 
+    	 	changeMonth:false,
+		    dateFormat: "dd-mm-yy",
+		    showWeek: true,
+		    firstDay: 1,
+		    numberOfMonths: 1,
+		    showButtonPanel: false,
+		    gotoCurrent:true, 
 	  });
 	
 	 //Methods
@@ -93,18 +91,18 @@ $(document).ready(function() {
 		datatype:"json",
 		colNames:['Article Id','Article Name', 'Color', 'Tannery', 'Customer','Order Date', 'PONo', 'Size','Subs','Selec','Selec P', 'Quantity'],  
 	    colModel:[   
-				{name:'prf_articleid', index:'prf_articleid', width:60, hidden: true, },
-				{name:'prf_articlename', index:'articlename', width:60, },
-				{name:'prf_color', index:'color', width:60, },
-				{name:'prf_tannid', index:'prf_tannid', width:60,  hidden: true,},
-				{name:'prf_custid', index:'prf_custid', width:60, hidden: true,},
-				{name:'prf_orderdate', index:'prf_orderdate', width:60, hidden: true,},
-				{name:'prf_poref', index:'prf_poref', width:60, },
-				{name:'prf_size', index:'size', width:60, },
-				{name:'prf_substance', index:'subatance', width:60, },
-				{name:'prf_selection', index:'selection', width:60, },
-				{name:'prf_selectionp', index:'selectionp', width:60, },
-				{name:'prf_quantity', index:'prf_quantity', width:60, },
+				{name:'prf_articleid', index:'prf_articleid',  hidden: false, },
+				{name:'prf_articlename', index:'articlename',  },
+				{name:'prf_color', index:'color',  },
+				{name:'prf_tannid', index:'prf_tannid',   hidden: false,},
+				{name:'prf_custid', index:'prf_custid',  hidden: false,},
+				{name:'prf_orderdate', index:'prf_orderdate',  hidden: false,},
+				{name:'prf_poref', index:'prf_poref',  },
+				{name:'prf_size', index:'size',  },
+				{name:'prf_substance', index:'subatance',  },
+				{name:'prf_selection', index:'selection',  },
+				{name:'prf_selectionp', index:'selectionp',  },
+				{name:'prf_quantity', index:'prf_quantity',  },
 			],  
 		jsonReader : {  
 		  	repeatitems:false,
@@ -115,7 +113,7 @@ $(document).ready(function() {
 		},
 		caption: "Load Article Details On Selected CT",
 		pager: '#insp_CtDetalspager',
-	   	rowNum:6, 
+	   	rowNum:2, 
 	   	rowList:[2,4,6],
 	    loadtext: "Bow Bow........... ",
 	    height : "auto",
@@ -133,15 +131,29 @@ $(document).ready(function() {
 	        return(true);
 	    },
 	    onSelectRow: function(rowid){
+	    	
 	    	clr = artgrid.jqGrid('getCell', rowid, 'prf_color');
-	       	arid = artgrid.jqGrid('getCell', rowid, 'prf_articleid');   //  /Myelclass/InspectionAction.do?event=reject
+	       	arid = artgrid.jqGrid('getCell', rowid, 'prf_articleid'); 
+	       	$("#artidhidden").val(arid); 
+	    	$("#article").val(artgrid.jqGrid('getCell', rowid, 'prf_articlename'));  
+	    	$("#color").val(clr); 
+	    	$("#tan").val(artgrid.jqGrid('getCell', rowid, 'prf_tannid')); 
+	    	$("#cust").val(artgrid.jqGrid('getCell', rowid, 'prf_custid')); 
+	    	//$("#color").val(artgrid.jqGrid('getCell', rowid, 'prf_orderdate')); 
+	    	$("#size").val(artgrid.jqGrid('getCell', rowid, 'prf_size')); 
+	    	$("#substance").val(artgrid.jqGrid('getCell', rowid, 'prf_substance')); 
+	    	$("#sel").val(artgrid.jqGrid('getCell', rowid, 'prf_selection')); 
+	    	$("#quantity").val(artgrid.jqGrid('getCell', rowid, 'prf_quantity')); 
+	    	
 	       	testgrid.jqGrid('setGridParam',{url:"/Myelclass/InspectionAction.do?event=manualtest&artid="+arid}).trigger("reloadGrid");
 	       	gradgrid.jqGrid('setGridParam',{url:"/Myelclass/InspectionAction.do?event=grade&artid="+arid}).trigger("reloadGrid");
 	       	rejgrid.jqGrid('setGridParam',{url:"/Myelclass/InspectionAction.do?event=reject&artid="+arid}).trigger("reloadGrid");
+	       	
+	       	
 		 }
 	}).jqGrid('navGrid', '#insp_CtDetalspager',  { edit: false, add: false, del: false, 
 	search: false, refresh: false, view:true });
-	
+	artgrid.jqGrid('setGridWidth', 930);
 	
 	
 //tEST GRID LOAD 
@@ -239,7 +251,7 @@ $(document).ready(function() {
 					 },
 					 reloadAfterSubmit: true,
 					 closeAfterAdd: true,
-					});
+					});testgrid.jqGrid('setGridWidth', 930);
 		
 //Grade GRID
 		gradgrid.jqGrid({  
@@ -317,7 +329,6 @@ $(document).ready(function() {
 					//Add
 				 beforeShowForm: function(form){
 					totinspectd = $("#totinspected").val();
-					 alert(totinspectd);
 					 $("#grtotinspected").val(totinspectd);
 					 $("#gradecolor").val(clr);
 					 
@@ -330,7 +341,7 @@ $(document).ready(function() {
 						return ival;
 					}
 				}
-	});
+	});gradgrid.jqGrid('setGridWidth', 930);
 
 //Rejects Grid
 rejgrid.jqGrid({  
@@ -339,7 +350,7 @@ rejgrid.jqGrid({
 	colNames:[ 'Arttype', 'id', 'RejectID ', 'Color ', 'Substance','Size','Selec','Color','Org','Other','Tot Rejects','Tot Passed', 'Tot Inspected'],  
     colModel:[ 
 		{name:'arttype', index:'arttype', align:'center', width:120, editable:true, sortable: true, hidden: false, 
-			edittype: 'select', editoptions: {value: {H:'Hides',S:'Sides',N:'NA'}},
+			edittype: 'select', editoptions: {value: {H:'Hides',S:'Sides',Skin:'Skins'}},
 		},
 		{name:'id', index:'id', align:'center', width:120, editable:true, sortable: true,  hidden: true, 
 	
@@ -417,10 +428,24 @@ rejgrid.jqGrid({
     loadtext: "Bow Bow........... ",
     height : "auto",
     width:"auto",  
+   // hiddengrid : true,
+    viewrecords: true,
+    gridview: true,
     sortname: 'rejectid',  
     sortorder: 'desc',  
     emptyrecords: 'No records to display',
     footerrow : true,
+    loadComplete:  function (){
+    	var $self = $(this);
+    	 sumtotinsp = $self.jqGrid("getCol", "rjtotinspected", false, "sum");
+    	 sumtotpass = $self.jqGrid("getCol", "totpassed", false, "sum");    	
+    	 sumtotrej = $self.jqGrid("getCol", "totrejects", false, "sum");
+
+    		$self.jqGrid("footerData", "set", {rjtotinspected: sumtotinsp});
+    		$self.jqGrid("footerData", "set", {totpassed: sumtotpass});
+    		$self.jqGrid("footerData", "set", {totrejects: sumtotrej});
+
+    }
 	}).jqGrid('navGrid', '#insprejpager',  { edit: true, add: true, del: true, 
 		   search: false, refresh: true	, view: false },
 		{ //Edit 
@@ -436,9 +461,7 @@ rejgrid.jqGrid({
 		{
 			//Add 
 			 beforeShowForm: function(form){
-				 alert(arid);
 				 $("#rejcolor").val(clr);
-				 alert(totinspectd);
 				 $("#rjtotinspected").val(totinspectd);		
 			 },
 			 editData:{
@@ -454,7 +477,7 @@ rejgrid.jqGrid({
 	  groupHeaders:[
 		{ startColumnName: 'subsrejects', numberOfColumns: 7, titleText: '<em>Rejects</em>'},
 	  ]
-});
+});rejgrid.jqGrid('setGridWidth', 930);
 	
 
 	

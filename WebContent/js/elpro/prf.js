@@ -362,7 +362,6 @@ $(document).ready(function() {
 				 //Size Avg Calculation
 				 var sizeval = $("#prf_size").val();
 				 var size_minindex = sizeval.indexOf('/');
-				 //var size_maxindex = sizeval.indexOf(' '); // in order to avoid Size remarks. Make Size remrk seperate row in Table
 				 var sizemin = sizeval.substring(0, size_minindex);
 				 var sizemax=  sizeval.substring(size_minindex+1);
 				 var sizeavg = ( (parseFloat (sizemin) + parseFloat(sizemax)) /2) ;
@@ -479,7 +478,7 @@ $(document).ready(function() {
 		});
 	 
 	 	
-		 $('#prf_consigneename').autocomplete({
+		$('#prf_consigneename').autocomplete({
 				minLength: 1,
 				source: function(request, response,term) {
 					var param = request.term;
@@ -591,6 +590,10 @@ $(document).ready(function() {
 				    numberOfMonths: 1,
 				    showButtonPanel: false,
 				    gotoCurrent:true, 
+				    beforeShowDay: function(date) {
+				        var day = date.getDay();              // Disable only SUndays
+				        return [(day != 0), ''];
+				    } 
 				});
 		       
 		                 
@@ -604,6 +607,10 @@ $(document).ready(function() {
 				    numberOfMonths: 2,
 				    showButtonPanel: false,
 				    gotoCurrent:true, 
+				    beforeShowDay: function(date) {
+				        var day = date.getDay();              // Disable only SUndays
+				        return [(day != 0), ''];
+				    } 
 				    /*onSelect: function(dateText, inst) { 
 						addOrRemoveDate(dateText);
 					},

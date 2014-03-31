@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
+import sb.elpro.actionform.InvoiceForm;
 import sb.elpro.dao.InvoiceDao;
 import sb.elpro.dao.InvoiceDaoImpl;
 import sb.elpro.model.ArticleDetails;
@@ -18,8 +19,10 @@ import sb.elpro.model.DestinationDetails;
 import sb.elpro.model.ExporterDetails;
 import sb.elpro.model.InvBillDetails;
 import sb.elpro.model.InvCustContractDetails;
+import sb.elpro.model.InvoiceBean;
 import sb.elpro.model.InvoiceTotAmtDetails;
 import sb.elpro.model.NotifyConsigneeDetails;
+import sb.elpro.model.SampleInvoiceBean;
 
 /**
  * @author Wahab
@@ -167,6 +170,31 @@ public class InvoiceBoImpl implements InvoiceBo {
 	public String getSampleInvoiceNo(String saminvtype) throws Exception {
 		String saminvNumarr = invdao.getSampleInvoiceNoDetails(saminvtype);
 		return saminvNumarr;
+	}
+	/* (non-Javadoc)
+	 * @see sb.elpro.bo.InvoiceBo#saveInvoiceform(sb.elpro.model.InvoiceBean)
+	 */
+	@Override
+	public boolean saveInvoiceform(InvoiceBean invbean) throws Exception {
+		boolean isSaveInvoice =  invdao.saveInvoiceForm(invbean);
+		return isSaveInvoice;
+	}
+	/* (non-Javadoc)
+	 * @see sb.elpro.bo.InvoiceBo#getEditInvFormValues(java.lang.String)
+	 */
+	@Override
+	public List<InvoiceBean> getEditInvFormValues(String invno)
+			throws Exception {
+		List<InvoiceBean> invgeteditForm = invdao.getEditInvFormDetails(invno);
+		return invgeteditForm;
+	}
+	/* (non-Javadoc)
+	 * @see sb.elpro.bo.InvoiceBo#updtInvoiceform(sb.elpro.model.InvoiceBean)
+	 */
+	@Override
+	public boolean updtInvoiceform(InvoiceBean invbean) throws Exception {
+		boolean isupdtinvForm = invdao.updtInvFormDetails(invbean);
+		return isupdtinvForm;
 	}
 	
 	

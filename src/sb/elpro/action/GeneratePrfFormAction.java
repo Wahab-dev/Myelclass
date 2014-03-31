@@ -42,6 +42,7 @@ public class GeneratePrfFormAction extends Action {
 			
 			System.out.println("Report Stream + "+reportStream);
 			response.setContentType("application/pdf");
+			response.setCharacterEncoding("UTF-8");
 			//Class.forName("com.mysql.jdbc.Driver");
 			//connection = DriverManager.getConnection("jdbc:mysql://localhost:8080/mydo?user=user&password=pass");
 			JasperRunManager.runReportToPdfStream(reportStream, servletOutputStream, new HashMap());

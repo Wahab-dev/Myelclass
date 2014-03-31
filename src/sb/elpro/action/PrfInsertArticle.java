@@ -33,6 +33,7 @@ public class PrfInsertArticle extends Action  {
 			PrintWriter out = response.getWriter();
 			JSONObject jsonobj = new JSONObject();
 			response.setContentType("application/json");
+			response.setCharacterEncoding("UTF-8");
 			 if(usersession != null){	
 				String oper =   request.getParameter("oper");
 				System.out.println("oper "+oper);

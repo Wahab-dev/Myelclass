@@ -40,6 +40,7 @@ public class MasterInsertAction extends Action{
 		PrintWriter out = response.getWriter();
 		JSONObject jsonobj = new JSONObject();
 		response.setContentType("application/json");
+		response.setCharacterEncoding("UTF-8");
 		System.out.println("In Master Tracking Form");
 		/*
 		 * Check for Valid USer - If S Load the Grid 

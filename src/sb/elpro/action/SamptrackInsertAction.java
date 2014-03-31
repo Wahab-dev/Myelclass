@@ -16,6 +16,7 @@ import org.apache.struts.action.Action;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.apache.struts.actions.DispatchAction;
 
 import sb.elpro.bo.SampTrackBo;
 import sb.elpro.bo.SampTrackBoImpl;
@@ -26,7 +27,7 @@ import sb.elpro.utility.DateConversion;
  * @author Wahab
  *
  */
-public class SamptrackInsertAction extends Action{
+public class SamptrackInsertAction extends DispatchAction{
 	HttpSession usersession;
 	SampTrackBo samptrackbo  =  new SampTrackBoImpl();
 	public ActionForward execute (ActionMapping map, ActionForm form, 
@@ -35,6 +36,7 @@ public class SamptrackInsertAction extends Action{
 		PrintWriter out = response.getWriter();
 		JSONObject jsonobj = new JSONObject();
 		response.setContentType("application/json");
+		response.setCharacterEncoding("UTF-8");
 		System.out.println("In Sample Track Action ");
 		 if(usersession != null){
 			 String oper =   request.getParameter("oper");
@@ -77,7 +79,7 @@ public class SamptrackInsertAction extends Action{
 				jsonobj.put("records", records);
 				jsonobj.put("rows", sampletrack);
 				System.out.println(jsonobj);		
-				out.println(jsonobj);
+				out.println(jsonobj);	
              }else{
             	 SampleTrack samplemodel = new SampleTrack();
             	 samplemodel.setStatus(request.getParameter("status"));
@@ -112,5 +114,12 @@ public class SamptrackInsertAction extends Action{
 		return null;
 	}
 	
-	
+	public ActionForward Logout (ActionMapping map, ActionForm form, 
+			HttpServletRequest request, HttpServletResponse response) throws Exception{
+		
+		usersession = request.getSession(false);
+		usersession.invalidate();			
+		
+		return map.findForward("login");
+	}
 }

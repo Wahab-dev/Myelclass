@@ -54,4 +54,12 @@ public interface SrfDao {
 	 */
 	boolean saveSrfForm(SampleRequest srfbean)throws SQLException;
 
+	/**  
+	 * (Method description)
+	 * @param
+	 * @return
+	 * etc
+	 */
+	boolean updtSrfForm(SampleRequest srfbean)throws SQLException;
+
 }

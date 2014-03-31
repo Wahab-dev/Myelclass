@@ -38,23 +38,24 @@ JSONObject jsonobj = new JSONObject();
 			usersession = request.getSession(false);
 			PrintWriter out = response.getWriter();
 			response.setContentType("application/json");
+			response.setCharacterEncoding("UTF-8");
 			if(usersession != null){
 				// String oper =   request.getParameter("oper");
 				 String rows = request.getParameter("rows");
 	             String pag = request.getParameter("page");
 	             String sidx = request.getParameter("sidx");
 	             String sord = request.getParameter("sord");
-	             String event = request.getParameter("event");
+	             String action = request.getParameter("action");
 	             String artid = request.getParameter("artid");
 				
 	             System.out.println("rows "+rows); 
 	             System.out.println("page "+pag); 
 	             System.out.println("sidx "+sidx);
 	             System.out.println("sord "+sord);
-	             System.out.println("event "+event);
+	             System.out.println("action "+action);
 	             System.out.println("artid "+artid);
 	             
-	             if(event.equalsIgnoreCase("load")){
+	            if(action.equalsIgnoreCase("load")){
 	            	 System.out.println("In INsp Track Load ");
 	            	 List<InspectionBean> trackingload = insptrackbo.getInspectionTrackDetails(sidx,sord);
 						int records = trackingload.size();
@@ -80,12 +81,14 @@ JSONObject jsonobj = new JSONObject();
 						jsonobj.put("rows", trackingload);
 						System.out.println(jsonobj);		
 						out.println(jsonobj);
-	             }
+	             
 				return null;
+	            }
 			}	else{
 				System.out.println("Wrong USer ////");
 				return map.findForward("login");
 			}
+			return null;
 			
 		}
 		  

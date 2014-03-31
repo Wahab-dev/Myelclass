@@ -34,6 +34,7 @@ public class ArticleSelectList extends Action{
 	public ActionForward execute (ActionMapping map, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response) throws Exception{
 		 response.setContentType("text/html");
+		 response.setCharacterEncoding("UTF-8");
 		PrintWriter out = response.getWriter();
 		System.out.println("In Article Selected List Servlet");
 		usersession = request.getSession(false);

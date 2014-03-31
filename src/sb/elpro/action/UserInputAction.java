@@ -29,7 +29,9 @@ import sb.elpro.model.ConsigneeDetails;
 import sb.elpro.model.CustomerDetails;
 import sb.elpro.model.DestinationDetails;
 import sb.elpro.model.NotifyConsigneeDetails;
+import sb.elpro.model.PaymentDetails;
 import sb.elpro.model.TanneryDetails;
+import sb.elpro.model.TermsDetails;
 
 /**
  * @author Wahab
@@ -48,7 +50,7 @@ public class UserInputAction extends Action{
 			PrintWriter out = response.getWriter();
 			JSONObject jsonobj = new JSONObject();
 			response.setContentType("application/json");
-			
+			response.setCharacterEncoding("UTF-8");
 			String actn = request.getParameter("actn");
 			String oper =   request.getParameter("oper");
 			System.out.println("actn "+actn);
@@ -425,12 +427,20 @@ public class UserInputAction extends Action{
 					 addarticledetail.setArticletype(request.getParameter("articletype")) ;
 					 addarticledetail.setArticlename(request.getParameter("articlename")) ;
 					 addarticledetail.setArticleshortform(request.getParameter("articleshortform"));
-					 addarticledetail.setSize(request.getParameter("size"));
+					 addarticledetail.setSize(request.getParameter("size") +" "+ request.getParameter("size_remarks"));
+					 addarticledetail.setSize_remarks(request.getParameter("size_remarks"));
+					 addarticledetail.setSelection(request.getParameter("selection"));
 					 addarticledetail.setSubstance(request.getParameter("substance"));
-					 addarticledetail.setRate(request.getParameter("rate"));
-					 addarticledetail.setTc(request.getParameter("tc"));
+					 addarticledetail.setRate(request.getParameter("ratesign")+" "+request.getParameter("rateamt")+" "+request.getParameter("shipment"));
+					 addarticledetail.setTc(request.getParameter("tc_amount")+" "+request.getParameter("tc_currency")+" "+request.getParameter("tc_agent"));
+					 //addarticledetail.setArticlefamily(request.getParameter(""))
 					 System.out.println("articleid "+request.getParameter("articleid"));
 					if(oper.equalsIgnoreCase("add")){
+						 addarticledetail.setSize(request.getParameter("size") +" "+ request.getParameter("size_remarks"));
+						 addarticledetail.setSubstance(request.getParameter("substance")+" mm");
+						 addarticledetail.setRate(request.getParameter("ratesign")+" "+request.getParameter("rateamt")+" "+request.getParameter("shipment"));
+						 addarticledetail.setTc(request.getParameter("tc_amount")+" "+request.getParameter("tc_currency")+" "+request.getParameter("tc_agent"));
+							
 						boolean isaddedarticledetails = userinputbo.addArticledetails(addarticledetail);
 						if(isaddedarticledetails){
 							jsonobj.put("success", "Successfully Inserted The Record");
@@ -583,6 +593,197 @@ public class UserInputAction extends Action{
 					}else{
 						boolean isdeletedestidetails = userinputbo.delDestiDetails(adddestidetail);
 						if(isdeletedestidetails){
+							jsonobj.put("success", "Successfully deleted The Record");
+						}else{
+							jsonobj.put("Error", "Error in deleteing");
+						}
+						System.out.println(jsonobj);		
+						out.println(jsonobj);
+					}
+				}
+			}else if(actn.equalsIgnoreCase("color")){
+				if(oper == null){
+					List<ArticleDetails> colordetails = userinputbo.getColorDetails();
+					int records = colordetails.size();
+					System.out.println("Reords  "+records);						
+					String rows = request.getParameter("rows");
+	                String pag = request.getParameter("page");
+	                int page = Integer.parseInt(pag);
+	                int totalPages = 0;
+	                int totalCount = records;
+	                if (totalCount > 0) {
+	                	 if (totalCount % Integer.parseInt(rows) == 0) {
+	                		 System.out.println("STEP 1 "+totalCount % Integer.parseInt(rows) );
+	                         totalPages = totalCount / Integer.parseInt(rows);
+	                         System.out.println("STEP 2 "+totalPages);
+	                     } else { 
+	                         totalPages = (totalCount / Integer.parseInt(rows)) + 1;
+	                         System.out.println("STEP 3 "+totalPages);
+	                     }
+	                }else {
+	                    totalPages = 0;
+	                }
+					jsonobj.put("total", totalPages);
+					jsonobj.put("page", page);
+					jsonobj.put("records", records);
+					jsonobj.put("rows", colordetails);
+					System.out.println(jsonobj);		
+					out.println(jsonobj);
+				}else{
+					ArticleDetails addcolorbean = new ArticleDetails();
+					 addcolorbean.setColorid(request.getParameter("colorid"));
+					 addcolorbean.setColor(request.getParameter("color"));
+					 addcolorbean.setColorothername(request.getParameter("colorothername"));
+					 addcolorbean.setPantoneshade(request.getParameter("pantoneshade"));
+					 addcolorbean.setColorrefno(request.getParameter("colorrefno"));
+					 System.out.println("color "+request.getParameter("color"));
+					 if(oper.equalsIgnoreCase("add")){
+						boolean isaddedcolordetails = userinputbo.addColordetails(addcolorbean);
+						if(isaddedcolordetails){
+							jsonobj.put("success", "Successfully Inserted The Record");
+						}else{
+							jsonobj.put("Error", "Error in Inserrting");
+						}
+						System.out.println(jsonobj);		
+						out.println(jsonobj);
+					}else if(oper.equalsIgnoreCase("edit")){
+						boolean isupdatedcolordetails = userinputbo.editColorDetails(addcolorbean);
+						if(isupdatedcolordetails){
+						jsonobj.put("success", "Successfully Edited The Record");
+						}else{
+							jsonobj.put("Error", "Error in edititng");
+						}
+						System.out.println(jsonobj);		
+						out.println(jsonobj);
+					}else{
+						boolean isdeletecolordetails = userinputbo.delColorDetails(addcolorbean);
+						if(isdeletecolordetails){
+							jsonobj.put("success", "Successfully deleted The Record");
+						}else{
+							jsonobj.put("Error", "Error in deleteing");
+						}
+						System.out.println(jsonobj);		
+						out.println(jsonobj);
+					}
+				}
+			}else if(actn.equalsIgnoreCase("terms")){
+				if(oper == null){
+					List<TermsDetails> termdetails = userinputbo.getTermDetails();
+					int records = termdetails.size();
+					System.out.println("Reords  "+records);						
+					String rows = request.getParameter("rows");
+	                String pag = request.getParameter("page");
+	                int page = Integer.parseInt(pag);
+	                int totalPages = 0;
+	                int totalCount = records;
+	                if (totalCount > 0) {
+	                	 if (totalCount % Integer.parseInt(rows) == 0) {
+	                		 System.out.println("STEP 1 "+totalCount % Integer.parseInt(rows) );
+	                         totalPages = totalCount / Integer.parseInt(rows);
+	                         System.out.println("STEP 2 "+totalPages);
+	                     } else { 
+	                         totalPages = (totalCount / Integer.parseInt(rows)) + 1;
+	                         System.out.println("STEP 3 "+totalPages);
+	                     }
+	                }else {
+	                    totalPages = 0;
+	                }
+					jsonobj.put("total", totalPages);
+					jsonobj.put("page", page);
+					jsonobj.put("records", records);
+					jsonobj.put("rows", termdetails);
+					System.out.println(jsonobj);		
+					out.println(jsonobj);
+				}else{
+					TermsDetails addtermbean = new TermsDetails();
+					 addtermbean.setTermid(request.getParameter("termid"));
+					 addtermbean.setTermname(request.getParameter("termname"));
+					 addtermbean.setOtherdetails(request.getParameter("otherdetails"));
+					 System.out.println("color "+request.getParameter("color"));
+					 if(oper.equalsIgnoreCase("add")){
+						boolean isaddedtermdetails = userinputbo.addTermdetails(addtermbean);
+						if(isaddedtermdetails){
+							jsonobj.put("success", "Successfully Inserted The Record");
+						}else{
+							jsonobj.put("Error", "Error in Inserrting");
+						}
+						System.out.println(jsonobj);		
+						out.println(jsonobj);
+					}else if(oper.equalsIgnoreCase("edit")){
+						boolean isupdatedtermdetails = userinputbo.editTermDetails(addtermbean);
+						if(isupdatedtermdetails){
+						jsonobj.put("success", "Successfully Edited The Record");
+						}else{
+							jsonobj.put("Error", "Error in edititng");
+						}
+						System.out.println(jsonobj);		
+						out.println(jsonobj);
+					}else{
+						boolean isdeletetermdetails = userinputbo.delTermDetails(addtermbean);
+						if(isdeletetermdetails){
+							jsonobj.put("success", "Successfully deleted The Record");
+						}else{
+							jsonobj.put("Error", "Error in deleteing");
+						}
+						System.out.println(jsonobj);		
+						out.println(jsonobj);
+					}
+				}
+			}else if(actn.equalsIgnoreCase("paymnt")){
+				if(oper == null){
+					List<PaymentDetails> paymntdetails = userinputbo.getPaymntDetails();
+					int records = paymntdetails.size();
+					System.out.println("Reords  "+records);						
+					String rows = request.getParameter("rows");
+	                String pag = request.getParameter("page");
+	                int page = Integer.parseInt(pag);
+	                int totalPages = 0;
+	                int totalCount = records;
+	                if (totalCount > 0) {
+	                	 if (totalCount % Integer.parseInt(rows) == 0) {
+	                		 System.out.println("STEP 1 "+totalCount % Integer.parseInt(rows) );
+	                         totalPages = totalCount / Integer.parseInt(rows);
+	                         System.out.println("STEP 2 "+totalPages);
+	                     } else { 
+	                         totalPages = (totalCount / Integer.parseInt(rows)) + 1;
+	                         System.out.println("STEP 3 "+totalPages);
+	                     }
+	                }else {
+	                    totalPages = 0;
+	                }
+					jsonobj.put("total", totalPages);
+					jsonobj.put("page", page);
+					jsonobj.put("records", records);
+					jsonobj.put("rows", paymntdetails);
+					System.out.println(jsonobj);		
+					out.println(jsonobj);
+				}else{
+					PaymentDetails addpaymntbean = new PaymentDetails();
+					 addpaymntbean.setPaymentid(request.getParameter("paymentid"));
+					 addpaymntbean.setPaymentname(request.getParameter("paymentname"));
+					 addpaymntbean.setOtherdetails(request.getParameter("otherdetails"));
+					 System.out.println("paymentname "+request.getParameter("paymentname"));
+					 if(oper.equalsIgnoreCase("add")){
+						boolean isaddedpaymntdetails = userinputbo.addPaymntdetails(addpaymntbean);
+						if(isaddedpaymntdetails){
+							jsonobj.put("success", "Successfully Inserted The Record");
+						}else{
+							jsonobj.put("Error", "Error in Inserrting");
+						}
+						System.out.println(jsonobj);		
+						out.println(jsonobj);
+					}else if(oper.equalsIgnoreCase("edit")){
+						boolean isupdatedpaymntdetails = userinputbo.editPaymntDetails(addpaymntbean);
+						if(isupdatedpaymntdetails){
+						jsonobj.put("success", "Successfully Edited The Record");
+						}else{
+							jsonobj.put("Error", "Error in edititng");
+						}
+						System.out.println(jsonobj);		
+						out.println(jsonobj);
+					}else{
+						boolean isdeletepaymntdetails = userinputbo.delPaymntDetails(addpaymntbean);
+						if(isdeletepaymntdetails){
 							jsonobj.put("success", "Successfully deleted The Record");
 						}else{
 							jsonobj.put("Error", "Error in deleteing");

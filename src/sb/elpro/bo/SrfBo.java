@@ -58,5 +58,13 @@ public interface  SrfBo {
 	 */
 	public boolean saveSrfform(SampleRequest srfbean) throws Exception;
 
+	/**  
+	 * (Method description)
+	 * @param
+	 * @return
+	 * etc
+	 */
+	public boolean updtSrfform(SampleRequest srfbean) throws Exception;
+
 	
 }

@@ -92,7 +92,7 @@ public class SrfForm extends ActionForm{
 	private String srf_courier;
 	private String srf_feedback;
 	private String srf_isSample;
-	
+	private String srfactionform;
 	
 	/**
 	 * @return the srf_sampleno
@@ -894,6 +894,8 @@ public class SrfForm extends ActionForm{
 		 */
 		@Override
 		public void reset(ActionMapping mapping, HttpServletRequest request) {
+			
+			System.out.println("IN SRF CLEAR FORM ");
 			srf_sampleno ="";
 			srf_agentname ="";
 			srf_orderdate ="";
@@ -923,5 +925,17 @@ public class SrfForm extends ActionForm{
 			srf_inspcdn =""; 
 			srf_forwarder =""; 
 			//super.reset(mapping, request);
+		}
+		/**
+		 * @return the srfactionform
+		 */
+		public String getSrfactionform() {
+			return srfactionform;
+		}
+		/**
+		 * @param srfactionform the srfactionform to set
+		 */
+		public void setSrfactionform(String srfactionform) {
+			this.srfactionform = srfactionform;
 		}
 }
