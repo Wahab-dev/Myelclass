@@ -287,14 +287,13 @@ function clickheremethod(){
 				       records: "records", //calls Third
 				       },
 			   pager : '#tbl_saminvpager',
-			   autoheight: true,
 			   rowNum: 10, 
 			   multiselect : true,
 			   multiboxonly: true, // what is this ??
 			   rowList:[10,20,30],	
 			   sortname: 'sampleno',
 			   sortorder: 'desc',  
-			   height: 'automatic',	
+			   height: '100%',	
 			   //hide: false,
 		       emptyrecords: 'No records to display',
 		       caption  : "Select Contract From List",

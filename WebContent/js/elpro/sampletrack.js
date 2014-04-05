@@ -125,10 +125,10 @@ $(function() {
 	 	datatype: 'json',
 	 	url: '/Myelclass/SamptrackInsertAction.do', 	
 		colNames:['Status','Sampleno','Order Date','Refno','priority','handledby','customerid','tanneryid','deliverid','destination',
-		          'endusage','terms','add_date','cdd_date','splcdn','inspcdn','forwaderid','isinvraised','articleid','articletype',
+		          'endusage','terms','add','cdd','splcdn','inspcdn','forwaderid','isinvraised','articleid','articletype',
 		          'articleshform','articlename','color','size','substance','selection','selectionp','quantity','pcs','colormatching','rate',
-		          'tapetest','crockingwet','crockingdry','fourfolds','keytest','srfarticleid','rdd_date','reps','courierdetails', 
-		          'feedbackdetails','User','isupdtarticle'],
+		          'tapetest','crockingwet','crockingdry','fourfolds','keytest','srfarticleid','rdd','reps','courierdetails', 
+		          'Customer Feedback','User','ApplytoAll'],
     	colModel :[  
                 {name: 'status', index: 'status', align:'center', width:35, search: true, stype:'text', editable:true, sortable: true, hidden: false,  
 		  			edittype: 'select', 

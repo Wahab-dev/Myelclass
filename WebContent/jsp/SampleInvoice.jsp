@@ -14,6 +14,7 @@
 <script src="js/jquery-1.9.1.js"></script>
 <script src="js/jquery-ui.js"></script>
 <link rel="stylesheet" type="text/css" media="screen" href="css/ui-darkness/jquery-ui-1.10.1.custom.css" />
+<link rel="stylesheet" type="text/css" media="screen" href="css/jquerywidgetstyle.css" />
 <link rel="stylesheet" type="text/css" media="screen" href="css/ui.jqgrid.css" />
 <script src="js/i18n/grid.locale-en.js" type="text/javascript"></script>
 <script src="js/jquery.jqGrid.min.js" type="text/javascript"></script>		
@@ -37,47 +38,47 @@ $(function() {
 <body>
 <div id="accordionwidth">
 <table  style="border: thin;">
-   		<tr>  
-   			<td>		
-			<div id="accordionmenu1" class="accordionmenu">
-			  <h3>Samples </h3>
-			        <ul>
-			              <li> <h:link action='/loadSrf' scope="request">SrfScreen</h:link></li>
-							<li> <h:link action='/gotoSampleTracking'>Sample Tacking</h:link></li>
-							<li> <h:link action='/gotoSampleInvoice'>Sample Invoice Screen</h:link></li>
-							  <li> <h:link action='/sit'>Sample Invoice Tracking</h:link></li>
-							 <li> <h:link action='/gotoSampleDebit'>Sample Debit</h:link></li>
-			        </ul>
-			        </div>
-			    </td>
-				<td>
-				<div id="accordionmenu2" class="accordionmenu">
-					<h3>Contracts</h3>
-			        <ul>
-			             <li><h:link action='/LoadPrf' scope="request">Prf Screen</h:link></li>
-							 <li><h:link action='/gotoBulkTracking'>Bulk Tacking</h:link></li>
-							<li><h:link action='/loadInspection'>Inspection Screen</h:link></li>
-							<li><h:link action='/gotoInspectionTracking'>Inspection Tacking</h:link></li>
-							<li><h:link action='/gotoinvoice'>Invoice Screen</h:link></li>
-							<li><h:link action='/InvoiceTracking'>Invoice Tracking</h:link></li>
-							<li><h:link action='/gotodebit'>Debit Screen</h:link></li>
-							<li><h:link action='/gotodebittracking'>Debit Tacking</h:link></li>
-							<li><h:link action='/gotopayment'>Payment Screen</h:link></li>
-							<li><h:link action='/gotoMasterTracking'>Master Tacking</h:link></li>
-			        </ul>
-			        </div>
-			   </td>
-			 <td>
-			 <div id="accordionmenu3" class="accordionmenu">
-			  <h3>UserInput Screen</h3>
-			        <ul>
-			            <li><h:link action='/gotoUserInput'>User Input Settingss</h:link></li>
-			        </ul>
-			</div>
-   			</td>
-   		</tr>
-   </table>
-   </div>
+   <tr>  
+   	 <td>		
+		<div id="accordionmenu1" class="accordionmenu">
+		  <h3>Samples </h3>
+		       <ul>
+		           <li> <h:link action='/loadSrf' scope="request">SrfScreen</h:link></li>
+		    	   <li> <h:link action='/gotoSampleTracking'>Sample Tacking</h:link></li>
+				   <li> <h:link action='/gotoSampleInvoice'>Sample Invoice Screen</h:link></li>
+				   <li> <h:link action='/sit'>Sample Invoice Tracking</h:link></li>
+				   <li> <h:link action='/gotoSampleDebit'>Sample Debit</h:link></li>
+			   </ul>
+	    </div>
+	 </td>
+	 <td>
+		<div id="accordionmenu2" class="accordionmenu">
+			<h3>Contracts</h3>
+		       <ul>
+			      <li><h:link action='/LoadPrf' scope="request">Prf Screen</h:link></li>
+				  <li><h:link action='/gotoBulkTracking'>Bulk Tacking</h:link></li>
+				  <li><h:link action='/loadInspection'>Inspection Screen</h:link></li>
+				  <li><h:link action='/gotoInspectionTracking'>Inspection Tacking</h:link></li>
+				  <li><h:link action='/gotoinvoice'>Invoice Screen</h:link></li>
+				  <li><h:link action='/InvoiceTracking'>Invoice Tracking</h:link></li>
+				  <li><h:link action='/gotodebit'>Debit Screen</h:link></li>
+				  <li><h:link action='/gotodebittracking'>Debit Tacking</h:link></li>
+				  <li><h:link action='/gotopayment'>Payment Screen</h:link></li>
+				  <li><h:link action='/gotoMasterTracking'>Master Tacking</h:link></li>
+			   </ul>
+	    </div>
+	 </td>
+	 <td>
+	    <div id="accordionmenu3" class="accordionmenu">
+			<h3>UserInput Screen</h3>
+			 <ul>
+			    <li><h:link action='/gotoUserInput'>User Input Settingss</h:link></li>
+			 </ul>
+		</div>
+   	 </td>
+   	</tr>
+</table>
+</div>
 <h:form action="/savesampleinvoice" method="post" styleId="savesampleinvoice">
    <table style=" border: thin;">
    		<tr>  			
@@ -88,11 +89,14 @@ $(function() {
    </table>
    
 	<table border="1" style="border: solid; padding: 0px; border-spacing: 0px;">
-	   <tr bordercolor="black"  >
+	   <tr>
    		  <td>
 		    <fieldset>         
-       		  <legend>Invoice Details</legend><br/> 
-       			  Type: <h:select property ="saminv_invoicetype"  styleId="saminv_invoicetype" value="${editsaminvform[0].saminv_invoicetype}">
+       		  <legend>Invoice Details</legend> 
+       		  <table>
+       			 <tr>
+       			 	<td>Type: </td>
+       			 	<td><h:select property ="saminv_invoicetype"  styleId="saminv_invoicetype" value="${editsaminvform[0].saminv_invoicetype}">
        			  		  <h:option value="0">Select Type</h:option>
    		 				  <h:option value="IC-L">IC-Local</h:option>
    		 				  <h:option value="IC-E">IC-Exports</h:option>
@@ -100,135 +104,286 @@ $(function() {
    		 				  <h:option value="O-C">Other-Tanner Courier</h:option> 
    		 				  <h:option value="O-E">Other-Tanner Exports</h:option> 
    		 				  <h:option value="O-L">Other-Tanner Local</h:option>
-       		    		</h:select><br/>     
-       		    		<div id="dv_invtype">
-       		    		</div>   
-   	 					 <br/> Invoice No: <h:text property="saminv_invoiceno" styleId="saminv_invoiceno"  value="${editsaminvform[0].saminv_invoiceno}"></h:text><br/>
-       					 <br/> Invoice Date:<h:text property="saminv_invdate" styleId="saminv_invdate" styleClass="dateclass"  value="${editsaminvform[0].saminv_invdate}"></h:text><br/>
-       					 <br/> Exporters Ref. : <h:text property="saminv_expref" styleId="saminv_expref"  value="${editsaminvform[0].saminv_expref}"> </h:text><br/>
-						 <br/> Other ref :  <h:text property="saminv_otherref" styleId="saminv_otherref"  value="${editsaminvform[0].saminv_otherref}"> </h:text>  <br/>  
+       		    		</h:select><br/>
+       		    	</td>
+       			 </tr>
+       			  <tr>
+       			  	<td>Invoice No:</td>
+       			  	<td><h:text property="saminv_invoiceno" size="19" styleId="saminv_invoiceno"  value="${editsaminvform[0].saminv_invoiceno}"></h:text><br/></td>
+       			 </tr>
+       			  <tr>
+       			 	<td>Invoice Date:</td>
+       			 	<td><h:text property="saminv_invdate" size="25" styleId="saminv_invdate" styleClass="dateclass"  value="${editsaminvform[0].saminv_invdate}"></h:text><br/></td>
+       			 </tr>
+       			  <tr>
+       			 	 <td> Exporters Ref. :</td>
+       			 	 <td> <h:textarea property="saminv_expref" cols="17"  rows="2" styleId="saminv_expref"  value="${editsaminvform[0].saminv_expref}"> </h:textarea><br/></td>
+       			 </tr>
+       			 <tr>
+       			 	 <td> Other ref : </td>
+       			 	 <td><h:textarea property="saminv_otherref" cols="17"  rows="2" styleId="saminv_otherref"  value="${editsaminvform[0].saminv_otherref}"> </h:textarea>  <br/>
+       			 </tr>   
+   			</table>
    			</fieldset>
 		  </td>
-   			  <td width="250">
+   			  <td>
    				  <fieldset>         
-       				  <legend>Exporter Details</legend><br/> 
-       					  Exporter: <h:text property="saminv_exporter" styleId="saminv_exporter"  value="${editsaminvform[0].saminv_exporter}"></h:text><br/>        
-   	 					 <br/> Attn: <h:text property="saminv_exporterattn" styleId="saminv_exporterattn"  value="${editsaminvform[0].saminv_exporterattn}"></h:text><br/>
-       					 <br/> Address: <h:textarea property="saminv_exporteraddress" cols="15" rows="1" styleId="saminv_exporteraddress"  value="${editsaminvform[0].saminv_exporteraddress}"></h:textarea><br/>
-       					 <br/> Telephone : <h:text property="saminv_exportertele" styleId="saminv_exportertele" value="${editsaminvform[0].saminv_exportertele}"> </h:text><br/>
-						<br/> Fax :  <h:text property="saminv_exporterfax" styleId="saminv_exporterfax" value="${editsaminvform[0].saminv_exporterfax}"> </h:text>  <br/>  
+       				  <legend>Exporter Details</legend>
+       				  <table>
+       				  <tr>
+       				  	<td>Name :</td>
+       				  	<td><h:text property="saminv_exporter" styleId="saminv_exporter" size="38" value="${editsaminvform[0].saminv_exporter}"></h:text><br/></td>
+       				  </tr>
+       				  <tr>
+       				  	<td>Attn :</td>
+       				  	<td><h:text property="saminv_exporterattn" styleId="saminv_exporterattn" size="38"  value="${editsaminvform[0].saminv_exporterattn}"></h:text><br/></td>
+       				  </tr>
+       				  <tr>
+       				  	<td>Addr :</td>
+       				  	<td><h:textarea property="saminv_exporteraddress" cols="30" rows="4" styleId="saminv_exporteraddress"  value="${editsaminvform[0].saminv_exporteraddress}"></h:textarea><br/></td>
+       				  </tr>
+       				  <tr>
+       				  	<td>Tele :</td>
+       				  	<td><h:text property="saminv_exportertele" styleId="saminv_exportertele" size="38" value="${editsaminvform[0].saminv_exportertele}"> </h:text><br/></td>
+       				  </tr>
+       				  <tr>
+       				  	<td>Fax :</td>
+       				  	<td><h:text property="saminv_exporterfax" styleId="saminv_exporterfax" size="38" value="${editsaminvform[0].saminv_exporterfax}" > </h:text>  <br/></td>
+       				  </tr>
+					</table>  
        			  </fieldset>
        		  </td>
-   			  <td width="250">
-   			  <div id="saminvnotify">
+   			  <td>
+   			  <div>
    				  <fieldset>         
-       				  <legend>Notify Details</legend><br/> 
-       					  Notify: <h:text property="saminv_notify" styleId="saminv_notify"  value="${editsaminvform[0].saminv_notify}"></h:text><br/>        
-   	 					 <br/> Attn: <h:text property="saminv_notifyattn" styleId="saminv_notifyattn"  value="${editsaminvform[0].saminv_notifyattn}"></h:text><br/>
-       					 <br/> Address:<h:textarea property="saminv_notifyaddress" cols="15" rows="1" styleId="saminv_notifyaddress"  value="${editsaminvform[0].saminv_notifyaddress}"></h:textarea><br/>
-       					<br/>  Phone : <h:text property="saminv_notifytele" styleId="saminv_notifytele"  value="${editsaminvform[0].saminv_notifytele}"> </h:text><br/>
-						 <br/> Fax :  <h:text property="saminv_notifyfax" styleId="saminv_notifyfax"  value="${editsaminvform[0].saminv_notifyfax}"> </h:text>  <br/>  
+       			  <legend>Notify Details</legend>
+       				<table>
+       				  <tr>
+       				  	<td>Name :</td>
+       				  	<td><h:text property="saminv_notify" styleId="saminv_notify" size="38" value="${editsaminvform[0].saminv_notify}"></h:text><br/></td>
+       				  </tr>
+       				  <tr>
+       				  	<td>Attn :</td>
+       				  	<td><h:text property="saminv_notifyattn" styleId="saminv_notifyattn" size="38"  value="${editsaminvform[0].saminv_notifyattn}"></h:text><br/></td>
+       				  </tr>
+       				  <tr>
+       				  	<td>Addr :</td>
+       				  	<td><h:textarea property="saminv_notifyaddress" cols="30" rows="4" styleId="saminv_notifyaddress"  value="${editsaminvform[0].saminv_notifyaddress}"></h:textarea><br/></td>
+       				  </tr>
+       				  <tr>
+       				  	<td>Tele :</td>
+       				  	<td><h:text property="saminv_notifytele" styleId="saminv_notifytele" size="38" value="${editsaminvform[0].saminv_notifytele}"> </h:text><br/></td>
+       				  </tr>
+       				  <tr>
+       				  	<td>Fax :</td>
+       				  	<td><h:text property="saminv_notifyfax" styleId="saminv_notifyfax" size="38" value="${editsaminvform[0].saminv_notifyfax}" > </h:text>  <br/></td>
+       				  </tr>
+					</table>  
        			  </fieldset>
        			  </div>
-   			  </td>
-   			 
+   			  </td> 
 		  </tr>
-		  <tr style="border: solid;">
+		  <tr>
    			  <td>
-				<div id="saminvbank">
+				<div>
    				  <fieldset>         
-       				  <legend>Bank Details</legend><br/> 
-       					  Bank: <h:text property="saminv_bank" styleId="saminv_bank" value="${editsaminvform[0].saminv_bank}"></h:text><br/>        
-   	 					  <br/>Branch: <h:text property="saminv_bankbranch" styleId="saminv_bankbranch" value="${editsaminvform[0].saminv_bankbranch}"></h:text><br/>
-       					  <br/>Addr:<h:textarea property="saminv_bankaddress" cols="15" rows="1" styleId="saminv_bankaddress" style="align:center"  value="${editsaminvform[0].saminv_bankaddress}"></h:textarea><br/>
-       					  <br/>Swift Code: <h:text property="saminv_bankswiftcode" styleId="saminv_bankswiftcode" value="${editsaminvform[0].saminv_bankswiftcode}"> </h:text><br/>
-       					  <br/>Acct No : <h:text property="saminv_bankacno" styleId="saminv_bankacno" value="${editsaminvform[0].saminv_bankacno}"> </h:text><br/>
-       					  <br/>Phone : <h:text property="saminv_banktele" styleId="saminv_banktele" value="${editsaminvform[0].saminv_banktele}"> </h:text><br/>
-						  <br/>fax :  <h:text property="saminv_bankfax" styleId="saminv_bankfax" value="${editsaminvform[0].saminv_bankfax}"> </h:text>  <br/>  
+       				  <legend>Bank Details</legend>
+       				  <table>
+       				  	<tr>
+       				  		<td>Bank: </td>
+       				  		<td><h:text property="saminv_bank" styleId="saminv_bank"  size="38"  value="${editsaminvform[0].saminv_bank}"></h:text><br/></td>
+       				  	</tr>
+       				  	<tr>
+       				  		<td>Branch: </td>
+       				  		<td><h:text property="saminv_bankbranch" styleId="saminv_bankbranch"  size="38"  value="${editsaminvform[0].saminv_bankbranch}"></h:text><br/></td>
+       				  	</tr>
+       				  	<tr>
+       				  		<td>Addr: </td>
+       				  		<td><h:textarea property="saminv_bankaddress" cols="30" rows="4" styleId="saminv_bankaddress" style="align:center"  value="${editsaminvform[0].saminv_bankaddress}"></h:textarea><br/></td>
+       				  	</tr>
+       				  	<tr>
+       				  		<td>Swift Code: </td>
+       				  		<td><h:text property="saminv_bankswiftcode" styleId="saminv_bankswiftcode" size="38" value="${editsaminvform[0].saminv_bankswiftcode}"> </h:text><br/></td>
+       				  	</tr>
+       				  	<tr>
+       				  		<td>Phone : </td>
+       				  		<td><h:text property="saminv_banktele" styleId="saminv_banktele" size="38" value="${editsaminvform[0].saminv_banktele}"> </h:text><br/></td>
+       				  	</tr>
+       				  	<tr>
+       				  		<td>fax  : </td>
+       				  		<td><h:text property="saminv_bankfax" styleId="saminv_bankfax" size="38" value="${editsaminvform[0].saminv_bankfax}"> </h:text>  <br/></td>
+       				  	</tr>
+					</table>  
        			  </fieldset>
        			</div>
        		  </td>
    			  <td>
    			      <fieldset>         
-       				  <legend>Dispatch Details</legend><br/> 
-       					  COG: <h:text property="saminv_ctryoforigngoods" styleId="saminv_ctryoforigngoods"  value="${editsaminvform[0].saminv_ctryoforigngoods}"></h:text><br/>
-       					  <br/>LoadingPort: <h:text property="saminv_loadingport" styleId="saminv_loadingport"  value="${editsaminvform[0].saminv_loadingport}"></h:text><br/> 
-						  <br/>COF: <h:text property="saminv_ctryoffinaldesti" styleId="saminv_ctryoffinaldesti"  value="${editsaminvform[0].saminv_ctryoffinaldesti}"></h:text><br/> 
-   	 					  <br/>Destination: <h:text property="saminv_finaldesti" styleId="saminv_finaldesti" styleClass="autocmplet" value="${editsaminvform[0].saminv_finaldesti}"></h:text><br/>
-       					  <br/>Dischargeport: <h:text property="saminv_dischargeport" styleId="saminv_dischargeport" styleClass="autocmplet" value="${editsaminvform[0].saminv_dischargeport}"></h:text><br/> 
-       					  <br/>Vessel No  : <h:text property="saminv_vesselno" styleId="saminv_vesselno"  value="${editsaminvform[0].saminv_vesselno}"></h:text><br/>      
-       					  <br/>AW/Bill Date: <h:text property="saminv_awbilldate" styleId="saminv_awbilldate" styleClass="dateclass" value="${editsaminvform[0].saminv_awbilldate}"> </h:text><br/>
-						  <br/>AW/Bill No :  <h:text property="saminv_awbillno" styleId="saminv_awbillno" value="${editsaminvform[0].saminv_awbillno}"> </h:text>  <br/>  
+       			   <legend>Dispatch Details</legend>
+					<table>
+       				  	<tr>
+       				  		<td>Origin: </td>
+       				  		<td><h:text property="saminv_ctryoforigngoods" styleId="saminv_ctryoforigngoods"  value="${editsaminvform[0].saminv_ctryoforigngoods}"></h:text><br/></td>
+       				  	</tr> 
+       				  	<tr>
+       				  		<td>LoadingPort: </td>
+       				  		<td><h:text property="saminv_loadingport" styleId="saminv_loadingport"  value="${editsaminvform[0].saminv_loadingport}"></h:text><br/></td>
+       				  	</tr> 
+       				  	<tr>
+       				  		<td>Country-Destn:</td>
+       				  		<td><h:text property="saminv_ctryoffinaldesti" styleId="saminv_ctryoffinaldesti"  value="${editsaminvform[0].saminv_ctryoffinaldesti}"></h:text><br/></td>
+       				  	</tr> 
+       				  	<tr>
+       				  		<td>Destn: </td>
+       				  		<td><h:text property="saminv_finaldesti" styleId="saminv_finaldesti" styleClass="autocmplet" value="${editsaminvform[0].saminv_finaldesti}"></h:text><br/></td>
+       				  	</tr> 
+       				  	<tr>
+       				  		<td>Port: </td>
+       				  		<td><h:text property="saminv_dischargeport" styleId="saminv_dischargeport" styleClass="autocmplet" value="${editsaminvform[0].saminv_dischargeport}"></h:text><br/></td>
+       				  	</tr> 
+       				  	<tr>
+       				  		<td>Vessel No  : </td>
+       				  		<td><h:text property="saminv_vesselno" styleId="saminv_vesselno"  value="${editsaminvform[0].saminv_vesselno}"></h:text><br/></td>
+       				  	</tr> 	
+       				  	<tr>
+       				  		<td>AW/Bill No :  </td>
+       				  		<td><h:text property="saminv_awbillno" styleId="saminv_awbillno" value="${editsaminvform[0].saminv_awbillno}"> </h:text>  <br/></td>
+       				  	</tr> 
+       				  	<tr>
+       				  		<td>AW/Bill Date: </td>
+       				  		<td><h:text property="saminv_awbilldate" styleId="saminv_awbilldate" styleClass="dateclass" value="${editsaminvform[0].saminv_awbilldate}"> </h:text><br/></td>
+       				  	</tr>  
+       				  	  
+       				  </table>	 
        			  </fieldset>    				  			
    			  </td>
-   			  <td width="250">
+   			  <td>
    				  <fieldset>         
-       				  <legend>Other Details</legend><br/> 
-       				  	  Pre Carriage By: <h:text property="saminv_precarriageby" styleId="saminv_precarriageby"  value="${editsaminvform[0].saminv_precarriageby}"></h:text><br/>
-       					  Place of Reciept: <br/>Dimension: <h:text property="saminv_precarriageby" styleId="saminv_precarriageby"  value="NA"></h:text><br/> 						
-   						  Gross Wt: <h:text property="saminv_grosswt" styleId="saminv_grosswt"  value="${editsaminvform[0].saminv_grosswt}"></h:text><br/>
-       					  <br/>Dimension: <h:text property="saminv_dimension" styleId="saminv_dimension" value="${editsaminvform[0].saminv_dimension}"></h:text><br/> 
-						  <br/> Marks: <h:text property="saminv_marksno" styleId="saminv_marksno" value="${editsaminvform[0].saminv_marksno}"></h:text><br/>
-   	 					  <br/> No Of packages: <h:text property="saminv_noofpackages" styleId="saminv_noofpackages" value="${editsaminvform[0].saminv_noofpackages}"></h:text><br/>
-       					  <br/>Pack No:<h:text property="saminv_packno" styleId="saminv_packno" value="${editsaminvform[0].saminv_packno}"></h:text><br/>
-       					  <br/>Net Wt: <h:text property="saminv_netwt" styleId="saminv_netwt" value="${editsaminvform[0].saminv_netwt}"></h:text><br/> 
+       			  <legend>Other Details</legend>
+			 	  <table>
+			 	  	<tr>
+			 	  		<td>Pre Carriage By: </td>
+			 	  		<td> <h:text property="saminv_precarriageby" styleId="saminv_precarriageby"  value="${editsaminvform[0].saminv_precarriageby}"></h:text><br/></td>
+			 	  	</tr>
+			 	  	<tr>
+			 	  		<td>Place of Reciept: </td>
+			 	  		<td><h:text property="saminv_precarriageby" styleId="saminv_precarriageby"  value="NA"></h:text><br/></td>
+			 	  	</tr>
+			 	  	<tr>
+			 	  		<td>Gross Wt: </td>
+			 	  		<td><h:text property="saminv_grosswt" styleId="saminv_grosswt"  value="${editsaminvform[0].saminv_grosswt}"></h:text><br/></td>
+			 	  	</tr>
+			 	  	<tr>
+			 	  		<td>Dimension: </td>
+			 	  		<td><h:text property="saminv_dimension" styleId="saminv_dimension" value="${editsaminvform[0].saminv_dimension}"></h:text><br/></td>
+			 	  	</tr>
+			 	  	<tr>
+			 	  		<td>Marks: </td>
+			 	  		<td><h:text property="saminv_marksno" styleId="saminv_marksno" value="${editsaminvform[0].saminv_marksno}"></h:text><br/></td>
+			 	  	</tr>
+			 	  	<tr>
+			 	  		<td>No Of packages:</td>
+			 	  		<td><h:text property="saminv_noofpackages" styleId="saminv_noofpackages" value="${editsaminvform[0].saminv_noofpackages}"></h:text><br/></td>
+			 	  	</tr>
+			 	  	<tr>
+			 	  		<td>Pack No:</td>
+			 	  		<td><h:text property="saminv_packno" styleId="saminv_packno" value="${editsaminvform[0].saminv_packno}"></h:text><br/></td>
+			 	  	</tr>
+			 	  	<tr>
+			 	  		<td>Net Wt: </td>
+			 	  		<td><h:text property="saminv_netwt" styleId="saminv_netwt" value="${editsaminvform[0].saminv_netwt}"></h:text><br/></td>
+			 	  	</tr>
+			 	  </table>	
 				  </fieldset>  
 			</td>
 			
 		</tr>
-		<tr style="border: solid;">		  
-		    <td width="250">
+		<tr>		  
+		    <td>
 			   <fieldset>         
-       			  <legend>Customer Details</legend>
-       			   <br/>Include Sample:<h:select property ="saminv_includeSample"  styleId="saminv_includeSample" > 
-       				 						<h:option value="sample" >sample only</h:option>
-       				 						<h:option value="ct" >include Contract</h:option>
-       				 					</h:select><br/>
-   					 <br/>Customer Name: <h:text property="saminv_customer" styleId="saminv_customer" value="${editsaminvform[0].saminv_customer}"></h:text><br/>
-       				 <br/>Attn: 	<h:text property="saminv_custattn" styleId="saminv_custattn" value="${editsaminvform[0].saminv_custattn}"></h:text><br/> 
-					 <br/> Address: <h:textarea property="saminv_custaddr" cols="15" rows="1" styleId="saminv_custaddr" value="${editsaminvform[0].saminv_custaddr}"></h:textarea><br/>
-   	 				 <br/>Telephone:<h:text property="saminv_custtele" styleId="saminv_custtele" value="${editsaminvform[0].saminv_custtele}"></h:text><br/>
-       				 <br/>Fax:	    <h:text property="saminv_custfax" styleId="saminv_custfax" value="${editsaminvform[0].saminv_custfax}"></h:text><br/>
-       				 <br/>ID:	    <h:text property="saminv_custid" styleId="saminv_custid" value="${editsaminvform[0].saminv_custid}"></h:text><br/>	
-       					
-			   </fieldset>
+       		   <legend>Customer Details</legend>
+       		   <table>
+       		   	<tr>
+       		   		<td>Include CT:</td>
+       		   		<td><h:select property ="saminv_includeSample"  styleId="saminv_includeSample" > 
+       				 		<h:option value="sample" >No</h:option>
+       				 		<h:option value="ct" >yes</h:option>
+       				 	</h:select><br/>
+       				</td>
+       		   	</tr>
+       		   	<tr>
+       		   		<td>Name :</td>
+       		   		<td><h:text property="saminv_customer" size="38"  styleId="saminv_customer" value="${editsaminvform[0].saminv_customer}"></h:text><br/></td>
+       		   	</tr>
+       		   	<tr>
+       		   		<td>Attn :</td>
+       		   		<td><h:text property="saminv_custattn" size="38"  styleId="saminv_custattn" value="${editsaminvform[0].saminv_custattn}"></h:text><br/></td>
+       		   	</tr>
+       		   	<tr>
+       		   		<td>Addr :</td>
+       		   		<td><h:textarea property="saminv_custaddr" cols="30" rows="4" styleId="saminv_custaddr" value="${editsaminvform[0].saminv_custaddr}"></h:textarea><br/></td>
+       		   	</tr>
+       		   	<tr>
+       		   		<td>Tele :</td>
+       		   		<td><h:text property="saminv_custtele" size="38"  styleId="saminv_custtele" value="${editsaminvform[0].saminv_custtele}"></h:text><br/></td>
+       		   	</tr>
+       		   	<tr>
+       		   		<td> Fax  :</td>
+       		   		<td> <h:text property="saminv_custfax" size="38"  styleId="saminv_custfax" value="${editsaminvform[0].saminv_custfax}"></h:text><br/></td>
+       		   	</tr>
+       		   	<tr>
+       		   		<td> ID  :</td>
+       		   		<td><h:text property="saminv_custid" size="38"  styleId="saminv_custid" value="${editsaminvform[0].saminv_custid}"></h:text><br/></td>
+       		   	</tr>
+       		   </table>
+       		  </fieldset>
 			</td>
-   			<td colspan="3">
+   			<td colspan="2">
            	    <table id="tbl_saminvListCustomerContract" > </table>   
            		<div id="tbl_saminvpager"></div> 
            		          	 
            	</td>	      	  
 		<tr>
-  			<td colspan="4">&nbsp;</td>
+  			<td colspan="3">&nbsp;</td>
 	    </tr>
 		<tr>
-		  <td colspan="4">
+		  <td colspan="3">
 		     	<table id="tbl_saminvaddinvBill"></table>
 		        <div id="tbl_saminvbillpager"></div>
 		  </td>  
 		</tr>
 		<tr>
-  			<td colspan="4">&nbsp;</td>
+  			<td colspan="3">&nbsp;</td>
 	    </tr>
 		<tr>
-   			<td colspan="4"> 
+   			<td colspan="3"> 
 				<table id="saminvBill"></table>
 		      	<div id="saminvbillpager"></div>
 			</td>    
         <tr>
-        <td width="250"> 
+        <td colspan="3"> 
 			 	<fieldset>         
        				<legend>Other Charges</legend>
-				  	Courier Discount: <h:text property="saminv_courierchrgs" styleId="saminv_courierchrgs"  value="${editsaminvform[0].saminv_courierchrgs}"> </h:text>
-				 	<br/>Discount :  <h:text property="saminv_deduction" styleId="saminv_deduction"  value="${editsaminvform[0].saminv_deduction}"> </h:text>  <br/>
-					<br/>Total Amount :  <h:text property="saminv_total" styleId="saminv_total"  value="${editsaminvform[0].saminv_total}"> </h:text>  <br/>
+       				<table>
+       					<tr>
+       						<td>Courier Discount: </td>
+       						<td><h:text property="saminv_courierchrgs" styleId="saminv_courierchrgs"  value="${editsaminvform[0].saminv_courierchrgs}"> </h:text></td>
+       					</tr>
+       					<tr>
+       						<td>Discount :  </td>
+       						<td><h:text property="saminv_deduction" styleId="saminv_deduction"  value="${editsaminvform[0].saminv_deduction}"> </h:text>  <br/></td>
+       					</tr>
+       					<tr>
+       						<td>Total Amount :  </td>
+       						<td><h:text property="saminv_total" styleId="saminv_total"  value="${editsaminvform[0].saminv_total}"> </h:text>  <br/></td>
+       					</tr>
+       				</table>
 				</fieldset>
 			</td>
-	    <tr style="border: solid;"> 
- 			<td colspan="4">
-		    	  <h:submit property="sampleinvoiceaction" value="Save"></h:submit>
-		    	  <h:submit property="sampleinvoiceaction" value="Clear"></h:submit>
-			</td>  		
+	    <tr> 	
+		    <td><h:submit property="sampleinvoiceaction" value="Save" styleClass="myPrintButton" ></h:submit></td>
+		    <td><h:reset property="sampleinvoiceaction" value="Clear" styleClass="myPrintButton" ></h:reset></td>
+		    <td><h:submit property="sampleinvoiceaction" value="Print" styleClass="myPrintButton" ></h:submit></td>	
    		</tr>
 	  </table>
 	</h:form>

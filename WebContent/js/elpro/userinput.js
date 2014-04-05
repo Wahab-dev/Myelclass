@@ -437,7 +437,7 @@ $(document).ready(function() {
 	               {name: 'bankSwiftCode',index :'bankSwiftCode', editable:true,hidden:true
 	            	   
 	               },
-	               {name: 'bankAcctNo',index :'bankAcctNo', editable:true,
+	               {name: 'bankAcctNo',index :'bankAcctNo', editable:true,hidden:true, 
 	            	   
 	               },
 	               {name: 'bankContactNo',index :'bankContactNo', editable:true,
@@ -506,7 +506,7 @@ $(document).ready(function() {
 			} 
 	});
 	 bankgrid.jqGrid('filterToolbar', {autosearch : true, searchOnEnter:false, stringResult: true}); 
- 
+	 bankgrid.jqGrid('setGridWidth', 930);
 	//Article  details
 	 var articlegrid = $("#articledetails");
 	 articlegrid.jqGrid({ 

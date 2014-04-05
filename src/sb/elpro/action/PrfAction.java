@@ -19,6 +19,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import net.sf.jasperreports.engine.JREmptyDataSource;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JRExporterParameter;
 import net.sf.jasperreports.engine.JasperCompileManager;
@@ -29,6 +30,9 @@ import net.sf.jasperreports.engine.JasperRunManager;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import net.sf.jasperreports.engine.data.JRMapCollectionDataSource;
 import net.sf.jasperreports.engine.export.JRPdfExporter;
+import net.sf.jasperreports.engine.export.JRXlsAbstractExporterParameter;
+import net.sf.jasperreports.engine.export.JRXlsExporterParameter;
+import net.sf.jasperreports.engine.export.ooxml.JRXlsxExporter;
 import net.sf.json.JSONObject;
 
 import org.apache.commons.beanutils.BeanUtils;
@@ -142,71 +146,68 @@ public class PrfAction extends DispatchAction {
 	
 	public ActionForward Print(ActionMapping map, ActionForm form, 
 			HttpServletRequest request, HttpServletResponse response) throws Exception{
-		/*System.out.println("IN Print  ");
-		 PrfForm prfprintform =(PrfForm) form;
-		 BeanUtils.copyProperties(prfprintbean, prfprintform);
-		 System.out.println("Ct No  "+prfprintform.getPrf_contractno());
-		
-		Connection conn = null;
-		
-		
-		try {
-            Class.forName("com.mysql.jdbc.Driver");
-            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/elpro","root","tiger");
-            System.out.println("conn "+conn.getCatalog());
-            } catch (SQLException ex) {
-            } catch (ClassNotFoundException ex) {
-            }
-		response.setContentType("application/pdf");
+		response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"); 
         ServletOutputStream out = response.getOutputStream();
-        
-        
-        JasperReport report = JasperCompileManager.compileReport("C:/Users/meetw_000/Desktop/report/SubreportTest/Blank_A4.jrxml");
-        //JasperReport subreportcust = JasperCompileManager.compileReport("C:/Users/meetw_000/Desktop/report/SubreportTest/address.jrxml");
-        JRBeanCollectionDataSource beanColDataSource = new
-        		JRBeanCollectionDataSource(prfprintbean);
-        
-        
-        List<ProductDetails> reportRows = new ArrayList<ProductDetails>;
-        HashMap<String, Object> params = new HashMap<String, Object>(); 
-        params.put("prf_contractno", prfprintform.getPrf_contractno());
-        JRMapCollectionDataSource dataSource = new JRMapCollectionDataSource(params);
-        //params.put("$F{customerid}", subreportcust);
-       
-        	System.out.println("zzzzz"+params.toString());
-        	//System.out.println("zzzzz"+subreportcust.getName());
-            JasperPrint jasperPrint = JasperFillManager.fillReport(report, params, conn);
-            
-            //Pdf Converter           
-            JRPdfExporter exporter = new JRPdfExporter();
-            exporter.setParameter(JRExporterParameter.JASPER_PRINT, jasperPrint);
-            exporter.setParameter(JRExporterParameter.OUTPUT_STREAM, out);
-            try {
-    			exporter.exportReport();
-    			
-    		} catch (JRException e) {
-    			throw new RuntimeException(e);
-    		}catch (Exception e) {
-       			e.printStackTrace();
-    		}
-		*/
+		System.out.println("IN Print  ");
+		PrfForm prfprintform =(PrfForm) form;
+		prfprintform.setPrf_poref("This is the Title of the Report");
+		JasperReport report = JasperCompileManager.compileReport("C:/Users/meetw_000/Desktop/report/prf.jrxml");
+		HashMap<String, Object> hm = new HashMap<String, Object>();
+		hm.put("pctno",prfprintform.getPrf_contractno());
+		hm.put("porderdt", prfprintform.getPrf_orderdate());
+		hm.put("ptanneryname", prfprintform.getPrf_tanname());
+		hm.put("ptanneryattn", prfprintform.getPrf_tanattn());
+		hm.put("ptanneryaddr", prfprintform.getPrf_tanaddr());
+		hm.put("ptanneryphone", prfprintform.getPrf_tanphone());
+		hm.put("ptanneryfax", prfprintform.getPrf_tanfax());
+		hm.put("pcustname", prfprintform.getPrf_custname());
+		hm.put("pcustattn", prfprintform.getPrf_custattn());
+		hm.put("pcustaddr", prfprintform.getPrf_custaddr());
+		hm.put("pcusttel", prfprintform.getPrf_custphone());
+		hm.put("pcustfax", prfprintform.getPrf_custfax());
+		hm.put("pdesti", prfprintform.getPrf_destination());
+		hm.put("pcomm", prfprintform.getPrf_elclasscommission()+" "+prfprintform.getPrf_commission());
+		hm.put("ppayment", prfprintform.getPrf_payment());
+		hm.put("pinsurance", prfprintform.getPrf_insurance());
+		hm.put("pterms", prfprintform.getPrf_terms());
+		hm.put("pbankname", prfprintform.getPrf_bankname());
+		hm.put("pbankaddr", prfprintform.getPrf_bankaddr());
+		hm.put("pbankbranch", prfprintform.getPrf_bankbranch());
+		hm.put("pbankphone", prfprintform.getPrf_bankphone());
+		hm.put("pbankfax", prfprintform.getPrf_bankfax());
+		hm.put("pconsigname", prfprintform.getPrf_consigneename());
+		hm.put("pconsigattn", prfprintform.getPrf_consigneeattn());
+		hm.put("pconsigaddr", prfprintform.getPrf_consigneeaddr());
+		hm.put("pconsigphone", prfprintform.getPrf_consigneephone());
+		hm.put("pconsigfax", prfprintform.getPrf_consigneefax());
+		hm.put("pnotifyname", prfprintform.getPrf_notifyname());
+		hm.put("pnotifyattn", prfprintform.getPrf_notifyattn());
+		hm.put("pnotifyaddr", prfprintform.getPrf_notifyaddr());
+		hm.put("pnotifytele", prfprintform.getPrf_notifyphone());
+		hm.put("pnotifyfax", prfprintform.getPrf_notifyfax());
+		hm.put("psplcdn", prfprintform.getPrf_special());
+		JasperPrint print = JasperFillManager.fillReport(report, hm, new JREmptyDataSource());
 		
-		/*System.out.println("1 .0 "); 
-		//Connection connection = null;
-		ServletOutputStream servletOutputStream = response.getOutputStream();
-		InputStream reportStream = getServlet().getServletConfig().getServletContext().getResourceAsStream("/jasper/prf.jasper");
-		System.out.println("1 .1"); 
-		response.setContentType("application/pdf");
-		//Class.forName("com.mysql.jdbc.Driver");
-		System.out.println("1 .2 "); 
-		//connection = DriverManager.getConnection("jdbc:mysql://localhost:8080/elpro?user=root&password=tiger");
-		JasperRunManager.runReportToPdfStream(reportStream, servletOutputStream, new HashMap());
-		//connection.close();
-		System.out.println("1 .3 "); 
-		servletOutputStream.flush();
-		servletOutputStream.close();
-		return map.getInputForward();*/
-		
+		JRXlsxExporter excelexporter = new JRXlsxExporter(); // supports jaspersoft 5.5.1 
+      
+ 		// Here we assign the parameters jp and baos to the exporter
+         excelexporter.setParameter(JRXlsExporterParameter.JASPER_PRINT, print);
+         excelexporter.setParameter(JRXlsExporterParameter.OUTPUT_STREAM, out);
+ 	
+         // Excel specific parameters
+         excelexporter.setParameter(JRXlsAbstractExporterParameter.IS_ONE_PAGE_PER_SHEET, Boolean.FALSE);
+         excelexporter.setParameter(JRXlsAbstractExporterParameter.IS_REMOVE_EMPTY_SPACE_BETWEEN_ROWS, Boolean.FALSE);
+         excelexporter.setParameter(JRXlsAbstractExporterParameter.IS_WHITE_PAGE_BACKGROUND, Boolean.FALSE);
+         excelexporter.setParameter(JRXlsAbstractExporterParameter.IS_IGNORE_GRAPHICS,Boolean.FALSE);
+         
+        try {
+        	excelexporter.exportReport();
+			
+		} catch (JRException e) {
+			throw new RuntimeException(e);
+		}catch (Exception e) {
+   			e.printStackTrace();
+		}
 		
 		return null;
 	}

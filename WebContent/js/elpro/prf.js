@@ -66,7 +66,7 @@ $(document).ready(function() {
 		postData: {
 		        ctno: function (){return $("#prf_contractno").val();},
 	    },
-		colNames:['Article Type','Name','Article Shform', 'Article ID','Color','Size','Size avg','Size Rem','Substance','Selection','Selp','Quantity','Unit','Pcs','Price','RateSign','Rateamt','Shipment','T c','tcamt','tcsign','tccust','Contract','Prfarticleid','User'],  
+		colNames:['Article Type','Name','Article Shform', 'Article ID','Color','Size','Size avg','Size Rem','Substance','Selection','Selp','Quantity','Unit','Pcs','Pric','Currency','Price','Shipment','T c','Price','Currency','tccust','Contract','Prfarticleid','User'],  
 	    colModel:[   
 			 {name:'prf_articletype', index:'articletype', width:80, align:'center', sortable:true, editable:true, hidden: false, edittype:'select', 
 				 editoptions: { 
@@ -503,7 +503,7 @@ $(document).ready(function() {
 					select: function( event, ui ) { 
 			          	  var addr = ui.item.addr; 
 			          	  var attn = ui.item.attn; 
-			          	  var fone = ui.item.phone; 
+			          	  var fone = ui.item.fone; 
 			          	  var fax = ui.item.fax; 
 			          	  $('#prf_consigneeaddr').val(addr);
 			          	 $('#prf_consigneephone').val(fone);
@@ -536,7 +536,7 @@ $(document).ready(function() {
 					select: function( event, ui ) { 
 			          	  var addr = ui.item.addr; 
 			          	  var brnch = ui.item.brnch; 
-			          	  var	 fone = ui.item.fone; 
+			          	  var fone = ui.item.fone; 
 			          	  var fax = ui.item.fax; 
 			          	  $('#prf_bankaddr').val(addr);
 			          	 $('#prf_bankphone').val(fone);
@@ -569,7 +569,7 @@ $(document).ready(function() {
 					select: function( event, ui ) { 
 			          	  var addr = ui.item.addr; 
 			          	  var attn = ui.item.attn; 
-			          	  var fone = ui.item.phone; 
+			          	  var fone = ui.item.fone; 
 			          	  var fax = ui.item.fax; 
 			          	  $('#prf_notifyaddr').val(addr);
 			          	 $('#prf_notifyphone').val(fone);
@@ -720,15 +720,14 @@ $(document).ready(function() {
 					    }
 				
 					    
-					    $( "#prf_destination" )
+					    $("#prf_destination")
 					      // don't navigate away from the field on tab when selecting an item
-					      .bind( "keydown", function( event ) {
+					    /*  .bind( "keydown", function( event ) {
 					        if ( event.keyCode === $.ui.keyCode.TAB &&
 					            $( this ).data( "ui-autocomplete" ).menu.active ) {
 					          event.preventDefault();
 					        }
-					      })
-					      .autocomplete({
+					      })*/.autocomplete({
 					        minLength: 1,
 					        source: function( request, response ) {
 					        	$.getJSON("/Myelclass/PrfAutocomplete.do?&action="+"desti", 
@@ -743,8 +742,8 @@ $(document).ready(function() {
 					                    }));
 					        		});	//done
 					        	//});//End Ajax
-					        },
-					        focus: function() {
+					        }});
+					        /*focus: function() {
 					          // prevent value inserted on focus
 					          return false;
 					        },
@@ -759,7 +758,7 @@ $(document).ready(function() {
 					          this.value = terms.join( ", " );
 					          return false;
 					        }
-					      }).autosize({append: "\n"});
+					      .autosize({append: "\n"});*/
 					    
 					    
 					    /*

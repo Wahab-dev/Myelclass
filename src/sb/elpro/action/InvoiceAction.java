@@ -4,11 +4,22 @@
 package sb.elpro.action;
 
 import java.io.PrintWriter;
+import java.util.HashMap;
 
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import net.sf.jasperreports.engine.JREmptyDataSource;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.export.JRXlsAbstractExporterParameter;
+import net.sf.jasperreports.engine.export.JRXlsExporterParameter;
+import net.sf.jasperreports.engine.export.ooxml.JRXlsxExporter;
 import net.sf.json.JSONObject;
 
 import org.apache.commons.beanutils.BeanUtils;
@@ -18,6 +29,7 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.actions.DispatchAction;
 
 import sb.elpro.actionform.InvoiceForm;
+import sb.elpro.actionform.PrfForm;
 import sb.elpro.actionform.SampleInvoiceForm;
 import sb.elpro.bo.InvoiceBo;
 import sb.elpro.bo.InvoiceBoImpl;
@@ -97,5 +109,82 @@ public class InvoiceAction extends DispatchAction{
 			HttpServletRequest request, HttpServletResponse response) throws Exception{
 		System.out.println("In INV Clear Logout ");	
 		return map.findForward("clear");  
+	}
+	public ActionForward Print(ActionMapping map, ActionForm form, 
+			HttpServletRequest request, HttpServletResponse response) throws Exception{
+		response.setContentType("application/ms-excel"); 
+		 response.setHeader("Content-Disposition", "attachment; filename=Invoice.xls");
+        ServletOutputStream out = response.getOutputStream();
+		System.out.println("IN Print  ");
+		InvoiceForm invprintform =(InvoiceForm) form;
+		BeanUtils.copyProperties(invbean, invprintform);
+		
+		JasperReport report = JasperCompileManager.compileReport("C:/Users/meetw_000/Desktop/report/invoiceform.jrxml");
+		HashMap<String, Object> hm = new HashMap<String, Object>();
+		hm.put("pexprtrname",invprintform.getInv_exporter());
+		hm.put("pexprtrattn", invprintform.getInv_exporterattn());
+		hm.put("pexprtraddr", invprintform.getInv_exporteraddress());
+		hm.put("pexprtrtele", invprintform.getInv_exportertele());
+		hm.put("pexprtrfax", invprintform.getInv_exporterfax());
+		hm.put("pconsigname", invprintform.getInv_customer());
+		hm.put("pconsigattn", invprintform.getInv_custattn());
+		hm.put("pconsigaddr", invprintform.getInv_custaddr());
+		hm.put("pconsigtele", invprintform.getInv_custtele());
+		hm.put("pconsigfax", invprintform.getInv_custfax());
+		hm.put("pnotifyname", invprintform.getInv_notify());
+		hm.put("pnotifyattn", invprintform.getInv_notifyattn());
+		hm.put("pnotifyaddr", invprintform.getInv_notifyaddress());
+		hm.put("pnotifytele", invprintform.getInv_notifytele());
+		hm.put("pnotifyfax", invprintform.getInv_notifyfax());
+		hm.put("pbuyer", invprintform.getInv_buyer());
+		hm.put("pbuyerattn", invprintform.getInv_buyerattn());
+		hm.put("pbuyeraddr", invprintform.getInv_buyeraddr());
+		hm.put("pbuyertele", invprintform.getInv_buyertele());
+		hm.put("pbuyerfax", invprintform.getInv_buyerfax());
+		hm.put("pinvno", invprintform.getInv_invoiceno());
+		hm.put("pinvdt", invprintform.getInv_invdate());
+		hm.put("pexporef", invprintform.getInv_expref());
+		hm.put("potherref", invprintform.getInv_otherref());
+		hm.put("ppono", invprintform.getInv_pono());
+		hm.put("pcog", invprintform.getInv_ctryoforigngoods());
+		hm.put("pcof", invprintform.getInv_ctryoffinaldesti());
+		hm.put("pterms", invprintform.getInv_terms());
+		hm.put("ppaymnt", invprintform.getInv_payment());
+		hm.put("pprecariageby", invprintform.getInv_precarriageby());
+		//hm.put("pprecarrierplace", invprintform.getInv_);
+		hm.put("pvessel", invprintform.getInv_vesselno());
+		hm.put("ploadingport", invprintform.getInv_loadingport());
+		hm.put("pdestiport", invprintform.getInv_dischargeport());
+		hm.put("pfinaldesti", invprintform.getInv_finaldesti());
+		hm.put("pmarksnctnr", invprintform.getInv_marksno());
+		hm.put("pkindpack", invprintform.getInv_packno());
+		hm.put("pgrwt", invprintform.getInv_grosswt());
+		hm.put("pnetwt", invprintform.getInv_netwt());
+		//hm.put("pamtinwords", invprintform.getInv_);
+		JasperPrint print = JasperFillManager.fillReport(report, hm, new JREmptyDataSource());
+		
+		JRXlsxExporter excelexporter = new JRXlsxExporter(); // supports jaspersoft 5.5.1 
+      
+ 		// Here we assign the parameters jp and baos to the exporter
+         excelexporter.setParameter(JRXlsExporterParameter.JASPER_PRINT, print);
+         excelexporter.setParameter(JRXlsExporterParameter.OUTPUT_STREAM, out);
+ 	
+         // Excel specific parameters
+         excelexporter.setParameter(JRXlsAbstractExporterParameter.IS_ONE_PAGE_PER_SHEET, Boolean.FALSE);
+         excelexporter.setParameter(JRXlsAbstractExporterParameter.IS_REMOVE_EMPTY_SPACE_BETWEEN_ROWS, Boolean.TRUE);
+         excelexporter.setParameter(JRXlsAbstractExporterParameter.IS_WHITE_PAGE_BACKGROUND, Boolean.TRUE);
+         excelexporter.setParameter(JRXlsAbstractExporterParameter.IS_IGNORE_GRAPHICS,Boolean.TRUE);
+         
+        try {
+        	excelexporter.exportReport();
+			
+		} catch (JRException e) {
+			throw new RuntimeException(e);
+		}catch (Exception e) {
+   			e.printStackTrace();
+		}
+		
+		return null;
+	
 	}
 }

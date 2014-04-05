@@ -1,20 +1,20 @@
 @CHARSET "ISO-8859-1";
 
 /*
- *  Complete Style details for the Jquery widgets 
- *  Author: Wahab 
+ * Complete Style details for the Jquery widgets 
+ * Author: Wahab 
  * Created : 19.03.14
- **/
+ */
  
- /* set accodion width*/
-#accordionwidth {
-	width: 350px;
-}
-#accordionmenu li{
-	text-align:left;
-}
+ /*  set accodion width
+	#accordionwidth {
+		width: 350px;
+	}
+	#accordionmenu li{
+		text-align:left;
+	} */
 
-/* Print Button in Prf */
+/* Print Button All Form */
 .myPrintButton {
 	-moz-box-shadow: 0px 10px 14px -7px #1c1b18;
 	-webkit-box-shadow: 0px 10px 14px -7px #1c1b18;

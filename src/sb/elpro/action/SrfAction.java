@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 
+import net.sf.jasperreports.engine.JREmptyDataSource;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperFillManager;
@@ -49,6 +50,7 @@ public class SrfAction extends DispatchAction {
 	HttpSession usersession;
 	SrfBo srfbo = new SrfBoImpl();
 	SampleRequest srfbean = new SampleRequest();
+	SampleRequest srfprintbean = new SampleRequest();
 	
 	public ActionForward Save(ActionMapping map, ActionForm form, 
 			HttpServletRequest request, HttpServletResponse response) throws Exception{
@@ -120,47 +122,59 @@ public class SrfAction extends DispatchAction {
 	}
 	public ActionForward Print(ActionMapping map, ActionForm form, 
 			HttpServletRequest request, HttpServletResponse response) throws Exception{
-		System.out.println("IN Print  ");
-		Connection conn = null;
-		try {
-            Class.forName("com.mysql.jdbc.Driver");
-            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/elpro","root","tiger");
-            System.out.println("conn "+conn.getCatalog());
-            } catch (SQLException ex) {
-            } catch (ClassNotFoundException ex) {
-            }
-
 		response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"); 
-        ServletOutputStream output = response.getOutputStream();
-
-        	JasperReport report = JasperCompileManager.compileReport("C:/Users/meetw_000/Desktop/report/Srf/Srfform.jrxml");
-            HashMap<String, Object> params = new HashMap<String, Object>(); 
-            params.put("Title", "Sample Track");
-        
-        	JasperPrint jasperPrint = JasperFillManager.fillReport(report, params, conn);
-        	  //Excel Converter
-        	
-        	JRXlsxExporter excelexporter = new JRXlsxExporter(); // supports jaspersoft 5.5.1 
-           // JExcelApiExporter excelexporter = new JExcelApiExporter(); // supports jasper Report version
-   		 
-    		// Here we assign the parameters jp and baos to the exporter
-            excelexporter.setParameter(JRXlsExporterParameter.JASPER_PRINT, jasperPrint);
-            excelexporter.setParameter(JRXlsExporterParameter.OUTPUT_STREAM, output);
-    	
-            // Excel specific parameters
-            excelexporter.setParameter(JRXlsAbstractExporterParameter.IS_ONE_PAGE_PER_SHEET, Boolean.FALSE);
-            excelexporter.setParameter(JRXlsAbstractExporterParameter.IS_REMOVE_EMPTY_SPACE_BETWEEN_ROWS, Boolean.FALSE);
-            excelexporter.setParameter(JRXlsAbstractExporterParameter.IS_WHITE_PAGE_BACKGROUND, Boolean.FALSE);
-            excelexporter.setParameter(JRXlsAbstractExporterParameter.IS_IGNORE_GRAPHICS,Boolean.FALSE);
-            
-    		try {
-    			excelexporter.exportReport();
-    			
-    		} catch (JRException e) {
-    			throw new RuntimeException(e);
-    		} catch (Exception e) {
-            e.printStackTrace();
-        }	
+        ServletOutputStream out = response.getOutputStream();
+		System.out.println("IN Print  ");
+		SrfForm srfprintform =(SrfForm) form;
+		//srfprintform.setPrf_poref("This is the Title of the Report");
+		JasperReport report = JasperCompileManager.compileReport("C:/Users/meetw_000/Desktop/report/Srfform.jrxml");
+		HashMap<String, Object> hm = new HashMap<String, Object>();
+		hm.put("psno",srfprintform.getSrf_sampleno());
+		hm.put("porddt", srfprintform.getSrf_orderdate());
+		hm.put("pcust", srfprintform.getSrf_customer());
+		hm.put("phandl", srfprintform.getSrf_handledby());
+		hm.put("prefno", srfprintform.getSrf_referenceno());
+		hm.put("ppriority", srfprintform.getSrf_priority());
+		hm.put("ptanname", srfprintform.getSrf_tanname());
+		hm.put("ptanattn", srfprintform.getSrf_tanattn());
+		hm.put("ptannaddr", srfprintform.getSrf_tanaddr());
+		hm.put("ptanntele", srfprintform.getSrf_tanphone());
+		hm.put("ptannfax", srfprintform.getSrf_tanfax());
+		hm.put("pdelname", srfprintform.getSrf_deliver());
+		hm.put("pdelattn", srfprintform.getSrf_custattn());
+		hm.put("pdeladdr", srfprintform.getSrf_custaddr());
+		hm.put("pdeltele", srfprintform.getSrf_custphone());
+		hm.put("pdelfax", srfprintform.getSrf_custfax());
+		hm.put("pcolrmatch", srfprintform.getSrf_colormatching());
+		hm.put("ptapetest", srfprintform.getSrf_tapetest());
+		//hm.put("pcrockwet", srfprintform.);
+		//hm.put("pcrockdry", srfprintform.getSrf_bankbranch());
+		hm.put("pendusage", srfprintform.getSrf_endusage());
+		hm.put("pdesti", srfprintform.getSrf_destination());
+		hm.put("pdeldate", srfprintform.getSrf_cdd());
+		hm.put("psplcdn", srfprintform.getSrf_splcdn());
+		JasperPrint print = JasperFillManager.fillReport(report, hm, new JREmptyDataSource());
+		
+		JRXlsxExporter excelexporter = new JRXlsxExporter(); // supports jaspersoft 5.5.1 
+      
+ 		// Here we assign the parameters jp and baos to the exporter
+         excelexporter.setParameter(JRXlsExporterParameter.JASPER_PRINT, print);
+         excelexporter.setParameter(JRXlsExporterParameter.OUTPUT_STREAM, out);
+ 	
+         // Excel specific parameters
+         excelexporter.setParameter(JRXlsAbstractExporterParameter.IS_ONE_PAGE_PER_SHEET, Boolean.FALSE);
+         excelexporter.setParameter(JRXlsAbstractExporterParameter.IS_REMOVE_EMPTY_SPACE_BETWEEN_ROWS, Boolean.FALSE);
+         excelexporter.setParameter(JRXlsAbstractExporterParameter.IS_WHITE_PAGE_BACKGROUND, Boolean.FALSE);
+         excelexporter.setParameter(JRXlsAbstractExporterParameter.IS_IGNORE_GRAPHICS,Boolean.FALSE);
+         
+        try {
+        	excelexporter.exportReport();
+			
+		} catch (JRException e) {
+			throw new RuntimeException(e);
+		}catch (Exception e) {
+   			e.printStackTrace();
+		}
 	
 		return null;
 	}

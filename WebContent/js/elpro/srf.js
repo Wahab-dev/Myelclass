@@ -7,8 +7,6 @@ $(document).ready(function() {
 	
 	$.get("/Myelclass/SrfAutoComplete.do?action="+"sampleno", 
 		 	function(data){
-				alert("Data: " + data);
-			 	alert($("#srfactionform").val()); 
 			 	if($("#srfactionform").val().toLowerCase() == "edit" ){
 			 		
 			 	}else{
@@ -28,7 +26,7 @@ $(document).ready(function() {
 			         postData: {
 			        	 sampleno: function (){return $("#srf_sampleno").val();},
 				    },
-			         colNames:['ArticleID', 'ArticleShForm', 'ArticleType','Article name','Color', 'Size','Sizeavg','Size Rem','Substance', 'Selection','Selectionp', 'Quantity','Unit','Pieces','Price','Ratesign','Rateamt','Shipment','Colormatching','Tapetest','Crockingwet','CrockingDry','Fourfolds','Keytest','SampleNo','User','Srfarticleid'],  
+			         colNames:['ArticleID', 'ArticleShForm', 'ArticleType','Article name','Color', 'Size','Sizeavg','Size Rem','Substance', 'Selection','Selectionp', 'Quantity','Unit','Pieces','Price','Currency','Price','Shipment','Colormatching','Tapetest','Crockingwet','CrockingDry','Fourfolds','Keytest','SampleNo','User','Srfarticleid'],  
 			         colModel :[   
 			                    {name:'articleid',index:'articleid',align:'center', editable:true, sortable:true, hidden:true,
 			                    	formoptions:{rowpos: 1, colpos: 1}, 
@@ -102,7 +100,6 @@ $(document).ready(function() {
 			      						          	 $('#srf_selection').val(ui.item.selec);
 			      						          	 $('#srf_selectionp').val(ui.item.selp);
 			      						          	 $('#srf_ratesign').val(ui.item.ratesign);
-			      						          	 alert("val " +$('#srf_ratesign').val());
 			      						          	 $('#srf_rateamt').val(ui.item.rateamt);
 			      						          	 $('#srf_shipment').val(ui.item.shipment);
 			      						            } 
@@ -354,7 +351,6 @@ $(document).ready(function() {
 		{
 			//Del
 			beforeShowForm: function ($form) {
-				alert("in b4 show form");
 				 var sel_id = grid.jqGrid('getGridParam', 'selrow');
                  var value = grid.jqGrid('getCell', sel_id, 'srf_color');
 			    $("td.delmsg", $form[0]).html("Delete Row for <b>Color=" +value+"</b>?");
@@ -368,15 +364,11 @@ $(document).ready(function() {
                         return value;
                      }
                  },
-				reloadAfterSubmit: true,
-			 
-		}
-		
-		);
+				reloadAfterSubmit: true, 
+		});
 	
 			
 	//Autocomplete
-	
 	 $('#srf_tanname').autocomplete({
 		 source: function(request, response) {
 				var param = request.term;  

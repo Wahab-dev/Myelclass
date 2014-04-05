@@ -10,14 +10,13 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>Sample Request Form</title>
-<link rel="stylesheet" type="text/css" media="screen" href="css/vader/jquery-ui-1.10.3.custom.css" />
-<link rel="stylesheet" type="text/css" media="screen" href="css/ui.jqgrid.css" />
 <style type="text/css">
 #ui-datepicker-div { font-size: 11px; } 	
 </style>
 <script src="js/jquery-1.9.1.js"></script>
 <script src="js/jquery-ui.js"></script>
 <link rel="stylesheet" type="text/css" media="screen" href="css/vader/jquery-ui-1.10.3.custom.css" />
+<link rel="stylesheet" type="text/css" media="screen" href="css/jquerywidgetstyle.css" />
 <link rel="stylesheet" type="text/css" media="screen" href="css/ui.jqgrid.css" />
 
 <script src="js/i18n/grid.locale-en.js" type="text/javascript"></script>
@@ -96,62 +95,123 @@ $(function() {
    		</tr>
    </table>
 
-	<table width="826" height="369" border="2" cellpadding="0" cellspacing="0">
+	<table width="926" height="369" border="2" cellpadding="0" cellspacing="0">
   		<tr>
-   			<td width="272">
-   				Sample No : <h:text property="srf_sampleno" styleId="srf_sampleno" value="${editsrfform[0].srf_sampleno}"></h:text> <br /><br />
-   				Order date: <h:text property="srf_orderdate" styleId="srf_orderdate" value="${editsrfform[0].srf_orderdate}"></h:text><br /><br />
-   				Reference No: :<h:select property="srf_poreftype" styleId="srf_poreftype">
+   			<td>
+   			<fieldset>         
+        			<legend>Sample Details </legend> 
+        			<table width="300">
+        				<tr>
+        					<td>Sample No:</td>
+        					<td><h:text property="srf_sampleno" styleId="srf_sampleno" value="${editsrfform[0].srf_sampleno}"></h:text> </td>
+        				</tr>
+        				<tr>
+        					<td>Order date:</td>
+        					<td><h:text property="srf_orderdate" styleId="srf_orderdate" value="${editsrfform[0].srf_orderdate}"></h:text></td>
+        				</tr>
+        				<tr>
+        					<td>Ref Type: </td>
+        					<td><h:select property="srf_poreftype" styleId="srf_poreftype">
         							<h:option value="Email">Email</h:option>
         							<h:option value="Phone">Call </h:option>
         							<h:option value="Others">Others</h:option>	
-        						</h:select><br />
-   					<h:textarea property="srf_referenceno" styleId="srf_referenceno" cols="20" rows="2" value="${editsrfform[0].srf_referenceno}"></h:textarea>  <br /><br />
-   				Priority   : <h:select property="srf_priority" styleId="srf_priority">
+        						</h:select></td>
+        				</tr>
+        				<tr>
+        					<td>Ref No: </td>
+        					<td><h:textarea property="srf_referenceno" styleId="srf_referenceno" cols="20" rows="2" value="${editsrfform[0].srf_referenceno}"></h:textarea> </td>
+        				</tr>
+        				<tr>
+        					<td>Priority :</td>
+        					<td><h:select property="srf_priority" styleId="srf_priority">
    								<h:option value="low">low</h:option>
           						<h:option value="medium">medium</h:option>
           						<h:option value="High">High</h:option>
           						<h:option value="Top Urgent">Top Urgent</h:option>
-       		 					</h:select><br /><br /> 
-   				Handled By : <h:text property="srf_handledby" styleId="srf_handledby" value="${editsrfform[0].srf_handledby}"></h:text><br /><br />	
-   				Customer : <h:text property="srf_customer" styleId="srf_customer" style="width:180px" value="${editsrfform[0].srf_custname}"></h:text><br /> 			 	         
-   				
+       		 					</h:select><br />
+       		 				</td>
+        				</tr>
+        				<tr>
+        					<td>Handled By :</td>
+        					<td><h:text property="srf_handledby" styleId="srf_handledby" value="${editsrfform[0].srf_handledby}"></h:text></td>
+        				</tr>
+        				<tr>
+        					<td>Customer :</td>
+        					<td><h:text property="srf_customer" styleId="srf_customer" style="width:180px" value="${editsrfform[0].srf_custname}"></h:text></td>
+        				</tr>
+        			</table> 			 	         
+   			</fieldset>	
    			</td>
-    		<td width="272">
+    		<td >
     			<fieldset>         
-        			<legend>Tanner Details</legend><br/> 
-        				Name: <h:text property="srf_tanname" styleId="srf_tanname" value="${editsrfform[0].srf_tanname}"></h:text><br /><br />
-       		 			Attn: <h:text property="srf_tanattn" styleId="srf_tanattn" value=""></h:text> <br /><br />
-         				Address:<h:textarea property="srf_tanaddr" cols="30" value="" rows="2" styleId="srf_tanaddr"></h:textarea> <br /><br />
-        				Telephone : <h:text property="srf_tanphone" value="" styleId="srf_tanphone"> </h:text> <br /><br />
-						Fax:  <h:text property="srf_tanfax" styleId="srf_tanfax" value=""> </h:text> <br /><br />
-						Type  :<h:select property="srf_isSample" styleId="srf_isSample" value="">
+        			<legend>Tanner Details</legend> 
+        			<table width="300">
+        				<tr>
+        					<td>Name: </td>
+        					<td><h:text property="srf_tanname" size="41" styleId="srf_tanname" value="${editsrfform[0].srf_tanname}"></h:text></td>
+        				</tr>
+        				<tr>
+        					<td>Attn: </td>
+        					<td><h:text property="srf_tanattn" size="41" styleId="srf_tanattn" value=""></h:text> </td>
+        				</tr>
+        				<tr>
+        					<td>Addr:</td>
+        					<td><h:textarea property="srf_tanaddr" cols="35" rows="4" value="" styleId="srf_tanaddr"></h:textarea> </td>
+        				</tr>
+        				<tr>
+        					<td>Tele: </td>
+        					<td><h:text property="srf_tanphone" size="41" value="" styleId="srf_tanphone"> </h:text></td>
+        				</tr>
+        				<tr>
+        					<td>Fax :</td>
+        					<td><h:text property="srf_tanfax" size="41" styleId="srf_tanfax" value=""> </h:text></td>
+        				</tr>
+        				<tr>
+        					<td>Type:</td>
+        					<td><h:select property="srf_isSample" styleId="srf_isSample" value="">
    								<h:option value="N">Free</h:option>
    								<h:option value="Y">Chargeable</h:option>  	
    								<h:option value="NA">To Clarify</h:option>  								
-   							 </h:select> <br /><br />	 
+   							 </h:select> 
+   						   </td>
+        				</tr>
+        			</table>	 
       			</fieldset>
       		</td>
-    		<td width="272">
+    		<td >
     			<fieldset>
-       				<legend>Deliver Details</legend><br/> 
-       					Deliver: <h:text property="srf_deliver" styleId="srf_deliver" value="${editsrfform[0].srf_deliver}"></h:text><br /><br />        
-        				Attn: <h:text property="srf_custattn" styleId="srf_custattn" value="" ></h:text><br /><br />
-         				Address:<h:textarea property="srf_custaddr" cols="30" rows="2"  value="" styleId="srf_custaddr"></h:textarea><br /><br />
-        				Telephone : <h:text property="srf_custphone" styleId="srf_custphone" value=""> </h:text><br /><br />
-						Fax:  <h:text property="srf_custfax" styleId="srf_custfax" value=""> </h:text> <br /><br />
-						To Pay A/C No:<h:text property="srf_custacctno" styleId="srf_custacctno" value=""> </h:text>  <br />  
+       				<legend>Deliver Details</legend>
+       				<table width="300">
+       					<tr>
+       						<td>Name:</td>
+       						<td><h:text property="srf_deliver" size="41" styleId="srf_deliver" value="${editsrfform[0].srf_deliver}"></h:text></td>
+       					</tr>
+       					<tr>
+       						<td>Attn:</td>
+       						<td><h:text property="srf_custattn" size="41" styleId="srf_custattn" value="" ></h:text></td>
+       					</tr>
+       					<tr>
+       						<td>Addr:</td>
+       						<td><h:textarea property="srf_custaddr" cols="35" rows="4" value="" styleId="srf_custaddr"></h:textarea></td>
+       					</tr>
+       					<tr>
+       						<td>Tele: </td>
+       						<td><h:text property="srf_custphone" size="41" styleId="srf_custphone" value=""> </h:text></td>
+       					</tr>
+       					<tr>
+       						<td>Fax :</td>
+       						<td><h:text property="srf_custfax" size="41" styleId="srf_custfax" value=""> </h:text></td>
+       					</tr>
+       					<tr>
+       						<td>A/C No:</td>
+       						<td><h:text property="srf_custacctno" size="41" styleId="srf_custacctno" value=""> </h:text> </td>
+       					</tr>
+       				</table>
       			</fieldset>
       		</td>
-  		</tr>
-  		<tr>
-    		<td height="21"></td>
-   			<td>&nbsp;</td>
-    		<td>&nbsp;</td>
   		</tr>
   		<tr>
     		<td colspan="3">
-    		<%-- <h:button property="artinsert" value="insert" styleId="thelink"></h:button>   --%>
     			<table id="srfArticletbl">
     			</table>
     		
@@ -162,32 +222,54 @@ $(function() {
   		
   		<tr>
 		    <td>
-		    	End Usage : <h:textarea property="srf_endusage" styleId="srf_endusage" value="${editsrfform[0].srf_endusage}"></h:textarea><br /><br />
-       		 	Destination :  <h:text property="srf_destination" styleId="srf_destination" value="${editsrfform[0].srf_destination}"></h:text><br /><br />
-       		 			
-       		 	Payment Terms : <h:text property="srf_paymentterms" styleId="srf_paymentterms" value="${editsrfform[0].srf_paymentterms}"></h:text><br /><br />						
+		    <fieldset>
+       			<legend>Delivery Details</legend>
+       			<table>
+       				<tr>
+       					<td>Desti :</td>   
+       					<td><h:text property="srf_destination" styleId="srf_destination" value="${editsrfform[0].srf_destination}"></h:text></td>      					
+       				</tr>
+       				<tr>
+       					<td>ADD : </td>   
+       					<td><h:text property="srf_add" styleId="srf_add" styleClass="srf_deliverydate" value="${editsrfform[0].srf_add}"></h:text></td>      					
+       				</tr>
+       				<tr>
+       					<td>CDD : </td>   
+       					<td><h:text property="srf_cdd" styleId="srf_cdd" styleClass="srf_deliverydate" value="${editsrfform[0].srf_cdd}"></h:text></td>      					
+       				</tr>
+       				<tr>
+       					<td>Terms : </td>   
+       					<td><h:text property="srf_paymentterms" styleId="srf_paymentterms" value="${editsrfform[0].srf_paymentterms}"></h:text></td>      					
+       				</tr>
+       				<tr>
+       					<td>End Usage :</td>   
+       					<td><h:textarea property="srf_endusage" styleId="srf_endusage" value="${editsrfform[0].srf_endusage}"></h:textarea></td>      					
+       				</tr>
+       			</table>			
+       		 	</fieldset>				
 		    </td>
 		    <td>
-		        ADD : <h:text property="srf_add" styleId="srf_add" styleClass="srf_deliverydate" value="${editsrfform[0].srf_add}"></h:text><br /><br /><br />	
-		        CDD : <h:text property="srf_cdd" styleId="srf_cdd" styleClass="srf_deliverydate" value="${editsrfform[0].srf_cdd}"></h:text><br /><br /><br />
-		        insp Cdn: <h:textarea property="srf_inspcdn" cols="30" rows="2" styleId="srf_inspcdn" value="${editsrfform[0].srf_inspcdn}"></h:textarea><br />     
+		        <fieldset>
+		    		<legend>Inspection Condition</legend> 
+		       		 <h:textarea property="srf_inspcdn" cols="40" rows="15" styleId="srf_inspcdn" value="${editsrfform[0].srf_inspcdn}"></h:textarea>
+		        </fieldset>     
 			</td>
 		    <td><fieldset>
-		    		<legend>Special Condition</legend><br/> 
-        				Condtion 1: <h:textarea property="srf_splcdn" cols="30" rows="2" styleId="srf_splcdn" value="${editsrfform[0].srf_splcdn}"></h:textarea><br />        
+		    		<legend>Special Condition</legend> 
+        				 <h:textarea property="srf_splcdn" cols="40" rows="15" styleId="srf_splcdn" value="${editsrfform[0].srf_splcdn}"></h:textarea>     
        	 				    									
       			</fieldset>
       		</td>
   		</tr>
   		<tr>			
   			<td> 
-  				<h:submit property="srfaction" value="Save" styleId="Save"></h:submit>
+  				<h:submit property="srfaction" value="Save" styleId="Save" styleClass="myPrintButton"></h:submit>
   			</td>
   			<td> 
-  				<h:submit property="srfaction" value="Clear" styleId="Clear"></h:submit>
+  				<h:reset property="srfaction" value="Clear" styleId="Clear" styleClass="myPrintButton"></h:reset>
   			</td>
   			<td> 
-  				<h:submit property="srfaction" value="Print" styleId="Print"></h:submit>
+  				<h:submit property="srfaction" value="Print" styleId="Print" styleClass="myPrintButton"></h:submit>
   			</td>
   		</tr>
 	</table>

@@ -11,6 +11,7 @@ import java.util.List;
 import sb.elpro.model.DebitFormDetails;
 import sb.elpro.model.InvBillDetails;
 import sb.elpro.model.PaymentBean;
+import sb.elpro.model.PaymentDetails;
 
 /**
  * @author Wahab
@@ -33,5 +34,13 @@ public interface PaymentBo {
 	 * etc
 	 */
 	boolean savePaymentform(PaymentBean paymntformbean) throws Exception;
+
+	/**  
+	 * (Method description)
+	 * @param
+	 * @return
+	 * etc
+	 */
+	List<PaymentBean> getPayTrackDetails()throws Exception;
 
 }

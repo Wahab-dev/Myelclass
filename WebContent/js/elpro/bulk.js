@@ -142,8 +142,8 @@ $(function() {
 		        url:"/Myelclass/BulkInsertAction.do", 
 		        colNames:['Status', 'Ct No', 'Agent', 'Order Date', 'PO No', 'Tan', 'Cust', 'Exp', 'Name', 'Color', 'Size', 
 		                  	'Substance', 'Selection', 'Selp', 'Quantity', 'Unit', 'Shipped', 'Balance', 'Comment', 'InvDetails', 
-		                  	'Feedback', 'rdd date', 'Price', 'Tc', 'Add', 'Cdd', 'Commission', 'PO/JW', 'Consignee', 'Notify', 
-		                  	'Bank', 'Destination', 'Splcdn', 'Represnt', 'Prfarticleid', 'User','isupdtarticle'
+		                  	'Customer Feedback', 'rdd', 'Price', 'Tc', 'Add', 'Cdd', 'Commission', 'PO/JW', 'Consignee', 'Notify', 
+		                  	'Bank', 'Destination', 'Splcdn', 'Represnt', 'Prfarticleid', 'User','ApplytoAll'
 		                  	],     
 		        colModel :[   
 				  

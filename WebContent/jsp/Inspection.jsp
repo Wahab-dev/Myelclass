@@ -84,7 +84,7 @@ $(function() {
 
 <h:form action="/saveinspection" styleId="saveInspection">
 
-<table style="border: 15px; ">
+<table border="1" cellspacing="0" cellpadding="0" >
    		<tr>  			
    			<td>Welcome <h:text property="userinsession" styleId="userinsession" value="${user.name}" readonly="true" ></h:text></td> 	
    			<td><h:text property="inspactionform" styleId="inspactionform" value="${inspactionform}" readonly="true" ></h:text></td>	
@@ -131,7 +131,7 @@ $(function() {
 		    <tr>
 		       <td>
 	          	<div>Please make sure you check the following before Inspection of Goods</div>
-	            <h:textarea  property="insp_cdn" styleId="insp_cdn" rows="4" cols="112"></h:textarea>
+	            <h:textarea  property="insp_cdn" styleId="insp_cdn" rows="4" cols="113"></h:textarea>
 	         
 	            <h:hidden property="artidhidden" styleId="artidhidden" ></h:hidden>
 	            <h:hidden property="color" styleId="color"></h:hidden>

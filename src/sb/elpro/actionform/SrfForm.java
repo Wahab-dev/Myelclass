@@ -46,6 +46,10 @@ public class SrfForm extends ActionForm{
 	private String srf_cdd;	
 	private String srf_add;	
 	private String srf_deliver;
+	private String srf_deliverattn;
+	private String srf_deliveraddr;
+	private String srf_deliverphone;
+	private String srf_deliverfax;
 	private String srf_splcdn;	
 	private String srf_inspcdn; 
 	private String srf_forwarder; 
@@ -921,6 +925,10 @@ public class SrfForm extends ActionForm{
 			srf_cdd ="";	
 			srf_add ="";	
 			srf_deliver ="";
+			srf_deliverattn ="";
+			srf_deliveraddr ="";
+			srf_deliverphone ="";
+			srf_deliverfax ="";
 			srf_splcdn ="";	
 			srf_inspcdn =""; 
 			srf_forwarder =""; 
@@ -937,5 +945,54 @@ public class SrfForm extends ActionForm{
 		 */
 		public void setSrfactionform(String srfactionform) {
 			this.srfactionform = srfactionform;
+		}
+		
+		/**
+		 * @return the srf_deliverattn
+		 */
+		public String getSrf_deliverattn() {
+			return srf_deliverattn;
+		}
+		/**
+		 * @param srf_deliverattn the srf_deliverattn to set
+		 */
+		public void setSrf_deliverattn(String srf_deliverattn) {
+			this.srf_deliverattn = srf_deliverattn;
+		}
+		/**
+		 * @return the srf_deliveraddr
+		 */
+		public String getSrf_deliveraddr() {
+			return srf_deliveraddr;
+		}
+		/**
+		 * @param srf_deliveraddr the srf_deliveraddr to set
+		 */
+		public void setSrf_deliveraddr(String srf_deliveraddr) {
+			this.srf_deliveraddr = srf_deliveraddr;
+		}
+		/**
+		 * @return the srf_deliverphone
+		 */
+		public String getSrf_deliverphone() {
+			return srf_deliverphone;
+		}
+		/**
+		 * @param srf_deliverphone the srf_deliverphone to set
+		 */
+		public void setSrf_deliverphone(String srf_deliverphone) {
+			this.srf_deliverphone = srf_deliverphone;
+		}
+		/**
+		 * @return the srf_deliverfax
+		 */
+		public String getSrf_deliverfax() {
+			return srf_deliverfax;
+		}
+		/**
+		 * @param srf_deliverfax the srf_deliverfax to set
+		 */
+		public void setSrf_deliverfax(String srf_deliverfax) {
+			this.srf_deliverfax = srf_deliverfax;
 		}
 }

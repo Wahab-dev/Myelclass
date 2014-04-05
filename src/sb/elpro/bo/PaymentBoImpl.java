@@ -47,4 +47,14 @@ public class PaymentBoImpl implements PaymentBo {
 		boolean issavePayForm = paymentdao.savePaymentFormDetails(paymntformbean);
 		return issavePayForm;
 	}
+
+
+	/* (non-Javadoc)
+	 * @see sb.elpro.bo.PaymentBo#getPayTrackDetails()
+	 */
+	@Override
+	public List<PaymentBean> getPayTrackDetails() throws Exception {
+		ArrayList<PaymentBean> getpaytrackdetails = paymentdao.getPaymentTrackList();
+		return getpaytrackdetails;
+	}
 }

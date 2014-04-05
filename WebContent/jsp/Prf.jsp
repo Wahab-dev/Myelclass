@@ -9,13 +9,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>PRF PAGE</title> 
 <style type="text/css">
-	#ui-datepicker-div { font-size: 11px; } 
-table.EditTable > tbody > tr.FormData > td.DataTD > input[type="select"] {
-    width: 115px !important;
-}
-#toolbar a { font-weight: bold; border: 1px solid #aaa; padding: 2px; }
-#toolbar a:hover { color: white; background-color: #aaa; }
-
+	
 </style>
 <script src="js/jquery-1.9.1.js"></script>
 <script src="js/jquery-ui.js"></script>
@@ -169,188 +163,268 @@ function loadvalues(){
 	   				<td >Welcome<h:text property="userinsession" styleId="userinsession" value="${user.name}" readonly="true" ></h:text></td >
 	   				<td ><h:text property="formaction" styleId="formaction" value="${actionform}"></h:text></td> 
 	   				<td><h:submit property="prfaction" value="Logout"></h:submit></td> 
-    <table width="800" border="1" cellspacing="0" cellpadding="0">
-         	 <tr>
-           		 <td width="97">
-           		 	<table width="263" border="0" cellspacing="0" cellpadding="0">
-              			<tr>
-                			<td height="40">
-                			<fieldset>
-        							<legend>Contract Details</legend>
-        							<br/>
-                     			    Agent:<h:text property="prf_agentname" styleId="prf_agentname" value="${editprfform[0].prf_agentname}" ></h:text>         									 
-        								Contract  No.<h:text property="prf_contractno" styleId="prf_contractno" value="${editprfctno}" /><br />
-        								<br />
-        								Date : <h:text property="prf_orderdate" styleId="prf_orderdate" value="${editprfform[0].prf_orderdate}"></h:text> <br /><br />						    
-        								P.O. reference:<h:select property="prf_poreftype" styleId="prf_poreftype">
-        								 					<h:option value="Email">Email</h:option>
-        								 					<h:option value="Phone">Call </h:option>
-        								 					<h:option value="Others">Others</h:option>	
-        								 				</h:select><br />
-        								 	<h:textarea property="prf_poref" styleId="prf_poref" value="${editprfform[0].prf_poref}"></h:textarea><br /><br />
-      							</fieldset>
-                  			</td>
-            	  		</tr>
-        	 	 	</table>
-        	 	 </td>
-            	<td width="97">
-            		<table width="263" border="0" cellspacing="0" cellpadding="0">
-              			<tr>
-                			<td height="21"><fieldset>         
-        							<legend>Tannery Details</legend><br/> 
-        												Name: <h:text property="prf_tanname" styleId="prf_tanname" ></h:text><br />  <br />    								      
-       	 												Attn: <h:text property="prf_tanattn" styleId="prf_tanattn" ></h:text><br /><br />
-         												Address:<h:textarea property="prf_tanaddr" cols="30" rows="2" styleId="prf_tanaddr" ></h:textarea><br /><br />
-        												Telephone : <h:text property="prf_tanphone" styleId="prf_tanphone" > </h:text><br /><br />
-														Fax:  <h:text property="prf_tanfax" styleId="prf_tanfax" > </h:text>  <br />  
-      										</fieldset>
-                  			</td>
-             		 	</tr>
-            	  	</table>
-             	</td>
-            	<td width="97">
-            		<table width="263" border="0" cellspacing="0" cellpadding="0">
-              			<tr>
-                			<td height="21"><fieldset>
-       								<legend>Customer Details</legend><br/> 
-       									Name:<h:text property="prf_custname" styleId="prf_custname" ></h:text><br /><br />        
-        								Attn: <h:text property="prf_custattn" styleId="prf_custattn" ></h:text><br />
-         								Address:<h:textarea property="prf_custaddr" cols="30" rows="2" styleId="prf_custaddr" > </h:textarea><br />
-        								Telephone : <h:text property="prf_custphone" styleId="prf_custphone" > </h:text><br />
-										Fax:  <h:text property="prf_custfax" styleId="prf_custfax" > </h:text>  <br />  
-      							</fieldset>
-                  			</td>
-              			</tr>
-            		</table>
-            	</td>
-          	</tr>
-          	 <tr>
-          	</tr>
-          	<tr>
-          	<td height="53" colspan="3">
+    <table border="1" cellspacing="0" cellpadding="0">
+        <tr>
+           <td>
+           	<fieldset>
+        	<legend>Contract Details</legend>    
+        	<table>
+        		<tr>
+        			<td>Agent: </td>
+        			<td><h:text property="prf_agentname" size="41" styleId="prf_agentname" value="${editprfform[0].prf_agentname}" ></h:text> <br /></td>
+        		</tr>
+        		<tr>
+        			<td>Ct No:  </td>
+        			<td><h:text property="prf_contractno" size="41" styleId="prf_contractno" value="${editprfctno}" /><br /></td>
+        		</tr>
+        		<tr>
+        			<td>Date: </td>
+        			<td>  <h:text property="prf_orderdate" size="41" styleId="prf_orderdate" value="${editprfform[0].prf_orderdate}"></h:text> <br /></td>
+        		</tr>
+        		<tr>
+        			<td>PO Type: </td>
+        			<td><h:select property="prf_poreftype"  styleId="prf_poreftype">             
+        	    			 <h:option value="Email">Via Email</h:option>
+        					 <h:option value="Phone">Via Call </h:option>
+        					 <h:option value="Others">Others</h:option>	
+        				   </h:select>
+        		    </td>
+        		</tr>
+        		<tr>
+        			<td>PO Ref: </td>
+        			<td> <h:textarea property="prf_poref" cols="30" rows="2"  styleId="prf_poref" value="${editprfform[0].prf_poref}"></h:textarea></td>
+        		</tr>
+        	</table>   			 		  
+   		    </fieldset>
+           </td>
+           <td >
+            <fieldset>         
+        	<legend>Tannery Details</legend>
+        	<table>
+        		<tr>
+        			<td>Name: </td>
+        			<td><h:text property="prf_tanname" size="41" styleId="prf_tanname" ></h:text><br /></td>
+        		</tr>
+        		<tr>
+        			<td>Attn:</td>
+        			<td><h:text property="prf_tanattn" size="41" styleId="prf_tanattn" ></h:text><br /></td>
+        		</tr>
+        		<tr>
+        			<td>Addr:</td>
+        			<td><h:textarea property="prf_tanaddr" cols="35" rows="4" styleId="prf_tanaddr" ></h:textarea><br /></td>
+        		</tr>
+        		<tr>
+        			<td>Tele: </td>
+        			<td><h:text property="prf_tanphone" size="41" styleId="prf_tanphone" > </h:text><br /></td>
+        		</tr>
+        		<tr>
+        			<td>Fax :</td>
+        			<td> <h:text property="prf_tanfax" size="41" styleId="prf_tanfax" > </h:text></td>
+        		</tr>
+        	</table>
+            </fieldset>
+           </td>
+           <td>
+            <fieldset>
+       		<legend>Customer Details</legend>
+       		<table>
+       			<tr>
+       				<td>Name:</td>
+       				<td><h:text property="prf_custname" size="41" styleId="prf_custname" ></h:text><br /></td>
+       			</tr>
+       			<tr>
+       				<td>Attn: </td>
+       				<td><h:text property="prf_custattn" size="41" styleId="prf_custattn" ></h:text><br /></td>
+       			</tr>
+       			<tr>
+       				<td>Addr:</td>
+       				<td><h:textarea property="prf_custaddr" cols="35" rows="4" styleId="prf_custaddr" > </h:textarea><br /></td>
+       			</tr>
+       			<tr>
+       				<td>Tele: </td>
+       				<td><h:text property="prf_custphone" size="41" styleId="prf_custphone" > </h:text><br /></td>
+       			</tr>
+       			<tr>
+       				<td>Fax :  </td>
+       				<td><h:text property="prf_custfax" size="41" styleId="prf_custfax" > </h:text>  </td>
+       			</tr>
+       		</table>
+      		</fieldset>
+           </td>
+        <tr>
+          	<td colspan="3">
           			<b>Response:</b> <span id="rsperror" style="color:red"></span> <br/>
              <table id="list"></table> 
 			 <div id="pager"></div> 
           	</td>
-          	</tr>
-          	<tr>
-            	<td>
-            		<fieldset>
-            			<legend>Delivery Details</legend><br/> 
-        						CDD: <h:text property="prf_cdd" styleId="prf_cdd" styleClass="prf_delivrydate" value="${editprfform[0].prf_cdd}"></h:text><br /> <br /> 
-       	 						ADD: <h:text property="prf_add" styleId="prf_add" styleClass="prf_delivrydate" value="${editprfform[0].prf_add}"></h:text><br /><br /> 
-       	 									
-         						Destination: <h:textarea property="prf_destination" rows="0" styleId="prf_destination"  value="${editprfform[0].prf_destination}"></h:textarea><br /><br /> 
-        						Terms : <h:select  property="prf_terms" styleId="prf_terms" value="${editprfform[0].prf_terms}">
-       		 								<h:option value="0">select Terms</h:option>
-          										<c:forEach items="${termsarray}" var ="termsList">
-          											<h:option value="${termsList.termname}">
-          			    								<c:out value="${termsList.termname}"></c:out>
-          											</h:option>  
-          										</c:forEach> 
-       		 					  		</h:select><br />
-      				</fieldset>
-      			</td>
-            	<td>
-            	<fieldset>
-            		<legend>Commission Details</legend>
-            			  Insurance:  <h:select property="prf_insurance" styleId="prf_insurance" value=""> <br /> 
-          														<h:option value="Consignee">By Consignee</h:option>     
-          														<h:option value="Shipper">By Shipper</h:option>      			    													         															
-       		 											</h:select><br /><br />
-            			 Payment:  <h:select property="prf_payment" styleId="prf_payment" >
-       		 													<h:option value="0">select Payment</h:option>
-          															<c:forEach items="${paymentarray}" var ="paymList">
-          																<h:option value="${paymList.paymentname}">
-          			    													<c:out value="${paymList.paymentname}"></c:out>
-          																</h:option>        		
-          															</c:forEach>
-       		 											  		</h:select><br /><br />
-       		 											  			
-        				elclass Commission : 
-        					<h:text property="prf_elclasscommission" styleId="prf_elclasscommission" value="${editprfform[0].prf_elclasscommission}"></h:text>
-        					<br /><br />
-        					<div id='TextBoxesGroup'>
-								<div id="TextBoxDiv1">
-   									 <label> Other Commission : </label><h:textarea property="prf_commission" styleId="prf_commission" value="${editprfform[0].prf_commission}" ></h:textarea> </div> 	   
-								</div>	
-							   		 														  					  		
-      			</fieldset>
-      			</td>
-            	<td><fieldset><legend>Special Condition</legend><br/> 
-        									Condtion 1: <h:textarea property="prf_special" cols="30" rows="5" styleId="prf_special" value="${editprfform[0].prf_special}"></h:textarea><br />        
-       	 									Inspection Cdn: <h:textarea property="prf_inspcdn" cols="30" rows="3" styleId="prf_inspcdn" value="${editprfform[0].prf_inspcdn}"></h:textarea><br />
-       	 										
-         			</fieldset></td>
-          	</tr>
-          	<tr>
-            	<td>&nbsp;</td>
-            	<td>&nbsp;</td>
-            	<td>&nbsp;</td>
-          	</tr>
-          	<tr>
-            	<td>
-            		<table width="263" border="0" cellspacing="0" cellpadding="0">
-                		<tr>
-                  			<td height="21"><fieldset>
-       											<legend>Consignee Details</legend><br/> 
-       													Name: <h:text property="prf_consigneename" styleId="prf_consigneename" ></h:text><br />        
-        												Attn: <h:text property="prf_consigneeattn" styleId="prf_consigneeattn" ></h:text><br />
-         												Address:<h:textarea property="prf_consigneeaddr" cols="30" rows="2" styleId="prf_consigneeaddr" ></h:textarea><br />
-        												Telephone : <h:text property="prf_consigneephone" styleId="prf_consigneephone" > </h:text><br />
-														Fax:  <h:text property="prf_consigneefax" styleId="prf_consigneefax" > </h:text>  <br />  
-      										</fieldset>
-                    		</td>
-                	   </tr>
-              		</table>
-              	</td>
-            	<td>
-            		<table width="263" border="0" cellspacing="0" cellpadding="0">
-              			<tr>
-                			<td height="21"><fieldset>
-       								<legend>Notify Details</legend><br/> 
-       													Name: <h:text property="prf_notifyname" styleId="prf_notifyname" ></h:text><br />        
-        												Attn: <h:text property="prf_notifyattn" styleId="prf_notifyattn" ></h:text><br />
-         												Address:<h:textarea property="prf_notifyaddr" cols="30" rows="2" styleId="prf_notifyaddr" ></h:textarea><br />
-        												Telephone : <h:text property="prf_notifyphone" styleId="prf_notifyphone" > </h:text><br />
-														Fax:  <h:text property="prf_notifyfax" styleId="prf_notifyfax" > </h:text>  <br />  
-      										</fieldset>
-                  			</td>
-              			</tr>
-            		</table>
-            	</td>
-            	<td>
-            		<table width="263" border="0" cellspacing="0" cellpadding="0">
-              			<tr>
-               				<td height="21"><fieldset>
-       							<legend>Bank Details</legend><br/> 
-       									Name: <h:text property="prf_bankname" styleId="prf_bankname" ></h:text><br />        
-        						 		Branch: <h:text property="prf_bankbranch" styleId="prf_bankbranch" ></h:text><br />
-         								Address:<h:textarea property="prf_bankaddr" cols="30" rows="2" styleId="prf_bankaddr" ></h:textarea><br />
-        								Telephone : <h:text property="prf_bankphone" styleId="prf_bankphone" > </h:text><br />
-										Fax:  <h:text property="prf_bankfax" styleId="prf_bankfax" > </h:text>  <br />  
-      							</fieldset>
-                  			</td>
-             			</tr>
-            		</table>
-            	</td> 
-          </tr>
-          <tr>
-            <!-- td>Running Since : <b:write name="datestarted" scope="application" format="MM/dd/yy"/> </td> -->
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-          </tr>
-          <tr>
-  				<td><h:submit  property="prfaction" styleId="Save" value="Save" styleClass="myPrintButton" ></h:submit></td>
-  				<!-- <a href="#" id="thelink">Clickme</a> -->
-  				<%-- <h:link href="#" property="insert">Click me</h:link> --%>
-  				<td><h:reset property="prfaction" styleId="Clear" value="Clear" styleClass="myPrintButton" ></h:reset></td>
-  				<td><h:submit property="prfaction" styleId="Print" value="Print" styleClass="myPrintButton" ></h:submit></td>
-  				<td><input type="button" id="Print" style="myPrintButton"></input></td>
-  			<td></td>
-          </tr>
-        </table>
-    </h:form>			
+        </tr>
+        <tr>
+            <td>
+            <fieldset>
+            <legend>Delivery Details</legend>
+            <table>
+            	<tr>
+            		<td>CDD : </td>
+            		<td><h:text property="prf_cdd" size="41" styleId="prf_cdd" styleClass="prf_delivrydate" value="${editprfform[0].prf_cdd}"></h:text><br /></td>
+            	</tr>
+            	<tr>
+            		<td>ADD :</td>
+            		<td><h:text property="prf_add" size="41" styleId="prf_add" styleClass="prf_delivrydate" value="${editprfform[0].prf_add}"></h:text><br /></td>
+            	</tr>
+            	<tr>
+            		<td>Desti:</td>
+            		<td><h:text property="prf_destination" styleId="prf_destination"  value="${editprfform[0].prf_destination}"></h:text><br/></td>
+            	</tr>
+            	<tr>
+            		<td>Terms: </td>
+            		<td><h:select  property="prf_terms" styleId="prf_terms" value="${editprfform[0].prf_terms}">
+       		 		   		<h:option value="0">select Terms</h:option>
+          			    	 <c:forEach items="${termsarray}" var ="termsList">
+          			      		<h:option value="${termsList.termname}">
+          			      		<c:out value="${termsList.termname}"></c:out>
+          			      		</h:option>  
+          			    	 </c:forEach> 
+       		 		  	  </h:select><br /></td>
+            	</tr>
+            	<tr>
+            		<td>Payment:</td>
+            		<td><h:select property="prf_payment" styleId="prf_payment" >
+       		 				<h:option value="0">select Payment</h:option>
+          					 <c:forEach items="${paymentarray}" var ="paymList">
+          				 		 <h:option value="${paymList.paymentname}">
+          			      		 <c:out value="${paymList.paymentname}"></c:out>
+          				  	</h:option>        		
+          				 	</c:forEach>
+       	  	  		  	  </h:select><br /></td>
+            	</tr>
+            	<tr>
+            		<td>Insurance: </td>
+            		<td><h:select property="prf_insurance" styleId="prf_insurance" value=""> <br /> 
+          	  			 	<h:option value="Consignee">By Consignee</h:option>     
+          				 	<h:option value="Shipper">By Shipper</h:option>      			    													         															
+       		 		  	 </h:select><br /></td>
+            	</tr>	
+            	<tr>
+            		<td>elclass Comm:</td>
+            		<td><h:text property="prf_elclasscommission" styleId="prf_elclasscommission" value="${editprfform[0].prf_elclasscommission}"></h:text><br /></td>
+            	</tr>
+            	<tr>
+            		<td>Other Comm: </td>
+            		<td>
+            			<div id='TextBoxesGroup'>
+						<div id="TextBoxDiv1">
+            				<h:textarea property="prf_commission" cols="30" rows="2"  styleId="prf_commission" value="${editprfform[0].prf_commission}" ></h:textarea>
+            		 	 </div> 	   
+						</div>	
+					</td>
+            	</tr>
+            </table>
+      		</fieldset>
+      		</td>
+            <td>
+      		<fieldset>
+            <legend>Inspection Condition</legend>     
+       	 		<h:textarea property="prf_inspcdn" cols="41" rows="17" styleId="prf_inspcdn" value="${editprfform[0].prf_inspcdn}"></h:textarea><br />									
+         	</fieldset>
+      		</td>
+            <td>
+            <fieldset>
+            <legend>Special Condition</legend>
+           		<h:textarea property="prf_special" cols="41" rows="17" styleId="prf_special" value="${editprfform[0].prf_special}"></h:textarea><br />        									
+         	</fieldset></td>
+        </tr>
+        <tr>
+           	<td>
+           	<fieldset>
+       		<legend>Consignee Details</legend>
+       		<table>
+       			<tr>
+       				<td>Name:</td>
+       				<td><h:text property="prf_consigneename" size="41" styleId="prf_consigneename" ></h:text></td>
+       			</tr>
+       			<tr>
+       				<td>Attn: </td>
+       				<td><h:text property="prf_consigneeattn" size="41" styleId="prf_consigneeattn" ></h:text></td>
+       			</tr>
+       			<tr>
+       				<td>Addr: </td>
+       				<td><h:textarea property="prf_consigneeaddr" cols="35" rows="4" styleId="prf_consigneeaddr" ></h:textarea></td>
+       			</tr>
+       			<tr>
+       				<td>Tele:</td>
+       				<td> <h:text property="prf_consigneephone" size="41" styleId="prf_consigneephone" > </h:text></td>
+       			</tr>
+       			<tr>
+       				<td>Fax :</td>
+       				<td> <h:text property="prf_consigneefax" size="41" styleId="prf_consigneefax" > </h:text></td>
+       			</tr>
+       		</table>
+      		</fieldset>
+            </td>
+        	<td>
+        	<fieldset>
+	       		<legend>Notify Details</legend>
+				<table>
+	       			<tr>
+	       				<td>Name:</td>
+	       				<td> <h:text property="prf_notifyname" size="41" styleId="prf_notifyname" ></h:text></td>
+	       			</tr>
+	       			<tr>
+	       				<td>Attn: </td>
+	       				<td><h:text property="prf_notifyattn" size="41" styleId="prf_notifyattn" ></h:text></td>
+	       			</tr>
+	       			<tr>
+	       				<td>Addr:</td>
+	       				<td><h:textarea property="prf_notifyaddr" cols="35" rows="4" styleId="prf_notifyaddr" > </h:textarea></td>
+	       			</tr>
+	       			<tr>
+	       				<td>Tele: </td>
+	       				<td><h:text property="prf_notifyphone" size="41" styleId="prf_notifyphone" > </h:text></td>
+	       			</tr>
+	       			<tr>
+	       				<td>Fax :</td>
+	       				<td> <h:text property="prf_notifyfax" size="41" styleId="prf_notifyfax" > </h:text> </td>
+	       			</tr>
+	       		</table> 
+      		</fieldset>
+            </td>
+            <td>
+            <fieldset>
+       		<legend>Bank Details</legend>
+			 <table>
+	       			<tr>
+	       				<td>Name :</td>
+	       				<td><h:text property="prf_bankname" size="41" styleId="prf_bankname" ></h:text></td>
+	       			</tr>
+	       			<tr>
+	       				<td>Branch : </td>
+	       				<td><h:text property="prf_bankbranch" size="41" styleId="prf_bankbranch" ></h:text></td>
+	       			</tr>
+	       			<tr>
+	       				<td>Addr :</td>
+	       				<td><h:textarea property="prf_bankaddr" cols="35" rows="4" styleId="prf_bankaddr" ></h:textarea></td>
+	       			</tr>
+	       			<tr>
+	       				<td>Tele :</td>
+	       				<td><h:text property="prf_bankphone" size="41" styleId="prf_bankphone" > </h:text></td>
+	       			</tr>
+	       			<tr>
+	       				<td>Fax  :</td>
+	       				<td><h:text property="prf_bankfax" size="41" styleId="prf_bankfax" > </h:text></td>
+	       			</tr>
+	       		 </table>  
+      		</fieldset>
+            </td>
+       <!--  <tr>
+            td>Running Since : <b:write name="datestarted" scope="application" format="MM/dd/yy"/> </td>
+        </tr> -->
+        <tr>
+  			<td><h:submit  property="prfaction" styleId="Save" value="Save" styleClass="myPrintButton" ></h:submit></td>
+  			<td><h:reset property="prfaction" styleId="Clear" value="Clear" styleClass="myPrintButton" ></h:reset></td>
+  			<td><h:submit property="prfaction" styleId="Print" value="Print" styleClass="myPrintButton" ></h:submit></td>
+        </tr>
+    </table>
+</h:form>			
 <!-- </div> -->					
 </body>
 </h:html>

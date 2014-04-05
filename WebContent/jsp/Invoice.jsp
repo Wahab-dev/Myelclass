@@ -16,6 +16,7 @@
 <script src="js/jquery-1.9.1.js"></script>
 <script src="js/jquery-ui.js"></script>
 <link rel="stylesheet" type="text/css" media="screen" href="css/ui-darkness/jquery-ui-1.10.1.custom.css" />
+<link rel="stylesheet" type="text/css" media="screen" href="css/jquerywidgetstyle.css" />
 <link rel="stylesheet" type="text/css" media="screen" href="css/ui.jqgrid.css" />
 
 <script src="js/i18n/grid.locale-en.js" type="text/javascript"></script>
@@ -83,7 +84,7 @@ $(function() {
    </div>
 
 <h:form action="/saveinvoice" styleId="saveinvoice">
-	<table style=" border: thin;">
+	<table>
    		<tr>  
   			 <td>Welcome <h:text property="userinsession" styleId="userinsession" value="${user.name}" readonly="true" ></h:text></td> 	
    			<td><h:text property="invactionform" styleId="invactionform" value="${invactionform}" readonly="true" ></h:text></td>
@@ -91,11 +92,14 @@ $(function() {
    		</tr>
    	</table> 
 	<table border="1" style="border: solid; padding: 0px; border-spacing: 0px;">
-	   <tr bordercolor="black"  >
+	   <tr>
    		  <td>
 		    <fieldset>         
-       		  <legend>Invoice Details</legend><br/> 
-       			  Type: <h:select property ="inv_invoicetype"  styleId="inv_invoicetype" value="${editinvform[0].inv_invoicetype }">
+       		  <legend>Invoice Details</legend>
+       		  <table>
+       		  	<tr>
+       		  		<td>Type: </td>
+       		  		<td><h:select property ="inv_invoicetype"  styleId="inv_invoicetype" value="${editinvform[0].inv_invoicetype }">
        			  		  <h:option value="0">Select Type</h:option>
    		 				  <h:option value="IC-L">IC-Local</h:option>
    		 				  <h:option value="IC-E">IC-Exports</h:option>
@@ -105,126 +109,273 @@ $(function() {
    		 				  <h:option value="O-L">Other-Tanner Local</h:option>
    		 				  <h:option value="IC-P">IC-PO</h:option>  
    		 				  <h:option value="IC-J">IC-JW</h:option>  
-       		    		</h:select><br/>     
-       		    		<div id="dv_invtype">
-       		    		</div>   
-   	 					 <br/> Invoice No: <h:text property="inv_invoiceno" styleId="inv_invoiceno" value="${editinvform[0].inv_invoiceno }"></h:text><br/>
-       					 <br/> Invoice Date:<h:text property="inv_invdate" styleId="inv_invdate" styleClass="dateclass" value="${editinvform[0].inv_invdate }"></h:text><br/>
-       					 <br/> Exporters Ref. : <h:text property="inv_expref" styleId="inv_expref" value="${editinvform[0].inv_expref }"> </h:text><br/>
-						 <br/> Other ref :  <h:text property="inv_otherref" styleId="inv_otherref" value="${editinvform[0].inv_otherref }"> </h:text>  <br/>  
+       		    		</h:select><br/>
+       		    	</td>
+       		  	</tr>
+       		  	<tr>
+       		  		<td>Invoice No: </td>
+       		  		<td><h:text property="inv_invoiceno" size="19" styleId="inv_invoiceno" value="${editinvform[0].inv_invoiceno }"></h:text><br/></td>
+       		  	</tr>
+       		  	<tr>
+       		  		<td>Invoice Date:</td>
+       		  		<td><h:text property="inv_invdate" styleId="inv_invdate" styleClass="dateclass" value="${editinvform[0].inv_invdate }"></h:text><br/></td>
+       		  	</tr>
+       		  	<tr>
+       		  		<td>Exporters Ref. : </td>
+       		  		<td><h:textarea property="inv_expref" styleId="inv_expref" cols="17"  rows="2" value="${editinvform[0].inv_expref }"> </h:textarea><br/></td>
+       		  	</tr>
+       		  	<tr>
+       		  		<td>Other ref :  </td>
+       		  		<td><h:textarea property="inv_otherref" styleId="inv_otherref" cols="17"  rows="2" value="${editinvform[0].inv_otherref }"> </h:textarea>  <br/></td>
+       		  	</tr>
+       		  </table>
    			</fieldset>
 		  </td>
-   			  <td width="250">
-   				  <fieldset>         
-       				  <legend>Exporter Details</legend><br/> 
-       					  Exporter: <h:text property="inv_exporter" styleId="inv_exporter" value="${editinvform[0].inv_exporter }"></h:text><br/>        
-   	 					 <br/> Attn: <h:text property="inv_exporterattn" styleId="inv_exporterattn" value="${editinvform[0].inv_exporterattn }"></h:text><br/>
-       					 <br/> Address: <h:textarea property="inv_exporteraddress" cols="15" rows="1" styleId="inv_exporteraddress" value="${editinvform[0].inv_exporteraddress }"></h:textarea><br/>
-       					 <br/> Telephone : <h:text property="inv_exportertele" styleId="inv_exportertele" value="${editinvform[0].inv_exportertele }"> </h:text><br/>
-						<br/> Fax :  <h:text property="inv_exporterfax" styleId="inv_exporterfax" value="${editinvform[0].inv_exporterfax }"> </h:text>  <br/>  
-       			  </fieldset>
-       		  </td>
-   			  <td width="250">
-   			  <div id="invnotify">
-   				  <fieldset>         
-       				  <legend>Notify Details</legend><br/> 
-       					  Notify: <h:text property="inv_notify" styleId="inv_notify" value="${editinvform[0].inv_notify }"></h:text><br/>        
-   	 					 <br/> Attn: <h:text property="inv_notifyattn" styleId="inv_notifyattn" value="${editinvform[0].inv_notifyattn }"></h:text><br/>
-       					 <br/> Address:<h:textarea property="inv_notifyaddress" cols="15" rows="1" styleId="inv_notifyaddress" value="${editinvform[0].inv_notifyaddress }"></h:textarea><br/>
-       					<br/>  Phone : <h:text property="inv_notifytele" styleId="inv_notifytele" value="${editinvform[0].inv_notifyfax }"> </h:text><br/>
-						 <br/> Fax :  <h:text property="inv_notifyfax" styleId="inv_notifyfax" value="${editinvform[0].inv_notifytele }"> </h:text>  <br/>  
-       			  </fieldset>
-       			  </div>
-   			  </td>
-   			  </tr>
-		  <tr style="border: solid;">
-   			  <td>
-				<div id="invbank">
-   				  <fieldset>         
-       				  <legend>Bank Details</legend><br/> 
-       					  Bank: <h:text property="inv_bank" styleId="inv_bank" value="${editinvform[0].inv_bank }"></h:text><br/>        
-   	 					  <br/>Branch: <h:text property="inv_bankbranch" styleId="inv_bankbranch" value="${editinvform[0].inv_bankbranch }"></h:text><br/>
-       					  <br/>Addr:<h:textarea property="inv_bankaddress" cols="15" rows="1" styleId="inv_bankaddress" style="align:center" value="${editinvform[0].inv_bankaddress }"></h:textarea><br/>
-       					  <br/>Swift Code: <h:text property="inv_bankswiftcode" styleId="inv_bankswiftcode" value="${editinvform[0].inv_bankswiftcode }"> </h:text><br/>
-       					  <br/>Acct No : <h:text property="inv_bankacno" styleId="inv_bankacno" value="${editinvform[0].inv_bankacno }"> </h:text><br/>
-       					  <br/>Phone : <h:text property="inv_banktele" styleId="inv_banktele" > </h:text><br/>
-						  <br/>fax :  <h:text property="inv_bankfax" styleId="inv_bankfax" > </h:text>  <br/>  
-       			  </fieldset>
+   	 	  <td>
+   			<fieldset>         
+       	    <legend>Exporter Details</legend>
+				<table>
+					<tr>
+						<td> Name: </td>
+						<td><h:text property="inv_exporter" styleId="inv_exporter" size="38" value="${editinvform[0].inv_exporter }"></h:text><br/></td>
+					</tr>
+					<tr>
+						<td>Attn: </td>
+						<td><h:text property="inv_exporterattn" size="38" styleId="inv_exporterattn" value="${editinvform[0].inv_exporterattn }"></h:text><br/></td>
+					</tr>
+					<tr>
+						<td>Addr: </td>
+						<td><h:textarea property="inv_exporteraddress" cols="30" rows="4" styleId="inv_exporteraddress" value="${editinvform[0].inv_exporteraddress }"></h:textarea><br/></td>
+					</tr>
+					<tr>
+						<td>Tele : </td>
+						<td><h:text property="inv_exportertele" size="38" styleId="inv_exportertele" value="${editinvform[0].inv_exportertele }"> </h:text><br/></td>
+					</tr>
+					<tr>
+						<td> Fax : </td>
+						<td> <h:text property="inv_exporterfax" size="38" styleId="inv_exporterfax" value="${editinvform[0].inv_exporterfax }"> </h:text>  <br/></td>
+					</tr>
+				</table>
+       		</fieldset>
+       	  </td>
+   		  <td>
+   		  <div>
+   			<fieldset>         
+       	    <legend>Notify Details</legend>
+       	    	<table>
+       	    		<tr>
+       	    			<td> Name: </td>
+       	    			<td><h:text property="inv_notify" size="38" styleId="inv_notify" value="${editinvform[0].inv_notify }"></h:text><br/></td>
+       	    		</tr>
+       	    		<tr>
+       	    			<td>Attn: </td>
+       	    			<td><h:text property="inv_notifyattn" size="38" styleId="inv_notifyattn" value="${editinvform[0].inv_notifyattn }"></h:text><br/></td>
+       	    		</tr>
+       	    		<tr>
+       	    			<td>Addr:</td>
+       	    			<td><h:textarea property="inv_notifyaddress" cols="30" rows="4" styleId="inv_notifyaddress" value="${editinvform[0].inv_notifyaddress }"></h:textarea><br/></td>
+       	    		</tr>
+       	    		<tr>
+       	    			<td>Tele :</td>
+       	    			<td><h:text property="inv_notifytele" size="38" styleId="inv_notifytele" value="${editinvform[0].inv_notifytele }"></h:text></tr>
+       	    		<tr>
+       	    			<td>Fax :</td>
+       	    			<td><h:text property="inv_notifyfax" size="38" styleId="inv_notifyfax" value="${editinvform[0].inv_notifyfax }"> </h:text>  <br/></td>
+       	    		</tr>
+       	    	</table>
+       		</fieldset>
+       	   </div>
+   		  </td>
+   	   </tr>
+	   <tr>
+   		  <td>
+		  <div>
+   		  <fieldset>         
+       	    <legend>Bank Details</legend>
+				<table>
+					<tr>
+						<td> Bank: </td>
+						<td><h:text property="inv_bank" size="38" styleId="inv_bank" value="${editinvform[0].inv_bank }"></h:text><br/></td>
+					</tr>
+					<tr>
+						<td>Branch: </td>
+						<td><h:text property="inv_bankbranch" size="38"  styleId="inv_bankbranch" value="${editinvform[0].inv_bankbranch }"></h:text><br/></td>
+					</tr>
+					<tr>
+						<td>Addr:</td>
+						<td><h:textarea property="inv_bankaddress" cols="30" rows="4" styleId="inv_bankaddress" style="align:center" value="${editinvform[0].inv_bankaddress }"></h:textarea><br/></td>
+					</tr>
+					<tr>
+						<td>Swift Code: </td>
+						<td><h:text property="inv_bankswiftcode" size="38" styleId="inv_bankswiftcode" value="${editinvform[0].inv_bankswiftcode }"> </h:text><br/></td>
+					</tr>
+					<tr>
+						<td>Phone : </td>
+						<td><h:text property="inv_banktele" size="38" styleId="inv_banktele" > </h:text><br/></td>
+					</tr>
+					<tr>
+						<td>fax :  </td>
+						<td><h:text property="inv_bankfax" size="38" styleId="inv_bankfax" > </h:text>  <br/></td>
+					</tr>
+				</table>
+       		   </fieldset>
        			</div>
        		  </td>
    			  <td>
    			      <fieldset>         
-       				  <legend>Dispatch Details</legend><br/> 
-       					  COG: <h:text property="inv_ctryoforigngoods" styleId="inv_ctryoforigngoods" value="${editinvform[0].inv_ctryoforigngoods }"></h:text><br/>
-       					  <br/>LoadingPort: <h:text property="inv_loadingport" styleId="inv_loadingport" value="${editinvform[0].inv_loadingport }"></h:text><br/> 
-						  <br/>COF: <h:text property="inv_ctryoffinaldesti" styleId="inv_ctryoffinaldesti" value="${editinvform[0].inv_ctryoffinaldesti }"></h:text><br/> 
-   	 					  <br/>Destination: <h:text property="inv_finaldesti" styleId="inv_finaldesti" styleClass="autocmplet" value="${editinvform[0].inv_finaldesti }"></h:text><br/>
-       					  <br/>Dischargeport: <h:text property="inv_dischargeport" styleId="inv_dischargeport" styleClass="autocmplet" value="${editinvform[0].inv_dischargeport }"></h:text><br/> 
-       					  <br/>Vessel No  : <h:text property="inv_vesselno" styleId="inv_vesselno" value="${editinvform[0].inv_vesselno }"></h:text><br/>      
-       					  <br/>AW/Bill Date: <h:text property="inv_awbilldate" styleId="inv_awbilldate" styleClass="dateclass" value="${editinvform[0].inv_awbilldate }"> </h:text><br/>
-						  <br/>AW/Bill No :  <h:text property="inv_awbillno" styleId="inv_awbillno" value="${editinvform[0].inv_awbillno }"> </h:text>  <br/>  
+       				  <legend>Dispatch Details</legend>
+       				  <table>
+       				  	<tr>
+       				  		<td>Origin: </td>
+       				  		<td> <h:text property="inv_ctryoforigngoods" size="25" styleId="inv_ctryoforigngoods" value="${editinvform[0].inv_ctryoforigngoods }"></h:text><br/></td>
+       				  	</tr>
+       				  	<tr>
+       				  		<td>LoadingPort: </td>
+       				  		<td><h:text property="inv_loadingport" size="25" styleId="inv_loadingport" value="${editinvform[0].inv_loadingport }"></h:text><br/></td>
+       				  	</tr>
+       				  	<tr>
+       				  		<td>Country-Destn: </td>
+       				  		<td><h:text property="inv_ctryoffinaldesti" size="25" styleId="inv_ctryoffinaldesti" value="${editinvform[0].inv_ctryoffinaldesti }"></h:text><br/></td>
+       				  	</tr>
+       				  	<tr>
+       				  		<td>Destn: </td>
+       				  		<td><h:text property="inv_finaldesti" size="25" styleId="inv_finaldesti" styleClass="autocmplet" value="${editinvform[0].inv_finaldesti }"></h:text><br/></td>
+       				  	</tr>
+       				  	<tr>
+       				  		<td>Port: </td>
+       				  		<td><h:text property="inv_dischargeport" size="25" styleId="inv_dischargeport" styleClass="autocmplet" value="${editinvform[0].inv_dischargeport }"></h:text><br/></td>
+       				  	</tr>
+       				  	<tr>
+       				  		<td>Vessel No  : </td>
+       				  		<td><h:text property="inv_vesselno" size="25" styleId="inv_vesselno" value="${editinvform[0].inv_vesselno }"></h:text><br/></td>
+       				  	</tr>
+       				  	<tr>
+       				  		<td>AW/Bill No :  </td>
+       				  		<td><h:text property="inv_awbillno" size="25" styleId="inv_awbillno" value="${editinvform[0].inv_awbillno }"> </h:text>  <br/></td>
+       				  	</tr>
+       				  	<tr>
+       				  		<td>AW/Bill Date:</td>
+       				  		<td><h:text property="inv_awbilldate" styleId="inv_awbilldate" styleClass="dateclass" value="${editinvform[0].inv_awbilldate }"> </h:text><br/></td>
+       				  	</tr> 	
+       				  </table>
        			  </fieldset>    				  			
    			  </td>
-   			  <td width="250">
+   			  <td>
    				  <fieldset>         
-       				  <legend>Other Details</legend><br/> 
-       				  	  Pre Carriage By: <h:text property="inv_precarriageby" styleId="inv_precarriageby" value="${editinvform[0].inv_precarriageby }"></h:text><br/>
-       					  Place of Reciept: <h:text property="inv_precarriageby" styleId="inv_precarriageby" value="${editinvform[0].inv_placeofreciept }"></h:text><br/> 						
-   						  Gross Wt: <h:text property="inv_grosswt" styleId="inv_grosswt" value="${editinvform[0].inv_grosswt }"></h:text><br/>
-       					  <br/>Dimension: <h:text property="inv_dimension" styleId="inv_dimension" value="${editinvform[0].inv_dimension }"></h:text><br/> 
-						  <br/> Marks: <h:text property="inv_marksno" styleId="inv_marksno" value="${editinvform[0].inv_marksno }"></h:text><br/>
-   	 					  <br/> No Of packages: <h:text property="inv_noofpackages" styleId="inv_noofpackages" value="${editinvform[0].inv_noofpackages }"></h:text><br/>
-       					  <br/>Pack No:<h:text property="inv_packno" styleId="inv_packno" value="${editinvform[0].inv_packno }"></h:text><br/>
-       					  <br/>Net Wt: <h:text property="inv_netwt" styleId="inv_netwt" value="${editinvform[0].inv_netwt }"></h:text><br/> 
+       				  <legend>Other Details</legend>
+					<table>
+						<tr>
+							<td>Pre Carriage By: </td>
+							<td><h:text property="inv_precarriageby" size="25" styleId="inv_precarriageby" value="${editinvform[0].inv_precarriageby }"></h:text><br/></td>
+						</tr>
+						<tr>
+							<td>Place of Reciept: </td>
+							<td> <h:text property="inv_precarriageby" size="25" styleId="inv_precarriageby" value="${editinvform[0].inv_placeofreciept }"></h:text><br/></td>
+						</tr>
+						<tr>
+							<td> Gross Wt: </td>
+							<td><h:text property="inv_grosswt" size="25" styleId="inv_grosswt" value="${editinvform[0].inv_grosswt }"></h:text><br/></td>
+						</tr>
+						<tr>
+							<td>Dimension: </td>
+							<td><h:text property="inv_dimension" size="25" styleId="inv_dimension" value="${editinvform[0].inv_dimension }"></h:text><br/></td>
+						</tr>
+						<tr>
+							<td>Marks: </td>
+							<td> <h:text property="inv_marksno" size="25" styleId="inv_marksno" value="${editinvform[0].inv_marksno }"></h:text><br/></td>
+						</tr>
+						<tr>
+							<td>No Of packages: </td>
+							<td><h:text property="inv_noofpackages" size="25" styleId="inv_noofpackages" value="${editinvform[0].inv_noofpackages }"></h:text><br/></td>
+						</tr>
+						<tr>
+							<td>Pack No:</td>
+							<td><h:text property="inv_packno" size="25" styleId="inv_packno" value="${editinvform[0].inv_packno }"></h:text><br/></td>
+						</tr>
+						<tr>
+							<td>Net Wt: </td>
+							<td><h:text property="inv_netwt" size="25" styleId="inv_netwt" value="${editinvform[0].inv_netwt }"></h:text><br/></td>
+						</tr>
+					</table>
 				  </fieldset>  
 			</td>
-			
-		</tr>
-		<tr style="border: solid;">		  
-		    <td width="250">
+	   </tr>
+	   <tr>		  
+		  <td>
 			   <fieldset>         
        			  <legend>Customer Details</legend>
-       			   <br/>Include Sample:<h:select property ="inv_includeSample"  styleId="inv_includeSample" > 
-       				 						<h:option value="ct" >No</h:option>
-       				 						<h:option value="sample" >yes</h:option>
-       				 					</h:select><br/>
-   					 <br/>Customer Name: <h:text property="inv_customer" styleId="inv_customer" value="${editinvform[0].inv_customer }"></h:text><br/>
-       				 <br/>Attn: 	<h:text property="inv_custattn" styleId="inv_custattn" value="${editinvform[0].inv_custattn }"></h:text><br/> 
-					 <br/> Address: <h:textarea property="inv_custaddr" cols="15" rows="1" styleId="inv_custaddr" value="${editinvform[0].inv_custaddr }"></h:textarea><br/>
-   	 				 <br/>Telephone:<h:text property="inv_custtele" styleId="inv_custtele" value="${editinvform[0].inv_custtele }"></h:text><br/>
-       				 <br/>Fax:	    <h:text property="inv_custfax" styleId="inv_custfax" value="${editinvform[0].inv_custfax }"></h:text><br/>
-       				 <br/>ID:	    <h:text property="inv_custid" styleId="inv_custid" value="${editinvform[0].inv_custid }"></h:text><br/>	
-       					
-			   </fieldset>
+       			  <table>
+       			  	<tr>
+       			  		<td>Include Sample:</td>
+       			  		<td><h:select property ="inv_includeSample"  styleId="inv_includeSample" > 
+       				 			<h:option value="ct" >No</h:option>
+       				 			<h:option value="sample" >yes</h:option>
+       				 		</h:select><br/>
+       				 	</td>
+       			  	</tr>
+       			  	<tr>
+       			  		<td>Customer Name: </td>
+       			  		<td><h:text property="inv_customer" size="38" styleId="inv_customer" value="${editinvform[0].inv_customer }"></h:text><br/></td>
+       			  	</tr>
+       			  	<tr>
+       			  		<td>Attn: </td>
+       			  		<td><h:text property="inv_custattn" size="38" styleId="inv_custattn" value="${editinvform[0].inv_custattn }"></h:text><br/></td>
+       			  	</tr>
+       			  	<tr>
+       			  		<td>Address: </td>
+       			  		<td><h:textarea property="inv_custaddr" cols="30" rows="4" styleId="inv_custaddr" value="${editinvform[0].inv_custaddr }"></h:textarea><br/></td>
+       			  	</tr>
+       			  	<tr>
+       			  		<td>Telephone:</td>
+       			  		<td><h:text property="inv_custtele" size="38" styleId="inv_custtele" value="${editinvform[0].inv_custtele }"></h:text><br/></td>
+       			  	</tr>
+       			  	<tr>
+       			  		<td>Fax: </td>
+       			  		<td><h:text property="inv_custfax" size="38" styleId="inv_custfax" value="${editinvform[0].inv_custfax }"></h:text><br/></td>
+       			  	</tr>
+       			  	<tr>
+       			  		<td>ID:	</td>
+       			  		<td><h:text property="inv_custid" size="38" styleId="inv_custid" value="${editinvform[0].inv_custid }"></h:text><br/></td>
+       			  	</tr>
+       			  </table>
+       			 </fieldset>
 			</td>
-   			<td colspan="3">
+   			<td colspan="2">
            	    <table id="tbl_invListCustomerContract" > </table>   
-           		<div id="tbl_invpager"></div> 
-           		<!-- <table id="tbl_invListCustomerSample" > </table>   
-           		<div id="tbl_invsamplepager"></div>  -->             	 
+           		<div id="tbl_invpager"></div>     	 
            	</td>	      	  
+		
 		<tr>
-  			<td colspan="4">&nbsp;</td>
-	    </tr>
-		<tr>
-		  <td colspan="4">
+		  <td colspan="3">
 		     	<table id="tbl_invaddinvBill"></table>
 		        <div id="tbl_invbillpager"></div>
 		  </td>  
 		</tr>
+		
 		<tr>
-  			<td colspan="4">&nbsp;</td>
-	    </tr>
-		<tr>
-   			<td colspan="4"> 
+   			<td colspan="3"> 
 				<table id="invBill"></table>
 		      	<div id="invbillpager"></div>
 			</td> 
 		<tr>	   
-			<td colspan="4"> 
+			<td colspan="3"> 
 				<fieldset>         
        				<legend>Other Charges</legend>
-				  	Deduction: <h:text property="inv_discount" styleId="inv_discount" value="${editinvform[0].inv_deduction }"> </h:text>
+       				<table>
+       					<tr>
+       						<td>Deduction: </td>
+       						<td><h:text property="inv_discount" size="15" styleId="inv_discount" value="${editinvform[0].inv_deduction }"> </h:text></td>
+       					</tr>
+       					<tr>
+       						<td>Other Charges : </td>
+       						<td> <h:text property="othercharges" size="15" styleId="othercharges" value="${editinvform[0].inv_courierchrgs }"> </h:text>  <br/></td>
+       					</tr>
+       					<tr>
+       						<td>Total Amount :  </td>
+       						<td><h:text property="inv_total" size="15" styleId="inv_total" value="${editinvform[0].inv_amount }"> </h:text>  <br/></td>
+       					</tr>
+       				</table>
+				  	
 				  	<%-- <div id="localsalesradio">	
 				  		<br/><h:radio property="inv_vatcst" value="2" styleId="inv_cst" onclick="alert(document.getElementById('inv_cst').value)">CST</h:radio>
 				  		<h:radio property="inv_vatcst" value="5" styleId="inv_vat" onclick="alert(document.getElementById('inv_vat').value)">VAT</h:radio>
@@ -233,17 +384,13 @@ $(function() {
 				  	<br/>Discount: <h:radio property="inv_discount" value="discount" styleId="inv_discount">
 				  	Deduction:</h:radio><h:radio property="inv_deduction" value="deduct" styleId="inv_deduction"></h:radio>
 				  --%>
-					<br/>Other Charges :  <h:text property="othercharges" styleId="othercharges" value="${editinvform[0].inv_courierchrgs }"> </h:text>  <br/>
-					<br/>Total Amount :  <h:text property="inv_total" styleId="inv_total" value="${editinvform[0].inv_amount }"> </h:text>  <br/>
 				</fieldset>	
 			</td>
 		</tr> 
-        <tr>
-	    <tr style="border: solid;"> 
- 			<td colspan="4">
-		    	  <h:submit property="invaction" value="Save"></h:submit>
-		    	  <h:reset property="invaction" value="Clear"></h:reset>
-			</td>  		
+	    <tr> 
+		   <td><h:submit property="invaction" value="Save" styleClass="myPrintButton"></h:submit></td>
+		   <td><h:reset property="invaction" value="Clear" styleClass="myPrintButton"></h:reset></td>
+		   <td><h:submit property="invaction" value="Print" styleClass="myPrintButton"></h:submit></td>  		
    		</tr>
 	  </table>
 	</h:form>

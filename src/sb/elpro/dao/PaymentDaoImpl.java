@@ -18,6 +18,7 @@ import sb.elpro.model.ArticleDetails;
 import sb.elpro.model.DebitFormDetails;
 import sb.elpro.model.PaymentBean;
 import sb.elpro.utility.DBConnection;
+import sb.elpro.utility.DateConversion;
 
 /**
  * @author Wahab
@@ -125,6 +126,56 @@ public class PaymentDaoImpl implements PaymentDao {
 		 pst.close();
    }	
 		return isSaved;
+	}
+
+	/* (non-Javadoc)
+	 * @see sb.elpro.dao.PaymentDao#getPaymentTrackList()
+	 */
+	@Override
+	public ArrayList<PaymentBean> getPaymentTrackList()
+			throws SQLException {
+		ArrayList<PaymentBean> paytrackarray = new ArrayList<PaymentBean>();			
+		Connection con = null;
+		Statement st = null;
+		ResultSet rs = null;			
+		try{			
+			con = DBConnection.getConnection();
+			st = (Statement) con.createStatement();
+			String sql = "SELECT paymentid, paymentno, paymentdate, exporter, cheqdetails, debno, debdate, quantity, invamt, elclassamt, total, tax, tds, due, creditedamt, balance, reciptdate, comments, status FROM tbl_paymentform  order by paymentno;";
+			rs = st.executeQuery(sql);
+			while(rs.next()) {	
+			PaymentBean debtrackbean = new PaymentBean();
+				debtrackbean.setPaymentid(rs.getString("paymentid"));
+				debtrackbean.setPaymentdate(DateConversion.ConverttoNormalDate(rs.getString("paymentdate")));
+				debtrackbean.setPaymentno(rs.getString("paymentno"));
+				debtrackbean.setDeb_exporter(rs.getString("exporter"));
+				debtrackbean.setChequedetails(rs.getString("cheqdetails"));
+				debtrackbean.setDeb_debitno(rs.getString("debno"));
+				debtrackbean.setDeb_debitdate(DateConversion.ConverttoNormalDate(rs.getString("debdate")));
+				debtrackbean.setDeb_qshipped(rs.getString("quantity"));
+				debtrackbean.setDeb_invoiceamt(rs.getString("invamt"));
+				debtrackbean.setDeb_elclassamt(rs.getString("elclassamt"));
+				debtrackbean.setDeb_total(rs.getString("total"));
+				debtrackbean.setDeb_tax(rs.getString("tax"));
+				debtrackbean.setDeb_tds(rs.getString("tds"));
+				debtrackbean.setDeb_due(rs.getString("due"));
+				debtrackbean.setCreditamt(rs.getString("creditedamt"));
+				debtrackbean.setBalanceamt(rs.getString("balance"));
+				debtrackbean.setRecieptdate(rs.getString("reciptdate"));
+				debtrackbean.setOtherdetails(rs.getString("comments"));
+				//debtrackbean.set(rs.getString("status"));				
+			 System.out.println("debitno"+debtrackbean.getDeb_debitno());
+			 paytrackarray.add(debtrackbean);
+			}
+		}catch(Exception e){
+			System.out.println("ERROR RESULT");
+			e.printStackTrace();
+		}finally{
+			 con.close() ;
+			 st.close();
+			 rs.close();
+	   }			
+		return paytrackarray;
 	}
 
 }

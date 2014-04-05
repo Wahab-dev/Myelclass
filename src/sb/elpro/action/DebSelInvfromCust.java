@@ -20,8 +20,6 @@ import org.apache.struts.action.ActionMapping;
 import sb.elpro.bo.DebitBo;
 import sb.elpro.bo.DebitBoImpl;
 import sb.elpro.model.InvBillDetails;
-import sb.elpro.model.RaiseDebit;
-
 /**
  * @author Wahab
  *

@@ -34,4 +34,12 @@ public interface PaymentDao {
 	 */
 	boolean savePaymentFormDetails(PaymentBean paymntformbean)throws SQLException;
 
+	/**  
+	 * (Method description)
+	 * @param
+	 * @return
+	 * etc
+	 */
+	ArrayList<PaymentBean> getPaymentTrackList()throws SQLException;
+
 }

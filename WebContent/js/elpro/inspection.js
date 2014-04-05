@@ -347,10 +347,10 @@ $(document).ready(function() {
 rejgrid.jqGrid({  
 	url:"",   
 	datatype:"json",
-	colNames:[ 'Arttype', 'id', 'RejectID ', 'Color ', 'Substance','Size','Selec','Color','Org','Other','Tot Rejects','Tot Passed', 'Tot Inspected'],  
+	colNames:[ 'Leather Type', 'id', 'RejectID ', 'Color ', 'Substance','Size','Selec','Color','Org','Other','Tot Rejects','Tot Passed', 'Tot Inspected'],  
     colModel:[ 
 		{name:'arttype', index:'arttype', align:'center', width:120, editable:true, sortable: true, hidden: false, 
-			edittype: 'select', editoptions: {value: {H:'Hides',S:'Sides',Skin:'Skins'}},
+			edittype: 'select', editoptions: {value: {H:'Hides',S:'Sides',HS:'H/S',A4:'A4 swatches'}},
 		},
 		{name:'id', index:'id', align:'center', width:120, editable:true, sortable: true,  hidden: true, 
 	
@@ -386,6 +386,7 @@ rejgrid.jqGrid({
 						var totpasses = 0;
 						
 						var totinsp = parseInt ($("#rjtotinspected").val());
+						alert(totinsp);
 						var subrej = parseInt ($("#subsrejects").val());
 						var sizerej = parseInt ($("#sizerejects").val());
 						var selecrej = parseInt ($("#selecrejects").val());
@@ -393,8 +394,10 @@ rejgrid.jqGrid({
 						var orgrej =  parseInt ($("#orgrejects").val());
 						var otherrej = parseInt ($("#otherrejects").val());
 						
-						totrej =  (subrej + sizerej + selecrej + colorrej + orgrej + otherrej);
+						totrej =  parseInt(subrej + sizerej + selecrej + colorrej + orgrej + otherrej);
+						alert(totrej);
 						totpasses = parseInt (totinsp - totrej);
+						alert(totpasses);
 						
 						$("#totrejects").val(totrej);
 						$("#totpassed").val(totpasses);
@@ -435,13 +438,14 @@ rejgrid.jqGrid({
     sortorder: 'desc',  
     emptyrecords: 'No records to display',
     footerrow : true,
+    altRows: true,
     loadComplete:  function (){
     	var $self = $(this);
     	 sumtotinsp = $self.jqGrid("getCol", "rjtotinspected", false, "sum");
     	 sumtotpass = $self.jqGrid("getCol", "totpassed", false, "sum");    	
     	 sumtotrej = $self.jqGrid("getCol", "totrejects", false, "sum");
 
-    		$self.jqGrid("footerData", "set", {rjtotinspected: sumtotinsp});
+    		$self.jqGrid("footerData", "set", {arttype:"Total:", rjtotinspected: sumtotinsp});
     		$self.jqGrid("footerData", "set", {totpassed: sumtotpass});
     		$self.jqGrid("footerData", "set", {totrejects: sumtotrej});
 

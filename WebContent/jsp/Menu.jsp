@@ -39,8 +39,9 @@ $(function() {
             <li> <h:link action='/loadSrf' scope="request">SrfScreen</h:link></li>
             <li> <h:link action='/gotoSampleTracking'>Sample Tacking</h:link></li>
             <li> <h:link action='/gotoSampleInvoice'>Sample Invoice Screen</h:link></li>
-              <li> <h:link action='/sit'>Sample Invoice Tracking</h:link></li>
-             <li> <h:link action='/gotoSampleDebit'>Sample Debit</h:link></li>
+            <li> <h:link action='/sit'>Sample Invoice Tracking</h:link></li>
+            <li> <h:link action='/gotoSampleDebit'>Sample Debit</h:link></li>
+            <li> <h:link action='/sm'>Sample Master Tracking</h:link></li>
         </ul>
     </li>
     <li><h3>Contracts</h3>
@@ -54,6 +55,7 @@ $(function() {
             <li><h:link action='/gotodebit'>Debit Screen</h:link></li>
             <li><h:link action='/gotodebittracking'>Debit Tacking</h:link></li>
             <li><h:link action='/gotopayment'>Payment Screen</h:link></li>
+            <li><h:link action='/pt'>Payment Tracking</h:link></li>
             <li><h:link action='/gotoMasterTracking'>Master Tacking</h:link></li>
         </ul>
     </li>
@@ -63,21 +65,5 @@ $(function() {
         </ul>
     </li>
 </ul>
-	
-	
-<%--Go to Prf Screen <h:link action="/LoadPrf" scope="request">PrfScreen</h:link><br /><br />
-	Go to Srf Screen <h:link action='/loadSrf' scope="request">SrfScreen</h:link><br /><br />
-	Go to Invoice Screen <h:link action='/gotoinvoice'>invoice Screen</h:link><br /><br />
-	Go to Inspection Screen <h:link action='/loadInspection'>Inspection Screen</h:link><br /><br />
-	Go to Debit Screen <h:link action='/gotodebit'>Debit Screen</h:link><br /><br />
-	Go to Debit Tracking <h:link action='/gotodebittracking'>Debit Tacking</h:link><br /><br />
-	Go to Payment Screen <h:link action='/gotopayment'>Payment Screen</h:link><br /><br />
-	Go to Bulk Trackig <h:link action='/gotoBulkTracking'>Bulk Tacking</h:link><br /><br />
-	Go to Sample Trackig <h:link action='/gotoSampleTracking'>Sample Tacking</h:link><br /><br />
-	Go to Inspection Trackig <h:link action='/gotoInspectionTracking'>Inspection Tacking</h:link><br /><br />
-	Go to Master Trackig <h:link action='/gotoMasterTracking'>Master Tacking</h:link><br /><br />
-	Go to User input Settings <h:link action='/gotoUserInput'>User Input Settingss</h:link><br /><br />
-	Go to Sample Invoice Screen <h:link action='/gotoSampleInvoice'>Sample Invoice Screen</h:link><br /><br /> --%>
-
 </body>
 </html>
