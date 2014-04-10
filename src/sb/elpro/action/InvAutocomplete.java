@@ -28,6 +28,8 @@ import sb.elpro.model.CustomerDetails;
 import sb.elpro.model.DestinationDetails;
 import sb.elpro.model.ExporterDetails;
 import sb.elpro.model.NotifyConsigneeDetails;
+import sb.elpro.model.PaymentDetails;
+import sb.elpro.model.TermsDetails;
 
 /**
  * @author Wahab
@@ -117,8 +119,8 @@ public class InvAutocomplete extends Action {
 					String invtype = request.getParameter("term");
 					String invtypelist =  invbo.getInvoiceNo(invtype);
 					if(invtypelist.isEmpty()){
-						//Check for null and filter i                                                  
-					}else{
+						//Check for null and filter i                                                   
+					}else{ 
 						System.out.println(invtypelist);
 						out.println(invtypelist);
 					}
@@ -132,6 +134,22 @@ public class InvAutocomplete extends Action {
 						System.out.println(saminvtypelist);
 						out.println(saminvtypelist);
 					}
+				}else if (action.equalsIgnoreCase("terms")){
+					System.out.println("In terms Autocomplete");
+					String term = request.getParameter("term");
+					List<TermsDetails> termlist =  invbo.getInvTermList(term);
+					System.out.println("List Value " +termlist.size());
+					JSONArray jsonOrdertanArray = JSONArray.fromObject(termlist);
+					System.out.println(jsonOrdertanArray);
+					out.println(jsonOrdertanArray);
+				}else if (action.equalsIgnoreCase("payment")){
+					System.out.println("In payment Autocomplete");
+					String term = request.getParameter("term");
+					List<PaymentDetails> termlist =  invbo.getPayTermList(term);
+					System.out.println("List Value " +termlist.size());
+					JSONArray jsonOrdertanArray = JSONArray.fromObject(termlist);
+					System.out.println(jsonOrdertanArray);
+					out.println(jsonOrdertanArray);
 				}else{
 					/*
 					 * Failed All Condition

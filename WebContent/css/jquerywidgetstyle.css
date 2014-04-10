@@ -6,6 +6,8 @@
  * Created : 19.03.14
  */
  
+ #ui-datepicker-div { font-size: 11px; } 
+ 
  /*  set accodion width
 	#accordionwidth {
 		width: 350px;

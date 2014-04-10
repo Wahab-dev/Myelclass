@@ -285,6 +285,18 @@ public class PrfBoImpl implements PrfBo {
 		return isUpdatePrf;
 	}
 
+	/* (non-Javadoc)
+	 * @see sb.elpro.bo.PrfBo#getPoJWno()
+	 */
+	@Override
+	public String getPoJWno() throws Exception {
+		String maxpojwno = prfdao.getPoJwno();
+		if(maxpojwno.isEmpty() || maxpojwno.equalsIgnoreCase("Null")){
+			maxpojwno = "PO001/14-15";
+		}		
+		return maxpojwno;
+	}
+
 
 
 	

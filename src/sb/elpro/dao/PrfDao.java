@@ -116,6 +116,14 @@ public interface PrfDao {
 	 */
 	boolean updatePrfForm(ProductDetails prfbean) throws SQLException;
 
+	/**  
+	 * (Method description)
+	 * @param
+	 * @return
+	 * etc
+	 */
+	String getPoJwno()throws SQLException;
+
 
 
 	

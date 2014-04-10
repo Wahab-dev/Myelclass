@@ -1244,6 +1244,40 @@ public class PrfDaoImpl implements PrfDao {
 		return isUpdated;
 	}
 
+	/* (non-Javadoc)
+	 * @see sb.elpro.dao.PrfDao#getPoJwno()
+	 */
+	@Override
+	public String getPoJwno() throws SQLException {
+		Connection con = null;
+		Statement st = null;
+		ResultSet rs = null;	
+		String debit = null;
+		try{			
+			con = DBConnection.getConnection();
+			st = (Statement) con.createStatement();
+			String sql = "SELECT max(pojwno) as pojwno FROM elpro.tbl_pojw";
+			rs = st.executeQuery(sql);
+			while(rs.next()) {	
+				String debitno = rs.getString("pojwno").trim();
+				int iprefix = debitno.indexOf('/');
+				String debitnoi = debitno.substring(2, iprefix);
+				int ideit = Integer.parseInt(debitnoi)+1;
+				System.out.println(" pojwno val "+ ideit);
+				debit = "PO"+ideit+"/14-15";
+				System.out.println("pojwno "+debit);	
+			}
+		}catch(Exception e){
+			System.out.println("Result ERROR RESULT");
+			e.printStackTrace();
+		}finally{
+			 con.close() ;
+			 st.close();
+			 rs.close();
+	   }			
+		return debit;
+	}
+
 	
 
 	

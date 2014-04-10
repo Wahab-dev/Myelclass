@@ -969,6 +969,33 @@ $(document).ready(function() {
 				 });
 			 }
 		});
+		$('#inv_terms').autocomplete({
+			 source: function(request, response) {
+				var param = request.term;  
+				$.getJSON("/Myelclass/InvAutocomplete.do?term="+param+"&action="+"terms",
+					function(result) { 	
+				       response($.map(result, function(item) {
+				           return { 
+				              value: item.termname,
+				              };
+				        }));//END response
+				 });
+			 }
+		});
+		$('#inv_payment').autocomplete({
+			 source: function(request, response) {
+				var param = request.term;  
+				$.getJSON("/Myelclass/InvAutocomplete.do?term="+param+"&action="+"payment",
+					function(result) { 	
+				       response($.map(result, function(item) {
+				           return { 
+				              value: item.paymentname,
+				              };
+				        }));//END response
+				 });
+			 }
+		});
+		
 		/*$('#inv_dischargeport').autocomplete({
 			 source: function(request, response) {
 				var param = request.term;  

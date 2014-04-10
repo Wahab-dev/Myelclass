@@ -54,17 +54,24 @@ public class NumberToWords {
 
 	  private static String convertLessThanOneThousand(int number) {
 	    String soFar;
-
+	    
 	    if (number % 100 < 20){
 	      soFar = numNames[number % 100];
+	      System.out.println("soFar "+soFar);
 	      number /= 100;
+	      System.out.println("number in convertLessThanOneThousand "+number);
 	    }
 	    else {
 	      soFar = numNames[number % 10];
+	      System.out.println("soFar "+soFar);
 	      number /= 10;
-
+	      System.out.println("number in convertLessThanOneThousand "+number);
+	      
+	      
 	      soFar = tensNames[number % 10] + soFar;
+	      System.out.println("soFar "+soFar);
 	      number /= 10;
+	      System.out.println("number in convertLessThanOneThousand "+number);
 	    }
 	    if (number == 0) return soFar;
 	    return numNames[number] + " hundred" + soFar;
@@ -76,21 +83,24 @@ public class NumberToWords {
 	    if (number == 0) { return "zero"; }
 
 	    String snumber = Long.toString(number);
-
+	    System.out.println("snumber"+snumber);
 	    // pad with "0"
 	    String mask = "000000000000";
 	    DecimalFormat df = new DecimalFormat(mask);
 	    snumber = df.format(number);
-
+	    System.out.println("snumber df.format"+snumber);
 	    // XXXnnnnnnnnn
 	    int billions = Integer.parseInt(snumber.substring(0,3));
+	    System.out.println("billions"+billions);
 	    // nnnXXXnnnnnn
 	    int millions  = Integer.parseInt(snumber.substring(3,6));
+	    System.out.println("millions"+millions);
 	    // nnnnnnXXXnnn
 	    int hundredThousands = Integer.parseInt(snumber.substring(6,9));
+	    System.out.println("hundredThousands"+hundredThousands);
 	    // nnnnnnnnnXXX
 	    int thousands = Integer.parseInt(snumber.substring(9,12));
-
+	    System.out.println("thousands"+thousands);
 	    String tradBillions;
 	    switch (billions) {
 	    case 0:

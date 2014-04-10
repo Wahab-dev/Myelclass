@@ -95,11 +95,11 @@ public class DebitBoImpl implements DebitBo {
 	 */
 	@Override
 	public String getDebno(String tanterm) throws Exception {
-			String maxdebno = debdao.getDebitnoteno();
-			if(maxdebno.isEmpty() || maxdebno.equalsIgnoreCase("Null")){
-				maxdebno = "EL001/14-15";
-			}		
-			return maxdebno;
+		String maxdebno = debdao.getDebitnoteno();
+		if(maxdebno.isEmpty() || maxdebno.equalsIgnoreCase("Null")){
+			maxdebno = "EL001/14-15";
+		}		
+		return maxdebno;
 	}
 
 

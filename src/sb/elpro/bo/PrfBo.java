@@ -119,6 +119,14 @@ public interface PrfBo  {
 	 * etc
 	 */
 	public boolean updatePrfform(ProductDetails prfbean)throws Exception;
+
+	/**  
+	 * (Method description)
+	 * @param
+	 * @return
+	 * etc
+	 */
+	public String getPoJWno()throws Exception;
 	
 
 }

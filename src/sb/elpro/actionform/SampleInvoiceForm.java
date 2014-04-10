@@ -62,6 +62,8 @@ public class SampleInvoiceForm extends ActionForm{
 	private String saminv_vesselno;
 	private String saminv_awbilldate;
 	private String saminv_awbillno;
+	private String saminv_payment;
+	private String saminv_terms;
 	
 	private String saminv_precarriageby;
 	private String saminv_marksno;
@@ -811,5 +813,29 @@ public class SampleInvoiceForm extends ActionForm{
 	 */
 	public void setSampleinvactionform(String sampleinvactionform) {
 		this.sampleinvactionform = sampleinvactionform;
+	}
+	/**
+	 * @return the saminv_terms
+	 */
+	public String getSaminv_terms() {
+		return saminv_terms;
+	}
+	/**
+	 * @param saminv_terms the saminv_terms to set
+	 */
+	public void setSaminv_terms(String saminv_terms) {
+		this.saminv_terms = saminv_terms;
+	}
+	/**
+	 * @return the saminv_payment
+	 */
+	public String getSaminv_payment() {
+		return saminv_payment;
+	}
+	/**
+	 * @param saminv_payment the saminv_payment to set
+	 */
+	public void setSaminv_payment(String saminv_payment) {
+		this.saminv_payment = saminv_payment;
 	}
 }

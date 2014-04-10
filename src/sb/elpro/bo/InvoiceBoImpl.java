@@ -22,7 +22,9 @@ import sb.elpro.model.InvCustContractDetails;
 import sb.elpro.model.InvoiceBean;
 import sb.elpro.model.InvoiceTotAmtDetails;
 import sb.elpro.model.NotifyConsigneeDetails;
+import sb.elpro.model.PaymentDetails;
 import sb.elpro.model.SampleInvoiceBean;
+import sb.elpro.model.TermsDetails;
 
 /**
  * @author Wahab
@@ -195,6 +197,23 @@ public class InvoiceBoImpl implements InvoiceBo {
 	public boolean updtInvoiceform(InvoiceBean invbean) throws Exception {
 		boolean isupdtinvForm = invdao.updtInvFormDetails(invbean);
 		return isupdtinvForm;
+	}
+	/* (non-Javadoc)
+	 * @see sb.elpro.bo.InvoiceBo#getInvTermList(java.lang.String)
+	 */
+	@Override
+	public List<TermsDetails> getInvTermList(String term)
+			throws Exception {
+		List<TermsDetails> invtermslist = invdao.getInvTermlist(term);
+		return invtermslist;
+	}
+	/* (non-Javadoc)
+	 * @see sb.elpro.bo.InvoiceBo#getPayTermList(java.lang.String)
+	 */
+	@Override
+	public List<PaymentDetails> getPayTermList(String term) throws Exception {
+		List<PaymentDetails> invpaytermslist = invdao.getInvPayTermlist(term);
+		return invpaytermslist;
 	}
 	
 	

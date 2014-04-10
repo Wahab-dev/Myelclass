@@ -122,7 +122,15 @@ $(function() {
        			 <tr>
        			 	 <td> Other ref : </td>
        			 	 <td><h:textarea property="saminv_otherref" cols="17"  rows="2" styleId="saminv_otherref"  value="${editsaminvform[0].saminv_otherref}"> </h:textarea>  <br/>
-       			 </tr>   
+       			 </tr>  
+       			 <tr>
+       	    		<td>terms :</td>
+       	    		<td><h:text property="saminv_terms" size="41" styleId="saminv_terms" value="${editinvform[0].saminv_terms }"> </h:text>  <br/></td>
+       	    	 </tr>
+       	    	 <tr>
+       	    		<td>Payment :</td>
+       	    	    <td><h:text property="saminv_payment" size="41" styleId="saminv_payment" value="${editinvform[0].saminv_payment }"> </h:text>  <br/></td>
+       	         </tr> 
    			</table>
    			</fieldset>
 		  </td>
@@ -132,11 +140,11 @@ $(function() {
        				  <table>
        				  <tr>
        				  	<td>Name :</td>
-       				  	<td><h:text property="saminv_exporter" styleId="saminv_exporter" size="38" value="${editsaminvform[0].saminv_exporter}"></h:text><br/></td>
+       				  	<td><h:text property="saminv_exporter" styleId="saminv_exporter" size="41" value="${editsaminvform[0].saminv_exporter}"></h:text><br/></td>
        				  </tr>
        				  <tr>
        				  	<td>Attn :</td>
-       				  	<td><h:text property="saminv_exporterattn" styleId="saminv_exporterattn" size="38"  value="${editsaminvform[0].saminv_exporterattn}"></h:text><br/></td>
+       				  	<td><h:text property="saminv_exporterattn" styleId="saminv_exporterattn" size="41"  value="${editsaminvform[0].saminv_exporterattn}"></h:text><br/></td>
        				  </tr>
        				  <tr>
        				  	<td>Addr :</td>
@@ -144,11 +152,11 @@ $(function() {
        				  </tr>
        				  <tr>
        				  	<td>Tele :</td>
-       				  	<td><h:text property="saminv_exportertele" styleId="saminv_exportertele" size="38" value="${editsaminvform[0].saminv_exportertele}"> </h:text><br/></td>
+       				  	<td><h:text property="saminv_exportertele" styleId="saminv_exportertele" size="41" value="${editsaminvform[0].saminv_exportertele}"> </h:text><br/></td>
        				  </tr>
        				  <tr>
        				  	<td>Fax :</td>
-       				  	<td><h:text property="saminv_exporterfax" styleId="saminv_exporterfax" size="38" value="${editsaminvform[0].saminv_exporterfax}" > </h:text>  <br/></td>
+       				  	<td><h:text property="saminv_exporterfax" styleId="saminv_exporterfax" size="41" value="${editsaminvform[0].saminv_exporterfax}" > </h:text>  <br/></td>
        				  </tr>
 					</table>  
        			  </fieldset>
@@ -160,11 +168,11 @@ $(function() {
        				<table>
        				  <tr>
        				  	<td>Name :</td>
-       				  	<td><h:text property="saminv_notify" styleId="saminv_notify" size="38" value="${editsaminvform[0].saminv_notify}"></h:text><br/></td>
+       				  	<td><h:text property="saminv_notify" styleId="saminv_notify" size="41" value="${editsaminvform[0].saminv_notify}"></h:text><br/></td>
        				  </tr>
        				  <tr>
        				  	<td>Attn :</td>
-       				  	<td><h:text property="saminv_notifyattn" styleId="saminv_notifyattn" size="38"  value="${editsaminvform[0].saminv_notifyattn}"></h:text><br/></td>
+       				  	<td><h:text property="saminv_notifyattn" styleId="saminv_notifyattn" size="41"  value="${editsaminvform[0].saminv_notifyattn}"></h:text><br/></td>
        				  </tr>
        				  <tr>
        				  	<td>Addr :</td>
@@ -172,11 +180,11 @@ $(function() {
        				  </tr>
        				  <tr>
        				  	<td>Tele :</td>
-       				  	<td><h:text property="saminv_notifytele" styleId="saminv_notifytele" size="38" value="${editsaminvform[0].saminv_notifytele}"> </h:text><br/></td>
+       				  	<td><h:text property="saminv_notifytele" styleId="saminv_notifytele" size="41" value="${editsaminvform[0].saminv_notifytele}"> </h:text><br/></td>
        				  </tr>
        				  <tr>
        				  	<td>Fax :</td>
-       				  	<td><h:text property="saminv_notifyfax" styleId="saminv_notifyfax" size="38" value="${editsaminvform[0].saminv_notifyfax}" > </h:text>  <br/></td>
+       				  	<td><h:text property="saminv_notifyfax" styleId="saminv_notifyfax" size="41" value="${editsaminvform[0].saminv_notifyfax}" > </h:text>  <br/></td>
        				  </tr>
 					</table>  
        			  </fieldset>
@@ -191,11 +199,11 @@ $(function() {
        				  <table>
        				  	<tr>
        				  		<td>Bank: </td>
-       				  		<td><h:text property="saminv_bank" styleId="saminv_bank"  size="38"  value="${editsaminvform[0].saminv_bank}"></h:text><br/></td>
+       				  		<td><h:text property="saminv_bank" styleId="saminv_bank"  size="41"  value="${editsaminvform[0].saminv_bank}"></h:text><br/></td>
        				  	</tr>
        				  	<tr>
        				  		<td>Branch: </td>
-       				  		<td><h:text property="saminv_bankbranch" styleId="saminv_bankbranch"  size="38"  value="${editsaminvform[0].saminv_bankbranch}"></h:text><br/></td>
+       				  		<td><h:text property="saminv_bankbranch" styleId="saminv_bankbranch"  size="41"  value="${editsaminvform[0].saminv_bankbranch}"></h:text><br/></td>
        				  	</tr>
        				  	<tr>
        				  		<td>Addr: </td>
@@ -203,15 +211,15 @@ $(function() {
        				  	</tr>
        				  	<tr>
        				  		<td>Swift Code: </td>
-       				  		<td><h:text property="saminv_bankswiftcode" styleId="saminv_bankswiftcode" size="38" value="${editsaminvform[0].saminv_bankswiftcode}"> </h:text><br/></td>
+       				  		<td><h:text property="saminv_bankswiftcode" styleId="saminv_bankswiftcode" size="41" value="${editsaminvform[0].saminv_bankswiftcode}"> </h:text><br/></td>
        				  	</tr>
        				  	<tr>
        				  		<td>Phone : </td>
-       				  		<td><h:text property="saminv_banktele" styleId="saminv_banktele" size="38" value="${editsaminvform[0].saminv_banktele}"> </h:text><br/></td>
+       				  		<td><h:text property="saminv_banktele" styleId="saminv_banktele" size="41" value="${editsaminvform[0].saminv_banktele}"> </h:text><br/></td>
        				  	</tr>
        				  	<tr>
        				  		<td>fax  : </td>
-       				  		<td><h:text property="saminv_bankfax" styleId="saminv_bankfax" size="38" value="${editsaminvform[0].saminv_bankfax}"> </h:text>  <br/></td>
+       				  		<td><h:text property="saminv_bankfax" styleId="saminv_bankfax" size="41" value="${editsaminvform[0].saminv_bankfax}"> </h:text>  <br/></td>
        				  	</tr>
 					</table>  
        			  </fieldset>
@@ -313,11 +321,11 @@ $(function() {
        		   	</tr>
        		   	<tr>
        		   		<td>Name :</td>
-       		   		<td><h:text property="saminv_customer" size="38"  styleId="saminv_customer" value="${editsaminvform[0].saminv_customer}"></h:text><br/></td>
+       		   		<td><h:text property="saminv_customer" size="41"  styleId="saminv_customer" value="${editsaminvform[0].saminv_customer}"></h:text><br/></td>
        		   	</tr>
        		   	<tr>
        		   		<td>Attn :</td>
-       		   		<td><h:text property="saminv_custattn" size="38"  styleId="saminv_custattn" value="${editsaminvform[0].saminv_custattn}"></h:text><br/></td>
+       		   		<td><h:text property="saminv_custattn" size="41"  styleId="saminv_custattn" value="${editsaminvform[0].saminv_custattn}"></h:text><br/></td>
        		   	</tr>
        		   	<tr>
        		   		<td>Addr :</td>
@@ -325,15 +333,15 @@ $(function() {
        		   	</tr>
        		   	<tr>
        		   		<td>Tele :</td>
-       		   		<td><h:text property="saminv_custtele" size="38"  styleId="saminv_custtele" value="${editsaminvform[0].saminv_custtele}"></h:text><br/></td>
+       		   		<td><h:text property="saminv_custtele" size="41"  styleId="saminv_custtele" value="${editsaminvform[0].saminv_custtele}"></h:text><br/></td>
        		   	</tr>
        		   	<tr>
        		   		<td> Fax  :</td>
-       		   		<td> <h:text property="saminv_custfax" size="38"  styleId="saminv_custfax" value="${editsaminvform[0].saminv_custfax}"></h:text><br/></td>
+       		   		<td> <h:text property="saminv_custfax" size="41"  styleId="saminv_custfax" value="${editsaminvform[0].saminv_custfax}"></h:text><br/></td>
        		   	</tr>
        		   	<tr>
        		   		<td> ID  :</td>
-       		   		<td><h:text property="saminv_custid" size="38"  styleId="saminv_custid" value="${editsaminvform[0].saminv_custid}"></h:text><br/></td>
+       		   		<td><h:text property="saminv_custid" size="41"  styleId="saminv_custid" value="${editsaminvform[0].saminv_custid}"></h:text><br/></td>
        		   	</tr>
        		   </table>
        		  </fieldset>

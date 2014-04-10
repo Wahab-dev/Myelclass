@@ -122,12 +122,20 @@ $(function() {
        		  	</tr>
        		  	<tr>
        		  		<td>Exporters Ref. : </td>
-       		  		<td><h:textarea property="inv_expref" styleId="inv_expref" cols="17"  rows="2" value="${editinvform[0].inv_expref }"> </h:textarea><br/></td>
+       		  		<td><h:text property="inv_expref" styleId="inv_expref" size="19" value="${editinvform[0].inv_expref }"> </h:text><br/></td>
        		  	</tr>
        		  	<tr>
        		  		<td>Other ref :  </td>
-       		  		<td><h:textarea property="inv_otherref" styleId="inv_otherref" cols="17"  rows="2" value="${editinvform[0].inv_otherref }"> </h:textarea>  <br/></td>
+       		  		<td><h:textarea property="inv_otherref" styleId="inv_otherref" cols="14"  rows="2" value="${editinvform[0].inv_otherref }"> </h:textarea>  <br/></td>
        		  	</tr>
+       		  	<tr>
+       	    		<td>terms :</td>
+       	    		<td><h:text property="inv_terms" size="19" styleId="inv_terms" value="${editinvform[0].inv_terms }"> </h:text>  <br/></td>
+       	    	</tr>
+       	    	<tr>
+       	    		<td>Payment :</td>
+       	    		<td><h:text property="inv_payment" size="19" styleId="inv_payment" value="${editinvform[0].inv_payment }"> </h:text>  <br/></td>
+       	    	</tr>
        		  </table>
    			</fieldset>
 		  </td>
@@ -137,11 +145,11 @@ $(function() {
 				<table>
 					<tr>
 						<td> Name: </td>
-						<td><h:text property="inv_exporter" styleId="inv_exporter" size="38" value="${editinvform[0].inv_exporter }"></h:text><br/></td>
+						<td><h:text property="inv_exporter" styleId="inv_exporter" size="41" value="${editinvform[0].inv_exporter }"></h:text><br/></td>
 					</tr>
 					<tr>
 						<td>Attn: </td>
-						<td><h:text property="inv_exporterattn" size="38" styleId="inv_exporterattn" value="${editinvform[0].inv_exporterattn }"></h:text><br/></td>
+						<td><h:text property="inv_exporterattn" size="41" styleId="inv_exporterattn" value="${editinvform[0].inv_exporterattn }"></h:text><br/></td>
 					</tr>
 					<tr>
 						<td>Addr: </td>
@@ -149,11 +157,11 @@ $(function() {
 					</tr>
 					<tr>
 						<td>Tele : </td>
-						<td><h:text property="inv_exportertele" size="38" styleId="inv_exportertele" value="${editinvform[0].inv_exportertele }"> </h:text><br/></td>
+						<td><h:text property="inv_exportertele" size="41" styleId="inv_exportertele" value="${editinvform[0].inv_exportertele }"> </h:text><br/></td>
 					</tr>
 					<tr>
 						<td> Fax : </td>
-						<td> <h:text property="inv_exporterfax" size="38" styleId="inv_exporterfax" value="${editinvform[0].inv_exporterfax }"> </h:text>  <br/></td>
+						<td> <h:text property="inv_exporterfax" size="41" styleId="inv_exporterfax" value="${editinvform[0].inv_exporterfax }"> </h:text>  <br/></td>
 					</tr>
 				</table>
        		</fieldset>
@@ -165,11 +173,11 @@ $(function() {
        	    	<table>
        	    		<tr>
        	    			<td> Name: </td>
-       	    			<td><h:text property="inv_notify" size="38" styleId="inv_notify" value="${editinvform[0].inv_notify }"></h:text><br/></td>
+       	    			<td><h:text property="inv_notify" size="41" styleId="inv_notify" value="${editinvform[0].inv_notify }"></h:text><br/></td>
        	    		</tr>
        	    		<tr>
        	    			<td>Attn: </td>
-       	    			<td><h:text property="inv_notifyattn" size="38" styleId="inv_notifyattn" value="${editinvform[0].inv_notifyattn }"></h:text><br/></td>
+       	    			<td><h:text property="inv_notifyattn" size="41" styleId="inv_notifyattn" value="${editinvform[0].inv_notifyattn }"></h:text><br/></td>
        	    		</tr>
        	    		<tr>
        	    			<td>Addr:</td>
@@ -177,11 +185,12 @@ $(function() {
        	    		</tr>
        	    		<tr>
        	    			<td>Tele :</td>
-       	    			<td><h:text property="inv_notifytele" size="38" styleId="inv_notifytele" value="${editinvform[0].inv_notifytele }"></h:text></tr>
+       	    			<td><h:text property="inv_notifytele" size="41" styleId="inv_notifytele" value="${editinvform[0].inv_notifytele }"></h:text></tr>
        	    		<tr>
        	    			<td>Fax :</td>
-       	    			<td><h:text property="inv_notifyfax" size="38" styleId="inv_notifyfax" value="${editinvform[0].inv_notifyfax }"> </h:text>  <br/></td>
+       	    			<td><h:text property="inv_notifyfax" size="41" styleId="inv_notifyfax" value="${editinvform[0].inv_notifyfax }"> </h:text>  <br/></td>
        	    		</tr>
+       	    		
        	    	</table>
        		</fieldset>
        	   </div>
@@ -195,11 +204,11 @@ $(function() {
 				<table>
 					<tr>
 						<td> Bank: </td>
-						<td><h:text property="inv_bank" size="38" styleId="inv_bank" value="${editinvform[0].inv_bank }"></h:text><br/></td>
+						<td><h:text property="inv_bank" size="41" styleId="inv_bank" value="${editinvform[0].inv_bank }"></h:text><br/></td>
 					</tr>
 					<tr>
 						<td>Branch: </td>
-						<td><h:text property="inv_bankbranch" size="38"  styleId="inv_bankbranch" value="${editinvform[0].inv_bankbranch }"></h:text><br/></td>
+						<td><h:text property="inv_bankbranch" size="41"  styleId="inv_bankbranch" value="${editinvform[0].inv_bankbranch }"></h:text><br/></td>
 					</tr>
 					<tr>
 						<td>Addr:</td>
@@ -207,15 +216,15 @@ $(function() {
 					</tr>
 					<tr>
 						<td>Swift Code: </td>
-						<td><h:text property="inv_bankswiftcode" size="38" styleId="inv_bankswiftcode" value="${editinvform[0].inv_bankswiftcode }"> </h:text><br/></td>
+						<td><h:text property="inv_bankswiftcode" size="41" styleId="inv_bankswiftcode" value="${editinvform[0].inv_bankswiftcode }"> </h:text><br/></td>
 					</tr>
 					<tr>
 						<td>Phone : </td>
-						<td><h:text property="inv_banktele" size="38" styleId="inv_banktele" > </h:text><br/></td>
+						<td><h:text property="inv_banktele" size="41" styleId="inv_banktele" > </h:text><br/></td>
 					</tr>
 					<tr>
 						<td>fax :  </td>
-						<td><h:text property="inv_bankfax" size="38" styleId="inv_bankfax" > </h:text>  <br/></td>
+						<td><h:text property="inv_bankfax" size="41" styleId="inv_bankfax" > </h:text>  <br/></td>
 					</tr>
 				</table>
        		   </fieldset>
@@ -315,11 +324,11 @@ $(function() {
        			  	</tr>
        			  	<tr>
        			  		<td>Customer Name: </td>
-       			  		<td><h:text property="inv_customer" size="38" styleId="inv_customer" value="${editinvform[0].inv_customer }"></h:text><br/></td>
+       			  		<td><h:text property="inv_customer" size="41" styleId="inv_customer" value="${editinvform[0].inv_customer }"></h:text><br/></td>
        			  	</tr>
        			  	<tr>
        			  		<td>Attn: </td>
-       			  		<td><h:text property="inv_custattn" size="38" styleId="inv_custattn" value="${editinvform[0].inv_custattn }"></h:text><br/></td>
+       			  		<td><h:text property="inv_custattn" size="41" styleId="inv_custattn" value="${editinvform[0].inv_custattn }"></h:text><br/></td>
        			  	</tr>
        			  	<tr>
        			  		<td>Address: </td>
@@ -327,15 +336,15 @@ $(function() {
        			  	</tr>
        			  	<tr>
        			  		<td>Telephone:</td>
-       			  		<td><h:text property="inv_custtele" size="38" styleId="inv_custtele" value="${editinvform[0].inv_custtele }"></h:text><br/></td>
+       			  		<td><h:text property="inv_custtele" size="41" styleId="inv_custtele" value="${editinvform[0].inv_custtele }"></h:text><br/></td>
        			  	</tr>
        			  	<tr>
        			  		<td>Fax: </td>
-       			  		<td><h:text property="inv_custfax" size="38" styleId="inv_custfax" value="${editinvform[0].inv_custfax }"></h:text><br/></td>
+       			  		<td><h:text property="inv_custfax" size="41" styleId="inv_custfax" value="${editinvform[0].inv_custfax }"></h:text><br/></td>
        			  	</tr>
        			  	<tr>
        			  		<td>ID:	</td>
-       			  		<td><h:text property="inv_custid" size="38" styleId="inv_custid" value="${editinvform[0].inv_custid }"></h:text><br/></td>
+       			  		<td><h:text property="inv_custid" size="41" styleId="inv_custid" value="${editinvform[0].inv_custid }"></h:text><br/></td>
        			  	</tr>
        			  </table>
        			 </fieldset>

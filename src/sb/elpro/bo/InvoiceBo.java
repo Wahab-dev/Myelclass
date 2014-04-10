@@ -17,6 +17,8 @@ import sb.elpro.model.InvCustContractDetails;
 import sb.elpro.model.InvoiceBean;
 import sb.elpro.model.InvoiceTotAmtDetails;
 import sb.elpro.model.NotifyConsigneeDetails;
+import sb.elpro.model.PaymentDetails;
+import sb.elpro.model.TermsDetails;
 /**
  * @author Wahab
  *
@@ -114,6 +116,22 @@ public interface InvoiceBo {
 	 * etc
 	 */
 	public boolean updtInvoiceform(InvoiceBean invbean)throws Exception;
+
+	/**  
+	 * (Method description)
+	 * @param
+	 * @return
+	 * etc
+	 */
+	public List<TermsDetails> getInvTermList(String term)throws Exception;
+
+	/**  
+	 * (Method description)
+	 * @param
+	 * @return
+	 * etc
+	 */
+	public List<PaymentDetails> getPayTermList(String term)throws Exception;
 
 	
 	

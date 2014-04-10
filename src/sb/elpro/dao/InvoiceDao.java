@@ -18,6 +18,8 @@ import sb.elpro.model.InvCustContractDetails;
 import sb.elpro.model.InvoiceBean;
 import sb.elpro.model.InvoiceTotAmtDetails;
 import sb.elpro.model.NotifyConsigneeDetails;
+import sb.elpro.model.PaymentDetails;
+import sb.elpro.model.TermsDetails;
 
 /**
  * @author Wahab
@@ -111,6 +113,22 @@ public interface InvoiceDao {
 	 * etc
 	 */
 	boolean updtInvFormDetails(InvoiceBean invbean)throws SQLException;
+
+	/**  
+	 * (Method description)
+	 * @param
+	 * @return
+	 * etc
+	 */
+	List<TermsDetails> getInvTermlist(String term)throws SQLException;
+
+	/**  
+	 * (Method description)
+	 * @param
+	 * @return
+	 * etc
+	 */
+	List<PaymentDetails> getInvPayTermlist(String term)throws SQLException;
 
 	
 

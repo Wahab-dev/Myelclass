@@ -153,7 +153,14 @@ public class PrfAutocomplete extends Action {
 					JSONArray jsonOrdertanArray = JSONArray.fromObject(articlelist);
 					 System.out.println(jsonOrdertanArray);
 			 		out.println(jsonOrdertanArray);
+				}else if(action.equalsIgnoreCase("pojwno")){
+					System.out.println("In pojwno Autocomplete");
+					String tanterm = request.getParameter("term");
+					String pojwno  =  prfbo.getPoJWno();
+					System.out.println(pojwno);
+					out.println(pojwno);
 				}else{
+				
 					/*
 					 * Here i am using first letter enter from the Entry using request .getparamanter 
 					 * and passing the value

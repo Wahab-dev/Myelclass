@@ -22,6 +22,8 @@ import sb.elpro.model.InvBillDetails;
 import sb.elpro.model.InvCustContractDetails;
 import sb.elpro.model.InvoiceBean;
 import sb.elpro.model.NotifyConsigneeDetails;
+import sb.elpro.model.PaymentDetails;
+import sb.elpro.model.TermsDetails;
 import sb.elpro.utility.DBConnection;
 import sb.elpro.utility.DateConversion;
 
@@ -1217,6 +1219,69 @@ public class InvoiceDaoImpl implements InvoiceDao {
 			pstdischrg.close();
 		}	
 		return isUpdtd;
+	}
+
+	/* (non-Javadoc)
+	 * @see sb.elpro.dao.InvoiceDao#getInvTermlist(java.lang.String)
+	 */
+	@Override
+	public List<TermsDetails> getInvTermlist(String term) throws SQLException {
+		ArrayList<TermsDetails> Invtermarray = new ArrayList<TermsDetails>();			
+		Connection con = null;
+		Statement st = null;
+		ResultSet rs = null;			
+		try{			
+			con = DBConnection.getConnection();
+			st = (Statement) con.createStatement();
+			String sql = "SELECT termname FROM elpro.tbl_terms order by termname";
+			rs = st.executeQuery(sql);
+			while(rs.next()) {	
+				TermsDetails Invtermbean = new TermsDetails();
+				Invtermbean.setTermname(rs.getString("termname"));
+				System.out.println("bank name"+Invtermbean.getTermname());
+				Invtermarray.add(Invtermbean);
+			}
+		}catch(Exception e){
+			System.out.println("ERROR RESULT");
+			e.printStackTrace();
+		}finally{
+			 con.close() ;
+			 st.close();
+			 rs.close();
+	   }			
+		return Invtermarray;
+	}
+
+	/* (non-Javadoc)
+	 * @see sb.elpro.dao.InvoiceDao#getInvPayTermlist(java.lang.String)
+	 */
+	@Override
+	public List<PaymentDetails> getInvPayTermlist(String term)
+			throws SQLException {
+		ArrayList<PaymentDetails> Invpaytermarray = new ArrayList<PaymentDetails>();			
+		Connection con = null;
+		Statement st = null;
+		ResultSet rs = null;			
+		try{			
+			con = DBConnection.getConnection();
+			st = (Statement) con.createStatement();
+			String sql = "SELECT payname FROM elpro.tbl_payment order by payname";
+			rs = st.executeQuery(sql);
+			while(rs.next()) {	
+				PaymentDetails Invpaytermbean = new PaymentDetails();
+				Invpaytermbean.setPaymentname(rs.getString("payname"));
+				System.out.println(" Invpaytermbean"+Invpaytermbean.getPaymentname());
+				Invpaytermarray.add(Invpaytermbean);
+			}
+		}catch(Exception e){
+			System.out.println("ERROR RESULT");
+			e.printStackTrace();
+		}finally{
+			 con.close() ;
+			 st.close();
+			 rs.close();
+	   }			
+		return Invpaytermarray;
 	}
 
 	

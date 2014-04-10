@@ -172,6 +172,33 @@ $(document).ready(function() {
 				    }
 		  	});
 	 
+		$('#saminv_terms').autocomplete({
+			 source: function(request, response) {
+				var param = request.term;  
+				$.getJSON("/Myelclass/InvAutocomplete.do?term="+param+"&action="+"terms",
+					function(result) { 	
+				       response($.map(result, function(item) {
+				           return { 
+				              value: item.termname,
+				              };
+				        }));//END response
+				 });
+			 }
+		});
+		$('#saminv_payment').autocomplete({
+			 source: function(request, response) {
+				var param = request.term;  
+				$.getJSON("/Myelclass/InvAutocomplete.do?term="+param+"&action="+"payment",
+					function(result) { 	
+				       response($.map(result, function(item) {
+				           return { 
+				              value: item.paymentname,
+				              };
+				        }));//END response
+				 });
+			 }
+		});
+		
 	 $('#saminv_bank').autocomplete({
 			minLength: 1,
 			source: function(request, response,term) {
