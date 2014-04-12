@@ -13,13 +13,13 @@
 </style>
 <script src="js/jquery-1.9.1.js"></script>
 <script src="js/jquery-ui.js"></script>
-<script src="js/jquery.dialogextend.1_0_1.js"></script>
+<!-- <script src="js/jquery.dialogextend.1_0_1.js"></script> -->
 <link rel="stylesheet" type="text/css" media="screen" href="css/pepper-grinder/jquery-ui-1.10.3.custom.css" />
 <link rel="stylesheet" type="text/css" media="screen" href="css/jquerywidgetstyle.css" />
 <link rel="stylesheet" type="text/css" media="screen" href="css/ui.jqgrid.css" />
 <script src="js/i18n/grid.locale-en.js" type="text/javascript"></script>
 <script src="js/jquery.jqGrid.min.js" type="text/javascript"></script>	
-<script src="js/jquery.dialogextend.js" type="text/javascript"></script>	
+<!-- <script src="js/jquery.dialogextend.js" type="text/javascript"></script>	 -->
 <script src="js/elpro/prf.js"></script> 
 <script src="js/jquery.autosize.js"></script> 
 
@@ -62,7 +62,6 @@ function padNumber(number)
     ret = "0" + ret;
   return ret;
 } */
-
 
 function loadvalues(){
 	var actionform = "<c:out value='${actionform}' />";
@@ -158,8 +157,11 @@ function loadvalues(){
    		</tr>
    </table>
    </div>
-
+<!-- <table>
+	<tr></tr>
+</table> -->
 <!-- <div id="prfform" title="PR Form"> -->
+<div>
 <h:form action="/Prf.do" method="post" styleId="savePrfForm" onreset="">
 	   				<td >Welcome<h:text property="userinsession" styleId="userinsession" value="${user.name}" readonly="true" ></h:text></td >
 	   				<td ><h:text property="formaction" styleId="formaction" value="${actionform}"></h:text></td> 
@@ -172,15 +174,15 @@ function loadvalues(){
         	<table>
         		<tr>
         			<td>Agent: </td>
-        			<td><h:text property="prf_agentname" size="41" styleId="prf_agentname" value="${editprfform[0].prf_agentname}" ></h:text> <br /></td>
+        			<td><h:text property="prf_agentname" size="41" styleId="prf_agentname" value="${editprfform[0].prf_agentname}" ></h:text> </td>
         		</tr>
         		<tr>
         			<td>Ct No:  </td>
-        			<td><h:text property="prf_contractno" size="41" styleId="prf_contractno" value="${editprfctno}" /><br /></td>
+        			<td><h:text property="prf_contractno" size="41" styleId="prf_contractno" value="${editprfctno}" /></td>
         		</tr>
         		<tr>
         			<td>Date: </td>
-        			<td>  <h:text property="prf_orderdate" size="41" styleId="prf_orderdate" styleClass="prf_orderdate" value="${editprfform[0].prf_orderdate}"></h:text> <br /></td>
+        			<td>  <h:text property="prf_orderdate" size="41" styleId="prf_orderdate" styleClass="prf_orderdate" value="${editprfform[0].prf_orderdate}"></h:text> </td>
         		</tr>
         		<tr>
         			<td>PO Type: </td>
@@ -204,19 +206,19 @@ function loadvalues(){
         	<table>
         		<tr>
         			<td>Name: </td>
-        			<td><h:text property="prf_tanname" size="41" styleId="prf_tanname" ></h:text><br /></td>
+        			<td><h:text property="prf_tanname" size="41" styleId="prf_tanname" ></h:text></td>
         		</tr>
         		<tr>
         			<td>Attn:</td>
-        			<td><h:text property="prf_tanattn" size="41" styleId="prf_tanattn" ></h:text><br /></td>
+        			<td><h:text property="prf_tanattn" size="41" styleId="prf_tanattn" ></h:text></td>
         		</tr>
         		<tr>
         			<td>Addr:</td>
-        			<td><h:textarea property="prf_tanaddr" cols="35" rows="4" styleId="prf_tanaddr" ></h:textarea><br /></td>
+        			<td><h:textarea property="prf_tanaddr" cols="35" rows="4" styleId="prf_tanaddr" ></h:textarea></td>
         		</tr>
         		<tr>
         			<td>Tele: </td>
-        			<td><h:text property="prf_tanphone" size="41" styleId="prf_tanphone" > </h:text><br /></td>
+        			<td><h:text property="prf_tanphone" size="41" styleId="prf_tanphone" > </h:text></td>
         		</tr>
         		<tr>
         			<td>Fax :</td>
@@ -231,19 +233,19 @@ function loadvalues(){
        		<table>
        			<tr>
        				<td>Name:</td>
-       				<td><h:text property="prf_custname" size="41" styleId="prf_custname" ></h:text><br /></td>
+       				<td><h:text property="prf_custname" size="41" styleId="prf_custname" ></h:text></td>
        			</tr>
        			<tr>
        				<td>Attn: </td>
-       				<td><h:text property="prf_custattn" size="41" styleId="prf_custattn" ></h:text><br /></td>
+       				<td><h:text property="prf_custattn" size="41" styleId="prf_custattn" ></h:text></td>
        			</tr>
        			<tr>
        				<td>Addr:</td>
-       				<td><h:textarea property="prf_custaddr" cols="35" rows="4" styleId="prf_custaddr" > </h:textarea><br /></td>
+       				<td><h:textarea property="prf_custaddr" cols="35" rows="4" styleId="prf_custaddr" > </h:textarea></td>
        			</tr>
        			<tr>
        				<td>Tele: </td>
-       				<td><h:text property="prf_custphone" size="41" styleId="prf_custphone" > </h:text><br /></td>
+       				<td><h:text property="prf_custphone" size="41" styleId="prf_custphone" > </h:text></td>
        			</tr>
        			<tr>
        				<td>Fax :  </td>
@@ -266,11 +268,11 @@ function loadvalues(){
             <table>
             	<tr>
             		<td>CDD : </td>
-            		<td><h:text property="prf_cdd" size="41" styleId="prf_cdd" styleClass="prf_delivrydate" value="${editprfform[0].prf_cdd}"></h:text><br /></td>
+            		<td><h:text property="prf_cdd" size="41" styleId="prf_cdd" styleClass="prf_delivrydate" value="${editprfform[0].prf_cdd}"></h:text></td>
             	</tr>
             	<tr>
             		<td>ADD :</td>
-            		<td><h:text property="prf_add" size="41" styleId="prf_add" styleClass="prf_delivrydate" value="${editprfform[0].prf_add}"></h:text><br /></td>
+            		<td><h:text property="prf_add" size="41" styleId="prf_add" styleClass="prf_delivrydate" value="${editprfform[0].prf_add}"></h:text></td>
             	</tr>
             	<tr>
             		<td>Desti:</td>
@@ -285,7 +287,7 @@ function loadvalues(){
           			      		<c:out value="${termsList.termname}"></c:out>
           			      		</h:option>  
           			    	 </c:forEach> 
-       		 		  	  </h:select><br /></td>
+       		 		  	  </h:select></td>
             	</tr>
             	<tr>
             		<td>Payment:</td>
@@ -296,18 +298,18 @@ function loadvalues(){
           			      		 <c:out value="${paymList.paymentname}"></c:out>
           				  	</h:option>        		
           				 	</c:forEach>
-       	  	  		  	  </h:select><br /></td>
+       	  	  		  	  </h:select></td>
             	</tr>
             	<tr>
             		<td>Insurance: </td>
-            		<td><h:select property="prf_insurance" styleId="prf_insurance" value=""> <br /> 
+            		<td><h:select property="prf_insurance" styleId="prf_insurance" value="">  
           	  			 	<h:option value="Consignee">By Consignee</h:option>     
           				 	<h:option value="Shipper">By Shipper</h:option>      			    													         															
-       		 		  	 </h:select><br /></td>
+       		 		  	 </h:select></td>
             	</tr>	
             	<tr>
             		<td>elclass Comm:</td>
-            		<td><h:text property="prf_elclasscommission" styleId="prf_elclasscommission" value="${editprfform[0].prf_elclasscommission}"></h:text><br /></td>
+            		<td><h:text property="prf_elclasscommission" styleId="prf_elclasscommission" value="${editprfform[0].prf_elclasscommission}"></h:text></td>
             	</tr>
             	<tr>
             		<td>Other Comm: </td>
@@ -325,13 +327,13 @@ function loadvalues(){
             <td>
       		<fieldset>
             <legend>Inspection Condition</legend>     
-       	 		<h:textarea property="prf_inspcdn" cols="41" rows="17" styleId="prf_inspcdn" value="${editprfform[0].prf_inspcdn}"></h:textarea><br />									
+       	 		<h:textarea property="prf_inspcdn" cols="41" rows="17" styleId="prf_inspcdn" value="${editprfform[0].prf_inspcdn}"></h:textarea>									
          	</fieldset>
       		</td>
             <td>
             <fieldset>
             <legend>Special Condition</legend>
-           		<h:textarea property="prf_special" cols="41" rows="17" styleId="prf_special" value="${editprfform[0].prf_special}"></h:textarea><br />        									
+           		<h:textarea property="prf_special" cols="41" rows="17" styleId="prf_special" value="${editprfform[0].prf_special}"></h:textarea>        									
          	</fieldset></td>
         </tr>
         <tr>
@@ -419,6 +421,7 @@ function loadvalues(){
        <!--  <tr>
             td>Running Since : <b:write name="datestarted" scope="application" format="MM/dd/yy"/> </td>
         </tr> -->
+        </tr>
         <tr>
   			<td>
   				<h:submit  property="prfaction" styleId="Save" value="Save" ></h:submit>
@@ -426,98 +429,104 @@ function loadvalues(){
   			</td>
   			<td><h:reset property="prfaction" styleId="Clear" value="Clear" ></h:reset></td>
   			<td>
-  				<h:submit property="prfaction" styleId="Print" value="Print"></h:submit>
-  				<div id="pojwdiv">
-  					<form action="/pojw" id="pojwform" method="post">
-  					<table>
-  					  <tr>	
-  						<td>
-  							 <fieldset>         
-				        	<legend>PO Details</legend>
-				        	<table >
-				        		<tr>
-				        			<td>PO No: </td>
-				        			<td><h:text property="prf_pojw" size="41" styleId="prf_pojw" ></h:text><br /></td>
-				        		</tr>
-				        		<tr>
-				        			<td>Order Date:</td>
-				        			<td><h:text property="pojw_orderdate" styleId="pojw_orderdate" styleClass="prf_orderdate"></h:text><br /></td>
-				        		</tr>
-				        		<tr>
-				        			<td>CDD:</td>
-				        			<td><h:text property="pojw_cddate" size="41" styleId="pojw_cddate" styleClass="prf_delivrydate"></h:text><br /></td>
-				        		</tr>
-				        		<tr>
-				        			<td>Ct No: </td>
-				        			<td><h:text property="pojw_contractno" size="41" styleId="pojw_contractno" > </h:text><br /></td>
-				        		</tr>
-				        		<tr>
-				        			<td>Commission :</td>
-				        			<td> <h:text property="pojw_comm" size="41" styleId="pojw_comm" > </h:text></td>
-				        		</tr>
-				        		
-				        	</table>
-				            </fieldset>
-				        </td>
-				        <td>  
-				        <fieldset>         
-				        	<legend>Tannery Details</legend>
-				        	<table>
-				        		<tr>
-				        			<td>Name: </td>
-				        			<td><h:text property="prf_exporter" size="41" styleId="prf_exporter" ></h:text><br /></td>
-				        		</tr>
-				        		<tr>
-				        			<td>Attn:</td>
-				        			<td><h:text property="prf_exporterattn" size="41" styleId="prf_exporterattn" ></h:text><br /></td>
-				        		</tr>
-				        		<tr>
-				        			<td>Addr:</td>
-				        			<td><h:textarea property="prf_exporteraddr" cols="38" rows="3" styleId="prf_exporteraddr" ></h:textarea><br /></td>
-				        		</tr>
-				        		<tr>
-				        			<td>Tele: </td>
-				        			<td><h:text property="prf_exportertele" size="41" styleId="prf_exportertele" > </h:text><br /></td>
-				        		</tr>
-				        		<tr>
-				        			<td>Fax :</td>
-				        			<td> <h:text property="prf_exporterfax" size="41" styleId="prf_exporterfax" > </h:text></td>
-				        		</tr>
-				        	</table>
-				            </fieldset>
-				        </td>
-				      </tr>     
-				      <tr>
-          				<td colspan="2">
-             				<table id="pojwtbl" class="pojwtbl"></table> 
-			 				<div id="pojwpager" class="pojwpager"></div> 
-          			    </td>
-        			  </tr>
-        			  <tr>  			  	
-        			  	<td colspan="2"> 
-        			  	<fieldset>
-        			  	<legend>Special Condition</legend>
-				       	 <h:textarea property="pojw_splcdn" cols="180" rows="4"  styleId="pojw_splcdn" > </h:textarea><br />
-				        </fieldset>
-				        </td>
-        			  </tr>
-        			 <tr>
-        			 	<td colspan="2"> 
-        			 	<fieldset>
-        			 	<legend>Payment Terms</legend>
-        			 		<h:textarea property="pojw_payterms" cols="180" rows="2" styleId="pojw_payterms" > </h:textarea>
-        			 	</fieldset>
-        			 	</td>
-        			  </tr>	
-				      </table>      
-  					</form>
-  				</div>
+  				<h:submit property="prfaction" styleId="Print" value="Print"></h:submit> 				
   			</td>
-  			
-        </tr>
-        
+  		 </tr>
     </table>
-</h:form>			
-<!-- </div> -->					
+</h:form>		
+</div>
+<div id="pojwdiv">
+  	<form action="/pojw" id="pojwform" method="post">
+  		<table>
+  		  <tr>	
+  			<td>
+  			<fieldset>         
+		    <legend>PO Details</legend>
+			 	<table>
+				  <tr>
+				    <td>PO No: </td>
+				     <td><input type="text" id="prf_pojw" size="41" name="prf_pojw" value=""></input><br/></td>
+				  </tr>
+				  <tr>
+				  	<td>Order Date:</td>
+				    <td><input type="text" id="pojw_orderdate" size="41" name="pojw_orderdate" value="" class="prf_orderdate" ></input><br /></td>
+				  </tr>
+				  <tr>
+				  	<td>CDD:</td>
+				  	<td><input type="text" id="pojw_cddate" size="41" name="pojw_cddate" value="" class="prf_delivrydate" ></input><br /></td>
+				  </tr>
+				  <tr>
+				    <td>Ct No: </td>
+				    <td><input type="text" id="pojw_contractno" size="41" name="pojw_contractno" value=""></input><br /></td>
+				  </tr>
+				  <tr>
+				  	<td>Commission :</td>
+				  	<td> <input type="text" id="pojw_comm" size="41" name="pojw_comm" value="" ></input></td>
+				  </tr>  
+				</table>
+			</fieldset>
+			</td>
+			<td>  
+			<fieldset>         
+			<legend>Tannery Details</legend>
+				<table>
+				  <tr>
+				  	<td>Name: </td>
+				    <td><input type="text" id="prf_exporter" size="41" name="prf_exporter" value=""></input><br /></td>
+				  </tr>
+				  <tr>
+				    <td>Attn:</td>
+				  	<td><input type="text" id="prf_exporterattn" size="41" name="prf_exporterattn" value="" ></input><br /></td>
+				  </tr>
+				  <tr>
+				  	<td>Addr:</td>
+				  	<td><textarea id="prf_exporteraddr" cols="38" rows="3" name="prf_exporteraddr"  cols="38" rows="3" ></textarea><br /></td>
+				  </tr>
+				  <tr>
+				  	<td>Tele: </td>
+				  	<td><input type="text" id="prf_exportertele" size="41" name="prf_exportertele" value="" ></input><br/></td>
+				  </tr>
+				  <tr>
+				  	<td>Fax :</td>
+				  	<td><input type="text" id="prf_exporterfax" size="41" name="prf_exporterfax" value=""></input></td>
+				  </tr>
+				</table>
+			</fieldset>
+			</td>
+		  </tr>     
+		  <tr>
+          	<td colspan="2">
+            	<table id="pojwtbl" class="pojwtbl"></table> 
+			 	<div id="pojwpager" class="pojwpager"></div> 
+          	</td>
+          </tr>
+          <tr>  			  	
+         	<td colspan="2"> 
+        	<fieldset>
+        	<legend>Special Condition</legend>
+			    <textarea id="pojw_splcdn" name="pojw_splcdn"  cols="38" rows="3" ></textarea><br />
+			</fieldset>
+			</td>
+          </tr>
+          <tr>
+        	<td colspan="2"> 
+        	<fieldset>
+        	<legend>Payment Terms</legend>
+        		<textarea id="pojw_payterms" name="pojw_payterms"  cols="38" rows="3"></textarea><br />
+        	</fieldset>
+        	</td>
+          </tr>	
+          <tr>	
+        	<td>
+        		<button id="save" name="Save" type="submit" title="Save">Save</button>
+        	</td>
+        	<td>
+        		<button id="clear" name="Clear" type="reset" title="Clear">Clear</button>
+        		<button id="print" name="Print" type="button" title="Print">Print</button>
+        	</td>
+          </tr>
+     	</table>
+	</form>
+ </div>
 </body>
-</h:html>
+</h:html>		

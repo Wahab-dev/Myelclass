@@ -78,7 +78,106 @@ public class PrfInsertArticle extends Action  {
 					jsonobj.put("rows", article);
 					System.out.println(jsonobj);		
 					out.println(jsonobj);
-				}else {
+				}else if(oper.equalsIgnoreCase("pojw")){
+					if(action.equalsIgnoreCase("load")){
+						 System.out.println(" In POJW Article LAOD");
+							List<PrfArticle> pojwarticle = prfbo.getPrfArticleDetails(ctno,sidx,sord);
+							int records = pojwarticle.size();
+							System.out.println("Reords  "+records);
+																		
+								int page = Integer.parseInt(pag);
+				                int totalPages = 0;
+				                int totalCount = records;
+				                if (totalCount > 0) {
+				                	 if (totalCount % Integer.parseInt(rows) == 0) {
+				                		 System.out.println("STEP 1 "+totalCount % Integer.parseInt(rows) );
+				                         totalPages = totalCount / Integer.parseInt(rows);
+				                         System.out.println("STEP 2 "+totalPages);
+				                     } else { 
+				                         totalPages = (totalCount / Integer.parseInt(rows)) + 1;
+				                         System.out.println("STEP 3 "+totalPages);
+				                     }
+				                }else {
+				                    totalPages = 0;
+				                }
+							jsonobj.put("total", totalPages);
+							jsonobj.put("page", page);
+							jsonobj.put("records", records);
+							jsonobj.put("rows", pojwarticle);
+							System.out.println(jsonobj);		
+							out.println(jsonobj);
+					}else{
+						System.out.println("In POJW MODIFY");
+						String sizerem = request.getParameter("prf_sizeremarks");
+						String siz = request.getParameter("prf_size");
+						String size = siz+" "+sizerem;
+						System.out.println("size "+size);
+			
+						String tc = request.getParameter("prf_tcamt");
+						String tcsig = request.getParameter("prf_tccurrency");
+						String tcto = request.getParameter("prf_tcagent");
+						String Tc = tc+" "+tcsig+" "+tcto;
+						System.out.println("Tc "+Tc);
+						
+						String rat = request.getParameter("prf_rateamt");
+						String ratsig = request.getParameter("prf_ratesign");
+						String ship = request.getParameter("prf_shipment");
+						String rate = ratsig+" "+rat+" "+ship;
+						System.out.println("rate"+rate);
+					
+						PrfArticle pojwartindertdetail = new PrfArticle();
+						 pojwartindertdetail.setPrf_contractnum(request.getParameter("prf_contractnum"));
+						 pojwartindertdetail.setArticleid(request.getParameter("articleid")) ;
+						 pojwartindertdetail.setPrf_articleid(request.getParameter("prf_articleid")) ;
+						 pojwartindertdetail.setPrf_articlename(request.getParameter("prf_articlename"));
+						 pojwartindertdetail.setArtshform(request.getParameter("artshform"));
+						 pojwartindertdetail.setPrf_articletype(request.getParameter("prf_articletype"));
+						 pojwartindertdetail.setPrf_color(request.getParameter("prf_color"));
+						 pojwartindertdetail.setPrf_rate(rate);
+						 pojwartindertdetail.setPrf_tc(Tc);
+						 pojwartindertdetail.setPrf_unit(request.getParameter("prf_unit"));
+						 pojwartindertdetail.setPrf_pieces(request.getParameter("prf_pieces"));
+						 pojwartindertdetail.setPrf_quantity(request.getParameter("prf_quantity"));
+						 pojwartindertdetail.setPrf_selection(request.getParameter("prf_selection"));
+						 pojwartindertdetail.setPrf_selectionp(request.getParameter("prf_selectionp"));
+						 pojwartindertdetail.setPrf_size(size);
+						 pojwartindertdetail.setPrf_substance(request.getParameter("prf_substance"));
+						 pojwartindertdetail.setUser(request.getParameter("user"));
+						if(action.equalsIgnoreCase("copy") || action.equalsIgnoreCase("add")){
+							System.out.println("In POJW copy");
+							boolean isPojwArticleAdded = prfbo.addPrfArticleDetails(pojwartindertdetail,sidx,sord);
+							if(isPojwArticleAdded){
+								jsonobj.put("success", "Successfully Inserted The Record");
+							}else{
+								jsonobj.put("Error", "Error in Inserrting");
+							}
+							System.out.println(jsonobj);		
+							out.println(jsonobj);
+						}else if(action.equalsIgnoreCase("edit")){
+							System.out.println("In POJW edit");
+							boolean isPojwArticleUpdated = prfbo.editPrfArticleDetails(pojwartindertdetail,sidx,sord);
+							if(isPojwArticleUpdated){
+								jsonobj.put("success", "Successfully Inserted The Record");
+							}else{
+								jsonobj.put("Error", "Error in Updating");
+							}
+							System.out.println(jsonobj);		
+							out.println(jsonobj);
+						}else if(action.equalsIgnoreCase("del")){
+							System.out.println("In POJW delete");
+							boolean isPojwArticleDel = prfbo.delPrfArticleDetails(pojwartindertdetail,sidx,sord);
+							if(isPojwArticleDel){
+							jsonobj.put("success", "Successfully Inserted The Record");
+							}else{
+								jsonobj.put("Error", "Error in Deleting");
+							}
+							System.out.println(jsonobj);		
+							out.println(jsonobj);
+						}
+					}
+					
+				}
+				else {
 					String sizerem = request.getParameter("prf_sizeremarks");
 					String siz = request.getParameter("prf_size");
 					String size = siz+" "+sizerem;

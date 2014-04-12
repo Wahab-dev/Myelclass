@@ -72,7 +72,7 @@
 	<action path="/PrfAutocomplete" name="PrfForm" type="sb.elpro.action.PrfAutocomplete" input="/jsp/Prf.jsp" scope="session"></action>
 	 
 	<action path="/PrfinsertArticle" name="PrfForm" type="sb.elpro.action.PrfInsertArticle" input="/jsp/Prf.jsp" scope="session"></action>	 
-	 
+	 <action path="/pojw" type="sb.elpro.action.PojwAction" input="/jsp/Prf.jsp" scope="session"></action>
 <!-- ==== Bulk Tracking ==================================================================================================================================================================== -->
 	<action path="/gotoBulkTracking" name="BulkTrackForm" type="sb.elpro.action.BulkTrackAction" input="/jsp/Bulk.jsp" scope="session" parameter="action"> 
 	   <forward name="bulkisloaded" path="/jsp/Bulk.jsp"></forward>	
@@ -244,7 +244,7 @@
 
 <!-- ==== Sample Invoice Screen ==================================================================================================================================================================== -->
 	<action path="/gotoSampleInvoice" name="SampleInvoiceForm" type="sb.elpro.action.SampleInvoiceLoadAction" input="/jsp/Menu.jsp" scope="session" parameter="sampleinvoiceaction">
-	 	 	<forward name="sampleinvoiceisloaded" path="/jsp/SampleInvoice.jsp"></forward>
+	 	 <forward name="sampleinvoiceisloaded" path="/jsp/SampleInvoice.jsp"></forward>
 	</action> 
 	<action path="/savesampleinvoice" name="SampleInvoiceForm" type="sb.elpro.action.SampleInvoiceAction" input="/jsp/SampleInvoice.jsp" scope="session" parameter="sampleinvoiceaction">
 	  	<forward name="sampleinvissaved" path="/jsp/SampleInvoice.jsp"></forward>

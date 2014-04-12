@@ -2,7 +2,7 @@
  * 
  */
 $(document).ready(function() {
-	var nameRegExpression = /^[a-zA-Z_0-9\s]*$/; // Name  validation
+	var nameRegExpression = /^[a-zA-Z_0-9-()\s]*$/; // Name  validation
 	var shformRegExpression = /^[a-zA-Z0-9-()]*$/;   /*short form  validation*/
 	var telephoneRegExpression = /[0]|[+]\d{3}-\d{3}-\d{6}$/ ; /*Telephone validation Not Working pls check*/
 	var addrRegExpression = /^[a-zA-Z0-9-\/:()#,.\s]*$/; 
