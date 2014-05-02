@@ -71,7 +71,7 @@ $(document).ready(function() {
 	paytrackgrid.jqGrid({
 		 url:'/Myelclass/PaymentTrackGridAction.do',
 		 datatype: "json",
-		 colNames:['Pay Id','Pay No','Pay Date','Exporter','Cheq Details','Deb no','Deb dt','Quantity','Inv Amt','el class Amt','Total','Tax','Tds','Due','Amt Credit','Balance','Reciept Dt','Comments'],
+		 colNames:['Pay Id','Pay No','Pay Date','Exporter','Payment Details','Deb no','Deb dt','Quantity','Inv Amt','Comm Amt','Total','Service Tax','Tds','Due','Amt Credit','Balance','Reciept Dt','Comments'],
 		 colModel:[
 					{name: 'paymentid', index: 'paymentid' ,width:90, hidden: false, 
 						
@@ -161,6 +161,8 @@ $(document).ready(function() {
        	 amt = parseFloat($self.jqGrid("getCol", "deb_elclassamtinrs", false, "sum")).toFixed(2);
        	 tax = parseFloat($self.jqGrid("getCol", "deb_tax", false, "sum")).toFixed(2);
        	 due = parseFloat($self.jqGrid("getCol", "deb_due", false, "sum")).toFixed(2);
+       	 
+    	 $self.jqGrid("footerData", "set", {paymentid: "Total"});
        	 $self.jqGrid("footerData", "set", {deb_elclassamtinrs: parseFloat(amt)});
        	 $self.jqGrid("footerData", "set", {deb_tax: parseFloat(tax)});
        	 $self.jqGrid("footerData", "set", {deb_due: parseFloat(due)});

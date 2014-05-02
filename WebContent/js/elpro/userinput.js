@@ -2,50 +2,60 @@
  * 
  */
 $(document).ready(function() {
-	var nameRegExpression = /^[a-zA-Z_0-9-()\s]*$/; // Name  validation
-	var shformRegExpression = /^[a-zA-Z0-9-()]*$/;   /*short form  validation*/
+	var nameRegExpression = /^[a-zA-Z_0-9-()\s]*$/; // Name  validation /s white space
+	var shformRegExpression = /^[a-zA-Z_0-9-()]*$/;   /*short form  validation*/
 	var telephoneRegExpression = /[0]|[+]\d{3}-\d{3}-\d{6}$/ ; /*Telephone validation Not Working pls check*/
-	var addrRegExpression = /^[a-zA-Z0-9-\/:()#,.\s]*$/; 
-	var attnRegExpression = /^[a-zA-Z-\/.\s]*$/;
-
+	var addrRegExpression = /^[a-zA-Z_0-9-\/:()#,.\s]*$/; 
+	var attnRegExpression = /^[a-zA-Z-\/.,\s]*$/;
+	var priceRegExpression =/^[0-9]*(?:\.\d{1,2})?$/; // source: http://stackoverflow.com/questions/21203729/regular-expression-in-javascript-allow-only-numbers-optional-2-decimals
+	
+	
 	 //Name Check 
 	function namecheck(value, colName) {
 		if (value == "" || value == " " || value.toUpperCase() === "NULL")
 			return [false,"Name Shouldnot be Empty"];
 		else if(!nameRegExpression.test(value) )
-			return [false, "Name only alphabets are allowed"];
+			return [false, "NAME: Only Alphabets, Numbers, Underscore _, hyphen -, Parentheses () are allowed"];
 		else
 			return [true, ""];
 		} 
 	function shformcheck(value, colName) {
 		if (value == "" || value == " " || value.toUpperCase() === "NULL")
-			return [false,"ShForm is  Empty"];
+			return [false,"ShForm Shouldnot be  Empty"];
 		else if(!shformRegExpression.test(value) )
-			return [false, "ShForm : Only alphabets , Number and -,(,)# are allowed in Shortform"];
+			return [false, "Short Form : Only alphabets , Numbers, Underscore _, hyphen -, Parentheses () are allowed"];
 		else
 			return [true, ""];
 		} 
 	
 	function telecheck(value, colName) {
 		 if(!value.match(telephoneRegExpression) )
-			return [false, "Number Should be of the Form +xxx-xxx-xxxxxx or 0"];
+			return [false, "Contact NO:  Should be 0 or of the form +123-456-789012"];
 		else 
 			return [true, ""];
 		} 
 	
 	function addrcheck(value, colName) {
 		 if(!value.match(addrRegExpression) )
-			return [false, "Address can contain alphabets , Number -,(),. and space"];
+			return [false, "Address : only alphabets, Numbers, Underscore _, hyphen -, Parentheses (), Forward Slash /, Colon : , Hash Tag #, Comma ,  Dot .  are Allowed"];
 		else 
 			return [true, ""];
 		} 
 	function attncheck(value, colName) {
 		 if(!value.match(attnRegExpression) )
-			return [false, "Attn can contain Alphabets, dots, comma and space"];
+			return [false, "Attn : Only Alphabets, dots, Forward Slash /, comma are allowed"];
 		else 
 			return [true, ""];
 		} 
 
+	function pricecheck(value, colName) {
+		if (value == "" || value == " " || value.toUpperCase() === "NULL")
+			return [false,"Price Should be 0 or Some Value"];
+		else if(!value.match(priceRegExpression) )
+			return [false, "Price : Only Numbers and Dots are allowed"];
+		else 
+			return [true, ""];
+		}
 	/* 	/*
 		 * function to capitalise each word in a textbox / text area
 		 * Need to check how it is working 
@@ -79,7 +89,7 @@ $(document).ready(function() {
 	 tangrid.jqGrid({ 
 		url :'/Myelclass/userinput/loadvalues.do?actn=tan',
 		datatype:'json',
-		colNames:['tanid','tanname','tanattn','tanaddr','tanphone','tanfax','shfrom'],  
+		colNames:['ID','Name','Attn','Address','Phone','fax','Short Form'],  
 	    colModel:[
 				   {name: 'tanneryId',index :'tanneryId', editable:true, hidden:true,
 					   editoptions: { readonly: 'readonly'},
@@ -118,13 +128,14 @@ $(document).ready(function() {
       loadtext: "Bow Bow........... ",
       sortname: 'tanneryName',  
       sortorder: 'desc', 
-      hiddengrid : true,
+      //  hiddengrid : false, //to place a icon on Caption Layer to hide/ unhide grid
       loadonce: true,
       viewrecords: true,
+      height: 'automatic',
       gridview: true, // if used cant use subgrid, treegrid and aftertInsertRow 
       emptyrecords: 'No records to display',
       editurl: "/Myelclass/userinput/loadvalues.do?actn=tan",
-	}).jqGrid('navGrid','#tannerpager',{add:true, edit:true, del: false, search: true,  beforeRefresh: function(){
+	}).jqGrid('navGrid','#tannerpager',{add:true, edit:true, del: true, search: true,  beforeRefresh: function(){
         tangrid.jqGrid('setGridParam',{datatype:'json'}).trigger('reloadGrid');
     }},			
 	{//edit 
@@ -158,14 +169,13 @@ $(document).ready(function() {
 			} 
 	});
 	tangrid.jqGrid('filterToolbar', {autosearch : true, searchOnEnter:false, stringResult: true}); 
-
-	
+	$(".ui-jqgrid-titlebar").hide();
 	//Customer Grid 
 	 var custgrid = $("#customerdetails");
 	 custgrid.jqGrid({ 
 		url :'/Myelclass/userinput/loadvalues.do?actn=cust',
 		datatype:'json',
-		colNames:['custid','custname','custattn','custaddr','custphone','custfax','shfrom'],  
+		colNames:['ID','Name','Attn','Address','Phone','fax','Short Form'],  
 	    colModel:[
 				   {name: 'customerId',index :'customerId', editable:true, hidden:true,
 					   editoptions: { readonly: 'readonly'},
@@ -203,10 +213,10 @@ $(document).ready(function() {
 		rowList:[10,20,30],
       loadtext: "Bow Bow........... ",
       sortname: 'customerName',  
-      sortorder: 'desc', 
-      hiddengrid : true,
+      sortorder: 'desc',      
       viewrecords: true,
       loadonce: true,
+      height: 'automatic',
       gridview: true, // if used cant use subgrid, treegrid and aftertInsertRow 
       emptyrecords: 'No records to display',
       editurl: "/Myelclass/userinput/loadvalues.do?actn=cust",
@@ -243,13 +253,13 @@ $(document).ready(function() {
 			} 
 	});
 	 custgrid.jqGrid('filterToolbar', {autosearch : true, searchOnEnter:false, stringResult: true}); 
-
+	 $(".ui-jqgrid-titlebar").hide();
 	//Consignee Grid 
 	 var consiggrid = $("#consigdetails");
 	 consiggrid.jqGrid({ 
 		url :'/Myelclass/userinput/loadvalues.do?actn=consig',
 		datatype:'json',
-		colNames:['consigid','consigname','consigattn','consigaddr','consigphone','consigfax','shfrom'],  
+		colNames:['ID','Name','Attn','Address','Phone','fax','Short Form'],  
 	    colModel:[
 				   {name: 'consigneeId',index :'consigneeId', editable:true, hidden:true,
 					   editoptions: { readonly: 'readonly'},
@@ -288,8 +298,8 @@ $(document).ready(function() {
       loadtext: "Bow Bow........... ",
       sortname: 'consigneeName',  
       sortorder: 'desc',
-      loadonce: true,
-      hiddengrid : true,
+      loadonce: true,  
+      height: 'automatic',
       viewrecords: true,
       gridview: true, // if used cant use subgrid, treegrid and aftertInsertRow 
       emptyrecords: 'No records to display',
@@ -327,14 +337,14 @@ $(document).ready(function() {
 			} 
 	});
 	consiggrid.jqGrid('filterToolbar', {autosearch : true, searchOnEnter:false, stringResult: true}); 
-
+	$(".ui-jqgrid-titlebar").hide();
 	 
 	 //Notify details
 	 var notifygrid = $("#notifydetails");
 	 notifygrid.jqGrid({ 
 		url :'/Myelclass/userinput/loadvalues.do?actn=notify',
 		datatype:'json',
-		colNames:['consigid','consigname','consigattn','consigaddr','consigphone','consigfax','shfrom'],  
+		colNames:['ID','Name','Attn','Address','Phone','fax','Short Form'],  
 	    colModel:[
 				   {name: 'notifyConsigneeId',index :'notifyConsigneeId', editable:true, hidden:true,
 					   editoptions: { readonly: 'readonly'},
@@ -372,9 +382,9 @@ $(document).ready(function() {
 		rowList:[10,20,30],
       loadtext: "Bow Bow........... ",
       sortname: 'notifyConsigneeName',  
-      sortorder: 'desc', 
-      hiddengrid : true,
+      sortorder: 'desc',      
       loadonce: true,
+      height: 'automatic',
       viewrecords: true,
       gridview: true, // if used cant use subgrid, treegrid and aftertInsertRow 
       emptyrecords: 'No records to display',
@@ -412,14 +422,14 @@ $(document).ready(function() {
 			} 
 	});
 	 notifygrid.jqGrid('filterToolbar', {autosearch : true, searchOnEnter:false, stringResult: true}); 
- 
+	 $(".ui-jqgrid-titlebar").hide();
 
 	 //Bank details
 	 var bankgrid = $("#bankdetails");
 	 bankgrid.jqGrid({ 
 		url :'/Myelclass/userinput/loadvalues.do?actn=bank',
 		datatype:'json',
-		colNames:['bankId','bankName','bankAddress','bankBranch','bankSwiftCode','bankAcctNo','bankContactNo','bankFax','accountholderName','bankIfsc'],  
+		colNames:['ID','Bank','Address','Branch','Swift Code','Acct No','Contact No','Fax','Acct Name','IFSC'],  
 	    colModel:[
 				   {name: 'bankId',index :'bankId', editable:true,  hidden:true,
 					   editoptions: { readonly: 'readonly'},
@@ -444,7 +454,7 @@ $(document).ready(function() {
 	            	   editrules :{custom:true, custom_func : telecheck},  
 	               }, 
 	               {name: 'bankFax',index :'bankFax', editable:true,
-	            	   editrules :{custom:true, custom_func : telecheck},  
+	            	   
 	               },
 	               {name: 'accountholderName',index :'accountholderName', editable:true,hidden:true,
 	            	   
@@ -466,9 +476,9 @@ $(document).ready(function() {
 		rowList:[10,20,30],
       loadtext: "Bow Bow........... ",
       sortname: 'bankName',  
-      sortorder: 'desc', 
-      hiddengrid : true,
+      sortorder: 'desc',       
       loadonce: true,
+      height: 'automatic',
       viewrecords: true,
       gridview: true, // if used cant use subgrid, treegrid and aftertInsertRow 
       emptyrecords: 'No records to display',
@@ -506,14 +516,14 @@ $(document).ready(function() {
 			} 
 	});
 	 bankgrid.jqGrid('filterToolbar', {autosearch : true, searchOnEnter:false, stringResult: true}); 
-	 bankgrid.jqGrid('setGridWidth', 930);
+	 $(".ui-jqgrid-titlebar").hide();
 	//Article  details
 	 var articlegrid = $("#articledetails");
 	 articlegrid.jqGrid({ 
 		url :'/Myelclass/userinput/loadvalues.do?actn=article',
 		datatype:'json',
 		autoencode: true,
-		colNames:['articleid','type','name','size','Size Remarks','substance','Sel','price','currency','amount','shipment','tc','tc amount','tc sign','tc agent','shform'],  
+		colNames:['ID','Type','Name','Size','Size Remarks','Substance','Sel','Rate','Currency','Amount','Shipment','TC','TC Amount','TC Sign','TC Agent','Short Form'],  
 	    colModel:[
 				   {name: 'articleid',index :'articleid', editable:true,  hidden:true,
 					   editoptions: { readonly: 'readonly'},
@@ -554,7 +564,7 @@ $(document).ready(function() {
 	            	   
 	               },
 				   {name: 'price',index :'price', editable:true, sortable:true, hidden: false,
-	            	   
+	            	  // editrules :{custom:true, custom_func : pricecheck}, 
 	               },
 	               {name: 'ratesign',index :'ratesign', editable:true, sortable:true, hidden: true,
 	            	   edittype:'select',
@@ -562,7 +572,7 @@ $(document).ready(function() {
                   	
 	               },
  				   {name: 'rateamt',index :'rateamt', editable:true, sortable:true, hidden: true,
-	            	   
+	            	  // editrules :{custom:true, custom_func : pricecheck},  
 	               },
  				   {name: 'shipment',index :'shipment', editable:true, sortable:true, hidden: true,
 	            	   edittype:'select',
@@ -573,7 +583,7 @@ $(document).ready(function() {
 	            	   
 	               },
 	               {name: 'tc_amount',index :'tc_amount', editable:true, sortable:true, hidden:true,
-	            	   
+	            	   editrules :{custom:true, custom_func : pricecheck},  
 	               },
 	               {name: 'tc_currency',index :'tc_currency', editable:true, sortable:true, hidden:true,
 	            	   edittype:'select',
@@ -603,14 +613,14 @@ $(document).ready(function() {
 		rowList:[20,50,100],
       loadtext: "Bow Bow........... ",
       sortname: 'articlename',  
-      sortorder: 'desc', 
-      hiddengrid : true,
+      sortorder: 'desc',       
       loadonce: true,
+      height: 'automatic',
       viewrecords: true,
       gridview: true, // if used cant use subgrid, treegrid and aftertInsertRow 
       emptyrecords: 'No records to display',
       editurl: "/Myelclass/userinput/loadvalues.do?actn=article",
-	}).jqGrid('navGrid','#articlepager',{add:true, edit:true, del: false, search: true, beforeRefresh: function(){
+	}).jqGrid('navGrid','#articlepager',{add:true, edit:true, del: true, search: true, beforeRefresh: function(){
 		articlegrid.jqGrid('setGridParam',{datatype:'json'}).trigger('reloadGrid');
     }},			
 	{//edit 
@@ -693,7 +703,7 @@ $(document).ready(function() {
 	});
 	 articlegrid.jqGrid('filterToolbar', {autosearch : true, searchOnEnter:false, stringResult: true}); 
 
-	 articlegrid.jqGrid('setGridWidth', 930);
+	 $(".ui-jqgrid-titlebar").hide();
 	 
 	 
 	 
@@ -703,7 +713,7 @@ $(document).ready(function() {
 	 commgrid.jqGrid({ 
 		url :'/Myelclass/userinput/loadvalues.do?actn=comm',
 		datatype:'json',
-		colNames:['Commid','Commname','commagent','commplace','commtype','agenttype'],  
+		colNames:['ID','Name','Agent','Place','Type','Agent Type'],  
 	    colModel:[
 				   {name: 'commid',index :'commid', editable: true, hidden: false,
 					   editoptions: { readonly: 'readonly'}, 
@@ -737,9 +747,9 @@ $(document).ready(function() {
 		rowList:[10,20,30],
       loadtext: "Bow Bow........... ",
       sortname: 'commname',  
-      sortorder: 'desc', 
-      hiddengrid : true,
+      sortorder: 'desc',   
       loadonce: true,
+      height: 'automatic',
       viewrecords: true,
       gridview: true, // if used cant use subgrid, treegrid and aftertInsertRow 
       emptyrecords: 'No records to display',
@@ -781,13 +791,13 @@ $(document).ready(function() {
 	});
 	 commgrid.jqGrid('filterToolbar', {autosearch : true, searchOnEnter:false, stringResult: true}); 
 
-	 commgrid.jqGrid('setGridWidth', 930);
+	 $(".ui-jqgrid-titlebar").hide();
 	//Destination Details 
 	 var destigrid = $("#destidetails");
 	 destigrid.jqGrid({ 
 		url :'/Myelclass/userinput/loadvalues.do?actn=desti',
 		datatype:'json',
-		colNames:['Destid','Destname','Country','Shortform','DestiPort','Destiplace'],  
+		colNames:['ID','Name','Country','Short form','Destination Port','Destination Final Place'],  
 	    colModel:[
 				   {name: 'destiid',index :'destiid', editable: true, hidden: false, 
 					   editoptions: { readonly: 'readonly'},
@@ -823,7 +833,7 @@ $(document).ready(function() {
       sortname: 'destiname',  
       sortorder: 'desc', 
       loadonce: true,
-      hiddengrid : true,
+      height: 'automatic',
       viewrecords: true,
       gridview: true, // if used cant use subgrid, treegrid and aftertInsertRow 
       emptyrecords: 'No records to display',
@@ -864,13 +874,14 @@ $(document).ready(function() {
 			} 
 	});
 	 destigrid.jqGrid('filterToolbar', {autosearch : true, searchOnEnter:false, stringResult: true}); 
- 
+	 $(".ui-jqgrid-titlebar").hide();
+	 
 	// Color  Details 
 	 var colorgrid = $("#colordetails");
 	 colorgrid.jqGrid({ 
 		url :'/Myelclass/userinput/loadvalues.do?actn=color',
 		datatype:'json',
-		colNames:['colorid','name','pantoneshades','othername','referenceid'],  
+		colNames:['ID','Name','Pantone Sshades','Other Name','Ref ID'],  
 	    colModel:[
 				   {name: 'colorid' ,index :'colorid', editable: true, hidden: false, 
 					   editoptions: { readonly: 'readonly'},
@@ -898,13 +909,13 @@ $(document).ready(function() {
 		},
 		caption: "Color  Details",
 		pager: '#colorpager',
-		rowNum:10, 
-		rowList:[10,20,30],
+		rowNum:20, 
+		rowList:[20,40,60],
       loadtext: "Bow Bow........... ",
       sortname: 'colorname',  
       sortorder: 'desc', 
       loadonce: true,
-      hiddengrid : true,
+      height: 'automatic',
       viewrecords: true,
       gridview: true, // if used cant use subgrid, treegrid and aftertInsertRow 
       emptyrecords: 'No records to display',
@@ -946,7 +957,8 @@ $(document).ready(function() {
 	});
 	 colorgrid.jqGrid('filterToolbar', {autosearch : true, searchOnEnter:false, stringResult: true}); 
  
-	 colorgrid.jqGrid('setGridWidth', 930);
+	 //colorgrid.jqGrid('setGridWidth', 930);
+	 $(".ui-jqgrid-titlebar").hide();
 	// -------------------
 	 
 	// terms  Details 
@@ -954,7 +966,7 @@ $(document).ready(function() {
 	 termsgrid.jqGrid({ 
 		url :'/Myelclass/userinput/loadvalues.do?actn=terms',
 		datatype:'json',
-		colNames:['termsid','name','comments'],  
+		colNames:['ID','Name','Comments'],  
 	    colModel:[
 				   {name: 'termid' ,index :'termid', editable: true, hidden: false, 
 					   editoptions: { readonly: 'readonly'},
@@ -980,8 +992,8 @@ $(document).ready(function() {
       loadtext: "Bow Bow........... ",
       sortname: 'terms',  
       sortorder: 'desc', 
-      loadonce: true,
-      hiddengrid : true,
+      loadonce: true,   
+      height: 'automatic',
       viewrecords: true,
       gridview: true, // if used cant use subgrid, treegrid and aftertInsertRow 
       emptyrecords: 'No records to display',
@@ -1023,7 +1035,8 @@ $(document).ready(function() {
 	});
 	 termsgrid.jqGrid('filterToolbar', {autosearch : true, searchOnEnter:false, stringResult: true}); 
 
-	termsgrid.jqGrid('setGridWidth', 930); 
+	//termsgrid.jqGrid('setGridWidth', 930);
+	 $(".ui-jqgrid-titlebar").hide();
 	
 	
 	// Payment  Details 
@@ -1031,7 +1044,7 @@ $(document).ready(function() {
 	 paymntgrid.jqGrid({ 
 		url :'/Myelclass/userinput/loadvalues.do?actn=paymnt',
 		datatype:'json',
-		colNames:['paymntid','name','comments'],  
+		colNames:['ID','Name','Comments'],  
 	    colModel:[
 				   {name: 'paymentid' ,index :'paymentid', editable: true, hidden: false, 
 					   editoptions: { readonly: 'readonly'},
@@ -1057,8 +1070,8 @@ $(document).ready(function() {
      loadtext: "Bow Bow........... ",
      sortname: 'paymentname',  
      sortorder: 'desc', 
-     loadonce: true,
-     hiddengrid : true,
+     loadonce: true,  
+     height: 'automatic',
      viewrecords: true,
      gridview: true, // if used cant use subgrid, treegrid and aftertInsertRow 
      emptyrecords: 'No records to display',
@@ -1100,6 +1113,7 @@ $(document).ready(function() {
 	});
 	 paymntgrid.jqGrid('filterToolbar', {autosearch : true, searchOnEnter:false, stringResult: true}); 
 
-	 paymntgrid.jqGrid('setGridWidth', 930); 
+	// paymntgrid.jqGrid('setGridWidth', 930);
+	 $(".ui-jqgrid-titlebar").hide();
 	 
 });

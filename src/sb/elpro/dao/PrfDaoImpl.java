@@ -52,7 +52,7 @@ public class PrfDaoImpl implements PrfDao {
 		try{			
 			con = DBConnection.getConnection();
 			st = (Statement) con.createStatement();
-			String sql = "SELECT agentid, agentname, contractno FROM elpro.tbl_prfctno where agentname like '%"+agenterm+"%' order by agentname;";
+			String sql = "SELECT agentid, agentname, contractno FROM elpro.tbl_prfctno where agentname like '%"+agenterm+"%' and agenttype ='U' order by agentname;";
 			//String sql = "SELECT max(Ctno)as ctno, agent from  elpro.tbl_prfform where agent like '%"+agenterm+"%' group by agent order by agent";
 			rs = st.executeQuery(sql);
 			while(rs.next()) {	
@@ -66,11 +66,13 @@ public class PrfDaoImpl implements PrfDao {
 				String ctnowithL = "L"+ictno;
 				System.out.println("ctnowithL "+ctnowithL);	
 				*/
-				
 				AgentDetails agentlist  = new AgentDetails();
 				agentlist.setAgentname(rs.getString("agentname"));
-				//agentlist.setAgentId(rs.getString("agentid"));
-				agentlist.setContractNo(rs.getString("contractno"));	
+				String ctno = rs.getString("contractno").trim();
+				int ictno = Integer.parseInt(ctno.substring(1));
+				System.out.println(" CT NO  "+ ++ictno);
+				ctno = "L"+ictno;
+				agentlist.setContractNo(ctno);
 				System.out.println("Agent name "+agentlist.getAgentname());
 				agentarraylist.add(agentlist);
 			}
@@ -98,7 +100,7 @@ public class PrfDaoImpl implements PrfDao {
 			String sql = "SELECT tanid, tanname, tanaddr, tanattn, tanphone, tanfax  FROM elpro.tbl_tannery where tanname like '%"+tanterm+"%' order by tanname";
 			rs = st.executeQuery(sql);
 			while(rs.next()) {	
-				TanneryDetails tanbean = new TanneryDetails();
+			 TanneryDetails tanbean = new TanneryDetails();
 				tanbean.setTanneryAddress(rs.getString("tanaddr"));
 				tanbean.setTanneryAttention(rs.getString("tanattn"));
 				tanbean.setTanneryFax(rs.getString("tanfax"));
@@ -283,6 +285,7 @@ public class PrfDaoImpl implements PrfDao {
 		Connection con = null;
 		PreparedStatement pst = null;
 		int noofrows  = 0;
+		int noofrowsupdtd  = 0;
 		boolean isSaved =true;
 		
 		try{
@@ -299,8 +302,8 @@ public class PrfDaoImpl implements PrfDao {
 			pst.setString(3, prfbean.getPrf_orderdate());
 			pst.setString(4, prfbean.getPrf_poreftype() +", "+ prfbean.getPrf_poref());
 			pst.setString(5, prfbean.getPrf_exporterid());
-			pst.setString(6, prfbean.getPrf_tanname());
-			pst.setString(7, prfbean.getPrf_custname());
+			pst.setString(6, prfbean.getPrf_tannid());
+			pst.setString(7, prfbean.getPrf_custid());
 			pst.setString(8, prfbean.getPrf_cdd());
 			pst.setString(9, prfbean.getPrf_add());
 			pst.setString(10, prfbean.getPrf_destination());
@@ -311,16 +314,25 @@ public class PrfDaoImpl implements PrfDao {
 			pst.setString(15, prfbean.getPrf_commission());
 			pst.setString(16, prfbean.getPrf_special());
 			pst.setString(17, prfbean.getPrf_inspcdn());
-			pst.setString(18, prfbean.getPrf_consigneename());
-			pst.setString(19, prfbean.getPrf_notifyname());
-			pst.setString(20, prfbean.getPrf_bankname());
+			pst.setString(18, prfbean.getPrf_consigneeid());
+			pst.setString(19, prfbean.getPrf_notifyid());
+			pst.setString(20, prfbean.getPrf_bankid());
 			pst.setString(21, prfbean.getPrf_pojw());
 			System.out.println("getPrf_pojw " +prfbean.getPrf_pojw());
 			noofrows = pst.executeUpdate();
-			if(noofrows == 1){
+			if(noofrows == 1){ 
 				/*
-				 * Call the STored Procedure for the prfctno table update 
+				 * Call the STored Procedure for the prfctno table update
+				 * Save Prfno in Table 
 				 */
+			System.out.println(" Save for Ct No table "+noofrows);
+			StringBuffer sql_updtprfctno = new StringBuffer("UPDATE elpro.tbl_prfctno SET contractno = ?  WHERE agentname = '"+prfbean.getPrf_agentname()+"' ");
+			String sqlquery_updtprfctno = sql_updtprfctno.toString();
+			pst = (PreparedStatement) con.prepareStatement(sqlquery_updtprfctno);
+			pst.setString(1, prfbean.getPrf_contractno());
+			System.out.println("getPrf_contractno " +prfbean.getPrf_contractno());
+			noofrowsupdtd = pst.executeUpdate();
+			System.out.println("Sucessfully updtd the CTNo Table." + noofrowsupdtd);
 			}
 			System.out.println("Sucessfully inserted the record.." + noofrows);
 	}catch(Exception e){
@@ -809,6 +821,7 @@ public class PrfDaoImpl implements PrfDao {
 				bankbean.setBankSwiftCode(rs.getString("swiftcode"));
 				bankbean.setBankContactNo(rs.getString("bankphone"));
 				bankbean.setBankAcctNo(rs.getString("Acctno"));
+				bankbean.setBankId(rs.getString("bankid"));
 				System.out.println("Bank  name "+bankbean.getBankName());
 				bankarraylist.add(bankbean);
 				}
@@ -834,7 +847,7 @@ public class PrfDaoImpl implements PrfDao {
 		try{			
 			con = DBConnection.getConnection();
 			st = (Statement) con.createStatement();
-			String sql = "SELECT consigname, consigattn, consigaddr, consigphone, consigfax, shortform FROM elpro.tbl_consignee where consigname like '%"+consigneeterm+"%' order by consigname";
+			String sql = "SELECT consigid, consigname, consigattn, consigaddr, consigphone, consigfax, shortform FROM elpro.tbl_consignee where consigname like '%"+consigneeterm+"%' order by consigname";
 			rs = st.executeQuery(sql);
 			while(rs.next()) {	
 				ConsigneeDetails consigbean = new ConsigneeDetails();
@@ -843,6 +856,7 @@ public class PrfDaoImpl implements PrfDao {
 				consigbean.setConsigneefax(rs.getString("consigfax"));
 				consigbean.setLabel(rs.getString("shortform"));
 				consigbean.setValue(rs.getString("consigname"));
+				consigbean.setConsigneeId(rs.getString("consigid"));
 				consigbean.setConsigneeContactNo(rs.getString("consigphone"));
 				System.out.println("consig  name "+consigbean.getConsigneeName());
 				consigarrayList.add(consigbean);
@@ -869,11 +883,12 @@ public class PrfDaoImpl implements PrfDao {
 		try{
 			con = DBConnection.getConnection();
 			st = (Statement) con.createStatement();
-			String sql = "SELECT notifyname, notifyattn, notifyaddr, notifyphone, notifyfax, shortform FROM elpro.tbl_notify where notifyname like '%"+notifyterm+"%' order by notifyname";
+			String sql = "SELECT notifyid, notifyname, notifyattn, notifyaddr, notifyphone, notifyfax, shortform FROM elpro.tbl_notify where notifyname like '%"+notifyterm+"%' order by notifyname";
 			rs = st.executeQuery(sql);
 			while(rs.next()) {	
 				NotifyConsigneeDetails notifyconsigbean = new NotifyConsigneeDetails();
 				notifyconsigbean.setNotifyConsigneeAddress(rs.getString("notifyaddr"));
+				notifyconsigbean.setNotifyConsigneeId(rs.getString("notifyid"));
 				notifyconsigbean.setNotifyConsigneeAttention(rs.getString("notifyattn"));
 				notifyconsigbean.setNotifyConsigneefax(rs.getString("notifyfax"));
 				notifyconsigbean.setNotifyConsigneeName(rs.getString("notifyname"));
@@ -974,8 +989,8 @@ public class PrfDaoImpl implements PrfDao {
 			if(noofrows == 1){
 				System.out.println(" ID "+artindertdetail.getPrf_articleid());
 				System.out.println(" Save for Status table "+noofrows);
-				StringBuffer sql_saveprfArticlestatus = new StringBuffer("insert into elpro.tbl_prfarticle_status (artname, status, qshipped, qbal, invdetails, reps, comments, feddback, contractno, rdd_date) ");
-				sql_saveprfArticlestatus.append("values (?,?,?,?,?,?,?,?,?,?)");
+				StringBuffer sql_saveprfArticlestatus = new StringBuffer("insert into elpro.tbl_prfarticle_status (artname, status, qty, qshipped, qbal, invdetails, reps, comments, feddback, contractno, rdd_date) ");
+				sql_saveprfArticlestatus.append("values (?,?,?,?,?,?,?,?,?,?,?)");
 				String sqlquery_saveprfArticlestatus = sql_saveprfArticlestatus.toString();
 				System.out.println("Save quert" +sqlquery_saveprfArticlestatus);
 				pst1 = (PreparedStatement) con.prepareStatement(sqlquery_saveprfArticlestatus);
@@ -983,14 +998,15 @@ public class PrfDaoImpl implements PrfDao {
 				pst1.setString(1, artindertdetail.getPrf_articlename());
 				System.out.println("getPrf_articlename " +artindertdetail.getPrf_articlename());
 				pst1.setString(2, "P");
-				pst1.setString(3, "0");
-				pst1.setString(4, artindertdetail.getPrf_quantity());
-				pst1.setString(5, "NA");
+				pst1.setString(3, artindertdetail.getPrf_quantity());
+				pst1.setString(4, "0");
+				pst1.setString(5, artindertdetail.getPrf_quantity());
 				pst1.setString(6, "NA");
 				pst1.setString(7, "NA");
 				pst1.setString(8, "NA");
-				pst1.setString(9, artindertdetail.getPrf_contractnum());
-				pst1.setString(10, "2013-12-30");
+				pst1.setString(9, "NA");
+				pst1.setString(10, artindertdetail.getPrf_contractnum());
+				pst1.setString(11, "2013-12-30");
 				addstatusrow = pst1.executeUpdate();
 				System.out.println("Sucessfully Inseerter in Status Table." + addstatusrow);
 			}
@@ -1076,13 +1092,13 @@ public class PrfDaoImpl implements PrfDao {
 			noofrows = pst.executeUpdate();
 			if(noofrows == 1){
 				System.out.println(" Update for Status table "+noofrows);
-				StringBuffer sql_updateprfArticlestatus = new StringBuffer("UPDATE elpro.tbl_prfarticle_status set artname = ? WHERE prf_articleid = '"+artindertdetail.getPrf_articleid()+"' ");
+				StringBuffer sql_updateprfArticlestatus = new StringBuffer("UPDATE elpro.tbl_prfarticle_status set artname = ? , qty = ? WHERE prf_articleid = '"+artindertdetail.getPrf_articleid()+"' ");
 				String sqlquery_updateprfArticlestatus = sql_updateprfArticlestatus.toString();
 				System.out.println("Save quert" +sqlquery_updateprfArticlestatus);
 				pst1 = (PreparedStatement) con.prepareStatement(sqlquery_updateprfArticlestatus);
 				//int prfarticleid = Integer.parseInt(artindertdetail.getPrf_articleid());
 				pst1.setString(1, artindertdetail.getPrf_articlename());
-				
+				pst1.setString(2, artindertdetail.getPrf_quantity());
 				updatestatusrow = pst1.executeUpdate();
 				System.out.println("Sucessfully Inseerter in Status Table." + updatestatusrow);
 			}
@@ -1149,19 +1165,37 @@ public class PrfDaoImpl implements PrfDao {
 		try{			
 			con = DBConnection.getConnection();
 			st = (Statement) con.createStatement();
-			String sql = "SELECT form.Ctno, form.agent, form.Orderdt, form.pono, form.exporterid, form.tanneryid, form.customerid, form.cdd_date, form.add_date, form.destination, form.terms, form.payment, form.commission, form.othercommission, form.splcdn, form.inspcdn, form.consigneeid, form.notifyid, form.bankid, form.pojw FROM elpro.tbl_prfform form where form.Ctno ='"+ctno+"' ";
+			String sql = "SELECT form.Ctno, form.agent, form.Orderdt, form.pono, form.exporterid, form.tanneryid, form.customerid, form.cdd_date, form.add_date, form.destination, form.terms, form.payment, form.commission, form.othercommission, form.splcdn, form.inspcdn, form.consigneeid, form.notifyid, form.bankid, form.pojw, tan.tanid, tan.tanname, tan.tanattn, tan.tanaddr, tan.tanphone, tan.tanfax, cust.custid, cust.custname, cust.custaddr, cust.custattn, cust.custphone, cust.custfax, consig.consigname,consig.consigattn, consig.consigaddr, consig.consigphone, consig.consigfax, notify.notifyname, notify.notifyattn, notify.notifyaddr,notify.notifyphone, notify.notifyfax, bank.bankname, bank.bankbranch, bank.bankaddr, bank.bankphone, bank.bankfax FROM elpro.tbl_prfform form  left outer join elpro.tbl_tannery tan on form.tanneryid =  tan.tanid left outer join elpro.tbl_customer cust on form.customerid =  cust.custid left outer join elpro.tbl_consignee consig on form.consigneeid =  consig.consigid left outer join elpro.tbl_notify notify on form.notifyid =  notify.notifyid left outer join elpro.tbl_bank bank on form.bankid =  bank.bankid where form.Ctno = '"+ctno+"' ";
 			System.out.println(sql);
 			rs = st.executeQuery(sql);
 			
 			if(rs.next()) {	
+					String varrefno = rs.getString("pono");
+					int index = varrefno.indexOf(',');
+					String reftype = varrefno.substring(0,index);
+					System.out.println(" reftype"+reftype);
+					String refno = varrefno.substring(index+1);
+					System.out.println(" refno"+refno);
+				
 				ProductDetails editprfformbean = new ProductDetails();
 				editprfformbean.setPrf_agentname(rs.getString("agent"));
 				editprfformbean.setPrf_orderdate(DateConversion.ConverttoNormalDate(rs.getString("Orderdt")));
-				editprfformbean.setPrf_poref(rs.getString("pono"));
+				editprfformbean.setPrf_poref(refno);
+				editprfformbean.setPrf_poreftype(reftype);
 				System.out.println("PONONO "+editprfformbean.getPrf_poref());
 				editprfformbean.setPrf_exporterid(rs.getString("exporterid"));
-				editprfformbean.setPrf_tanname(rs.getString("tanneryid"));
-				editprfformbean.setPrf_custname(rs.getString("customerid"));
+				editprfformbean.setPrf_tannid(rs.getString("tanneryid"));
+				editprfformbean.setPrf_tanname(rs.getString("tan.tanname"));
+				editprfformbean.setPrf_tanattn(rs.getString("tan.tanattn"));
+				editprfformbean.setPrf_tanaddr(rs.getString("tan.tanaddr"));
+				editprfformbean.setPrf_tanphone(rs.getString("tan.tanphone"));
+				editprfformbean.setPrf_tanfax(rs.getString("tan.tanfax"));
+				editprfformbean.setPrf_custid(rs.getString("customerid"));
+				editprfformbean.setPrf_custname(rs.getString("cust.custname"));
+				editprfformbean.setPrf_custattn(rs.getString("cust.custattn"));
+				editprfformbean.setPrf_custaddr(rs.getString("cust.custaddr"));
+				editprfformbean.setPrf_custphone(rs.getString("cust.custphone"));
+				editprfformbean.setPrf_custfax(rs.getString("cust.custfax"));
 				editprfformbean.setPrf_cdd(DateConversion.ConverttoNormalDate(rs.getString("cdd_date")));
 				editprfformbean.setPrf_add(DateConversion.ConverttoNormalDate(rs.getString("add_date")));
 				editprfformbean.setPrf_destination(rs.getString("destination"));
@@ -1171,9 +1205,27 @@ public class PrfDaoImpl implements PrfDao {
 				editprfformbean.setPrf_commission(rs.getString("othercommission"));
 				editprfformbean.setPrf_special(rs.getString("splcdn"));
 				editprfformbean.setPrf_inspcdn(rs.getString("inspcdn"));
-				editprfformbean.setPrf_consigneename(rs.getString("consigneeid"));
-				editprfformbean.setPrf_notifyname(rs.getString("notifyid"));
-				editprfformbean.setPrf_bankname(rs.getString("bankid"));
+				editprfformbean.setPrf_consigneeid(rs.getString("consigneeid"));
+				editprfformbean.setPrf_consigneename(rs.getString("consig.consigname"));
+				editprfformbean.setPrf_consigneeattn(rs.getString("consig.consigattn"));
+				editprfformbean.setPrf_consigneeaddr(rs.getString("consig.consigaddr"));
+				editprfformbean.setPrf_consigneephone(rs.getString("consig.consigphone"));
+				editprfformbean.setPrf_consigneefax(rs.getString("consig.consigfax"));
+				
+				editprfformbean.setPrf_notifyid(rs.getString("notifyid"));
+				editprfformbean.setPrf_notifyname(rs.getString("notify.notifyname"));
+				editprfformbean.setPrf_notifyattn(rs.getString("notify.notifyattn"));
+				editprfformbean.setPrf_notifyaddr(rs.getString("notify.notifyaddr"));
+				editprfformbean.setPrf_notifyphone(rs.getString("notify.notifyphone"));
+				editprfformbean.setPrf_notifyfax(rs.getString("notify.notifyfax"));
+				
+				editprfformbean.setPrf_bankid(rs.getString("bankid"));
+				editprfformbean.setPrf_bankname(rs.getString("bank.bankname"));
+				editprfformbean.setPrf_bankaddr(rs.getString("bank.bankaddr"));
+				editprfformbean.setPrf_bankbranch(rs.getString("bank.bankbranch"));
+				editprfformbean.setPrf_bankphone(rs.getString("bank.bankphone"));
+				editprfformbean.setPrf_bankfax(rs.getString("bank.bankfax"));
+				
 				editprfformbean.setPrf_pojw(rs.getString("pojw"));
 				editprfformbean.setFormaction("edit");
 				 
@@ -1213,8 +1265,8 @@ public class PrfDaoImpl implements PrfDao {
 			pst.setString(1, prfbean.getPrf_orderdate());
 			pst.setString(2, prfbean.getPrf_poreftype() +", "+ prfbean.getPrf_poref());
 			pst.setString(3, prfbean.getPrf_exporterid());
-			pst.setString(4, prfbean.getPrf_tanname());
-			pst.setString(5, prfbean.getPrf_custname());
+			pst.setString(4, prfbean.getPrf_tannid());
+			pst.setString(5, prfbean.getPrf_custid());
 			pst.setString(6, prfbean.getPrf_cdd());
 			pst.setString(7, prfbean.getPrf_add());
 			pst.setString(8, prfbean.getPrf_destination());
@@ -1225,9 +1277,9 @@ public class PrfDaoImpl implements PrfDao {
 			pst.setString(13, prfbean.getPrf_commission());
 			pst.setString(14, prfbean.getPrf_special());
 			pst.setString(15, prfbean.getPrf_inspcdn());
-			pst.setString(16, prfbean.getPrf_consigneename());
-			pst.setString(17, prfbean.getPrf_notifyname());
-			pst.setString(18, prfbean.getPrf_bankname());
+			pst.setString(16, prfbean.getPrf_consigneeid());
+			pst.setString(17, prfbean.getPrf_notifyid());
+			pst.setString(18, prfbean.getPrf_bankid());
 			pst.setString(19, prfbean.getPrf_pojw());
 			System.out.println("getPrf_pojw " +prfbean.getPrf_pojw());
 			noofrows = pst.executeUpdate();

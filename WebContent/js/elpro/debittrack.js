@@ -94,7 +94,7 @@ $(document).ready(function() {
 	 debtrackgrid.jqGrid({
 		 url:'/Myelclass/DebitTrackInsertAction.do',
 		 datatype: "json",
-		 colNames:['Deb No','Deb date','Tannery','el class ref','Inv Date','Inv no','Ct No','Inv Amt','Exchange Rate','Commission','Price','Quantity','Commision Amt','Amt in Rs','Tax','Total','TDS','Total Due'],
+		 colNames:['Debit No','Debit date','Tannery','el class ref no','Inv Date','Inv no','Ct No','Inv Amt','Exchange Rate','Commission','Price','Quantity','Commision Amt','INR','Service Tax','Total','TDS','Total Due'],
 		 colModel:[
 					{name: 'deb_debitno', index: 'deb_debitno' ,width:90, hidden: false, 
 						 formatter: "dynamicLink",
@@ -125,37 +125,37 @@ $(document).ready(function() {
 					{name: 'deb_contractno', index: 'deb_contractno' ,width:70, hidden: true,
 						
 					},
-					{name: 'deb_invoiceamt', index: 'deb_invoiceamt' ,width:70,  hidden: false,
+					{name: 'deb_invoiceamt', index: 'deb_invoiceamt' ,width:70,  hidden: false, align:'right',
 						
 					},
-					{name: 'deb_exchangerate', index: 'deb_exchangerate' ,width:70,  hidden: false,
+					{name: 'deb_exchangerate', index: 'deb_exchangerate' ,width:70,  hidden: false, align:'right',
 						
 					},
 					{name: 'deb_commission', index: 'deb_commission' ,width:70, hidden: false,
 						
 					},
-					{name: 'deb_rate', index: 'deb_rate' ,width:70, hidden: false,
+					{name: 'deb_rate', index: 'deb_rate' ,width:70, hidden: false, align:'right',
 						
 					},
-					{name: 'deb_qshipped', index: 'deb_qshipped' ,width:70, hidden: false,
+					{name: 'deb_qshipped', index: 'deb_qshipped' ,width:70, hidden: false, align:'right',
 						
 					},
-					{name: 'deb_elclassamt', index: 'deb_elclassamt' ,width:70, hidden: false,
+					{name: 'deb_elclassamt', index: 'deb_elclassamt' ,width:70,  align:'right', hidden: false,
 						
 					},
-					{name: 'deb_elclassamtinrs', index: 'deb_elclassamtinrs' ,width:70,  hidden: false,
+					{name: 'deb_elclassamtinrs', index: 'deb_elclassamtinrs' ,width:70,  align:'right',  hidden: false,
 						
 					},
-					{name: 'deb_tax', index: 'deb_tax' ,width:70,  hidden: false,
+					{name: 'deb_tax', index: 'deb_tax' ,width:70,  hidden: false, align:'right',
 						
 					},
-					{name: 'deb_total', index: 'deb_total' ,width:50, hidden: false,
+					{name: 'deb_total', index: 'deb_total' ,width:50, hidden: false, align:'right',
 						
 					},
-					{name: 'deb_tds', index: 'deb_tds' ,width:90, hidden: false,
+					{name: 'deb_tds', index: 'deb_tds' ,width:90, hidden: false, align:'right',
 						
 					},
-					{name: 'deb_due', index: 'deb_due' ,width:70, hidden: false,
+					{name: 'deb_due', index: 'deb_due' ,width:70, hidden: false, align:'right',
 						
 					},
 		           ],
@@ -179,6 +179,8 @@ $(document).ready(function() {
 		 gridview : true,
 		 viewrecords: true,
 		 footerrow: true,
+		 grouping:true, 
+		 groupingView : { groupField : ['deb_debitno'] },
 		 loadComplete: function() {
         	 var $self = $(this),
         	 amt = parseFloat($self.jqGrid("getCol", "deb_elclassamtinrs", false, "sum")).toFixed(2);

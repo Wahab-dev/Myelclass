@@ -95,8 +95,10 @@ $(function() {
 				}else{
 					sampletrackgrid.jqGrid('groupingGroupBy', vl, {
 			            groupOrder : ['desc'],
-			            groupColumnShow: [false],
-			            groupCollapse: [true],
+			            groupColumnShow: [true],
+			            groupingView: {
+			            	groupCollapse: [true],
+			            }
 			        });
 				}	
 			}else{
@@ -124,10 +126,10 @@ $(function() {
  sampletrackgrid.jqGrid({  
 	 	datatype: 'json',
 	 	url: '/Myelclass/SamptrackInsertAction.do', 	
-		colNames:['Status','Sampleno','Order Date','Refno','priority','handledby','customerid','tanneryid','deliverid','destination',
-		          'endusage','terms','add','cdd','splcdn','inspcdn','forwaderid','isinvraised','articleid','articletype',
-		          'articleshform','articlename','color','size','substance','selection','selectionp','quantity','pcs','colormatching','rate',
-		          'tapetest','crockingwet','crockingdry','fourfolds','keytest','srfarticleid','rdd','reps','courierdetails', 
+		colNames:['Status','Srf No','Order Date','Ref no','Priority','Handled by','Customer','Tannery','Deliver to','Destination',
+		          'endusage','Terms','ADD','CDD','splcdn','inspcdn','forwaderid','isinvraised','articleid','Animal Type',
+		          'articleshform','Article','Color','Size','Substance','Selection','selectionp','Quantity','Pcs','colormatching','Price',
+		          'tapetest','crockingwet','crockingdry','fourfolds','keytest','srfarticleid','RDD','Reps','Courier Details', 
 		          'Customer Feedback','User','ApplytoAll'],
     	colModel :[  
                 {name: 'status', index: 'status', align:'center', width:35, search: true, stype:'text', editable:true, sortable: true, hidden: false,  
@@ -289,11 +291,11 @@ $(function() {
 					 },*/					 
 					editrules :{required : true},
 				},
-				{name: 'courierdetails', index: 'courierdetails', align:'center', width:60,  search: true, stype:'text',editable:true, sortable: true, hidden: false, 
+				{name: 'courierdetails', index: 'courierdetails', align:'center', width:100,  search: true, stype:'text',editable:true, sortable: true, hidden: false, 
 					edittype: 'textarea', 
 				},
 				
-				{name: 'feedbackdetails', index: 'feedbackdetails', align:'center', width:60,  search: true, stype:'text',editable:true, sortable: true, hidden: false, 
+				{name: 'feedbackdetails', index: 'feedbackdetails', align:'center', width:100,  search: true, stype:'text',editable:true, sortable: true, hidden: false, 
 					edittype: 'textarea', 
 				},
 				
@@ -313,10 +315,10 @@ $(function() {
 	},  
 	caption : 'Sample Tracking Report',
 	pager : '#sampletrackpgr',
-	rowNum : 50, 
-	rowList : [50,100,200],
-    height : "auto",
-    width : "auto",  
+	rowNum : 20, 
+	rowList : [10,20,40,50,100,200],
+	height: 'automatic',
+    width: 'automatic', 
     sortname : 'sampleno',  
     sortorder : 'desc',
     loadonce: true,
@@ -327,6 +329,8 @@ $(function() {
     footerrow: true,
     loadonce: true,
     emptyrecords: 'No records to display',
+    grouping:true, 
+    groupingView : { groupField : ['sampleno'] },
     loadComplete: function () {
         var $self = $(this),
             sum = $self.jqGrid("getCol", "pcs", false, "sum");
@@ -419,8 +423,7 @@ $(function() {
         buttonicon: "ui-icon-print",
         title: "Print in Excel Format",
         onClickButton: downloadExcel,
-    });
- 
+    }).jqGrid('setGridWidth',1400);
  
  /*
 	*  Function to print the Master Page 

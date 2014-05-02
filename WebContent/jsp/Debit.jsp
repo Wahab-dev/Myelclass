@@ -83,7 +83,7 @@ $(function() {
    		</tr>
    </table>
    </div>
-
+<div>
 <h:form action="/Debit" focus="debitno" method="post" onreset=""> 	
 			<td >Welcome <h:text property="userinsession" styleId="userinsession" value="${user.name}" readonly="true" ></h:text></td >
    			<td><h:text property="debactionform" styleId="debactionform" value="${debactionform}" readonly="true" ></h:text></td>
@@ -261,5 +261,6 @@ $(function() {
  
  
 </h:form>
+</div>
 </body>
 </html>

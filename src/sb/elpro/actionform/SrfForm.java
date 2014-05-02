@@ -29,27 +29,31 @@ public class SrfForm extends ActionForm{
 	private String srf_priority;
 	private String srf_handledby;
 	private String srf_customer;
+	private String srf_customerid;
 	private String srf_tanname;
+	private String srf_tannameid;
 	private String srf_tanattn;
 	private String srf_tanaddr;	
 	private String srf_tanphone;
 	private String srf_tanfax;
-	private String srf_custname;
+	/*private String srf_custname;
 	private String srf_custattn;	
 	private String srf_custaddr;
 	private String srf_custphone;
 	private String srf_custfax;	
-	private String srf_custacctno;
+	private String srf_custacctno;*/
 	private String srf_endusage;	
 	private String srf_destination;	
 	private String srf_paymentterms;	
 	private String srf_cdd;	
 	private String srf_add;	
 	private String srf_deliver;
+	private String srf_deliverid;
 	private String srf_deliverattn;
 	private String srf_deliveraddr;
 	private String srf_deliverphone;
 	private String srf_deliverfax;
+	private String srf_deliveracctno;
 	private String srf_splcdn;	
 	private String srf_inspcdn; 
 	private String srf_forwarder; 
@@ -233,75 +237,7 @@ public class SrfForm extends ActionForm{
 	/**
 	 * @return the srf_custname
 	 */
-	public String getSrf_custname() {
-		return srf_custname;
-	}
-	/**
-	 * @param srf_custname the srf_custname to set
-	 */
-	public void setSrf_custname(String srf_custname) {
-		this.srf_custname = srf_custname;
-	}
-	/**
-	 * @return the srf_custattn
-	 */
-	public String getSrf_custattn() {
-		return srf_custattn;
-	}
-	/**
-	 * @param srf_custattn the srf_custattn to set
-	 */
-	public void setSrf_custattn(String srf_custattn) {
-		this.srf_custattn = srf_custattn;
-	}
-	/**
-	 * @return the srf_custaddr
-	 */
-	public String getSrf_custaddr() {
-		return srf_custaddr;
-	}
-	/**
-	 * @param srf_custaddr the srf_custaddr to set
-	 */
-	public void setSrf_custaddr(String srf_custaddr) {
-		this.srf_custaddr = srf_custaddr;
-	}
-	/**
-	 * @return the srf_custphone
-	 */
-	public String getSrf_custphone() {
-		return srf_custphone;
-	}
-	/**
-	 * @param srf_custphone the srf_custphone to set
-	 */
-	public void setSrf_custphone(String srf_custphone) {
-		this.srf_custphone = srf_custphone;
-	}
-	/**
-	 * @return the srf_custfax
-	 */
-	public String getSrf_custfax() {
-		return srf_custfax;
-	}
-	/**
-	 * @param srf_custfax the srf_custfax to set
-	 */
-	public void setSrf_custfax(String srf_custfax) {
-		this.srf_custfax = srf_custfax;
-	}
-	/**
-	 * @return the srf_custacctno
-	 */
-	public String getSrf_custacctno() {
-		return srf_custacctno;
-	}
-	/**
-	 * @param srf_custacctno the srf_custacctno to set
-	 */
-	public void setSrf_custacctno(String srf_custacctno) {
-		this.srf_custacctno = srf_custacctno;
-	}
+	
 	/**
 	 * @return the srf_endusage
 	 */
@@ -913,12 +849,6 @@ public class SrfForm extends ActionForm{
 			srf_tanaddr ="";	
 			srf_tanphone ="";
 			srf_tanfax ="";
-			srf_custname ="";
-			srf_custattn ="";	
-			srf_custaddr ="";
-			srf_custphone ="";
-			srf_custfax ="";	
-			srf_custacctno ="";
 			srf_endusage ="";	
 			srf_destination ="";	
 			srf_paymentterms ="";	
@@ -994,5 +924,53 @@ public class SrfForm extends ActionForm{
 		 */
 		public void setSrf_deliverfax(String srf_deliverfax) {
 			this.srf_deliverfax = srf_deliverfax;
+		}
+		/**
+		 * @return the srf_customerid
+		 */
+		public String getSrf_customerid() {
+			return srf_customerid;
+		}
+		/**
+		 * @param srf_customerid the srf_customerid to set
+		 */
+		public void setSrf_customerid(String srf_customerid) {
+			this.srf_customerid = srf_customerid;
+		}
+		/**
+		 * @return the srf_tannameid
+		 */
+		public String getSrf_tannameid() {
+			return srf_tannameid;
+		}
+		/**
+		 * @param srf_tannameid the srf_tannameid to set
+		 */
+		public void setSrf_tannameid(String srf_tannameid) {
+			this.srf_tannameid = srf_tannameid;
+		}
+		/**
+		 * @return the srf_deliverid
+		 */
+		public String getSrf_deliverid() {
+			return srf_deliverid;
+		}
+		/**
+		 * @param srf_deliverid the srf_deliverid to set
+		 */
+		public void setSrf_deliverid(String srf_deliverid) {
+			this.srf_deliverid = srf_deliverid;
+		}
+		/**
+		 * @return the srf_deliveracctno
+		 */
+		public String getSrf_deliveracctno() {
+			return srf_deliveracctno;
+		}
+		/**
+		 * @param srf_deliveracctno the srf_deliveracctno to set
+		 */
+		public void setSrf_deliveracctno(String srf_deliveracctno) {
+			this.srf_deliveracctno = srf_deliveracctno;
 		}
 }

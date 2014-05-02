@@ -34,7 +34,7 @@ public class BulkDaoImpl implements BulkDao {
 			
 			con = DBConnection.getConnection();
 			st = (Statement) con.createStatement();// limit "+pag+", "+rows+" 
-			String sql = "SELECT distinct article.prfarticleid, form.agent, form.Ctno, Orderdt, pono, exporterid, tanneryid, customerid, cdd_date, add_date, destination, terms, payment, commission, splcdn, inspcdn, consigneeid, notifyid,  bankid,  pojw, article.articleid, articletype, articleshfrom, articlename, color, size, substance, selection, selectionpercent, quantity , unit,pcs, rate, tc, article.prfarticleid, user, statuse.prf_articleid, status, qshipped, qbal, invdetails, reps,  comments, feddback, statuse.contractno, rdd_date FROM elpro.tbl_prfform form, elpro.tbl_prf_article article, elpro.tbl_prfarticle_status statuse where form.Ctno = article.contractno and article.prfarticleid = statuse.prf_articleid order by "+sidx+" "+sord+" ";
+			String sql = "SELECT distinct article.prfarticleid, form.agent, form.Ctno, Orderdt, pono, exporterid, tanneryid, customerid, cdd_date, add_date, destination, terms, payment, commission, splcdn, inspcdn, consigneeid, form.notifyid,  form.bankid,  pojw, article.articleid, articletype, articleshfrom, articlename, color, size, substance, selection, selectionpercent, quantity , unit,pcs, rate, tc, article.prfarticleid, user, stats.prf_articleid, status, qshipped, qbal, invdetails, reps,  comments,  feddback, stats.contractno, rdd_date, tan.tanshform, cust.shortform as custshform,consig.shortform as consigshform ,notify.shortform as notifyshform ,bank.shortform as bankshform FROM  elpro.tbl_prf_article article left outer join elpro.tbl_prfarticle_status stats on article.prfarticleid = stats.prf_articleid left outer join elpro.tbl_prfform form on form.Ctno = article.contractno left outer join elpro.tbl_tannery tan on  tan.tanid = form.tanneryid left outer join elpro.tbl_customer cust on  cust.custid = form.customerid left outer join elpro.tbl_consignee consig on  consig.consigid = form.consigneeid left outer join elpro.tbl_notify notify on  notify.notifyid = form.notifyid left outer join elpro.tbl_bank bank on  bank.bankid = form.bankid order by form.Ctno desc, articletype asc, articlename asc, color asc ";
 			System.out.println(sql);
 			System.out.println(" Rows "+rows);
 			System.out.println(" Page "+pag);
@@ -45,9 +45,9 @@ public class BulkDaoImpl implements BulkDao {
 				bulkbean.setAgent(rs.getString("agent"));
 				bulkbean.setOrderdt(DateConversion.ConverttoNormalDate(rs.getString("Orderdt")));
 				bulkbean.setPono(rs.getString("pono"));
-				bulkbean.setTanneryid(rs.getString("tanneryid"));
-				bulkbean.setExporterid(rs.getString("exporterid"));
-				bulkbean.setCustomerid(rs.getString("customerid"));
+				bulkbean.setTanneryid(rs.getString("tan.tanshform"));
+				bulkbean.setExporterid(rs.getString("tan.tanshform"));
+				bulkbean.setCustomerid(rs.getString("custshform"));
 				bulkbean.setCdd_date(DateConversion.ConverttoNormalDate(rs.getString("cdd_date")));
 				bulkbean.setAdd_date(DateConversion.ConverttoNormalDate(rs.getString("add_date")));
 				bulkbean.setDestination(rs.getString("destination"));
@@ -56,9 +56,9 @@ public class BulkDaoImpl implements BulkDao {
 				bulkbean.setCommission(rs.getString("commission"));
 				bulkbean.setSplcdn(rs.getString("splcdn"));
 				bulkbean.setInspcdn(rs.getString("inspcdn"));
-				bulkbean.setConsigneeid(rs.getString("consigneeid"));
-				bulkbean.setNotifyid(rs.getString("notifyid"));
-				bulkbean.setBankid(rs.getString("bankid"));
+				bulkbean.setConsigneeid(rs.getString("consigshform"));
+				bulkbean.setNotifyid(rs.getString("notifyshform"));
+				bulkbean.setBankid(rs.getString("bankshform"));
 				bulkbean.setPojw(rs.getString("pojw"));
 				
 				bulkbean.setPrfarticleid(rs.getString("article.prfarticleid"));

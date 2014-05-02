@@ -23,12 +23,15 @@ public class SampleRequest implements Serializable {
 	private String srf_priority;
 	private String srf_handledby;
 	private String srf_customer;
+	private String srf_customerid;
 	private String srf_tanname;
+	private String srf_tannameid;
 	private String srf_tanattn;
 	private String srf_tanaddr;	
 	private String srf_tanphone;
 	private String srf_tanfax;
 	private String srf_custname;
+	private String srf_custnameid;
 	private String srf_custattn;	
 	private String srf_custaddr;
 	private String srf_custphone;
@@ -40,6 +43,7 @@ public class SampleRequest implements Serializable {
 	private String srf_cdd;	
 	private String srf_add;	
 	private String srf_deliver;
+	private String srf_deliverid;
 	private String srf_deliverattn;
 	private String srf_deliveraddr;
 	private String srf_deliverphone;
@@ -944,6 +948,54 @@ public class SampleRequest implements Serializable {
 	 */
 	public void setSrfactionform(String srfactionform) {
 		this.srfactionform = srfactionform;
+	}
+	/**
+	 * @return the srf_customerid
+	 */
+	public String getSrf_customerid() {
+		return srf_customerid;
+	}
+	/**
+	 * @param srf_customerid the srf_customerid to set
+	 */
+	public void setSrf_customerid(String srf_customerid) {
+		this.srf_customerid = srf_customerid;
+	}
+	/**
+	 * @return the srf_tannameid
+	 */
+	public String getSrf_tannameid() {
+		return srf_tannameid;
+	}
+	/**
+	 * @param srf_tannameid the srf_tannameid to set
+	 */
+	public void setSrf_tannameid(String srf_tannameid) {
+		this.srf_tannameid = srf_tannameid;
+	}
+	/**
+	 * @return the srf_custnameid
+	 */
+	public String getSrf_custnameid() {
+		return srf_custnameid;
+	}
+	/**
+	 * @param srf_custnameid the srf_custnameid to set
+	 */
+	public void setSrf_custnameid(String srf_custnameid) {
+		this.srf_custnameid = srf_custnameid;
+	}
+	/**
+	 * @return the srf_deliverid
+	 */
+	public String getSrf_deliverid() {
+		return srf_deliverid;
+	}
+	/**
+	 * @param srf_deliverid the srf_deliverid to set
+	 */
+	public void setSrf_deliverid(String srf_deliverid) {
+		this.srf_deliverid = srf_deliverid;
 	}
 
 }

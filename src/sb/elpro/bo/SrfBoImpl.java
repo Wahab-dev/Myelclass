@@ -103,6 +103,7 @@ public class SrfBoImpl implements SrfBo {
 	public List<SampleRequest> getEditSrfFormValues(String sampleno)
 			throws Exception {
 		List<SampleRequest> editsrfformarray = srfdao.getEditSrfFormDetails(sampleno);
+		//if(editsrfformarray.)
 		return editsrfformarray;
 	}
 	/* (non-Javadoc)

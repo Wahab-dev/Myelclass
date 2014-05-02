@@ -24,6 +24,7 @@ $(document).ready(function() {
 			                       phone: item.tanneryContactNo,	
 			                       attn : item.tanneryAttention,
 			                       fax: item.tanneryFax,
+			                       id: item.tanneryId
 			                       };
 			                     }));//END response
 			                    }
@@ -36,7 +37,6 @@ $(document).ready(function() {
 			          	 $('#prf_exporterattn').val(ui.item.attn);
 			          	 $('#prf_exporterfax').val(ui.item.fax);
 			          	 $('#pojw_payterms').val('By local Cheque on or before 30 days from invoice date in Indian Rupee at prevailing exchange rates.');
-			          	
 			           } ,	
 			});  
 	 $('#prf_tanname').autocomplete({
@@ -51,6 +51,7 @@ $(document).ready(function() {
 			                       phone: item.tanneryContactNo,	
 			                       attn : item.tanneryAttention,
 			                       fax: item.tanneryFax,
+			                       id: item.tanneryId
 			                       };
 			                     }));//END response
 			                    }
@@ -67,6 +68,7 @@ $(document).ready(function() {
 			          	 $('#prf_tanphone').val(ui.item.phone);
 			          	 $('#prf_tanattn').val(ui.item.attn);
 			          	 $('#prf_tanfax').val(ui.item.fax);
+			        	 $('#prf_tannid').val(ui.item.id);
 			           } 
 			}); 
 	 
@@ -279,7 +281,7 @@ $(document).ready(function() {
 			},  
 			{name:'prf_selection', index:'selection', align:'center', width:90, sortable:true, hidden: false, editable:true,
 				edittype:'select',
-				  editoptions:{value:{0:'Select Selection %',A:'A',AB:'AB',ABC:'ABC',TR:'TR',Available:'Available'}},
+				  editoptions:{value:{0:'Select Selection %',A:'A',AB:'AB',ABC:'ABC',TR:'TR',Available:'Available',TBA:'TBA',}},
 				  editrules :{required : true},formoptions:{rowpos: 7, colpos: 2} 
 			}, 
 			{name:'prf_selectionp', index:'selectionpercent', align:'center', width:90, sortable:true, editable:true, hidden: false,
@@ -563,20 +565,18 @@ $(document).ready(function() {
 			                             fone: item.consigneeContactNo,	
 			                             attn : item.consigneeAttention,
 			                             fax: item.consigneefax,
+			                             id:item.consigneeId
 			                             };
 			                         }));//END Success
 			                    }
 			            });//END AJAX
 					},
 					select: function( event, ui ) { 
-			          	  var addr = ui.item.addr; 
-			          	  var attn = ui.item.attn; 
-			          	  var fone = ui.item.fone; 
-			          	  var fax = ui.item.fax; 
-			          	  $('#prf_consigneeaddr').val(addr);
-			          	 $('#prf_consigneephone').val(fone);
-			          	 $('#prf_consigneeattn').val(attn);
-			          	 $('#prf_consigneefax').val(fax);
+			          	  $('#prf_consigneeaddr').val(ui.item.addr);
+			          	 $('#prf_consigneephone').val(ui.item.fone);
+			          	 $('#prf_consigneeattn').val(ui.item.attn);
+			          	 $('#prf_consigneefax').val(ui.item.fax);
+			          	 $('#prf_consigneeid').val(ui.item.id);
 			            } 
 		});
 		 $('#prf_bankname').autocomplete({
@@ -596,20 +596,18 @@ $(document).ready(function() {
 			                             fone: item.bankContactNo,	
 			                             brnch : item.bankBranch,
 			                             fax: item.bankFax,
+			                             id:item.bankId
 			                             };
 			                         }));//END Succ ess
 			                    }
 			            });//END AJAX
 					},
 					select: function( event, ui ) { 
-			          	  var addr = ui.item.addr; 
-			          	  var brnch = ui.item.brnch; 
-			          	  var fone = ui.item.fone; 
-			          	  var fax = ui.item.fax; 
-			          	  $('#prf_bankaddr').val(addr);
-			          	 $('#prf_bankphone').val(fone);
-			          	 $('#prf_bankbranch').val(brnch);
-			          	 $('#prf_bankfax').val(fax);
+			          	  $('#prf_bankaddr').val(ui.item.addr);
+			          	 $('#prf_bankphone').val(ui.item.fone);
+			          	 $('#prf_bankbranch').val(ui.item.brnch);
+			          	 $('#prf_bankfax').val(ui.item.fax);
+			          	 $('#prf_bankid').val(ui.item.id);
 			            } 
 		});
 		 $('#prf_notifyname').autocomplete({
@@ -629,22 +627,20 @@ $(document).ready(function() {
 			                             fone: item.notifyConsigneeContactNo,	
 			                             attn : item.notifyConsigneeAttention,
 			                             fax: item.notifyConsigneefax,
+			                             id: item.notifyConsigneeId
 			                             };
 			                         }));//END Success
 			                    }
 			            });//END AJAX
 					},
-					select: function( event, ui ) { 
-			          	  var addr = ui.item.addr; 
-			          	  var attn = ui.item.attn; 
-			          	  var fone = ui.item.fone; 
-			          	  var fax = ui.item.fax; 
-			          	  $('#prf_notifyaddr').val(addr);
-			          	 $('#prf_notifyphone').val(fone);
-			          	 $('#prf_notifyattn').val(attn);
-			          	 $('#prf_notifyfax').val(fax);
+					select: function( event, ui ) {
+			          	  $('#prf_notifyaddr').val( ui.item.addr);
+			          	 $('#prf_notifyphone').val(ui.item.fone);
+			          	 $('#prf_notifyattn').val(ui.item.attn);
+			          	 $('#prf_notifyfax').val(ui.item.fax);
+			          	 $('#prf_notifyid').val(ui.item.id);
 			            } 
-		});
+		 	});
 		
 		        //DATEPICKER
 		        $(".prf_orderdate").datepicker({
@@ -679,27 +675,7 @@ $(document).ready(function() {
 				        var day = date.getDay();              // Disable only SUndays
 				        return [(day != 0), ''];
 				    } 
-				    /*onSelect: function(dateText, inst) { 
-						addOrRemoveDate(dateText);
-					},
-					beforeShowDay: function (date){
-				         var year = date.getFullYear();
-				         // months and days are inserted into the array in the form, e.g "01/01/2009", but here the format is "1/1/2009"
-				         var month = padNumber(date.getMonth() + 1);
-				         var day = padNumber(date.getDate());
-				         // This depends on the datepicker's date format
-				         var dateString = month + "/" + day + "/" + year;
-
-				         var gotDate = jQuery.inArray(dateString, dates);
-				         if (gotDate >= 0) {
-				           // Enable date so it can be deselected. Set style to be highlighted
-				           return [true,"ui-state-highlight"]; 
-				         }
-				         // Dates not in the array are left enabled, but with no extra style
-				         return [true, ""];
-				       }
-				    */
-				});
+				    });
 		        
 					 
 			 
@@ -717,6 +693,7 @@ $(document).ready(function() {
 						                       phone: item.customerTelephone,	
 						                       attn : item.customerAttention,
 						                       fax: item.customerFax,
+						                       id: item.customerId
 						                       };
 						                     }));//END response
 						                    }
@@ -727,6 +704,7 @@ $(document).ready(function() {
 						          	 $('#prf_custphone').val(ui.item.phone);
 						          	 $('#prf_custattn').val(ui.item.attn);
 						          	 $('#prf_custfax').val(ui.item.fax);
+						          	 $('#prf_custid').val(ui.item.id);
 						           } 
 						}); 
 
@@ -900,7 +878,7 @@ $(document).ready(function() {
 		 $.post("/Myelclass/Prf", savePrfForm).done( function(data, textStatus) {
              alert(data)});
 	});*/
-
+ 
 					    
 //UI MODAL FORM FOR POJW
  $("#pojwdiv").dialog({
@@ -916,6 +894,7 @@ $(document).ready(function() {
        	var pojwctno = $("#prf_contractno").val();
        	$("#pojw_contractno").val(pojwctno);
       	$("#pojw_orderdate").val($("#prf_orderdate").val());
+      	$('#pojw_splcdn').val($("#prf_special").val());
        	pojwgrid.jqGrid('setGridParam',{url:"/Myelclass/PrfinsertArticle.do?ctno="+pojwctno}).trigger("reloadGrid");
     },
     buttons:{
@@ -945,9 +924,33 @@ $(document).ready(function() {
     	},
     	"Print" : function (){
     		alert("In Print");
+    		var formdata = $('#pojwform').serialize();
+    		alert("Form Data"+formdata);
+    		$.ajax({
+    			url: "/Myelclass/pojw/print.do",
+    			type: "POST",
+    			async: true,
+    			dataType: "text",
+    			data: formdata,
+    			contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+    			success: function (data) {
+    				alert("S"+data);
+                 console.log("success"+data);
+                 $(this).dialog("close");
+             }, 
+             error: function (data) {
+             	alert("F "+data);
+                 console.log("error");
+             } 
+    		});
+    		
     	}
     }
  	}).css("font-size", "12px");
+ 
+ function callprint(){
+	 
+ 	}
 	$('#pojw').click(function(){
 	 //Dialog Box 	
 	 $("#pojwdiv").dialog('open');

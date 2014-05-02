@@ -21,7 +21,7 @@ $(function() {
 	insptrackgrid.jqGrid({ 
 		datatype: 'json',
         url:"/Myelclass/InspectionTracGridAction.do?action=load", 
-        colNames:['ID','CtNo','InspDate','QCtlr','ArticleID','Article','Color','InspCdn','Grade','Tot Inspected','Skin Count','percent','Passed','Rejects'],  
+        colNames:['ID','CtNo','Inspn Dt','QC','ArticleID','Article','Color','Inspn Condition','Grade','Tot Inspected','Skin Count','Percentage','Passed','Rejects'],  
     	colModel :[ 
 			{name:'inspid', index:'inspid', align:'center', width:60,  editable:true,  },
 			{name:'inspContractNo', index:'inspContractNo',  width:60, align:'center', editable:true, },
@@ -52,13 +52,15 @@ $(function() {
 	    loadtext: "Bow Bow........... ",
 	    height : "auto",
         width: "auto",  
-	    sortname: 'invno',  
+	    sortname: 'inspContractNo',  
 	    sortorder: 'desc',
 	    viewrecords: true,
 	    sortable: true,
         gridview: true , // if used cant use subgrid, treegrid and aftertInsertRow 
 	    footerrow: true,
         loadonce: true,
+        grouping:true, 
+        groupingView : { groupField : ['inspContractNo'] },
 	    emptyrecords: 'No records to display',
 	    loadComplete: function () {
           var $self = $(this),

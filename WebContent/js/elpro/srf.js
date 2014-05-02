@@ -4,17 +4,27 @@
  * 
  */
 $(document).ready(function() {
+	//UI MODAL FORM FOR POJW
+	/* $("#srfdialogform").dialog({
+		autoOpen: true,
+	    resizable: true,
+	    width: 980,
+	    height: 600,
+	    autoResize: true, 
+	    modal:false,  
+	    jqModal:true,
+	    title : "Raise SRF Form",
+	 }).css("font-size", "12px");
+	*/
 	
 	$.get("/Myelclass/SrfAutoComplete.do?action="+"sampleno", 
-		 	function(data){
-			 	if($("#srfactionform").val().toLowerCase() == "edit" ){
-			 		
-			 	}else{
-			 		$("#srf_sampleno").val(data); 
-			 		$.trim($("#srf_sampleno").val());
-			 	}
-			 	
-		 	},"text");
+		 function(data){
+		 	if($("#srfactionform").val().toLowerCase() == "edit" ){	
+		 	}else{
+		 		$("#srf_sampleno").val(data); 
+		 		$.trim($("#srf_sampleno").val());
+		 	}
+		 },"text");
 	
 	
 	 var grid = $("#srfArticletbl"); 
@@ -26,7 +36,7 @@ $(document).ready(function() {
 			         postData: {
 			        	 sampleno: function (){return $("#srf_sampleno").val();},
 				    },
-			         colNames:['ArticleID', 'ArticleShForm', 'ArticleType','Article name','Color', 'Size','Sizeavg','Size Rem','Substance', 'Selection','Selectionp', 'Quantity','Unit','Pieces','Price','Currency','Price','Shipment','Colormatching','Tapetest','Crockingwet','CrockingDry','Fourfolds','Keytest','SampleNo','User','Srfarticleid'],  
+				     colNames:['ArticleID', 'ArticleShForm', 'ArticleType','Article name','Color', 'Size','Sizeavg','Size Rem','Substance', 'Selection','Selectionp', 'Quantity','Unit','Pieces','Price','Currency','Price','Shipment','Colormatching','Tapetest','Crockingwet','CrockingDry','Fourfolds','Keytest','SampleNo','User','Srfarticleid'],  
 			         colModel :[   
 			                    {name:'articleid',index:'articleid',align:'center', editable:true, sortable:true, hidden:true,
 			                    	formoptions:{rowpos: 1, colpos: 1}, 
@@ -54,8 +64,6 @@ $(document).ready(function() {
 			                             editrules :{require : true},	
 			                             formoptions:{rowpos: 2, colpos: 1}, 
 			                    },  
-			                    
-			                    
 			                    {name:'srf_articlename', index:'articlename',  align:'center', width:80, editable:true, sortable:true, hidden:false,
 			                    	edittype:'text',
 			      		    	    editoptions:{
@@ -171,7 +179,7 @@ $(document).ready(function() {
 			        				formoptions:{rowpos: 5, colpos: 1}, 	
 			                    }, 
 			                    {name:'srf_selection', index:'selection', align:'center', width:80, editable:true, sortable:true, hidden:false, edittype:'select',			                    	
-			      				  editoptions:{value:{0:'Select Selection %',A:'A',AB:'AB',ABC:'ABC',TR:'TR',Available:'Available'}},
+			      				  editoptions:{value:{0:'Select Selection %',A:'A',AB:'AB',ABC:'ABC',TR:'TR',Available:'Available',TBA:'TBA'}},
 			      				  formoptions:{rowpos: 5, colpos: 2},
 			    				},  
 			                    {name:'srf_selectionp', index:'selectionp',  align:'center', width:80, editable:true, sortable:true, hidden:true, 
@@ -226,7 +234,7 @@ $(document).ready(function() {
 			                    },  
 			                    {name:'srf_colormatch', index:'colormatching', align:'center', editable:true, sortable:true, hidden:true, 
 			                    	 edittype:'select',
-				       			      editoptions:{value:{0:'--- Select colormatching --- ',Normalwhitetubelight:'Normal White Tube Light',NaturalLight:'Natural Light',TL84:'TL 84',TL86:'TL 86'}},
+				       			      editoptions:{value:{0:'--- Select colormatching --- ',Normalwhitetubelight:'Normal White Tube Light',NaturalLight:'Natural Light',TL84:'TL 84',TL86:'TL 86',D65:'D 65'}},
 				       			      editrules:{edithidden:true},	
 				       			   formoptions:{rowpos: 9, colpos: 1},
 			                    },   
@@ -281,14 +289,14 @@ $(document).ready(function() {
 			    	viewrecords: true ,
 			    	rowList:[7,10,15],
 			        loadtext: "Bow Bow",
-			        height : "auto",
-			        width:"auto",  
+			        height: 'automatic',
+			        width: 'automatic',
 			        sortname: 'articleid',  
 			        sortorder: 'desc',  
 			        emptyrecords: 'No records to display',
 			        editurl: "/Myelclass/SrfinsertArticle.do", 
-			        });  
-		grid.jqGrid('navGrid','#srfArticlepager',{edit:true,add:true,del:true, search:true, view:true},
+			        }); 
+		grid.jqGrid('navGrid','#srfArticlepager',{edit:true,add:true,del:true, search:true, view:false},
 		{
 		  //Edit 
 		  top: 150,
@@ -319,27 +327,18 @@ $(document).ready(function() {
 			  $("#srf_shipment").val(ratec.substring(ratemplast+1));
 				 
 			  $("#tr_srf_price").hide();
-			  // Add Button i n Edit Form
-			   /*   $('<a href="#">Edit save<span class="ui-icon ui-icon-disk"></span></a>')
-		                .click(function() {
-		                	grid.jqGrid('editGridRow', "new", properties );
-		                }).addClass("fm-button ui-state-default ui-corner-all fm-button-icon-left")
-		                  .prependTo("#Act_Buttons>td.EditButton");*/
-		        
-		        },
-		        closeAfterEdit: true,
-				reloadAfterSubmit: true,
+		      },
+		      closeAfterEdit: true,
+			reloadAfterSubmit: true,
 			
 		},		
 		{
 			//Add
 			beforeShowForm: function(form) { 
-				
-				 
+			
 	           	 $("#srf_samplenum").val($("#srf_sampleno").val());
 	           	 $("#user").val($("#userinsession").val());
-	            	$("#tr_srf_price").hide(); // hide the tr prf_rate
-	            	//$("#tr_prf_rate").hide();
+	             $("#tr_srf_price").hide(); // hide the tr prf_rat
 	          },
 	          closeAfterAdd: true,
 			  reloadAfterSubmit: true,
@@ -366,7 +365,14 @@ $(document).ready(function() {
                  },
 				reloadAfterSubmit: true, 
 		});
-	
+		/*grid.jqGrid('navGrid', '#srfArticlepager', {
+	         addtext: 'Add',
+	         edittext: 'Edit',
+	         deltext: 'Delete',
+	         searchtext: 'Search',
+	         refreshtext: 'Reload',
+	         viewtext: 'View'
+	     });*/
 			
 	//Autocomplete
 	 $('#srf_tanname').autocomplete({
@@ -381,6 +387,7 @@ $(document).ready(function() {
 			                       phone: item.tanneryContactNo,	
 			                       attn : item.tanneryAttention,
 			                       fax: item.tanneryFax,
+			                       id: item.tanneryId,
 			                       };
 			                     }));//END response
 			                    }
@@ -391,8 +398,11 @@ $(document).ready(function() {
 			          	 $('#srf_tanphone').val(ui.item.phone);
 			          	 $('#srf_tanattn').val(ui.item.attn);
 			          	 $('#srf_tanfax').val(ui.item.fax);
+			          	 $('#srf_tannameid').val(ui.item.id);
 			           } 
-			}); 
+			}).focus(function(){            
+	            $(this).trigger('keydown.autocomplete');
+	        }); 
 		  $('#srf_deliver').autocomplete({
 			 source: function(request, response) {
 				var param = request.term;  
@@ -405,16 +415,18 @@ $(document).ready(function() {
 			                       phone: item.customerTelephone,	
 			                       attn : item.customerAttention,
 			                       fax: item.customerFax,
+			                       id: item.customerId,
 			                       };
 			                     }));//END response
 			                    }
 					 );
 					},
 					select: function( event, ui) { 
-			          	 $('#srf_custaddr').val(ui.item.addr);
-			          	 $('#srf_custphone').val(ui.item.phone);
-			          	 $('#srf_custattn').val(ui.item.attn);
-			          	 $('#srf_custfax').val(ui.item.fax);
+			          	 $('#srf_deliveraddr').val(ui.item.addr);
+			          	 $('#srf_deliverphone').val(ui.item.phone);
+			          	 $('#srf_deliverattn').val(ui.item.attn);
+			          	 $('#srf_deliverfax').val(ui.item.fax);
+			          	$('#srf_deliverid').val(ui.item.id);
 			           } 
 			}); 
 		  
@@ -426,12 +438,15 @@ $(document).ready(function() {
 			            		response($.map(result, function(item) {
 			                	return {
 			                		label: item.label,  //can add number of attributes here   
-			                        value: item.label  // I am displaying both labe and value  
+			                        value: item.label,
+			                        id: item.customerId// I am displaying both labe and value  
 			                	};
 			            }));
 			        });
-			    }
-
+			    },
+			    select: function( event, ui) { 
+		          	$('#srf_customerid').val(ui.item.id);
+		           } 
 			});
 	$('#srf_destination').autocomplete({
 	    source: function(request, response) {
@@ -565,7 +580,7 @@ $(document).ready(function() {
 			    showButtonPanel: false,
 			    gotoCurrent:true, 
 			    beforeShowDay: function(date) {
-			        var day = date.getDay();              // Disable only SUndays
+			        var day = date.getDay();              // Disable only Sundays
 			        return [(day != 0), ''];
 			    } 
 			    

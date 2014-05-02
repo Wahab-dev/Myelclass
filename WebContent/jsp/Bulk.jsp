@@ -79,29 +79,19 @@ $(function() {
    		</tr>
    </table>
    </div>
-  			<h:form action="/login" method="post" >	  
-  			<table>
-  			<tr>
-  			<td>
-	   				<td >Welcome <h:text property="userinsession" styleId="userinsession" value="${user.name}" readonly="true" ></h:text></td >
-	   				<td ><h:text property="formaction" styleId="formaction" value="${actionform}"></h:text></td> 
-	   				<td><h:submit property="prfaction" value="Logout"></h:submit></td> 
-   				
+   <div>
+  	<h:form action="/login" method="post" >	  
+  	<table>
+  		<tr>
+	   		<td>Welcome ${user.name}</td > 
+	   		<td> <h:submit property="prfaction" value="Logout"></h:submit></td> 	
    		</tr>
    </table>
    </h:form>
 <!-- Bulk Tracking Form  -->
-<h:form >   
-	<div id="blk">Bulk Tracking</div> 
-	 Group By: <select id="chngroup"> 
-			<option value="clear" selected="selected">Remove Grouping</option>
-			<option value="ctno">Ct No</option> 
-			<option value="articlename">Article</option> 
-			<option value="status">Status</option>
-			<option value="color">color</option> 
-		</select> <br/><br/> 
+	Group By: <select id="chngroup"> <option value="ctno">Ct No</option><option value="articlename">Article</option><option value="status">Status</option><option value="color">color</option><option value="clear" >Remove Grouping</option></select> 
 			<table id="bulkktracktbl"></table> 
 			<div id="bulkktrackpager"></div> 
-	 </h:form>  
+	 </div>
 </body>
 </html>

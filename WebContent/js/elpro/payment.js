@@ -83,7 +83,7 @@ $(function() {
 		 sortorder: 'desc',  
 		 height : 'automatic',
 		 emptyrecords: 'No records to display',
-		 caption: 'Payment Load',
+		 caption: 'Payment Details',
 		 multiselect : true,
 		 loadComplete: function (data){ //load complete fires immeddiately aftr server response
 			
@@ -125,7 +125,7 @@ $(function() {
 	 			 var deb_tax = parseFloat(rowData.deb_tax).toFixed(2);
 	 			 var deb_total = parseFloat(rowData.deb_total).toFixed(2);
 	 			 var deb_tds = parseFloat(rowData.deb_tds).toFixed(2);
-	 			 var deb_due = parseFloat(rowData.deb_due).toFixed(2);
+	 			 var deb_due = parseFloat(rowData.deb_due).toFixed(0);
 	 			 
 	 			qshipped =  parseFloat(qshipped) + parseFloat(deb_qshipped);
 	 			invamt =  parseFloat(invamt) + parseFloat(deb_invamt);

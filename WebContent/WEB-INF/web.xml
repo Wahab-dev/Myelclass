@@ -26,6 +26,13 @@
   </welcome-file-list>
   
   
+  <jsp-config>
+  <jsp-property-group>
+    <url-pattern>*.jsp</url-pattern>
+    <trim-directive-whitespaces>true</trim-directive-whitespaces>
+  </jsp-property-group>
+</jsp-config>
+  
   <listener>
 		<listener-class>sb.elpro.utility.Config</listener-class>	
 	</listener>

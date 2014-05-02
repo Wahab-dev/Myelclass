@@ -155,7 +155,7 @@ public class PrfAutocomplete extends Action {
 			 		out.println(jsonOrdertanArray);
 				}else if(action.equalsIgnoreCase("pojwno")){
 					System.out.println("In pojwno Autocomplete");
-					String tanterm = request.getParameter("term");
+				
 					String pojwno  =  prfbo.getPoJWno();
 					System.out.println(pojwno);
 					out.println(pojwno);

@@ -122,12 +122,22 @@ public class SrfAction extends DispatchAction {
 	}
 	public ActionForward Print(ActionMapping map, ActionForm form, 
 			HttpServletRequest request, HttpServletResponse response) throws Exception{
-		response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"); 
+		
+		Connection conn = null;
+		try {
+            Class.forName("com.mysql.jdbc.Driver");
+            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/elpro","root","tiger");
+            System.out.println("conn "+conn.getCatalog());
+            } catch (SQLException ex) {
+            } catch (ClassNotFoundException ex) {
+            }
+		response.setContentType("application/ms-excel"); 
+		response.setHeader("Content-Disposition", "attachment; filename=SRF.xls");
         ServletOutputStream out = response.getOutputStream();
 		System.out.println("IN Print  ");
 		SrfForm srfprintform =(SrfForm) form;
 		//srfprintform.setPrf_poref("This is the Title of the Report");
-		JasperReport report = JasperCompileManager.compileReport("C:/Users/meetw_000/Desktop/report/Srfform.jrxml");
+		JasperReport report = JasperCompileManager.compileReport("C:/Users/meetw_000/Desktop/report/SampleForm.jrxml");
 		HashMap<String, Object> hm = new HashMap<String, Object>();
 		hm.put("psno",srfprintform.getSrf_sampleno());
 		hm.put("porddt", srfprintform.getSrf_orderdate());
@@ -141,10 +151,10 @@ public class SrfAction extends DispatchAction {
 		hm.put("ptanntele", srfprintform.getSrf_tanphone());
 		hm.put("ptannfax", srfprintform.getSrf_tanfax());
 		hm.put("pdelname", srfprintform.getSrf_deliver());
-		hm.put("pdelattn", srfprintform.getSrf_custattn());
-		hm.put("pdeladdr", srfprintform.getSrf_custaddr());
-		hm.put("pdeltele", srfprintform.getSrf_custphone());
-		hm.put("pdelfax", srfprintform.getSrf_custfax());
+		hm.put("pdelattn", srfprintform.getSrf_deliverattn());
+		hm.put("pdeladdr", srfprintform.getSrf_deliveraddr());
+		hm.put("pdeltele", srfprintform.getSrf_deliverphone());
+		hm.put("pdelfax", srfprintform.getSrf_deliverfax());
 		hm.put("pcolrmatch", srfprintform.getSrf_colormatching());
 		hm.put("ptapetest", srfprintform.getSrf_tapetest());
 		//hm.put("pcrockwet", srfprintform.);
@@ -153,7 +163,7 @@ public class SrfAction extends DispatchAction {
 		hm.put("pdesti", srfprintform.getSrf_destination());
 		hm.put("pdeldate", srfprintform.getSrf_cdd());
 		hm.put("psplcdn", srfprintform.getSrf_splcdn());
-		JasperPrint print = JasperFillManager.fillReport(report, hm, new JREmptyDataSource());
+		JasperPrint print = JasperFillManager.fillReport(report, hm, conn);
 		
 		JRXlsxExporter excelexporter = new JRXlsxExporter(); // supports jaspersoft 5.5.1 
       
@@ -162,9 +172,9 @@ public class SrfAction extends DispatchAction {
          excelexporter.setParameter(JRXlsExporterParameter.OUTPUT_STREAM, out);
  	
          // Excel specific parameters
-         excelexporter.setParameter(JRXlsAbstractExporterParameter.IS_ONE_PAGE_PER_SHEET, Boolean.FALSE);
+         excelexporter.setParameter(JRXlsAbstractExporterParameter.IS_ONE_PAGE_PER_SHEET, Boolean.TRUE);
          excelexporter.setParameter(JRXlsAbstractExporterParameter.IS_REMOVE_EMPTY_SPACE_BETWEEN_ROWS, Boolean.FALSE);
-         excelexporter.setParameter(JRXlsAbstractExporterParameter.IS_WHITE_PAGE_BACKGROUND, Boolean.FALSE);
+         excelexporter.setParameter(JRXlsAbstractExporterParameter.IS_WHITE_PAGE_BACKGROUND, Boolean.TRUE);
          excelexporter.setParameter(JRXlsAbstractExporterParameter.IS_IGNORE_GRAPHICS,Boolean.FALSE);
          
         try {

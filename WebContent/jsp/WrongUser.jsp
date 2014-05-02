@@ -9,15 +9,16 @@
 </head>
 <body>
 <h1>Invalid  User Page</h1>
-<h:form action="/login" method="post" >
+<%-- <h:form action="/login" method="post" >
 	<table style="border: thin;">
    		<tr>  			
    			 	
-   			<td>Login Again<h:submit property="btraction" value="login"></h:submit></td> 
+   			<td>Click Here<h:link action="login"></h:link>to login Again</td> 
    		</tr>
    </table>
-</h:form>
-
-	
+</h:form> --%>
+ <ul>
+            <li><h:link action="/login"> Click here </h:link>to go to Login Page</li>
+</ul>
 </body>
 </html>

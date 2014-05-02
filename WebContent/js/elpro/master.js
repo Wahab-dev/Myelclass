@@ -66,15 +66,15 @@ $(function() {
 		datatype: 'json',
         url:"/Myelclass/MasterInsertAction.do", 
 		colNames:[
-		          'Ct NO','Agent','Date','PONo','Exporter','Tanner','Customer','ADD','RDD','Desti','Commission','Commission1','Consignee',
-				  'Notify','POJW','ArticleID','Article','Color','Size','Subs','Selec','Qty','Shipped','Bal','Rate','TC','USer','Status',
-			      'InvDetails','Reps','Comments','Feedbacks','inspid','inspdate','qualitycontroller','contractno','articleid','article','color',
-	              'inspcdn','testid','gradeid','rejectsid','totinspected','inspcomments','invtype','invno','invdate','exportersref','expname',
-	              'taninvno','customer','consignee','notify','totalamount','otherref','buyer', 'bank','AWBillNo','AWBillDate',
-	              'othercharges','discounts','invbillid','articleid','artname','color','size','subs','selc','qty','pcs','rate',
-		          'qshpd','qbal','amt','comm','othercomm','debitno','debitdate',
-		          'exchgrate','commission', 'amount','elclassamount','amountinrs','tax','totaltax','tds',
-	              'totaldue'
+		          'Ct NO','Agent','Order Date','PO No','Exporter','Tanner','Customer','ADD','RDD','Destination','Commission','Commission1','Consignee',
+				  'Notify','PO/JW No','ArticleID','Article','Color','Size','Subs','Selec','Qty','Shipped','Bal','Price','TC','User','Status',
+			      'Inv Details','Reps','Comments','Feedback','inspid','Insp Date','QC','Ct No','Articleid','Article','Color',
+	              'Inspn Condition','testid','gradeid','rejectsid','Tot Inspected','Insp Comments','invtype','Inv No','Inv Date','exportersref','Exp Name',
+	              'Tan Inv No','Customer','Consignee','Notify','Total Asmount','Other Ref','Buyer', 'Bank','AWB/BL No','AWB/BL Date',
+	              'Other Charges','Discounts','invbillid','articleid','Article','Color','Size','Subs','Selc','Qty','Pcs','Price',
+		          'Qty Shpd','Q Bal','Inv Amount','Com %','Other Com%','Debit No','Debit Date',
+		          'Ex-Rate','Com ', 'Inv Amt','Comm Amt','INR','Service Tax','Total','TDS',
+	              'Due'
 		  	      ],  
 		 colModel:[
 					{name:'ctno', index:'ctno',align:'center', editable:false, sortable: true, hidden:false, 
@@ -139,8 +139,8 @@ $(function() {
 					{name:'feddback', index:'feddback',align:'center', editable:false, sortable: true, hidden:false, search: true, stype:'text',},
 					
 					//Inspection Details
-					{name:'inspid', index:'inspid',align:'center', editable:false, sortable: true, hidden:true, search: true, stype:'text',},
-					{name:'inspdate', index:'inspdate',align:'center', editable:false, sortable: true, hidden:true, search: true, stype:'date',
+					{name:'inspid', index:'inspid',align:'center', editable:false, sortable: true, hidden:false, search: true, stype:'text',},
+					{name:'inspdate', index:'inspdate',align:'center', editable:false, sortable: true, hidden:false, search: true, stype:'date',
 						formatter: 'date', formatoptions: { newformat: 'd-m-Y' },
 						
 						searchoptions: {
@@ -149,22 +149,22 @@ $(function() {
 							 sopt: ['eq', 'ne', 'lt', 'le', 'gt', 'ge']  
 					       },		
 					},
-					{name:'qualitycontroller', index:'qualitycontroller',align:'center', editable:false, sortable: true, hidden:true, search: true, stype:'text',},
-					{name:'contractno', index:'contractno',align:'center', editable:false, sortable: true, hidden:true, search: true, stype:'text',},
-					{name:'articleid', index:'articleid',align:'center', editable:false, sortable: true, hidden:true, search: true, stype:'text',},
-					{name:'article', index:'article',align:'center', editable:false, sortable: true, hidden:true, search: true, stype:'text',},
-					{name:'color', index:'color',align:'center', editable:false, sortable: true, hidden:true, search: true, stype:'text',},
-					{name:'inspcdn', index:'inspcdn',align:'center', editable:false, sortable: true, hidden:true, search: true, stype:'text',},
-					{name:'testid', index:'testid',align:'center', editable:false, sortable: true, hidden:true, search: true, stype:'text',},
-					{name:'gradeid', index:'gradeid',align:'center', editable:false, sortable: true, hidden:true, search: true, stype:'text',},
-					{name:'rejectsid', index:'rejectsid',align:'center', editable:false, sortable: true, hidden:true, search: true, stype:'text',},
-					{name:'totinspected', index:'totinspected',align:'center', editable:true, sortable: true, hidden:true, search: true, stype:'text',},
-					{name:'inspcomments', index:'inspcomments',align:'center', editable:true, sortable: true, hidden:true, search: true, stype:'text',},
+					{name:'qualitycontroller', index:'qualitycontroller',align:'center', editable:false, sortable: true, hidden:false, search: true, stype:'text',},
+					{name:'contractno', index:'contractno',align:'center', editable:false, sortable: true, hidden:false, search: true, stype:'text',},
+					{name:'articleid', index:'articleid',align:'center', editable:false, sortable: true, hidden:false, search: true, stype:'text',},
+					{name:'article', index:'article',align:'center', editable:false, sortable: true, hidden:false, search: true, stype:'text',},
+					{name:'color', index:'color',align:'center', editable:false, sortable: true, hidden:false, search: true, stype:'text',},
+					{name:'inspcdn', index:'inspcdn',align:'center', editable:false, sortable: true, hidden:false, search: true, stype:'text',},
+					{name:'testid', index:'testid',align:'center', editable:false, sortable: true, hidden:false, search: true, stype:'text',},
+					{name:'gradeid', index:'gradeid',align:'center', editable:false, sortable: true, hidden:false, search: true, stype:'text',},
+					{name:'rejectsid', index:'rejectsid',align:'center', editable:false, sortable: true, hidden:false, search: true, stype:'text',},
+					{name:'totinspected', index:'totinspected',align:'center', editable:true, sortable: true, hidden:false, search: true, stype:'text',},
+					{name:'inspcomments', index:'inspcomments',align:'center', editable:true, sortable: true, hidden:false, search: true, stype:'text',},
 					
 					//Invoice Deatils 
-					{name:'invtype', index:'invtype',align:'center', editable:false, sortable: true, hidden:true, search: true, stype:'text',},
-					{name:'invno', index:'invno',align:'center', editable:false, sortable: true, hidden:true, search: true, stype:'text',},
-					{name:'invdate', index:'invdate',align:'center', editable:false, sortable: true, hidden:true, search: true, stype:'date',
+					{name:'invtype', index:'invtype',align:'center', editable:false, sortable: true, hidden:false, search: true, stype:'text',},
+					{name:'invno', index:'invno',align:'center', editable:false, sortable: true, hidden:false, search: true, stype:'text',},
+					{name:'invdate', index:'invdate',align:'center', editable:false, sortable: true, hidden:false, search: true, stype:'date',
 						formatter: 'date', formatoptions: { newformat: 'd-m-Y' },					
 						searchoptions: {
 					        searchOperators: true,
@@ -172,19 +172,19 @@ $(function() {
 							 sopt: ['eq', 'ne', 'lt', 'le', 'gt', 'ge']  
 					       },		
 					},
-					{name:'exportersref', index:'exporters ref',align:'center', editable:false, sortable: true, hidden:true, search: true, stype:'text',},
-					{name:'expname', index:'expname',align:'center', editable:false, sortable: true, hidden:true, search: true, stype:'text',},
-					{name:'taninvno', index:'taninvno',align:'center', editable:false, sortable: true, hidden:true, search: true, stype:'text',},
+					{name:'exportersref', index:'exporters ref',align:'center', editable:false, sortable: true, hidden:false, search: true, stype:'text',},
+					{name:'expname', index:'expname',align:'center', editable:false, sortable: true, hidden:false, search: true, stype:'text',},
+					{name:'taninvno', index:'taninvno',align:'center', editable:false, sortable: true, hidden:false, search: true, stype:'text',},
 					
-					{name:'customer', index:'customer',align:'center', editable:false, sortable: true, hidden:true, search: true, stype:'text',},
-					{name:'consignee', index:'consignee',align:'center', editable:false, sortable: true, hidden:true, search: true, stype:'text',},
-					{name:'notify', index:'notify',align:'center', editable:false, sortable: true, hidden:true, search: true, stype:'text',},
-					{name:'totalamount', index:'totalamount',align:'center', editable:false, sortable: true, hidden:true, search: true, stype:'text',},
-					{name:'otherref', index:'otherref',align:'center', editable:false, sortable: true, hidden:true, search: true, stype:'text',},
-					{name:'buyer', index:'buyer',align:'center', editable:false, sortable: true, hidden:true, search: true, stype:'text',},
-					{name:'bank', index:'bank',align:'center', editable:false, sortable: true, hidden:true, search: true, stype:'text',},
-					{name:'AWBillNo', index:'AWBillNo',align:'center', editable:false, sortable: true, hidden:true, search: true, stype:'text',},
-					{name:'AWBillDate', index:'AWBillDate',align:'center', editable:false, sortable: true, hidden:true, search: true, stype:'date',
+					{name:'customer', index:'customer',align:'center', editable:false, sortable: true, hidden:false, search: true, stype:'text',},
+					{name:'consignee', index:'consignee',align:'center', editable:false, sortable: true, hidden:false, search: true, stype:'text',},
+					{name:'notify', index:'notify',align:'center', editable:false, sortable: true, hidden:false, search: true, stype:'text',},
+					{name:'totalamount', index:'totalamount',align:'center', editable:false, sortable: true, hidden:false, search: true, stype:'text',},
+					{name:'otherref', index:'otherref',align:'center', editable:false, sortable: true, hidden:false, search: true, stype:'text',},
+					{name:'buyer', index:'buyer',align:'center', editable:false, sortable: true, hidden:false, search: true, stype:'text',},
+					{name:'bank', index:'bank',align:'center', editable:false, sortable: true, hidden:false, search: true, stype:'text',},
+					{name:'AWBillNo', index:'AWBillNo',align:'center', editable:false, sortable: true, hidden:false, search: true, stype:'text',},
+					{name:'AWBillDate', index:'AWBillDate',align:'center', editable:false, sortable: true, hidden:false, search: true, stype:'date',
 						formatter: 'date', formatoptions: { newformat: 'd-m-Y' },
 						searchoptions: {
 					        searchOperators: true,
@@ -192,28 +192,28 @@ $(function() {
 							 sopt: ['eq', 'ne', 'lt', 'le', 'gt', 'ge']  
 					       },					
 					},
-					{name:'othercharges', index:'othercharges',align:'center', editable:false, sortable: true, hidden:true, search: true, stype:'text',},
-					{name:'discounts', index:'discounts',align:'center', editable:false, sortable: true, hidden:true, search: true, stype:'text',},
-					{name:'invbillid', index:'invbillid',align:'center', editable:false, sortable: true, hidden:true, search: true, stype:'text',},
-					{name:'articleid', index:'articleid',align:'center', editable:false, sortable: true, hidden:true, search: true, stype:'text',},
-					{name:'artname', index:'artname',align:'center', editable:false, sortable: true, hidden:true, search: true, stype:'text',},
-					{name:'color', index:'color',align:'center', editable:false, sortable: true, hidden:true, search: true, stype:'text',},
-					{name:'size', index:'size',align:'center', editable:false, sortable: true, hidden:true, search: true, stype:'text',},
-					{name:'subs', index:'subs',align:'center', editable:false, sortable: true, hidden:true, search: true, stype:'text',},
-					{name:'selc', index:'selc',align:'center', editable:false, sortable: true, hidden:true, search: true, stype:'text',},
-					{name:'qty', index:'qty',align:'center', editable:false, sortable: true, hidden:true, search: true, stype:'text',},
-					{name:'pcs', index:'pcs',align:'center', editable:false, sortable: true, hidden:true, search: true, stype:'text',},
-					{name:'rate', index:'rate',align:'center', editable:false, sortable: true, hidden:true, search: true, stype:'text',},
+					{name:'othercharges', index:'othercharges',align:'center', editable:false, sortable: true, hidden:false, search: true, stype:'text',},
+					{name:'discounts', index:'discounts',align:'center', editable:false, sortable: true, hidden:false, search: true, stype:'text',},
+					{name:'invbillid', index:'invbillid',align:'center', editable:false, sortable: true, hidden:false, search: true, stype:'text',},
+					{name:'articleid', index:'articleid',align:'center', editable:false, sortable: true, hidden:false, search: true, stype:'text',},
+					{name:'artname', index:'artname',align:'center', editable:false, sortable: true, hidden:false, search: true, stype:'text',},
+					{name:'color', index:'color',align:'center', editable:false, sortable: true, hidden:false, search: true, stype:'text',},
+					{name:'size', index:'size',align:'center', editable:false, sortable: true, hidden:false, search: true, stype:'text',},
+					{name:'subs', index:'subs',align:'center', editable:false, sortable: true, hidden:false, search: true, stype:'text',},
+					{name:'selc', index:'selc',align:'center', editable:false, sortable: true, hidden:false, search: true, stype:'text',},
+					{name:'qty', index:'qty',align:'center', editable:false, sortable: true, hidden:false, search: true, stype:'text',},
+					{name:'pcs', index:'pcs',align:'center', editable:false, sortable: true, hidden:false, search: true, stype:'text',},
+					{name:'rate', index:'rate',align:'center', editable:false, sortable: true, hidden:false, search: true, stype:'text',},
 							           
-					{name:'qshpd', index:'qshpd',align:'center', editable:false, sortable: true, hidden:true, search: true, stype:'text',},
-					{name:'qbal', index:'qbal',align:'center', editable:false, sortable: true, hidden:true, search: true, stype:'text',},
-					{name:'amt', index:'amt',align:'center', editable:false, sortable: true, hidden:true, search: true, stype:'text',},
-					{name:'comm', index:'comm',align:'center', editable:false, sortable: true, hidden:true, search: true, stype:'text',},
-					{name:'othercomm', index:'othercomm',align:'center', editable:false, sortable: true, hidden:true, search: true, stype:'text',},
+					{name:'qshpd', index:'qshpd',align:'center', editable:false, sortable: true, hidden:false, search: true, stype:'text',},
+					{name:'qbal', index:'qbal',align:'center', editable:false, sortable: true, hidden:false, search: true, stype:'text',},
+					{name:'amt', index:'amt',align:'center', editable:false, sortable: true, hidden:false, search: true, stype:'text',},
+					{name:'comm', index:'comm',align:'center', editable:false, sortable: true, hidden:false, search: true, stype:'text',},
+					{name:'othercomm', index:'othercomm',align:'center', editable:false, sortable: true, hidden:false, search: true, stype:'text',},
 					
 					//Debit
-					{name:'debitno', index:'debitno',align:'center', editable:false, sortable: true, hidden:true, search: true, stype:'text',},
-					{name:'debitdate', index:'debitdate',align:'center', editable:false, sortable: true, hidden:true, search: true, stype:'date',
+					{name:'debitno', index:'debitno',align:'center', editable:false, sortable: true, hidden:false, search: true, stype:'text',},
+					{name:'debitdate', index:'debitdate',align:'center', editable:false, sortable: true, hidden:false, search: true, stype:'date',
 						formatter: 'date', formatoptions: { newformat: 'd-m-Y' },
 						searchoptions: {
 					        searchOperators: true,
@@ -222,16 +222,16 @@ $(function() {
 					       },		
 					},
 					
-					{name:'exchgrate', index:'exchgrate',align:'center', editable:false, sortable: true, hidden:true, search: true, stype:'text',},
-					{name:'commission', index:'commission',align:'center', editable:false, sortable: true, hidden:true, search: true, stype:'text',},
+					{name:'exchgrate', index:'exchgrate',align:'center', editable:false, sortable: true, hidden:false, search: true, stype:'text',},
+					{name:'commission', index:'commission',align:'center', editable:false, sortable: true, hidden:false, search: true, stype:'text',},
 					
-					{name:'amount', index:'amount',align:'center', editable:false, sortable: true, hidden:true, search: true, stype:'text',},
-					{name:'elclassamount', index:'elclassamount',align:'center', editable:false, sortable: true, hidden:true, search: true, stype:'text',},
-					{name:'amountinrs', index:'amountinrs',align:'center', editable:false, sortable: true, hidden:true, search: true, stype:'text',},
-					{name:'tax', index:'tax',align:'center', editable:false, sortable: true, hidden:true, search: true, stype:'text',},
-					{name:'totaltax', index:'totaltax',align:'center', editable:false, sortable: true, hidden:true, search: true, stype:'text',},
-					{name:'tds', index:'tds',align:'center', editable:false, sortable: true, hidden:true, search: true, stype:'text',},
-					{name:'totaldue', index:'totaldue',align:'center', editable:false, sortable: true, hidden:true, search: true, stype:'text',},				           
+					{name:'amount', index:'amount',align:'center', editable:false, sortable: true, hidden:false, search: true, stype:'text',},
+					{name:'elclassamount', index:'elclassamount',align:'center', editable:false, sortable: true, hidden:false, search: true, stype:'text',},
+					{name:'amountinrs', index:'amountinrs',align:'center', editable:false, sortable: true, hidden:false, search: true, stype:'text',},
+					{name:'tax', index:'tax',align:'center', editable:false, sortable: true, hidden:false, search: true, stype:'text',},
+					{name:'totaltax', index:'totaltax',align:'center', editable:false, sortable: true, hidden:false, search: true, stype:'text',},
+					{name:'tds', index:'tds',align:'center', editable:false, sortable: true, hidden:false, search: true, stype:'text',},
+					{name:'totaldue', index:'totaldue',align:'center', editable:false, sortable: true, hidden:false, search: true, stype:'text',},				           
 					],
 		jsonReader : {  
 		  	repeatitems:false,
@@ -320,7 +320,6 @@ $(function() {
 		alert(printurl);
 		//start the Download
 		window.location = printurl;
-		
 		
 		// Show progress dialog
 		$('#msgbox').text('Processing download...');

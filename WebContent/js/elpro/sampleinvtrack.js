@@ -81,7 +81,9 @@ $(document).ready(function() {
 				sampleinvtrackgrid.jqGrid('groupingGroupBy', vl, {
 		            groupOrder : ['desc'],
 		            groupColumnShow: [false],
-		            groupCollapse: [true],
+		            groupingView: {
+		            	groupCollapse: [true],
+		            }
 		        });
 			}	
 		}else{
@@ -215,7 +217,7 @@ $(document).ready(function() {
         loadtext: "Bow Bow",
         height : "auto",
         width: "auto",  
-        sortname: 'Ctno',  
+        sortname: 'invno',  
         sortorder: 'desc',
         loadonce: true,
         sortable: true,
@@ -223,6 +225,8 @@ $(document).ready(function() {
         gridview : true,
         viewrecords: true,
         footerrow: true,
+        grouping:true, 
+        groupingView : { groupField : ['invno'] },
         userDataOnFooter : true, //Gets Footer Total Recod from Server Side 
         emptyrecords: 'No records to display',
         loadComplete: function() {

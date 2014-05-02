@@ -71,8 +71,11 @@
 	 
 	<action path="/PrfAutocomplete" name="PrfForm" type="sb.elpro.action.PrfAutocomplete" input="/jsp/Prf.jsp" scope="session"></action>
 	 
-	<action path="/PrfinsertArticle" name="PrfForm" type="sb.elpro.action.PrfInsertArticle" input="/jsp/Prf.jsp" scope="session"></action>	 
+	<action path="/PrfinsertArticle" name="PrfForm" type="sb.elpro.action.PrfInsertArticle" input="/jsp/Prf.jsp" scope="session"></action>
+		 
 	 <action path="/pojw" type="sb.elpro.action.PojwAction" input="/jsp/Prf.jsp" scope="session"></action>
+	 
+	 <action path="/pojw/print" name="PrfForm"  type="sb.elpro.action.PojwPrintAction" input="/jsp/Prf.jsp" scope="session"></action>
 <!-- ==== Bulk Tracking ==================================================================================================================================================================== -->
 	<action path="/gotoBulkTracking" name="BulkTrackForm" type="sb.elpro.action.BulkTrackAction" input="/jsp/Bulk.jsp" scope="session" parameter="action"> 
 	   <forward name="bulkisloaded" path="/jsp/Bulk.jsp"></forward>	

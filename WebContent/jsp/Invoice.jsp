@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=utf-8"
+    pageEncoding="UTF-8"%>
 <%@ taglib uri="http://struts.apache.org/tags-html-el" prefix="h"%>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="b"%>
 <%@ taglib uri="http://struts.apache.org/tags-logic-el" prefix="l"%>
@@ -8,7 +8,7 @@
 <!DOCTYPE html>
 <h:html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>Invoice Page </title>
 <style type="text/css">
 #ui-datepicker-div { font-size: 11px; } 
@@ -129,7 +129,7 @@ $(function() {
        		  		<td><h:textarea property="inv_otherref" styleId="inv_otherref" cols="14"  rows="2" value="${editinvform[0].inv_otherref }"> </h:textarea>  <br/></td>
        		  	</tr>
        		  	<tr>
-       	    		<td>terms :</td>
+       	    		<td>Terms :</td>
        	    		<td><h:text property="inv_terms" size="19" styleId="inv_terms" value="${editinvform[0].inv_terms }"> </h:text>  <br/></td>
        	    	</tr>
        	    	<tr>

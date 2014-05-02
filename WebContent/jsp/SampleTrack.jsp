@@ -91,7 +91,6 @@ $(function() {
 </h:form>
 <h:form action="/SamptrackInsertAction.do">   
 	 Group By: <select id="chngroup"> 
-			<option value="clear" selected="selected">Remove Grouping</option>
 			<option value="sampleno">Sampleno No</option> 
 			<option value="status">Status</option> 
 			<option value="handledby">Handled By</option>
@@ -102,7 +101,7 @@ $(function() {
 			<option value="articlename">Article</option> 
 			<option value="color">Color</option> 
 			<option value="reps">Agent</option> 
-			<!-- <option value="user">color</option>  -->
+			<option value="clear">Remove Grouping</option>
 		</select> <br/><br/> 
 		<div id="sampletracking grid">
 			<table id="sampletrack"></table> 

@@ -5,11 +5,24 @@ package sb.elpro.action;
 
 
 import java.io.PrintWriter;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.util.HashMap;
 
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.export.JRXlsAbstractExporterParameter;
+import net.sf.jasperreports.engine.export.JRXlsExporterParameter;
+import net.sf.jasperreports.engine.export.ooxml.JRXlsxExporter;
 import net.sf.json.JSONObject;
 
 import org.apache.commons.beanutils.BeanUtils;
@@ -139,11 +152,64 @@ public class DebitAction extends DispatchAction {
 		return mapping.getInputForward();
 		
 	}
-	public ActionForward Waived(ActionMapping mapping, ActionForm form, 
+	public ActionForward Print(ActionMapping mapping, ActionForm form, 
 			HttpServletRequest request, HttpServletResponse response) throws Exception{
-		System.out.println("in Waived");
+		System.out.println("in Print");
+		Connection conn = null;
+		try {
+            Class.forName("com.mysql.jdbc.Driver");
+            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/elpro","root","tiger");
+            System.out.println("conn "+conn.getCatalog());
+            } catch (SQLException ex) {
+            } catch (ClassNotFoundException ex) {
+            }
 		
-		return mapping.getInputForward();
+		response.setContentType("application/ms-excel"); 
+		response.setHeader("Content-Disposition", "attachment; filename=PRF.xls");
+        ServletOutputStream out = response.getOutputStream();
+		System.out.println("IN Print  ");
+		PrfForm prfprintform =(PrfForm) form;
+		prfprintform.setPrf_poref("This is the Title of the Report");
+		JasperReport report = JasperCompileManager.compileReport("C:/Users/meetw_000/Desktop/report/prf.jrxml");
+		HashMap<String, Object> hm = new HashMap<String, Object>();
+		hm.put("pdebexporter",prfprintform.getPrf_contractno());
+		hm.put("porderdt", prfprintform.getPrf_orderdate());
+		hm.put("ptanneryname", prfprintform.getPrf_tanname());
+		hm.put("ptanneryattn", prfprintform.getPrf_tanattn());
+		hm.put("ptanneryaddr", prfprintform.getPrf_tanaddr());
+		hm.put("ptanneryphone", prfprintform.getPrf_tanphone());
+		hm.put("ptanneryfax", prfprintform.getPrf_tanfax());
+		hm.put("pcustname", prfprintform.getPrf_custname());
+		hm.put("pcustattn", prfprintform.getPrf_custattn());
+		hm.put("pcustaddr", prfprintform.getPrf_custaddr());
+		hm.put("pcusttel", prfprintform.getPrf_custphone());
+		hm.put("pcustfax", prfprintform.getPrf_custfax());
+		hm.put("pdesti", prfprintform.getPrf_destination());
+		
+		JasperPrint print = JasperFillManager.fillReport(report, hm, conn);
+		JRXlsxExporter excelexporter = new JRXlsxExporter(); // supports jaspersoft 5.5.1 
+	      
+ 		// Here we assign the parameters jp and baos to the exporter
+         excelexporter.setParameter(JRXlsExporterParameter.JASPER_PRINT, print);
+         excelexporter.setParameter(JRXlsExporterParameter.OUTPUT_STREAM, out);
+ 	
+         // Excel specific parameters
+         excelexporter.setParameter(JRXlsAbstractExporterParameter.IS_ONE_PAGE_PER_SHEET, Boolean.TRUE);
+         excelexporter.setParameter(JRXlsAbstractExporterParameter.IS_REMOVE_EMPTY_SPACE_BETWEEN_ROWS, Boolean.FALSE);
+         excelexporter.setParameter(JRXlsAbstractExporterParameter.IS_WHITE_PAGE_BACKGROUND, Boolean.TRUE);
+         excelexporter.setParameter(JRXlsAbstractExporterParameter.IS_IGNORE_GRAPHICS,Boolean.FALSE);
+         
+        try {
+        	excelexporter.exportReport();
+			
+		} catch (JRException e) {
+			throw new RuntimeException(e);
+		}catch (Exception e) {
+   			e.printStackTrace();
+		}
+		
+        
+		return null;
 		
 	}
 	

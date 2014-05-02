@@ -1,5 +1,6 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=utf-8"
+    pageEncoding="UTF-8"%>
+    
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="h"%>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="l"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -67,7 +68,6 @@ function loadvalues(){
 	var actionform = "<c:out value='${actionform}' />";
 	if(actionform == "edit"){
 		var prfeditterms = "<c:out value='${editprfform[0].prf_terms}' />";
-		alert(prfeditterms);
 		var prfeditpayment = "<c:out value='${editprfform[0].prf_payment}' />";  
 		var prfeditagentname = "<c:out value='${editprfform[0].prf_agentname}' />";
 		var prfedittanname =  "<c:out value='${editprfform[0].prf_tanname}' />";
@@ -186,7 +186,7 @@ function loadvalues(){
         		</tr>
         		<tr>
         			<td>PO Type: </td>
-        			<td><h:select property="prf_poreftype"  styleId="prf_poreftype">             
+        			<td><h:select property="prf_poreftype"  styleId="prf_poreftype"  value="${editprfform[0].prf_poreftype}">             
         	    			 <h:option value="Email">Via Email</h:option>
         					 <h:option value="Phone">Via Call </h:option>
         					 <h:option value="Others">Others</h:option>	
@@ -206,23 +206,27 @@ function loadvalues(){
         	<table>
         		<tr>
         			<td>Name: </td>
-        			<td><h:text property="prf_tanname" size="41" styleId="prf_tanname" ></h:text></td>
+        			<td><h:text property="prf_tanname" size="41" styleId="prf_tanname"  value="${editprfform[0].prf_tanname}"></h:text></td>
+        		</tr>
+        		<tr>
+        			<td>Id: </td>
+        			<td><h:text property="prf_tannid" size="41" styleId="prf_tannid"   value="${editprfform[0].prf_tannid}"></h:text></td>
         		</tr>
         		<tr>
         			<td>Attn:</td>
-        			<td><h:text property="prf_tanattn" size="41" styleId="prf_tanattn" ></h:text></td>
+        			<td><h:text property="prf_tanattn" size="41" styleId="prf_tanattn"   value="${editprfform[0].prf_tanattn}"></h:text></td>
         		</tr>
         		<tr>
         			<td>Addr:</td>
-        			<td><h:textarea property="prf_tanaddr" cols="35" rows="4" styleId="prf_tanaddr" ></h:textarea></td>
+        			<td><h:textarea property="prf_tanaddr" cols="35" rows="4" styleId="prf_tanaddr"  value="${editprfform[0].prf_tanaddr}"></h:textarea></td>
         		</tr>
         		<tr>
         			<td>Tele: </td>
-        			<td><h:text property="prf_tanphone" size="41" styleId="prf_tanphone" > </h:text></td>
+        			<td><h:text property="prf_tanphone" size="41" styleId="prf_tanphone"  value="${editprfform[0].prf_tanphone}"> </h:text></td>
         		</tr>
         		<tr>
         			<td>Fax :</td>
-        			<td> <h:text property="prf_tanfax" size="41" styleId="prf_tanfax" > </h:text></td>
+        			<td> <h:text property="prf_tanfax" size="41" styleId="prf_tanfax"  value="${editprfform[0].prf_tanfax}"> </h:text></td>
         		</tr>
         	</table>
             </fieldset>
@@ -233,23 +237,27 @@ function loadvalues(){
        		<table>
        			<tr>
        				<td>Name:</td>
-       				<td><h:text property="prf_custname" size="41" styleId="prf_custname" ></h:text></td>
+       				<td><h:text property="prf_custname" size="41" styleId="prf_custname"  value="${editprfform[0].prf_custname}"></h:text></td>
        			</tr>
        			<tr>
+        			<td>Id: </td>
+        			<td><h:text property="prf_custid" size="41" styleId="prf_custid"  value="${editprfform[0].prf_custid}"></h:text></td>
+        		</tr>
+       			<tr>
        				<td>Attn: </td>
-       				<td><h:text property="prf_custattn" size="41" styleId="prf_custattn" ></h:text></td>
+       				<td><h:text property="prf_custattn" size="41" styleId="prf_custattn"  value="${editprfform[0].prf_custattn}"></h:text></td>
        			</tr>
        			<tr>
        				<td>Addr:</td>
-       				<td><h:textarea property="prf_custaddr" cols="35" rows="4" styleId="prf_custaddr" > </h:textarea></td>
+       				<td><h:textarea property="prf_custaddr" cols="35" rows="4" styleId="prf_custaddr"  value="${editprfform[0].prf_custaddr}"> </h:textarea></td>
        			</tr>
        			<tr>
        				<td>Tele: </td>
-       				<td><h:text property="prf_custphone" size="41" styleId="prf_custphone" > </h:text></td>
+       				<td><h:text property="prf_custphone" size="41" styleId="prf_custphone"  value="${editprfform[0].prf_custphone}"> </h:text></td>
        			</tr>
        			<tr>
        				<td>Fax :  </td>
-       				<td><h:text property="prf_custfax" size="41" styleId="prf_custfax" > </h:text>  </td>
+       				<td><h:text property="prf_custfax" size="41" styleId="prf_custfax"  value="${editprfform[0].prf_custfax}"> </h:text>  </td>
        			</tr>
        		</table>
       		</fieldset>
@@ -274,6 +282,7 @@ function loadvalues(){
             		<td>ADD :</td>
             		<td><h:text property="prf_add" size="41" styleId="prf_add" styleClass="prf_delivrydate" value="${editprfform[0].prf_add}"></h:text></td>
             	</tr>
+            	
             	<tr>
             		<td>Desti:</td>
             		<td><h:text property="prf_destination" styleId="prf_destination"  value="${editprfform[0].prf_destination}"></h:text><br/></td>
@@ -291,7 +300,7 @@ function loadvalues(){
             	</tr>
             	<tr>
             		<td>Payment:</td>
-            		<td><h:select property="prf_payment" styleId="prf_payment" >
+            		<td><h:select property="prf_payment" styleId="prf_payment"  value="${editprfform[0].prf_payment}">
        		 				<h:option value="0">select Payment</h:option>
           					 <c:forEach items="${paymentarray}" var ="paymList">
           				 		 <h:option value="${paymList.paymentname}">
@@ -302,7 +311,7 @@ function loadvalues(){
             	</tr>
             	<tr>
             		<td>Insurance: </td>
-            		<td><h:select property="prf_insurance" styleId="prf_insurance" value="">  
+            		<td><h:select property="prf_insurance" styleId="prf_insurance"  value="${editprfform[0].prf_insurance}">  
           	  			 	<h:option value="Consignee">By Consignee</h:option>     
           				 	<h:option value="Shipper">By Shipper</h:option>      			    													         															
        		 		  	 </h:select></td>
@@ -343,23 +352,27 @@ function loadvalues(){
        		<table>
        			<tr>
        				<td>Name:</td>
-       				<td><h:text property="prf_consigneename" size="41" styleId="prf_consigneename" ></h:text></td>
+       				<td><h:text property="prf_consigneename" size="41" styleId="prf_consigneename"  value="${editprfform[0].prf_consigneename}"></h:text></td>
        			</tr>
        			<tr>
+        			<td>Id: </td>
+        			<td><h:text property="prf_consigneeid" size="41" styleId="prf_consigneeid"  value="${editprfform[0].prf_consigneeid}"></h:text></td>
+        		</tr>
+       			<tr>
        				<td>Attn: </td>
-       				<td><h:text property="prf_consigneeattn" size="41" styleId="prf_consigneeattn" ></h:text></td>
+       				<td><h:text property="prf_consigneeattn" size="41" styleId="prf_consigneeattn"  value="${editprfform[0].prf_consigneeattn}"></h:text></td>
        			</tr>
        			<tr>
        				<td>Addr: </td>
-       				<td><h:textarea property="prf_consigneeaddr" cols="35" rows="4" styleId="prf_consigneeaddr" ></h:textarea></td>
+       				<td><h:textarea property="prf_consigneeaddr" cols="35" rows="4" styleId="prf_consigneeaddr"  value="${editprfform[0].prf_consigneeaddr}"></h:textarea></td>
        			</tr>
        			<tr>
        				<td>Tele:</td>
-       				<td> <h:text property="prf_consigneephone" size="41" styleId="prf_consigneephone" > </h:text></td>
+       				<td> <h:text property="prf_consigneephone" size="41" styleId="prf_consigneephone"  value="${editprfform[0].prf_consigneephone}"> </h:text></td>
        			</tr>
        			<tr>
        				<td>Fax :</td>
-       				<td> <h:text property="prf_consigneefax" size="41" styleId="prf_consigneefax" > </h:text></td>
+       				<td> <h:text property="prf_consigneefax" size="41" styleId="prf_consigneefax"  value="${editprfform[0].prf_consigneefax}"> </h:text></td>
        			</tr>
        		</table>
       		</fieldset>
@@ -370,23 +383,27 @@ function loadvalues(){
 				<table>
 	       			<tr>
 	       				<td>Name:</td>
-	       				<td> <h:text property="prf_notifyname" size="41" styleId="prf_notifyname" ></h:text></td>
+	       				<td> <h:text property="prf_notifyname" size="41" styleId="prf_notifyname"  value="${editprfform[0].prf_notifyname}"></h:text></td>
 	       			</tr>
 	       			<tr>
+        				<td>Id: </td>
+        				<td><h:text property="prf_notifyid" size="41" styleId="prf_notifyid"  value="${editprfform[0].prf_notifyid}"></h:text></td>
+        			</tr>
+	       			<tr>
 	       				<td>Attn: </td>
-	       				<td><h:text property="prf_notifyattn" size="41" styleId="prf_notifyattn" ></h:text></td>
+	       				<td><h:text property="prf_notifyattn" size="41" styleId="prf_notifyattn"  value="${editprfform[0].prf_notifyattn}"></h:text></td>
 	       			</tr>
 	       			<tr>
 	       				<td>Addr:</td>
-	       				<td><h:textarea property="prf_notifyaddr" cols="35" rows="4" styleId="prf_notifyaddr" > </h:textarea></td>
+	       				<td><h:textarea property="prf_notifyaddr" cols="35" rows="4" styleId="prf_notifyaddr"  value="${editprfform[0].prf_notifyaddr}"> </h:textarea></td>
 	       			</tr>
 	       			<tr>
 	       				<td>Tele: </td>
-	       				<td><h:text property="prf_notifyphone" size="41" styleId="prf_notifyphone" > </h:text></td>
+	       				<td><h:text property="prf_notifyphone" size="41" styleId="prf_notifyphone"  value="${editprfform[0].prf_notifyphone}"> </h:text></td>
 	       			</tr>
 	       			<tr>
 	       				<td>Fax :</td>
-	       				<td> <h:text property="prf_notifyfax" size="41" styleId="prf_notifyfax" > </h:text> </td>
+	       				<td> <h:text property="prf_notifyfax" size="41" styleId="prf_notifyfax"  value="${editprfform[0].prf_notifyfax}"> </h:text> </td>
 	       			</tr>
 	       		</table> 
       		</fieldset>
@@ -397,23 +414,27 @@ function loadvalues(){
 			 <table>
 	       			<tr>
 	       				<td>Name :</td>
-	       				<td><h:text property="prf_bankname" size="41" styleId="prf_bankname" ></h:text></td>
+	       				<td><h:text property="prf_bankname" size="41" styleId="prf_bankname"  value="${editprfform[0].prf_bankname}"></h:text></td>
 	       			</tr>
 	       			<tr>
+        				<td>Id: </td>
+        				<td><h:text property="prf_bankid" size="41" styleId="prf_bankid"  value="${editprfform[0].prf_bankid}"></h:text></td>
+        			</tr>
+	       			<tr>
 	       				<td>Branch : </td>
-	       				<td><h:text property="prf_bankbranch" size="41" styleId="prf_bankbranch" ></h:text></td>
+	       				<td><h:text property="prf_bankbranch" size="41" styleId="prf_bankbranch"  value="${editprfform[0].prf_bankbranch}"></h:text></td>
 	       			</tr>
 	       			<tr>
 	       				<td>Addr :</td>
-	       				<td><h:textarea property="prf_bankaddr" cols="35" rows="4" styleId="prf_bankaddr" ></h:textarea></td>
+	       				<td><h:textarea property="prf_bankaddr" cols="35" rows="4" styleId="prf_bankaddr"  value="${editprfform[0].prf_bankaddr}"></h:textarea></td>
 	       			</tr>
 	       			<tr>
 	       				<td>Tele :</td>
-	       				<td><h:text property="prf_bankphone" size="41" styleId="prf_bankphone" > </h:text></td>
+	       				<td><h:text property="prf_bankphone" size="41" styleId="prf_bankphone"  value="${editprfform[0].prf_bankphone}"> </h:text></td>
 	       			</tr>
 	       			<tr>
 	       				<td>Fax  :</td>
-	       				<td><h:text property="prf_bankfax" size="41" styleId="prf_bankfax" > </h:text></td>
+	       				<td><h:text property="prf_bankfax" size="41" styleId="prf_bankfax"  value="${editprfform[0].prf_bankfax}"> </h:text></td>
 	       			</tr>
 	       		 </table>  
       		</fieldset>
@@ -436,7 +457,7 @@ function loadvalues(){
 </h:form>		
 </div>
 <div id="pojwdiv">
-  	<form action="/pojw" id="pojwform" method="post">
+  	<form id="pojwform" method="post">
   		<table>
   		  <tr>	
   			<td>
@@ -516,7 +537,7 @@ function loadvalues(){
         	</fieldset>
         	</td>
           </tr>	
-          <tr>	
+         <!--  <tr>	
         	<td>
         		<button id="save" name="Save" type="submit" title="Save">Save</button>
         	</td>
@@ -524,7 +545,7 @@ function loadvalues(){
         		<button id="clear" name="Clear" type="reset" title="Clear">Clear</button>
         		<button id="print" name="Print" type="button" title="Print">Print</button>
         	</td>
-          </tr>
+          </tr> -->
      	</table>
 	</form>
  </div>

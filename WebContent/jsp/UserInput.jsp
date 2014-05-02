@@ -32,7 +32,16 @@ $(function() {
 		 collapsible: true ,
 		 heightStyle: "content"
 	});
+	$("#jqgriduserinput").accordion({
+		heightStyle: "content",
+		 icons: icons,
+		 active: false,
+		 collapsible: true ,
+		 heightStyle: "content"
+	});
 });
+
+
 </script>
 </head>
 <body>
@@ -86,62 +95,76 @@ $(function() {
    			</td>
    		</tr>
    </table>
-   </div>
-<div id="tannery Details">
-	<table id="tannerdetails"></table>
-	<div id="tannerpager"></div>
 </div>
 
-<div id="Customer Details">
-	<table id="customerdetails"></table>
-	<div id="customerpager"></div>
-</div>
-
-<div id="Consignee Details">
-	<table id="consigdetails"></table>
-	<div id="consigpager"></div>
-</div>
-
-<div id="Notify Details">
-	<table id="notifydetails"></table>
-	<div id="notifypager"></div>
-</div>
-
-<div id="Bank Details">
-	<table id="bankdetails"></table>
-	<div id="bankpager"></div>
-</div>
-
-<div id="Article Details">
-	<table id="articledetails"></table>
-	<div id="articlepager"></div>
-</div>
-<div id="Color Details">
-	<table id="colordetails"></table>
-	<div id="colorpager"></div>
-</div>	
-
-<div id="Destination Details">
-	<table id="articledetails"></table>
-	<div id="articlepager"></div>
-</div>
-<div id="Commission Details">
-	<table id="commissiondetails"></table>
-	<div id="commissionpager"></div>
-</div>
-<div id="Destination Details">
-	<table id="destidetails"></table>
-	<div id="destipager"></div>
-</div>
-<div id="Terms Details">
-	<table id="termsdetails"></table>
-	<div id="termspager"></div>
-</div>
-
-<div id="Payment Details">
-	<table id="paymntdetails"></table>
-	<div id="paymntpager"></div>
-</div>
-
+<ul id="jqgriduserinput">
+ <li> <h3>Tanner </h3>	
+ 	<div id="tannery Details">
+		<table id="tannerdetails"></table>
+		<div id="tannerpager"></div>
+	</div>
+ </li>
+ <li><h3>Customer </h3>	
+ 	<div id="Customer Details">
+		<table id="customerdetails"></table>
+		<div id="customerpager"></div>
+	</div>
+ </li>
+<li><h3>Consignee </h3>
+	<div id="Consignee Details">
+		<table id="consigdetails"></table>
+		<div id="consigpager"></div>
+	</div>
+</li> 
+ <li><h3>Notify </h3>
+ 	<div id="Notify Details">
+		<table id="notifydetails"></table>
+		<div id="notifypager"></div>
+	</div>
+</li> 
+<li><h3>Bank </h3>
+	<div id="Bank Details">
+		<table id="bankdetails"></table>
+		<div id="bankpager"></div>
+	</div>
+</li> 
+<li><h3>Article  </h3>
+	<div id="Article Details">
+		<table id="articledetails"></table>
+		<div id="articlepager"></div>
+	</div>
+</li> 
+<li><h3>Color </h3>
+	<div id="Color Details">
+		<table id="colordetails"></table>
+		<div id="colorpager"></div>
+	</div>	
+</li> 
+<li><h3>Destination </h3>
+	<div id="Destination Details">
+		<table id="destidetails"></table>
+		<div id="destipager"></div>
+	</div>
+</li> 
+<li><h3>Commission </h3>
+	<div id="Commission Details">
+		<table id="commissiondetails"></table>
+		<div id="commissionpager"></div>
+	</div>
+</li> 
+<li><h3>Terms </h3>
+	<div id="Terms Details">
+		<table id="termsdetails"></table>
+		<div id="termspager"></div>
+	</div>
+</li> 
+<li><h3>Payment </h3>
+	<div id="Payment Details">
+		<table id="paymntdetails"></table>
+		<div id="paymntpager"></div>
+	</div>
+</li> 
+ 
+</ul>
 </body>
 </html>

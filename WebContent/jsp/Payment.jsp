@@ -63,7 +63,7 @@ $(function() {
 							<li><h:link action='/InvoiceTracking'>Invoice Tracking</h:link></li>
 							<li><h:link action='/gotodebit'>Debit Screen</h:link></li>
 							<li><h:link action='/gotodebittracking'>Debit Tacking</h:link></li>
-							<li><h:link action='/gotopayment'>Payment Screen</h:link></li>
+							<li><h:link action='/gotopayment'>Receipt Screen</h:link></li>
 							<li><h:link action='/gotoMasterTracking'>Master Tacking</h:link></li>
 			        </ul>
 			        </div>
@@ -109,7 +109,7 @@ $(function() {
         	 <legend>Payment Reciept Details</legend> 
         	 <table>
         	 	<tr>
-        	 		<td>Paymnet No: </td>
+        	 		<td>Payment No: </td>
         	 		<td><h:text property="paymentno" styleId="paymentno" value="${editpayform[0].deb_debitno}"></h:text></td>
         	 	</tr>
         	 	<tr>

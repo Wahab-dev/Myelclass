@@ -32,7 +32,7 @@ public class SampTrackDaoImpl implements SampTrackDao {
 		try{			
 			con = DBConnection.getConnection();
 			st = (Statement) con.createStatement();
-			String sql = "SELECT  form.sampleno, agentid, orderdt, refno, priority, handledby, customerid, tanneryid,  deliverid, destination, endusage, terms, add_date, cdd_date, splcdn, inspcdn,  forwaderid, isinvraised, articleid, articletype, articleshform, articlename, color, size,  substance, selection, selectionp, concat (quantity,' ',unit) as quantity, unit, pcs, rate, colormatching, tapetest,  crockingwet, crockingdry, fourfolds, keytest, article.srfarticleid, user, shpd, bal, status, rdd_date, courierdetails, reps, feedbackdetails FROM  elpro.tbl_srfform form, elpro.tbl_srf_article article, elpro.tbl_srfarticle_status status where  form.sampleno = article.sampleno and form.sampleno = article.sampleno and article.srfarticleid = status.srfarticleid order by sampleno desc";
+			String sql = "SELECT form.sampleno, orderdt, refno, priority, handledby, cust.shortform, tan.tanshform,  del.shortform, destination, endusage, terms, add_date, cdd_date, splcdn, inspcdn,  forwaderid, isinvraised, articleid, articletype, articleshform, articlename, color, size,  substance, selection, selectionp, concat (quantity,' ',unit) as quantity, unit, pcs, rate, colormatching, tapetest,  crockingwet, crockingdry, fourfolds, keytest, article.srfarticleid, user, shpd, bal, status, rdd_date, courierdetails, reps, feedbackdetails FROM  elpro.tbl_srf_article article join elpro.tbl_srfarticle_status stats on article.srfarticleid = stats.srfarticleid left join elpro.tbl_srfform form on form.sampleno = article.sampleno left join elpro.tbl_customer cust on cust.custid = form.customerid left join elpro.tbl_tannery tan on tan.tanid = form.tanneryid left join elpro.tbl_customer del on del.custid = form.customerid order by form.sampleno desc, article.articletype asc, article.articlename asc, article.color asc";
 			System.out.println(sql);
 			rs = st.executeQuery(sql);
 			while(rs.next()) {	
@@ -42,9 +42,9 @@ public class SampTrackDaoImpl implements SampTrackDao {
 			 	samptrackbean.setRefno(rs.getString("refno"));
 			 	samptrackbean.setPriority(rs.getString("priority"));
 			 	samptrackbean.setHandledby(rs.getString("handledby"));
-			 	samptrackbean.setCustomerid(rs.getString("customerid"));
-			 	samptrackbean.setTanneryid(rs.getString("tanneryid"));
-			 	samptrackbean.setDeliverid(rs.getString("deliverid"));
+			 	samptrackbean.setCustomerid(rs.getString("cust.shortform"));
+			 	samptrackbean.setTanneryid(rs.getString("tan.tanshform"));
+			 	samptrackbean.setDeliverid(rs.getString("del.shortform"));
 			 	samptrackbean.setDestination(rs.getString("destination"));
 			 	samptrackbean.setEndusage(rs.getString("endusage")); //==
 			 	samptrackbean.setTerms(rs.getString("terms"));

@@ -128,7 +128,9 @@ $(function() {
 				bulkgrid.jqGrid('groupingGroupBy', vl, {
 		            groupOrder : ['desc'],
 		            groupColumnShow: [false],
+				  groupingView: {
 		            groupCollapse: [true],
+				  }
 		        });
 			}	
 		}else{
@@ -140,10 +142,10 @@ $(function() {
 	bulkgrid.jqGrid({     
 		 		datatype: 'json',
 		        url:"/Myelclass/BulkInsertAction.do", 
-		        colNames:['Status', 'Ct No', 'Agent', 'Order Date', 'PO No', 'Tan', 'Cust', 'Exp', 'Name', 'Color', 'Size', 
+		        colNames:['Status', 'Ct No', 'Agent', 'Order Date', 'PO No', 'Tannery', 'Customer', 'Exporter', 'Article', 'Color', 'Size', 
 		                  	'Substance', 'Selection', 'Selp', 'Quantity', 'Unit', 'Shipped', 'Balance', 'Comment', 'InvDetails', 
-		                  	'Customer Feedback', 'rdd', 'Price', 'Tc', 'Add', 'Cdd', 'Commission', 'PO/JW', 'Consignee', 'Notify', 
-		                  	'Bank', 'Destination', 'Splcdn', 'Represnt', 'Prfarticleid', 'User','ApplytoAll'
+		                  	'Customer Feedback', 'RDD', 'Price', 'Tc', 'ADD', 'CDD', 'Commission', 'PO/JW', 'Consignee', 'Notify', 
+		                  	'Bank', 'Destination', 'Splcdn', 'Representative', 'Prfarticleid', 'User','ApplytoAll'
 		                  	],     
 		        colModel :[   
 				  
@@ -318,11 +320,13 @@ $(function() {
 		        editurl: "/Myelclass/BulkInsertAction.do",
 		        sortable: true,
 		        grouping: true,
-		        toppager:true,
+		     //   toppager:true,
 		        gridview : true,
 		        rownumbers: true, // not working Check 
 		        viewrecords: true,
 		        footerrow: true,
+		        grouping:true, 
+		        groupingView : { groupField : ['ctno'] },
 		        altRows: true,  // altrows and altclass for alternate color on grid rows
 		        altclass:  'myAltRowClass',
 		        //userDataOnFooter : true, //Gets Footer Total Recod from Server Side 
@@ -376,8 +380,6 @@ $(function() {
 		 		 	    var $self = $(this);
 		 		 	   $self.jqGrid("editGridRow", $self.jqGrid("getGridParam", "selrow"),
 		 		 	    {
-		 		 		   
-		 		 	
 		 		 		 /* beforeInitData: function(formid) {
 		 		 			bulkgrid.setColProp('status', {
 		 		 				formoptions : {
@@ -572,8 +574,7 @@ $(function() {
 				alert(printurl);
 				//start the Download
 				window.location = printurl;
-				
-				
+								
 				// Show progress dialog
 				$('#msgbox').text('Processing download...');
 				$('#msgbox').dialog({	
@@ -584,71 +585,5 @@ $(function() {
 							} 
 						}
 				});
-			}	
-			
-			/*navButtonAdd('#bulkktrackpager',{ 
-			 		 	   caption:"Modify", 
-			 		 	   buttonicon:"ui-icon-tag", 
-			 		 	   onClickButton: function(){ 
-			 		 		 var $self = $(this);
-				 		 	   $self.jqGrid("editGridRow", $self.jqGrid("getGridParam", "selrow"),
-				 		 		{ // some options
-			       	                   recreateForm: true,
-			       	                   editData: {//Function to Add parameters to the edit 
-			 						 		oper: 'modify',
-			                           },
-					 		 	 });		   
-			 		 	   }, 
-			 		 	   position:"centre"
-			 	   }).navButtonAdd('#bulkktrackpager',{
-		 		 	   caption:"Destination", 
-		 		 	   buttonicon:"ui-icon-battery-2", 
-		 		 	   onClickButton: function(){ 
-		 		 		 var $self = $(this);
-			 		 	   $self.jqGrid("editGridRow", $self.jqGrid("getGridParam", "selrow"),
-			 		 		{ // some options
-		       	                   recreateForm: true,
-		       	                   editData: {//Function to Add parameters to the edit 
-		 						 		oper: 'modify',
-		                           },
-				 		 	 });	   
-			 		 			   
-		 		 	   }, 
-		 		 	   position:"centre"
-		 		 	}).navButtonAdd('#bulkktrackpager',{
-			 		 	   caption:"Print", 
-			 		 	   buttonicon:"ui-icon-print", 
-			 		 	   onClickButton: function(){ 
-			 		 		 var $self = $(this);
-				 		 	   $self.jqGrid("editGridRow", $self.jqGrid("getGridParam", "selrow"),
-				 		 		{ // some options
-			       	                   recreateForm: true,
-			       	                   editData: {//Function to Add parameters to the edit 
-			 						 		oper: 'modify',
-			                           },
-					 		 	 });	  	   
-			 		 	   }, 
-			 		 	   position:"centre"
-			 		});  */
-			
-			/*bulkgrid.jqGrid('navButtonAdd', '#bulkktrackpager', {
-                caption: "",
-                buttonicon: "ui-icon-calculator",
-                title: "Choose columns",
-                onClickButton: function () {
-                    $(this).jqGrid('columnChooser',
-                        {width: 550, msel_opts: {dividerLocation: 0.5}, modal: true});
-                    $("#colchooser_" + $.jgrid.jqID(this.id) + ' div.available>div.actions')
-                        .prepend('<label style="float:left;position:relative;margin-left:0.6em;top:0.6em">Search:</label>');
-                }
-            });*/
-			
-			/*bulkgrid.jqGrid ('navButtonAdd', '#bulkktrackpager',
-		             { caption: "", buttonicon: "ui-icon-calculator",
-		               title: "Choose Columns",
-		               onClickButton: function() {
-		            	   bulkgrid.jqGrid('columnChooser');
-		               }
-		             });*/
-			
+			}		
 });

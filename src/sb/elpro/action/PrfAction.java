@@ -73,26 +73,8 @@ public class PrfAction extends DispatchAction {
 		 prfbean.setPrf_orderdate(DateConversion.ConverttoMysqlDate(request.getParameter("prf_orderdate")));
 		 prfbean.setPrf_cdd(DateConversion.ConverttoMysqlDate(request.getParameter("prf_cdd")));
 		 prfbean.setPrf_add(DateConversion.ConverttoMysqlDate(request.getParameter("prf_add")));
-		 prfbean.setPrf_exporterid(prfbean.getPrf_tanname());
+		 prfbean.setPrf_exporterid(prfbean.getPrf_tannid());
 		
-		/* prfbean.setPrf_agentname(request.getParameter("prf_agentname"));
-		 prfbean.setPrf_contractno(request.getParameter("prf_contractno"));
-		 prfbean.setPrf_poreftype(request.getParameter("prf_poreftype"));
-		 prfbean.setPrf_poref(request.getParameter("prf_poref"));
-		 prfbean.setPrf_tanname(request.getParameter("prf_tanname"));
-		 prfbean.setPrf_custname(request.getParameter("prf_custname"));		 
-		 prfbean.setPrf_destination(request.getParameter("prf_destination"));
-		 prfbean.setPrf_terms(request.getParameter("prf_terms"));
-		 prfbean.setPrf_insurance(request.getParameter("prf_insurance"));
-		 prfbean.setPrf_payment(request.getParameter("prf_payment"));
-		 prfbean.setPrf_elclasscommission(request.getParameter("prf_elclasscommission"));
-		 prfbean.setPrf_commission(request.getParameter("prf_commission"));
-		 prfbean.setPrf_special(request.getParameter("prf_special"));
-		 prfbean.setPrf_inspcdn(request.getParameter("prf_inspcdn"));
-		 prfbean.setPrf_consigneename(request.getParameter("prf_consigneename"));
-		 prfbean.setPrf_notifyname(request.getParameter("prf_notifyname"));
-		 prfbean.setPrf_bankname(request.getParameter("prf_bankname"));
-		 prfbean.setPrf_exporterid(request.getParameter("prf_tanname")); *///Exported ID
 		 prfbean.setPrf_pojw("N/A");
 		// prfbean.setFormaction("edit");
 		 usersession = request.getSession(false);
@@ -127,10 +109,8 @@ public class PrfAction extends DispatchAction {
 						prfjsonobj.put("error", "Error in Updated The Form");
 						out.println(prfjsonobj);
 						return null;
-					}
-				
-			 }
-			 
+					}			
+			 }	 
 		 }	
 		System.out.println(" LOgin Credential Fails");
 		 return map.findForward("login");
@@ -146,7 +126,18 @@ public class PrfAction extends DispatchAction {
 	
 	public ActionForward Print(ActionMapping map, ActionForm form, 
 			HttpServletRequest request, HttpServletResponse response) throws Exception{
-		response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"); 
+		
+		Connection conn = null;
+		try {
+            Class.forName("com.mysql.jdbc.Driver");
+            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/elpro","root","tiger");
+            System.out.println("conn "+conn.getCatalog());
+            } catch (SQLException ex) {
+            } catch (ClassNotFoundException ex) {
+            }
+		
+		response.setContentType("application/ms-excel"); 
+		response.setHeader("Content-Disposition", "attachment; filename=PRF.xls");
         ServletOutputStream out = response.getOutputStream();
 		System.out.println("IN Print  ");
 		PrfForm prfprintform =(PrfForm) form;
@@ -170,6 +161,7 @@ public class PrfAction extends DispatchAction {
 		hm.put("ppayment", prfprintform.getPrf_payment());
 		hm.put("pinsurance", prfprintform.getPrf_insurance());
 		hm.put("pterms", prfprintform.getPrf_terms());
+		hm.put("pcdd", prfprintform.getPrf_cdd());
 		hm.put("pbankname", prfprintform.getPrf_bankname());
 		hm.put("pbankaddr", prfprintform.getPrf_bankaddr());
 		hm.put("pbankbranch", prfprintform.getPrf_bankbranch());
@@ -177,6 +169,7 @@ public class PrfAction extends DispatchAction {
 		hm.put("pbankfax", prfprintform.getPrf_bankfax());
 		hm.put("pconsigname", prfprintform.getPrf_consigneename());
 		hm.put("pconsigattn", prfprintform.getPrf_consigneeattn());
+		System.out.println("getPrf_consigneeaddr"+prfprintform.getPrf_consigneeaddr());
 		hm.put("pconsigaddr", prfprintform.getPrf_consigneeaddr());
 		hm.put("pconsigphone", prfprintform.getPrf_consigneephone());
 		hm.put("pconsigfax", prfprintform.getPrf_consigneefax());
@@ -186,7 +179,7 @@ public class PrfAction extends DispatchAction {
 		hm.put("pnotifytele", prfprintform.getPrf_notifyphone());
 		hm.put("pnotifyfax", prfprintform.getPrf_notifyfax());
 		hm.put("psplcdn", prfprintform.getPrf_special());
-		JasperPrint print = JasperFillManager.fillReport(report, hm, new JREmptyDataSource());
+		JasperPrint print = JasperFillManager.fillReport(report, hm, conn);
 		
 		JRXlsxExporter excelexporter = new JRXlsxExporter(); // supports jaspersoft 5.5.1 
       
@@ -195,11 +188,10 @@ public class PrfAction extends DispatchAction {
          excelexporter.setParameter(JRXlsExporterParameter.OUTPUT_STREAM, out);
  	
          // Excel specific parameters
-         excelexporter.setParameter(JRXlsAbstractExporterParameter.IS_ONE_PAGE_PER_SHEET, Boolean.FALSE);
+         excelexporter.setParameter(JRXlsAbstractExporterParameter.IS_ONE_PAGE_PER_SHEET, Boolean.TRUE);
          excelexporter.setParameter(JRXlsAbstractExporterParameter.IS_REMOVE_EMPTY_SPACE_BETWEEN_ROWS, Boolean.FALSE);
-         excelexporter.setParameter(JRXlsAbstractExporterParameter.IS_WHITE_PAGE_BACKGROUND, Boolean.FALSE);
-         excelexporter.setParameter(JRXlsAbstractExporterParameter.IS_IGNORE_GRAPHICS,Boolean.FALSE);
-         
+         excelexporter.setParameter(JRXlsAbstractExporterParameter.IS_WHITE_PAGE_BACKGROUND, Boolean.TRUE);
+         excelexporter.setParameter(JRXlsAbstractExporterParameter.IS_IGNORE_GRAPHICS,Boolean.FALSE);       
         try {
         	excelexporter.exportReport();
 			
@@ -207,11 +199,9 @@ public class PrfAction extends DispatchAction {
 			throw new RuntimeException(e);
 		}catch (Exception e) {
    			e.printStackTrace();
-		}
-		
+		}	
 		return null;
 	}
-	
 	
 	public ActionForward Logout(ActionMapping mapping, ActionForm form, 
 			HttpServletRequest request, HttpServletResponse response) throws Exception{
@@ -220,109 +210,4 @@ public class PrfAction extends DispatchAction {
 		usersession.invalidate();			
 		return mapping.findForward("login");  
 	}
-	/*
-	public ActionForward insertArticle(ActionMapping map , ActionForm form, 
-			HttpServletRequest request, HttpServletResponse response ) throws Exception{
-		System.out.println("In Load Article");
-		String ctno = request.getParameter("contractno");
-		System.out.println("Ct No  "+ctno);
-		request.setAttribute("ctno", ctno);
-		//String prfartid = request.getParameter("prf_articleid");
-		usersession = request.getSession(false);
-		if(!(usersession==null)){
-			String prfartid = request.getParameter("articleid");
-			
-		 if(prfartid == null || prfartid.isEmpty()){
-			 System.out.println("It is an Insert Command ");
-		 }else{
-			 System.out.println("It is an Update Command ");
-			// PrfArticle editprfartbean = new PrfArticle();
-			// List<ArticleDetails> editarticle =  prfbo.editprfArticle(prfartid);
-			
-			 //usersession.setAttribute("articlearray",editarticle);
-			 
-		 }
-			
-			
-			
-			
-			
-			String ctno = request.getParameter("contractno"); 
-			String prfartid = request.getParameter("prf_articleid");
-			System.out.println("Session is Valid for Article Page /+ "+ctno+ "/ /" +prfartid);
-			request.setAttribute("ctno", ctno);
-			request.setAttribute("prfartid", prfartid);
-			return map.findForward("showArticlePage");
-		}else{
-			System.out.println("Session is INVALIDValid for Article Page");
-			return map.findForward("login");
-		}
-	}
-		public ActionForward saveArticle(ActionMapping map, ActionForm form, 
-				HttpServletRequest request, HttpServletResponse response ) throws Exception{
-			System.out.println("SAVE ARTICLE Art");
-			String ctno = request.getParameter("prfhidd_contractno"); 
-			System.out.println("CT NO = +"+ctno);
-			String prfartid = request.getQueryString();
-			System.out.println("Qury String "+prfartid);
-			
-			//String id = request.getParameter("checkboxValue");
-			//System.out.println("Insert ID "+id);
-			usersession = request.getSession(false);
-			if(usersession != null){			
-				PrfForm prfArticleform =(PrfForm) form;
-				System.out.println("Article ID B4 in FORM "+prfArticleform.getPrf_articleid());
-				 ArticleDetails prfartbean = new ArticleDetails();
-				 System.out.println("Article ID B4 in Bean "+prfartbean.getPrfarticleid());
-				 BeanUtils.copyProperties(prfartbean, prfArticleform);
-				 String id = prfartbean.getPrfarticleid();
-				 prfartbean.setContractno(ctno);
-				 if((id == null) || id.isEmpty() || id.equalsIgnoreCase("null")){
-					 System.out.println("IT IS AN INSERT COMMAND");
-						usersession.setAttribute("saveArticle", prfbo.saveprfArticle(prfartbean));
-					}else{
-						System.out.println("IT IS AN UPDATE COMMAND ");
-						 PrfForm prfArticleupform =(PrfForm) form;
-						 ArticleDetails prfartupbean = new ArticleDetails();
-						 BeanUtils.copyProperties(prfartupbean, prfArticleupform);
-						 usersession.setAttribute("saveArticle", prfbo.updateprfArticle(prfartbean));
-						 String myctno = prfartbean.getContractno();
-						 System.out.println("MyCTNO !!!"+ myctno);
-						 getAllArticle(request,myctno);
-						return map.findForward("updateprfarticle");
-					}
-				 String myctno = prfartbean.getContractno();
-				 getAllArticle(request,myctno);
-			return map.findForward("prfArticlesaved");
-			}else{
-			return map.findForward("login");
-			//}
-	}
-		
-		public ActionForward edit(ActionMapping mapping, ActionForm form, 
-				HttpServletRequest request, HttpServletResponse response) throws Exception{
-			System.out.println("In Edit Article "); 
-			PrfForm prfArticleform =(PrfForm) form;
-			PrfArticle prfartbean = new PrfArticle();
-			BeanUtils.copyProperties(prfartbean, prfArticleform);
-			String prfarticleid = request.getParameter("prf_articleid");
-			String contractno = request.getParameter("prf_contractno");
-			System.out.println("Prf Article Id "+prfarticleid);
-			usersession = request.getSession(false);
-			if(usersession != null){
-				List<PrfArticle> EditArticle =  prfbo.editprfArticle(prfarticleid);
-				request.setAttribute("editarticle", EditArticle);
-				return mapping.findForward("editprfarticle");
-			}else
-				return mapping.findForward("login");
-		}
-			
-			
-		
-		private void getAllArticle(HttpServletRequest request, String myctno) throws Exception{
-			List<ArticleDetails> article = prfbo.getPrfArticleDetails(myctno);
-			request.setAttribute("article", article);
-		}
-		*/
-	
 }

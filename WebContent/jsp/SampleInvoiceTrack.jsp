@@ -93,14 +93,14 @@ $(function() {
 	   		</table>	
 
 	 Group By: <select id="chngroup"> 
-			<option value="clear" selected="selected">Remove Grouping</option>
-			<option value="invtype">Inv Type</option> 
 			<option value="invno">Inv No</option> 
+			<option value="invtype">Inv Type</option>
 			<option value="exporter">Exporter</option>
 			<option value="customer">Customer</option> 
 			<option value="invctno">Ct No</option> 
 			<option value="invartname">Article</option>
 			<option value="invcolor">Color</option>
+			<option value="clear">Remove Grouping</option>
 		</select> <br/><br/>
  
 		<div>

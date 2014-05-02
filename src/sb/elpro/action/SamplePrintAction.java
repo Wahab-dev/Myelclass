@@ -79,7 +79,8 @@ public class SamplePrintAction extends Action{
 	           			e.printStackTrace();
 	        		}
 			}else{
-				response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"); 
+				response.setContentType("application/ms-excel"); 
+				response.setHeader("Content-Disposition", "attachment; filename=SampleTracking.xls");
 		        ServletOutputStream output = response.getOutputStream();
 
 		        	JasperReport report = JasperCompileManager.compileReport("C:/Users/meetw_000/Desktop/report/SampleTrack/SampleTrack.jrxml");

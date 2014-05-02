@@ -470,22 +470,41 @@ public class SrfDaoImpl implements SrfDao {
 		try{			
 			con = DBConnection.getConnection();
 			st = (Statement) con.createStatement();
-			String sql = "SELECT sampleno, agentid, orderdt, refno, priority, handledby, customerid, tanneryid, deliverid, destination, terms, add_date, cdd_date, endusage, splcdn, inspcdn, forwaderid, isinvraised FROM elpro.tbl_srfform where sampleno ='"+sampleno+"' ";
+			String sql = "SELECT sampleno, orderdt, refno, priority, handledby, customerid, tanneryid, deliverid, destination, terms, add_date, cdd_date, endusage, splcdn, inspcdn, forwaderid, isinvraised, tan.tanshform, tan.tanname, tan.tanaddr, tan.tanattn, tan.tanphone, tan.tanfax, cust.shortform, cust.custname, cust.custaddr, cust.custattn, cust.custphone, cust.custfax, deliv.shortform, deliv.custname, deliv.custaddr, deliv.custattn, deliv.custphone, deliv.custfax FROM elpro.tbl_srfform form left join elpro.tbl_tannery tan on tan.tanid=form.tanneryid join elpro.tbl_customer cust on cust.custid = form.customerid  join elpro.tbl_customer deliv on deliv.custid = form.deliverid where sampleno ='"+sampleno+"' ";
 			System.out.println(sql);
 			rs = st.executeQuery(sql);
-			
 			if(rs.next()) {	
+			String varrefno = rs.getString("refno");
+			int index = varrefno.indexOf(',');
+			String reftype = varrefno.substring(0,index);
+			System.out.println(" reftype"+reftype);
+			String refno = varrefno.substring(index+1);
+			System.out.println(" refno"+refno);
 				SampleRequest editsrfformbean = new SampleRequest();
 				editsrfformbean.setSrf_sampleno(rs.getString("sampleno"));
-				editsrfformbean.setSrf_agentname(rs.getString("agentid"));
 				editsrfformbean.setSrf_orderdate(DateConversion.ConverttoNormalDate(rs.getString("orderdt")));
-				System.out.println("DT "+editsrfformbean.getSrf_orderdate());
-				editsrfformbean.setSrf_referenceno(rs.getString("refno"));
+				editsrfformbean.setSrf_referenceno(refno);
+				editsrfformbean.setSrf_poreftype(reftype);
 				editsrfformbean.setSrf_priority(rs.getString("priority"));
 				editsrfformbean.setSrf_handledby(rs.getString("handledby"));
-				editsrfformbean.setSrf_custname(rs.getString("customerid"));
-				editsrfformbean.setSrf_tanname(rs.getString("tanneryid"));
-				editsrfformbean.setSrf_deliver(rs.getString("deliverid"));
+				editsrfformbean.setSrf_customerid(rs.getString("customerid"));
+				editsrfformbean.setSrf_customer(rs.getString("cust.custname"));
+				/*editsrfformbean.setSrf_custattn(rs.getString("cust.custattn"));
+				editsrfformbean.setSrf_custaddr(rs.getString("cust.custaddr"));
+				editsrfformbean.setSrf_custphone(rs.getString("cust.custphone"));
+				editsrfformbean.setSrf_custfax(rs.getString("cust.custfax"));*/
+				editsrfformbean.setSrf_tannameid(rs.getString("tanneryid"));
+				editsrfformbean.setSrf_tanname(rs.getString("tan.tanname"));
+				editsrfformbean.setSrf_tanattn(rs.getString("tan.tanattn"));
+				editsrfformbean.setSrf_tanaddr(rs.getString("tan.tanaddr"));
+				editsrfformbean.setSrf_tanphone(rs.getString("tan.tanphone"));
+				editsrfformbean.setSrf_tanfax(rs.getString("tan.tanfax"));
+				editsrfformbean.setSrf_deliverid(rs.getString("deliverid"));
+				editsrfformbean.setSrf_deliver(rs.getString("deliv.custname"));
+				editsrfformbean.setSrf_deliverattn(rs.getString("deliv.custattn"));
+				editsrfformbean.setSrf_deliveraddr(rs.getString("deliv.custaddr"));
+				editsrfformbean.setSrf_deliverphone(rs.getString("deliv.custphone"));
+				editsrfformbean.setSrf_deliverfax(rs.getString("deliv.custfax"));
 				editsrfformbean.setSrf_destination(rs.getString("destination"));
 				editsrfformbean.setSrf_endusage(rs.getString("endusage"));
 				editsrfformbean.setSrf_paymentterms(rs.getString("terms"));
@@ -495,13 +514,13 @@ public class SrfDaoImpl implements SrfDao {
 				editsrfformbean.setSrf_inspcdn(rs.getString("inspcdn"));
 				//editsrfformbean.setSrf_(rs.getString("forwaderid"));
 				editsrfformbean.setSrf_isSample(rs.getString("isinvraised"));
-				
 				editsrfformlist.add(editsrfformbean);
 				}
-			System.out.println(" dest Result Added Successfully");
+			
+			System.out.println(" Givindu Result Added Successfully");
 			}catch(Exception e){
 				e.printStackTrace();
-				System.out.println("dest ERROR RESULT");
+				System.out.println("Givindu ERROR RESULT");
 			}finally{
 				 con.close() ;
 				 st.close();
@@ -515,7 +534,7 @@ public class SrfDaoImpl implements SrfDao {
 	 */
 	@Override
 	public boolean saveSrfForm(SampleRequest srfbean) throws SQLException {
-		System.out.println("In PRF SAVE");
+		System.out.println("In SRF SAVE");
 		Connection con = null;
 		PreparedStatement pst = null;
 		int noofrows  = 0;
@@ -535,9 +554,9 @@ public class SrfDaoImpl implements SrfDao {
 			pst.setString(4, srfbean.getSrf_poreftype() +", "+ srfbean.getSrf_referenceno());
 			pst.setString(5, srfbean.getSrf_priority());
 			pst.setString(6, srfbean.getSrf_handledby());
-			pst.setString(7, srfbean.getSrf_customer());
-			pst.setString(8, srfbean.getSrf_tanname());
-			pst.setString(9, srfbean.getSrf_deliver());
+			pst.setString(7, srfbean.getSrf_customerid());
+			pst.setString(8, srfbean.getSrf_tannameid());
+			pst.setString(9, srfbean.getSrf_deliverid());
 			pst.setString(10, srfbean.getSrf_destination());
 			pst.setString(11, srfbean.getSrf_endusage());
 			pst.setString(12, srfbean.getSrf_paymentterms());
@@ -577,12 +596,12 @@ public class SrfDaoImpl implements SrfDao {
 			String sqlquery_uptsrf = sql_uptsrf.toString();
 			pst = (PreparedStatement) con.prepareStatement(sqlquery_uptsrf);
 			pst.setString(1, srfbean.getSrf_orderdate());
-			pst.setString(2, srfbean.getSrf_referenceno());
+			pst.setString(2, srfbean.getSrf_poreftype() +", "+ srfbean.getSrf_referenceno());
 			pst.setString(3, srfbean.getSrf_priority());
 			pst.setString(4, srfbean.getSrf_handledby());
-			pst.setString(5, srfbean.getSrf_customer());
-			pst.setString(6, srfbean.getSrf_tanname());
-			pst.setString(7, srfbean.getSrf_deliver());
+			pst.setString(5, srfbean.getSrf_customerid());
+			pst.setString(6, srfbean.getSrf_tannameid());
+			pst.setString(7, srfbean.getSrf_deliverid());
 			pst.setString(8, srfbean.getSrf_destination());
 			pst.setString(9, srfbean.getSrf_endusage());
 			pst.setString(10, srfbean.getSrf_paymentterms());

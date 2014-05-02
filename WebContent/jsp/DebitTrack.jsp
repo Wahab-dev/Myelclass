@@ -92,11 +92,11 @@ $(function() {
 <h:form >   
 	<div id="blk">Debit tracking</div> 
 	 Group By: <select id="chngroup"> 
-			<option value="clear" selected="selected">Remove Grouping</option>
 			<option value="deb_debitno">Debit No</option> 
 			<option value="deb_exporter">Tannery</option> <!-- 
 			<option value="deb_contractno">Ct No</option> -->
 			<option value="deb_commission">Commission</option> 
+			<option value="clear">Remove Grouping</option>
 		</select> <br/><br/> 
 			<table id="debittracktbl"></table> 
 			<div id="debittrackpager"></div> 

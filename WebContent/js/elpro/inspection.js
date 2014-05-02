@@ -160,7 +160,7 @@ $(document).ready(function() {
 	testgrid.jqGrid({  
 				url:"",   
 				datatype:"json",
-				colNames:['Id','Test Id', 'ArticleID','Color','TestType', 'pieces tested', 'Results','Comments'],  
+				colNames:['Id','Test Id', 'ArticleID','Color','Test Type', 'Pieces Tested', 'Results','Comments'],  
 			    colModel:[  
 					{name:'id', index:'id', align:'center', width:60, editable:true, sortable: true, hidden: true, 
 						editoptions: {size:8},
@@ -347,10 +347,10 @@ $(document).ready(function() {
 rejgrid.jqGrid({  
 	url:"",   
 	datatype:"json",
-	colNames:[ 'Leather Type', 'id', 'RejectID ', 'Color ', 'Substance','Size','Selec','Color','Org','Other','Tot Rejects','Tot Passed', 'Tot Inspected'],  
+	colNames:[ 'Hides/Sides', 'id', 'RejectID ', 'Color ', 'Substance','Size','Selec','Color','Org','Others','Tot Rej','Tot Pass', 'Tot Inspected'],  
     colModel:[ 
 		{name:'arttype', index:'arttype', align:'center', width:120, editable:true, sortable: true, hidden: false, 
-			edittype: 'select', editoptions: {value: {H:'Hides',S:'Sides',HS:'H/S',A4:'A4 swatches'}},
+			edittype: 'select', editoptions: {value: {H:'Hides',S:'Sides',HS:'H&S'}},
 		},
 		{name:'id', index:'id', align:'center', width:120, editable:true, sortable: true,  hidden: true, 
 	
