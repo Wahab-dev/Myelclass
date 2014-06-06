@@ -39,24 +39,30 @@ public class InspectionTrackDaoImpl implements InspectionTrackDao {
 		try{			
 			con = DBConnection.getConnection();
 			st = (Statement) con.createStatement();
-			String sql = "SELECT inspid, inspdate, qualitycontroller, contractno, form.articleid, article, form.color, inspcdn, totinspected, grade, skincount, percent, totpassed, totrejects FROM tbl_inspform form,  tbl_inspgradedetails grade,  tbl_insprejectdetails rej where form.articleid = grade.articleid and form.articleid = rej.articleid order by inspid desc";
+			String sql = "SELECT inspid, inspdate, qualitycontroller, form.contractno, articlename, grade.color, testid, gradeid, rejectid, rjtotinspected, reject.totpassed, skincount1, skincount2, skincount3, skincount4, skincount5, skincount6, totrejects, form.inspcomments, inspcdn  FROM elpro.tbl_inspgradedetails grade join elpro.tbl_insprejectdetails reject on grade.articleid = reject.articleid join elpro.tbl_insptestdetails test on grade.articleid = test.articleid join elpro.tbl_inspform form on form.articleid = grade.articleid left join elpro.tbl_prf_article art on art.prfarticleid = grade.articleid order by contractno desc, articlename desc, color desc";
 			rs = st.executeQuery(sql);
 			while(rs.next()) {	
-				InspectionBean insptrackbean = new InspectionBean();
+			InspectionBean insptrackbean = new InspectionBean();
 				insptrackbean.setInspid(rs.getString("inspid"));
 				insptrackbean.setInspdate( DateConversion.ConverttoNormalDate(rs.getString("inspdate")));
 				insptrackbean.setInspqualityctrlr(rs.getString("qualitycontroller"));
 				insptrackbean.setInspContractNo(rs.getString("contractno"));
-				insptrackbean.setArticleid(rs.getString("articleid"));
-				insptrackbean.setArticle(rs.getString("article"));
+				insptrackbean.setArticle(rs.getString("articlename"));
 				insptrackbean.setColor(rs.getString("color"));
-				insptrackbean.setInsp_cdn(rs.getString("inspcdn"));
-				insptrackbean.setTotinspected(rs.getString("totinspected"));
-				insptrackbean.setGrade(rs.getString("grade"));
-				insptrackbean.setSkincount(rs.getString("skincount"));
-				insptrackbean.setPercent(rs.getString("percent"));
+				insptrackbean.setTestid(rs.getString("testid"));
+				insptrackbean.setGradeid(rs.getString("gradeid"));
+				insptrackbean.setRejectid(rs.getString("rejectid"));
+				insptrackbean.setRjtotinspected(rs.getString("rjtotinspected"));
 				insptrackbean.setTotpassed(rs.getString("totpassed"));
+				insptrackbean.setSkincount1(rs.getString("skincount1"));
+				insptrackbean.setSkincount2(rs.getString("skincount2"));
+				insptrackbean.setSkincount3(rs.getString("skincount3"));
+				insptrackbean.setSkincount4(rs.getString("skincount4"));
+				insptrackbean.setSkincount5(rs.getString("skincount5"));
+				insptrackbean.setSkincount6(rs.getString("skincount6"));
 				insptrackbean.setTotrejects(rs.getString("totrejects"));
+				insptrackbean.setInspcomments(rs.getString("inspcomments"));
+				insptrackbean.setInsp_cdn(rs.getString("inspcdn"));
 				insptracklist.add(insptrackbean);
 			}
 			System.out.println("Insp Track loaded Successfully");

@@ -4,13 +4,15 @@
 $(document).ready(function() {
 	$.get("/Myelclass/DebAutoComplete.do?action="+"debno", 
 		 	function(data){
-			 	if($("#debactionform").val().toLowerCase() == "edit" ){
-			 		
+			 	if($("#debactionform").val().toLowerCase() == "edit" ){		
+			 		alert("In Edit From");
+			 		var elclassrefnoforedit = $("#invnoforedit").val();
+					grid.jqGrid('setGridParam',{url:"/Myelclass/DebSelInvfromCust.do?invno="+elclassrefnoforedit+"&action="+"loadGrid",}).trigger("reloadGrid");			
 			 	}else{
+			 		/*var elclassrefno = $("#invnoforedit").val();*/
 			 		$("#deb_debitno").val(data); 
 			 		$.trim($("#deb_debitno").val());
-			 	}
-			 	
+			 	}			 	
 		 	},"text"); 
 	
 	
@@ -25,32 +27,36 @@ $(document).ready(function() {
 	    numberOfMonths: 1,
 	    showButtonPanel: true,
 	    gotoCurrent:true, 
+	    beforeShowDay: function(date) {
+	        var day = date.getDay();              // Disable only SUndays
+	        return [(day != 0), ''];
+	    }
 	});
     
 		 var grid = $("#tbl_debselInvDetails");
 		 grid.jqGrid({
 			 url:"",
 			 datatype: "json",
-			 colNames:['Inv No','Inv date','Ct No','Article','Color','Size','Substance','Quantity','QShipd','QBal','Rate','Inv AMount','Other Charges','Discount','Total','TC','Comm','Other'],
+			 colNames:['Inv No','Inv date','Ct No','Article','Color','Size','Substance','Quantity','QShipd','QBal','Rate','Inv AMount','Other Chrg','Claim','Total','TC','Comm','Other'],
 			 colModel:[
-                 	{name: 'invno', index: 'invno' ,width:90, hidden: false, },
-					{name: 'invdt', index: 'invdt' ,width:70, hidden: true,},
-					{name: 'invctno', index: 'invctno' ,width:50, hidden: false, },
-					{name: 'invartname', index: 'invartname' ,width:90,  hidden: false,},
-					{name: 'invcolor', index: 'invcolor' ,width:70, hidden: false, },
-					{name: 'invsize', index: 'invsize' ,width:70, hidden: true,},
-					{name: 'invsubs', index: 'invsubs' ,width:70, hidden: true,},
-					{name: 'invqty', index: 'invqty' ,width:70,  hidden: false,},
-					{name: 'invqshpd', index: 'invqshpd' ,width:70,  hidden: false,},
-					{name: 'invqbal', index: 'invqbal' ,width:70, hidden: false,},
-					{name: 'invrate', index: 'invrate' ,width:70,  hidden: false,},
-					{name: 'invamt', index: 'invamt' ,width:70,  hidden: false,},
-					{name: 'invothercrg', index: 'invothercrg' ,width:50, hidden: true,},
-					{name: 'invclaim', index: 'invclaim' ,width:90, hidden: true,},
-					{name: 'invtotamount', index: 'invtotamount' ,width:70, hidden: false,},
-					{name: 'invtc', index: 'invtc' ,width:70,  hidden: false,},
-					{name: 'invcomm', index: 'invcomm' ,width:50,  hidden: false,},
-					{name: 'invothercomm', index: 'invothercomm' ,width:90, hidden: false,},
+			     {name: 'invno', index: 'invno' ,align:'center',width:50, hidden: false, },
+				 {name: 'invdt', index: 'invdt' ,align:'center',width:70, hidden: false,},
+				 {name: 'invctno', index: 'invctno' ,align:'center',width:50, hidden: false, },
+				 {name: 'invartname', index: 'invartname' ,align:'center',width:90,  hidden: false,},
+				 {name: 'invcolor', index: 'invcolor' ,align:'center',width:70, hidden: false, },
+				 {name: 'invsize', index: 'invsize' ,align:'center',width:70, hidden: true,},
+				 {name: 'invsubs', index: 'invsubs' ,align:'center',width:70, hidden: true,},
+				 {name: 'invqty', index: 'invqty' ,align:'right',width:60,  hidden: false,},
+				 {name: 'invqshpd', index: 'invqshpd' ,align:'right',width:60,  hidden: false,},
+				 {name: 'invqbal', index: 'invqbal' ,align:'right',width:60, hidden: false,},
+				 {name: 'invrate', index: 'invrate' ,align:'center',width:50,  hidden: false,},
+				 {name: 'invamt', index: 'invamt' ,align:'right',width:70,  hidden: false,},
+				 {name: 'invothercrg', index: 'invothercrg' ,align:'right',width:70, hidden: false,},
+				 {name: 'invclaim', index: 'invclaim' ,align:'right',width:50, hidden: false,},
+				 {name: 'invtotamount', index: 'invtotamount' ,align:'right',width:70, hidden: false,},
+				 {name: 'invtc', index: 'invtc' ,align:'center',width:70,  hidden: false,},
+				 {name: 'invcomm', index: 'invcomm' ,align:'center',width:50,  hidden: false,},
+				 {name: 'invothercomm', index: 'invothercomm' ,align:'center',width:90, hidden: false,},
 				],
 			 jsonReader : {  
 				 repeatitems:false,
@@ -60,45 +66,59 @@ $(document).ready(function() {
 				 records: "records" //calls Third
 			 }, 
 			 pager: '#deb_debpager',
-			 rowNum:3, 
-			 rowList:[3,5,7],	       
+			 rowNum:5, 
+			 rowList:[5,7,9],	       
 			 sortorder: 'desc',  
 			 height : 'automatic',
 			 emptyrecords: 'No records to display',
 			 caption: 'Debit Load',
-			 //multiselect : true,
+			// multiselect : true,
+			 footerrow: true,
 			 loadComplete: function (data){ //load complete fires immeddiately aftr server response
+				 var $self = $(this),
+				 totshpd = $self.jqGrid("getCol", "invqshpd", false, "sum");
+				 totamt = $self.jqGrid("getCol", "invamt", false, "sum");
+				 $self.jqGrid("footerData", "set", {invqshpd: totshpd.toFixed(2)});
+	        	 $self.jqGrid("footerData", "set", {invamt: totamt.toFixed(2)});
+				 
+				 
 				 $("#tcbtn").addClass('ui-state-disabled'); // Diable TC btn
 				 $("#tcbutton").attr('disabled' , true);
-			 },
-			 onSelectRow:  function(rowid, status, e) {
 				 
+			 },
+			 onSelectRow: function(rowid, status, e) {
 				 var qshippedsum = grid.jqGrid('getCol', 'invqshpd', false, 'sum');
+				 var ctnos = grid.jqGrid('getCol', 'invctno', false);
 				 var selrowid = grid.jqGrid('getGridParam', 'selrow');
 		         var invdetails = grid.jqGrid('getRowData', selrowid);
-		         
-		         alert(" Alpha  "+qshippedsum);
+
 		         $("#deb_rate").val(invdetails.invrate);
 		         $("#deb_totalquantity").val(qshippedsum);
-		         $("#deb_commission1").val(invdetails.invcomm);
-		         $("#deb_invoiceamt").val(invdetails.invtotamount);
+		         $("#deb_commission").val(invdetails.invcomm.substring(0,4));
+		         $("#deb_invoiceamt").val(totamt.toFixed(2));
+		         $("#deb_invdate").val(invdetails.invdt);
+		         $("#deb_othercommission").val(invdetails.invothercomm);
+		         $("#deb_contractno").val(ctnos);
 		         var tc = invdetails.invtc;
 		         $("#deb_tc").val(tc);
 		         var tcmt =  tc.substring(0,1);
-				   alert("tcmt"+tcmt);
-				   if(tcmt != 0){
+		      
+				   alert(tcmt);
+				   if (tc.toLowerCase().indexOf("ic") >= 0 && tcmt != 0){
 						//enable tc button
 						$("#tcbutton").attr('disabled' , false);
 						$("#invtc").val(tc);
 						//disable save button
-						$("#Btndebitsave").attr('disabled' , true);
+						$("#Btndebitsave").attr('disabled' ,true);
 					}else{
 						$("#Btndebitsave").attr('disabled' , false);
 						$("#tcbutton").attr('disabled' , true);
 					}
 		         
 			 }
-		}).navGrid('#deb_debpager',{ edit: false, add: false, del: false, refresh: true, view: false, search: true,
+		}).navGrid('#deb_debpager',{ 
+				edit: false, add: false, del: false, refresh: true, view: false, search: true,
+				addtext: 'Add', edittext: 'Edit', deltext: 'Delete', searchtext: 'Search', refreshtext: 'Reload', viewtext: 'View'
 		}).navButtonAdd( '#deb_debpager',{ 
 			        caption: "Waived",
 			        title:"Debit to Waived",
@@ -135,12 +155,14 @@ $(document).ready(function() {
 			              label: item.tanneryName,
 			              addr: item.tanneryAddress,
 			              ctno: item.tanneryContactNo,
+			              id: item.tanneryId,
 			              };
 			        }));//END response
 			 });
 		 },
 		 select: function(event, ui){
 			 $('#deb_tanaddr').val(ui.item.addr);
+			 $('#deb_exporterid').val(ui.item.id);
 			 $('#deb_tantelephone').val(ui.item.ctno);
 		 }
 	}); 
@@ -158,15 +180,20 @@ $(document).ready(function() {
 			              value: item.label,
 			              taninvno: item.shform,
 			              };
-			        }));//END response
+			        }));
 			 });
 		 },
 		 select: function(event, ui){
 			 $('#deb_taninvno').val(ui.item.taninvno);
 			 $('#deb_elclassrefno').val(ui.item.value); 
-			 var elclassrefno = $("#deb_elclassrefno").val();
-			 grid.jqGrid('setGridParam',{url:"/Myelclass/DebSelInvfromCust.do?invno="+elclassrefno+"&action="+"loadGrid",}).trigger("reloadGrid");
-		 }
+			 if($("#debactionform").val().toLowerCase() == "edit" ){
+				
+			 }else{
+				 alert("in select Add"+$("#debactionform").val());
+				 var elclassrefno = $("#deb_elclassrefno").val();
+				 grid.jqGrid('setGridParam',{url:"/Myelclass/DebSelInvfromCust.do?invno="+elclassrefno+"&action="+"loadGrid",}).trigger("reloadGrid");
+			 }
+		}
 	}); 
 	
 	
@@ -177,7 +204,7 @@ $(document).ready(function() {
 	 $("#tcdebit").tabs().dialog({
 			autoOpen: false,
 	        resizable: true,
-	        width: 830,
+	        width: 880,
 	        height: 500,
 	        autoResize: true, 
 	        modal: true,
@@ -188,7 +215,10 @@ $(document).ready(function() {
 	        	$("#tcdeb_exporter").val($("#deb_exporter").val());
 	        	$("#tcdeb_tanaddr").val($("#deb_tanaddr").val());
 	        	$("#tcdeb_tantelephone").val($("#deb_tantelephone").val());
-	        	$("#tcdeb_tcdebitdate").val($("#deb_debitdate").val());
+	        	//$("#tcdeb_tcdebitdate").val($("#deb_debitdate").val());
+	         	/*$("#tcdeb_ctno").val($("#deb_contractno").val());
+	         	$("#tcdeb_commission").val($("#deb_commission").val());
+	         	$("#tcdeb_exchangerate").val($("#deb_exchangerate").val());*/
 	        	$("#tcdeb_taninvno").val($("#deb_taninvno").val());
 	        	$("#tcdeb_elclassrefno").val($("#deb_elclassrefno").val());
 	        	$("#tcdeb_tcamt").val($("#deb_tc").val());
@@ -248,11 +278,12 @@ $(document).ready(function() {
 	    var tax = (amtinrs *12.36)/100;                   // Add Dynamic Tax Percentage here          
 	    $("#deb_tax").val(tax.toFixed(2));
 	    var total = amtinrs + tax; 
-	    $("#deb_total").val(total.toFixed(2));
+	    $("#deb_total").val(total.toFixed(0));
 	    var tds = (total * 10)/100;
 	    $("#deb_tds").val(tds.toFixed(2));
 	    var due = total - tds;
-	    $("#deb_due").val(due.toFixed(2));
+	    $("#deb_due").val(due.toFixed(0));
+	    test_skill();
 	 });
 	 
 	 $("#tcdeb_exchangerate").focusout(function() {
@@ -261,16 +292,174 @@ $(document).ready(function() {
 			var totqty = $("#tcdeb_totalquantity").val();
 			
 			var tcindex = tc.indexOf(' ');
-			alert(tcindex);
+			
 			var tcpercent = tc.substring(0,tcindex);
 			tcpercent.trim();
-			alert(tcpercent);
+			
 			 var amt = (tcpercent * totqty) / 100;
-			 alert(amt);
+			 
 			 var amtinrs = (amt * exchngrate);
-			 alert(amtinrs);
+			 
 			 $("#tcdeb_elclassamtinrs").val(amtinrs);
 		   
-		 });
-	 
+	});
+	 /*
+	  * Function to Convert the Number To Words Print
+	  * Reused from the Old elpro Software 
+	  * Nee dto Fine tune for the Jquery Version 
+	  */
+	 function format_number(pnumber,decimals){
+			if (isNaN(pnumber)) 
+					return 0;
+			if (pnumber=='') 
+				return 0;
+			
+			var snum = new String(pnumber);
+			var sec = snum.split('.');
+			var whole = parseFloat(sec[0]);
+			var result = '';
+			
+			if(sec.length > 1){
+				var dec = new String(sec[1]);
+				dec = String(parseFloat(sec[1])/Math.pow(10,(dec.length - decimals)));
+				dec = String(whole + Math.round(parseFloat(dec))/Math.pow(10,decimals));
+				var dot = dec.indexOf('.');
+				if(dot == -1){
+					dec += '.'; 
+					dot = dec.indexOf('.');
+				}
+				while(dec.length <= dot + decimals) { dec += '0'; }
+				result = dec;
+			} else{
+				var dot;
+				var dec = new String(whole);
+				dec += '.';
+				dot = dec.indexOf('.');		
+				while(dec.length <= dot + decimals) { dec += '0'; }
+				result = dec;
+			}	
+			return result;
+		}
+
+		function test_skill() 
+		{
+			
+			    var junkVal=$('#deb_total').val();
+				junkVal=Math.round(junkVal);
+				var obStr=new String(junkVal);
+				numReversed=obStr.split("");
+				actnumber=numReversed.reverse();
+				
+			    if(Number(junkVal) >=0){
+			        //do nothing
+			    }
+			    else{
+			        alert('wrong Number cannot be converted');
+			        return false;
+			    }
+			    if(Number(junkVal)==0){
+			    	$('#debamtinwords').val("Zero Only");
+			        return false;
+			    }
+			    if(actnumber.length>9){
+			        alert('The Number is too big to covertes');
+			        return false;
+			    }
+			 
+			    var iWords=["Zero", " One", " Two", " Three", " Four", " Five", " Six", " Seven", " Eight", " Nine"];
+			    var ePlace=['Ten', ' Eleven', ' Twelve', ' Thirteen', ' Fourteen', ' Fifteen', ' Sixteen', ' Seventeen', ' Eighteen', ' Nineteen'];
+			    var tensPlace=['dummy', ' Ten', ' Twenty', ' Thirty', ' Forty', ' Fifty', ' Sixty', ' Seventy', ' Eighty', ' Ninety' ];
+			 
+			    var iWordsLength=numReversed.length;
+			    var inWords=new Array();
+			    var finalWord="";
+			    j=0;
+			    for(var i=0; i<iWordsLength; i++){
+			        switch(i)
+			        {
+			        case 0:
+			            if(actnumber[i]==0 || actnumber[i+1]==1 ) {
+			                inWords[j]='';
+			            }
+			            else {
+			                inWords[j]=iWords[actnumber[i]];
+			            }
+			            inWords[j]=inWords[j]+' Only';
+			            break;
+			        case 1:
+			            tens_complication();
+			            break;
+			        case 2:
+			            if(actnumber[i]==0) {
+			                inWords[j]='';
+			            }
+			            else if(actnumber[i-1]!=0 && actnumber[i-2]!=0) {
+			                inWords[j]=iWords[actnumber[i]]+' Hundred and';
+			            }
+			            else {
+			                inWords[j]=iWords[actnumber[i]]+' Hundred';
+			            }
+			            break;
+			        case 3:
+			            if(actnumber[i]==0 || actnumber[i+1]==1) {
+			                inWords[j]='';
+			            }
+			            else {
+			                inWords[j]=iWords[actnumber[i]];
+			            }
+			            if(actnumber[i+1] != 0 || actnumber[i] > 0){
+			                inWords[j]=inWords[j]+" Thousand";
+			            }
+			            break;
+			        case 4:
+			            tens_complication();
+			            break;
+			        case 5:
+			            if(actnumber[i]==0 || actnumber[i+1]==1 ) {
+			                inWords[j]='';
+			            }
+			            else {
+			                inWords[j]=iWords[actnumber[i]];
+			            }
+			            inWords[j]=inWords[j]+" Lakh";
+			            break;
+			        case 6:
+			            tens_complication();
+			            break;
+			        case 7:
+			            if(actnumber[i]==0 || actnumber[i+1]==1 ){
+			                inWords[j]='';
+			            }
+			            else {
+			                inWords[j]=iWords[actnumber[i]];
+			            }
+			            inWords[j]=inWords[j]+" Crore";
+			            break;
+			        case 8:
+			            tens_complication();
+			            break;
+			        default:
+			            break;
+			        }
+			        j++;
+			    }
+			 
+			    function tens_complication() 
+				{
+			        if(actnumber[i]==0) {
+			            inWords[j]='';
+			        }
+			        else if(actnumber[i]==1) {
+			            inWords[j]=ePlace[actnumber[i-1]];
+			        }
+			        else {
+			            inWords[j]=tensPlace[actnumber[i]];
+			        }
+			    }
+			    inWords.reverse();
+			    for(i=0; i<inWords.length; i++) {
+			        finalWord+=inWords[i];
+			    }
+			    $('#debamtinwords').val(finalWord);
+			}
 });

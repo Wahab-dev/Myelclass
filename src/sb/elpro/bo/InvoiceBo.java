@@ -47,9 +47,7 @@ public interface InvoiceBo {
 
 	public List<CustomerDetails> getInvCustomer()throws Exception;
 
-	public List<InvCustContractDetails> getInvCustContract()throws Exception;
-
-	public List<CustomerInvoice> getInvCustCtDetails(String cust, String type, String sidx, String sord)throws Exception;
+	public List<CustomerInvoice> getInvCustCtDetails(String custid, String type, String sidx, String sord)throws Exception;
 	/**  
 	 * (Method description)
 	 * @param

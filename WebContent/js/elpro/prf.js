@@ -4,6 +4,8 @@
  * 
  */
 $(document).ready(function() {
+	
+	
 	 $("#prf_pojw").focusin(function() {
 		 $.get("/Myelclass/PrfAutocomplete.do?action="+"pojwno", 
 		 	function(data){
@@ -26,19 +28,23 @@ $(document).ready(function() {
 			                       fax: item.tanneryFax,
 			                       id: item.tanneryId
 			                       };
-			                     }));//END response
-			                    }
-					 );
+			              }));//END response
+			           }
+				);
 			 	$('.ui-autocomplete').css('zIndex',1234);
-					},
-					select: function( event, ui) {
-			          	 $('#prf_exporteraddr').val(ui.item.addr);
-			          	 $('#prf_exportertele').val(ui.item.phone);
-			          	 $('#prf_exporterattn').val(ui.item.attn);
-			          	 $('#prf_exporterfax').val(ui.item.fax);
-			          	 $('#pojw_payterms').val('By local Cheque on or before 30 days from invoice date in Indian Rupee at prevailing exchange rates.');
-			           } ,	
-			});  
+		 	},
+			select: function( event, ui) {
+			     $('#prf_exporteraddr').val(ui.item.addr);
+			     $('#prf_exportertele').val(ui.item.phone);
+			     $('#prf_exporterattn').val(ui.item.attn);
+			     $('#prf_exporterfax').val(ui.item.fax);
+			     $('#prf_exporterid').val(ui.item.id);
+			     $('#pojw_payterms').val('By local Cheque on or before 30 days from invoice date in Indian Rupee at prevailing exchange rates.');
+	        } ,	
+	        change: function(event,ui){
+		    	 $(this).val((ui.item ? ui.item.value : ""));
+		   }
+	 });  
 	 $('#prf_tanname').autocomplete({
 		 source: function(request, response) {
 				var param = request.term;  
@@ -69,7 +75,10 @@ $(document).ready(function() {
 			          	 $('#prf_tanattn').val(ui.item.attn);
 			          	 $('#prf_tanfax').val(ui.item.fax);
 			        	 $('#prf_tannid').val(ui.item.id);
-			           } 
+			       },
+			       change: function(event,ui){
+				    	 $(this).val((ui.item ? ui.item.value : ""));
+				   }
 			}); 
 	 
 	 
@@ -128,6 +137,17 @@ $(document).ready(function() {
 		});*/
 	
 	 //$("#prfform").dialog( "open" );
+	
+	function selecpcheck(value,colName){
+		var sum = 0;
+		$.map(($("#prf_selectionp").val()).split('-'), function(value){
+			sum += parseInt(value, 10);
+			return sum;
+		});
+		if(!(sum == 100))return [false,"Sum of Selection Percent Should be 100"];
+		else return [true,""];
+	    
+	}
 	var grid = $("#list"); //table id artinsert
 	 grid.jqGrid({ 
 		url:"/Myelclass/PrfinsertArticle.do", ///   
@@ -136,7 +156,7 @@ $(document).ready(function() {
 		postData: {
 		        ctno: function (){return $("#prf_contractno").val();},
 	    },
-		colNames:['Article Type','Name','Article Shform', 'Article ID','Color','Size','Size avg','Size Rem','Substance','Selection','Selp','Quantity','Unit','Pcs','Pric','Currency','Price','Shipment','T c','Price','Currency','tccust','Contract','Prfarticleid','User'],  
+		colNames:['Article Type','Name','Article Shform', 'Article ID','Color','Size','Size avg','Size Rem','Substance','Selection','Selection percent','Quantity','Unit','Pcs','Pric','Currency','Price','Shipment','T c','Price','Currency','tccust','Contract','Prfarticleid','User'],  
 	    colModel:[   
 			 {name:'prf_articletype', index:'articletype', width:80, align:'center', sortable:true, editable:true, hidden: false, edittype:'select', 
 				 editoptions: { 
@@ -272,7 +292,7 @@ $(document).ready(function() {
 			}, 
 			{name:'prf_sizeremarks', index:'sizerem', width:40, align:'center',  editable:true, hidden: true, 
 				edittype:'select',
-				editoptions:{value:{0: 'Select Size Remarks', F:'F', S:'S', FS:'FS', DB:'Double Butt'}},
+				editoptions:{value:{0: 'Select Size Remarks', F:'F', S:'S', FS:'FS', DB:'Double Butt', NA:'NA'}},
 				  editrules: {required: true},
 				  formoptions:{rowpos: 6, colpos: 2} ,	
 			}, 
@@ -281,22 +301,32 @@ $(document).ready(function() {
 			},  
 			{name:'prf_selection', index:'selection', align:'center', width:90, sortable:true, hidden: false, editable:true,
 				edittype:'select',
-				  editoptions:{value:{0:'Select Selection %',A:'A',AB:'AB',ABC:'ABC',TR:'TR',Available:'Available',TBA:'TBA',}},
+				editoptions: { 
+        			  dataUrl:'/Myelclass/PrfAutocomplete.do?action=selec',
+        			  type:"GET",
+        			  buildSelect: function(data) {
+        			   	var response = jQuery.parseJSON(data);
+        			        	var s = '<select style="width: 520px">';
+        			        	if (response && response.length) {
+        			            	s += '<option value="0">--- Select Article Type ---</option>';
+        			  	            for (var i = 0, l=response.length; i<l ; i++) {
+        			                  var ri = response[i].value;
+        			               	  s += '<option value="'+ri+'">'+ri+'</option>';
+        			            	}
+        			          	}
+        			       return s + "</select>";
+        			   },
+        			 } ,
 				  editrules :{required : true},formoptions:{rowpos: 7, colpos: 2} 
 			}, 
 			{name:'prf_selectionp', index:'selectionpercent', align:'center', width:90, sortable:true, editable:true, hidden: false,
 				editrules :{required : true},
-			//	editrules:{custom:true, custom_func:mypricecheck}, 
+				editrules:{custom:true, custom_func:selecpcheck}, 
 				editoptions: { 
 					dataEvents:[{
 					type: 'focusout',
 					fn: function(e){
-						var sum = 0;
-						$.map(($("#prf_selectionp").val()).split('-'), function(value){
-							sum += parseInt(value, 10);
-							return sum;
-						});
-						if(!(sum == 100))alert("selection percent should be 100. Please Enter valid percentage");
+					
 					}
 				}],
 				},
@@ -304,14 +334,14 @@ $(document).ready(function() {
 			}, 	
 		
 			{name:'prf_quantity', index:'quantity', width:90, align:'center', sortable:true, hidden: false, 
-				editable:true, editrules:{required : true, number:true}, formatter: 'number',  
-				  formatoptions: {decimalSeparator: ".", thousandsSeparator: ",", decimalPlaces: 2, defaultValue: '0.0000' },
+				editable:true, editrules:{required : true, number:true}, formatter: 'integer',  // -- Allow only whole number - change to number to allow decimal  
+				  //formatoptions: {decimalSeparator: ".", thousandsSeparator: ",", decimalPlaces: 2, defaultValue: '0.0000' },
 				  formoptions:{rowpos: 8, colpos: 1} 
 			}, 	
 			{name:'prf_unit', index:'unit', width:90, align:'center', sortable:true, hidden: false, editable:true,
 				edittype:'select',
 				  editoptions:{
-					  value:{0:'Select Quantity Unit',sqft:'sq ft',skins:'skins',Garment:'Garment',NA:'NA'},
+					  value:{0:'Select Quantity Unit',sqft:'sq ft',skin:'skin',skins:'skins',Garment:'Garment',NA:'NA'},
 					  dataEvents:[{
 							type: 'focusout',
 							fn: function(e){
@@ -336,7 +366,6 @@ $(document).ready(function() {
 			{name:'prf_ratesign', index:'ratesign', width:90, align:'center', sortable:true, hidden: true, editable:true,
 				  edittype:'select',
 				  editoptions:{value:{0:'--- Select Currency --- ',$:'$',Rs:'Rs',Euro:'Euro',NA:' Not Available'}},
-				  //editoptions:{value:"0:--- Select Currency --- ; $:Dollar; Rs:Rupees; €:Euro; NA:Not Available"},
 				  editrules:{edithidden:true,required : true}, 
 				  formoptions: {rowpos: 10, colpos: 1},
 			},  
@@ -346,8 +375,10 @@ $(document).ready(function() {
 			}, 
 			{name:'prf_shipment', index:'shipment', width:90, align:'center', sortable:true, editable:true, hidden: true,
 			      edittype:'select',
-			      editoptions:{value:{0:'--- Select Shipment --- ',Air:'Air',Sea:'Sea',Courier:'Courier',Truck:'Truck'}},
-			      editrules:{edithidden:true,required : true},  formoptions: {rowpos: 10, colpos: 3},	
+			      //editoptions:{value:{0:'--- Select Shipment --- ',Air:'Air',Sea:'Sea',Courier:'Courier',Truck:'Truck',Fob:'Fob'}},
+			      editoptions:{value:{0:'--- Select Shipment --- ',Air:'Air',Sea:'Sea',Courier:'Courier',Truck:'Truck',Train:'Train',Fob:'Fob',ExChennai:'Ex Chennai',ExRanipet:'Ex Ranipet',ExFactory:'Ex-Factory',NA:'NA',TBA:'TBA'}},
+			     // editrules:{edithidden:true, required : true},	
+   			      formoptions:{rowpos: 10, colpos: 3},
 			}, 
 			{name:'prf_tc', index:'tc', width:90, align:'center', sortable:true, editable:true, hidden: false}, 
 			 	
@@ -370,20 +401,7 @@ $(document).ready(function() {
 			{name:'user', index:'user', width:90, align:'center', sortable:true, editable:true, hidden: true,
 				//${user.name}.	
 			
-			}, 	
-			/*{
-			    name: 'checkbox',
-			    index: 'checkbox',
-			    editable:true,
-			    checked:false,
-			    edittype:'checkbox',
-			    align:"center",
-			  //hidden : adminHide,
-			    editoptions: { value:"True:False"},
-			    formatter: "checkbox",
-			    formatoptions: {disabled : false,checked:false}
-			}*/
-									  
+			}, 						  
 		],  
 		jsonReader : {  
 		  	repeatitems:false,
@@ -404,16 +422,18 @@ $(document).ready(function() {
         height: "100%", 
         emptyrecords: 'No records to display',
       	editurl: "/Myelclass/PrfinsertArticle.do",
-		}).jqGrid('navGrid','#pager',{add:true, edit:true, del:true, search: false}, 
+		}).jqGrid('navGrid','#pager',{
+			add:true, edit:true, del:true, search: false,
+			addtext: 'Add', edittext: 'Edit', deltext: 'Delete', searchtext: 'Search', refreshtext: 'Reload',
+			}, 
 			/*
 	         *  // edit option
 			 */
 		   { 
 		  	
-			 width : 650,
-			 top:120,
-			 left:120,
-			 // edit option
+				top: 150,
+			 	left: 200,
+			 	width : 850,
 			 beforeShowForm: function(form) { 
 				 /*
 				  * Code to Implement Save as New in Edit form
@@ -705,7 +725,10 @@ $(document).ready(function() {
 						          	 $('#prf_custattn').val(ui.item.attn);
 						          	 $('#prf_custfax').val(ui.item.fax);
 						          	 $('#prf_custid').val(ui.item.id);
-						           } 
+						           } ,
+						           change: function(event,ui){
+								    	 $(this).val((ui.item ? ui.item.value : ""));
+								   }
 						}); 
 
 					/*
@@ -905,12 +928,11 @@ $(document).ready(function() {
 				url: "/Myelclass/pojw.do",
 				type: "POST",
 				async: true,
-				dataType: "text",
+				dataType: "html",
 				data: formdata,
 				contentType: "application/x-www-form-urlencoded; charset=UTF-8",
 				success: function (data) {
-					alert("S"+data);
-	                console.log("success"+data);
+					alert(data);
 	                $(this).dialog("close");
 	            }, 
 	            error: function (data) {
@@ -930,18 +952,17 @@ $(document).ready(function() {
     			url: "/Myelclass/pojw/print.do",
     			type: "POST",
     			async: true,
-    			dataType: "text",
+    			dataType: "html",
     			data: formdata,
     			contentType: "application/x-www-form-urlencoded; charset=UTF-8",
     			success: function (data) {
-    				alert("S"+data);
-                 console.log("success"+data);
+    				alert(data);
                  $(this).dialog("close");
-             }, 
-             error: function (data) {
-             	alert("F "+data);
-                 console.log("error");
-             } 
+    			}, 
+    			error: function (data) {
+    				alert("F "+data);
+    				console.log("error");
+    			} 
     		});
     		
     	}
@@ -972,7 +993,7 @@ $(document).ready(function() {
 							  
 							        },
 						    },*/
-							colNames:['Article Type','Name','Article Shform', 'Article ID','Color','Size','Size avg','Size Rem','Substance','Selection','Selp','Quantity','Unit','Pcs','Pric','Currency','Price','Shipment','T c','Price','Currency','tccust','Contract','Prfarticleid','User'],  
+							colNames:['Article Type','Name','Article Shform', 'Article ID','Color','Size','Size avg','Size Rem','Substance','Selection','Selp','Quantity','Unit','Pcs','Pric','Currency','Price','Shipment','T c','Price','Currency','tccust','Contract','User','Prfarticleid'],  
 						    colModel:[   
 								 {name:'prf_articletype', index:'articletype', width:80, align:'center', sortable:true, editable:true, hidden: false, edittype:'select', 
 									 editoptions: { 
@@ -1052,7 +1073,7 @@ $(document).ready(function() {
 								}, 
 								{name:'artshform', index:'articleshfrom', width:55, align:'center', editable:true, hidden: true,
 									formoptions:{rowpos: 1, colpos: 3},
-									 editrules :{required : true},
+									 //editrules :{required : true},
 								}, 
 								{name:'articleid', index:'articleid', align: 'center', width:40, sortable:true,  editable:true,  hidden: true,					     				 
 									 editrules :{required : true},
@@ -1192,20 +1213,23 @@ $(document).ready(function() {
 								}, 	
 								{name:'prf_tccurrency', index:'tcsign', width:90, align:'center', sortable:true, editable:true, hidden: true,
 									edittype:'select',
-								  	  editoptions:{value:{0:'Select TC currency ',cents:'cents',paise:'paise',shillings:'shillings',NA:'NA'}},
+								  	  editoptions:{value:{0:'--- Select TC Currency ---',cents:'cents',paise:'paise',shillings:'shillings',NA:'NA'}},
 								  	 editrules:{edithidden:true}, formoptions: {rowpos: 12, colpos: 1},
 								},
 								{name:'prf_tcagent', index:'tccust', width:90, align:'center', sortable:true, editable:true, hidden: true,
 									 edittype:'select',
-								      editoptions:{value:{0:'Select TC Customer',IC:'IC',Cust:'Cust',ICMD:'IC/MD',MD:'MD',NA:'NA'}},
+								      editoptions:{value:{0:'--- Select TC Customer ---',IC:'IC',Cust:'Cust',ICMD:'IC/MD',MD:'MD',NA:'NA'}},
 								      editrules:{edithidden:true, required : true}, formoptions: {rowpos: 12, colpos: 3},
 								}, 	
-								{name:'prf_contractnum', index:'contractno', width:90, align:'center', sortable:true, editable:true,editoptions:{required : true}, hidden: false}, 	
-								{name:'prf_articleid', index:'prfarticleid', width:90, align:'center', sortable:true, editable:true, hidden: true}, 	
+								{name:'prf_contractnum', index:'contractno', width:90, align:'center', sortable:true, editable:true,editoptions:{required : true}, hidden: false,
+									formoptions: {rowpos: 13, colpos: 3},	
+								}, 	
 								
 								{name:'user', index:'user', width:90, align:'center', sortable:true, editable:true, hidden: true,
-									//${user.name}.	
+									formoptions: {rowpos: 13, colpos: 2},	
 								},
+								{name:'prf_articleid', index:'prfarticleid', width:90, align:'center', sortable:true, editable:true, hidden: true}, 	
+								
 														  
 							],  
 							jsonReader : {  
@@ -1305,6 +1329,7 @@ $(document).ready(function() {
 							           	 $("#prf_contractnum").val($("#prf_pojw").val());
 							           	 $("#user").val($("#userinsession").val());		   
 							             $("#tr_prf_tc").hide(); // hide the tr prf_rate
+							             $("#tr_artshform").hide();
 							             $("#tr_prf_rate").hide();
 							             $("#tr_user").show();
 							        },
@@ -1332,7 +1357,7 @@ $(document).ready(function() {
 								 });
 						 pojwgrid.jqGrid('navButtonAdd','#pojwpager',  { // "#list_toppager_left"
 				                caption: "Copy",
-				                buttonicon: 'ui-icon-wrench',
+				                buttonicon: 'ui-icon-scissors',
 				                onClickButton: function() {
 				                	 var $self = $(this);
 						 		 	 $self.jqGrid("editGridRow", $self.jqGrid("getGridParam", "selrow"),
@@ -1341,9 +1366,13 @@ $(document).ready(function() {
 										 width : 650,
 										 top: 550,
 										 left:120,
-										 
+										   recreateForm: true,
 										 // edit option
 										 beforeShowForm: function(form) { 
+											 alert("Hi");
+											 $("#tr_prf_tc").hide();
+											 $("#tr_prf_rate").hide();
+									
 											 var sizec = $("#prf_size").val();
 											 var temp = sizec.indexOf(' ');
 											 $("#prf_size").val(sizec.substring(0, temp));
@@ -1381,8 +1410,7 @@ $(document).ready(function() {
 											 $("#prf_tccurrency").val(tcsign);
 											 $("#prf_contractnum").val($("#prf_pojw").val());
 											// var ctno = $("#prf_contractnum").val();		
-											 $("#tr_prf_tc").hide();
-											 $("#tr_prf_rate").hide();
+											
 											
 									      },
 									       recreateForm: true,

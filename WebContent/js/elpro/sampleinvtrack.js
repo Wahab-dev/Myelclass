@@ -241,17 +241,29 @@ $(document).ready(function() {
         }
 	 });
 	sampleinvtrackgrid.jqGrid('navGrid','#sampleinvtrackpager',{
-	 	edit: true,
-	 	add: true,
-	 	del: true, 
+	 	edit: false,
+	 	add: false,
+	 	del: false, 
 	 	search: true, 
 	 	view: true, 
+	 	addtext: 'Add', edittext: 'Edit', deltext: 'Delete', searchtext: 'Search', refreshtext: 'Reload', viewtext:'View'
+	}).jqGrid('navButtonAdd',"#sampleinvtrackpager",{caption:"Toggle",title:"Toggle Search Toolbar", buttonicon :'ui-icon-pin-s',
+		onClickButton:function(){
+			sampleinvtrackgrid[0].toggleToolbar();
+		} 
+	}).jqGrid('navButtonAdd',"#sampleinvtrackpager",{caption:"Clear",title:"Clear Search",buttonicon :'ui-icon-refresh',
+		onClickButton:function(){
+			sampleinvtrackgrid[0].clearToolbar();
+		} 
+	}).jqGrid('filterToolbar', {autosearch : true, searchOnEnter:false, stringResult: true //To Enable AutoSearch please comment Search on Enter to False
+		
 	}).jqGrid('navButtonAdd', '#sampleinvtrackpager', {
         caption: "Pdf",
         buttonicon: "ui-icon-print",
         title: "Print in PDF Format",
         onClickButton: downloadPdf,
     });
+	
 	/*
 	*  Function to print the Page 
 	*/

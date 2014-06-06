@@ -8,7 +8,7 @@
 <title>Menu page</title>
 <script src="js/jquery-1.9.1.js"></script>
 <script src="js/jquery-ui.js"></script>
-<link rel="stylesheet" type="text/css" media="screen" href="css/overcast/jquery-ui-1.10.3.custom.css" />
+<link rel="stylesheet" type="text/css" media="screen" href="css/redmond/jquery-ui-1.10.3.custom.css" />
 <script src="js/i18n/grid.locale-en.js" type="text/javascript"></script>
 <script src="js/jquery.jqGrid.min.js" type="text/javascript"></script>	
 <script type="text/javascript">
@@ -37,7 +37,7 @@ $(function() {
     <li> <h3>Samples </h3>
         <ul>
             <li> <h:link action='/loadSrf' scope="request">SrfScreen</h:link></li>
-            <li> <h:link action='/gotoSampleTracking'>Sample Tacking</h:link></li>
+            <li> <h:link action='/gotoSampleTracking'>Sample Tracking</h:link></li>
             <li> <h:link action='/gotoSampleInvoice'>Sample Invoice Screen</h:link></li>
             <li> <h:link action='/sit'>Sample Invoice Tracking</h:link></li>
             <li> <h:link action='/gotoSampleDebit'>Sample Debit</h:link></li>

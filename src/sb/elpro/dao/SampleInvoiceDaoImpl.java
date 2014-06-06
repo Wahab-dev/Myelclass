@@ -32,7 +32,7 @@ public class SampleInvoiceDaoImpl implements SampleInvoiceDao{
 	 * @see sb.elpro.dao.SampleInvoiceDao#getSamInvCustsampleDet(java.lang.String, java.lang.String, java.lang.String, java.lang.String)
 	 */
 	@Override
-	public ArrayList<CustomerInvoice> getSamInvCustsampleDet(String custname,
+	public ArrayList<CustomerInvoice> getSamInvCustsampleDet(String custid,
 			String type, String sidx, String sord) throws SQLException {
 		ArrayList<CustomerInvoice> invcustctrraylist = new ArrayList<CustomerInvoice>();			
 		Connection con = null;
@@ -43,9 +43,9 @@ public class SampleInvoiceDaoImpl implements SampleInvoiceDao{
 			con = DBConnection.getConnection();
 			st = (Statement) con.createStatement();
 			if(type.equalsIgnoreCase("sample")){
-				sql = "SELECT Sampleno, orderdt, refno, customerid,  tanneryid, deliverid, destination, add_date, cdd_date, handledby, isinvraised FROM elpro.tbl_srfform where customerid like '%"+custname+"%' order by "+sidx+" "+sord+" ";
+				sql = "SELECT Sampleno, orderdt, refno, customerid,  tanneryid, deliverid, destination, add_date, cdd_date, handledby, isinvraised FROM elpro.tbl_srfform where customerid like '%"+custid+"%' order by "+sidx+" "+sord+" ";
 			}else{
-			   sql = "(SELECT Sampleno, orderdt, refno, customerid,  tanneryid, deliverid, destination,add_date, cdd_date, handledby, isinvraised FROM elpro.tbl_srfform where customerid like '%"+custname+"%') union (SELECT Ctno, Orderdt as Dt, pono as refno, customerid as cust,  tanneryid, consigneeid, destination, add_date, cdd_date, commission, othercommission FROM elpro.tbl_prfform where customerid like '%"+custname+"%') order by "+sidx+" "+sord+" ";
+			   sql = "(SELECT Sampleno, orderdt, refno, customerid,  tanneryid, deliverid, destination,add_date, cdd_date, handledby, isinvraised FROM elpro.tbl_srfform where customerid like '%"+custid+"%') union (SELECT Ctno, Orderdt as Dt, pono as refno, customerid as cust,  tanneryid, consigneeid, destination, add_date, cdd_date, commission, othercommission FROM elpro.tbl_prfform where customerid like '%"+custid+"%') order by "+sidx+" "+sord+" ";
 			}
 			
 			System.out.println("SQL + "+sql);

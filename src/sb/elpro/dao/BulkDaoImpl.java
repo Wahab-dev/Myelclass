@@ -71,7 +71,7 @@ public class BulkDaoImpl implements BulkDao {
 				bulkbean.setSubstance(rs.getString("substance"));
 				bulkbean.setSelection(rs.getString("selection"));
 				bulkbean.setSelectionpercent(rs.getString("selectionpercent"));
-				bulkbean.setQuantity(rs.getString("quantity"));
+				bulkbean.setQuantity(rs.getString("quantity")+rs.getString("unit"));
 				bulkbean.setUnit(rs.getString("unit"));
 				bulkbean.setPcs(rs.getString("pcs"));
 				bulkbean.setRate(rs.getString("rate"));

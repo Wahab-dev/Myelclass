@@ -45,8 +45,6 @@ public interface InvoiceDao {
 
 	ArrayList<CustomerDetails> getinvCustomerDetails()throws SQLException;
 
-	ArrayList<InvCustContractDetails> getinvCustContracttDetails()throws SQLException;
-
 	ArrayList<CustomerInvoice> getInvCustCtlist(String custid, String sortname, String type, String sortord)throws SQLException;
 	/**  
 	 * (Method description)

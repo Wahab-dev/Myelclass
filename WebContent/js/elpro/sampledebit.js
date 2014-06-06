@@ -229,7 +229,8 @@ $(document).ready(function() {
 	 	add: false,
 	 	del: false, 
 	 	search: false, 
-	 	view: false, 
+	 	view: true, 
+	 	searchtext: 'Search', refreshtext: 'Reload', viewtext: 'View',
 	}).navButtonAdd('#sampledebpager',{
 	 	   caption:"UpDate Debit Details", 
 		   buttonicon:"ui-icon-lightbulb", 

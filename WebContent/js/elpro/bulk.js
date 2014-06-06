@@ -143,18 +143,20 @@ $(function() {
 		 		datatype: 'json',
 		        url:"/Myelclass/BulkInsertAction.do", 
 		        colNames:['Status', 'Ct No', 'Agent', 'Order Date', 'PO No', 'Tannery', 'Customer', 'Exporter', 'Article', 'Color', 'Size', 
-		                  	'Substance', 'Selection', 'Selp', 'Quantity', 'Unit', 'Shipped', 'Balance', 'Comment', 'InvDetails', 
-		                  	'Customer Feedback', 'RDD', 'Price', 'Tc', 'ADD', 'CDD', 'Commission', 'PO/JW', 'Consignee', 'Notify', 
+		                  	'Substance', 'Selection', 'Selp', 'Price', 'Quantity', 'Unit', 'Shipped', 'Balance', 'Comment', 'InvDetails', 
+		                  	'Customer Feedback',  'Tc', 'ADD', 'CDD', 'RDD', 'Commission', 'PO/JW', 'Consignee', 'Notify', 
 		                  	'Bank', 'Destination', 'Splcdn', 'Representative', 'Prfarticleid', 'User','ApplytoAll'
 		                  	],     
 		        colModel :[   
 				  
-				  {name: 'status', index: 'status', align:'center', width:35, editable:true, sortable: true, hidden:false, 
-					  search: true, stype:'text', searchoptions :{defaultValue : 'P'}, searchrules:{required:true},   	
+				  {name: 'status', index: 'status', align:'center', width:45, editable:true, sortable: true, hidden:false, 
+					  search: true, stype:'select', searchrules:{required:true},   	
 					  edittype: 'select', 
-					  editoptions:{value:{0:'Select Status',I:'Inspection', P:'Pending',C:'Closed',CA:'Cancel',PS:'Partial Ship',S:'Shipped',D:'Delivered',AA:'Await Approval',AP:'Await Payment'},defaultValue: 'Pending'},
+					  editoptions:{value:{I:'Inspection', P:'Pending' ,PS:'Partial Ship',S:'Shipped',D:'Delivered',AA:'Await Approval',AP:'Await Payment',C:'Closed',CA:'Cancel'},defaultValue: 'Pending'},
 					  //editrules :{require : true},
-					 
+					  //searchoptions:{value:{P:'Pending',RW:'Rework', I:'Inspection', PS:'Partial Ship',S:'Shipped',D:'Delivered',AA:'Await Approval',AP:'Await Payment',C:'Closed',CA:'Cancel'}},
+					  searchoptions:{value:":All;P:Pending;I:Inspection;PS:Partial Ship;D:Delivered;RW:Rework;S:Shipped;AA:Await Approval;AP:Await Payment;C:Closed;CA:Cancel"},
+					   
 				  },
 				  {name: 'ctno', index: 'ctno', align:'center', width:60, editable:true, sortable: true, hidden:false, 
 					  editrules :{require : true},
@@ -168,7 +170,7 @@ $(function() {
 					        }
 					    }
 				  },
-				  {name: 'agent', index: 'agent', align:'center', width:60, editable:true, sortable: true, hidden:false, search: true, stype:'text', 
+				  {name: 'agent', index: 'agent', align:'center', width:30, editable:true, sortable: true, hidden:true, search: true, stype:'text', 
 					  editrules :{require : true},
 					  
 				  },
@@ -186,10 +188,10 @@ $(function() {
 				  {name: 'pono', index: 'pono', align:'center', width:90, editable:true, sortable: true, hidden:true,  
 					  editrules :{require : true},
 				  },
-				  {name: 'tanneryid', index: 'tanneryid', align:'center', width:90, editable:true, sortable: true, hidden:false,  
+				  {name: 'tanneryid', index: 'tanneryid', align:'center', width:60, editable:true, sortable: true, hidden:false,  
 					  editrules :{require : true},
 				  },
-				  {name: 'customerid', index: 'customerid', align:'center', width:90, editable:true, sortable: true, hidden:false,  
+				  {name: 'customerid', index: 'customerid', align:'center', width:60, editable:true, sortable: true, hidden:false,  
 					  editrules :{require : true},
 				  },
 				  {name: 'exporterid', index: 'exprtr', align:'center', width:90, editable:true, sortable: true, hidden:true,  
@@ -201,31 +203,35 @@ $(function() {
 				  {name: 'color', index: 'color', align:'center', width:90, editable:true, sortable: true, hidden:false,  
 					 // editrules :{require : true},
 				  },
-				  {name: 'size', index: 'size', align:'center', width:90, editable:true, sortable: true, hidden:true,  
+				  {name: 'size', index: 'size', align:'center', width:50, editable:true, sortable: true, hidden:false,  
 					//  editrules :{require : true},
 				  },
-				  {name: 'substance', index: 'substance', align:'center', width:90, editable:true, sortable: true, hidden: true,  
+				  {name: 'substance', index: 'substance', align:'center', width:60, editable:true, sortable: true, hidden: false,  
 					 // editrules :{require : true},
 				  },
-				  {name: 'selection', index: 'selection', align:'center', width:90, editable:true, sortable: true, hidden:true,  
+				  {name: 'selection', index: 'selection', align:'center', width:40, editable:true, sortable: true, hidden:false,  
 					  //editrules :{require : true},
 				  },
 				  {name: 'selectionpercent', index: 'selectionpercent', align:'center', width:90, editable:true, sortable: true, hidden: true,  
 					  //editrules :{require : true},
 				  },
+				  {name: 'rate', index: 'rate', align:'center', width:90, editable:true, sortable: true, hidden: false,  
+					  //editrules :{require : true},
+				  },
 				  {name: 'quantity', index: 'quantity', align:'center', width:90, editable:true, sortable: true, hidden:false,  
 					  //editrules :{require : true},
+					  //formatoptions: {decimalSeparator: ".", thousandsSeparator: ",", decimalPlaces: 2, defaultValue: '0.00' },
 				  },
-				  {name: 'unit', index: 'unit', align:'center', width:90, editable:true, sortable: true, hidden:false,  
+				  {name: 'unit', index: 'unit', align:'center', width:70, editable:true, sortable: true, hidden:true,  
 					  //editrules :{require : true},
 				  },
-				  {name: 'qshipped', index: 'qshipped', align:'center', width:90, editable:true, sortable: true, hidden: false,  
+				  {name: 'qshipped', index: 'qshipped', align:'center', width:50, editable:true, sortable: true, hidden: false,  
 					  //editrules :{require : true},
 				  },
-				  {name: 'qbal', index: 'qbal', align:'center', width:90, editable:true, sortable: true, hidden:false,  
+				  {name: 'qbal', index: 'qbal', align:'center', width:50, editable:true, sortable: true, hidden:false,  
 					//  editrules :{require : true},
 				  },
-				  {name: 'comments', index: 'Pro Stat', align:'center', width:90, editable:true, sortable: true, hidden:false,  
+				  {name: 'comments', index: 'Pro Stat', align:'center', width:90, editable:true, sortable: true, hidden:true,  
 					  edittype: 'textarea', 
 					  editrules :{require : true},
 				  },
@@ -233,51 +239,59 @@ $(function() {
 					  edittype: 'textarea',
 					  editrules :{require : true},
 				  },
-				  {name: 'feddback', index: 'feddback', align:'center', width:90, editable:true, sortable: true, hidden: false,  
+				  {name: 'feddback', index: 'feddback', align:'center', width:90, editable:true, sortable: true, hidden: true,  
 					  
 					  edittype: 'textarea', 
 					  editrules :{require : true},
 				  },
-				  {name: 'rdd_date', index: 'rdd_date', align:'center', width:90, editable: true, sortable: true, hidden:false,  
-					  sorttype: 'date',
-					//  formatter: 'date', //datefmt: 'yy/MM/d',//formatoptions: {newformat: 'd-m-y'}, 
-					  editoptions: { dataInit: DateGrpEdit },
-					  editrules :{require : true},
-				  },
-				  {name: 'rate', index: 'rate', align:'center', width:90, editable:true, sortable: true, hidden: false,  
-					  //editrules :{require : true},
-				  },
+				 
+				 
 				  {name: 'tc', index: 'tc', align:'center', width:90, editable:true, sortable: true, hidden: true,  
 					 // editrules :{require : true},
 				  },
-				  {name: 'add_date', index: 'add_date', align:'center', width:90, editable:true, sortable: true, hidden: false,  
+				  {name: 'add_date', index: 'add_date', align:'center', width:60, editable:true, sortable: true, hidden: false,  
 					  sorttype: 'date',
 					 /* formatter: 'date', datefmt: 'd/m/Y',formatoptions: {newformat: 'd/m/Y'},
 					  editoptions: { dataInit: DateGrpEdit },*/
 					  editrules :{require : true},
 				  },
-				  {name: 'cdd_date', index: 'cdd_date', align:'center', width:90, editable:true, sortable: true, hidden: false,  
+				  {name: 'cdd_date', index: 'cdd_date', align:'center', width:60, editable:true, sortable: true, hidden: false,  
 					  sorttype: 'date',
 					 /* formatter: 'date', datefmt: 'd/m/Y',formatoptions: {newformat: 'd/m/Y'}, 
 					  editoptions: { dataInit: DateGrpEdit },*/
 					  editrules :{require : true},
 				  },
+				  {name: 'rdd_date', index: 'rdd_date', align:'center', width:60, editable: true, sortable: true, hidden:false,  
+					  sorttype: 'date',
+					//  formatter: 'date', //datefmt: 'yy/MM/d',//formatoptions: {newformat: 'd-m-y'}, 
+					  editoptions: { dataInit: DateGrpEdit },
+					  editrules :{require : true},
+				  },
 				  {name: 'commission', index: 'commission', align:'center', width:90, editable:true, sortable: true, hidden: true,  
 					 // editrules :{require : true},
 				  },
-				  {name: 'pojw', index: 'pojw', align:'center', width:90, editable:true, sortable: true, hidden:false,  
+				  {name: 'pojw', index: 'pojw', align:'center', width:60, editable:true, sortable: true, hidden:false,  
 					    editrules :{require : true},
+					    formatter: "dynamicLink",
+					    formatoptions: {
+					        url: function (cellValue, rowId, rowData) {
+					            return '/Myelclass/LoadPrf.do'+ '?' +'action=editform&'+
+					                $.param({
+					                    ctno: rowData.ctno
+					                });
+					        }
+					    }
 				  },
 				  {name: 'consigneeid', index: 'consigneeid', align:'center', width:90, editable:true, sortable: true, hidden: true,  
 					 // editrules :{require : true},
 				  },
-				  {name: 'notifyid', index: 'notifyid', align:'center', width:90, editable:true, sortable: true, hidden: false,  
+				  {name: 'notifyid', index: 'notifyid', align:'center', width:90, editable:true, sortable: true, hidden: true,  
 					 // editrules :{require : true},
 				  },
-				  {name: 'bankid', index: 'bankid', align:'center', width:90, editable:true, sortable: true, hidden: false,  
+				  {name: 'bankid', index: 'bankid', align:'center', width:90, editable:true, sortable: true, hidden: true,  
 					  //editrules :{require : true},
 				  },
-				  {name: 'destination', index: 'destination', align:'center', width:90, editable:true, sortable: true, hidden: false,  
+				  {name: 'destination', index: 'destination', align:'center', width:90, editable:true, sortable: true, hidden: true,  
 					 //editrules :{require : true},formoptions : {
 				  },
 				  
@@ -292,7 +306,7 @@ $(function() {
 				  {name: 'prfarticleid', index: 'prfarticleid', align:'center', width:90, editable:true, sortable: true, hidden: true,  
 					 // editrules :{require : true},
 				  },
-				  {name: 'user', index: 'user', align:'center', width:90, editable:true, sortable: true, hidden: false,  
+				  {name: 'user', index: 'user', align:'center', width:50, editable:true, sortable: true, hidden: false,  
 					 // editrules :{require : true},
 				  },
 				  {name: 'isupdtar', index: 'isupdtart', align:'center', width:60, editable:true, sortable: true, hidden: true, 
@@ -301,15 +315,15 @@ $(function() {
 		        ],  
 		        jsonReader : {  
 				  	repeatitems:false,
-			      	/*root: "rows",
+			      	root: "rows",
 			      	page: "page", //calls first
 			      	total: "total" ,//calls Second
-			      	records: "records" //calls Third*/
+			      	records: "records" //calls Third
 				},  
 		       	caption: "Bulk Tracking Report",
 		    	pager: '#bulkktrackpager',
-		    	rowNum: 50, 
-		    	rowList: [50,75,100],
+		    	rowNum: 20, 
+		    	rowList: [5,10,20,40,50,60,80,100,200],
 		        loadtext: "Bow Bow",
 		        height : "auto",
 		        width: "auto",  
@@ -320,7 +334,7 @@ $(function() {
 		        editurl: "/Myelclass/BulkInsertAction.do",
 		        sortable: true,
 		        grouping: true,
-		     //   toppager:true,
+		        toppager:true,
 		        gridview : true,
 		        rownumbers: true, // not working Check 
 		        viewrecords: true,
@@ -343,11 +357,15 @@ $(function() {
 		        });
 			
 			bulkgrid.jqGrid('navGrid','#bulkktrackpager',{
-		 		 	edit: true,
-		 		 	add: true,
-		 		 	del: true, 
+		 		 	edit: false,
+		 		 	add: false,
+		 		 	del: false, 
 		 		 	search: true, 
 		 		 	view: true, 
+		 		 	addtext: 'Add', edittext: 'Edit', deltext: 'Delete', searchtext: 'Search', refreshtext: 'Reload', viewtext: 'View',
+		 		 		beforeRefresh: function(){
+		 		 			bulkgrid.jqGrid('setGridParam',{datatype:'json'}).trigger('reloadGrid');
+		 				}
 		 		 	//cloneToTop: true,
 		 		 	},
 		 		 	{
@@ -375,118 +393,11 @@ $(function() {
 				).navButtonAdd('#bulkktrackpager',{
 		 		 	   caption:"Status", 
 		 		 	   buttonicon:"ui-icon-lightbulb", 
-		 		 	   position:"last",
+		 		 	   position:"first",
 		 		 	   onClickButton: function(){ 
 		 		 	    var $self = $(this);
 		 		 	   $self.jqGrid("editGridRow", $self.jqGrid("getGridParam", "selrow"),
 		 		 	    {
-		 		 		 /* beforeInitData: function(formid) {
-		 		 			bulkgrid.setColProp('status', {
-		 		 				formoptions : {
-									rowpos : 1,
-									colpos: 1,
-								},
-							});
-		 		 			bulkgrid.setColProp('ctno', {
-		 		 				formoptions : {
-									rowpos : 1,
-									colpos: 2,
-								},
-								
-							});
-		 		 			bulkgrid.setColProp('tanneryid', {
-		 		 				formoptions : {
-									rowpos : 2,
-									colpos: 1,
-								},
-							});
-		 		 			bulkgrid.setColProp('customerid', {
-		 		 				formoptions : {
-									rowpos : 2,
-									colpos: 2,
-								},
-								
-							});
-		 		 			bulkgrid.setColProp('articlename', {
-		 		 				formoptions : {
-									rowpos : 6,
-									colpos: 1,
-								},
-							});
-		 		 			bulkgrid.setColProp('color', {
-		 		 				formoptions : {
-									rowpos : 6,
-									colpos: 2,
-								},
-								
-							});
-		 		 			bulkgrid.setColProp('size', {
-		 		 				formoptions : {
-									rowpos : 7,
-									colpos: 1,
-								},
-							});
-		 		 			bulkgrid.setColProp('quantity', {
-		 		 				formoptions : {
-									rowpos : 7,
-									colpos: 2,
-								},
-								
-							});
-		 		 			bulkgrid.setColProp('cdd_date', {
-		 		 				formoptions : {
-									rowpos : 9,
-									colpos: 1,
-								},
-							});
-		 		 			bulkgrid.setColProp('add_date', {
-		 		 				formoptions : {
-									rowpos : 9,
-									colpos: 2,
-								},
-								
-							});
-		 		 			 bulkgrid.setColProp('rdd_date', {
-		 		 				formoptions : {
-									rowpos : 10,
-									colpos: 1,
-								},
-							});
-		 		 			bulkgrid.setColProp('reps', {
-		 		 				formoptions : {
-									rowpos : 10,
-									colpos: 2,
-								},
-								
-							});
-		 		 			bulkgrid.setColProp('comments', {
-		 		 				formoptions : {
-									rowpos : 11,
-									colpos: 1,
-								},
-							});
-		 		 			bulkgrid.setColProp('splcdn', {
-		 		 				formoptions : {
-									rowpos : 11,
-									colpos: 2,
-								},
-								
-							});
-		 		 			bulkgrid.setColProp('invdetails', {
-		 		 				formoptions : {
-									rowpos : 20,
-									colpos: 1,
-								},
-							});
-		 		 			bulkgrid.setColProp('feddback', {
-		 		 				formoptions : {
-									rowpos : 20,
-									colpos: 2,
-								},
-								
-							});
-		 		 			 			
-						},  */
 		 		 		 beforeShowForm:  function(form) { 
 		 		 			 $("#tr_agent").hide();
 		 		 			 $("#tr_pono").hide(); 
@@ -510,7 +421,9 @@ $(function() {
 		 		 			 $("#tr_qshipped").hide(); 
 		 		 			 $("#tr_qbal").hide(); 
 		 		 			 $("#tr_pojw").hide();
+		 		 			 $("#tr_feddback").show();
 		 		 			 $("#tr_isupdtar").show();
+		 		 			
 		 		 			 
 		 		 			 
 		 		 			 $("#ctno").attr("readonly","readonly"); 
@@ -544,17 +457,34 @@ $(function() {
 			});
 			bulkgrid.jqGrid('filterToolbar', {autosearch : true, searchOnEnter:false, stringResult: true});  //To Enable AutoSearch please comment Search on Enter to False
 			
+			
 			bulkgrid.jqGrid('navButtonAdd', '#bulkktrackpager', {
 		        caption: "Pdf",
 		        buttonicon: "ui-icon-print",
 		        title: "Print in PDF Format",
 		        onClickButton: downloadPdf,
 		    }).jqGrid('navButtonAdd', '#bulkktrackpager', {
+		        caption: "EXCELOLD",
+		        buttonicon: "ui-icon-print",
+		        title: "Print in Excel Format",
+		        onClickButton: downloadExcelold,
+		    }).jqGrid('navButtonAdd', '#bulkktrackpager', {
 		        caption: "Excel",
 		        buttonicon: "ui-icon-print",
 		        title: "Print in Excel Format",
 		        onClickButton: downloadExcel,
 		    });
+			bulkgrid.jqGrid('navButtonAdd',"#bulkktrackpager",{caption:"columnChooser",title:"Column Chooser",buttonicon :'ui-icon-extlink',
+				onClickButton:function(){
+
+                	bulkgrid.jqGrid('columnChooser', {
+                        done: function(perm) {
+                            if (!perm) { return false; }
+                            this.jqGrid('remapColumns', perm, true);                        	
+                        }
+                    });
+				} 
+			});
 			/*
 			*  Function to print the Master Page 
 			*/
@@ -566,6 +496,10 @@ $(function() {
 			function downloadExcel() 
 			{
 			download('xls');
+			}
+			function downloadExcelold() 
+			{
+			download('xlsold');
 			}
 			function download(type){
 				//var data = mastergrid.jqGrid('getGridParam', 'postData');

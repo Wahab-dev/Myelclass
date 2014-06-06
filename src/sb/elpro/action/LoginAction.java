@@ -34,6 +34,7 @@ public class LoginAction extends DispatchAction {
 	HttpSession usersession;
 	public ActionForward Login(ActionMapping map, ActionForm form, 
 			HttpServletRequest request, HttpServletResponse response) throws Exception{
+		System.out.println("In Looog");
 		usersession = request.getSession();
 		LoginForm loginform = (LoginForm) form;
 		BeanUtils.copyProperties(user, loginform);

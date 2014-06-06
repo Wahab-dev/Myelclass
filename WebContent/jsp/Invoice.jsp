@@ -15,7 +15,7 @@
 </style>
 <script src="js/jquery-1.9.1.js"></script>
 <script src="js/jquery-ui.js"></script>
-<link rel="stylesheet" type="text/css" media="screen" href="css/ui-darkness/jquery-ui-1.10.1.custom.css" />
+<link rel="stylesheet" type="text/css" media="screen" href="css/redmond/jquery-ui-1.10.3.custom.css" />
 <link rel="stylesheet" type="text/css" media="screen" href="css/jquerywidgetstyle.css" />
 <link rel="stylesheet" type="text/css" media="screen" href="css/ui.jqgrid.css" />
 
@@ -47,7 +47,7 @@ $(function() {
 			  <h3>Samples </h3>
 			        <ul>
 			             <li> <h:link action='/loadSrf' scope="request">SrfScreen</h:link></li>
-							<li> <h:link action='/gotoSampleTracking'>Sample Tacking</h:link></li>
+							<li> <h:link action='/gotoSampleTracking'>Sample Tracking</h:link></li>
 							<li> <h:link action='/gotoSampleInvoice'>Sample Invoice Screen</h:link></li>
 							  <li> <h:link action='/sit'>Sample Invoice Tracking</h:link></li>
 							 <li> <h:link action='/gotoSampleDebit'>Sample Debit</h:link></li>
@@ -148,6 +148,11 @@ $(function() {
 						<td><h:text property="inv_exporter" styleId="inv_exporter" size="41" value="${editinvform[0].inv_exporter }"></h:text><br/></td>
 					</tr>
 					<tr>
+						<td> ID: </td>
+						<td><h:text property="inv_exporterid" styleId="inv_exporterid" size="41" value="${editinvform[0].inv_exporterid }"></h:text><br/></td>
+					</tr>
+					
+					<tr>
 						<td>Attn: </td>
 						<td><h:text property="inv_exporterattn" size="41" styleId="inv_exporterattn" value="${editinvform[0].inv_exporterattn }"></h:text><br/></td>
 					</tr>
@@ -174,6 +179,10 @@ $(function() {
        	    		<tr>
        	    			<td> Name: </td>
        	    			<td><h:text property="inv_notify" size="41" styleId="inv_notify" value="${editinvform[0].inv_notify }"></h:text><br/></td>
+       	    		</tr>
+       	    		<tr>
+       	    			<td> ID: </td>
+       	    			<td><h:text property="inv_notifyid" size="41" styleId="inv_notifyid" value="${editinvform[0].inv_notifyid }"></h:text><br/></td>
        	    		</tr>
        	    		<tr>
        	    			<td>Attn: </td>
@@ -205,6 +214,10 @@ $(function() {
 					<tr>
 						<td> Bank: </td>
 						<td><h:text property="inv_bank" size="41" styleId="inv_bank" value="${editinvform[0].inv_bank }"></h:text><br/></td>
+					</tr>
+					<tr>
+						<td> ID: </td>
+						<td><h:text property="inv_bankid" size="41" styleId="inv_bankid" value="${editinvform[0].inv_bankid }"></h:text><br/></td>
 					</tr>
 					<tr>
 						<td>Branch: </td>
@@ -373,26 +386,17 @@ $(function() {
        				<table>
        					<tr>
        						<td>Deduction: </td>
-       						<td><h:text property="inv_discount" size="15" styleId="inv_discount" value="${editinvform[0].inv_deduction }"> </h:text></td>
+       						<td><h:text property="inv_discount" size="15" styleId="inv_discount" value="${editinvform[0].inv_discount }"> </h:text></td>
        					</tr>
        					<tr>
        						<td>Other Charges : </td>
-       						<td> <h:text property="othercharges" size="15" styleId="othercharges" value="${editinvform[0].inv_courierchrgs }"> </h:text>  <br/></td>
+       						<td> <h:text property="othercharges" size="15" styleId="othercharges" value="${editinvform[0].othercharges }"> </h:text>  <br/></td>
        					</tr>
        					<tr>
        						<td>Total Amount :  </td>
-       						<td><h:text property="inv_total" size="15" styleId="inv_total" value="${editinvform[0].inv_amount }"> </h:text>  <br/></td>
+       						<td><h:text property="inv_total" size="15" styleId="inv_total" value="${editinvform[0].inv_total }"> </h:text>  <br/></td>
        					</tr>
        				</table>
-				  	
-				  	<%-- <div id="localsalesradio">	
-				  		<br/><h:radio property="inv_vatcst" value="2" styleId="inv_cst" onclick="alert(document.getElementById('inv_cst').value)">CST</h:radio>
-				  		<h:radio property="inv_vatcst" value="5" styleId="inv_vat" onclick="alert(document.getElementById('inv_vat').value)">VAT</h:radio>
-				  		<h:radio property="inv_vatcst" value="0" styleId="inv_vat"  onclick="alert(document.getElementById('inv_vat').value)">VAT</h:radio>
-				  	</div>
-				  	<br/>Discount: <h:radio property="inv_discount" value="discount" styleId="inv_discount">
-				  	Deduction:</h:radio><h:radio property="inv_deduction" value="deduct" styleId="inv_deduction"></h:radio>
-				  --%>
 				</fieldset>	
 			</td>
 		</tr> 

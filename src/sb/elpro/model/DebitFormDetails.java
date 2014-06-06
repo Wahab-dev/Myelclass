@@ -17,7 +17,8 @@ public class DebitFormDetails implements Serializable {
 	private static final long serialVersionUID = -984073219433371462L;
 	private String deb_debitno;
 	private String deb_debitdate;
-	private String deb_exporter;
+	private String deb_exporterid;
+	private String deb_exporter;	
 	private String deb_tanaddr;
 	private String deb_tanattn;
 	private String deb_tantelephone;
@@ -65,6 +66,9 @@ public class DebitFormDetails implements Serializable {
 	private String tcdeb_invoiceamt;
 	private String tcdeb_elclassamt;
 	private String tcdeb_elclassamtinrs;
+	
+	private String debactionform;
+	private String debamtinwords;
 	
 	
 	/**
@@ -634,6 +638,42 @@ public class DebitFormDetails implements Serializable {
 	 */
 	public void setDeb_othercommission(String deb_othercommission) {
 		this.deb_othercommission = deb_othercommission;
+	}
+	/**
+	 * @return the deb_exporterid
+	 */
+	public String getDeb_exporterid() {
+		return deb_exporterid;
+	}
+	/**
+	 * @param deb_exporterid the deb_exporterid to set
+	 */
+	public void setDeb_exporterid(String deb_exporterid) {
+		this.deb_exporterid = deb_exporterid;
+	}
+	/**
+	 * @return the debactionform
+	 */
+	public String getDebactionform() {
+		return debactionform;
+	}
+	/**
+	 * @param debactionform the debactionform to set
+	 */
+	public void setDebactionform(String debactionform) {
+		this.debactionform = debactionform;
+	}
+	/**
+	 * @return the debamtinwords
+	 */
+	public String getDebamtinwords() {
+		return debamtinwords;
+	}
+	/**
+	 * @param debamtinwords the debamtinwords to set
+	 */
+	public void setDebamtinwords(String debamtinwords) {
+		this.debamtinwords = debamtinwords;
 	}
 	
 }

@@ -253,11 +253,12 @@ $(document).ready(function() {
         }
 	 });
 	invtrackgrid.jqGrid('navGrid','#invtrackpager',{
-		 	edit: true,
-		 	add: true,
-		 	del: true, 
+		 	edit: false,
+		 	add: false,
+		 	del: false, 
 		 	search: true, 
 		 	view: true, 
+		 	addtext: 'Add', edittext: 'Edit', deltext: 'Delete', searchtext: 'Search', refreshtext: 'Reload', viewtext: 'View'
 	});
 	invtrackgrid.jqGrid('navButtonAdd',"#invtrackpager",{caption:"Toggle",title:"Toggle Search Toolbar", buttonicon :'ui-icon-pin-s',
 		onClickButton:function(){

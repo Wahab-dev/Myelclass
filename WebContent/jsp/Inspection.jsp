@@ -16,12 +16,21 @@
 </style>	
 <script src="js/jquery-1.9.1.js"></script>
 <script src="js/jquery-ui.js"></script>
-<link rel="stylesheet" type="text/css" media="screen" href="css/pepper-grinder/jquery-ui-1.10.3.custom.css" />
+<link rel="stylesheet" type="text/css" media="screen" href="css/redmond/jquery-ui-1.10.3.custom.css" />
 <link rel="stylesheet" type="text/css" media="screen" href="css/ui.jqgrid.css" />
 <script src="js/i18n/grid.locale-en.js" type="text/javascript"></script>
 <script src="js/jquery.jqGrid.min.js" type="text/javascript"></script>	
 <script src="js/elpro/inspection.js"></script> 	
 <script type="text/javascript">
+function onlyNumbers(evt)
+{
+    var e = (window.event)?event:evt; // for cross browser compatibility
+    var charCode = e.which || e.keyCode;
+    if (charCode > 31 && (charCode < 48 || charCode > 57)){
+        return false;
+    }
+    return true;
+}
 $(function() {
 	 var icons = {
 			 header: "ui-icon-circle-arrow-e",
@@ -46,7 +55,7 @@ $(function() {
 			  <h3>Samples </h3>
 			        <ul>
 			            <li> <h:link action='/loadSrf' scope="request">SrfScreen</h:link></li>
-							<li> <h:link action='/gotoSampleTracking'>Sample Tacking</h:link></li>
+							<li> <h:link action='/gotoSampleTracking'>Sample Tracking</h:link></li>
 							<li> <h:link action='/gotoSampleInvoice'>Sample Invoice Screen</h:link></li>
 							  <li> <h:link action='/sit'>Sample Invoice Tracking</h:link></li>
 							 <li> <h:link action='/gotoSampleDebit'>Sample Debit</h:link></li>
@@ -80,7 +89,7 @@ $(function() {
    			</td>
    		</tr>
    </table>
-   </div>
+</div>
 
 <h:form action="/saveinspection" styleId="saveInspection">
 
@@ -92,10 +101,6 @@ $(function() {
    		</tr>
    </table>
 	<table width="800" border="1" cellspacing="0" cellpadding="0">
-	 <%--   <div id="format">
-				<input type="radio" id="check1" name="radio" class="radio" checked="checked" value="Ct"><label for="check1">Contract</label>
-				<input type="radio" id="check2" name="radio" class="radio" value="Sample"><label for="check2">Sample</label>
-			</div> --%>
 	  	<tr>
 		   <td>
 		   	<table>
@@ -114,8 +119,8 @@ $(function() {
 		     		 <h:text property="inspqualityctrlr" styleId="inspqualityctrlr"></h:text>	
 		     		</td>
 		    		<td>
-		     		 Total Inspected:
-		     		 <h:text property="totinspected" styleId="totinspected"></h:text>	
+		     		 Total Passed:
+		     		 <h:text property="totinspected" styleId="totinspected" maxlength="5" onkeypress="return onlyNumbers(event);"></h:text>	
 		     		 </td>
 		    	</tr>
 		      </table>
@@ -123,9 +128,8 @@ $(function() {
 		    </tr>
 		    <tr>
 		   	  <td>
-
 		    	<table id="insp_Ctdetails"></table>
-		    		<div id="insp_CtDetalspager"></div>
+		    	<div id="insp_CtDetalspager"></div>
 		   	  </td>
 		    </tr>
 		    <tr>
@@ -134,14 +138,15 @@ $(function() {
 	            <h:textarea  property="insp_cdn" styleId="insp_cdn" rows="4" cols="113"></h:textarea>
 	         
 	            <h:hidden property="artidhidden" styleId="artidhidden" ></h:hidden>
-	            <h:hidden property="color" styleId="color"></h:hidden>
-	            <h:hidden property="article" styleId="article"></h:hidden>
-	            <h:hidden property="size" styleId="size"></h:hidden>
-	            <h:hidden property="substance" styleId="substance"></h:hidden>
-	            <h:hidden property="sel" styleId="sel"></h:hidden>
-	            <h:hidden property="quantity" styleId="quantity"></h:hidden>
-	            <h:hidden property="cust" styleId="cust"></h:hidden> 
-	            <h:hidden property="tan" styleId="tan"></h:hidden>
+	            <h:hidden property="colorhidden" styleId="colorhidden"></h:hidden>
+	            <h:hidden property="articlehidden" styleId="articlehidden"></h:hidden>
+	            <h:hidden property="sizehidden" styleId="sizehidden"></h:hidden>
+	            <h:hidden property="substancehidden" styleId="substancehidden"></h:hidden>
+	            <h:hidden property="selhidden" styleId="selhidden"></h:hidden>
+	            <h:hidden property="quantityhidden" styleId="quantityhidden"></h:hidden>
+	            <h:hidden property="custhidden" styleId="custhidden"></h:hidden> 
+	            <h:hidden property="tanhidden" styleId="tanhidden"></h:hidden>
+	             <h:hidden property="ctdthidden" styleId="ctdthidden"></h:hidden>
  				</td>
  			 <tr>
  			 	<td>
@@ -164,15 +169,15 @@ $(function() {
 	         <tr>
 	              <td height="15"> 
 	               Comments:<h:textarea property="inspcomments" styleId="inspcomments" rows="4" cols="112"  ></h:textarea> 	
-	              </td>	
-	                                 
+	              </td>	                
                 </tr>
 	           
                  <tr>
   					<td>
-  						<h:submit property="inspaction" value="Save" styleId="Save"></h:submit>	
+  						<h:submit property="inspaction" value="Save" styleId="Save"></h:submit>
   						<h:reset property="inspaction" value="Clear" styleId="Clear" ></h:reset>
-  					</td>	
+  						<h:submit property="inspaction" value="Print" styleId="Print" ></h:submit>
+  					</td>
   				</tr>
               </table>
 </h:form>

@@ -18,6 +18,7 @@ import sb.elpro.model.ConsigneeDetails;
 import sb.elpro.model.CustomerDetails;
 import sb.elpro.model.NotifyConsigneeDetails;
 import sb.elpro.model.PaymentDetails;
+import sb.elpro.model.PoJwBean;
 import sb.elpro.model.PrfArticle;
 import sb.elpro.model.ProductDetails;
 import sb.elpro.model.RateDetails;
@@ -295,6 +296,42 @@ public class PrfBoImpl implements PrfBo {
 			maxpojwno = "PO001/14-15";
 		}		
 		return maxpojwno;
+	}
+
+	/* (non-Javadoc)
+	 * @see sb.elpro.bo.PrfBo#savePoJwForm(sb.elpro.model.PoJwBean)
+	 */
+	@Override
+	public boolean savePoJwForm(PoJwBean pojw) throws Exception{
+		boolean isSavePoJw = prfdao.savePoJwForm(pojw);
+		return isSavePoJw;
+	}
+
+	/* (non-Javadoc)
+	 * @see sb.elpro.bo.PrfBo#getShipmentDetails(java.lang.String)
+	 */
+	@Override
+	public List<AutoComplete> getShipmentDetails(String term) throws Exception {
+		ArrayList<AutoComplete> shipmentList = prfdao.getShipmentList(term);
+		return shipmentList;
+	}
+
+	/* (non-Javadoc)
+	 * @see sb.elpro.bo.PrfBo#getPrfSelection()
+	 */
+	@Override
+	public List<AutoComplete> getPrfSelection() throws Exception {
+		ArrayList<AutoComplete> selecList = prfdao.getPrfSelectionList();
+		return selecList;
+	}
+
+	/* (non-Javadoc)
+	 * @see sb.elpro.bo.PrfBo#getPrfColormatch()
+	 */
+	@Override
+	public List<AutoComplete> getPrfColormatch() throws Exception {
+		ArrayList<AutoComplete> colormatchList = prfdao.getPrfColorMatchList();
+		return colormatchList;
 	}
 
 

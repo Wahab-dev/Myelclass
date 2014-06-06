@@ -1,8 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
     pageEncoding="UTF-8"%>
-    
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="h"%>
-<%@ taglib uri="http://struts.apache.org/tags-logic" prefix="l"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c"%>
 <h:html>
@@ -15,11 +13,13 @@
 <script src="js/jquery-1.9.1.js"></script>
 <script src="js/jquery-ui.js"></script>
 <!-- <script src="js/jquery.dialogextend.1_0_1.js"></script> -->
-<link rel="stylesheet" type="text/css" media="screen" href="css/pepper-grinder/jquery-ui-1.10.3.custom.css" />
+<link rel="stylesheet" type="text/css" media="screen" href="css/redmond/jquery-ui-1.10.3.custom.css" />
 <link rel="stylesheet" type="text/css" media="screen" href="css/jquerywidgetstyle.css" />
 <link rel="stylesheet" type="text/css" media="screen" href="css/ui.jqgrid.css" />
 <script src="js/i18n/grid.locale-en.js" type="text/javascript"></script>
 <script src="js/jquery.jqGrid.min.js" type="text/javascript"></script>	
+<!-- <script src="/js/jquery.barcode.2.0.3.js" type="text/javascript"> </script> -->
+
 <!-- <script src="js/jquery.dialogextend.js" type="text/javascript"></script>	 -->
 <script src="js/elpro/prf.js"></script> 
 <script src="js/jquery.autosize.js"></script> 
@@ -39,90 +39,20 @@ $(function() {
 		 heightStyle: "content"
 	});
 });
-/*
-//Maintain array of dates
-var dates = new Array();
-function addDate(date) {if (jQuery.inArray(date, dates) < 0) dates.push(date);}
-function removeDate(index) {dates.splice(index, 1);}
-
-// Adds a date if we don't have it yet, else remove it
-function addOrRemoveDate(date)
-{
-  var index = jQuery.inArray(date, dates); 
-  if (index >= 0)
-    removeDate(index);
-  else 
-    addDate(date);
-}
-
-// Takes a 1-digit number and inserts a zero before it
-function padNumber(number)
-{
-  var ret = new String(number);
-  if (ret.length == 1)
-    ret = "0" + ret;
-  return ret;
-} */
-
-function loadvalues(){
-	var actionform = "<c:out value='${actionform}' />";
-	if(actionform == "edit"){
-		var prfeditterms = "<c:out value='${editprfform[0].prf_terms}' />";
-		var prfeditpayment = "<c:out value='${editprfform[0].prf_payment}' />";  
-		var prfeditagentname = "<c:out value='${editprfform[0].prf_agentname}' />";
-		var prfedittanname =  "<c:out value='${editprfform[0].prf_tanname}' />";
-		var prfeditcustname =  "<c:out value='${editprfform[0].prf_custname}' />";
-		var prfeditconsigname =  "<c:out value='${editprfform[0].prf_consigneename}' />";
-		var prfeditnotifyname =  "<c:out value='${editprfform[0].prf_notifyname}' />";
-		var prfeditbankname =  "<c:out value='${editprfform[0].prf_bankname}' />";
-		
-		$("#prf_tanname").val(prfedittanname); 
-		$("#prf_custname").val(prfeditcustname); 
-		$("#prf_consigneename").val(prfeditconsigname); 
-		$("#prf_notifyname").val(prfeditnotifyname); 
-		$("#prf_bankname").val(prfeditbankname); 
-		if(prfedittanname != null){
-			//Ajax Call for Address and Other Values 
-			var url = "/Myelclass/PrfAutocomplete.do";
-			$.getJSON(url, {term: prfedittanname, action:"tan"},  
-				function(data) { 	
-					//Data Gets Returned In JSON Format but Unable to SET in HTML
-						/* var items = [];
-						 $.each( data, function( key, val ) {
-							alert("VA l"+items[val]);
-						 }); */
-					});			
-			}
-		$("#prf_terms option").filter(function() {//Set Terms Value
-		    return $(this).text() == prfeditterms; 
-		}).prop('selected', true);
-		
-		$("#prf_payment option").filter(function() {//Set Payment Value
-		    return $(this).text() == prfeditpayment; 
-		}).prop('selected', true);
-		
-		$("#prf_agentname option").filter(function() {//Set Agent Value
-		    return $(this).text() == prfeditagentname; 
-		}).prop('selected', true);
-		
-		//$("#Save").val("UpdatePrf");
-	}
-
-}  
 </script>
 </head>
 
-<body onload="loadvalues();">
+<body>
 <!--  Login Form  -->
 <div id="accordionwidth" style="width: 1100px">
-<table  style="border: thin;">
+<table  style="border: thin; background-color: #f5f8f9">
    		<tr>  
    			<td>		
 			<div id="accordionmenu1" class="accordionmenu">
 			  <h3>Samples </h3>
 			        <ul>
 			             <li> <h:link action='/loadSrf' scope="request">SrfScreen</h:link></li>
-							<li> <h:link action='/gotoSampleTracking'>Sample Tacking</h:link></li>
+							<li> <h:link action='/gotoSampleTracking'>Sample Tracking</h:link></li>
 							<li> <h:link action='/gotoSampleInvoice'>Sample Invoice Screen</h:link></li>
 							  <li> <h:link action='/sit'>Sample Invoice Tracking</h:link></li>
 							 <li> <h:link action='/gotoSampleDebit'>Sample Debit</h:link></li>
@@ -157,12 +87,8 @@ function loadvalues(){
    		</tr>
    </table>
    </div>
-<!-- <table>
-	<tr></tr>
-</table> -->
-<!-- <div id="prfform" title="PR Form"> -->
 <div>
-<h:form action="/Prf.do" method="post" styleId="savePrfForm" onreset="">
+<h:form action="/Prf.do" method="post" styleId="savePrfForm" onreset="" styleClass="form">
 	   				<td >Welcome<h:text property="userinsession" styleId="userinsession" value="${user.name}" readonly="true" ></h:text></td >
 	   				<td ><h:text property="formaction" styleId="formaction" value="${actionform}"></h:text></td> 
 	   				<td><h:submit property="prfaction" value="Logout"></h:submit></td> 
@@ -197,6 +123,11 @@ function loadvalues(){
         			<td>PO Ref: </td>
         			<td> <h:textarea property="prf_poref" cols="30" rows="2"  styleId="prf_poref" value="${editprfform[0].prf_poref}"></h:textarea></td>
         		</tr>
+        		<tr>
+        			<td>
+        				<div id="bcTarget" ></div> 
+        			</td>
+        		</tr>
         	</table>   			 		  
    		    </fieldset>
            </td>
@@ -209,8 +140,7 @@ function loadvalues(){
         			<td><h:text property="prf_tanname" size="41" styleId="prf_tanname"  value="${editprfform[0].prf_tanname}"></h:text></td>
         		</tr>
         		<tr>
-        			<td>Id: </td>
-        			<td><h:text property="prf_tannid" size="41" styleId="prf_tannid"   value="${editprfform[0].prf_tannid}"></h:text></td>
+        			<td><h:hidden property="prf_tannid"  styleId="prf_tannid"   value="${editprfform[0].prf_tannid}"></h:hidden></td>
         		</tr>
         		<tr>
         			<td>Attn:</td>
@@ -218,7 +148,7 @@ function loadvalues(){
         		</tr>
         		<tr>
         			<td>Addr:</td>
-        			<td><h:textarea property="prf_tanaddr" cols="35" rows="4" styleId="prf_tanaddr"  value="${editprfform[0].prf_tanaddr}"></h:textarea></td>
+        			<td><h:textarea property="prf_tanaddr" cols="30" rows="4" styleId="prf_tanaddr"  value="${editprfform[0].prf_tanaddr}"></h:textarea></td>
         		</tr>
         		<tr>
         			<td>Tele: </td>
@@ -239,9 +169,8 @@ function loadvalues(){
        				<td>Name:</td>
        				<td><h:text property="prf_custname" size="41" styleId="prf_custname"  value="${editprfform[0].prf_custname}"></h:text></td>
        			</tr>
-       			<tr>
-        			<td>Id: </td>
-        			<td><h:text property="prf_custid" size="41" styleId="prf_custid"  value="${editprfform[0].prf_custid}"></h:text></td>
+       			<tr>	
+        			<td><h:hidden property="prf_custid"  styleId="prf_custid"  value="${editprfform[0].prf_custid}"></h:hidden></td>
         		</tr>
        			<tr>
        				<td>Attn: </td>
@@ -249,7 +178,7 @@ function loadvalues(){
        			</tr>
        			<tr>
        				<td>Addr:</td>
-       				<td><h:textarea property="prf_custaddr" cols="35" rows="4" styleId="prf_custaddr"  value="${editprfform[0].prf_custaddr}"> </h:textarea></td>
+       				<td><h:textarea property="prf_custaddr" cols="30" rows="4" styleId="prf_custaddr"  value="${editprfform[0].prf_custaddr}"> </h:textarea></td>
        			</tr>
        			<tr>
        				<td>Tele: </td>
@@ -282,7 +211,6 @@ function loadvalues(){
             		<td>ADD :</td>
             		<td><h:text property="prf_add" size="41" styleId="prf_add" styleClass="prf_delivrydate" value="${editprfform[0].prf_add}"></h:text></td>
             	</tr>
-            	
             	<tr>
             		<td>Desti:</td>
             		<td><h:text property="prf_destination" styleId="prf_destination"  value="${editprfform[0].prf_destination}"></h:text><br/></td>
@@ -335,15 +263,16 @@ function loadvalues(){
       		</td>
             <td>
       		<fieldset>
-            <legend>Inspection Condition</legend>     
-       	 		<h:textarea property="prf_inspcdn" cols="41" rows="17" styleId="prf_inspcdn" value="${editprfform[0].prf_inspcdn}"></h:textarea>									
+            <legend>Special Condition</legend>
+           		<h:textarea property="prf_special" cols="41" rows="17" styleId="prf_special" value="${editprfform[0].prf_special}"></h:textarea>        									
          	</fieldset>
       		</td>
             <td>
             <fieldset>
-            <legend>Special Condition</legend>
-           		<h:textarea property="prf_special" cols="41" rows="17" styleId="prf_special" value="${editprfform[0].prf_special}"></h:textarea>        									
-         	</fieldset></td>
+             <legend>Inspection Condition</legend>     
+       	 		<h:textarea property="prf_inspcdn" cols="41" rows="17" styleId="prf_inspcdn" value="${editprfform[0].prf_inspcdn}"></h:textarea>									
+         	</fieldset>
+           </td>
         </tr>
         <tr>
            	<td>
@@ -355,8 +284,7 @@ function loadvalues(){
        				<td><h:text property="prf_consigneename" size="41" styleId="prf_consigneename"  value="${editprfform[0].prf_consigneename}"></h:text></td>
        			</tr>
        			<tr>
-        			<td>Id: </td>
-        			<td><h:text property="prf_consigneeid" size="41" styleId="prf_consigneeid"  value="${editprfform[0].prf_consigneeid}"></h:text></td>
+        			<td><h:hidden property="prf_consigneeid" styleId="prf_consigneeid"  value="${editprfform[0].prf_consigneeid}"></h:hidden></td>
         		</tr>
        			<tr>
        				<td>Attn: </td>
@@ -364,7 +292,7 @@ function loadvalues(){
        			</tr>
        			<tr>
        				<td>Addr: </td>
-       				<td><h:textarea property="prf_consigneeaddr" cols="35" rows="4" styleId="prf_consigneeaddr"  value="${editprfform[0].prf_consigneeaddr}"></h:textarea></td>
+       				<td><h:textarea property="prf_consigneeaddr" cols="30" rows="4" styleId="prf_consigneeaddr"  value="${editprfform[0].prf_consigneeaddr}"></h:textarea></td>
        			</tr>
        			<tr>
        				<td>Tele:</td>
@@ -386,8 +314,7 @@ function loadvalues(){
 	       				<td> <h:text property="prf_notifyname" size="41" styleId="prf_notifyname"  value="${editprfform[0].prf_notifyname}"></h:text></td>
 	       			</tr>
 	       			<tr>
-        				<td>Id: </td>
-        				<td><h:text property="prf_notifyid" size="41" styleId="prf_notifyid"  value="${editprfform[0].prf_notifyid}"></h:text></td>
+	       				<td><h:hidden property="prf_notifyid"  styleId="prf_notifyid"  value="${editprfform[0].prf_notifyid}"></h:hidden></td>
         			</tr>
 	       			<tr>
 	       				<td>Attn: </td>
@@ -395,7 +322,7 @@ function loadvalues(){
 	       			</tr>
 	       			<tr>
 	       				<td>Addr:</td>
-	       				<td><h:textarea property="prf_notifyaddr" cols="35" rows="4" styleId="prf_notifyaddr"  value="${editprfform[0].prf_notifyaddr}"> </h:textarea></td>
+	       				<td><h:textarea property="prf_notifyaddr" cols="30" rows="4" styleId="prf_notifyaddr"  value="${editprfform[0].prf_notifyaddr}"> </h:textarea></td>
 	       			</tr>
 	       			<tr>
 	       				<td>Tele: </td>
@@ -417,8 +344,7 @@ function loadvalues(){
 	       				<td><h:text property="prf_bankname" size="41" styleId="prf_bankname"  value="${editprfform[0].prf_bankname}"></h:text></td>
 	       			</tr>
 	       			<tr>
-        				<td>Id: </td>
-        				<td><h:text property="prf_bankid" size="41" styleId="prf_bankid"  value="${editprfform[0].prf_bankid}"></h:text></td>
+        				<td><h:hidden property="prf_bankid"  styleId="prf_bankid"  value="${editprfform[0].prf_bankid}"></h:hidden></td>
         			</tr>
 	       			<tr>
 	       				<td>Branch : </td>
@@ -426,7 +352,7 @@ function loadvalues(){
 	       			</tr>
 	       			<tr>
 	       				<td>Addr :</td>
-	       				<td><h:textarea property="prf_bankaddr" cols="35" rows="4" styleId="prf_bankaddr"  value="${editprfform[0].prf_bankaddr}"></h:textarea></td>
+	       				<td><h:textarea property="prf_bankaddr" cols="30" rows="4" styleId="prf_bankaddr"  value="${editprfform[0].prf_bankaddr}"></h:textarea></td>
 	       			</tr>
 	       			<tr>
 	       				<td>Tele :</td>
@@ -494,6 +420,10 @@ function loadvalues(){
 				  <tr>
 				  	<td>Name: </td>
 				    <td><input type="text" id="prf_exporter" size="41" name="prf_exporter" value=""></input><br /></td>
+				  </tr>
+				   <tr>
+				  	
+				    <td><input type="text" id="prf_exporterid" size="41" name="prf_exporterid" value=""></input><br /></td>
 				  </tr>
 				  <tr>
 				    <td>Attn:</td>

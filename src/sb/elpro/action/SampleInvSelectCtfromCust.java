@@ -64,12 +64,12 @@ public class SampleInvSelectCtfromCust extends Action {
 			 *  Loads the Customers Sample Details 
 			 */	
 			if(action.equalsIgnoreCase("load")){
-				String custname = request.getParameter("custname");
+				String custid = request.getParameter("custid");
 				String type = request.getParameter("type");
-				System.out.println("custname  "+custname);			
+				System.out.println("custid  "+custid);			
 				System.out.println("type"+type);
 				
-				List<CustomerInvoice> saminvctlist = saminvbo.getSamInvCustsampleDetails(custname, type, sidx,sord);
+				List<CustomerInvoice> saminvctlist = saminvbo.getSamInvCustsampleDetails(custid, type, sidx,sord);
 				int records = saminvctlist.size();
 						
 				int page = Integer.parseInt(pag);

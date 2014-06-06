@@ -13,8 +13,6 @@ import org.apache.struts.action.ActionMapping;
  *
  */
 public class InspectionForm extends ActionForm {
-	
-	
 	/**
 	 * 
 	 */
@@ -29,14 +27,15 @@ public class InspectionForm extends ActionForm {
 	
 	private String articleid;	
 	private String artidhidden;	
-	private String color;
-	private String size;
-	private String substance;
-	private String sel;
-	private String quantity;
-	private String cust;
-	private String tan;
-	private String ctdt;
+	private String articlehidden;
+	private String colorhidden;
+	private String sizehidden;
+	private String substancehidden;
+	private String selhidden;
+	private String quantityhidden;
+	private String custhidden;
+	private String tanhidden;
+	private String ctdthidden;
 	
 	//Manual test 
 	private String testid;
@@ -84,8 +83,8 @@ public class InspectionForm extends ActionForm {
 	private String grade3comments;
 	private String grade4comments;
 	private String grade5comments;*/
-	
-	
+
+
 	// Rejects 
 	private String rejectid;
 	private String arttype;
@@ -190,18 +189,8 @@ public class InspectionForm extends ActionForm {
 	public void setArticleid(String articleid) {
 		this.articleid = articleid;
 	}
-	/**
-	 * @return the color
-	 */
-	public String getColor() {
-		return color;
-	}
-	/**
-	 * @param color the color to set
-	 */
-	public void setColor(String color) {
-		this.color = color;
-	}
+	
+	
 	/**
 	 * @return the testid
 	 */
@@ -664,6 +653,7 @@ public class InspectionForm extends ActionForm {
 	 */
 	@Override
 	public void reset(ActionMapping mapping, HttpServletRequest request) {
+		System.out.println(" IN RESET INSPECTION FORM");
 		id=""; 
 		inspid=""; //inspection id
 		inspContractNo="";
@@ -673,7 +663,6 @@ public class InspectionForm extends ActionForm {
 		inspcomments="";
 		
 		articleid="";		
-		color="";
 		
 		//Manual test 
 		testid="";
@@ -742,90 +731,7 @@ public class InspectionForm extends ActionForm {
 		rjtotinspected="";
 		status="";
 	}
-	/**
-	 * @return the tan
-	 */
-	public String getTan() {
-		return tan;
-	}
-	/**
-	 * @param tan the tan to set
-	 */
-	public void setTan(String tan) {
-		this.tan = tan;
-	}
-	/**
-	 * @return the cust
-	 */
-	public String getCust() {
-		return cust;
-	}
-	/**
-	 * @param cust the cust to set
-	 */
-	public void setCust(String cust) {
-		this.cust = cust;
-	}
-	/**
-	 * @return the quantity
-	 */
-	public String getQuantity() {
-		return quantity;
-	}
-	/**
-	 * @param quantity the quantity to set
-	 */
-	public void setQuantity(String quantity) {
-		this.quantity = quantity;
-	}
-	/**
-	 * @return the sel
-	 */
-	public String getSel() {
-		return sel;
-	}
-	/**
-	 * @param sel the sel to set
-	 */
-	public void setSel(String sel) {
-		this.sel = sel;
-	}
-	/**
-	 * @return the substance
-	 */
-	public String getSubstance() {
-		return substance;
-	}
-	/**
-	 * @param substance the substance to set
-	 */
-	public void setSubstance(String substance) {
-		this.substance = substance;
-	}
-	/**
-	 * @return the size
-	 */
-	public String getSize() {
-		return size;
-	}
-	/**
-	 * @param size the size to set
-	 */
-	public void setSize(String size) {
-		this.size = size;
-	}
-	/**
-	 * @return the ctdt
-	 */
-	public String getCtdt() {
-		return ctdt;
-	}
-	/**
-	 * @param ctdt the ctdt to set
-	 */
-	public void setCtdt(String ctdt) {
-		this.ctdt = ctdt;
-	}
+
 	/**
 	 * @return the artidhidden
 	 */
@@ -837,6 +743,114 @@ public class InspectionForm extends ActionForm {
 	 */
 	public void setArtidhidden(String artidhidden) {
 		this.artidhidden = artidhidden;
+	}
+	/**
+	 * @return the articlehidden
+	 */
+	public String getArticlehidden() {
+		return articlehidden;
+	}
+	/**
+	 * @param articlehidden the articlehidden to set
+	 */
+	public void setArticlehidden(String articlehidden) {
+		this.articlehidden = articlehidden;
+	}
+	/**
+	 * @return the colorhidden
+	 */
+	public String getColorhidden() {
+		return colorhidden;
+	}
+	/**
+	 * @param colorhidden the colorhidden to set
+	 */
+	public void setColorhidden(String colorhidden) {
+		this.colorhidden = colorhidden;
+	}
+	/**
+	 * @return the sizehidden
+	 */
+	public String getSizehidden() {
+		return sizehidden;
+	}
+	/**
+	 * @param sizehidden the sizehidden to set
+	 */
+	public void setSizehidden(String sizehidden) {
+		this.sizehidden = sizehidden;
+	}
+	/**
+	 * @return the substancehidden
+	 */
+	public String getSubstancehidden() {
+		return substancehidden;
+	}
+	/**
+	 * @param substancehidden the substancehidden to set
+	 */
+	public void setSubstancehidden(String substancehidden) {
+		this.substancehidden = substancehidden;
+	}
+	/**
+	 * @return the selhidden
+	 */
+	public String getSelhidden() {
+		return selhidden;
+	}
+	/**
+	 * @param selhidden the selhidden to set
+	 */
+	public void setSelhidden(String selhidden) {
+		this.selhidden = selhidden;
+	}
+	/**
+	 * @return the quantityhidden
+	 */
+	public String getQuantityhidden() {
+		return quantityhidden;
+	}
+	/**
+	 * @param quantityhidden the quantityhidden to set
+	 */
+	public void setQuantityhidden(String quantityhidden) {
+		this.quantityhidden = quantityhidden;
+	}
+	/**
+	 * @return the custhidden
+	 */
+	public String getCusthidden() {
+		return custhidden;
+	}
+	/**
+	 * @param custhidden the custhidden to set
+	 */
+	public void setCusthidden(String custhidden) {
+		this.custhidden = custhidden;
+	}
+	/**
+	 * @return the tanhidden
+	 */
+	public String getTanhidden() {
+		return tanhidden;
+	}
+	/**
+	 * @param tanhidden the tanhidden to set
+	 */
+	public void setTanhidden(String tanhidden) {
+		this.tanhidden = tanhidden;
+	}
+	/**
+	 * @return the ctdthidden
+	 */
+	public String getCtdthidden() {
+		return ctdthidden;
+	}
+	/**
+	 * @param ctdthidden the ctdthidden to set
+	 */
+	public void setCtdthidden(String ctdthidden) {
+		this.ctdthidden = ctdthidden;
 	}
 }
 

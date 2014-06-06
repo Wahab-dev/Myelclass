@@ -75,6 +75,18 @@ public class PrfAutocomplete extends Action {
 				
 					 System.out.println(jsonOrdertanArray);
 			 		out.println(jsonOrdertanArray);
+				}else if (action.equalsIgnoreCase("selec")){
+					List<AutoComplete> seleclist =  prfbo.getPrfSelection();
+					System.out.println("List Value " +seleclist.size());
+					JSONArray jsonOrdertanArray = JSONArray.fromObject(seleclist);
+					 System.out.println(jsonOrdertanArray);
+			 		out.println(jsonOrdertanArray);
+				}else if (action.equalsIgnoreCase("colormatch")){
+					List<AutoComplete> colormatchlist =  prfbo.getPrfColormatch();
+					System.out.println("List Value " +colormatchlist.size());
+					JSONArray jsonOrdertanArray = JSONArray.fromObject(colormatchlist);
+					 System.out.println(jsonOrdertanArray);
+			 		out.println(jsonOrdertanArray);
 				}else if (action.equalsIgnoreCase("color")){
 					String term = request.getParameter("term");
 					List<AutoComplete> articlelist =  prfbo.getPrfColor(term);
@@ -153,6 +165,13 @@ public class PrfAutocomplete extends Action {
 					JSONArray jsonOrdertanArray = JSONArray.fromObject(articlelist);
 					 System.out.println(jsonOrdertanArray);
 			 		out.println(jsonOrdertanArray);
+				}else if (action.equalsIgnoreCase("shipment")){
+					String term = request.getParameter("term");
+					List<AutoComplete> shipmentlist =  prfbo.getShipmentDetails(term);
+					System.out.println("List Value " +shipmentlist.size());
+					JSONArray jsonOrdershipArray = JSONArray.fromObject(shipmentlist);
+					 System.out.println(jsonOrdershipArray);
+			 		out.println(jsonOrdershipArray);
 				}else if(action.equalsIgnoreCase("pojwno")){
 					System.out.println("In pojwno Autocomplete");
 				

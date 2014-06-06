@@ -27,7 +27,7 @@ public interface SampleInvoiceBo {
 	 * @return
 	 * etc
 	 */
-	List<CustomerInvoice> getSamInvCustsampleDetails(String custname, String type, String sidx, String sord) throws Exception;
+	List<CustomerInvoice> getSamInvCustsampleDetails(String custid, String type, String sidx, String sord) throws Exception;
 
 	/**  
 	 * (Method description)

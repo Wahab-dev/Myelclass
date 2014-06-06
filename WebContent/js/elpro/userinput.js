@@ -2,7 +2,7 @@
  * 
  */
 $(document).ready(function() {
-	var nameRegExpression = /^[a-zA-Z_0-9-()\s]*$/; // Name  validation /s white space
+	var nameRegExpression = /^[a-zA-Z_0-9-()\/.\s]*$/; // Name  validation /s white space
 	var shformRegExpression = /^[a-zA-Z_0-9-()]*$/;   /*short form  validation*/
 	var telephoneRegExpression = /[0]|[+]\d{3}-\d{3}-\d{6}$/ ; /*Telephone validation Not Working pls check*/
 	var addrRegExpression = /^[a-zA-Z_0-9-\/:()#,.\s]*$/; 
@@ -15,7 +15,7 @@ $(document).ready(function() {
 		if (value == "" || value == " " || value.toUpperCase() === "NULL")
 			return [false,"Name Shouldnot be Empty"];
 		else if(!nameRegExpression.test(value) )
-			return [false, "NAME: Only Alphabets, Numbers, Underscore _, hyphen -, Parentheses () are allowed"];
+			return [false, "NAME: Only Alphabets, Numbers, Underscore _, hyphen -, Parentheses (), dots .  slash / are allowed"];
 		else
 			return [true, ""];
 		} 
@@ -127,7 +127,7 @@ $(document).ready(function() {
 		rowList:[10,20,30],
       loadtext: "Bow Bow........... ",
       sortname: 'tanneryName',  
-      sortorder: 'desc', 
+      sortorder: 'asc', 
       //  hiddengrid : false, //to place a icon on Caption Layer to hide/ unhide grid
       loadonce: true,
       viewrecords: true,
@@ -135,9 +135,13 @@ $(document).ready(function() {
       gridview: true, // if used cant use subgrid, treegrid and aftertInsertRow 
       emptyrecords: 'No records to display',
       editurl: "/Myelclass/userinput/loadvalues.do?actn=tan",
-	}).jqGrid('navGrid','#tannerpager',{add:true, edit:true, del: true, search: true,  beforeRefresh: function(){
-        tangrid.jqGrid('setGridParam',{datatype:'json'}).trigger('reloadGrid');
-    }},			
+	}).jqGrid('navGrid','#tannerpager',{
+			 add:true, edit:true, del: false, search: false,
+			 addtext: 'Add', edittext: 'Edit', deltext: 'Delete', searchtext: 'Search', refreshtext: 'Reload',
+			 beforeRefresh: function(){
+				 	tangrid.jqGrid('setGridParam',{datatype:'json'}).trigger('reloadGrid');
+			 }
+	},			
 	{//edit 
 	 closeAfterEdit: true,
 	 reloadAfterSubmit: true,	
@@ -158,7 +162,7 @@ $(document).ready(function() {
 		}
 	}
 	);
-	tangrid.jqGrid('navButtonAdd',"#tannerpager",{caption:"Toggle",title:"Toggle Search Toolbar", buttonicon :'ui-icon-pin-s',
+/*	tangrid.jqGrid('navButtonAdd',"#tannerpager",{caption:"Toggle",title:"Toggle Search Toolbar", buttonicon :'ui-icon-pin-s',
 			onClickButton:function(){
 				tangrid[0].toggleToolbar();
 			} 
@@ -167,7 +171,7 @@ $(document).ready(function() {
 			onClickButton:function(){
 				tangrid[0].clearToolbar();
 			} 
-	});
+	});*/
 	tangrid.jqGrid('filterToolbar', {autosearch : true, searchOnEnter:false, stringResult: true}); 
 	$(".ui-jqgrid-titlebar").hide();
 	//Customer Grid 
@@ -213,16 +217,19 @@ $(document).ready(function() {
 		rowList:[10,20,30],
       loadtext: "Bow Bow........... ",
       sortname: 'customerName',  
-      sortorder: 'desc',      
+      sortorder: 'asc',      
       viewrecords: true,
       loadonce: true,
       height: 'automatic',
       gridview: true, // if used cant use subgrid, treegrid and aftertInsertRow 
       emptyrecords: 'No records to display',
       editurl: "/Myelclass/userinput/loadvalues.do?actn=cust",
-	}).jqGrid('navGrid','#customerpager',{add: true, edit: true, del: false, search: true,   beforeRefresh: function(){
-		custgrid.jqGrid('setGridParam',{datatype:'json'}).trigger('reloadGrid');
-    }},			
+	}).jqGrid('navGrid','#customerpager',{add: true, edit: true, del: false, search: false,   
+		addtext: 'Add', edittext: 'Edit', deltext: 'Delete', searchtext: 'Search', refreshtext: 'Reload',
+		beforeRefresh: function(){
+			custgrid.jqGrid('setGridParam',{datatype:'json'}).trigger('reloadGrid');
+		}
+	},			
 	{//edit 
 	 closeAfterEdit: true,
 	 reloadAfterSubmit: true,	
@@ -242,7 +249,7 @@ $(document).ready(function() {
      	 		},		
 		}
 	});
-	 custgrid.jqGrid('navButtonAdd',"#customerpager",{caption:"Toggle",title:"Toggle Search Toolbar", buttonicon :'ui-icon-pin-s',
+	/* custgrid.jqGrid('navButtonAdd',"#customerpager",{caption:"Toggle",title:"Toggle Search Toolbar", buttonicon :'ui-icon-pin-s',
 			onClickButton:function(){
 				custgrid[0].toggleToolbar();
 			} 
@@ -251,7 +258,7 @@ $(document).ready(function() {
 			onClickButton:function(){
 				custgrid[0].clearToolbar();
 			} 
-	});
+	});*/
 	 custgrid.jqGrid('filterToolbar', {autosearch : true, searchOnEnter:false, stringResult: true}); 
 	 $(".ui-jqgrid-titlebar").hide();
 	//Consignee Grid 
@@ -297,16 +304,19 @@ $(document).ready(function() {
 		rowList:[10,20,30],
       loadtext: "Bow Bow........... ",
       sortname: 'consigneeName',  
-      sortorder: 'desc',
+      sortorder: 'asc',
       loadonce: true,  
       height: 'automatic',
       viewrecords: true,
       gridview: true, // if used cant use subgrid, treegrid and aftertInsertRow 
       emptyrecords: 'No records to display',
       editurl: "/Myelclass/userinput/loadvalues.do?actn=consig",
-	}).jqGrid('navGrid','#consigpager',{add:true, edit:true, del: false, search: true, beforeRefresh: function(){
-		consiggrid.jqGrid('setGridParam',{datatype:'json'}).trigger('reloadGrid');
-    }},			
+	}).jqGrid('navGrid','#consigpager',{add:true, edit:true, del: false, search: false,
+		addtext: 'Add', edittext: 'Edit', deltext: 'Delete', searchtext: 'Search', refreshtext: 'Reload',
+		beforeRefresh: function(){
+		 consiggrid.jqGrid('setGridParam',{datatype:'json'}).trigger('reloadGrid');
+		}
+	},			
 	{//edit 
 	 closeAfterEdit: true,
 	 reloadAfterSubmit: true,	
@@ -326,7 +336,7 @@ $(document).ready(function() {
      	 		},		
 		}
 	});
-	consiggrid.jqGrid('navButtonAdd',"#consigpager",{caption:"Toggle",title:"Toggle Search Toolbar", buttonicon :'ui-icon-pin-s',
+	/*consiggrid.jqGrid('navButtonAdd',"#consigpager",{caption:"Toggle",title:"Toggle Search Toolbar", buttonicon :'ui-icon-pin-s',
 			onClickButton:function(){
 				consiggrid[0].toggleToolbar();
 			} 
@@ -335,7 +345,7 @@ $(document).ready(function() {
 			onClickButton:function(){
 				consiggrid[0].clearToolbar();
 			} 
-	});
+	});*/
 	consiggrid.jqGrid('filterToolbar', {autosearch : true, searchOnEnter:false, stringResult: true}); 
 	$(".ui-jqgrid-titlebar").hide();
 	 
@@ -382,16 +392,19 @@ $(document).ready(function() {
 		rowList:[10,20,30],
       loadtext: "Bow Bow........... ",
       sortname: 'notifyConsigneeName',  
-      sortorder: 'desc',      
+      sortorder: 'asc',      
       loadonce: true,
       height: 'automatic',
       viewrecords: true,
       gridview: true, // if used cant use subgrid, treegrid and aftertInsertRow 
       emptyrecords: 'No records to display',
       editurl: "/Myelclass/userinput/loadvalues.do?actn=notify",
-	}).jqGrid('navGrid','#notifypager',{add:true, edit:true, del: false, search: true, beforeRefresh: function(){
-		notifygrid.jqGrid('setGridParam',{datatype:'json'}).trigger('reloadGrid');
-    }},			
+	}).jqGrid('navGrid','#notifypager',{add:true, edit:true, del: false, search: false, 
+		addtext: 'Add', edittext: 'Edit', deltext: 'Delete', searchtext: 'Search', refreshtext: 'Reload',
+		beforeRefresh: function(){
+			notifygrid.jqGrid('setGridParam',{datatype:'json'}).trigger('reloadGrid');
+		}
+	},			
 	{//edit 
 	 closeAfterEdit: true,
 	 reloadAfterSubmit: true,	
@@ -411,7 +424,7 @@ $(document).ready(function() {
      	 		},		
 		}
 	});
-	 notifygrid.jqGrid('navButtonAdd',"#notifypager",{caption:"Toggle",title:"Toggle Search Toolbar", buttonicon :'ui-icon-pin-s',
+	/* notifygrid.jqGrid('navButtonAdd',"#notifypager",{caption:"Toggle",title:"Toggle Search Toolbar", buttonicon :'ui-icon-pin-s',
 			onClickButton:function(){
 				notifygrid[0].toggleToolbar();
 			} 
@@ -420,7 +433,7 @@ $(document).ready(function() {
 			onClickButton:function(){
 				notifygrid[0].clearToolbar();
 			} 
-	});
+	});*/
 	 notifygrid.jqGrid('filterToolbar', {autosearch : true, searchOnEnter:false, stringResult: true}); 
 	 $(".ui-jqgrid-titlebar").hide();
 
@@ -476,16 +489,19 @@ $(document).ready(function() {
 		rowList:[10,20,30],
       loadtext: "Bow Bow........... ",
       sortname: 'bankName',  
-      sortorder: 'desc',       
+      sortorder: 'asc',       
       loadonce: true,
       height: 'automatic',
       viewrecords: true,
       gridview: true, // if used cant use subgrid, treegrid and aftertInsertRow 
       emptyrecords: 'No records to display',
       editurl: "/Myelclass/userinput/loadvalues.do?actn=bank",
-	}).jqGrid('navGrid','#bankpager',{add:true, edit:true, del: false, search: true, beforeRefresh: function(){
-		bankgrid.jqGrid('setGridParam',{datatype:'json'}).trigger('reloadGrid');
-    }},			
+	}).jqGrid('navGrid','#bankpager',{add:true, edit:true, del: false, search: false, 
+		addtext: 'Add', edittext: 'Edit', deltext: 'Delete', searchtext: 'Search', refreshtext: 'Reload',
+		beforeRefresh: function(){
+			bankgrid.jqGrid('setGridParam',{datatype:'json'}).trigger('reloadGrid');
+		}
+	},			
 	{//edit 
 	 closeAfterEdit: true,
 	 reloadAfterSubmit: true,	
@@ -505,7 +521,7 @@ $(document).ready(function() {
      	 		},		
 		}
 	});
-	 bankgrid.jqGrid('navButtonAdd',"#bankpager",{caption:"Toggle",title:"Toggle Search Toolbar", buttonicon :'ui-icon-pin-s',
+	 /*bankgrid.jqGrid('navButtonAdd',"#bankpager",{caption:"Toggle",title:"Toggle Search Toolbar", buttonicon :'ui-icon-pin-s',
 			onClickButton:function(){
 				bankgrid[0].toggleToolbar();
 			} 
@@ -514,7 +530,7 @@ $(document).ready(function() {
 			onClickButton:function(){
 				bankgrid[0].clearToolbar();
 			} 
-	});
+	});*/
 	 bankgrid.jqGrid('filterToolbar', {autosearch : true, searchOnEnter:false, stringResult: true}); 
 	 $(".ui-jqgrid-titlebar").hide();
 	//Article  details
@@ -559,8 +575,9 @@ $(document).ready(function() {
 	               {name: 'substance',index :'substance', editable:true, sortable:true, hidden:false,
 	            	   
 	               },
-				   {name: 'selection',index :'selection',width:80, editable:true, sortable:true, hidden:false, edittype:'select',			                    	
-	      				  editoptions:{value:{0:'--- Select Selection ---',A:'A',AB:'AB',ABC:'ABC',TR:'TR',Available:'Available'}},
+				   {name: 'selection',index :'selection',width:80, editable:true, sortable:true, hidden:false, 
+	            	   edittype:'text',			                    	
+	      				  //editoptions:{value:{0:'--- Select Selection ---',A:'A',AB:'AB',ABC:'ABC',TR:'TR',Available:'Available'}},
 	            	   
 	               },
 				   {name: 'price',index :'price', editable:true, sortable:true, hidden: false,
@@ -576,8 +593,23 @@ $(document).ready(function() {
 	               },
  				   {name: 'shipment',index :'shipment', editable:true, sortable:true, hidden: true,
 	            	   edittype:'select',
-	       			   editoptions:{value:{0:'--- Select Shipment --- ',Air:'Air',Sea:'Sea',Courier:'Courier',Truck:'Truck',Train:'Train'}},
-	       			      
+	       			  // editoptions:{value:{0:'--- Select Shipment --- ',Air:'Air',Sea:'Sea',Courier:'Courier',Truck:'Truck',Train:'Train'}},
+	       			 editoptions: { 
+		          		 dataUrl:'/Myelclass/PrfAutocomplete.do?action=shipment',
+		          		 buildSelect: function(data) {
+		          		  	var response = jQuery.parseJSON(data);
+		                    	var s = '<select style="width: 520px">';
+		                    	if (response && response.length) {
+		                        	s += '<option value="0">--- Select Article Type ---</option>';
+		                    		for (var i = 0, l=response.length; i<l ; i++) {
+		                          	var ri = response[i].value;
+		                           	s += '<option value="'+ri+'">'+ri+'</option>';
+		                        	}
+		                      	}
+		                     	return s + "</select>";
+		                   	},
+		                 } ,
+		                 editrules :{required : true},   
 	               },
 	               {name: 'tc',index :'tc', editable:true, sortable:true, hidden:false,
 	            	   
@@ -602,27 +634,30 @@ $(document).ready(function() {
 	              ],
 	    jsonReader : {  
 		  	repeatitems:false,
-	        root: "rows",
+	       /* root: "rows",
 	      	page: "page", //calls first
 	      	total: "total" ,//calls Second
 	      	records: "records" //calls Third 
-		},
+*/		},
 		caption: "Article Details",
 		pager: '#articlepager',
 		rowNum:20, 
 		rowList:[20,50,100],
       loadtext: "Bow Bow........... ",
       sortname: 'articlename',  
-      sortorder: 'desc',       
+      sortorder: 'asc',       
       loadonce: true,
       height: 'automatic',
       viewrecords: true,
       gridview: true, // if used cant use subgrid, treegrid and aftertInsertRow 
       emptyrecords: 'No records to display',
       editurl: "/Myelclass/userinput/loadvalues.do?actn=article",
-	}).jqGrid('navGrid','#articlepager',{add:true, edit:true, del: true, search: true, beforeRefresh: function(){
-		articlegrid.jqGrid('setGridParam',{datatype:'json'}).trigger('reloadGrid');
-    }},			
+	}).jqGrid('navGrid','#articlepager',{add:true, edit:true, del: false, search: false, 
+		addtext: 'Add', edittext: 'Edit', deltext: 'Delete', searchtext: 'Search', refreshtext: 'Reload',
+		beforeRefresh: function(){
+			articlegrid.jqGrid('setGridParam',{datatype:'json'}).trigger('reloadGrid');
+		}
+	},			
 	{//edit 
 		beforeShowForm: function(form) {   		   
             $("#tr_articleshortform").show();
@@ -691,7 +726,7 @@ $(document).ready(function() {
      	 		},		
 		}
 	}); 
-	 articlegrid.jqGrid('navButtonAdd',"#articlepager",{caption:"Toggle",title:"Toggle Search Toolbar", buttonicon :'ui-icon-pin-s',
+	/* articlegrid.jqGrid('navButtonAdd',"#articlepager",{caption:"Toggle",title:"Toggle Search Toolbar", buttonicon :'ui-icon-pin-s',
 			onClickButton:function(){
 				articlegrid[0].toggleToolbar();
 			} 
@@ -700,11 +735,10 @@ $(document).ready(function() {
 			onClickButton:function(){
 				articlegrid[0].clearToolbar();
 			} 
-	});
+	});*/
 	 articlegrid.jqGrid('filterToolbar', {autosearch : true, searchOnEnter:false, stringResult: true}); 
 
 	 $(".ui-jqgrid-titlebar").hide();
-	 
 	 
 	 
 	 
@@ -743,20 +777,23 @@ $(document).ready(function() {
 		},
 		caption: "Commision Details",
 		pager: '#commissionpager',
-		rowNum:10, 
-		rowList:[10,20,30],
+		rowNum:20, 
+		rowList:[20,40,50,100],
       loadtext: "Bow Bow........... ",
       sortname: 'commname',  
-      sortorder: 'desc',   
+      sortorder: 'asc',   
       loadonce: true,
       height: 'automatic',
       viewrecords: true,
       gridview: true, // if used cant use subgrid, treegrid and aftertInsertRow 
       emptyrecords: 'No records to display',
       editurl: "/Myelclass/userinput/loadvalues.do?actn=comm",
-	}).jqGrid('navGrid','#commissionpager',{add:true, edit:true, del: false, search: true, beforeRefresh: function(){
-		commgrid.jqGrid('setGridParam',{datatype:'json'}).trigger('reloadGrid');
-    }},			
+	}).jqGrid('navGrid','#commissionpager',{add:true, edit:true, del: false, search: false, 
+		addtext: 'Add', edittext: 'Edit', deltext: 'Delete', searchtext: 'Search', refreshtext: 'Reload',
+		beforeRefresh: function(){
+			commgrid.jqGrid('setGridParam',{datatype:'json'}).trigger('reloadGrid');
+		}
+	},			
 	{//edit 
 	 closeAfterEdit: true,
 	 reloadAfterSubmit: true,
@@ -779,7 +816,7 @@ $(document).ready(function() {
      	 		},		
 		}
 	});
-	 commgrid.jqGrid('navButtonAdd',"#commissionpager",{caption:"Toggle",title:"Toggle Search Toolbar", buttonicon :'ui-icon-pin-s',
+	 /*commgrid.jqGrid('navButtonAdd',"#commissionpager",{caption:"Toggle",title:"Toggle Search Toolbar", buttonicon :'ui-icon-pin-s',
 			onClickButton:function(){
 				commgrid[0].toggleToolbar();
 			} 
@@ -788,7 +825,7 @@ $(document).ready(function() {
 			onClickButton:function(){
 				commgrid[0].clearToolbar();
 			} 
-	});
+	});*/
 	 commgrid.jqGrid('filterToolbar', {autosearch : true, searchOnEnter:false, stringResult: true}); 
 
 	 $(".ui-jqgrid-titlebar").hide();
@@ -827,20 +864,23 @@ $(document).ready(function() {
 */		},
 		caption: "Destination Details",
 		pager: '#destipager',
-		rowNum:10, 
+		rowNum:20, 
 		rowList:[20,30,40],
       loadtext: "Bow Bow........... ",
       sortname: 'destiname',  
-      sortorder: 'desc', 
+      sortorder: 'asc', 
       loadonce: true,
       height: 'automatic',
       viewrecords: true,
       gridview: true, // if used cant use subgrid, treegrid and aftertInsertRow 
       emptyrecords: 'No records to display',
       editurl: "/Myelclass/userinput/loadvalues.do?actn=desti",
-	}).jqGrid('navGrid','#destipager',{add:true, edit:true, del: false, search: true, beforeRefresh: function(){
-		destigrid.jqGrid('setGridParam',{datatype:'json'}).trigger('reloadGrid');
-    }},			
+	}).jqGrid('navGrid','#destipager',{add:true, edit:true, del: false, search: false, 
+		addtext: 'Add', edittext: 'Edit', deltext: 'Delete', searchtext: 'Search', refreshtext: 'Reload',
+		beforeRefresh: function(){
+			destigrid.jqGrid('setGridParam',{datatype:'json'}).trigger('reloadGrid');
+		}
+	},			
 	{//edit 
 	 closeAfterEdit: true,
 	 reloadAfterSubmit: true,	
@@ -863,7 +903,7 @@ $(document).ready(function() {
      	 		},		
 		}
 	});	
-	 destigrid.jqGrid('navButtonAdd',"#destipager",{caption:"Toggle",title:"Toggle Search Toolbar", buttonicon :'ui-icon-pin-s',
+	/* destigrid.jqGrid('navButtonAdd',"#destipager",{caption:"Toggle",title:"Toggle Search Toolbar", buttonicon :'ui-icon-pin-s',
 			onClickButton:function(){
 				destigrid[0].toggleToolbar();
 			} 
@@ -872,7 +912,7 @@ $(document).ready(function() {
 			onClickButton:function(){
 				destigrid[0].clearToolbar();
 			} 
-	});
+	});*/
 	 destigrid.jqGrid('filterToolbar', {autosearch : true, searchOnEnter:false, stringResult: true}); 
 	 $(".ui-jqgrid-titlebar").hide();
 	 
@@ -910,19 +950,22 @@ $(document).ready(function() {
 		caption: "Color  Details",
 		pager: '#colorpager',
 		rowNum:20, 
-		rowList:[20,40,60],
+		rowList:[20,40,60,100],
       loadtext: "Bow Bow........... ",
       sortname: 'colorname',  
-      sortorder: 'desc', 
+      sortorder: 'asc', 
       loadonce: true,
       height: 'automatic',
       viewrecords: true,
       gridview: true, // if used cant use subgrid, treegrid and aftertInsertRow 
       emptyrecords: 'No records to display',
       editurl: "/Myelclass/userinput/loadvalues.do?actn=color",
-	}).jqGrid('navGrid','#colorpager',{add:true, edit:true, del: false, search: true, beforeRefresh: function(){
-		colorgrid.jqGrid('setGridParam',{datatype:'json'}).trigger('reloadGrid');
-    }},			
+	}).jqGrid('navGrid','#colorpager',{add:true, edit:true, del: false, search: false, 
+		addtext: 'Add', edittext: 'Edit', deltext: 'Delete', searchtext: 'Search', refreshtext: 'Reload',
+		beforeRefresh: function(){
+			colorgrid.jqGrid('setGridParam',{datatype:'json'}).trigger('reloadGrid');
+		}
+	},			
 	{//edit 
 	 closeAfterEdit: true,
 	 reloadAfterSubmit: true,	
@@ -945,7 +988,7 @@ $(document).ready(function() {
      	 		},		
 		}
 	});	
-	 colorgrid.jqGrid('navButtonAdd',"#colorpager",{caption:"Toggle",title:"Toggle Search Toolbar", buttonicon :'ui-icon-pin-s',
+	/* colorgrid.jqGrid('navButtonAdd',"#colorpager",{caption:"Toggle",title:"Toggle Search Toolbar", buttonicon :'ui-icon-pin-s',
 			onClickButton:function(){
 				colorgrid[0].toggleToolbar();
 			} 
@@ -954,7 +997,7 @@ $(document).ready(function() {
 			onClickButton:function(){
 				colorgrid[0].clearToolbar();
 			} 
-	});
+	});*/
 	 colorgrid.jqGrid('filterToolbar', {autosearch : true, searchOnEnter:false, stringResult: true}); 
  
 	 //colorgrid.jqGrid('setGridWidth', 930);
@@ -988,19 +1031,22 @@ $(document).ready(function() {
 		caption: "Terms  Details",
 		pager: '#termspager',
 		rowNum:10, 
-		rowList:[10,20,30],
+		rowList:[10,20,30,40],
       loadtext: "Bow Bow........... ",
       sortname: 'terms',  
-      sortorder: 'desc', 
+      sortorder: 'asc', 
       loadonce: true,   
       height: 'automatic',
       viewrecords: true,
       gridview: true, // if used cant use subgrid, treegrid and aftertInsertRow 
       emptyrecords: 'No records to display',
       editurl: "/Myelclass/userinput/loadvalues.do?actn=terms",
-	}).jqGrid('navGrid','#termspager',{add:true, edit:true, del: false, search: true, beforeRefresh: function(){
-		termsgrid.jqGrid('setGridParam',{datatype:'json'}).trigger('reloadGrid');
-    }},			
+	}).jqGrid('navGrid','#termspager',{add:true, edit:true, del: false, search: false, 
+		addtext: 'Add', edittext: 'Edit', deltext: 'Delete', searchtext: 'Search', refreshtext: 'Reload',
+		beforeRefresh: function(){
+			termsgrid.jqGrid('setGridParam',{datatype:'json'}).trigger('reloadGrid');
+		}
+	},			
 	{//edit 
 	 closeAfterEdit: true,
 	 reloadAfterSubmit: true,	
@@ -1023,7 +1069,7 @@ $(document).ready(function() {
      	 		},		
 		}
 	});	
-	 termsgrid.jqGrid('navButtonAdd',"#termspager",{caption:"Toggle",title:"Toggle Search Toolbar", buttonicon :'ui-icon-pin-s',
+	 /*termsgrid.jqGrid('navButtonAdd',"#termspager",{caption:"Toggle",title:"Toggle Search Toolbar", buttonicon :'ui-icon-pin-s',
 			onClickButton:function(){
 				termsgrid[0].toggleToolbar();
 			} 
@@ -1032,7 +1078,7 @@ $(document).ready(function() {
 			onClickButton:function(){
 				termsgrid[0].clearToolbar();
 			} 
-	});
+	});*/
 	 termsgrid.jqGrid('filterToolbar', {autosearch : true, searchOnEnter:false, stringResult: true}); 
 
 	//termsgrid.jqGrid('setGridWidth', 930);
@@ -1066,19 +1112,22 @@ $(document).ready(function() {
 		caption: "Payment  Details",
 		pager: '#paymntpager',
 		rowNum:10, 
-		rowList:[10,20,30],
+		rowList:[10,20,30,40],
      loadtext: "Bow Bow........... ",
      sortname: 'paymentname',  
-     sortorder: 'desc', 
+     sortorder: 'asc', 
      loadonce: true,  
      height: 'automatic',
      viewrecords: true,
      gridview: true, // if used cant use subgrid, treegrid and aftertInsertRow 
      emptyrecords: 'No records to display',
      editurl: "/Myelclass/userinput/loadvalues.do?actn=paymnt",
-	}).jqGrid('navGrid','#paymntpager',{add:true, edit:true, del: false, search: true, beforeRefresh: function(){
-		paymntgrid.jqGrid('setGridParam',{datatype:'json'}).trigger('reloadGrid');
-   }},			
+	}).jqGrid('navGrid','#paymntpager',{add:true, edit:true, del: false, search: false, 
+		addtext: 'Add', edittext: 'Edit', deltext: 'Delete', searchtext: 'Search', refreshtext: 'Reload',
+		beforeRefresh: function(){
+			paymntgrid.jqGrid('setGridParam',{datatype:'json'}).trigger('reloadGrid');
+		}
+	},			
 	{//edit 
 	 closeAfterEdit: true,
 	 reloadAfterSubmit: true,	
@@ -1101,7 +1150,7 @@ $(document).ready(function() {
     	 		},		
 		}
 	});	
-	 paymntgrid.jqGrid('navButtonAdd',"#paymntpager",{caption:"Toggle",title:"Toggle Search Toolbar", buttonicon :'ui-icon-pin-s',
+	 /*paymntgrid.jqGrid('navButtonAdd',"#paymntpager",{caption:"Toggle",title:"Toggle Search Toolbar", buttonicon :'ui-icon-pin-s',
 			onClickButton:function(){
 				paymntgrid[0].toggleToolbar();
 			} 
@@ -1110,7 +1159,7 @@ $(document).ready(function() {
 			onClickButton:function(){
 				paymntgrid[0].clearToolbar();
 			} 
-	});
+	});*/
 	 paymntgrid.jqGrid('filterToolbar', {autosearch : true, searchOnEnter:false, stringResult: true}); 
 
 	// paymntgrid.jqGrid('setGridWidth', 930);

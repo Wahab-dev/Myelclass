@@ -127,14 +127,13 @@
 	 
 
 <!-- ==== Inspection Details ==================================================================================================================================================================== -->
-	<action path="/loadInspection" type="sb.elpro.action.InspectionLoadAction" input="/jsp/Menu.jsp" scope="session"  parameter="inspaction">
+	<action path="/loadInspection" type="sb.elpro.action.InspectionLoadAction" input="/jsp/Menu.jsp" scope="session">
 	  	<forward name="inspectionisloaded" path="/jsp/Inspection.jsp"></forward>
 	</action>
 	
-	<action path="/saveinspection" name="InspectionForm" type="sb.elpro.action.InspectionAction" input="/jsp/Inspection.jsp" scope="session" parameter="inspaction">
-	  	<forward name="invoiceisloaded" path="/jsp/Invoice.jsp"></forward>
+	<action path="/saveinspection" name="InspectionForm" type="sb.elpro.action.InspectionAction" input="/jsp/Inspection.jsp" parameter="inspaction" scope="session" >
+	  <!-- 	<forward name="inspectionisloaded" path="/jsp/Inspection.jsp"></forward> -->
 	  	<forward name="inspissaved" path="/jsp/Inspection.jsp"></forward>
-	  	<forward name="inspectionisloaded" path="/jsp/Inspection.jsp"></forward>
 	  	<forward name="login" redirect="true" path="/Login.jsp"></forward>
 	</action> 
 	

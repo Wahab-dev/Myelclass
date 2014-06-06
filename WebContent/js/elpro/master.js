@@ -267,11 +267,12 @@ $(function() {
 	 
 	 });
 	mastergrid.jqGrid('navGrid','#masterpager',{
-		 	edit: true,
+		 	edit: false,
 		 	add: false,
 		 	del: false, 
 		 	search: true, 
  		 	view: true, 
+ 		 	addtext: 'Add', edittext: 'Edit', deltext: 'Delete', searchtext: 'Search', refreshtext: 'Reload', viewtext: 'View'
 	 },
 	 {},{},{},{
 		 //advance Search 

@@ -31,9 +31,9 @@ public class SampleInvoiceBoImpl implements SampleInvoiceBo {
 	 * @see sb.elpro.bo.SampleInvoiceBo#getSamInvCustCtDetails(java.lang.String, java.lang.String, java.lang.String, java.lang.String)
 	 */
 	@Override
-	public List<CustomerInvoice> getSamInvCustsampleDetails(String custname,
+	public List<CustomerInvoice> getSamInvCustsampleDetails(String custid,
 			String type, String sidx, String sord) throws Exception {
-		ArrayList<CustomerInvoice> saminvCustomerarr = sampleinvdao.getSamInvCustsampleDet(custname, type, sidx, sord);
+		ArrayList<CustomerInvoice> saminvCustomerarr = sampleinvdao.getSamInvCustsampleDet(custid, type, sidx, sord);
 		return saminvCustomerarr;
 	}
 	

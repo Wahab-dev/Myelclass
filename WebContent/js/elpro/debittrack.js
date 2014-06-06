@@ -68,8 +68,6 @@ $(document).ready(function() {
 	
 ///////////////////////////////////////////////////////////////////
 	
-	
-	
 	var debtrackgrid = $('#debittracktbl');
 	
     $('#chngroup').change(function(){
@@ -94,9 +92,9 @@ $(document).ready(function() {
 	 debtrackgrid.jqGrid({
 		 url:'/Myelclass/DebitTrackInsertAction.do',
 		 datatype: "json",
-		 colNames:['Debit No','Debit date','Tannery','el class ref no','Inv Date','Inv no','Ct No','Inv Amt','Exchange Rate','Commission','Price','Quantity','Commision Amt','INR','Service Tax','Total','TDS','Total Due'],
+		 colNames:['Debit No','Debit date','Tannery','ref no','Inv Date','Inv no','Ct No','Inv Amt','Exchange Rate','Commission','Price','Quantity','Commision Amt','INR','Service Tax','Total','TDS','Total Due'],
 		 colModel:[
-					{name: 'deb_debitno', index: 'deb_debitno' ,width:90, hidden: false, 
+					{name: 'deb_debitno', index: 'deb_debitno' , align:'center', width:90, hidden: false, 
 						 formatter: "dynamicLink",
 						 formatoptions: {
 						        url: function (cellValue, rowId, rowData) {
@@ -107,22 +105,22 @@ $(document).ready(function() {
 						        }
 						    }	
 					},
-					{name: 'deb_debitdate', index: 'deb_debitdate' ,width:70, hidden: false,
+					{name: 'deb_debitdate', index: 'deb_debitdate' ,align:'center', width:70, hidden: false,
 						
 					},
-					{name: 'deb_exporter', index: 'deb_exporter' ,width:50, hidden: false, 
+					{name: 'deb_exporter', index: 'deb_exporter', align:'center', width:50, hidden: false, 
 						
 					},
-					{name: 'deb_elclassrefno', index: 'deb_elclassrefno' ,width:90,  hidden: false,
+					{name: 'deb_elclassrefno', index: 'deb_elclassrefno' ,align:'center', width:50,  hidden: false,
 						
 					},
-					{name: 'deb_invdate', index: 'deb_invdate' ,width:70, hidden: true, 
+					{name: 'deb_invdate', index: 'deb_invdate' ,align:'center', width:70, hidden: true, 
 						
 					},
-					{name: 'deb_taninvno', index: 'deb_taninvno' ,width:70, hidden: false,
+					{name: 'deb_taninvno', index: 'deb_taninvno' ,align:'center', width:110, hidden: false,
 						
 					},
-					{name: 'deb_contractno', index: 'deb_contractno' ,width:70, hidden: true,
+					{name: 'deb_contractno', index: 'deb_contractno' ,align:'center', width:70, hidden: true,
 						
 					},
 					{name: 'deb_invoiceamt', index: 'deb_invoiceamt' ,width:70,  hidden: false, align:'right',
@@ -180,23 +178,25 @@ $(document).ready(function() {
 		 viewrecords: true,
 		 footerrow: true,
 		 grouping:true, 
-		 groupingView : { groupField : ['deb_debitno'] },
-		 loadComplete: function() {
+		// groupingView : { groupField : ['deb_exporter'] },
+		 loadComplete: function() { //deb_total
         	 var $self = $(this),
         	 amt = parseFloat($self.jqGrid("getCol", "deb_elclassamtinrs", false, "sum")).toFixed(2);
         	 tax = parseFloat($self.jqGrid("getCol", "deb_tax", false, "sum")).toFixed(2);
         	 due = parseFloat($self.jqGrid("getCol", "deb_due", false, "sum")).toFixed(2);
+        	 tot = parseFloat($self.jqGrid("getCol", "deb_total", false, "sum")).toFixed(2);
         	 $self.jqGrid("footerData", "set", {deb_elclassamtinrs: parseFloat(amt)});
         	 $self.jqGrid("footerData", "set", {deb_tax: parseFloat(tax)});
         	 $self.jqGrid("footerData", "set", {deb_due: parseFloat(due)});
+        	 $self.jqGrid("footerData", "set", {deb_total: parseFloat(tot)});
         	
         }
 	 }).jqGrid('navGrid','#debittrackpager',{
-		 edit: true,
-		 	add: false,
-		 	del: false, 
-		 	search: true, 
-		 	view: true, 
+		 edit: true, add: false, del: false,  search: true, view: true, 
+		 	addtext: 'Add', edittext: 'Edit', deltext: 'Delete', searchtext: 'Search', refreshtext: 'Reload', viewtext: 'View',
+		 	 beforeRefresh: function(){
+		 		debtrackgrid.jqGrid('setGridParam',{datatype:'json'}).trigger('reloadGrid');
+			 }
 		});
 	 debtrackgrid.jqGrid('navButtonAdd',"#debittrackpager",{caption:"Toggle",title:"Toggle Search Toolbar", buttonicon :'ui-icon-pin-s',
 			onClickButton:function(){

@@ -7,9 +7,9 @@ import java.io.PrintWriter;
 import java.util.Iterator;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import net.sf.json.JSONObject;
 
@@ -21,7 +21,6 @@ import org.apache.struts.action.ActionMapping;
 import sb.elpro.bo.InvoiceBo;
 import sb.elpro.bo.InvoiceBoImpl;
 import sb.elpro.model.ArticleDetails;
-import sb.elpro.model.BulkQtyDetails;
 import sb.elpro.model.CustomerInvoice;
 import sb.elpro.model.InvBillDetails;
 
@@ -60,18 +59,14 @@ public class InvSelectCtfromCust extends Action {
 			 *  Loads the Customers Ct Details 
 			 */
 			if(action.equalsIgnoreCase("load")){
-				String custname = request.getParameter("custname");
+				String custid = request.getParameter("custid");
 				String type = request.getParameter("type");
-				System.out.println("custname  "+custname);			
+				System.out.println("custid  "+custid);			
 				System.out.println("type"+type);
 				
-				List<CustomerInvoice> invctlist = invbo.getInvCustCtDetails(custname, type, sidx,sord);
+				List<CustomerInvoice> invctlist = invbo.getInvCustCtDetails(custid, type, sidx,sord);
 				int records = invctlist.size();
 				
-				/*if(type.equalsIgnoreCase("ctsam")){
-					List<CustomerInvoice> invsamlist = invbo.getInvCustSampleDetails(custname, sidx,sord);
-					int samplerecords = invsamlist.size();
-				}*/
 				
 				int page = Integer.parseInt(pag);
                 int totalPages = 0;
@@ -144,12 +139,17 @@ public class InvSelectCtfromCust extends Action {
 			   invbill.setInvtc(request.getParameter("tc"));
 			   invbill.setInvpcs(request.getParameter("pieces"));
 			   System.out.println("TC"+request.getParameter("tc"));
-			   System.out.println("pieces"+request.getParameter("pieces"));
+			   System.out.println("pieces"+request.getParameter("pieces"));// 
 			   invbill.setInvartid(request.getParameter("prfarticleid"));
 			   invbill.setInvno(request.getParameter("invoiceno"));
 			   invbill.setInvtype(request.getParameter("invoicetype"));
 			   invbill.setInvdt(request.getParameter("invoicedt"));
+			   invbill.setUser(request.getParameter("user"));
+			   invbill.setInvcomm(request.getParameter("commission"));
+			   invbill.setInvothercomm(request.getParameter("othercommission"));
+			   			   
 			   String oper = request.getParameter("oper");
+			   
 			   if(oper.equalsIgnoreCase("edit")){
 				   /*
 				    * Perform Edit Function
@@ -244,6 +244,9 @@ public class InvSelectCtfromCust extends Action {
 				   invaddagainbill.setInvno(request.getParameter("invno"));
 				   invaddagainbill.setInvdt(request.getParameter("invdt"));
 				   invaddagainbill.setInvid(request.getParameter("invid"));
+				   invaddagainbill.setInvcomm(request.getParameter("invcomm"));
+				   invaddagainbill.setInvothercomm(request.getParameter("invothercomm"));
+				   invaddagainbill.setUser(request.getParameter("invuser"));
 				   
 			   	   if(oper.equalsIgnoreCase("add")){
 			   		   /*

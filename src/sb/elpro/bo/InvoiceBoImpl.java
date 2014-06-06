@@ -85,22 +85,6 @@ public class InvoiceBoImpl implements InvoiceBo {
 		ArrayList<CustomerDetails> invCustomerarr = invdao.getinvCustomerDetails();
 		return invCustomerarr;
 	}
-	@Override
-	public List<InvCustContractDetails> getInvCustContract()  throws Exception {
-		ArrayList<InvCustContractDetails> invCustomerctarr = invdao.getinvCustContracttDetails();
-		return invCustomerctarr;
-	}
-	
-	/* (non-Javadoc)
-	 * @see sb.elpro.bo.InvoiceBo#getInvCustSampleDetails(java.lang.String, java.lang.String, java.lang.String)
-	 
-	@Override
-	public List<CustomerInvoice> getInvCustSampleDetails(String custname,
-			String sidx, String sord)throws Exception {
-		ArrayList<CustomerInvoice> invCustomersamarr = invdao.getinvCustSampleDetails( custname, sidx, sord);
-		return invCustomersamarr;
-	}*/
-
 	///GRID LOAD CUSTOMER CT DETAILS
 	@Override
 	public List<CustomerInvoice> getInvCustCtDetails(String custid, String type, String sortname, String sortord) throws Exception {

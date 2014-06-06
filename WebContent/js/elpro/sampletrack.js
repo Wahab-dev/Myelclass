@@ -127,15 +127,18 @@ $(function() {
 	 	datatype: 'json',
 	 	url: '/Myelclass/SamptrackInsertAction.do', 	
 		colNames:['Status','Srf No','Order Date','Ref no','Priority','Handled by','Customer','Tannery','Deliver to','Destination',
-		          'endusage','Terms','ADD','CDD','splcdn','inspcdn','forwaderid','isinvraised','articleid','Animal Type',
+		          'endusage','Terms', 'splcdn','inspcdn','forwaderid','isinvraised','articleid','Animal Type',
 		          'articleshform','Article','Color','Size','Substance','Selection','selectionp','Quantity','Pcs','colormatching','Price',
-		          'tapetest','crockingwet','crockingdry','fourfolds','keytest','srfarticleid','RDD','Reps','Courier Details', 
-		          'Customer Feedback','User','ApplytoAll'],
+		          'tapetest','crockingwet','crockingdry','fourfolds','keytest','srfarticleid','ADD','CDD','RDD','Reps','Courier', 
+		          'Feedback','User','ApplytoAll'],
     	colModel :[  
                 {name: 'status', index: 'status', align:'center', width:35, search: true, stype:'text', editable:true, sortable: true, hidden: false,  
 		  			edittype: 'select', 
 		 			editoptions:{value:{0:'Select Status',P:'Pending',C:'Closed',CA:'Cancel',IC:'IC',S:'Shipped',D:'Delivered'},defaultValue: 'Pending'},
 		  			editrules :{require : true},
+		  			search: true, stype:'select', searchrules:{required:true},   
+		  			//searchoptions:{ sopt:['eq'],value:{P:'Pending',I:'Inspection', IC:'In IC',S:'Shipped',D:'Delivered',RW:'Rework',Bl:'Billed',C:'Closed',CA:'Cancel'}},
+		  			searchoptions:{value:":All;P:Pending;I:Inspection;IC:In IC;D:Delivered;RW:Rework;S:Shipped;BI:Billed;C:Closed;CA:Cancel"},
 	  			}, 
 	  			{name: 'sampleno', index: 'sampleno', align:'center', width:60, editable:true, search: true, stype:'text', sortable: true, hidden: false, 			
 	  				formatter: "dynamicLink",
@@ -179,12 +182,7 @@ $(function() {
 				{name: 'terms', index: 'terms', align:'center', width:60, editable:true, search: true, stype:'text', sortable: true, hidden: true, 
 					
 				},
-				{name: 'add_date', index: 'add_date', align:'center', width:60, editable:true, search: true, stype:'text', sortable: true, hidden: false, 
-					
-				},
-				{name: 'cdd_date', index: 'cdd_date', align:'center', width:60, editable:true, search: true, stype:'text', sortable: true, hidden: false, 
-					
-				},
+				
 				{name: 'splcdn', index: 'splcdn', align:'center', width:60, editable:true, search: true, stype:'text', sortable: true, hidden : true, 
 					
 				},
@@ -200,25 +198,25 @@ $(function() {
 				{name: 'articleid', index: 'articleid', align:'center', width:60,  search: true, stype:'text',editable:true, sortable: true, hidden: true, 
 					
 				},
-				{name: 'articletype', index: 'articletype', align:'center', width:60,  search: true, stype:'text',editable:true, sortable: true, hidden: false, 
+				{name: 'articletype', index: 'articletype', align:'center', width:40,  search: true, stype:'text',editable:true, sortable: true, hidden: false, 
 					
 				},
-				{name: 'articleshform', index: 'articleshform', align:'center', width:60,  search: true, stype:'text',editable:true, sortable: true, hidden: true, 
+				{name: 'articleshform', index: 'articleshform', align:'center', width:40,  search: true, stype:'text',editable:true, sortable: true, hidden: true, 
 					
 				},
-				{name: 'articlename', index: 'articlename', align:'center', width:60,  search: true, stype:'text',editable:true, sortable: true, hidden: false, 
+				{name: 'articlename', index: 'articlename', align:'center', width:100,  search: true, stype:'text',editable:true, sortable: true, hidden: false, 
 					
 				},
 				{name: 'color', index: 'color', align:'center', width:60,  search: true, stype:'text',editable:true, sortable: true, hidden: false, 
 					
 				},
-				{name: 'size', index: 'size', align:'center', width:60,  search: true, stype:'text',editable:true, sortable: true, hidden: false, 
+				{name: 'size', index: 'size', align:'center', width:50,  search: true, stype:'text',editable:true, sortable: true, hidden: false, 
 					
 				},
 				{name: 'substance', index: 'substance', align:'center', width:60,  search: true, stype:'text',editable:true, sortable: true, hidden: false, 
 					
 				},
-				{name: 'selection', index: 'selection', align:'center', width:60,  search: true, stype:'text',editable:true, sortable: true, hidden: true, 
+				{name: 'selection', index: 'selection', align:'center', width:60,  search: true, stype:'text',editable:true, sortable: true, hidden: false, 
 					
 				},
 				{name: 'selectionp', index: 'selectionp', align:'center', width:60,  search: true, stype:'text',editable:true, sortable: true, hidden: true, 
@@ -227,7 +225,7 @@ $(function() {
 				{name: 'quantity', index: 'quantity', align:'center', width:60,  search: true, stype:'text',editable:true, sortable: true, hidden: false, 
 					
 				},
-				{name: 'pcs', index: 'pcs', align:'center', width:60,  search: true, stype:'text',editable:true, sortable: true, hidden: false, 
+				{name: 'pcs', index: 'pcs', align:'center', width:30,  search: true, stype:'text',editable:true, sortable: true, hidden: false, 
 					
 				},
 				{name: 'colormatching', index: 'colormatching',  align:'center', width:60,  search: true, stype:'text',editable:true, sortable: true, hidden: true	, 
@@ -255,7 +253,13 @@ $(function() {
 				{name: 'srfarticleid', index: 'srfarticleid', align:'center', width:60,  search: true, stype:'text',editable:true, sortable: true, hidden: true, 
 					
 				},
-				{name: 'rdd_date', index: 'rdd_date', align:'center', width:120, editable:true, sortable: true, hidden: false, 
+				{name: 'add_date', index: 'add_date', align:'center', width:60, editable:true, search: true, stype:'text', sortable: true, hidden: false, 
+					
+				},
+				{name: 'cdd_date', index: 'cdd_date', align:'center', width:60, editable:true, search: true, stype:'text', sortable: true, hidden: false, 
+					
+				},
+				{name: 'rdd_date', index: 'rdd_date', align:'center', width:60, editable:true, sortable: true, hidden: false, 
 					 sorttype: 'date',
 						//formatter: 'date', //datefmt: 'yy/MM/d',//formatoptions: {newformat: 'd-m-y'}, 
 						  editoptions: { dataInit: DateGrpEdit, size:8 },
@@ -299,7 +303,7 @@ $(function() {
 					edittype: 'textarea', 
 				},
 				
-				{name: 'user', index: 'user', align:'center', width:60,  search: true, stype:'text',editable:true, sortable: true, hidden: true, 
+				{name: 'user', index: 'user', align:'center', width:60,  search: true, stype:'text',editable:true, sortable: true, hidden: false, 
 					
 				},
 				{name: 'isupdtar', index: 'isupdtart', align:'center', width:60,  editable:true, sortable: true, hidden: true, 
@@ -316,7 +320,7 @@ $(function() {
 	caption : 'Sample Tracking Report',
 	pager : '#sampletrackpgr',
 	rowNum : 20, 
-	rowList : [10,20,40,50,100,200],
+	rowList : [5,10,20,40,50,100,200],
 	height: 'automatic',
     width: 'automatic', 
     sortname : 'sampleno',  
@@ -328,6 +332,8 @@ $(function() {
     viewrecords: true,
     footerrow: true,
     loadonce: true,
+    toppager:true,
+    shrinktofit:false,
     emptyrecords: 'No records to display',
     grouping:true, 
     groupingView : { groupField : ['sampleno'] },
@@ -338,17 +344,19 @@ $(function() {
         $self.jqGrid("footerData", "set", {quantity: "Total:", pcs: sum});
     }
     }).jqGrid('navGrid','#sampletrackpgr',{
-    	edit: true,
-	 	add: true,
-	 	del: true, 
+    	position : 'left',
+    	edit: false,
+	 	add: false,
+	 	del: false, 
 	 	search: true, 
 	 	view: true, beforeRefresh: function(){
 	 		sampletrackgrid.jqGrid('setGridParam',{datatype:'json'}).trigger('reloadGrid');
-	    }
+	    },
+	    addtext: 'Add', edittext: 'Edit', deltext: 'Delete', searchtext: 'Search', refreshtext: 'Reload', viewtext: 'View',
 	}).navButtonAdd('#sampletrackpgr',{
 	   caption:"Status", 
 	   buttonicon:"ui-icon-lightbulb", 
-	   position:"last",
+	   position:"first",
 	   onClickButton: function(){ 
 	   var $self = $(this);
 	   $self.jqGrid("editGridRow", $self.jqGrid("getGridParam", "selrow"),
@@ -386,12 +394,14 @@ $(function() {
 			 $("#tr_pcs").hide();
 			 $("#tr_reps").show();
 			 $("#tr_isupdtar").show();
+			 $("#tr_selection").show();
 			 
 			 $("#sampleno").attr("readonly","readonly"); 
 			 $("#articlename").attr("readonly","readonly"); 
 			 $("#color").attr("readonly","readonly"); 
 			 $("#size").attr("readonly","readonly"); 
 			 $("#substance").attr("readonly","readonly"); 
+			 $("#selection").attr("readonly","readonly"); 
 			 $("#quantity").attr("readonly","readonly"); 
 		 },
         recreateForm: true,
@@ -403,27 +413,48 @@ $(function() {
 	    });
 	   
 	   }
-	}).jqGrid('navButtonAdd',"#sampletrackpgr",{caption:"Toggle",title:"Toggle Search Toolbar", buttonicon :'ui-icon-pin-s',
-		onClickButton:function(){
-			sampletrackgrid[0].toggleToolbar();
-		} 
-	}).jqGrid('navButtonAdd',"#sampletrackpgr",{caption:"Clear",title:"Clear Search",buttonicon :'ui-icon-refresh',
-		onClickButton:function(){
-			sampletrackgrid[0].clearToolbar();
-		} 
-	}).jqGrid('filterToolbar', {autosearch : true, searchOnEnter:false, stringResult: true  //To Enable AutoSearch please comment Search on Enter to False
-		
-	}).jqGrid('navButtonAdd', '#sampletrackpgr', {
+	});
+ 	sampletrackgrid.jqGrid('filterToolbar', {autosearch : true, searchOnEnter:false, stringResult: true  //To Enable AutoSearch please comment Search on Enter to False
+		//xlsold
+	});
+ 	sampletrackgrid.jqGrid('navButtonAdd', '#sampletrackpgr', {
         caption: "Pdf",
         buttonicon: "ui-icon-print",
         title: "Print in PDF Format",
         onClickButton: downloadPdf,
-    }).jqGrid('navButtonAdd', '#sampletrackpgr', {
+    });
+ 	sampletrackgrid.jqGrid('navButtonAdd', '#sampletrackpgr', {
         caption: "Excel",
         buttonicon: "ui-icon-print",
         title: "Print in Excel Format",
         onClickButton: downloadExcel,
-    }).jqGrid('setGridWidth',1400);
+    });
+ 	sampletrackgrid.jqGrid('navButtonAdd', '#sampletrackpgr', {
+        caption: "ExcelOld",
+        buttonicon: "ui-icon-print",
+        title: "Print in Excel Format",
+        onClickButton: downloadExcelold,
+    });
+ 	sampletrackgrid.jqGrid('navButtonAdd',"#sampletrackpgr",{caption:"Toggle",title:"Toggle Search Toolbar", buttonicon :'ui-icon-pin-s',
+		onClickButton:function(){
+			sampletrackgrid[0].toggleToolbar();
+		} 
+	});
+ 	sampletrackgrid.jqGrid('navButtonAdd',"#sampletrackpgr",{caption:"Clear",title:"Clear Search",buttonicon :'ui-icon-refresh',
+		onClickButton:function(){
+			sampletrackgrid[0].clearToolbar();
+		} 
+	});
+ 	sampletrackgrid.jqGrid('navButtonAdd',"#sampletrackpgr",{caption:"Column Chooser",title:"Column Chooser",buttonicon :'ui-icon-extlink',
+		onClickButton:function(){
+			sampletrackgrid.jqGrid('columnChooser', {
+             done: function(perm) {
+                 if (!perm) { return false; }
+                 this.jqGrid('remapColumns', perm, true);                        	
+             }
+         }).jqGrid('setGridWidth',1600);
+		} 
+	});
  
  /*
 	*  Function to print the Master Page 
@@ -437,11 +468,12 @@ $(function() {
 	{
 	download('xls');
 	}
+	function downloadExcelold() 
+	{
+	download('xlsold');
+	}
 	function download(type){
-		//var data = mastergrid.jqGrid('getGridParam', 'postData');
-		//alert(data);
 		printurl = "/Myelclass/SamptrackInsertAction/PrintReports.do?&type="+type;
-		alert(printurl);
 		//start the Download
 		window.location = printurl;
 		
@@ -457,50 +489,4 @@ $(function() {
 				}
 		});
 	}	
-  
- /*.navButtonAdd('#sampletrackpgr',{
-	   caption:"Modify", 
-	   buttonicon:"ui-icon-tag", 
-	   onClickButton: function(){ 
-		 var $self = $(this);
-	 	   $self.jqGrid("editGridRow", $self.jqGrid("getGridParam", "selrow"),
-	 		{ // some options
-	                   recreateForm: true,
-	                   editData: {//Function to Add parameters to the edit 
-				 		oper: 'modify',
-                 },
-		 	 });	   
-	 			   
-	   }, 
-	   position:"centre"
-		}).navButtonAdd('#sampletrackpgr',{
-	   caption:"Destination", 
-	   buttonicon:"ui-icon-battery-2", 
-	   onClickButton: function(){ 
-		 var $self = $(this);
-	   $self.jqGrid("editGridRow", $self.jqGrid("getGridParam", "selrow"),
-		{ // some options
-                recreateForm: true,
-                editData: {//Function to Add parameters to the edit 
-				 		oper: 'modify',
-             },
-	 	 });	   
-			   
-	   }, 
-	   position:"centre"
-	}).navButtonAdd('#sampletrackpgr',{
-	   caption:"Print", 
-	   buttonicon:"ui-icon-print", 
-	   onClickButton: function(){ 
-		 var $self = $(this);
-	 	   $self.jqGrid("editGridRow", $self.jqGrid("getGridParam", "selrow"),
-	 		{ // some options
-	                   recreateForm: true,
-	                   editData: {//Function to Add parameters to the edit 
-				 		oper: 'modify',
-                 },
-		 	 });	  	   
-	   }, 
-	   position:"centre"
-});*/
-});
+  });

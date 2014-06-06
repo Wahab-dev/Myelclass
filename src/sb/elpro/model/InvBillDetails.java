@@ -65,7 +65,7 @@ public class InvBillDetails implements Serializable{
 	private String debdt;
 	private String remarks;
 	
-	
+	private String user;
 	
 	/**
 	 * @return the bankcharge
@@ -589,6 +589,18 @@ public class InvBillDetails implements Serializable{
 	 */
 	public void setDebid(String debid) {
 		this.debid = debid;
+	}
+	/**
+	 * @return the user
+	 */
+	public String getUser() {
+		return user;
+	}
+	/**
+	 * @param user the user to set
+	 */
+	public void setUser(String user) {
+		this.user = user;
 	}
 	
 		

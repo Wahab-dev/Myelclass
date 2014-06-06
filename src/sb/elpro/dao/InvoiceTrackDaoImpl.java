@@ -13,7 +13,6 @@ import java.util.ArrayList;
 import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.Statement;
 
-import sb.elpro.model.BulkArticle;
 import sb.elpro.model.InvBillDetails;
 import sb.elpro.utility.DBConnection;
 import sb.elpro.utility.DateConversion;
@@ -34,21 +33,20 @@ public class InvoiceTrackDaoImpl implements InvoiceTrackDao {
 		Connection con = null;
 		Statement st = null;
 		ResultSet rs = null;
-		try{	
-			
+		try{				
 			con = DBConnection.getConnection();
 			st = (Statement) con.createStatement();// limit "+pag+", "+rows+" 
-			String sql = "SELECT invtype, form.invno, form.invdate, expname, taninvno, customer, invbillid, ctno,  articleid, artname, color, size, subs, selc, unit, pcs, rate, tc, qty, qshpd, qbal, amt,  othercharges, discounts , totalamount, AWBillNo, AWBillDate, comm, othercomm,  consignee, notify, otherref, buyer, bank FROM tbl_inv_bill bill, tbl_invform form where form.invno = bill.invno order by form.invno ";
+			String sql = "SELECT invtype, form.invno, form.invdate,  tanshform, taninvno,  cust.shortform, invbillid, ctno,  articleid, artname, color, size, subs, selc, unit, pcs, rate, tc, qty, qshpd, qbal, amt,  othercharges, discounts , totamt, AWBillNo, AWBillDate, comm, othercomm,  consignee,  notifyname,  otherref, buyer,  bankname  FROM tbl_inv_bill bill left outer join tbl_invform form on form.invno = bill.invno left outer join elpro.tbl_tannery tan on  tan.tanid = form.expname  left outer join elpro.tbl_customer cust on  cust.custid = form.customer  left outer join elpro.tbl_consignee consig on  consig.consigid = form.consignee  left outer join elpro.tbl_notify notify on  notify.notifyid = form.notify  left outer join elpro.tbl_bank bank on  bank.bankid = form.bank  order by form.invno ";
 			System.out.println(sql);
 			rs = st.executeQuery(sql);
 			while(rs.next()) {	
-			 InvBillDetails invtrackbean = new InvBillDetails();
+			  InvBillDetails invtrackbean = new InvBillDetails();
 				invtrackbean.setInvtype(rs.getString("invtype"));
 				invtrackbean.setInvno(rs.getString("invno"));
 				invtrackbean.setInvdt(DateConversion.ConverttoNormalDate(rs.getString("invdate")));
-				invtrackbean.setExporter(rs.getString("expname"));
+				invtrackbean.setExporter(rs.getString("tanshform"));
 				invtrackbean.setTaninvno(rs.getString("taninvno"));
-				invtrackbean.setCustomer(rs.getString("customer"));
+				invtrackbean.setCustomer(rs.getString("shortform"));
 				invtrackbean.setInvid(rs.getString("invbillid"));
 				invtrackbean.setInvctno(rs.getString("ctno"));
 				invtrackbean.setInvartid(rs.getString("articleid"));
@@ -59,7 +57,7 @@ public class InvoiceTrackDaoImpl implements InvoiceTrackDao {
 				invtrackbean.setInvselc(rs.getString("selc"));
 				invtrackbean.setInvunit(rs.getString("unit"));
 				invtrackbean.setInvpcs(rs.getString("pcs"));
-				invtrackbean.setInvrate(rs.getString("rate"));
+				invtrackbean.setInvrate(rs.getString("rate")); 
 				invtrackbean.setInvtc(rs.getString("tc"));
 				invtrackbean.setInvqty(rs.getString("qty")+" "+rs.getString("unit"));
 				invtrackbean.setInvqshpd(rs.getString("qshpd"));
@@ -67,16 +65,16 @@ public class InvoiceTrackDaoImpl implements InvoiceTrackDao {
 				invtrackbean.setInvamt(rs.getString("amt"));
 				invtrackbean.setInvothercrg(rs.getString("othercharges"));
 				invtrackbean.setInvclaim(rs.getString("discounts"));
-				invtrackbean.setInvtotamount(rs.getString("totalamount"));
+				invtrackbean.setInvtotamount(rs.getString("totamt"));
 				invtrackbean.setAwbillno(rs.getString("AWBillNo"));
 				invtrackbean.setAwbillno(DateConversion.ConverttoNormalDate(rs.getString("AWBillDate")));
 				invtrackbean.setInvcomm(rs.getString("comm"));
 				invtrackbean.setInvothercomm(rs.getString("othercomm"));
 				invtrackbean.setConsignee(rs.getString("consignee"));
-				invtrackbean.setNotify(rs.getString("notify"));
+				invtrackbean.setNotify(rs.getString("notifyname"));
 				invtrackbean.setOtherref(rs.getString("otherref"));
 				invtrackbean.setBuyer(rs.getString("buyer"));
-				invtrackbean.setBank(rs.getString("bank"));
+				invtrackbean.setBank(rs.getString("bankname"));
 				invtrackarray.add(invtrackbean);
 			}	
 		}catch(Exception e){

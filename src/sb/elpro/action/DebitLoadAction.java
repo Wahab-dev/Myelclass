@@ -17,7 +17,6 @@ import org.apache.struts.action.ActionMapping;
 import sb.elpro.bo.DebitBo;
 import sb.elpro.bo.DebitBoImpl;
 import sb.elpro.model.DebitFormDetails;
-import sb.elpro.model.InvoiceBean;
 
 /**
  * @author Wahab
@@ -36,15 +35,15 @@ public class DebitLoadAction extends Action {
 			System.out.println("Debit  action PPP"+action);
 			if(action == null){
 				System.out.println("In Debit Load.....");
-				usersession.setAttribute("debitactionform", "add");
-				
-			}else{
+				usersession.setAttribute("debitactionform", "add");				
+			}else{	
 				System.out.println("In Debit Edit Form");
-				String actionform = "edit";
 				String deb_debitno = request.getParameter("deb_debitno");
-				usersession.setAttribute("debactionform", actionform);
+				usersession.setAttribute("debitactionform", "edit"); //
+				
 				usersession.setAttribute("editdebno", deb_debitno);
 				List<DebitFormDetails> editdebform = debitbo.getEditDebFormValues(deb_debitno);
+				usersession.setAttribute("invnoforedit", editdebform); 
 				usersession.setAttribute("editdebform", editdebform);
 			}
 			return map.findForward("debitisloaded");

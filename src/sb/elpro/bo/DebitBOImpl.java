@@ -11,7 +11,6 @@ import sb.elpro.dao.DebitDaoImpl;
 import sb.elpro.model.AutoComplete;
 import sb.elpro.model.DebitFormDetails;
 import sb.elpro.model.InvBillDetails;
-import sb.elpro.model.InvoiceBean;
 import sb.elpro.model.RaiseDebit;
 import sb.elpro.model.TanneryDetails;
 
@@ -96,9 +95,6 @@ public class DebitBoImpl implements DebitBo {
 	@Override
 	public String getDebno(String tanterm) throws Exception {
 		String maxdebno = debdao.getDebitnoteno();
-		if(maxdebno.isEmpty() || maxdebno.equalsIgnoreCase("Null")){
-			maxdebno = "EL001/14-15";
-		}		
 		return maxdebno;
 	}
 

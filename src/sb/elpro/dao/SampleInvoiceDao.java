@@ -27,7 +27,7 @@ public interface SampleInvoiceDao {
 	 * @return
 	 * etc
 	 */
-	ArrayList<CustomerInvoice> getSamInvCustsampleDet(String custname,
+	ArrayList<CustomerInvoice> getSamInvCustsampleDet(String custid,
 			String type, String sidx, String sord) throws SQLException;
 
 	/**  

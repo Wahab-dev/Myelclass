@@ -42,10 +42,11 @@ public class InvoiceDaoImpl implements InvoiceDao {
 			try{			
 				con = DBConnection.getConnection();
 				st = (Statement) con.createStatement();
-				String sql = "SELECT tanname, tanattn, tanaddr, tanphone, tanfax, expid, cstno, tinno, exprefno FROM elpro.tbl_tannery where tanname like '%"+expterm+"%' order by tanname";
+				String sql = "SELECT tanid, tanname, tanattn, tanaddr, tanphone, tanfax, expid, cstno, tinno, exprefno FROM elpro.tbl_tannery where tanname like '%"+expterm+"%' order by tanname";
 				rs = st.executeQuery(sql);
 				while(rs.next()) {	
 				ExporterDetails invexporterbean = new ExporterDetails();
+					invexporterbean.setExpid(rs.getString("tanid"));
 					invexporterbean.setExpname(rs.getString("tanname"));
 					invexporterbean.setExpaddr(rs.getString("tanaddr"));
 					invexporterbean.setExpref(rs.getString("exprefno"));
@@ -75,10 +76,11 @@ public class InvoiceDaoImpl implements InvoiceDao {
 			try{			
 				con = DBConnection.getConnection();
 				st = (Statement) con.createStatement();
-				String sql = "SELECT notifyname, notifyattn, notifyaddr, notifyphone, notifyfax FROM elpro.tbl_notify order by notifyname";
+				String sql = "SELECT notifyid, notifyname, notifyattn, notifyaddr, notifyphone, notifyfax FROM elpro.tbl_notify order by notifyname";
 				rs = st.executeQuery(sql);
 				while(rs.next()) {	
 					NotifyConsigneeDetails InvNotifybean = new NotifyConsigneeDetails();
+					InvNotifybean.setNotifyConsigneeId(rs.getString("notifyid"));
 					InvNotifybean.setNotifyConsigneeName(rs.getString("notifyname"));
 					InvNotifybean.setNotifyConsigneeAttention(rs.getString("notifyattn"));
 					InvNotifybean.setNotifyConsigneeAddress(rs.getString("notifyaddr"));
@@ -107,10 +109,11 @@ public class InvoiceDaoImpl implements InvoiceDao {
 		try{			
 			con = DBConnection.getConnection();
 			st = (Statement) con.createStatement();
-			String sql = "SELECT bankname, bankbranch, bankaddr, swiftcode, Acctno FROM elpro.tbl_bank order by bankname";
+			String sql = "SELECT bankid, bankname, bankbranch, bankaddr, swiftcode, Acctno FROM elpro.tbl_bank order by bankname";
 			rs = st.executeQuery(sql);
 			while(rs.next()) {	
 				BankDetails InvBankbean = new BankDetails();
+				InvBankbean.setBankId(rs.getString("bankid"));
 				InvBankbean.setBankName(rs.getString("bankname"));
 				InvBankbean.setBankBranch(rs.getString("bankbranch"));
 				InvBankbean.setBankAddress(rs.getString("bankaddr"));
@@ -188,37 +191,6 @@ public class InvoiceDaoImpl implements InvoiceDao {
 		return InvFinalDestiarray;
 	}
 	
-
-	/*@Override
-	public ArrayList<DestinationDetails> getinvDischargePort()
-			throws SQLException {
-		ArrayList<DestinationDetails> InvDischargePortarray = new ArrayList<DestinationDetails>();			
-		Connection con = null;
-		Statement st = null;
-		ResultSet rs = null;			
-		try{			
-			con = DBConnection.getConnection();
-			st = (Statement) con.createStatement();
-			String sql = "SELECT distinct DestinationName FROM elpro.tbl_destinationport order by DestinationName";
-			rs = st.executeQuery(sql);
-			while(rs.next()) {	
-				DestinationDetails InvDischargeportbean = new DestinationDetails();
-				InvDischargeportbean.setDestination(rs.getString("DestinationName"));
-				System.out.println("Result Added Successfully");
-				System.out.println("DestinationName"+InvDischargeportbean.getDestination());
-				InvDischargePortarray.add(InvDischargeportbean);
-			}
-		}catch(Exception e){
-			System.out.println("ERROR RESULT");
-			e.printStackTrace();
-		}finally{
-			 con.close() ;
-			 st.close();
-			 rs.close();
-	   }			
-		return InvDischargePortarray;
-	}*/
-
 	@Override
 	public ArrayList<CustomerDetails> getinvCustomerDetails()
 			throws SQLException {
@@ -252,41 +224,7 @@ public class InvoiceDaoImpl implements InvoiceDao {
 		return invcustrraylist;
 	}
 
-	@Override
-	public ArrayList<InvCustContractDetails> getinvCustContracttDetails()
-			throws SQLException {
-		ArrayList<InvCustContractDetails> invcustctrraylist = new ArrayList<InvCustContractDetails>();			
-		Connection con = null;
-		Statement st = null;
-		ResultSet rs = null;				
-		try{			
-			con = DBConnection.getConnection();
-			st = (Statement) con.createStatement();
-			String sql = "select CNo, Agent, OrderDate, Tannery, Customer, Consignee, Notify, Exporter from elpro.prf order by Customer";
-			rs = st.executeQuery(sql);
-			while(rs.next()) {						
-					InvCustContractDetails InvCustCtbean = new InvCustContractDetails();
-					InvCustCtbean.setCustName(rs.getString("Customer"));
-					InvCustCtbean.setCosigneeId (rs.getString("Consignee"));
-					InvCustCtbean.setCtNo(rs.getString("CNo"));
-					InvCustCtbean.setExporterName(rs.getString("Exporter"));
-					InvCustCtbean.setIssuedDate(rs.getString("OrderDate"));
-					InvCustCtbean.setNotifyId(rs.getString("Notify"));
-					InvCustCtbean.setTannerName(rs.getString("Tannery"));
-					InvCustCtbean.setAgent(rs.getString("Agent"));
-					System.out.println("Ct No "+InvCustCtbean.getCtNo());
-					invcustctrraylist.add(InvCustCtbean);
-			}
-	}catch(Exception e){
-		e.printStackTrace();
-		System.out.println("Customer Name ERROR RESULT");
-	}finally{
-		 con.close() ;
-		 st.close();
-		 rs.close();
-   }	
-	return invcustctrraylist;
-}
+
 
 	@Override
 	public ArrayList<CustomerInvoice> getInvCustCtlist(String custid, String type, String sortname, String sortorder) throws SQLException {
@@ -303,13 +241,12 @@ public class InvoiceDaoImpl implements InvoiceDao {
 			}else{
 				 sql = "(SELECT Ctno, Orderdt as Dt, pono as refno, customerid as cust,  tanneryid, consigneeid, destination, add_date, cdd_date, commission, othercommission FROM elpro.tbl_prfform where customerid like '%"+custid+"%') union (SELECT Sampleno, orderdt, refno, customerid,  tanneryid, deliverid, destination,add_date, cdd_date, handledby, isinvraised FROM elpro.tbl_srfform where customerid like '%"+custid+"%') order by "+sortname+" "+sortorder+" ";
 			}
-			
 			System.out.println("SQL + "+sql);
 			rs = st.executeQuery(sql);
 			while(rs.next()) {						
 			 CustomerInvoice InvCustCtbean = new CustomerInvoice();
 			  InvCustCtbean.setCtno(rs.getString("Ctno"));
-			  InvCustCtbean.setOrderdt(rs.getString("Dt"));
+			  InvCustCtbean.setOrderdt(DateConversion.ConverttoNormalDate(rs.getString("Dt")));
 			  InvCustCtbean.setPono(rs.getString("refno")); //
 			  InvCustCtbean.setCustomer(rs.getString("cust"));
 			  InvCustCtbean.setTannery(rs.getString("tanneryid"));
@@ -317,8 +254,8 @@ public class InvoiceDaoImpl implements InvoiceDao {
 			  InvCustCtbean.setDestination(rs.getString("destination"));
 			  InvCustCtbean.setCommission(rs.getString("commission"));
 			  InvCustCtbean.setOthercommission(rs.getString("othercommission"));
-			  InvCustCtbean.setCdd_date(rs.getString("cdd_date"));
-			  InvCustCtbean.setAdd_date(rs.getString("add_date"));
+			  InvCustCtbean.setCdd_date(DateConversion.ConverttoNormalDate(rs.getString("cdd_date")));
+			  InvCustCtbean.setAdd_date(DateConversion.ConverttoNormalDate(rs.getString("add_date")));
 			  System.out.println("etCtno "+InvCustCtbean.getCtno());
 			 invcustctrraylist.add(InvCustCtbean);
 			}
@@ -332,49 +269,7 @@ public class InvoiceDaoImpl implements InvoiceDao {
    }	
 	return invcustctrraylist;
 	}
-	/*  Not Necessary - merged Sample with CT
-	 * (non-Javadoc)
-	 * @see sb.elpro.dao.InvoiceDao#getinvCustSampleDetails(java.lang.String, java.lang.String, java.lang.String)
-	 
-	@Override
-	public ArrayList<CustomerInvoice> getinvCustSampleDetails(String custname,
-			String sidx, String sord) throws SQLException {
-		ArrayList<CustomerInvoice> invcustctrraylist = new ArrayList<CustomerInvoice>();			
-		Connection con = null;
-		Statement st = null;
-		ResultSet rs = null;	
-		try{			
-			con = DBConnection.getConnection();
-			st = (Statement) con.createStatement();
-			String sql = "SELECT Sampleno, orderdt, refno, priority, handledby, customerid, tanneryid, deliverid, add_date, cdd_date, isinvraised FROM elpro.tbl_srfform  where customerid like '%"+custname+"%' order by "+sidx+" "+sord+" ";
-			System.out.println("SQL + "+sql);
-			rs = st.executeQuery(sql);
-			while(rs.next()) {						
-			 CustomerInvoice InvCustCtbean = new CustomerInvoice();
-			  InvCustCtbean.setSampleno(rs.getString("Sampleno"));
-			  InvCustCtbean.setOrderdt(rs.getString("orderdt"));
-			  InvCustCtbean.setRefno(rs.getString("refno"));
-			  InvCustCtbean.setPriority(rs.getString("priority")); //
-			  InvCustCtbean.setHandledby(rs.getString("handledby"));
-			  InvCustCtbean.setScustomerid(rs.getString("customerid"));
-			  InvCustCtbean.setStanneryid(rs.getString("tanneryid"));
-			  InvCustCtbean.setDeliverid(rs.getString("deliverid"));
-			  InvCustCtbean.setSadd_date(rs.getString("add_date"));
-			  InvCustCtbean.setScdd_date(rs.getString("cdd_date"));
-			  InvCustCtbean.setIsinvraised(rs.getString("isinvraised"));
-			  System.out.println("Sampleno "+InvCustCtbean.getSampleno());
-			 invcustctrraylist.add(InvCustCtbean);
-			}
-	}catch(Exception e){
-		e.printStackTrace();
-		System.out.println("Customer Name ERROR RESULT");
-	}finally{
-		 con.close() ;
-		 st.close();
-		 rs.close();
-   }	
-	return invcustctrraylist;
-	}*/
+	
 	@Override
 	public ArrayList<CustomerDetails> getInvCustlist(String custterm)
 			throws SQLException {
@@ -482,16 +377,15 @@ public class InvoiceDaoImpl implements InvoiceDao {
 			con = DBConnection.getConnection();
 			st = (Statement) con.createStatement();
 			if(type.equalsIgnoreCase("ct")){
-				sql =  "SELECT articletype, articlename, color, size, substance, selection, quantity, unit, pcs, qshipped, qbal, rate, tc, article.contractno, prfarticleid, status, rdd_date, comments, reps, feddback from tbl_prf_article article, elpro.tbl_prfarticle_status statuse  where prf_articleid = prfarticleid and article.contractno in ("+ctno+") order by article.contractno";
+				sql =  "SELECT articletype, articlename, color, size, substance, selection, quantity, unit, pcs, qshipped, qbal, rate, tc, article.contractno, prfarticleid, status, rdd_date, comments, reps, feddback, commission, othercommission from tbl_prf_article article left outer join elpro.tbl_prfarticle_status statuse on statuse.prf_articleid = article.prfarticleid left outer join elpro.tbl_prfform form on form.Ctno = article.contractno where article.contractno in ("+ctno+") order by article.contractno";
 			}else{
-				sql = "(SELECT articletype, articlename, color, size, substance, selection, quantity, unit, pcs, qshipped, qbal, rate, tc, article.contractno, prfarticleid, status, rdd_date, comments, reps, feddback from tbl_prf_article article, elpro.tbl_prfarticle_status statuse  where prf_articleid = prfarticleid and article.contractno in ("+ctno+")) union (SELECT articletype, articlename, color, size, substance, selection , quantity ,unit, pcs, shpd, bal,  rate, articleid,  art.sampleno, art.srfarticleid, status, rdd_date, courierdetails, reps, feedbackdetails FROM elpro.tbl_srf_article art, elpro.tbl_srfarticle_status statuse Where  art.srfarticleid = statuse.srfarticleid and art.sampleno in ("+ctno+") order by article.contractno)";
+				sql = "(SELECT articletype, articlename, color, size, substance, selection, quantity, unit, pcs, qshipped, qbal, rate, tc, article.contractno, prfarticleid, status, rdd_date, comments, reps, feddback, commission, othercommission from tbl_prf_article article left outer join elpro.tbl_prfarticle_status statuse on statuse.prf_articleid = article.prfarticleid left outer join elpro.tbl_prfform form on form.Ctno = article.contractno where article.contractno in ("+ctno+")) union (SELECT articletype, articlename, color, size, substance, selection , quantity ,unit, pcs, shpd, bal,  rate, articleid,  art.sampleno, art.srfarticleid, status, rdd_date, courierdetails, reps, feedbackdetails, feedbackdetails, feedbackdetails FROM elpro.tbl_srf_article art, elpro.tbl_srfarticle_status statuse Where  art.srfarticleid = statuse.srfarticleid and art.sampleno in ("+ctno+") order by article.contractno)";
 			}
-			//String sql = "SELECT articleid, articlename, size, substance, selection, selectionpercent, color, quantity, qshipped, qbal, unit, pcs, rate, tc, article.contractno, prfarticleid from tbl_prf_article article, elpro.tbl_prfarticle_status statuse where  prf_articleid = prfarticleid and article.contractno in ("+ctno+") order by article.contractno";
 			System.out.println((sql));
 			rs = st.executeQuery(sql);
 			System.out.println((sql));
 			while(rs.next()) {	
-				ArticleDetails artbean = new ArticleDetails();
+			ArticleDetails artbean = new ArticleDetails();
 				artbean.setArticletype(rs.getString("articletype"));
 				artbean.setArticlename(rs.getString("articlename"));
 				artbean.setSize(rs.getString("size"));
@@ -505,6 +399,8 @@ public class InvoiceDaoImpl implements InvoiceDao {
 				artbean.setQbal(rs.getFloat("qbal"));
 				artbean.setRate(rs.getString("rate"));
 				artbean.setTc(rs.getString("tc"));
+				artbean.setCommission(rs.getString("commission"));
+				artbean.setOthercommission(rs.getString("othercommission"));
 				artbean.setContractno(rs.getString("contractno"));
 				artbean.setPrfarticleid(rs.getString("prfarticleid"));
 				artbean.setStatus(rs.getString("status"));
@@ -537,8 +433,8 @@ public class InvoiceDaoImpl implements InvoiceDao {
 		boolean isInserted = true;
 		try{			
 			con = DBConnection.getConnection();
-			StringBuffer sql_saveprfArticle = new StringBuffer("insert into tbl_inv_bill (ctno, artname, color, size, subs, selc, unit, qty, pcs, rate, tc, comm, invno, invdate, qshpd, qbal, amt,articleid)");
-			sql_saveprfArticle.append("values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+			StringBuffer sql_saveprfArticle = new StringBuffer("insert into tbl_inv_bill (ctno, artname, color, size, subs, selc, unit, qty, pcs, rate, tc, invno, invdate, qshpd, qbal, amt, comm, othercomm, articleid, user)");
+			sql_saveprfArticle.append("values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
 			String sqlquery_saveprfArticle = sql_saveprfArticle.toString();
 			System.out.println("Insert quert" +sqlquery_saveprfArticle);
 			pst = (PreparedStatement) con.prepareStatement(sqlquery_saveprfArticle);
@@ -555,13 +451,15 @@ public class InvoiceDaoImpl implements InvoiceDao {
 			pst.setString(9, invbill.getInvpcs());
 			pst.setString(10, invbill.getInvrate());
 			pst.setString(11, invbill.getInvtc());
-			pst.setString(12, invbill.getInvcomm());
-			pst.setString(13, invbill.getInvno());
-			pst.setString(14, invbill.getInvdt());
-			pst.setString(15, invbill.getInvqshpd());
-			pst.setString(16, invbill.getInvqbal());
-			pst.setString(17, invbill.getInvamt());
-			pst.setString(18, invbill.getInvartid());
+			pst.setString(12, invbill.getInvno());
+			pst.setString(13, invbill.getInvdt());
+			pst.setString(14, invbill.getInvqshpd());
+			pst.setString(15, invbill.getInvqbal());
+			pst.setString(16, invbill.getInvamt());
+			pst.setString(17, invbill.getInvcomm());
+			pst.setString(18, invbill.getInvothercomm());
+			pst.setString(19, invbill.getInvartid());
+			pst.setString(20, invbill.getUser());
 			noofrows = pst.executeUpdate();
 			System.out.println("Sucessfully inserted the record.." + noofrows);
 			if(noofrows == 1){
@@ -621,12 +519,12 @@ public class InvoiceDaoImpl implements InvoiceDao {
 		try{			
 			con = DBConnection.getConnection();
 			st = (Statement) con.createStatement();
-			String sql = "SELECT invbillid, articleid, artname, color, size, subs, selc, unit,  qty, pcs, rate, tc, comm, ctno, invno, invdate, qshpd, qbal, amt FROM elpro.tbl_inv_bill where ctno in ("+ctno+") order by invno, artname ";
+			String sql = "SELECT invbillid, articleid, artname, color, size, subs, selc, unit,  qty, pcs, rate, tc, comm, ctno, invno, invdate, qshpd, qbal, amt, comm, othercomm, user FROM elpro.tbl_inv_bill where ctno in ("+ctno+") order by invno, artname ";
 			System.out.println((sql));
 			rs = st.executeQuery(sql);
 			System.out.println((sql));
 			while(rs.next()) {						
-				InvBillDetails invbillbean = new InvBillDetails();
+			InvBillDetails invbillbean = new InvBillDetails();
 				invbillbean.setInvid(rs.getString("invbillid"));
 				invbillbean.setInvartid(rs.getString("articleid"));
 				invbillbean.setInvartname(rs.getString("artname"));
@@ -645,6 +543,10 @@ public class InvoiceDaoImpl implements InvoiceDao {
 				invbillbean.setInvqshpd(rs.getString("qshpd"));
 				invbillbean.setInvqbal(rs.getString("qbal"));
 				invbillbean.setInvamt(rs.getString("amt"));
+				invbillbean.setInvcomm(rs.getString("comm"));
+				invbillbean.setInvothercomm(rs.getString("othercomm"));
+				invbillbean.setUser(rs.getString("user"));
+				
 				System.out.println("Art CT List"+invbillbean.getInvctno());
 				invBilllist.add(invbillbean);
 			}
@@ -704,8 +606,8 @@ public class InvoiceDaoImpl implements InvoiceDao {
 		boolean isInserted = true;
 		try{			
 			con = DBConnection.getConnection();
-			StringBuffer sql_saveprfArticle = new StringBuffer("insert into tbl_inv_bill (ctno, artname, color, size, subs, selc, qty, unit, pcs, rate, tc, comm,invno, invdate, qshpd, qbal, amt,articleid)");
-			sql_saveprfArticle.append("values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+			StringBuffer sql_saveprfArticle = new StringBuffer("insert into tbl_inv_bill (ctno, artname, color, size, subs, selc, qty, unit, pcs, rate, tc, comm, othercomm, user, invno, invdate, qshpd, qbal, amt,articleid)");
+			sql_saveprfArticle.append("values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
 			String sqlquery_saveprfArticle = sql_saveprfArticle.toString();
 			System.out.println("Insert quert" +sqlquery_saveprfArticle);
 			pst = (PreparedStatement) con.prepareStatement(sqlquery_saveprfArticle);
@@ -724,12 +626,14 @@ public class InvoiceDaoImpl implements InvoiceDao {
 			pst.setString(11, invaddagainbill.getInvtc());
 		
 			pst.setString(12, invaddagainbill.getInvcomm());
-			pst.setString(13, invaddagainbill.getInvno());
-			pst.setString(14, invaddagainbill.getInvdt());
-			pst.setString(15, invaddagainbill.getInvqshpd());
-			pst.setString(16, invaddagainbill.getInvqbal());
-			pst.setString(17, invaddagainbill.getInvamt());
-			pst.setString(18, invaddagainbill.getInvartid());
+			pst.setString(13, invaddagainbill.getInvothercomm());
+			pst.setString(14, invaddagainbill.getUser());
+			pst.setString(15, invaddagainbill.getInvno());
+			pst.setString(16, invaddagainbill.getInvdt());
+			pst.setString(17, invaddagainbill.getInvqshpd());
+			pst.setString(18, invaddagainbill.getInvqbal());
+			pst.setString(19, invaddagainbill.getInvamt());
+			pst.setString(20, invaddagainbill.getInvartid());
 			noofrows = pst.executeUpdate();
 			if(noofrows == 1){
 				if(invaddagainbill.getInvctno().startsWith("L")){
@@ -1011,8 +915,8 @@ public class InvoiceDaoImpl implements InvoiceDao {
 		boolean isSaved =true;
 		try{
 			con = DBConnection.getConnection();
-			StringBuffer sql_saveinvform = new StringBuffer("insert into tbl_invform (invtype, invno, invdate, exportersref, expname, taninvno, customer, consignee, notify, totalamount, otherref, buyer, bank, AWBillNo, AWBillDate, othercharges, discounts, totamt)");
-			sql_saveinvform.append("values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+			StringBuffer sql_saveinvform = new StringBuffer("insert into tbl_invform (invtype, invno, invdate, exportersref, expname, taninvno, customer, consignee, notify, otherref, buyer, bank, terms, payment, AWBillNo, AWBillDate, othercharges, discounts, totamt)");
+			sql_saveinvform.append("values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
 			String sqlquery_saveinvform = sql_saveinvform.toString();
 			pst = (PreparedStatement) con.prepareStatement(sqlquery_saveinvform);
 			pst.setString(1, invbean.getInv_invoicetype());
@@ -1021,20 +925,21 @@ public class InvoiceDaoImpl implements InvoiceDao {
 			System.out.println("getInv_invoiceno " +invbean.getInv_invoiceno());
 			pst.setString(3, invbean.getInv_invdate());
 			pst.setString(4, invbean.getInv_expref());
-			pst.setString(5, invbean.getInv_exporter());
+			pst.setString(5, invbean.getInv_exporterid());
 			pst.setString(6, invbean.getInv_otherref());
-			pst.setString(7, invbean.getInv_customer());
-			pst.setString(8, invbean.getInv_buyer());
-			pst.setString(9, invbean.getInv_notify());
+			pst.setString(7, invbean.getInv_custid());
+			pst.setString(8, invbean.getInv_buyerid());
+			pst.setString(9, invbean.getInv_notifyid());
 			pst.setString(10, "NA");
 			pst.setString(11, "NA");
-			pst.setString(12, "NA");
-			pst.setString(13, invbean.getInv_bank());
-			pst.setString(14, invbean.getInv_awbillno());
-			pst.setString(15, invbean.getInv_awbilldate());
-			pst.setString(16, invbean.getInv_courierchrgs());
-			pst.setString(17, invbean.getInv_deduction());
-			pst.setString(18, invbean.getInv_total());
+			pst.setString(12, invbean.getInv_bankid());
+			pst.setString(13, invbean.getInv_terms());
+			pst.setString(14, invbean.getInv_payment());
+			pst.setString(15, invbean.getInv_awbillno());
+			pst.setString(16, invbean.getInv_awbilldate());
+			pst.setString(17, invbean.getOthercharges());
+			pst.setString(18, invbean.getInv_discount());
+			pst.setString(19, invbean.getInv_total());
 			System.out.println("getInv_total " +invbean.getInv_total());
 			noofrows = pst.executeUpdate();
 			if(noofrows == 1){
@@ -1092,10 +997,9 @@ public class InvoiceDaoImpl implements InvoiceDao {
 		try{			
 			con = DBConnection.getConnection();
 			st = (Statement) con.createStatement();
-			String sql = "SELECT * FROM elpro.tbl_invform form , tbl_inv_dispatchdetails dispatch where form.invno= dispatch.invno and form.invno = '"+invno+"' ";
+			String sql = "SELECT invtype, form.invno, form.invdate, exportersref, expname, tanname, tanaddr, tanattn, tanphone, tanfax, taninvno, customer, custname, custattn, custaddr ,custfax, custphone, consignee, notify, notifyname, notifyattn, notifyaddr, notifyphone, notifyfax,  otherref, buyer, bank, bankname, bankaddr, bankfax, bankbranch, swiftcode, bankphone, vesselno, placeofreciept, AWBillNo, AWBillDate, othercharges, discounts, totamt, ctryoforigin, ctryofdesti, loadingport,  dischargeport, destination, precarriage, dimension, marks, grosswt, netwt, container, noofpackages, packno,terms, payment FROM elpro.tbl_invform form  left outer join tbl_inv_dispatchdetails dispatch on form.invno= dispatch.invno  left outer join tbl_customer cust on cust.custid=form.customer left outer join tbl_tannery tan on tan.tanid = form.expname left outer join tbl_notify notify on notify.notifyid = form.notify left outer join  tbl_bank bank on bank.bankid = form.bank where form.invno = '"+invno+"' ";
 			System.out.println(sql);
-			rs = st.executeQuery(sql);
-			
+			rs = st.executeQuery(sql);			
 			if(rs.next()) {	
 				InvoiceBean editinvformbean = new InvoiceBean();
 				editinvformbean.setInv_invoicetype(rs.getString("invtype"));
@@ -1103,18 +1007,40 @@ public class InvoiceDaoImpl implements InvoiceDao {
 				editinvformbean.setInv_invdate(DateConversion.ConverttoNormalDate(rs.getString("invdate")));
 				System.out.println("DT "+editinvformbean.getInv_invdate());
 				editinvformbean.setInv_expref(rs.getString("exportersref"));
-				editinvformbean.setInv_exporter(rs.getString("expname"));
+				editinvformbean.setInv_exporter(rs.getString("tanname"));
+				editinvformbean.setInv_exporterid(rs.getString("expname"));
+				editinvformbean.setInv_exporteraddress(rs.getString("tanaddr"));
+				editinvformbean.setInv_exporterattn(rs.getString("tanattn"));
+				editinvformbean.setInv_exportertele(rs.getString("tanphone"));
+				editinvformbean.setInv_exporterfax(rs.getString("tanphone"));
 				editinvformbean.setInv_otherref(rs.getString("taninvno"));
-				editinvformbean.setInv_customer(rs.getString("customer"));
+				editinvformbean.setInv_customer(rs.getString("custname"));
+				editinvformbean.setInv_custid(rs.getString("customer"));
+				editinvformbean.setInv_custattn(rs.getString("custattn"));
+				editinvformbean.setInv_custaddr(rs.getString("custaddr"));
+				editinvformbean.setInv_custtele(rs.getString("custphone"));
+				editinvformbean.setInv_custfax(rs.getString("custfax"));
 				editinvformbean.setInv_buyer(rs.getString("consignee"));
-				editinvformbean.setInv_notify(rs.getString("notify"));
-				//editinvformbean.setInv_destination(rs.getString("amount"));
-				//editinvformbean.setInv_endusage(rs.getString("otherref"));
-				//editinvformbean.setInv_paymentterms(rs.getString("buyer"));
+				editinvformbean.setInv_notifyid(rs.getString("notify"));
+				editinvformbean.setInv_notify(rs.getString("notifyname"));
+				editinvformbean.setInv_notifyattn(rs.getString("notifyattn"));
+				editinvformbean.setInv_notifyaddress(rs.getString("notifyaddr"));
+				editinvformbean.setInv_notifytele(rs.getString("notifyphone"));
+				editinvformbean.setInv_notifyfax(rs.getString("notifyfax"));
+				editinvformbean.setInv_vesselno(rs.getString("vesselno"));
+				editinvformbean.setInv_placeofreciept(rs.getString("placeofreciept"));
+				editinvformbean.setInv_awbillno(rs.getString("AWBillNo"));
 				editinvformbean.setInv_awbilldate(DateConversion.ConverttoNormalDate(rs.getString("AWBillDate")));
-				editinvformbean.setInv_bank(rs.getString("bank"));
-				editinvformbean.setInv_courierchrgs(rs.getString("othercharges"));
-				editinvformbean.setInv_deduction(rs.getString("discounts"));
+				editinvformbean.setInv_bank(rs.getString("bankname"));
+				editinvformbean.setInv_bankid(rs.getString("bank"));
+				editinvformbean.setInv_bankacno(rs.getString("bankphone"));
+				editinvformbean.setInv_bankaddress(rs.getString("bankaddr"));
+				editinvformbean.setInv_bankbranch(rs.getString("bankbranch"));
+				editinvformbean.setInv_bankfax(rs.getString("bankfax"));
+				editinvformbean.setInv_bankswiftcode(rs.getString("swiftcode"));
+				
+				editinvformbean.setOthercharges(rs.getString("othercharges"));
+				editinvformbean.setInv_discount(rs.getString("discounts"));
 				editinvformbean.setInv_total(rs.getString("totamt"));
 				editinvformbean.setInv_ctryoforigngoods(rs.getString("ctryoforigin"));
 				editinvformbean.setInv_loadingport(rs.getString("loadingport"));
@@ -1129,6 +1055,8 @@ public class InvoiceDaoImpl implements InvoiceDao {
 				editinvformbean.setInv_precarriageby(rs.getString("container"));
 				editinvformbean.setInv_noofpackages(rs.getString("noofpackages"));
 				editinvformbean.setInv_packno(rs.getString("packno"));
+				editinvformbean.setInv_terms(rs.getString("terms"));
+				editinvformbean.setInv_payment(rs.getString("payment"));
 				
 				editinvformlist.add(editinvformbean);
 				}
@@ -1233,7 +1161,7 @@ public class InvoiceDaoImpl implements InvoiceDao {
 		try{			
 			con = DBConnection.getConnection();
 			st = (Statement) con.createStatement();
-			String sql = "SELECT termname FROM elpro.tbl_terms order by termname";
+			String sql = "SELECT termname FROM elpro.tbl_terms where termname like '%"+term+"%' order by termname ";
 			rs = st.executeQuery(sql);
 			while(rs.next()) {	
 				TermsDetails Invtermbean = new TermsDetails();
@@ -1265,7 +1193,7 @@ public class InvoiceDaoImpl implements InvoiceDao {
 		try{			
 			con = DBConnection.getConnection();
 			st = (Statement) con.createStatement();
-			String sql = "SELECT payname FROM elpro.tbl_payment order by payname";
+			String sql = "SELECT payname FROM elpro.tbl_payment where payname like '%"+term+"%' order by payname";
 			rs = st.executeQuery(sql);
 			while(rs.next()) {	
 				PaymentDetails Invpaytermbean = new PaymentDetails();

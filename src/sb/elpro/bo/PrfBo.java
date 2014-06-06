@@ -16,6 +16,7 @@ import sb.elpro.model.ConsigneeDetails;
 import sb.elpro.model.CustomerDetails;
 import sb.elpro.model.NotifyConsigneeDetails;
 import sb.elpro.model.PaymentDetails;
+import sb.elpro.model.PoJwBean;
 import sb.elpro.model.PrfArticle;
 import sb.elpro.model.ProductDetails;
 import sb.elpro.model.RateDetails;
@@ -127,6 +128,41 @@ public interface PrfBo  {
 	 * etc
 	 */
 	public String getPoJWno()throws Exception;
+	/*
+	 * POJW Save 
+	 * 
+	 */
+	/**  
+	 * (Method description)
+	 * @param
+	 * @return
+	 * etc
+	 */
+	public boolean savePoJwForm(PoJwBean pojw)throws Exception;
+
+	/**  
+	 * (Method description)
+	 * @param
+	 * @return
+	 * etc
+	 */
+	public List<AutoComplete> getShipmentDetails(String term)throws Exception;
+
+	/**  
+	 * (Method description)
+	 * @param
+	 * @return
+	 * etc
+	 */
+	public List<AutoComplete> getPrfSelection()throws Exception;
+
+	/**  
+	 * (Method description)
+	 * @param
+	 * @return
+	 * etc
+	 */
+	public List<AutoComplete> getPrfColormatch()throws Exception;
 	
 
 }

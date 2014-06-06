@@ -20,6 +20,8 @@ import org.apache.struts.action.ActionMapping;
 import sb.elpro.bo.InspectionBo;
 import sb.elpro.bo.InspectionBoImpl;
 import sb.elpro.model.InspectionBean;
+import sb.elpro.model.InspectionGrade;
+import sb.elpro.model.ManualTest;
 import sb.elpro.model.ProductDetails;
 
 /**
@@ -57,7 +59,7 @@ public class InspectionGridAction extends Action{
             	 System.out.println("In INsp test ");
 		             if(oper == null){
 						System.out.println(" In Insp Test Load");
-						List<InspectionBean> testload = inspbo.getInspectionTestDetails(sidx,sord,artid);
+						List<ManualTest> testload = inspbo.getInspectionTestDetails(sidx,sord,artid);
 						int records = testload.size();
 						System.out.println("Reords  "+records);
 							int page = Integer.parseInt(pag);
@@ -82,17 +84,55 @@ public class InspectionGridAction extends Action{
 						System.out.println(jsonobj);		
 						out.println(jsonobj);
 		             }else {
-		            	InspectionBean insptest = new InspectionBean();
-		            	    insptest.setTestid(request.getParameter("testid"));
-		            	 	insptest.setArticleid(request.getParameter("articleid"));
-		            	 	insptest.setColortest(request.getParameter("colortest"));
-		            	 	insptest.setId(request.getParameter("id"));
-		            	 	insptest.setTesttype(request.getParameter("testtype"));
-		            	 	insptest.setTestedpcs(request.getParameter("testedpcs"));
-		            	 	insptest.setResult(request.getParameter("result"));
-		            	 	insptest.setComments(request.getParameter("comments"));
-		            	 	
-		            		if(oper.equalsIgnoreCase("add")){
+		            	ManualTest insptest = new ManualTest();
+		            		insptest.setId(request.getParameter("id"));
+		            		insptest.setTestid(request.getParameter("testid"));
+		            		insptest.setArticleid(request.getParameter("articleid"));
+		            		insptest.setTestcolor(request.getParameter("testcolor"));
+		            		insptest.setContractno(request.getParameter("")); 
+		            		
+		            		insptest.setColortest(request.getParameter("colortest"));
+		            		insptest.setColortested(request.getParameter("colortested"));
+		            		insptest.setColorresult(request.getParameter("colorresult"));
+		            		insptest.setColorcomments(request.getParameter("colorcomments"));
+		            		insptest.setSubtest(request.getParameter("subtest"));
+		            		insptest.setSubtested(request.getParameter("subtested"));
+		            		insptest.setSubresult(request.getParameter("subresult"));
+		            		insptest.setSubcomments(request.getParameter("subcomments"));
+		            		insptest.setTeartest(request.getParameter("teartest"));
+		            		insptest.setTeartested(request.getParameter("teartested"));
+		            		insptest.setTearresult(request.getParameter("tearresult"));
+		            		insptest.setTearcomments(request.getParameter("tearcomments"));
+		            		insptest.setGrainbreaktest(request.getParameter("grainbreaktest"));
+		            		insptest.setGrainbreaktested(request.getParameter("grainbreaktested"));
+		            		insptest.setGrainbreakresult(request.getParameter("grainbreakresult"));
+		            		insptest.setGrainbreakcomments(request.getParameter("grainbreakcomments"));
+		            		insptest.setCrockingwettest(request.getParameter("crockingwettest"));
+		            		insptest.setCrockingwettested(request.getParameter("crockingwettested"));
+		            		insptest.setCrockingwetresult(request.getParameter("crockingwetresult"));
+		            		insptest.setCrockingwetcomments(request.getParameter("crockingwetcomments"));
+		            		insptest.setCrockingdrytest(request.getParameter("crockingdrytest"));
+		            		insptest.setCrockingdrytested(request.getParameter("crockingdrytested"));
+		            		insptest.setCrockingdryresult(request.getParameter("crockingdryresult"));
+		            		insptest.setCrockingdrycomments(request.getParameter("crockingdrycomments"));
+		            		insptest.setFinishadhensiontest(request.getParameter("finishadhensiontest"));
+		            		insptest.setFinishadhensiontested(request.getParameter("finishadhensiontested"));
+		            		insptest.setFinishadhensionresult(request.getParameter("finishadhensionresult"));
+		            		insptest.setFinishadhensioncomments(request.getParameter("finishadhensioncomments"));
+		            		insptest.setFourfoldstest(request.getParameter("fourfoldstest"));
+		            		insptest.setFourfoldstested(request.getParameter("fourfoldstested"));
+		            		insptest.setFourfoldsresult(request.getParameter("fourfoldsresult"));
+		            		insptest.setFourfoldscomments(request.getParameter("fourfoldscomments"));
+		            		insptest.setDyethrutest(request.getParameter("dyethrutest"));
+		            		insptest.setDyethrutested(request.getParameter("dyethrutested"));
+		            		insptest.setDyethruresult(request.getParameter("dyethruresult"));
+		            		insptest.setDyethrucomments(request.getParameter("dyethrucomments"));
+		            		insptest.setOrganoleptictest(request.getParameter("organoleptictest"));
+		            		insptest.setOrganoleptictested(request.getParameter("organoleptictested"));
+		            		insptest.setOrganolepticresult(request.getParameter("organolepticresult"));
+		            		insptest.setOrganolepticcomments(request.getParameter("organolepticcomments"));
+		            		
+		               		if(oper.equalsIgnoreCase("add")){
 		            			System.out.println(" In Article Add");
 								boolean isInspTestAdded = inspbo.getInspectionTestAddDetails(insptest,sidx,sord);
 								if(isInspTestAdded){
@@ -128,7 +168,7 @@ public class InspectionGridAction extends Action{
              		 System.out.println("In INsp GRADING---- ");
 		             if(oper == null){
 						System.out.println(" In Insp Grade Load");
-						List<InspectionBean> gradeload = inspbo.getInspectionGradeDetails(sidx, sord, artid);
+						List<InspectionGrade> gradeload = inspbo.getInspectionGradeDetails(sidx, sord, artid);
 						int records = gradeload.size();
 						System.out.println("Reords  "+records);
 							int page = Integer.parseInt(pag);
@@ -153,17 +193,37 @@ public class InspectionGridAction extends Action{
 						System.out.println(jsonobj);		
 						out.println(jsonobj);
 		             }else {
-		            	 InspectionBean inspgrad = new InspectionBean();
+		            	 InspectionGrade inspgrad = new InspectionGrade();
 		            	 	inspgrad.setId(request.getParameter("id"));
 		            	 	inspgrad.setGradeid(request.getParameter("gradeid"));
-		            	 	inspgrad.setArticleid(request.getParameter("articleid"));
+		            	 	inspgrad.setArtid(request.getParameter("articleid"));
 		            	 	inspgrad.setGradecolor(request.getParameter("gradecolor"));
-		            	 	inspgrad.setGrade(request.getParameter("grade"));
-		            	 	inspgrad.setSkincount(request.getParameter("skincount"));
-		            	 	inspgrad.setPercent(request.getParameter("percent"));
-		            	 	inspgrad.setComment(request.getParameter("comment"));
-		            	 	inspgrad.setGrtotinspected(request.getParameter("grtotinspected"));
-		            	 	
+		            		inspgrad.setGrtotinspected(request.getParameter("grtotinspected"));
+		            	 	inspgrad.setGrade1(request.getParameter("grade1"));
+		            	 	inspgrad.setSkincount1(request.getParameter("skincount1"));
+		            	 	inspgrad.setPercent1(request.getParameter("percent1"));
+		            	 	inspgrad.setComment1(request.getParameter("comment1"));
+		            		inspgrad.setGrade2(request.getParameter("grade2"));
+		            	 	inspgrad.setSkincount2(request.getParameter("skincount2"));
+		            	 	inspgrad.setPercent2(request.getParameter("percent2"));
+		            	 	inspgrad.setComment2(request.getParameter("comment2"));
+		            		inspgrad.setGrade3(request.getParameter("grade3"));
+		            	 	inspgrad.setSkincount3(request.getParameter("skincount3"));
+		            	 	inspgrad.setPercent3(request.getParameter("percent3"));
+		            	 	inspgrad.setComment3(request.getParameter("comment3"));
+		            		inspgrad.setGrade4(request.getParameter("grade4"));
+		            	 	inspgrad.setSkincount4(request.getParameter("skincount4"));
+		            	 	inspgrad.setPercent4(request.getParameter("percent4"));
+		            	 	inspgrad.setComment4(request.getParameter("comment4"));
+		            		inspgrad.setGrade5(request.getParameter("grade5"));
+		            	 	inspgrad.setSkincount5(request.getParameter("skincount5"));
+		            	 	inspgrad.setPercent5(request.getParameter("percent5"));
+		            	 	inspgrad.setComment5(request.getParameter("comment5"));
+		            	 	inspgrad.setImprovement(request.getParameter("improvement"));
+		            	 	inspgrad.setSkincount6(request.getParameter("skincount6"));
+		            	 	inspgrad.setPercent6(request.getParameter("percent6"));
+		            	 	inspgrad.setComment6(request.getParameter("comment6"));
+		            	
 		            		if(oper.equalsIgnoreCase("add")){
 		            			System.out.println(" In Grading Add");
 								boolean isInspGradAdded = inspbo.getInspectionGradeAddDetails(inspgrad,sidx,sord);

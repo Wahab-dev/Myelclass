@@ -77,6 +77,11 @@ public class ArticleDetails implements Serializable {
 	private String colorothername;
 	private String colorrefno;
 	
+	//Commission Details 
+	private String commission;
+	private String othercommission;
+	
+	
 	
 	/**
 	 * @return the colormatch
@@ -739,6 +744,30 @@ public class ArticleDetails implements Serializable {
 	 */
 	public void setColorrefno(String colorrefno) {
 		this.colorrefno = colorrefno;
+	}
+	/**
+	 * @return the othercommission
+	 */
+	public String getOthercommission() {
+		return othercommission;
+	}
+	/**
+	 * @param othercommission the othercommission to set
+	 */
+	public void setOthercommission(String othercommission) {
+		this.othercommission = othercommission;
+	}
+	/**
+	 * @return the commission
+	 */
+	public String getCommission() {
+		return commission;
+	}
+	/**
+	 * @param commission the commission to set
+	 */
+	public void setCommission(String commission) {
+		this.commission = commission;
 	}
 		
 

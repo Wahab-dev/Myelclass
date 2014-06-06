@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=utf-8"
+    pageEncoding="UTF-8"%>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="h"%>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="b"%>
 <%@ taglib uri="http://struts.apache.org/tags-logic-el" prefix="l"%>
@@ -16,7 +16,7 @@
 </style>	
 <script src="js/jquery-1.9.1.js"></script>
 <script src="js/jquery-ui.js"></script>
-<link rel="stylesheet" type="text/css" media="screen" href="css/pepper-grinder/jquery-ui-1.10.3.custom.css" />
+<link rel="stylesheet" type="text/css" media="screen" href="css/redmond/jquery-ui-1.10.3.custom.css" />
 <link rel="stylesheet" type="text/css" media="screen" href="css/ui.jqgrid.css" />
 <link rel="stylesheet" type="text/css" media="screen" href="css/jquerywidgetstyle.css" />
 
@@ -37,6 +37,7 @@ $(function() {
 		 heightStyle: "content"
 	});
 });
+
 </script>
 </head>
 <body>
@@ -48,7 +49,7 @@ $(function() {
 			  <h3>Samples </h3>
 			        <ul>
 							 <li> <h:link action='/loadSrf' scope="request">SrfScreen</h:link></li>
-							<li> <h:link action='/gotoSampleTracking'>Sample Tacking</h:link></li>
+							<li> <h:link action='/gotoSampleTracking'>Sample Tracking</h:link></li>
 							<li> <h:link action='/gotoSampleInvoice'>Sample Invoice Screen</h:link></li>
 							  <li> <h:link action='/sit'>Sample Invoice Tracking</h:link></li>
 							 <li> <h:link action='/gotoSampleDebit'>Sample Debit</h:link></li>
@@ -86,7 +87,8 @@ $(function() {
 <div>
 <h:form action="/Debit" focus="debitno" method="post" onreset=""> 	
 			<td >Welcome <h:text property="userinsession" styleId="userinsession" value="${user.name}" readonly="true" ></h:text></td >
-   			<td><h:text property="debactionform" styleId="debactionform" value="${debactionform}" readonly="true" ></h:text></td>
+   			<td><h:text property="debactionform" styleId="debactionform" value="${debitactionform}" readonly="true" ></h:text></td>
+   			<td><h:text property="invnoforedit" styleId="invnoforedit" value="${editdebform[0].deb_elclassrefno}" readonly="true" ></h:text></td>
    			<td><h:submit property="debitaction" value="Logout"></h:submit></td> 
 	<table style="border-width: medium; border-style: solid;"> 
     	<tr>
@@ -98,13 +100,14 @@ $(function() {
         				<td>Tanner  :</td>
         				<td><h:text property="deb_exporter" size="41" styleId="deb_exporter" value="${editdebform[0].deb_exporter}"></h:text></td>
         			</tr>
+        			
         			<tr>
         				<td>Address: </td>
-        				<td><h:textarea property="deb_tanaddr" cols="35" rows="4"  styleId="deb_tanaddr"></h:textarea></td>
+        				<td><h:textarea property="deb_tanaddr" cols="35" rows="2"  value="${editdebform[0].deb_tanaddr}" styleId="deb_tanaddr" ></h:textarea></td>
         			</tr>
         			<tr>
         				<td>Telephone : </td>
-        				<td><h:text property="deb_tantelephone" size="41" styleId="deb_tantelephone"> </h:text></td>
+        				<td><h:text property="deb_tantelephone" size="41"  value="${editdebform[0].deb_tantelephone}" styleId="deb_tantelephone"> </h:text></td>
         			</tr>
         		</table>
       		 </fieldset>
@@ -116,6 +119,10 @@ $(function() {
 		    		<tr>
         				<td>Debit No: </td>
         				<td><h:text property="deb_debitno" size="41" styleId="deb_debitno" value="${editdebform[0].deb_debitno}"></h:text></td>
+        			</tr>
+        			<tr>
+        				<td></td>
+        				<td><h:hidden property="deb_exporterid"  styleId="deb_exporterid"   value="${editdebform[0].deb_exporterid}"></h:hidden></td>
         			</tr>
 		    		<tr>
 		    			<td>Debit Date:</td>
@@ -143,8 +150,12 @@ $(function() {
 		    <td>
 		    <table>
 		    	<tr>
+		    		<td>Ct No : </td>
+		    		<td><h:text property="deb_contractno" size="41" styleId="deb_contractno" styleClass="evntxchngerate"  value="${editdebform[0].deb_contractno }"> </h:text></td>
+		    	</tr>
+		    	<tr>
 	    			<td>Exchange Rate:</td>
-	    			<td><h:text property="deb_exchangerate" size="41" styleId="deb_exchangerate" styleClass="evntxchngerate"  value="${editdebform[0].deb_exchangerate }"> </h:text></td>
+	    			<td><h:text property="deb_exchangerate" size="41" styleId="deb_exchangerate" styleClass="evntxchngerate" value="${editdebform[0].deb_exchangerate}"> </h:text></td>
 		    	</tr>
 		    	<tr>
 	    			<td>Commission : </td>
@@ -168,15 +179,19 @@ $(function() {
 		    	</tr>
 		    	<tr>
 	    			<td></td>
-	    			<td><input type="hidden" id="deb_tc" size="41" placeholder="tc values" ></input></td>
+	    			<td><input type="text" id="deb_tc" size="41" placeholder="tc values" ></input></td>
 		    	</tr>
 		    </table>
       		</td>
 		    <td>
 		    <table>
 		    	<tr>
-		    		<td></td>
-		    		<td> <input type="hidden" id="deb_ctno" size="41" placeholder="ct no" ></input></td>
+		    		<td>Inv Dt: </td>
+		    		<td><h:text property="deb_invdate" size="41" styleId="deb_invdate" value="${editdebform[0].deb_invdate }"> </h:text></td>
+		    	</tr>
+		    	<tr>
+		    		<td>Other Commssion: </td>
+		    		<td><h:text property="deb_othercommission" size="41" styleId="deb_othercommission" value="${editdebform[0].deb_othercommission }"> </h:text></td>
 		    	</tr>
 		    	<tr>
 		    		<td>Commission in INR:</td>
@@ -202,6 +217,12 @@ $(function() {
 			</td>
 	  	</tr>
 	  	<tr>
+	  		<td></td>
+	  		<td>
+	  			<h:text property="debamtinwords" styleId="debamtinwords" value="${editdebform[0].debamtinwords }"/>
+	  		</td>
+	  	</tr>
+	  	<tr>
 		    <td>
 		    	<h:submit property="debitaction" value="Save" styleId="Btndebitsave" styleClass="myPrintButton" ></h:submit>
 		    	<input type="button" disabled="disabled" id="tcbutton" value="TC Button" ></input> </td>
@@ -211,41 +232,112 @@ $(function() {
   		</tr>
 	</table>
 	
-	
+	</h:form>
 <!-- TC DEBIT NOTE  Dialog  -->	
 	<div id="tcdebit" title="TC Debit Note" class="tcform">
- 		<h:form styleId="tcdebitform" action="/Debit.do" method="POST" onreset=""> 
+ 		<h:form styleId="tcdebitform" action="/Debit.do" method="POST"> 
  			<table style="border-width: medium;">
     			<tr>
 		   	 		<td>
 		    			<fieldset>         
-        				<legend></legend> 
-        					Tcdebit No: <h:text property="tcdeb_tcdebitno" styleId="tcdeb_tcdebitno" ></h:text><br/>
-        					<br/>Tanner  : <h:text property="tcdeb_exporter" styleId="tcdeb_exporter" ></h:text><br/>        	 					
-         					<br/>Address: <h:textarea property="tcdeb_tanaddr" cols="30" rows="2" styleId="tcdeb_tanaddr"></h:textarea><br/>
-        					<br/>Telephone : <h:text property="tcdeb_tantelephone" styleId="tcdeb_tantelephone"> </h:text><br/>
-							
-      		  			</fieldset>
+        				<legend>Tannery Details</legend> 
+        				<table>
+        					<tr>
+        						<td>Tanner  :</td>
+        						<td><h:text property="tcdeb_exporter" styleId="tcdeb_exporter" size="32" ></h:text><br/></td>
+        						<td></td>
+        					</tr>
+        					<tr>
+        						<td>Address:</td>
+        						<td> <h:textarea property="tcdeb_tanaddr" cols="30" rows="2" styleId="tcdeb_tanaddr"><br/></h:textarea></td>
+        						<td></td>
+        					</tr>
+        					<tr>
+        						<td>Telephone:</td>
+        						<td><h:text property="tcdeb_tantelephone" styleId="tcdeb_tantelephone" size="32"><br/> </h:text></td>
+        						<td></td>
+        					</tr>
+        				
+        				</table>
+      		  		</fieldset>
 		    		</td>
 		    		<td>
 		    		<fieldset>  
-		    			<legend></legend> 
-        					<br/>TcDebit Date: <h:text property="tcdeb_tcdebitdate" styleId="tcdeb_tcdebitdate" styleClass="dtdebit"></h:text><br/>
-        					<br/>Tanner Invoice No: <h:text property="tcdeb_taninvno" styleId="tcdeb_taninvno" ></h:text><br/>              	 					
-         					<br/>elclass ref no : <h:text property="tcdeb_elclassrefno" styleId="tcdeb_elclassrefno" ></h:text><br/>
-         					<br/>Exchange Rate: <h:text property="tcdeb_exchangerate" styleId="tcdeb_exchangerate" > </h:text><br/>
-        			</fieldset>		
+		    			<legend>TC Debit Details</legend> 
+		    			<table>
+        					<tr>
+        						<td>Tcdebit No  :</td>
+        						<td><h:text property="tcdeb_tcdebitno" styleId="tcdeb_tcdebitno" size="28" ></h:text><br/></td>
+        						<td></td>
+        					</tr>
+        					<tr>
+        						<td>TcDebit Date:</td>
+        						<td> <h:text property="tcdeb_tcdebitdate" styleId="tcdeb_tcdebitdate" size="32" styleClass="dtdebit"></h:text></td>
+        						<td></td>
+        					</tr>
+        					<tr>
+        						<td>Tanner Inv No:</td>
+        						<td><h:text property="tcdeb_taninvno" styleId="tcdeb_taninvno" size="28" ></h:text></td>
+        						<td></td>
+        					</tr>
+        					<tr>
+        						<td>elclass ref no:</td>
+        						<td><h:text property="tcdeb_elclassrefno" styleId="tcdeb_elclassrefno" size="28"></h:text></td>
+        						<td></td>
+        					</tr>
+        					
+        				</table>
+      		  		</fieldset>		
 					</td>
   			    </tr>
 	  			<tr>
 		    		<td>
-				    	
-						<br/>TC :  <h:text property="tcdeb_tcamt" styleId="tcdeb_tcamt"> </h:text>  <br/>  
-						<br/>Rate: <h:text property="tcdeb_rate" styleId="tcdeb_rate"> </h:text><br/>
+				    <fieldset>  
+		    		<legend>Invoice Details</legend> 
+		    		 <table>
+        				<tr>
+        					<td>TC :</td>
+        					<td> <h:text property="tcdeb_tcamt" styleId="tcdeb_tcamt"> </h:text> </td>
+						</tr>  
+						<tr>
+        					<td>Rate: </td>
+        					<td><h:text property="tcdeb_rate" styleId="tcdeb_rate"> </h:text> </td>
+						</tr>  
+						<tr>
+        					<td>Exchange Rate:</td>
+        					<td> <h:text property="tcdeb_tcamt" styleId="tcdeb_tcamt"> </h:text> </td>
+						</tr>  
+						<tr>
+        					<td>Invoice Amount:: </td>
+        					<td><h:text property="tcdeb_rate" styleId="tcdeb_rate"> </h:text> </td>
+						</tr>  
+					</table>
+					</fieldset>	
+		    			<%-- <br/>Quantity :  <h:text property="tcdeb_totalquantity" styleId="tcdeb_totalquantity"> </h:text>  <br/>
+				    	<br/>TC Amount in Rs: <h:text property="tcdeb_elclassamtinrs" styleId="tcdeb_elclassamtinrs"> </h:text><br/> --%>
 					</td>
-		    		<td>
-		    			<br/>Quantity :  <h:text property="tcdeb_totalquantity" styleId="tcdeb_totalquantity"> </h:text>  <br/>
-				    	<br/>TC Amount in Rs: <h:text property="tcdeb_elclassamtinrs" styleId="tcdeb_elclassamtinrs"> </h:text><br/>
+					<td>
+					<fieldset>  
+		    		<legend>TC Details</legend> 
+		    		 <table>
+        				<tr>
+        					<td>TC :</td>
+        					<td> <h:text property="tcdeb_tcamt" styleId="tcdeb_tcamt"> </h:text> </td>
+						</tr>  
+						<tr>
+        					<td>Rate: </td>
+        					<td><h:text property="tcdeb_rate" styleId="tcdeb_rate"> </h:text> </td>
+						</tr>  
+						<tr>
+        					<td>Exchange Rate:</td>
+        					<td> <h:text property="tcdeb_tcamt" styleId="tcdeb_tcamt"> </h:text> </td>
+						</tr>  
+						<tr>
+        					<td>Invoice Amount:: </td>
+        					<td><h:text property="tcdeb_rate" styleId="tcdeb_rate"> </h:text> </td>
+						</tr>  
+					</table>
+					</fieldset>	
 					</td>
 				</tr>
 				<%-- <tr>
@@ -260,7 +352,7 @@ $(function() {
  </div>
  
  
-</h:form>
+
 </div>
 </body>
 </html>

@@ -5,6 +5,8 @@ package sb.elpro.bo;
 
 import java.util.List;
 import sb.elpro.model.InspectionBean;
+import sb.elpro.model.InspectionGrade;
+import sb.elpro.model.ManualTest;
 import sb.elpro.model.ProductDetails;
 import sb.elpro.model.QualityCtrlrDetails;
 
@@ -50,7 +52,7 @@ public interface InspectionBo {
 	 * etc
 	 */
 	//Manual Test 
-	public List<InspectionBean> getInspectionTestDetails(String sidx, String sord, String artid)throws Exception;
+	public List<ManualTest> getInspectionTestDetails(String sidx, String sord, String artid)throws Exception;
 	
 	
 	/**
@@ -59,7 +61,7 @@ public interface InspectionBo {
 	 * @return 
 	 * etc
 	 */
-	public boolean getInspectionTestAddDetails(InspectionBean insptest, String sidx, String sord)throws Exception;
+	public boolean getInspectionTestAddDetails(ManualTest insptest, String sidx, String sord)throws Exception;
 
 	/**
 	 * Method to Return 
@@ -67,7 +69,7 @@ public interface InspectionBo {
 	 * @return 
 	 * etc
 	 */
-	public boolean getInspectionTesEditDetails(InspectionBean insptest, String sidx, String sord)throws Exception;
+	public boolean getInspectionTesEditDetails(ManualTest insptest, String sidx, String sord)throws Exception;
 
 	/**
 	 * Method to Return 
@@ -75,7 +77,7 @@ public interface InspectionBo {
 	 * @return 
 	 * etc
 	 */
-	public boolean getInspectionTesDelDetails(InspectionBean insptest,
+	public boolean getInspectionTesDelDetails(ManualTest insptest,
 			String sidx, String sord)throws Exception;
 
 	/**
@@ -85,7 +87,7 @@ public interface InspectionBo {
 	 * etc
 	 */
 	//Grading test  
-	public List<InspectionBean> getInspectionGradeDetails(String sidx,
+	public List<InspectionGrade> getInspectionGradeDetails(String sidx,
 			String sord, String artid)throws Exception;
 	
 	/**
@@ -94,7 +96,7 @@ public interface InspectionBo {
 	 * @return 
 	 * etc
 	 */
-	public boolean getInspectionGradeAddDetails(InspectionBean inspgrad,
+	public boolean getInspectionGradeAddDetails(InspectionGrade inspgrad,
 			String sidx, String sord)throws Exception;
 
 	/**
@@ -103,7 +105,7 @@ public interface InspectionBo {
 	 * @return 
 	 * etc
 	 */
-	public boolean getInspectionGradEditDetails(InspectionBean inspgrad,
+	public boolean getInspectionGradEditDetails(InspectionGrade inspgrad,
 			String sidx, String sord)throws Exception;
 
 	/**
@@ -112,7 +114,7 @@ public interface InspectionBo {
 	 * @return 
 	 * etc
 	 */
-	public boolean getInspectionGradeDelDetails(InspectionBean inspgrad,
+	public boolean getInspectionGradeDelDetails(InspectionGrade inspgrad,
 			String sidx, String sord)throws Exception;
 
 	/**

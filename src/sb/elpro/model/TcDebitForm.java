@@ -21,15 +21,17 @@ public class TcDebitForm implements Serializable {
 	private String tcdeb_tanaddr;
 	private String tcdeb_tantelephone;
 	private String tcdeb_tcdebitdate;
+	private String tcdeb_ctno;
 	private String tcdeb_taninvno;
 	private String tcdeb_elclassrefno;
 	private String tcdeb_exchangerate;
-	private String tcdeb_commission1;
+	private String tcdeb_commission;
 	private String tcdeb_rate;
 	private String tcdeb_totalquantity;
 	private String tcdeb_invoiceamt;
 	private String tcdeb_elclassamt;
 	private String tcdeb_elclassamtinrs;
+	private String tcdeb_tcamt;
 	/**
 	 * @return the tcdeb_tcdebitno
 	 */
@@ -126,21 +128,7 @@ public class TcDebitForm implements Serializable {
 	public void setTcdeb_exchangerate(String tcdeb_exchangerate) {
 		this.tcdeb_exchangerate = tcdeb_exchangerate;
 	}
-	/**
-	 * @return the tcdeb_commission1
-	 */
-	public String getTcdeb_commission1() {
-		return tcdeb_commission1;
-	}
-	/**
-	 * @param tcdeb_commission1 the tcdeb_commission1 to set
-	 */
-	public void setTcdeb_commission1(String tcdeb_commission1) {
-		this.tcdeb_commission1 = tcdeb_commission1;
-	}
-	/**
-	 * @return the tcdeb_rate
-	 */
+	
 	public String getTcdeb_rate() {
 		return tcdeb_rate;
 	}
@@ -197,6 +185,42 @@ public class TcDebitForm implements Serializable {
 	 */
 	public void setTcdeb_elclassamtinrs(String tcdeb_elclassamtinrs) {
 		this.tcdeb_elclassamtinrs = tcdeb_elclassamtinrs;
+	}
+	/**
+	 * @return the tcdeb_ctno
+	 */
+	public String getTcdeb_ctno() {
+		return tcdeb_ctno;
+	}
+	/**
+	 * @param tcdeb_ctno the tcdeb_ctno to set
+	 */
+	public void setTcdeb_ctno(String tcdeb_ctno) {
+		this.tcdeb_ctno = tcdeb_ctno;
+	}
+	/**
+	 * @return the tcdeb_tcamt
+	 */
+	public String getTcdeb_tcamt() {
+		return tcdeb_tcamt;
+	}
+	/**
+	 * @param tcdeb_tcamt the tcdeb_tcamt to set
+	 */
+	public void setTcdeb_tcamt(String tcdeb_tcamt) {
+		this.tcdeb_tcamt = tcdeb_tcamt;
+	}
+	/**
+	 * @return the tcdeb_commission
+	 */
+	public String getTcdeb_commission() {
+		return tcdeb_commission;
+	}
+	/**
+	 * @param tcdeb_commission the tcdeb_commission to set
+	 */
+	public void setTcdeb_commission(String tcdeb_commission) {
+		this.tcdeb_commission = tcdeb_commission;
 	}
 	
 	

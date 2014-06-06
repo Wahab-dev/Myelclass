@@ -12,6 +12,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import sb.elpro.model.InspectionBean;
+import sb.elpro.model.InspectionGrade;
+import sb.elpro.model.ManualTest;
 import sb.elpro.model.ProductDetails;
 import sb.elpro.model.QualityCtrlrDetails;
 
@@ -35,20 +37,10 @@ public class InspectionDaoImpl implements InspectionDao {
 		try{			
 			con = DBConnection.getConnection();
 			st = (Statement) con.createStatement();
-			//String sql = "SELECT distinct Ctno, Orderdt, pono, inspcdn, articlename, size, substance, selection, selectionpercent, color, quantity, unit, pcs, articletype, articleshfrom  FROM elpro.tbl_prfform prf, elpro.tbl_prf_article article  where prf.Ctno = article.contractno and Ctno like '%"+inspctterm+"%' order by articlename";
 			String sql = "SELECT distinct Ctno, inspcdn FROM elpro.tbl_prfform prf where Ctno like '%"+inspctterm+"%' order by Ctno";
 			rs = st.executeQuery(sql);
 			while(rs.next()) {	
 				ProductDetails inspctbean = new ProductDetails();
-				/*inspctbean.setPrf_articlename(rs.getString("articlename"));
-				inspctbean.setPrf_orderdate(rs.getString("Orderdt"));
-				inspctbean.setPrf_poref(rs.getString("pono"));
-				
-				inspctbean.setLabel(rs.getString("Ctno"));
-				inspctbean.setPrf_size(rs.getString("size"));
-				inspctbean.setPrf_substance(rs.getString("substance"));
-				inspctbean.setPrf_selection(rs.getString("selection"));
-				inspctbean.setPrf_color(rs.getString("color"));*/
 				inspctbean.setLabel(rs.getString("Ctno"));
 				inspctbean.setPrf_inspcdn(rs.getString("inspcdn"));
 				System.out.println("Insp CT  name "+inspctbean.getLabel());
@@ -109,18 +101,16 @@ public class InspectionDaoImpl implements InspectionDao {
 		try{			
 			con = DBConnection.getConnection();
 			st = (Statement) con.createStatement();
-			String sql = "SELECT distinct Ctno, Orderdt, tanneryid, customerid, pono, inspcdn, articlename, size, substance, selection, selectionpercent, color, quantity, unit, pcs, prfarticleid, articletype, articleshfrom  FROM elpro.tbl_prfform prf, elpro.tbl_prf_article article  where prf.Ctno = article.contractno and Ctno like '%"+ctno+"%' order by articlename";
-			//String sql = "SELECT distinct Ctno FROM elpro.tbl_prfform prf where Ctno like '%"+inspctterm+"%' order by articlename";
+			String sql = "SELECT Ctno, Orderdt, tanname, custname, pono, inspcdn, articlename, size, substance, selection, selectionpercent, color, quantity, unit, pcs, prfarticleid, articletype, articleshfrom  FROM  elpro.tbl_prf_article article  left outer join elpro.tbl_prfform prf on prf.Ctno = article.contractno  left outer join elpro.tbl_tannery tan on  tan.tanid = prf.tanneryid  left outer join elpro.tbl_customer cust on  cust.custid = prf.customerid where Ctno like '%"+ctno+"%' order by articlename";
 			rs = st.executeQuery(sql);
 			while(rs.next()) {	
 				String qty =  rs.getString("quantity")+" "+ rs.getString("unit");
-				
 				ProductDetails inspctbean = new ProductDetails();
 				inspctbean.setPrf_articlename(rs.getString("articlename"));
 				inspctbean.setPrf_articleid(rs.getString("prfarticleid"));
 				inspctbean.setPrf_orderdate(rs.getString("Orderdt"));
-				inspctbean.setPrf_tannid(rs.getString("tanneryid"));
-				inspctbean.setPrf_custid(rs.getString("customerid"));
+				inspctbean.setPrf_tannid(rs.getString("tanname"));
+				inspctbean.setPrf_custid(rs.getString("custname"));
 				inspctbean.setPrf_poref(rs.getString("pono"));
 				inspctbean.setPrf_inspcdn(rs.getString("inspcdn"));
 				inspctbean.setPrf_contractno(rs.getString("Ctno"));
@@ -146,29 +136,66 @@ public class InspectionDaoImpl implements InspectionDao {
 	}
 
 	@Override
-	public ArrayList<InspectionBean> getInspTestList(String sidx,
+	public ArrayList<ManualTest> getInspTestList(String sidx,
 			String sord, String artid) throws SQLException {
-		ArrayList<InspectionBean> insptestarray = new ArrayList<InspectionBean>();
+		ArrayList<ManualTest> insptestarray = new ArrayList<ManualTest>();
 		Connection con = null;
 		Statement st = null;
 		ResultSet rs = null;
 		try{			
 			con = DBConnection.getConnection();
 			st = (Statement) con.createStatement();
-			String sql = "SELECT id, testid, testtype,  pcstested, result, comments, articleid, color FROM tbl_insptestdetails where articleid = '"+artid+"' order by "+sidx+" "+sord+"";
+			String sql = "SELECT id, testid, articleid, color, contractno, colortest, colorpieces, colorresult, colorcomments, subtest, subpieces, subresult, subcomments, teartest, tearpieces, tearresult, tearcomments, graintest, grainpieces, grainresult, graincomments, crockwettest, crockwetpieces, crockwetresult, crockwetcomments, crockdrytest, crockdrypieces, crockdryresult, crockdrycomments, finishtest, finishpieces, finishresult, fnishcomments, fourtest, fourpieces, fourresult, fourcomments, dyetest, dyepieces, dyeresult, dyecomments, orgtest, orgpieces, orgresult, orgcomments FROM elpro.tbl_insptestdetails where articleid = '"+artid+"' order by "+sidx+" "+sord+"";
 			System.out.println(sql);
 			rs = st.executeQuery(sql);
 			while(rs.next()) {	
-				InspectionBean insptestbean = new InspectionBean();
+				ManualTest insptestbean = new ManualTest();
 			 insptestbean.setId(rs.getString("id"));
-			    insptestbean.setTestid(rs.getString("testid"));
-			    insptestbean.setTesttype(rs.getString("testtype"));
-				insptestbean.setTestedpcs(rs.getString("pcstested"));
-				insptestbean.setResult(rs.getString("result"));
-				insptestbean.setComments(rs.getString("comments"));
-				insptestbean.setArticleid(rs.getString("articleid"));
-				insptestbean.setColortest(rs.getString("color"));
-				insptestarray.add(insptestbean);
+			 insptestbean.setTestid(rs.getString("testid"));
+			 insptestbean.setArticleid(rs.getString("articleid"));
+			 insptestbean.setTestcolor(rs.getString("color"));
+			 insptestbean.setContractno(rs.getString("contractno"));
+			 insptestbean.setColortest(rs.getString("colortest"));
+			 insptestbean.setColortested(rs.getString("colorpieces"));
+			 insptestbean.setColorresult(rs.getString("colorresult"));
+			 insptestbean.setColorcomments(rs.getString("colorcomments"));
+			 insptestbean.setSubtest(rs.getString("subtest"));
+			 insptestbean.setSubtested(rs.getString("subpieces"));
+			 insptestbean.setSubresult(rs.getString("subresult"));
+			 insptestbean.setSubcomments(rs.getString("subcomments"));
+			 insptestbean.setTeartest(rs.getString("teartest"));
+			 insptestbean.setTeartested(rs.getString("tearpieces"));
+			 insptestbean.setTearresult(rs.getString("tearresult"));
+			 insptestbean.setTearcomments(rs.getString("tearcomments"));
+			 insptestbean.setGrainbreaktest(rs.getString("graintest"));
+			 insptestbean.setGrainbreaktested(rs.getString("grainpieces"));
+			 insptestbean.setGrainbreakresult(rs.getString("grainresult"));
+			 insptestbean.setGrainbreakcomments(rs.getString("graincomments"));
+			 insptestbean.setCrockingwettest(rs.getString("crockwettest"));	
+			 insptestbean.setCrockingwettested(rs.getString("crockwetpieces"));
+			 insptestbean.setCrockingwetresult(rs.getString("crockwetresult"));
+			 insptestbean.setCrockingwetcomments(rs.getString("crockwetcomments"));
+			 insptestbean.setCrockingdrytest(rs.getString("crockdrytest"));
+			 insptestbean.setCrockingdrytested(rs.getString("crockdrypieces"));
+			 insptestbean.setCrockingdryresult(rs.getString("crockdryresult"));
+			 insptestbean.setCrockingdrycomments(rs.getString("crockdrycomments"));
+			 insptestbean.setFinishadhensiontest(rs.getString("finishtest"));
+			 insptestbean.setFinishadhensiontested(rs.getString("finishpieces"));
+			 insptestbean.setFinishadhensionresult(rs.getString("finishresult"));
+			 insptestbean.setFinishadhensioncomments(rs.getString("fnishcomments"));
+			 insptestbean.setFourfoldstest(rs.getString("fourtest"));
+			 insptestbean.setFourfoldstested(rs.getString("fourpieces"));
+			 insptestbean.setFourfoldsresult(rs.getString("fourresult"));
+			 insptestbean.setFourfoldscomments(rs.getString("fourcomments"));
+			 insptestbean.setDyethrutest(rs.getString("dyetest"));
+			 insptestbean.setDyethrutested(rs.getString("dyepieces"));
+			 insptestbean.setDyethruresult(rs.getString("dyeresult"));
+			 insptestbean.setDyethrucomments(rs.getString("dyecomments"));
+			 insptestbean.setOrganoleptictest(rs.getString("orgtest"));
+			 insptestbean.setOrganoleptictested(rs.getString("orgpieces"));
+			 insptestbean.setOrganolepticresult(rs.getString("orgresult"));
+			 insptestbean.setOrganolepticcomments(rs.getString("orgcomments"));
+			 insptestarray.add(insptestbean);
 			}
 		}catch(Exception e){
 				e.printStackTrace();
@@ -182,7 +209,7 @@ public class InspectionDaoImpl implements InspectionDao {
 		}
 
 	@Override
-	public boolean getInspTestAddList(InspectionBean insptest, String sidx,
+	public boolean getInspTestAddList(ManualTest insptest, String sidx,
 			String sord) throws SQLException {
 		Connection con = null;
 		PreparedStatement pst = null;
@@ -190,20 +217,58 @@ public class InspectionDaoImpl implements InspectionDao {
 		boolean isadded = true;
 		try{			
 			con = DBConnection.getConnection();
-			StringBuffer sql_saveinspTest = new StringBuffer("insert into tbl_insptestdetails (testid, articleid, color, testtype, pcstested, result, comments)");
-			sql_saveinspTest.append("values (?,?,?,?,?,?,?)");
+			StringBuffer sql_saveinspTest = new StringBuffer("insert into tbl_insptestdetails (testid, articleid, color, contractno, colortest, colorpieces, colorresult, colorcomments, subtest, subpieces, subresult, subcomments, teartest, tearpieces,tearresult ,tearcomments , graintest, grainpieces, grainresult,graincomments ,crockwettest ,crockwetpieces , crockwetresult, crockwetcomments, crockdrytest, crockdrypieces, crockdryresult, crockdrycomments, finishtest, finishpieces,finishresult , fnishcomments, fourtest, fourpieces, fourresult, fourcomments, dyetest, dyepieces, dyeresult, dyecomments, orgtest,orgpieces ,orgresult , orgcomments)");
+			sql_saveinspTest.append("values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
 			String sqlquery_saveinspTest = sql_saveinspTest.toString();
 			
 			pst = (PreparedStatement) con.prepareStatement(sqlquery_saveinspTest);
 			pst.setString(1, insptest.getTestid());
 			pst.setString(2, insptest.getArticleid());
-			pst.setString(3, insptest.getColortest());
-			pst.setString(4, insptest.getTesttype());
-			pst.setString(5, insptest.getTestedpcs());
-			pst.setString(6, insptest.getResult());
-			pst.setString(7, insptest.getComments());
+			pst.setString(3, insptest.getTestcolor());
+			pst.setString(4, insptest.getContractno());
+			pst.setString(5, insptest.getColortest());
+			pst.setString(6, insptest.getColortested	());
+			pst.setString(7, insptest.getColorresult());
+			pst.setString(8, insptest.getColorcomments());
+			pst.setString(9, insptest.getSubtest());
+			pst.setString(10, insptest.getSubtested());
+			pst.setString(11, insptest.getSubresult());
+			pst.setString(12, insptest.getSubcomments());
+			pst.setString(13, insptest.getTeartest());
+			pst.setString(14, insptest.getTeartested());
+			pst.setString(15, insptest.getTearresult());
+			pst.setString(16, insptest.getTearcomments());
+			pst.setString(17, insptest.getGrainbreaktest());
+			pst.setString(18, insptest.getGrainbreaktested());
+			pst.setString(19, insptest.getGrainbreakresult());
+			pst.setString(20, insptest.getGrainbreakcomments());
+			pst.setString(21, insptest.getCrockingwettest());	
+			pst.setString(22, insptest.getCrockingwettested());
+			pst.setString(23, insptest.getCrockingwetresult());
+			pst.setString(24, insptest.getCrockingwetcomments());
+			pst.setString(25, insptest.getCrockingdrytest());
+			pst.setString(26, insptest.getCrockingdrytested());
+			pst.setString(27, insptest.getCrockingdryresult());
+			pst.setString(28, insptest.getCrockingdrycomments());
+			pst.setString(29, insptest.getFinishadhensiontest());
+			pst.setString(30, insptest.getFinishadhensiontested());
+			pst.setString(31, insptest.getFinishadhensionresult());
+			pst.setString(32, insptest.getFinishadhensioncomments());
+			pst.setString(33, insptest.getFourfoldstest());
+			pst.setString(34, insptest.getFourfoldstested());
+			pst.setString(35, insptest.getFourfoldsresult());
+			pst.setString(36, insptest.getFourfoldscomments());
+			pst.setString(37, insptest.getDyethrutest());
+			pst.setString(38, insptest.getDyethrutested());
+			pst.setString(39, insptest.getDyethruresult());
+			pst.setString(40, insptest.getDyethrucomments());
+			pst.setString(41, insptest.getOrganoleptictest());
+			pst.setString(42, insptest.getOrganoleptictested());
+			pst.setString(43, insptest.getOrganolepticresult());
+			pst.setString(44, insptest.getOrganolepticcomments());
+			//pst.setString(45, insptest.get);
 			
-			System.out.println("getComments " +insptest.getComments());
+			System.out.println("getTestid " +insptest.getTestid());
 			noofrows = pst.executeUpdate();
 			
 			System.out.println("Sucessfully inserted the record.." + noofrows);
@@ -219,26 +284,63 @@ public class InspectionDaoImpl implements InspectionDao {
 	}
 
 	@Override
-	public boolean getInspTestEditList(InspectionBean insptest,
-			String sidx, String sord) throws SQLException {
+	public boolean getInspTestEditList(ManualTest insptest, String sidx, String sord) throws SQLException {
 		Connection con = null;
 		PreparedStatement pst = null;
 		int noofrows  = 0;
 		boolean isupdate = true;
 		try{			
 			con = DBConnection.getConnection();
-			StringBuffer sql_saveInsptest = new StringBuffer("UPDATE elpro.tbl_insptestdetails SET testid = ? , articleid = ? , color = ? , testtype = ? , pcstested = ? , result = ? , comments = ?  WHERE id = '"+insptest.getId()+"' ");
+			StringBuffer sql_saveInsptest = new StringBuffer("UPDATE elpro.tbl_insptestdetails SET testid = ? , articleid = ? , color = ? , contractno = ? , colortest = ? , colorpieces = ? , colorresult = ?, colorcomments= ?, subtest= ?, subpieces= ?, subresult= ?, subcomments= ?, teartest= ?, tearpieces= ?, tearresult= ?, tearcomments= ?, graintest= ?, grainpieces= ?, grainresult= ?, graincomments= ?, crockwettest= ?, crockwetpieces= ?, crockwetresult= ?, crockwetcomments= ?, crockdrytest= ?, crockdrypieces= ?, crockdryresult= ?, crockdrycomments= ?, finishtest= ?, finishpieces= ?, finishresult= ?, fnishcomments= ?, fourtest = ?, fourpieces =?, fourresult = ?, fourcomments = ?, dyetest= ?, dyepieces= ?, dyeresult= ?, dyecomments= ?, orgtest= ?, orgpieces= ?, orgresult= ?, orgcomments = ?  WHERE id = '"+insptest.getId()+"' ");
 			String sqlquery_saveInsptest = sql_saveInsptest.toString();
 			pst = (PreparedStatement) con.prepareStatement(sqlquery_saveInsptest);
 			pst.setString(1, insptest.getTestid());
 			System.out.println("getTestid " +insptest.getTestid());
 			pst.setString(2, insptest.getArticleid());
-			pst.setString(3, insptest.getColortest());
-			pst.setString(4, insptest.getTesttype());
-			pst.setString(5, insptest.getTestedpcs());
-			pst.setString(6, insptest.getResult());
-			pst.setString(7, insptest.getComments());
+			pst.setString(3, insptest.getTestcolor());
+			pst.setString(4, insptest.getContractno());
+			pst.setString(5, insptest.getColortest());
+			pst.setString(6, insptest.getColortested());
+			pst.setString(7, insptest.getColorresult());
+			pst.setString(8, insptest.getColorcomments());
+			pst.setString(9, insptest.getSubtest());
+			pst.setString(10, insptest.getSubtested());
+			pst.setString(11, insptest.getSubresult());
+			pst.setString(12, insptest.getSubcomments());
+			pst.setString(13, insptest.getTeartest());
+			pst.setString(14, insptest.getTeartested());
+			pst.setString(15, insptest.getTearresult());
+			pst.setString(16, insptest.getTearcomments());
+			pst.setString(17, insptest.getGrainbreaktest());
+			pst.setString(18, insptest.getGrainbreaktested());
+			pst.setString(19, insptest.getGrainbreakresult());
+			pst.setString(20, insptest.getGrainbreakcomments());
+			pst.setString(21, insptest.getCrockingwettest());
+			pst.setString(22, insptest.getCrockingwettested());
+			pst.setString(23, insptest.getCrockingwetresult());
+			pst.setString(24, insptest.getCrockingwetcomments());
+			pst.setString(25, insptest.getCrockingdrytest());
+			pst.setString(26, insptest.getCrockingdrytested());
+			pst.setString(27, insptest.getCrockingdryresult());
+			pst.setString(28, insptest.getCrockingdrycomments());
+			pst.setString(29, insptest.getFinishadhensiontest());
+			pst.setString(30, insptest.getFinishadhensiontested());
+			pst.setString(31, insptest.getFinishadhensionresult());
+			pst.setString(32, insptest.getFinishadhensioncomments());
+			pst.setString(33, insptest.getFourfoldstest());
+			pst.setString(34, insptest.getFourfoldstested());
+			pst.setString(35, insptest.getFourfoldsresult());
+			pst.setString(36, insptest.getFourfoldscomments());
+			pst.setString(37, insptest.getDyethrutest());
+			pst.setString(38, insptest.getDyethrutested());
+			pst.setString(39, insptest.getDyethruresult());
+			pst.setString(40, insptest.getDyethrucomments());
+			pst.setString(41, insptest.getOrganoleptictest());
+			pst.setString(42, insptest.getOrganoleptictested());
+			pst.setString(43, insptest.getOrganolepticresult());
+			pst.setString(44, insptest.getOrganolepticcomments());
 			noofrows = pst.executeUpdate();
+			
 			System.out.println("Sucessfully inserted the record.." + noofrows);
 		}catch(Exception e){
 			e.printStackTrace();
@@ -252,7 +354,7 @@ public class InspectionDaoImpl implements InspectionDao {
 	}
 
 	@Override
-	public boolean getInspTestDelList(InspectionBean insptest,
+	public boolean getInspTestDelList(ManualTest insptest,
 			String sidx, String sord) throws SQLException {
 		Connection con = null;
 		PreparedStatement pst = null;
@@ -279,30 +381,52 @@ public class InspectionDaoImpl implements InspectionDao {
 	}
 
 	@Override
-	public ArrayList<InspectionBean> getInspGradeList(String sidx,
+	public ArrayList<InspectionGrade> getInspGradeList(String sidx,
 			String sord, String artid) throws SQLException {
-		ArrayList<InspectionBean> insptestarray = new ArrayList<InspectionBean>();
+		ArrayList<InspectionGrade> inspgradearray = new ArrayList<InspectionGrade>();
 		Connection con = null;
 		Statement st = null;
 		ResultSet rs = null;
 		try{			
 			con = DBConnection.getConnection();
 			st = (Statement) con.createStatement();
-			String sql = "SELECT id, gradeid, articleid, color, grade, skincount, grtotinspected, percent, comment FROM tbl_inspgradedetails where articleid ='"+artid+"' order by "+sidx+" "+sord+"";
+			String sql = "SELECT id, gradeid, articleid, color, grtotinspected, grade1, skincount1, percent1, comment1, grade2, skincount2, percent2, comment2, grade3, skincount3, percent3, comment3, grade4, skincount4, percent4, comment4, grade5, skincount5, percent5, comment5, improvement, skincount6, percent6, comment6 FROM tbl_inspgradedetails where articleid ='"+artid+"' order by "+sidx+" "+sord+"";
 			System.out.println(sql);
 			rs = st.executeQuery(sql);
 			while(rs.next()) {	
-				InspectionBean insptestbean = new InspectionBean();
-			 insptestbean.setId(rs.getString("id"));
-			    insptestbean.setGradeid(rs.getString("gradeid"));
-				insptestbean.setArticleid(rs.getString("articleid"));
-				insptestbean.setGradecolor(rs.getString("color"));
-				insptestbean.setGrade(rs.getString("grade"));
-				insptestbean.setSkincount(rs.getString("skincount"));
-				insptestbean.setPercent(rs.getString("percent"));
-				insptestbean.setGrtotinspected(rs.getString("grtotinspected"));
-				insptestbean.setComment(rs.getString("comment"));
-				insptestarray.add(insptestbean);
+				InspectionGrade inspgradebean = new InspectionGrade();
+			    inspgradebean.setId(rs.getString("id"));
+			    inspgradebean.setGradeid(rs.getString("gradeid"));
+				inspgradebean.setArtid(rs.getString("articleid"));
+				inspgradebean.setGradecolor(rs.getString("color"));
+				inspgradebean.setGrtotinspected(rs.getString("grtotinspected"));
+				inspgradebean.setGrade1(rs.getString("grade1"));
+				inspgradebean.setSkincount1(rs.getString("skincount1"));
+				inspgradebean.setPercent1(rs.getString("percent1"));
+				inspgradebean.setComment1(rs.getString("comment1"));
+				inspgradebean.setGrade2(rs.getString("grade2"));
+				inspgradebean.setSkincount2(rs.getString("skincount2"));
+				inspgradebean.setPercent2(rs.getString("percent2"));
+				inspgradebean.setComment2(rs.getString("comment2"));
+				inspgradebean.setGrade3(rs.getString("grade3"));
+				inspgradebean.setSkincount3(rs.getString("skincount3"));
+				inspgradebean.setPercent3(rs.getString("percent3"));
+				inspgradebean.setComment3(rs.getString("comment3"));
+				
+				inspgradebean.setGrade4(rs.getString("grade4"));
+				inspgradebean.setSkincount4(rs.getString("skincount4"));
+				inspgradebean.setPercent4(rs.getString("percent4"));
+				inspgradebean.setComment4(rs.getString("comment4"));
+				inspgradebean.setGrade5(rs.getString("grade5"));
+				inspgradebean.setSkincount5(rs.getString("skincount5"));
+				inspgradebean.setPercent5(rs.getString("percent5"));
+				inspgradebean.setComment5(rs.getString("comment5"));
+				
+				inspgradebean.setImprovement(rs.getString("improvement"));
+				inspgradebean.setSkincount6(rs.getString("skincount6"));
+				inspgradebean.setPercent6(rs.getString("percent6"));
+				inspgradebean.setComment6(rs.getString("comment6"));
+				inspgradearray.add(inspgradebean);
 			}
 		}catch(Exception e){
 				e.printStackTrace();
@@ -312,11 +436,11 @@ public class InspectionDaoImpl implements InspectionDao {
 				 st.close();
 				 rs.close();
 		}	
-		return insptestarray;
+		return inspgradearray;
 	}
 
 	@Override
-	public boolean getInspGradeAddList(InspectionBean inspgrad, String sidx,
+	public boolean getInspGradeAddList(InspectionGrade  inspgrad, String sidx,
 			String sord) throws SQLException {
 		Connection con = null;
 		PreparedStatement pst = null;
@@ -324,22 +448,41 @@ public class InspectionDaoImpl implements InspectionDao {
 		boolean isadded = true;
 		try{			
 			con = DBConnection.getConnection();
-			StringBuffer sql_saveinspgrad = new StringBuffer("insert into tbl_inspgradedetails (gradeid, articleid, color, grade, skincount, grtotinspected, percent, comment)");
-			sql_saveinspgrad.append("values (?,?,?,?,?,?,?,?)");
+			StringBuffer sql_saveinspgrad = new StringBuffer("insert into tbl_inspgradedetails (gradeid, articleid, color, grtotinspected, grade1, skincount1, percent1, comment1, grade2, skincount2, percent2, comment2, grade3, skincount3, percent3, comment3, grade4, skincount4, percent4, comment4, grade5, skincount5, percent5, comment5, improvement, skincount6, percent6, comment6)");
+			sql_saveinspgrad.append("values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
 			String sqlquery_saveinspgrad = sql_saveinspgrad.toString();
 			
 			pst = (PreparedStatement) con.prepareStatement(sqlquery_saveinspgrad);
 			pst.setString(1, inspgrad.getGradeid());
 			System.out.println("getGradeid " +inspgrad.getGradeid());
-			pst.setString(2, inspgrad.getArticleid());
+			pst.setString(2, inspgrad.getArtid());
 			pst.setString(3, inspgrad.getGradecolor());
-			pst.setString(4, inspgrad.getGrade());
-			pst.setString(5, inspgrad.getSkincount());
-			pst.setString(6, inspgrad.getGrtotinspected());  
-			pst.setString(7, inspgrad.getPercent());
-			pst.setString(8, inspgrad.getComment());
-			
-			System.out.println("getComment " +inspgrad.getComment());
+			pst.setString(4, inspgrad.getGrtotinspected());  
+			pst.setString(5, inspgrad.getGrade1());
+			pst.setString(6, inspgrad.getSkincount1());
+			pst.setString(7, inspgrad.getPercent1());
+			pst.setString(8, inspgrad.getComment1());
+			pst.setString(9, inspgrad.getGrade2());
+			pst.setString(10, inspgrad.getSkincount2());
+			pst.setString(11, inspgrad.getPercent2());
+			pst.setString(12, inspgrad.getComment2());
+			pst.setString(13, inspgrad.getGrade3());
+			pst.setString(14, inspgrad.getSkincount3());
+			pst.setString(15, inspgrad.getPercent3());
+			pst.setString(16, inspgrad.getComment3());
+			pst.setString(17, inspgrad.getGrade4());
+			pst.setString(18, inspgrad.getSkincount4());
+			pst.setString(19, inspgrad.getPercent4());
+			pst.setString(20, inspgrad.getComment4());
+			pst.setString(21, inspgrad.getGrade5());
+			pst.setString(22, inspgrad.getSkincount5());
+			pst.setString(23, inspgrad.getPercent5());
+			pst.setString(24, inspgrad.getComment5());
+			pst.setString(25, inspgrad.getImprovement());
+			pst.setString(26, inspgrad.getSkincount6());
+			pst.setString(27, inspgrad.getPercent6());
+			pst.setString(28, inspgrad.getComment6());
+			System.out.println("getComment5 " +inspgrad.getComment5());
 			noofrows = pst.executeUpdate();
 			
 			System.out.println("Sucessfully inserted the record.." + noofrows);
@@ -355,7 +498,7 @@ public class InspectionDaoImpl implements InspectionDao {
 	}
 
 	@Override
-	public boolean getInspGradeEditList(InspectionBean inspgrad, String sidx,
+	public boolean getInspGradeEditList(InspectionGrade inspgrad, String sidx,
 			String sord) throws SQLException {
 		Connection con = null;
 		PreparedStatement pst = null;
@@ -363,18 +506,38 @@ public class InspectionDaoImpl implements InspectionDao {
 		boolean isupdate = true;
 		try{			
 			con = DBConnection.getConnection();
-			StringBuffer sql_saveInspgrad = new StringBuffer("UPDATE elpro.tbl_inspgradedetails SET gradeid = ? , articleid = ? , color = ? , grade= ? , skincount = ? , grtotinspected = ? , percent = ? , comment = ?  WHERE id = '"+inspgrad.getId()+"' ");
+			StringBuffer sql_saveInspgrad = new StringBuffer("UPDATE elpro.tbl_inspgradedetails SET gradeid = ? , articleid = ? , color = ? ,grtotinspected = ? , grade1= ? , skincount1 = ? ,  percent1 = ? , comment1 = ?, grade2= ? , skincount2 = ? ,  percent2 = ? , comment2 = ?, grade3= ? , skincount3 = ? ,  percent3 = ? , comment3 = ?, grade4= ? , skincount4 = ? ,  percent4 = ? , comment4 = ?, grade5= ? , skincount5 = ? ,  percent5 = ? , comment5 = ?, improvement= ? , skincount6 = ? ,  percent6 = ? , comment6 = ?  WHERE id = '"+inspgrad.getId()+"' ");
 			String sqlquery_saveInspgrad = sql_saveInspgrad.toString();
 			pst = (PreparedStatement) con.prepareStatement(sqlquery_saveInspgrad);
 			pst.setString(1, inspgrad.getGradeid());
 			System.out.println("getGradeid " +inspgrad.getGradeid());
-			pst.setString(2, inspgrad.getArticleid());
+			pst.setString(2, inspgrad.getArtid());
 			pst.setString(3, inspgrad.getGradecolor());
-			pst.setString(4, inspgrad.getGrade());
-			pst.setString(5, inspgrad.getSkincount());
-			pst.setString(6, inspgrad.getGrtotinspected()); 
-			pst.setString(7, inspgrad.getPercent());
-			pst.setString(8, inspgrad.getComment());
+			pst.setString(4, inspgrad.getGrtotinspected()); 
+			pst.setString(5, inspgrad.getGrade1());
+			pst.setString(6, inspgrad.getSkincount1());
+			pst.setString(7, inspgrad.getPercent1());
+			pst.setString(8, inspgrad.getComment1());
+			pst.setString(9, inspgrad.getGrade2());
+			pst.setString(10, inspgrad.getSkincount2());
+			pst.setString(11, inspgrad.getPercent2());
+			pst.setString(12, inspgrad.getComment2());
+			pst.setString(13, inspgrad.getGrade3());
+			pst.setString(14, inspgrad.getSkincount3());
+			pst.setString(15, inspgrad.getPercent3());
+			pst.setString(16, inspgrad.getComment3());
+			pst.setString(17, inspgrad.getGrade4());
+			pst.setString(18, inspgrad.getSkincount4());
+			pst.setString(19, inspgrad.getPercent4());
+			pst.setString(20, inspgrad.getComment4());
+			pst.setString(21, inspgrad.getGrade5());
+			pst.setString(22, inspgrad.getSkincount5());
+			pst.setString(23, inspgrad.getPercent5());
+			pst.setString(24, inspgrad.getComment5());
+			pst.setString(25, inspgrad.getImprovement());
+			pst.setString(26, inspgrad.getSkincount6());
+			pst.setString(27, inspgrad.getPercent6());
+			pst.setString(28, inspgrad.getComment6());
 			noofrows = pst.executeUpdate();
 			System.out.println("Sucessfully inserted the record.." + noofrows);
 		}catch(Exception e){
@@ -389,7 +552,7 @@ public class InspectionDaoImpl implements InspectionDao {
 	}
 
 	@Override
-	public boolean getInspGradeDelList(InspectionBean inspgrad, String sidx,
+	public boolean getInspGradeDelList(InspectionGrade inspgrad, String sidx,
 			String sord) throws SQLException {
 		Connection con = null;
 		PreparedStatement pst = null;
@@ -579,25 +742,18 @@ public class InspectionDaoImpl implements InspectionDao {
 		boolean isSaved =true;
 		try{
 			con = DBConnection.getConnection();
-			StringBuffer sql_savinspform = new StringBuffer("insert into tbl_inspform ( status, inspdate, qualitycontroller, contractno, articleid, article, color, inspcdn, testid, gradeid, rejectsid, totinspected, inspcomments)");
-			sql_savinspform.append("values (?,?,?,?,?,?,?,?,?,?,?,?,?)");
+			StringBuffer sql_savinspform = new StringBuffer("insert into tbl_inspform (inspdate, qualitycontroller, contractno, articleid, inspcdn, totpassed, inspcomments)");
+			sql_savinspform.append("values (?,?,?,?,?,?,?)");
 			String sqlquery_savinspform = sql_savinspform.toString();
 			pst = (PreparedStatement) con.prepareStatement(sqlquery_savinspform);
-			pst.setString(1, inspbean.getStatus());
-			System.out.println("getStatus " +inspbean.getStatus());
-			pst.setString(2, inspbean.getInspdate());
+			pst.setString(1, inspbean.getInspdate());
 			System.out.println("getInspdate " +inspbean.getInspdate());
-			pst.setString(3, inspbean.getInspqualityctrlr());
-			pst.setString(4, inspbean.getInspContractNo());
-			pst.setString(5, inspbean.getArtidhidden());
-			pst.setString(6, inspbean.getArticle());
-			pst.setString(7, inspbean.getColor());
-			pst.setString(8, inspbean.getInsp_cdn());
-			pst.setString(9, inspbean.getTestid());
-			pst.setString(10, inspbean.getGradeid());
-			pst.setString(11, inspbean.getRejectid());
-			pst.setString(12, inspbean.getTotinspected());
-			pst.setString(13, inspbean.getInspcomments());
+			pst.setString(2, inspbean.getInspqualityctrlr());
+			pst.setString(3, inspbean.getInspContractNo());
+			pst.setString(4, inspbean.getArtidhidden());
+			pst.setString(5, inspbean.getInsp_cdn());
+			pst.setString(6, inspbean.getTotpassed());
+			pst.setString(7, inspbean.getInspcomments());
 			System.out.println("getComments " +inspbean.getComments());
 			noofrows = pst.executeUpdate();
 		System.out.println("Sucessfully inserted the record.." + noofrows);

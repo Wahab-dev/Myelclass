@@ -8,7 +8,6 @@ $(document).ready(function() {
 		var courchrg = $("#saminv_courierchrgs").val();
 		var tot = $("#saminv_total").val();
 		totamt = (parseFloat (tot) - parseFloat (discnt)) + parseFloat (courchrg);
-		alert("totamt"+totamt);
 		$("#saminv_total").val(totamt);
 	});
 	var billInvisInEdit = false; //boolean value need to Check High Priority 
@@ -254,11 +253,11 @@ $(document).ready(function() {
 		          	 $('#saminv_custattn').val(ui.item.attn);
 		          	 $('#saminv_custfax').val(ui.item.fax);
 		          	 $('#saminv_custid').val(ui.item.id);
-		          	 var custname = ui.item.label;
+		          	 var custid = ui.item.id;
 		          	 //Load First Grid Based On Selected Value
 		          	type = $('#saminv_includeSample').val();
-					alert("asd"+type);
-					saminvctgrid.jqGrid('setGridParam',{url:"/Myelclass/sampleInvSelectCtfromCust.do?custname="+custname+"&type="+type+"&action="+"load"}).trigger("reloadGrid");				 
+					
+					saminvctgrid.jqGrid('setGridParam',{url:"/Myelclass/sampleInvSelectCtfromCust.do?custid="+custid+"&type="+type+"&action="+"load"}).trigger("reloadGrid");				 
 				    }
 		  	 });
 function clickheremethod(){
@@ -271,9 +270,9 @@ function clickheremethod(){
 	   }
 	 var itemp = selsamnos.lastIndexOf(",");
 	 var samnoselc = selsamnos.substring(0, itemp);
-	 alert("samnoselc"+samnoselc);
+	 
 	 type = $('#saminv_includeSample').val();
-	 alert("asd"+type);
+	 
 	 sambillgrid.jqGrid('setGridParam',{url:"/Myelclass/sampleInvSelectCtfromCust.do?samno="+samnoselc+"&type="+type+"&action="+"loadsubgrid",page:1});
 	 sambillgrid.jqGrid('setCaption',"Raise Invoice").trigger('reloadGrid');
 	 saminvgrid.jqGrid('setGridParam',{url:"/Myelclass/sampleInvSelectCtfromCust.do?action="+"loadBill&samno="+samnoselc+"&type="+type ,page:1}).trigger('reloadGrid');
@@ -331,7 +330,8 @@ function clickheremethod(){
 			del : false,
 			view: false,
 			search : false,
-			reload: true		
+			reload: true,
+			refreshtext: 'Reload',
 		}).jqGrid('navButtonAdd', '#tbl_saminvpager', {
 		 	   caption:"Click Here",    
 		 	   buttonicon: "ui-icon-print",
@@ -497,7 +497,10 @@ function clickheremethod(){
 			del : false, 
 			view: false, 
 			search : false, 
-			reload: false}, 
+			reload: false,
+			addtext: 'Add', refreshtext: 'Reload',
+			
+	 	}, 
 			{},
 			{
 				/*
@@ -638,17 +641,17 @@ function clickheremethod(){
 							 	dataEvents:  [{
 									type: 'focusout',
 									fn: function(e){
-										alert("IS this Edit BILL Calculation"+billInvisInEdit);
+									
 										if(billInvisInEdit){
-											alert( "WTH"+$("#invqbal").val());
+											
 											//Code for Edit Form Qty Calculation 
 											 var invqbal = parseFloat($("#invqbal").val() - $("#invqshpd").val());
 											 var qbals = invqbal.toFixed(2);
-											 alert(qbals+"Qbalance.. ");
+											
 											 $("#invqbal").val(qbals);
 											 //Rate Calculation
 											 var rate = $("#invrate").val();
-											 alert(rate);
+											
 											 var ratemp = rate.indexOf(' ');
 											 var ratemplast = rate.lastIndexOf(' ');
 											 var rates = rate.substring(ratemp+1, ratemplast);
@@ -657,7 +660,7 @@ function clickheremethod(){
 											 $("#invamt").val(amt);
 										 }else{
 											 var invqbal = parseFloat($("#invqbal").val() - $("#invqshpd").val()).toFixed(2);
-											 alert(invqbal);
+											
 											 $("#invqbal").val(invqbal);
 											 var rate = $("#invrate").val();
 											 var ratemp = rate.indexOf(' ');
@@ -698,8 +701,7 @@ function clickheremethod(){
 	            groupField : ['invno'],
 	            groupOrder : ['desc'] 
 	        },
-	        loadComplete: function () {
-	        	
+	        loadComplete: function () {	        	
 	            var $self = $(this);
 	            var qshpdsum = $self.jqGrid("getCol", "invqshpd", false, "sum");
 	            var amtsum 	 = $self.jqGrid("getCol", "invamt", false, "sum");
@@ -716,7 +718,9 @@ function clickheremethod(){
 				del : true,
 				view: true,
 				search : true,
-				reload: true},
+				reload: true,
+				addtext: 'Add', edittext: 'Edit', deltext: 'Delete', searchtext: 'Search', refreshtext: 'Reload', viewtext:'View'
+				},
 				{	
 					/*
 					 * Edit Method 
@@ -726,7 +730,6 @@ function clickheremethod(){
 					reloadAfterSubmit: true,
 					beforeInitData: function ()
 					{
-						alert(" In B4 Init EDITTTT"+billInvisInEdit);
 						billInvisInEdit = true;
 					},
 					beforeShowForm : function(formID){
@@ -738,7 +741,6 @@ function clickheremethod(){
 						
 						var invqbal = parseFloat( $("#invqshpd").val()) + parseFloat ($("#invqbal").val() );
 						var qbals = invqbal.toFixed(2);
-						alert(qbals+"Qbalance.. ");
 						$("#invqbal").val(qbals);
 						$('#invqshpd').val("");
 					}
@@ -755,7 +757,6 @@ function clickheremethod(){
 					//Add 
 					beforeInitData: function ()
 					{
-						alert(" In B4 Init ADDD"+billInvisInEdit);
 						billInvisInEdit = false;
 					},
 					beforeShowForm : function(formID){
@@ -767,11 +768,9 @@ function clickheremethod(){
 						var selRowData;
 						var rowid = saminvgrid.jqGrid('getGridParam', 'selrow');
 			           	if (rowid === null) {
-			             alert('Please select row');
 			             return;
 						}
 			           	selRowData = saminvgrid.jqGrid('getRowData', rowid);
-			           	alert(selRowData.invno);
 			           	$('#' + 'invctno' + '.FormElement', formID).val(selRowData.invctno);
 			         	$('#' + 'invartid' + '.FormElement', formID).val(selRowData.invartid);
 			            $('#' + 'invartname' + '.FormElement', formID).val(selRowData.invartname);

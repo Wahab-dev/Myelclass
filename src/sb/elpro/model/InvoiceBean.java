@@ -21,17 +21,20 @@ public class InvoiceBean implements Serializable {
 	private String inv_expref;		
 	private String inv_otherref;
 	
-	private String inv_exporter; //Exporter
+	private String inv_exporter; 
+	private String inv_exporterid;//Exporter
 	private String inv_exporterattn;
 	private String inv_exporteraddress;
 	private String inv_exportertele;
 	private String inv_exporterfax;
 	private String inv_notify;  //Notify
+	private String inv_notifyid; 
 	private String inv_notifyattn;
 	private String inv_notifyaddress;
 	private String inv_notifyfax;
 	private String inv_notifytele;
 	private String inv_bank;  //Bank
+	private String inv_bankid;
 	private String inv_bankbranch;
 	private String inv_bankaddress;
 	private String inv_banktele;
@@ -1068,5 +1071,41 @@ public class InvoiceBean implements Serializable {
 	 */
 	public void setInv_includeSample(boolean inv_includeSample) {
 		this.inv_includeSample = inv_includeSample;
+	}
+	/**
+	 * @return the inv_exporterid
+	 */
+	public String getInv_exporterid() {
+		return inv_exporterid;
+	}
+	/**
+	 * @param inv_exporterid the inv_exporterid to set
+	 */
+	public void setInv_exporterid(String inv_exporterid) {
+		this.inv_exporterid = inv_exporterid;
+	}
+	/**
+	 * @return the inv_notifyid
+	 */
+	public String getInv_notifyid() {
+		return inv_notifyid;
+	}
+	/**
+	 * @param inv_notifyid the inv_notifyid to set
+	 */
+	public void setInv_notifyid(String inv_notifyid) {
+		this.inv_notifyid = inv_notifyid;
+	}
+	/**
+	 * @return the inv_bankid
+	 */
+	public String getInv_bankid() {
+		return inv_bankid;
+	}
+	/**
+	 * @param inv_bankid the inv_bankid to set
+	 */
+	public void setInv_bankid(String inv_bankid) {
+		this.inv_bankid = inv_bankid;
 	}
 }

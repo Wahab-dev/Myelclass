@@ -78,6 +78,41 @@ public class SamplePrintAction extends Action{
 	        		}catch (Exception e) {
 	           			e.printStackTrace();
 	        		}
+			}else if (type.equalsIgnoreCase("xlsold")){
+				response.setContentType("application/ms-excel"); 
+				response.setHeader("Content-Disposition", "attachment; filename=SampleTrackingOld.xls");
+				
+				ServletOutputStream output = response.getOutputStream();
+
+		        	JasperReport report = JasperCompileManager.compileReport("C:/Users/meetw_000/Desktop/report/SampleTrack/SampleTrackOld.jrxml");
+		            HashMap<String, Object> params = new HashMap<String, Object>(); 
+		            params.put("Title", "Sample Track");
+		        
+		        	JasperPrint jasperPrint = JasperFillManager.fillReport(report, params, conn);
+		        	  //Excel Converter
+		        	
+		        	JRXlsxExporter excelexporter = new JRXlsxExporter(); // supports jaspersoft 5.5.1 
+		           // JExcelApiExporter excelexporter = new JExcelApiExporter(); // supports jasper Report version
+		   		 
+		    		// Here we assign the parameters jp and baos to the exporter
+		            excelexporter.setParameter(JRXlsExporterParameter.JASPER_PRINT, jasperPrint);
+		            excelexporter.setParameter(JRXlsExporterParameter.OUTPUT_STREAM, output);
+		    	
+		            // Excel specific parameters
+		            excelexporter.setParameter(JRXlsAbstractExporterParameter.IS_ONE_PAGE_PER_SHEET, Boolean.FALSE);
+		            excelexporter.setParameter(JRXlsAbstractExporterParameter.IS_REMOVE_EMPTY_SPACE_BETWEEN_ROWS, Boolean.FALSE);
+		            excelexporter.setParameter(JRXlsAbstractExporterParameter.IS_WHITE_PAGE_BACKGROUND, Boolean.FALSE);
+		            excelexporter.setParameter(JRXlsAbstractExporterParameter.IS_IGNORE_GRAPHICS,Boolean.FALSE);
+		            
+		    		try {
+		    			excelexporter.exportReport();
+		    			
+		    		} catch (JRException e) {
+		    			throw new RuntimeException(e);
+		    		} catch (Exception e) {
+		            e.printStackTrace();
+		        }	
+			
 			}else{
 				response.setContentType("application/ms-excel"); 
 				response.setHeader("Content-Disposition", "attachment; filename=SampleTracking.xls");

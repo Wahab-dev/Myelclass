@@ -21,22 +21,30 @@ $(function() {
 	insptrackgrid.jqGrid({ 
 		datatype: 'json',
         url:"/Myelclass/InspectionTracGridAction.do?action=load", 
-        colNames:['ID','CtNo','Inspn Dt','QC','ArticleID','Article','Color','Inspn Condition','Grade','Tot Inspected','Skin Count','Percentage','Passed','Rejects'],  
+        colNames:['ID','CtNo','Inspn Dt','QC','Article','Color','TestID','GraddeID','Reject ID','Tot inspctd',
+                  'Skin Ct1','Skin Ct2','Skin Ct3','Skin Ct4','Skin Ct5','Skin Ct6','Tot Rejects','Tot passd',
+                  'Insp Comments','Inspn Condition'	],  
     	colModel :[ 
 			{name:'inspid', index:'inspid', align:'center', width:60,  editable:true,  },
 			{name:'inspContractNo', index:'inspContractNo',  width:60, align:'center', editable:true, },
 			{name:'inspdate', index:'inspdate', align:'center',  width:60, editable:true,   },
-			{name:'inspqualityctrlr', index:'inspqualityctrlr', width:80,  align:'center', editable:true, },
-			{name:'articleid', index:'articleid',  align:'center', width:60,  editable:true, },
-			{name:'article', index:'article', align:'center', editable:true,  },
-			{name:'color', index:'color', align:'center', editable:true, },
-			{name:'insp_cdn', index:'insp_cdn', align:'center', editable:true, },
-			{name:'grade', index:'grade', align:'center', editable:true, },
-			{name:'totinspected', index:'totinspected', align:'center', width:60, editable:true, },
-			{name:'skincount', index:'skincount', align:'center', width:60, editable:true, },
-			{name:'percent', index:'percent', align:'center', width:60, editable:true, },
+			{name:'inspqualityctrlr', index:'inspqualityctrlr', width:60,  align:'center', editable:true, },
+			{name:'article', index:'article',  align:'center', width:60,  editable:true, },
+			{name:'color', index:'color', align:'center', width:60, editable:true,  },
+			{name:'testid', index:'testid', align:'center', width:60, editable:true, },
+			{name:'gradeid', index:'gradeid', align:'center', width:50, editable:true, },
+			{name:'rejectid', index:'rejectid', align:'center',width:70,  editable:true, },
+			{name:'rjtotinspected', index:'rjtotinspected', align:'center', width:60, editable:true, },
+			{name:'skincount1', index:'skincount1', align:'center', width:60, editable:true, },
+			{name:'skincount2', index:'skincount2', align:'center', width:60, editable:true, },
+			{name:'skincount3', index:'skincount3', align:'center', width:60, editable:true, },
+			{name:'skincount4', index:'skincount4', align:'center', width:60, editable:true, },
+			{name:'skincount5', index:'skincount5', align:'center', width:60, editable:true, },
+			{name:'skincount6', index:'skincount6', align:'center', width:60, editable:true, },
+			{name:'totrejects', index:'totrejects', align:'center', width:60, editable:true, },
 			{name:'totpassed', index:'totpassed', align:'center', width:60, editable:true, },
-			{name:'totrejects', index:'totrejects', align:'center', width:60, editable:true, }
+			{name:'inspcomments', index:'inspcomments', align:'center', width:60, editable:true, },
+			{name:'insp_cdn', index:'insp_cdn', align:'center', width:60, editable:true, },
     	],
 		jsonReader : {  
 		  	repeatitems:false,
@@ -49,7 +57,7 @@ $(function() {
 		pager: '#insptrackpager',
 		rowNum:20, 
 		rowList:[20,50,60],
-	    loadtext: "Bow Bow........... ",
+	    loadtext: "Bow Bow... ",
 	    height : "auto",
         width: "auto",  
 	    sortname: 'inspContractNo',  
@@ -70,9 +78,7 @@ $(function() {
           $self.jqGrid("footerData", "set", {totinspected: totinspsum});
           $self.jqGrid("footerData", "set", {totpassed: totpasssum}); 
           $self.jqGrid("footerData", "set", {totrejects: totrejsum});
-          
-          
-	    }
+        }
 	 });
 	insptrackgrid.jqGrid('navGrid','#insptrackpager',{
 	 	edit: true,

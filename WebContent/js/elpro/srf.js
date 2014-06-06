@@ -171,7 +171,7 @@ $(document).ready(function() {
 			                    },
 			                    {name:'srf_sizeremarks', index:'sizerem', width:40, align:'center',  editable:true, hidden: true, 
 			        				edittype:'select',
-			        				editoptions:{value:{0: 'Select Size Remarks', F:'F', S:'S', FS:'FS', DB:'Double Butt'}},
+			        				editoptions:{value:{0: 'Select Size Remarks', F:'F', S:'S', FS:'FS', DB:'Double Butt',NA:'NA'}},
 			        				editrules:{edithidden:true},
 			        				formoptions:{rowpos: 4, colpos: 3}, 
 			        			}, 
@@ -179,7 +179,24 @@ $(document).ready(function() {
 			        				formoptions:{rowpos: 5, colpos: 1}, 	
 			                    }, 
 			                    {name:'srf_selection', index:'selection', align:'center', width:80, editable:true, sortable:true, hidden:false, edittype:'select',			                    	
-			      				  editoptions:{value:{0:'Select Selection %',A:'A',AB:'AB',ABC:'ABC',TR:'TR',Available:'Available',TBA:'TBA'}},
+			                    	editoptions: { 
+			              			  dataUrl:'/Myelclass/PrfAutocomplete.do?action=selec',
+			              			  type:"GET",
+			              			  buildSelect: function(data) {
+			              			   	var response = jQuery.parseJSON(data);
+			              			        	var s = '<select style="width: 520px">';
+			              			        	if (response && response.length) {
+			              			            	s += '<option value="0">--- Select Article Type ---</option>';
+			              			  	            for (var i = 0, l=response.length; i<l ; i++) {
+			              			                  var ri = response[i].value;
+			              			               	  s += '<option value="'+ri+'">'+ri+'</option>';
+			              			            	}
+			              			          	}
+			              			       return s + "</select>";
+			              			   },
+			              			 } ,
+			                    	
+			                       //editoptions:{value:{0:'Select Selection %',A:'A',AB:'AB',ABC:'ABC',TR:'TR',Available:'Available',TBA:'TBA'}},
 			      				  formoptions:{rowpos: 5, colpos: 2},
 			    				},  
 			                    {name:'srf_selectionp', index:'selectionp',  align:'center', width:80, editable:true, sortable:true, hidden:true, 
@@ -187,14 +204,14 @@ $(document).ready(function() {
 			    					formoptions:{rowpos: 5, colpos: 3},
 			    				},   
 			                    {name:'srf_qty', index:'quantity', align:'center', width:80, editable:true, sortable:true, hidden:false, 
-			                      editrules:{number:true}, formatter: 'number',  
-			      				  formatoptions: {decimalSeparator: ".", thousandsSeparator: ",", decimalPlaces: 2, defaultValue: '0.0000' },
+			                      editrules:{number:true}, formatter: 'integer',  
+			      				  //formatoptions: {decimalSeparator: ".", thousandsSeparator: ",", decimalPlaces: 2, defaultValue: '0.0000' },
 			      				  formoptions:{rowpos: 6, colpos: 1},
 			                    },  
 			                    {name:'srf_unit', index:'unit' , align:'center', width:80, editable:true, sortable:true, hidden:false, 
 			                    	edittype:'select',
 			      				  editoptions:{
-			      					  value:{0:'Select Quantity Unit',sqft:'sq ft',skins:'skins',Garment:'Garment',NA:'NA'},
+			      					  value:{0:'Select Quantity Unit',skins:'skins',skin:'skin',sqft:'sq ft',Garment:'Garment',NA:'NA'},
 			      					  dataEvents:[{
 			      							type: 'focusout',
 			      							fn: function(e){
@@ -217,8 +234,8 @@ $(document).ready(function() {
 			                    },   
 			                    {name:'srf_ratesign', index:'currency',  align:'center', editable:true, sortable:true, hidden:true, 
 			                    	 edittype:'select',
-			       				     editoptions:{value:{0:'--- Select Currency --- ',$:'$',Rs:'Rs',Euro:'€',NA:' Not Available'}},
-			                    	//   editoptions:{value:  "TBA:TBA;$:$; €:€; NA:NA;"},
+			       				     editoptions:{value:{0:'--- Select Currency --- ',$:'$',Rs:'Rs',Euro:'Euro',NA:' Not Available'}},
+			                    	//   editoptions:{value:  "TBA:TBA;$:$; ï¿½:ï¿½; NA:NA;"},
 			       				     editrules:{edithidden:true},	
 			       				  formoptions:{rowpos: 8, colpos: 1},
 			                    },  
@@ -227,14 +244,29 @@ $(document).ready(function() {
 			                    	 formoptions:{rowpos: 8, colpos: 2},
 			                    },   
 			                    {name:'srf_shipment', index:'shipment',  align:'center', editable:true, sortable:true, hidden:true, 
-			                    	 edittype:'select',
-			       			      editoptions:{value:{0:'--- Select Shipment --- ',Air:'Air',Sea:'Sea',Courier:'Courier',Truck:'Truck',Train:'Train'}},
+			                      edittype:'select',
+			                      editoptions:{value:{0:'--- Select Shipment --- ',Air:'Air',Sea:'Sea',Courier:'Courier',Truck:'Truck',Train:'Train',Fob:'Fob',ExChennai:'Ex Chennai',ExRanipet:'Ex Ranipet',ExFactory:'Ex-Factory',NA:'NA',TBA:'TBA'}},
 			       			      editrules:{edithidden:true},	
 			       			      formoptions:{rowpos: 8, colpos: 3},
 			                    },  
 			                    {name:'srf_colormatch', index:'colormatching', align:'center', editable:true, sortable:true, hidden:true, 
 			                    	 edittype:'select',
-				       			      editoptions:{value:{0:'--- Select colormatching --- ',Normalwhitetubelight:'Normal White Tube Light',NaturalLight:'Natural Light',TL84:'TL 84',TL86:'TL 86',D65:'D 65'}},
+			                    	 editoptions: { 
+			               			  dataUrl:'/Myelclass/PrfAutocomplete.do?action=colormatch',
+			               			  type:"GET",
+			               			  buildSelect: function(data) {
+			               			   	var response = jQuery.parseJSON(data);
+			               			        	var s = '<select style="width: 520px">';
+			               			        	if (response && response.length) {
+			               			            	s += '<option value="0">--- Select Article Type ---</option>';
+			               			  	            for (var i = 0, l=response.length; i<l ; i++) {
+			               			                  var ri = response[i].value;
+			               			               	  s += '<option value="'+ri+'">'+ri+'</option>';
+			               			            	}
+			               			          	}
+			               			       return s + "</select>";
+			               			   },
+			               			 } ,
 				       			      editrules:{edithidden:true},	
 				       			   formoptions:{rowpos: 9, colpos: 1},
 			                    },   
@@ -376,7 +408,10 @@ $(document).ready(function() {
 			
 	//Autocomplete
 	 $('#srf_tanname').autocomplete({
-		 source: function(request, response) {
+		 	/*autoFill: true,
+			mustMatch: true,
+			matchContains: false,*/
+			source: function(request, response) {
 				var param = request.term;  
 			 	$.getJSON("/Myelclass/PrfAutocomplete.do?term="+param+"&action="+"tan",
 					function(result) { 	
@@ -391,18 +426,18 @@ $(document).ready(function() {
 			                       };
 			                     }));//END response
 			                    }
-					 );
-					},
-					select: function( event, ui) { 
-			          	 $('#srf_tanaddr').val(ui.item.addr);
-			          	 $('#srf_tanphone').val(ui.item.phone);
-			          	 $('#srf_tanattn').val(ui.item.attn);
-			          	 $('#srf_tanfax').val(ui.item.fax);
-			          	 $('#srf_tannameid').val(ui.item.id);
-			           } 
+				  );
+			  },
+			  select: function( event, ui) { 
+			        $('#srf_tanaddr').val(ui.item.addr);
+			        $('#srf_tanphone').val(ui.item.phone);
+			        $('#srf_tanattn').val(ui.item.attn);
+			        $('#srf_tanfax').val(ui.item.fax);
+			        $('#srf_tannameid').val(ui.item.id);
+			  } ,
 			}).focus(function(){            
 	            $(this).trigger('keydown.autocomplete');
-	        }); 
+	        }).addClass("ui-corner-all"); 
 		  $('#srf_deliver').autocomplete({
 			 source: function(request, response) {
 				var param = request.term;  

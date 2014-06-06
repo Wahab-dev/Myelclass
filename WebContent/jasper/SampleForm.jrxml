@@ -862,7 +862,7 @@
 	<pageFooter>
 		<band height="354" splitType="Stretch">
 			<frame>
-				<reportElement x="0" y="0" width="555" height="250" uuid="f7e0f84b-ec55-432e-a42a-206a2220937e">
+				<reportElement x="0" y="0" width="555" height="320" uuid="f7e0f84b-ec55-432e-a42a-206a2220937e">
 					<property name="local_mesure_unitx" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.x" value="px"/>
 					<property name="local_mesure_unitheight" value="pixel"/>
@@ -874,11 +874,12 @@
 					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<frame>
-					<reportElement x="0" y="180" width="555" height="60" uuid="d23106ab-aa7c-4da6-afc0-54cf39f13138">
+					<reportElement x="0" y="250" width="555" height="60" uuid="d23106ab-aa7c-4da6-afc0-54cf39f13138">
 						<property name="local_mesure_unitx" value="pixel"/>
 						<property name="local_mesure_unitwidth" value="pixel"/>
 						<property name="local_mesure_unity" value="pixel"/>
 						<property name="com.jaspersoft.studio.unit.x" value="px"/>
+						<property name="com.jaspersoft.studio.unit.y" value="px"/>
 					</reportElement>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -1256,14 +1257,6 @@
 						</box>
 						<textFieldExpression><![CDATA[$P{psplcdn}]]></textFieldExpression>
 					</textField>
-				</frame>
-				<frame>
-					<reportElement positionType="Float" x="0" y="168" width="555" height="12" uuid="7a912fc4-e902-4a73-ad07-49e788cdc0ca">
-						<property name="local_mesure_unity" value="pixel"/>
-						<property name="local_mesure_unitx" value="pixel"/>
-						<property name="local_mesure_unitwidth" value="pixel"/>
-						<property name="com.jaspersoft.studio.unit.y" value="px"/>
-					</reportElement>
 				</frame>
 				<frame>
 					<reportElement x="0" y="0" width="555" height="12" uuid="76135d52-2f94-4c24-b78f-dedf521ff028">

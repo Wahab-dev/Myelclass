@@ -10,6 +10,8 @@ import java.util.List;
 import sb.elpro.dao.InspectionDao;
 import sb.elpro.dao.InspectionDaoImpl;
 import sb.elpro.model.InspectionBean;
+import sb.elpro.model.InspectionGrade;
+import sb.elpro.model.ManualTest;
 import sb.elpro.model.ProductDetails;
 import sb.elpro.model.QualityCtrlrDetails;
 
@@ -49,15 +51,15 @@ public class InspectionBoImpl implements InspectionBo {
 
 
 	@Override
-	public List<InspectionBean> getInspectionTestDetails(String sidx, String sord, String artid)
+	public List<ManualTest> getInspectionTestDetails(String sidx, String sord, String artid)
 			throws Exception {
-		ArrayList<InspectionBean> InspTestList = inspdao.getInspTestList(sidx,sord,artid);
+		ArrayList<ManualTest> InspTestList = inspdao.getInspTestList(sidx,sord,artid);
 		return InspTestList;
 	}
 
 
 	@Override
-	public boolean getInspectionTestAddDetails(InspectionBean insptest,
+	public boolean getInspectionTestAddDetails(ManualTest insptest,
 			String sidx, String sord) throws Exception {
 		boolean InspTestAddList = inspdao.getInspTestAddList(insptest, sidx,sord);
 		return InspTestAddList;
@@ -65,7 +67,7 @@ public class InspectionBoImpl implements InspectionBo {
 
 
 	@Override
-	public boolean getInspectionTesEditDetails(InspectionBean insptest,
+	public boolean getInspectionTesEditDetails(ManualTest insptest,
 			String sidx, String sord) throws Exception {
 		boolean InspTestEditList = inspdao.getInspTestEditList(insptest, sidx,sord);
 		return InspTestEditList;
@@ -73,7 +75,7 @@ public class InspectionBoImpl implements InspectionBo {
 
 
 	@Override
-	public boolean getInspectionTesDelDetails(InspectionBean insptest,
+	public boolean getInspectionTesDelDetails(ManualTest insptest,
 			String sidx, String sord) throws Exception {
 		boolean InspTestDelList = inspdao.getInspTestDelList(insptest, sidx,sord);
 		return InspTestDelList;
@@ -81,15 +83,15 @@ public class InspectionBoImpl implements InspectionBo {
 
 
 	@Override
-	public List<InspectionBean> getInspectionGradeDetails(String sidx,
+	public List<InspectionGrade> getInspectionGradeDetails(String sidx,
 			String sord, String artid ) throws Exception {
-		ArrayList<InspectionBean> InspGradeList = inspdao.getInspGradeList(sidx, sord, artid);
+		ArrayList<InspectionGrade> InspGradeList = inspdao.getInspGradeList(sidx, sord, artid);
 		return InspGradeList;
 	}
 
 
 	@Override
-	public boolean getInspectionGradeAddDetails(InspectionBean inspgrad,
+	public boolean getInspectionGradeAddDetails(InspectionGrade inspgrad,
 			String sidx, String sord) throws Exception {
 		boolean InspGradeAddList = inspdao.getInspGradeAddList(inspgrad, sidx,sord);
 		return InspGradeAddList;
@@ -97,7 +99,7 @@ public class InspectionBoImpl implements InspectionBo {
 
 
 	@Override
-	public boolean getInspectionGradEditDetails(InspectionBean inspgrad,
+	public boolean getInspectionGradEditDetails(InspectionGrade inspgrad,
 			String sidx, String sord) throws Exception {
 		boolean InspGradeEditList = inspdao.getInspGradeEditList(inspgrad, sidx,sord);
 		return InspGradeEditList;
@@ -105,7 +107,7 @@ public class InspectionBoImpl implements InspectionBo {
 
 
 	@Override
-	public boolean getInspectionGradeDelDetails(InspectionBean inspgrad,
+	public boolean getInspectionGradeDelDetails(InspectionGrade inspgrad,
 			String sidx, String sord) throws Exception {
 		boolean InspGradeDelList = inspdao.getInspGradeDelList(inspgrad, sidx,sord);
 		return InspGradeDelList;

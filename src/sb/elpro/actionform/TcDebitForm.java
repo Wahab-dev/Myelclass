@@ -21,10 +21,11 @@ public class TcDebitForm extends ActionForm{
 	private String tcdeb_tanaddr;
 	private String tcdeb_tantelephone;
 	private String tcdeb_tcdebitdate;
+	private String tcdeb_ctno;
 	private String tcdeb_taninvno;
 	private String tcdeb_elclassrefno;
 	private String tcdeb_exchangerate;
-	private String tcdeb_commission1;
+	private String tcdeb_commission;
 	private String tcdeb_rate;
 	private String tcdeb_totalquantity;
 	private String tcdeb_invoiceamt;
@@ -131,14 +132,14 @@ public class TcDebitForm extends ActionForm{
 	/**
 	 * @return the tcdeb_commission1
 	 */
-	public String getTcdeb_commission1() {
-		return tcdeb_commission1;
+	public String getTcdeb_commission() {
+		return tcdeb_commission;
 	}
 	/**
 	 * @param tcdeb_commission1 the tcdeb_commission1 to set
 	 */
-	public void setTcdeb_commission1(String tcdeb_commission1) {
-		this.tcdeb_commission1 = tcdeb_commission1;
+	public void setTcdeb_commission(String tcdeb_commission) {
+		this.tcdeb_commission = tcdeb_commission;
 	}
 	/**
 	 * @return the tcdeb_rate
@@ -211,6 +212,18 @@ public class TcDebitForm extends ActionForm{
 	 */
 	public void setTcdeb_tcamt(String tcdeb_tcamt) {
 		this.tcdeb_tcamt = tcdeb_tcamt;
+	}
+	/**
+	 * @return the tcdeb_ctno
+	 */
+	public String getTcdeb_ctno() {
+		return tcdeb_ctno;
+	}
+	/**
+	 * @param tcdeb_ctno the tcdeb_ctno to set
+	 */
+	public void setTcdeb_ctno(String tcdeb_ctno) {
+		this.tcdeb_ctno = tcdeb_ctno;
 	}
 
 	

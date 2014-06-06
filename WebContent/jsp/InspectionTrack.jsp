@@ -8,7 +8,7 @@
 <title>Inspection Tracking Page</title>
 <script src="js/jquery-1.9.1.js"></script>
 <script src="js/jquery-ui.js"></script>
-<link rel="stylesheet" type="text/css" media="screen" href="css/pepper-grinder/jquery-ui-1.10.3.custom.css" />
+<link rel="stylesheet" type="text/css" media="screen" href="css/redmond/jquery-ui-1.10.3.custom.css" />
 <link rel="stylesheet" type="text/css" media="screen" href="css/ui.jqgrid.css" />
 <style type="text/css">
 #ui-datepicker-div { font-size: 11px; } 
@@ -42,7 +42,7 @@ $(function() {
 			  <h3>Samples </h3>
 			        <ul>
 			            <li> <h:link action='/loadSrf' scope="request">SrfScreen</h:link></li>
-							<li> <h:link action='/gotoSampleTracking'>Sample Tacking</h:link></li>
+							<li> <h:link action='/gotoSampleTracking'>Sample Tracking</h:link></li>
 							<li> <h:link action='/gotoSampleInvoice'>Sample Invoice Screen</h:link></li>
 							  <li> <h:link action='/sit'>Sample Invoice Tracking</h:link></li>
 							 <li> <h:link action='/gotoSampleDebit'>Sample Debit</h:link></li>
@@ -96,7 +96,6 @@ $(function() {
 			<option value="inspdate">date</option> 
 			<option value="inspqualityctrlr">QCtrlr</option>
 			<option value="article">Article</option> 
-			<option value="articleid">Article ID</option> 
 			<option value="color">color</option> 
 			<option value="clear" >Remove Grouping</option>
 		</select> <br/><br/> 

@@ -24,6 +24,7 @@ import sb.elpro.model.ConsigneeDetails;
 import sb.elpro.model.CustomerDetails;
 import sb.elpro.model.NotifyConsigneeDetails;
 import sb.elpro.model.PaymentDetails;
+import sb.elpro.model.PoJwBean;
 import sb.elpro.model.PrfArticle;
 import sb.elpro.model.ProductDetails;
 import sb.elpro.model.RateDetails;
@@ -53,7 +54,6 @@ public class PrfDaoImpl implements PrfDao {
 			con = DBConnection.getConnection();
 			st = (Statement) con.createStatement();
 			String sql = "SELECT agentid, agentname, contractno FROM elpro.tbl_prfctno where agentname like '%"+agenterm+"%' and agenttype ='U' order by agentname;";
-			//String sql = "SELECT max(Ctno)as ctno, agent from  elpro.tbl_prfform where agent like '%"+agenterm+"%' group by agent order by agent";
 			rs = st.executeQuery(sql);
 			while(rs.next()) {	
 				
@@ -404,16 +404,16 @@ public class PrfDaoImpl implements PrfDao {
 				selbean.setPrf_articleid(rs.getString("articleid"));
 				selbean.setPrf_articlename(rs.getString("articlename"));
 				artarrayNamelist.add(selbean);
-				}
+			}
 			System.out.println("Article name "+artarrayNamelist.toString());
-			}catch(Exception e){
-				e.printStackTrace();
-				System.out.println("Article name ERROR RESULT");
-			}finally{
+		}catch(Exception e){
+			e.printStackTrace();
+			System.out.println("Article name ERROR RESULT");
+		}finally{
 				 con.close() ;
 				 st.close();
 				 rs.close();
-		   }	
+		  }	
 		return artarrayNamelist;
 	}
 	
@@ -1033,7 +1033,7 @@ public class PrfDaoImpl implements PrfDao {
 		try{			
 			con = DBConnection.getConnection();
 			st = (Statement) con.createStatement();
-			String sql = "SELECT distinct articletype FROM elpro.tbl_article order by articletype";
+			String sql = "SELECT articletype FROM elpro.tbl_articletype order by articletype asc";
 			System.out.println(sql);
 			rs = st.executeQuery(sql);
 			
@@ -1092,13 +1092,13 @@ public class PrfDaoImpl implements PrfDao {
 			noofrows = pst.executeUpdate();
 			if(noofrows == 1){
 				System.out.println(" Update for Status table "+noofrows);
-				StringBuffer sql_updateprfArticlestatus = new StringBuffer("UPDATE elpro.tbl_prfarticle_status set artname = ? , qty = ? WHERE prf_articleid = '"+artindertdetail.getPrf_articleid()+"' ");
+				StringBuffer sql_updateprfArticlestatus = new StringBuffer("UPDATE elpro.tbl_prfarticle_status set artname = ? , qty = ? , qbal = ?  WHERE prf_articleid = '"+artindertdetail.getPrf_articleid()+"' ");
 				String sqlquery_updateprfArticlestatus = sql_updateprfArticlestatus.toString();
 				System.out.println("Save quert" +sqlquery_updateprfArticlestatus);
 				pst1 = (PreparedStatement) con.prepareStatement(sqlquery_updateprfArticlestatus);
-				//int prfarticleid = Integer.parseInt(artindertdetail.getPrf_articleid());
 				pst1.setString(1, artindertdetail.getPrf_articlename());
 				pst1.setString(2, artindertdetail.getPrf_quantity());
+				pst1.setString(3, artindertdetail.getPrf_quantity());
 				updatestatusrow = pst1.executeUpdate();
 				System.out.println("Sucessfully Inseerter in Status Table." + updatestatusrow);
 			}
@@ -1310,14 +1310,12 @@ public class PrfDaoImpl implements PrfDao {
 			st = (Statement) con.createStatement();
 			String sql = "SELECT max(pojwno) as pojwno FROM elpro.tbl_pojw";
 			rs = st.executeQuery(sql);
-			while(rs.next()) {	
-				String debitno = rs.getString("pojwno").trim();
-				int iprefix = debitno.indexOf('/');
-				String debitnoi = debitno.substring(2, iprefix);
-				int ideit = Integer.parseInt(debitnoi)+1;
-				System.out.println(" pojwno val "+ ideit);
-				debit = "PO"+ideit+"/14-15";
-				System.out.println("pojwno "+debit);	
+			if(rs.next()) {	
+				System.out.println(" IN POJW get NO");
+				int pojwno = Integer.parseInt(rs.getString("pojwno").trim());
+				System.out.println(" pojwno "+pojwno+1);
+				String spojwno = String.valueOf(pojwno) ;
+				System.out.println("pojwno "+spojwno);	
 			}
 		}catch(Exception e){
 			System.out.println("Result ERROR RESULT");
@@ -1328,6 +1326,159 @@ public class PrfDaoImpl implements PrfDao {
 			 rs.close();
 	   }			
 		return debit;
+	}
+
+	/* (non-Javadoc)
+	 * @see sb.elpro.dao.PrfDao#savePoJwForm(sb.elpro.model.PoJwBean)
+	 */
+	@Override
+	public boolean savePoJwForm(PoJwBean pojw) throws SQLException {
+		System.out.println("In POJW SAVE");
+		Connection con = null;
+		PreparedStatement pst = null;
+		int noofrows  = 0;
+		boolean isSaved =true;
+		
+		try{
+			con = DBConnection.getConnection();
+			StringBuffer sql_savepojwform = new StringBuffer("insert into tbl_pojw (pojwno, orderdate, CDD, Tannery, splcdn, paymentterm, Ctno, Category)");
+			sql_savepojwform.append("values (?,?,?,?,?,?,?,?)");
+			String sqlquery_savepojwform = sql_savepojwform.toString();
+			pst = (PreparedStatement) con.prepareStatement(sqlquery_savepojwform);
+			pst.setString(1, pojw.getPojwno());
+			System.out.println("getPojwno " +pojw.getPojwno());
+			pst.setString(2, pojw.getPojw_orderdate());
+			System.out.println("getPojw_orderdate " +pojw.getPojw_orderdate());
+			pst.setString(3, pojw.getPojw_cddate());
+			pst.setString(4, pojw.getPrf_exporterid());
+			pst.setString(5, pojw.getPojw_splcdn());
+			pst.setString(6, pojw.getPojw_payterms());
+			pst.setString(7, pojw.getPojw_contractno());
+			pst.setString(8,"PO");
+			noofrows = pst.executeUpdate();
+			/*if(noofrows == 1){ 
+				
+				 * Call the STored Procedure for the prfctno table update
+				 * Save Prfno in Table 
+				 
+			System.out.println(" Save for Ct No table "+noofrows);
+			StringBuffer sql_updtprfctno = new StringBuffer("UPDATE elpro.tbl_prfctno SET contractno = ?  WHERE agentname = '"+prfbean.getPrf_agentname()+"' ");
+			String sqlquery_updtprfctno = sql_updtprfctno.toString();
+			pst = (PreparedStatement) con.prepareStatement(sqlquery_updtprfctno);
+			pst.setString(1, prfbean.getPrf_contractno());
+			System.out.println("getPrf_contractno " +prfbean.getPrf_contractno());
+			noofrowsupdtd = pst.executeUpdate();
+			System.out.println("Sucessfully updtd the CTNo Table." + noofrowsupdtd);
+			}*/
+			System.out.println("Sucessfully inserted the record.." + noofrows);
+	}catch(Exception e){
+		e.printStackTrace();
+		isSaved = false;
+		System.out.println("ERROR RESULT");
+	}finally{
+		 con.close() ;
+		 pst.close();
+   }	
+		return isSaved;
+	}
+
+	/* (non-Javadoc)
+	 * @see sb.elpro.dao.PrfDao#getShipmentList(java.lang.String)
+	 */
+	@Override
+	public ArrayList<AutoComplete> getShipmentList(String term)throws SQLException {
+		ArrayList<AutoComplete> shipmentlist = new ArrayList<AutoComplete>() ;
+		Connection con = null;
+		Statement st = null;
+		ResultSet rs = null;
+		try{			
+			con = DBConnection.getConnection();
+			st = (Statement) con.createStatement();
+			String sql = "SELECT shipment FROM elpro.tbl_shipment order by shipment";
+			System.out.println(sql);
+			rs = st.executeQuery(sql);
+			
+			while(rs.next()) {	
+				AutoComplete shpmntbean = new AutoComplete();
+				shpmntbean.setValue(rs.getString("shipment"));	
+				shipmentlist.add(shpmntbean);
+				}
+			System.out.println(" dest Result Added Successfully");
+			}catch(Exception e){
+				e.printStackTrace();
+				System.out.println("dest ERROR RESULT");
+			}finally{
+				 con.close() ;
+				 st.close();
+				 rs.close();
+		   }	
+		return shipmentlist;
+	}
+
+	/* (non-Javadoc)
+	 * @see sb.elpro.dao.PrfDao#getPrfSelectionList()
+	 */
+	@Override
+	public ArrayList<AutoComplete> getPrfSelectionList() throws SQLException {
+		ArrayList<AutoComplete> selectlist = new ArrayList<AutoComplete>() ;
+		Connection con = null;
+		Statement st = null;
+		ResultSet rs = null;
+		try{			
+			con = DBConnection.getConnection();
+			st = (Statement) con.createStatement();
+			String sql = "SELECT selection FROM elpro.tbl_selection order by selection";
+			System.out.println(sql);
+			rs = st.executeQuery(sql);
+			
+			while(rs.next()) {	
+				AutoComplete selectbean = new AutoComplete();
+				selectbean.setValue(rs.getString("selection"));	
+				selectlist.add(selectbean);
+				}
+			System.out.println(" dest Result Added Successfully");
+			}catch(Exception e){
+				e.printStackTrace();
+				System.out.println("dest ERROR RESULT");
+			}finally{
+				 con.close() ;
+				 st.close();
+				 rs.close();
+		   }	
+		return selectlist;
+	}
+
+	/* (non-Javadoc)
+	 * @see sb.elpro.dao.PrfDao#getPrfColorMatchList()
+	 */
+	@Override
+	public ArrayList<AutoComplete> getPrfColorMatchList() throws SQLException {
+		ArrayList<AutoComplete> colormatchlist = new ArrayList<AutoComplete>() ;
+		Connection con = null;
+		Statement st = null;
+		ResultSet rs = null;
+		try{			
+			con = DBConnection.getConnection();
+			st = (Statement) con.createStatement();
+			String sql = "SELECT colormatch FROM elpro.tbl_colormatch order by colormatch";
+			System.out.println(sql);
+			rs = st.executeQuery(sql);
+			
+			while(rs.next()) {	
+				AutoComplete colormatchbean = new AutoComplete();
+				colormatchbean.setValue(rs.getString("colormatch"));	
+				colormatchlist.add(colormatchbean);
+				}
+			System.out.println(" dest Result Added Successfully");
+			}catch(Exception e){
+				e.printStackTrace();
+				System.out.println("dest ERROR RESULT");
+			}finally{
+				 con.close() ;
+				 st.close();
+				 rs.close();
+		   }	
+		return colormatchlist;
 	}
 
 	

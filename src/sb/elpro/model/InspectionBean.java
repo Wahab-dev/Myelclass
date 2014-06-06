@@ -19,7 +19,7 @@ public class InspectionBean implements Serializable {
 	private String inspid; //inspection id
 	private String inspContractNo;
 	private String inspdate;
-	private String inspqualityctrlr;
+	private String inspqualityctrlr	;
 	private String insp_cdn;
 	private String inspcomments;
 	
@@ -80,6 +80,12 @@ public class InspectionBean implements Serializable {
 	private String grade4comments;
 	private String grade5comments;*/
 	
+	private String skincount1;
+	private String skincount2;
+	private String skincount3;
+	private String skincount4;
+	private String skincount5;
+	private String skincount6;
 	
 	// Rejects 
 	private String rejectid;
@@ -749,6 +755,78 @@ public class InspectionBean implements Serializable {
 	 */
 	public void setArtidhidden(String artidhidden) {
 		this.artidhidden = artidhidden;
+	}
+	/**
+	 * @return the skincount6
+	 */
+	public String getSkincount6() {
+		return skincount6;
+	}
+	/**
+	 * @param skincount6 the skincount6 to set
+	 */
+	public void setSkincount6(String skincount6) {
+		this.skincount6 = skincount6;
+	}
+	/**
+	 * @return the skincount4
+	 */
+	public String getSkincount4() {
+		return skincount4;
+	}
+	/**
+	 * @param skincount4 the skincount4 to set
+	 */
+	public void setSkincount4(String skincount4) {
+		this.skincount4 = skincount4;
+	}
+	/**
+	 * @return the skincount1
+	 */
+	public String getSkincount1() {
+		return skincount1;
+	}
+	/**
+	 * @param skincount1 the skincount1 to set
+	 */
+	public void setSkincount1(String skincount1) {
+		this.skincount1 = skincount1;
+	}
+	/**
+	 * @return the skincount2
+	 */
+	public String getSkincount2() {
+		return skincount2;
+	}
+	/**
+	 * @param skincount2 the skincount2 to set
+	 */
+	public void setSkincount2(String skincount2) {
+		this.skincount2 = skincount2;
+	}
+	/**
+	 * @return the skincount5
+	 */
+	public String getSkincount5() {
+		return skincount5;
+	}
+	/**
+	 * @param skincount5 the skincount5 to set
+	 */
+	public void setSkincount5(String skincount5) {
+		this.skincount5 = skincount5;
+	}
+	/**
+	 * @return the skincount3
+	 */
+	public String getSkincount3() {
+		return skincount3;
+	}
+	/**
+	 * @param skincount3 the skincount3 to set
+	 */
+	public void setSkincount3(String skincount3) {
+		this.skincount3 = skincount3;
 	}
 
 

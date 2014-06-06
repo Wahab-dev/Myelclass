@@ -7,6 +7,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import sb.elpro.model.InspectionBean;
+import sb.elpro.model.InspectionGrade;
+import sb.elpro.model.ManualTest;
 import sb.elpro.model.ProductDetails;
 import sb.elpro.model.QualityCtrlrDetails;
 
@@ -26,27 +28,27 @@ public interface InspectionDao {
 	ArrayList<ProductDetails> getInspArtList(String ctno)throws SQLException;
 
 	//test
-	ArrayList<InspectionBean> getInspTestList(String sidx, String sord, String ctno)throws SQLException;
+	ArrayList<ManualTest> getInspTestList(String sidx, String sord, String ctno)throws SQLException;
 
-	boolean getInspTestAddList(InspectionBean insptest, String sidx,
+	boolean getInspTestAddList(ManualTest insptest, String sidx,
 			String sord)throws SQLException;
 
-	boolean getInspTestEditList(InspectionBean insptest, String sidx, String sord)throws SQLException;
+	boolean getInspTestEditList(ManualTest insptest, String sidx, String sord)throws SQLException;
 
 	
-	boolean getInspTestDelList(InspectionBean insptest, String sidx,
+	boolean getInspTestDelList(ManualTest insptest, String sidx,
 			String sord)throws SQLException;
 
 	//Grading
-	ArrayList<InspectionBean> getInspGradeList(String sidx, String sord, String artid)throws SQLException;
+	ArrayList<InspectionGrade> getInspGradeList(String sidx, String sord, String artid)throws SQLException;
 
-	boolean getInspGradeAddList(InspectionBean inspgrad, String sidx,
+	boolean getInspGradeAddList(InspectionGrade inspgrad, String sidx,
 			String sord) throws SQLException;
 
-	boolean getInspGradeEditList(InspectionBean inspgrad, String sidx,
+	boolean getInspGradeEditList(InspectionGrade inspgrad, String sidx,
 			String sord)throws SQLException;
 
-	boolean getInspGradeDelList(InspectionBean inspgrad, String sidx,
+	boolean getInspGradeDelList(InspectionGrade inspgrad, String sidx,
 			String sord) throws SQLException;
 
 	//Rejetcs
