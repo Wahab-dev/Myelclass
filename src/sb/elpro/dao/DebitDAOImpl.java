@@ -174,7 +174,7 @@ public class DebitDaoImpl implements DebitDao {
 	@Override
 	public boolean saveDebitFormDetails(DebitFormDetails debformbean)
 			throws SQLException {
-		System.out.println("In PRF SAVE");
+		System.out.println("In Debit SAVE");
 		Connection con = null;
 		PreparedStatement pst = null;
 		PreparedStatement pststatus = null;

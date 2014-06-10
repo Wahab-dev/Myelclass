@@ -343,7 +343,7 @@ public class SrfDaoImpl implements SrfDao {
 				pststatus.setString(4, "0");
 				pststatus.setString(5, artindertdetail.getSrf_qty());
 				pststatus.setString(6, "P");
-				pststatus.setString(7, DateConversion.ConverttoMysqlDate("01-01-2013"));
+				pststatus.setString(7, DateConversion.ConverttoMysqlDate("01-01-2014"));
 				pststatus.setString(8, artindertdetail.getSrf_courier());
 				pststatus.setString(9, "");
 				pststatus.setString(10, "");

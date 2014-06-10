@@ -7,7 +7,6 @@
 package sb.elpro.action;
 
 import java.io.PrintWriter;
-import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -22,7 +21,6 @@ import org.apache.struts.action.ActionMapping;
 
 import sb.elpro.bo.TcDebitBo;
 import sb.elpro.bo.TcDebitBoImpl;
-import sb.elpro.model.RaiseDebit;
 
 /**
  * @author Wahab

@@ -224,11 +224,11 @@ $(function() {
 	  	</tr>
 	  	<tr>
 		    <td>
-		    	<h:submit property="debitaction" value="Save" styleId="Btndebitsave" styleClass="myPrintButton" ></h:submit>
+		    	<h:submit property="debitaction" value="Save" styleId="Btndebitsave"  ></h:submit>
 		    	<input type="button" disabled="disabled" id="tcbutton" value="TC Button" ></input> </td>
    			<td>
-   				<h:reset property="debitaction" value="Clear" styleClass="myPrintButton" ></h:reset>
-   			    <h:submit property="debitaction" value="Print" styleId="Btndebitsave" styleClass="myPrintButton" ></h:submit></td>
+   				<h:reset property="debitaction" value="Clear"  ></h:reset>
+   			    <h:submit property="debitaction" value="Print" styleId="Btndebitsave"  ></h:submit></td>
   		</tr>
 	</table>
 	
@@ -245,17 +245,22 @@ $(function() {
         					<tr>
         						<td>Tanner  :</td>
         						<td><h:text property="tcdeb_exporter" styleId="tcdeb_exporter" size="32" ></h:text><br/></td>
-        						<td></td>
+        						
+        					</tr>
+        					<tr>
+        						<td>ID  :</td>
+        						<td><h:text property="tcdeb_exporterid" styleId="tcdeb_exporterid" size="32" ></h:text><br/></td>
+        						
         					</tr>
         					<tr>
         						<td>Address:</td>
         						<td> <h:textarea property="tcdeb_tanaddr" cols="30" rows="2" styleId="tcdeb_tanaddr"><br/></h:textarea></td>
-        						<td></td>
+        						
         					</tr>
         					<tr>
         						<td>Telephone:</td>
         						<td><h:text property="tcdeb_tantelephone" styleId="tcdeb_tantelephone" size="32"><br/> </h:text></td>
-        						<td></td>
+        						
         					</tr>
         				
         				</table>
@@ -268,22 +273,22 @@ $(function() {
         					<tr>
         						<td>Tcdebit No  :</td>
         						<td><h:text property="tcdeb_tcdebitno" styleId="tcdeb_tcdebitno" size="28" ></h:text><br/></td>
-        						<td></td>
+        						
         					</tr>
         					<tr>
         						<td>TcDebit Date:</td>
         						<td> <h:text property="tcdeb_tcdebitdate" styleId="tcdeb_tcdebitdate" size="32" styleClass="dtdebit"></h:text></td>
-        						<td></td>
+        						
         					</tr>
         					<tr>
         						<td>Tanner Inv No:</td>
         						<td><h:text property="tcdeb_taninvno" styleId="tcdeb_taninvno" size="28" ></h:text></td>
-        						<td></td>
+        						
         					</tr>
         					<tr>
         						<td>elclass ref no:</td>
         						<td><h:text property="tcdeb_elclassrefno" styleId="tcdeb_elclassrefno" size="28"></h:text></td>
-        						<td></td>
+        						
         					</tr>
         					
         				</table>
@@ -296,26 +301,24 @@ $(function() {
 		    		<legend>Invoice Details</legend> 
 		    		 <table>
         				<tr>
-        					<td>TC :</td>
-        					<td> <h:text property="tcdeb_tcamt" styleId="tcdeb_tcamt"> </h:text> </td>
+        					<td>Ct No :</td>
+        					<td> <h:text property="tcdeb_ctno" styleId="tcdeb_ctno"> </h:text> </td>
 						</tr>  
 						<tr>
-        					<td>Rate: </td>
-        					<td><h:text property="tcdeb_rate" styleId="tcdeb_rate"> </h:text> </td>
+        					<td>Quantity: </td>
+        					<td><h:text property="tcdeb_totalquantity" styleId="tcdeb_totalquantity"> </h:text> </td>
 						</tr>  
 						<tr>
-        					<td>Exchange Rate:</td>
-        					<td> <h:text property="tcdeb_tcamt" styleId="tcdeb_tcamt"> </h:text> </td>
+        					<td>Commission:</td>
+        					<td> <h:text property="tcdeb_commission" styleId="tcdeb_commission"> </h:text> </td>
 						</tr>  
 						<tr>
-        					<td>Invoice Amount:: </td>
-        					<td><h:text property="tcdeb_rate" styleId="tcdeb_rate"> </h:text> </td>
+        					<td>Invoice Amount: </td>
+        					<td><h:text property="tcdeb_invoiceamt" styleId="tcdeb_invoiceamt"> </h:text> </td>
 						</tr>  
 					</table>
 					</fieldset>	
-		    			<%-- <br/>Quantity :  <h:text property="tcdeb_totalquantity" styleId="tcdeb_totalquantity"> </h:text>  <br/>
-				    	<br/>TC Amount in Rs: <h:text property="tcdeb_elclassamtinrs" styleId="tcdeb_elclassamtinrs"> </h:text><br/> --%>
-					</td>
+		    		</td>
 					<td>
 					<fieldset>  
 		    		<legend>TC Details</legend> 
@@ -330,11 +333,11 @@ $(function() {
 						</tr>  
 						<tr>
         					<td>Exchange Rate:</td>
-        					<td> <h:text property="tcdeb_tcamt" styleId="tcdeb_tcamt"> </h:text> </td>
+        					<td> <h:text property="tcdeb_exchangerate" styleId="tcdeb_exchangerate"> </h:text> </td>
 						</tr>  
 						<tr>
-        					<td>Invoice Amount:: </td>
-        					<td><h:text property="tcdeb_rate" styleId="tcdeb_rate"> </h:text> </td>
+        					<td>TC Amount: </td>
+        					<td><h:text property="tcdeb_elclassamt" styleId="tcdeb_elclassamt"> </h:text> </td>
 						</tr>  
 					</table>
 					</fieldset>	

@@ -273,7 +273,7 @@ order by form.Ctno asc, articletype asc, articlename asc, color asc]]>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font size="9" isBold="true"/>
 					</textElement>
-					<text><![CDATA[Rate]]></text>
+					<text><![CDATA[Price]]></text>
 				</staticText>
 				<staticText>
 					<reportElement mode="Opaque" x="1020" y="16" width="120" height="16" backcolor="#C0C0C0" uuid="9957ec59-921d-44c8-9269-447e9fab7cc8">
@@ -307,7 +307,7 @@ order by form.Ctno asc, articletype asc, articlename asc, color asc]]>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font size="9" isBold="true"/>
 					</textElement>
-					<text><![CDATA[ADD]]></text>
+					<text><![CDATA[CDD]]></text>
 				</staticText>
 				<staticText>
 					<reportElement mode="Opaque" x="675" y="16" width="52" height="16" backcolor="#C0C0C0" uuid="1b2066b2-e986-443c-a728-1574398c0e2f">
@@ -324,7 +324,7 @@ order by form.Ctno asc, articletype asc, articlename asc, color asc]]>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font size="9" isBold="true"/>
 					</textElement>
-					<text><![CDATA[CDD]]></text>
+					<text><![CDATA[ADD]]></text>
 				</staticText>
 				<staticText>
 					<reportElement mode="Opaque" x="727" y="16" width="52" height="16" backcolor="#C0C0C0" uuid="8ff7661e-4359-4c79-a834-1096b93213de">
@@ -651,7 +651,7 @@ order by form.Ctno asc, articletype asc, articlename asc, color asc]]>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{add_date}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{cdd_date}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement x="675" y="0" width="52" height="16" uuid="7e335a98-4f32-4511-85d7-505f5c139a44">
@@ -670,7 +670,7 @@ order by form.Ctno asc, articletype asc, articlename asc, color asc]]>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{cdd_date}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{add_date}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement x="727" y="0" width="52" height="16" uuid="79116883-31e0-4c19-8066-c9d107e48915">

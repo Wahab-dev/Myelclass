@@ -41,7 +41,7 @@ public class InspectionDaoImpl implements InspectionDao {
 			rs = st.executeQuery(sql);
 			while(rs.next()) {	
 				ProductDetails inspctbean = new ProductDetails();
-				inspctbean.setLabel(rs.getString("Ctno"));
+				inspctbean.setPrf_contractno(rs.getString("Ctno"));
 				inspctbean.setPrf_inspcdn(rs.getString("inspcdn"));
 				System.out.println("Insp CT  name "+inspctbean.getLabel());
 				inspCtlist.add(inspctbean);

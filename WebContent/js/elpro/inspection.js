@@ -5,7 +5,8 @@ $(document).ready(function() {
 	 //Global Variables
    var clr = null ;
    var arid = null ;
-   var totinspectd = ""; 
+  // var totinspectd = ""; 
+   
 // Grid Details 
 	var artgrid = $('#insp_Ctdetails'); 
 	var testgrid = $('#insptesttbl'); 
@@ -35,7 +36,7 @@ $(document).ready(function() {
 				function(result) { 	
 			       response($.map(result, function(item) {
 			           return { 
-			              value: item.label,
+			              value: item.prf_contractno,
 			              splcdn: item.prf_inspcdn,
 			              };
 			        }));//END response
@@ -43,7 +44,8 @@ $(document).ready(function() {
 		 },
 		 select: function( event, ui ) { 
          	$('#insp_cdn').val(ui.item.splcdn);
-         	var ctno = $('#inspContractNo').val();
+         	var ctno =ui.item.value;
+         	alert(ctno);
          	artgrid.jqGrid('setGridParam',{url:"/Myelclass/InspectionAction.do?event=loadarticle&ctno="+ctno}).trigger("reloadGrid");
            } 
 	}); 
@@ -89,6 +91,7 @@ $(document).ready(function() {
 	artgrid.jqGrid({  
 		url:"",   
 		datatype:"json",
+		loadonce: false,
 		colNames:['Article Id','Article Name', 'Color', 'Tannery', 'Customer','Order Date', 'PONo', 'Size','Subs','Selec','Selec P', 'Quantity'],  
 	    colModel:[   
 				{name:'prf_articleid', index:'prf_articleid', hidden: true, sortable: true, },
@@ -119,7 +122,6 @@ $(document).ready(function() {
 	    height : "auto",
 	    width:"auto",
 	    multiselect: true,
-	    loadonce: true,
 	    sortname: 'articlename',  
 	    sortorder: 'desc',  
 	    viewrecords: true,
@@ -127,11 +129,11 @@ $(document).ready(function() {
 	    /*
 	     * Method to select only one row @ a time in multiselect
 	     */
-//	    beforeSelectRow: function(rowid, e)
-//	    {
-//	    	artgrid.jqGrid('resetSelection');
-//	        return(true);
-//	    },
+	    beforeSelectRow: function(rowid, e)
+	    {
+	    	artgrid.jqGrid('resetSelection');
+	        return(true);
+	    },
 	    onSelectRow: function(rowid){
 	    	clr = artgrid.jqGrid('getCell', rowid, 'prf_color');
 	       	arid = artgrid.jqGrid('getCell', rowid, 'prf_articleid'); 

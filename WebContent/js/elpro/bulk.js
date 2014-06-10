@@ -126,7 +126,7 @@ $(function() {
 				bulkgrid.jqGrid('groupingRemove',true);	
 			}else{
 				bulkgrid.jqGrid('groupingGroupBy', vl, {
-		            groupOrder : ['desc'],
+		            groupOrder : ['asc'],
 		            groupColumnShow: [false],
 				  groupingView: {
 		            groupCollapse: [true],
@@ -323,26 +323,22 @@ $(function() {
 		       	caption: "Bulk Tracking Report",
 		    	pager: '#bulkktrackpager',
 		    	rowNum: 20, 
-		    	rowList: [5,10,20,40,50,60,80,100,200],
-		        loadtext: "Bow Bow",
-		        height : "auto",
+		    	rowList: [5,10,20,40,50,60,80,100,200,250,300],
+		    	rownumbers: true,  
+		    	loadtext: "Bulk Tracking is Loading",
+		        height : "360",
 		        width: "auto",  
 		        sortname: 'Ctno',  
 		        sortorder: 'desc',
 		        loadonce: true,
-		        scroll: 1, //Check here
+		        //scroll: 1, //Check here
 		        editurl: "/Myelclass/BulkInsertAction.do",
 		        sortable: true,
-		        grouping: true,
 		        toppager:true,
 		        gridview : true,
-		        rownumbers: true, // not working Check 
 		        viewrecords: true,
 		        footerrow: true,
-		        grouping:true, 
-		        groupingView : { groupField : ['ctno'] },
 		        altRows: true,  // altrows and altclass for alternate color on grid rows
-		        altclass:  'myAltRowClass',
 		        //userDataOnFooter : true, //Gets Footer Total Recod from Server Side 
 		        loadComplete: function() {
 		        	 var $self = $(this),

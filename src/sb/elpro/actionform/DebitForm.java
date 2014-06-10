@@ -58,23 +58,23 @@ public class DebitForm extends ActionForm{
 
 	private String tcdeb_tcdebitno;
 	private String tcdeb_exporter;
+	private String tcdeb_exporterid;
 	private String tcdeb_tanaddr;
 	private String tcdeb_tantelephone;
 	private String tcdeb_tcdebitdate;
+	private String tcdeb_ctno;
 	private String tcdeb_taninvno;
 	private String tcdeb_elclassrefno;
 	private String tcdeb_exchangerate;
-	private String tcdeb_commission1;
-	private String tcdeb_tcamt;
+	private String tcdeb_commission;
 	private String tcdeb_rate;
 	private String tcdeb_totalquantity;
 	private String tcdeb_invoiceamt;
 	private String tcdeb_elclassamt;
 	private String tcdeb_elclassamtinrs;
-	
+	private String tcdeb_tcamt;
 
 	private String debactionform;
-	
 	
 	/**
 	 * @return the tcdeb_tcdebitno
@@ -172,18 +172,7 @@ public class DebitForm extends ActionForm{
 	public void setTcdeb_exchangerate(String tcdeb_exchangerate) {
 		this.tcdeb_exchangerate = tcdeb_exchangerate;
 	}
-	/**
-	 * @return the tcdeb_commission1
-	 */
-	public String getTcdeb_commission1() {
-		return tcdeb_commission1;
-	}
-	/**
-	 * @param tcdeb_commission1 the tcdeb_commission1 to set
-	 */
-	public void setTcdeb_commission1(String tcdeb_commission1) {
-		this.tcdeb_commission1 = tcdeb_commission1;
-	}
+	
 	/**
 	 * @return the tcdeb_rate
 	 */
@@ -664,13 +653,14 @@ public class DebitForm extends ActionForm{
 
 		tcdeb_tcdebitno="";
 		tcdeb_exporter="";
+		tcdeb_exporterid="";
 		tcdeb_tanaddr="";
 		tcdeb_tantelephone="";
 		tcdeb_tcdebitdate="";
 		tcdeb_taninvno="";
 		tcdeb_elclassrefno="";
 		tcdeb_exchangerate="";
-		tcdeb_commission1="";
+		tcdeb_commission="";
 		tcdeb_tcamt="";
 		tcdeb_rate="";
 		tcdeb_totalquantity="";
@@ -740,6 +730,42 @@ public class DebitForm extends ActionForm{
 	 */
 	public void setDebamtinwords(String debamtinwords) {
 		this.debamtinwords = debamtinwords;
+	}
+	/**
+	 * @return the tcdeb_ctno
+	 */
+	public String getTcdeb_ctno() {
+		return tcdeb_ctno;
+	}
+	/**
+	 * @param tcdeb_ctno the tcdeb_ctno to set
+	 */
+	public void setTcdeb_ctno(String tcdeb_ctno) {
+		this.tcdeb_ctno = tcdeb_ctno;
+	}
+	/**
+	 * @return the tcdeb_commission
+	 */
+	public String getTcdeb_commission() {
+		return tcdeb_commission;
+	}
+	/**
+	 * @param tcdeb_commission the tcdeb_commission to set
+	 */
+	public void setTcdeb_commission(String tcdeb_commission) {
+		this.tcdeb_commission = tcdeb_commission;
+	}
+	/**
+	 * @return the tcdeb_exporterid
+	 */
+	public String getTcdeb_exporterid() {
+		return tcdeb_exporterid;
+	}
+	/**
+	 * @param tcdeb_exporterid the tcdeb_exporterid to set
+	 */
+	public void setTcdeb_exporterid(String tcdeb_exporterid) {
+		this.tcdeb_exporterid = tcdeb_exporterid;
 	}
 
 }

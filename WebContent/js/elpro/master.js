@@ -244,14 +244,15 @@ $(function() {
 		pager: '#masterpager',
 		rowNum:20, 
 		rowList:[20,50,60],
-	    loadtext: "Bow Bow........... ",
-	    height : "auto",
+		loadtext: "Master Tracking is Loading",
+		rownumbers: true,  
+		height : "360",
         width: "auto",  
 	    sortname: 'invno',  
 	    sortorder: 'desc',
 	    viewrecords: true,
 	    sortable: true,
-        gridview: true , // if used cant use subgrid, treegrid and aftertInsertRow 
+       // gridview: true , // if used cant use subgrid, treegrid and aftertInsertRow 
 	    height: "100%",
 	    footerrow: true,
         loadonce: true,

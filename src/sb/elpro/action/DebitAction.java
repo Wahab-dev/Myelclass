@@ -145,7 +145,11 @@ public class DebitAction extends DispatchAction {
         DebitForm debprintform =(DebitForm) form;
         BeanUtils.copyProperties(debformbean, debprintform);
         JasperReport report = JasperCompileManager.compileReport("C:/Users/meetw_000/Desktop/report/DebitForm.jrxml");
-        HashMap<String, Object> hm = new HashMap<String, Object>();        
+        HashMap<String, Object> hm = new HashMap<String, Object>();  
+        
+        String othercomm = debformbean.getDeb_othercommission();
+        int icount = othercomm.indexOf("%");
+        System.out.println("Icount "+icount);
 		
 		System.out.println("TOTAL AMT "+debformbean.getDebamtinwords());
 		hm.put("ptanname",debformbean.getDeb_exporter());

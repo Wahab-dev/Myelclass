@@ -180,7 +180,7 @@
 					<textElement textAlignment="Center">
 						<font isBold="true"/>
 					</textElement>
-					<text><![CDATA[Tannery Details	]]></text>
+					<text><![CDATA[Tannery Details]]></text>
 				</staticText>
 			</frame>
 			<frame>

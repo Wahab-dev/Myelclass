@@ -18,7 +18,7 @@ public class DebitFormDetails implements Serializable {
 	private String deb_debitno;
 	private String deb_debitdate;
 	private String deb_exporterid;
-	private String deb_exporter;	
+	private String deb_exporter;
 	private String deb_tanaddr;
 	private String deb_tanattn;
 	private String deb_tantelephone;
@@ -48,27 +48,30 @@ public class DebitFormDetails implements Serializable {
 	private String deb_due;
 	private String deb_deduction;
 	private String deb_iswaived;
+	private String debamtinwords;
 	
 	//TcDebit 
 
 	private String tcdeb_tcdebitno;
 	private String tcdeb_exporter;
+	private String tcdeb_exporterid;
 	private String tcdeb_tanaddr;
 	private String tcdeb_tantelephone;
 	private String tcdeb_tcdebitdate;
+	private String tcdeb_ctno;
 	private String tcdeb_taninvno;
 	private String tcdeb_elclassrefno;
 	private String tcdeb_exchangerate;
-	private String tcdeb_commission1;
-	private String tcdeb_tcamt;
+	private String tcdeb_commission;
 	private String tcdeb_rate;
 	private String tcdeb_totalquantity;
 	private String tcdeb_invoiceamt;
 	private String tcdeb_elclassamt;
 	private String tcdeb_elclassamtinrs;
-	
+	private String tcdeb_tcamt;
+
 	private String debactionform;
-	private String debamtinwords;
+
 	
 	
 	/**
@@ -516,30 +519,7 @@ public class DebitFormDetails implements Serializable {
 	public void setTcdeb_elclassrefno(String tcdeb_elclassrefno) {
 		this.tcdeb_elclassrefno = tcdeb_elclassrefno;
 	}
-	/**
-	 * @return the tcdeb_exchangerate
-	 */
-	public String getTcdeb_exchangerate() {
-		return tcdeb_exchangerate;
-	}
-	/**
-	 * @param tcdeb_exchangerate the tcdeb_exchangerate to set
-	 */
-	public void setTcdeb_exchangerate(String tcdeb_exchangerate) {
-		this.tcdeb_exchangerate = tcdeb_exchangerate;
-	}
-	/**
-	 * @return the tcdeb_commission1
-	 */
-	public String getTcdeb_commission1() {
-		return tcdeb_commission1;
-	}
-	/**
-	 * @param tcdeb_commission1 the tcdeb_commission1 to set
-	 */
-	public void setTcdeb_commission1(String tcdeb_commission1) {
-		this.tcdeb_commission1 = tcdeb_commission1;
-	}
+	
 	/**
 	 * @return the tcdeb_tcamt
 	 */
@@ -674,6 +654,54 @@ public class DebitFormDetails implements Serializable {
 	 */
 	public void setDebamtinwords(String debamtinwords) {
 		this.debamtinwords = debamtinwords;
+	}
+	/**
+	 * @return the tcdeb_ctno
+	 */
+	public String getTcdeb_ctno() {
+		return tcdeb_ctno;
+	}
+	/**
+	 * @param tcdeb_ctno the tcdeb_ctno to set
+	 */
+	public void setTcdeb_ctno(String tcdeb_ctno) {
+		this.tcdeb_ctno = tcdeb_ctno;
+	}
+	/**
+	 * @return the tcdeb_commission
+	 */
+	public String getTcdeb_commission() {
+		return tcdeb_commission;
+	}
+	/**
+	 * @param tcdeb_commission the tcdeb_commission to set
+	 */
+	public void setTcdeb_commission(String tcdeb_commission) {
+		this.tcdeb_commission = tcdeb_commission;
+	}
+	/**
+	 * @return the tcdeb_exporterid
+	 */
+	public String getTcdeb_exporterid() {
+		return tcdeb_exporterid;
+	}
+	/**
+	 * @param tcdeb_exporterid the tcdeb_exporterid to set
+	 */
+	public void setTcdeb_exporterid(String tcdeb_exporterid) {
+		this.tcdeb_exporterid = tcdeb_exporterid;
+	}
+	/**
+	 * @return the tcdeb_exchangerate
+	 */
+	public String getTcdeb_exchangerate() {
+		return tcdeb_exchangerate;
+	}
+	/**
+	 * @param tcdeb_exchangerate the tcdeb_exchangerate to set
+	 */
+	public void setTcdeb_exchangerate(String tcdeb_exchangerate) {
+		this.tcdeb_exchangerate = tcdeb_exchangerate;
 	}
 	
 }

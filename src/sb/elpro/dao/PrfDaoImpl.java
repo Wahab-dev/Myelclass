@@ -1006,7 +1006,7 @@ public class PrfDaoImpl implements PrfDao {
 				pst1.setString(8, "NA");
 				pst1.setString(9, "NA");
 				pst1.setString(10, artindertdetail.getPrf_contractnum());
-				pst1.setString(11, "2013-12-30");
+				pst1.setString(11, DateConversion.ConverttoMysqlDate("01-01-2014"));
 				addstatusrow = pst1.executeUpdate();
 				System.out.println("Sucessfully Inseerter in Status Table." + addstatusrow);
 			}

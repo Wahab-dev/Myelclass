@@ -213,12 +213,13 @@ $(document).ready(function() {
 	        	$("#tcdeb_tcdebitno").val(debitno);
 	        	$("#tcdeb_tcdebitdate").val($("#deb_debitdate").val());
 	        	$("#tcdeb_exporter").val($("#deb_exporter").val());
+	        	$("#tcdeb_exporterid").val($("#deb_exporterid").val());
 	        	$("#tcdeb_tanaddr").val($("#deb_tanaddr").val());
 	        	$("#tcdeb_tantelephone").val($("#deb_tantelephone").val());
-	        	//$("#tcdeb_tcdebitdate").val($("#deb_debitdate").val());
-	         	/*$("#tcdeb_ctno").val($("#deb_contractno").val());
+	        	$("#tcdeb_invoiceamt").val($("#deb_invoiceamt").val());
+	         	$("#tcdeb_ctno").val($("#deb_contractno").val());
 	         	$("#tcdeb_commission").val($("#deb_commission").val());
-	         	$("#tcdeb_exchangerate").val($("#deb_exchangerate").val());*/
+	         	$("#tcdeb_exchangerate").val($("#deb_exchangerate").val());
 	        	$("#tcdeb_taninvno").val($("#deb_taninvno").val());
 	        	$("#tcdeb_elclassrefno").val($("#deb_elclassrefno").val());
 	        	$("#tcdeb_tcamt").val($("#deb_tc").val());
@@ -226,6 +227,30 @@ $(document).ready(function() {
 	        	$("#tcdeb_totalquantity").val($("#deb_totalquantity").val());
 	        },
 	        buttons:{
+	        	"Clear" : function () {
+	        		alert("In Print");
+	        		var formdata = $('#tcdebitform').serialize();
+	        		alert("Form Data"+formdata);
+	        		$.ajax({
+	        			url: "/Myelclass/pojw/print.do",
+	        			type: "POST",
+	        			async: true,
+	        			dataType: "html",
+	        			data: formdata,
+	        			contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+	        			success: function (data) {
+	        				alert(data);
+	                     $(this).dialog("close");
+	        			}, 
+	        			error: function (data) {
+	        				alert("F "+data);
+	        				console.log("error");
+	        			} 
+	        		});	
+				},
+				"Close" : function () {
+					 $(this).dialog("close");
+				},
 	        	"Save": function () {
 	        		var formdata = $('#tcdebitform').serialize();
 	        		alert("Form Data"+formdata);
@@ -237,10 +262,10 @@ $(document).ready(function() {
 	    				dataType: "text",
 	    				data: formdata,
 	    				contentType: "application/x-www-form-urlencoded; charset=UTF-8",
-	    				success: function (data) {
-	    					alert("S"+data);
-	    	                console.log("success"+data);
-	    	                $(this).dialog("close");
+	    				success: function (textStatus) {
+	    	                alert("success"+textStatus);
+	    	                $("#Btndebitsave").removeAttr('disabled');
+	    	               // $(this).dialog("close");
 	    	            }, 
 	    	            error: function (data) {
 	    	            	alert("F "+data);
@@ -248,12 +273,7 @@ $(document).ready(function() {
 	    	            } 
 	    			});
 				},
-				"Clear" : function () {
-					alert("T");
-				},
-				"Close" : function () {
-					 $(this).dialog("close");
-				},
+				
 	        },
 		});
 	 
@@ -286,23 +306,20 @@ $(document).ready(function() {
 	    test_skill();
 	 });
 	 
-	 $("#tcdeb_exchangerate").focusout(function() {
-			var tc = $("#tcdeb_tcamt").val();
+	 $("#tcdeb_elclassamt").focusout(function() {
+		 	var tc = $("#tcdeb_tcamt").val();
 			var exchngrate = $("#tcdeb_exchangerate").val();
 			var totqty = $("#tcdeb_totalquantity").val();
-			
 			var tcindex = tc.indexOf(' ');
-			
 			var tcpercent = tc.substring(0,tcindex);
 			tcpercent.trim();
 			
 			 var amt = (tcpercent * totqty) / 100;
-			 
 			 var amtinrs = (amt * exchngrate);
-			 
-			 $("#tcdeb_elclassamtinrs").val(amtinrs);
-		   
-	});
+			 $("#tcdeb_elclassamt").val(Math.round(amtinrs));
+	 });
+	 
+	 
 	 /*
 	  * Function to Convert the Number To Words Print
 	  * Reused from the Old elpro Software 

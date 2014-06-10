@@ -84,10 +84,10 @@ $(document).ready(function() {
 				invtrackgrid.jqGrid('groupingRemove',true);	
 			}else{
 				invtrackgrid.jqGrid('groupingGroupBy', vl, {
-					groupOrder : ['desc'],
+					groupOrder : ['asc'],
 		            groupColumnShow: [false],
 		            groupingView: {
-		                groupCollapse: true
+		                groupCollapse: [true],
 		            }
 		        });
 			}	
@@ -226,20 +226,19 @@ $(document).ready(function() {
 		},  
 		caption: "Invoice Tracking Report",
     	pager: '#invtrackpager',
-    	rowNum: 40, 
-    	rowList: [40,50,60],
-        loadtext: "Bow Bow",
-        height : "auto",
+    	rowNum: 50, 
+    	rowList: [5,10,20,50,100,150,200,250,300],
+        loadtext: "Loading the Invoice Tracking Page ",
+        height : "360",
         width: "auto",  
-        sortname: 'Ctno',  
-        sortorder: 'desc',
+        rownumbers: true,  
         loadonce: true,
         sortable: true,
-        grouping: true,
+      //  grouping: true,
         gridview : true,
         viewrecords: true,
         footerrow: true,
-        userDataOnFooter : true, //Gets Footer Total Recod from Server Side 
+        //userDataOnFooter : true, //Gets Footer Total Recod from Server Side 
         emptyrecords: 'No records to display',
         loadComplete: function() {
         	 var $self = $(this),
@@ -258,7 +257,10 @@ $(document).ready(function() {
 		 	del: false, 
 		 	search: true, 
 		 	view: true, 
-		 	addtext: 'Add', edittext: 'Edit', deltext: 'Delete', searchtext: 'Search', refreshtext: 'Reload', viewtext: 'View'
+		 	addtext: 'Add', edittext: 'Edit', deltext: 'Delete', searchtext: 'Search', refreshtext: 'Reload', viewtext: 'View',
+		 		 beforeRefresh: function(){
+		 			invtrackgrid.jqGrid('setGridParam',{datatype:'json'}).trigger('reloadGrid');
+				 }
 	});
 	invtrackgrid.jqGrid('navButtonAdd',"#invtrackpager",{caption:"Toggle",title:"Toggle Search Toolbar", buttonicon :'ui-icon-pin-s',
 		onClickButton:function(){

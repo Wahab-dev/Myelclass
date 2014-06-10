@@ -5,6 +5,7 @@ package sb.elpro.bo;
 
 import java.util.List;
 
+import sb.elpro.model.DebitFormDetails;
 import sb.elpro.model.InvoiceBean;
 
 /**
@@ -20,6 +21,14 @@ public interface TcDebitBo  {
 	 * etc
 	 */
 	List<InvoiceBean> getinvDetails(String invno) throws Exception;
+
+	/**  
+	 * (Method description)
+	 * @param
+	 * @return
+	 * etc
+	 */
+	boolean saveTCDebitform(DebitFormDetails tcformbean)throws Exception;
 
 	
 }

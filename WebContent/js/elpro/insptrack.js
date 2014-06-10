@@ -57,9 +57,10 @@ $(function() {
 		pager: '#insptrackpager',
 		rowNum:20, 
 		rowList:[20,50,60],
-	    loadtext: "Bow Bow... ",
-	    height : "auto",
+		loadtext: "Inspection Tracking is Loading", 
         width: "auto",  
+		height : "360",
+		rownumbers: true, 
 	    sortname: 'inspContractNo',  
 	    sortorder: 'desc',
 	    viewrecords: true,
@@ -67,8 +68,8 @@ $(function() {
         gridview: true , // if used cant use subgrid, treegrid and aftertInsertRow 
 	    footerrow: true,
         loadonce: true,
-        grouping:true, 
-        groupingView : { groupField : ['inspContractNo'] },
+        //grouping:true, 
+        //groupingView : { groupField : ['inspContractNo'] },
 	    emptyrecords: 'No records to display',
 	    loadComplete: function () {
           var $self = $(this),

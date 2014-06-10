@@ -165,23 +165,22 @@ $(document).ready(function() {
 			 records: "records" //calls Third
 		 }, 
 		 pager: '#debittrackpager',
+		 loadtext: "Debit Tracking is Loading",
+		 caption: 'Debit Tracking Page', 
+		 emptyrecords: 'No records to display',
 		 rowNum:30, 
+		 rownumbers:true,
 		 loadonce: true,
 		 rowList:[30,50,70],	       
-		 sortorder: 'desc',  
-		 height : 'automatic',
+		 sortorder: 'asc',  
+		 height : '360',
 		 sortname : 'deb_debitno',  
-		 sortorder : 'desc',
-		 emptyrecords: 'No records to display',
-		 caption: 'Debit Tracking Page', 
 		 gridview : true,
 		 viewrecords: true,
 		 footerrow: true,
-		 grouping:true, 
-		// groupingView : { groupField : ['deb_exporter'] },
 		 loadComplete: function() { //deb_total
-        	 var $self = $(this),
-        	 amt = parseFloat($self.jqGrid("getCol", "deb_elclassamtinrs", false, "sum")).toFixed(2);
+			 var $self = $(this),
+			 amt = parseFloat($self.jqGrid("getCol", "deb_elclassamtinrs", false, "sum")).toFixed(2);
         	 tax = parseFloat($self.jqGrid("getCol", "deb_tax", false, "sum")).toFixed(2);
         	 due = parseFloat($self.jqGrid("getCol", "deb_due", false, "sum")).toFixed(2);
         	 tot = parseFloat($self.jqGrid("getCol", "deb_total", false, "sum")).toFixed(2);
@@ -189,7 +188,7 @@ $(document).ready(function() {
         	 $self.jqGrid("footerData", "set", {deb_tax: parseFloat(tax)});
         	 $self.jqGrid("footerData", "set", {deb_due: parseFloat(due)});
         	 $self.jqGrid("footerData", "set", {deb_total: parseFloat(tot)});
-        	
+        	 //$(this).jqGrid('showCol', 'rn');
         }
 	 }).jqGrid('navGrid','#debittrackpager',{
 		 edit: true, add: false, del: false,  search: true, view: true, 

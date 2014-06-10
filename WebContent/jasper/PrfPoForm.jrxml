@@ -14,7 +14,7 @@
 	<parameter name="prf_exportertele" class="java.lang.String"/>
 	<parameter name="prf_exporterfax" class="java.lang.String"/>
 	<parameter name="pojw_splcdn" class="java.lang.String"/>
-	<queryString>
+	<queryString language="SQL">
 		<![CDATA[SELECT * FROM elpro.tbl_prf_article where contractno = 'PO248/14-15']]>
 	</queryString>
 	<field name="articleid" class="java.lang.Integer">

@@ -28,9 +28,9 @@ case
 		 else unit
 	 end as unit, 
 	PIECES,  concat (RATE_SIGN,RATE,' ',SHIPMENT) as Rate,  
-	DATE_FORMAT(STR_TO_DATE(order_date, '%d/%m/%Y'), '%e/%c/%y') as CONFIRM_DD, 
-	DATE_FORMAT(STR_TO_DATE(order_date, '%d/%m/%Y'), '%e/%c/%y') as ACTUAL_DD, 
-	DATE_FORMAT(STR_TO_DATE(order_date, '%d/%m/%Y'), '%e/%c/%y') as REVISED_DD, 
+	DATE_FORMAT(STR_TO_DATE(CONFIRM_DD, '%d/%m/%Y'), '%e/%c/%y') as CONFIRM_DD, 
+	DATE_FORMAT(STR_TO_DATE(ACTUAL_DD, '%d/%m/%Y'), '%e/%c/%y') as ACTUAL_DD, 
+	DATE_FORMAT(STR_TO_DATE(REVISED_DD, '%d/%m/%Y'), '%e/%c/%y') as REVISED_DD, 
 	PAYMENT, Replace (Comments,'NULL','') as Comments,  replace (PO_JW_No,'N/A','') as PO_JW_No,  QUANTITY_SHIPPED,  REMAINING_QUANTITY,  b.STATUS from elclass.tab_prf a, 	elclass.tab_prf_article b, elclass.tab_prf_jw_temp c, elclass.tab_srf_prf_tannery d,elclass.tab_srf_prf_tannery e, elclass.tab_deliver_customer f where a.CONTRACT_NUMBER = b.Contract_number and  a.CONTRACT_NUMBER = c.ContractNo and d.Tannery_Name = c.TanneryName  and e.Tannery_Name = a.TANNERY_NAME and a.CUSTOMER_NAME = f.Deliver  and b.STATUS in  ('PENDING','REWORK') order by d.DEBIT_SEQ Asc,a.CONTRACT_NUMBER Asc,ORDER_DATE Asc, DESCRIPTION Asc,COLOR Asc]]>
 	</queryString>
 	<field name="Customer" class="java.lang.String"/>
@@ -282,7 +282,7 @@ case
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font size="9" isBold="true"/>
 					</textElement>
-					<text><![CDATA[Rate]]></text>
+					<text><![CDATA[Price]]></text>
 				</staticText>
 				<staticText>
 					<reportElement mode="Opaque" x="1020" y="16" width="120" height="16" backcolor="#C0C0C0" uuid="9957ec59-921d-44c8-9269-447e9fab7cc8">
@@ -318,7 +318,7 @@ case
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font size="9" isBold="true"/>
 					</textElement>
-					<text><![CDATA[ADD]]></text>
+					<text><![CDATA[CDD]]></text>
 				</staticText>
 				<staticText>
 					<reportElement mode="Opaque" x="675" y="16" width="52" height="16" backcolor="#C0C0C0" uuid="1b2066b2-e986-443c-a728-1574398c0e2f">
@@ -335,7 +335,7 @@ case
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font size="9" isBold="true"/>
 					</textElement>
-					<text><![CDATA[CDD]]></text>
+					<text><![CDATA[ADD]]></text>
 				</staticText>
 				<staticText>
 					<reportElement mode="Opaque" x="727" y="16" width="52" height="16" backcolor="#C0C0C0" uuid="8ff7661e-4359-4c79-a834-1096b93213de">
@@ -687,7 +687,7 @@ case
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{ACTUAL_DD}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{CONFIRM_DD}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement x="779" y="0" width="65" height="16" uuid="03b4c0fb-f55a-4b37-a661-3d6826f7deee">
@@ -745,7 +745,7 @@ case
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{CONFIRM_DD}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{ACTUAL_DD}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement x="844" y="0" width="46" height="16" uuid="1d8b6d3f-044e-4603-bbe4-fb21ae9e6bcf">

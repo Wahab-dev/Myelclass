@@ -318,10 +318,12 @@ $(function() {
 		records: "records" //calls Third
 	},  
 	caption : 'Sample Tracking Report',
+	loadtext: "Sample Tracking is Loading",
 	pager : '#sampletrackpgr',
 	rowNum : 20, 
 	rowList : [5,10,20,40,50,100,200],
-	height: 'automatic',
+	rownumbers: true,  
+	height: '360',
     width: 'automatic', 
     sortname : 'sampleno',  
     sortorder : 'desc',
@@ -331,12 +333,11 @@ $(function() {
     gridview : true,
     viewrecords: true,
     footerrow: true,
-    loadonce: true,
     toppager:true,
     shrinktofit:false,
     emptyrecords: 'No records to display',
-    grouping:true, 
-    groupingView : { groupField : ['sampleno'] },
+    //grouping:true, 
+   // groupingView : { groupField : ['sampleno'] },
     loadComplete: function () {
         var $self = $(this),
             sum = $self.jqGrid("getCol", "pcs", false, "sum");

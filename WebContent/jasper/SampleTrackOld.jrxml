@@ -113,7 +113,7 @@ case
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font size="9" isBold="true"/>
 					</textElement>
-					<text><![CDATA[S No]]></text>
+					<text><![CDATA[SRF No]]></text>
 				</staticText>
 				<staticText>
 					<reportElement style="Column header" mode="Opaque" x="38" y="17" width="42" height="16" forecolor="#000000" backcolor="#C0C0C0" uuid="9489b4e8-104f-47c4-ad1a-7f3df0024da0">
@@ -308,7 +308,7 @@ case
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font size="9" isBold="true"/>
 					</textElement>
-					<text><![CDATA[Rate]]></text>
+					<text><![CDATA[Price]]></text>
 				</staticText>
 				<staticText>
 					<reportElement style="Column header" mode="Opaque" x="852" y="17" width="58" height="16" forecolor="#000000" backcolor="#C0C0C0" uuid="31790e62-cf0d-494f-91c8-cd196a547f41">

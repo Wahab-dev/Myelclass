@@ -336,6 +336,7 @@ public class InspectionGridAction extends Action{
 		             }
              	}else if(event.equalsIgnoreCase("loadarticle")){
              		String ctno = request.getParameter("ctno");
+             		System.out.println(" Ct No in inspection Form GRID  "+ctno);
              		List<ProductDetails> inspartllist =  inspbo.getInspArtDetails(ctno);
     				int records = inspartllist.size();
     				System.out.println("Reords  "+records);
