@@ -22,6 +22,7 @@ public class InspectionBean implements Serializable {
 	private String inspqualityctrlr	;
 	private String insp_cdn;
 	private String inspcomments;
+	private String insptype;
 	
 	private String articleid;	
 	private String artidhidden;	
@@ -827,6 +828,18 @@ public class InspectionBean implements Serializable {
 	 */
 	public void setSkincount3(String skincount3) {
 		this.skincount3 = skincount3;
+	}
+	/**
+	 * @return the insptype
+	 */
+	public String getInsptype() {
+		return insptype;
+	}
+	/**
+	 * @param insptype the insptype to set
+	 */
+	public void setInsptype(String insptype) {
+		this.insptype = insptype;
 	}
 
 

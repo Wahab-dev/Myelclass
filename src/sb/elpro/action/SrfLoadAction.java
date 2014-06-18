@@ -59,7 +59,7 @@ public class SrfLoadAction extends Action  {
 				}
 				return map.findForward("srfisloaded");
 			}else{
-				return map.findForward("login");
+				return map.findForward("logout");
 			}
 		
 		}

@@ -96,7 +96,10 @@ $(function() {
 <table border="1" cellspacing="0" cellpadding="0" >
    		<tr>  			
    			<td>Welcome <h:text property="userinsession" styleId="userinsession" value="${user.name}" readonly="true" ></h:text></td> 	
-   			<td><h:text property="inspactionform" styleId="inspactionform" value="${inspactionform}" readonly="true" ></h:text></td>	
+   			<td><h:text property="inspactionform" styleId="inspactionform" value="${inspactionform}" readonly="true" ></h:text></td>
+   			<td>
+   				
+   			</td>	
    			<td><h:submit property="inspaction" value="Logout"></h:submit></td> 
    		</tr>
    </table>
@@ -104,6 +107,15 @@ $(function() {
 	  	<tr>
 		   <td>
 		   	<table>
+		   		 <tr>
+		   		 	 <td>
+		     		Type : 
+		     		 <h:select property="insptype"  styleId="insptype">             
+        	    			 <h:option value="Ct">Contract </h:option>
+        					 <h:option value="sample">Sample</h:option>
+        				   </h:select>         												
+		     		</td>
+		   		 </tr>
 		     	 <tr>
 		     	    <td>
 		     		 <label for="Contract" id="ctno">Contract Number :</label>

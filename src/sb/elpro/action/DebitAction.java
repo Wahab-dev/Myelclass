@@ -50,7 +50,7 @@ public class DebitAction extends DispatchAction {
 			HttpServletRequest request, HttpServletResponse response) throws Exception{
 		usersession = request.getSession(false);
 		usersession.invalidate();
-		return mapping.findForward("login");
+		return mapping.findForward("logout");
 	}
 	public ActionForward Save(ActionMapping mapping, ActionForm form, 
 			HttpServletRequest request, HttpServletResponse response) throws Exception{
@@ -100,7 +100,7 @@ public class DebitAction extends DispatchAction {
 		 }
 		 else{
 			 System.out.println(" Invalid Session");
-			 return mapping.findForward("login");
+			 return mapping.findForward("logout");
 		 } 
 	}
 	public ActionForward TcSave(ActionMapping mapping, ActionForm form, 

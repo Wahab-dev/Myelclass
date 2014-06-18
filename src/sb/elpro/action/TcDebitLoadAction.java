@@ -69,7 +69,7 @@ public class TcDebitLoadAction extends Action {
 				}
 		}else{
 			 System.out.println(" Invalid Session");
-			 return mapping.findForward("login");
+			 return mapping.findForward("logout");
 		 } 
 	}
 	

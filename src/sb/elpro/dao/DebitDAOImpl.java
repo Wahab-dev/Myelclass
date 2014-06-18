@@ -101,6 +101,14 @@ public class DebitDaoImpl implements DebitDao {
 			System.out.println(sql);
 			rs = st.executeQuery(sql);
 			while(rs.next()) {
+				float debamt = (float) 0.00;
+				//float qshiped = Float.parseFloat(rs.getString("qty"));
+				float invamt= Float.parseFloat(rs.getString("amt"));
+				if(!(rs.getString("comm").isEmpty() || rs.getString("comm").equalsIgnoreCase("null"))){
+					float com = Float.valueOf(rs.getString("comm").replaceAll("[^\\d.]+|\\.(?!\\d)", ""));
+					 debamt = ((invamt * com) /100);
+				}
+				
 			InvBillDetails invdetload= new InvBillDetails();
 				invdetload.setInvno(rs.getString("invno"));
 				invdetload.setInvdt(DateConversion.ConverttoNormalDate(rs.getString("invdate")));
@@ -121,7 +129,8 @@ public class DebitDaoImpl implements DebitDao {
 				invdetload.setInvtotamount(rs.getString("totamt"));
 				invdetload.setInvclaim(rs.getString("discounts"));
 				invdetload.setInvothercrg(rs.getString("othercharges"));
-				System.out.println("Article Retrieved Successfully");
+				invdetload.setDebamt(String.valueOf(debamt));
+				
 				System.out.println("invno  "+invdetload.getInvno());
 				debInvarray.add(invdetload);
 				}

@@ -39,7 +39,7 @@ public class MasterTrackAction extends Action {
 				return map.findForward("masterisloaded");			
 			 }else{
 				 System.out.println("Error Invalid Session");
-				 return map.findForward("login");
+				 return map.findForward("logout");
 			 }	
 		}
 }

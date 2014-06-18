@@ -73,7 +73,7 @@ public class DebitForm extends ActionForm{
 	private String tcdeb_elclassamt;
 	private String tcdeb_elclassamtinrs;
 	private String tcdeb_tcamt;
-
+	private String tcdebamtinwords;
 	private String debactionform;
 	
 	/**
@@ -766,6 +766,18 @@ public class DebitForm extends ActionForm{
 	 */
 	public void setTcdeb_exporterid(String tcdeb_exporterid) {
 		this.tcdeb_exporterid = tcdeb_exporterid;
+	}
+	/**
+	 * @return the tcdebamtinwords
+	 */
+	public String getTcdebamtinwords() {
+		return tcdebamtinwords;
+	}
+	/**
+	 * @param tcdebamtinwords the tcdebamtinwords to set
+	 */
+	public void setTcdebamtinwords(String tcdebamtinwords) {
+		this.tcdebamtinwords = tcdebamtinwords;
 	}
 
 }

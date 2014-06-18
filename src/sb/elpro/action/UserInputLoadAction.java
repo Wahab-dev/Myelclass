@@ -25,8 +25,7 @@ public class UserInputLoadAction extends Action{
 
 		public ActionForward execute( ActionMapping map, ActionForm form,
 				HttpServletRequest request , HttpServletResponse response) throws IOException, ServletException{
-			
-			System.out.println("hooooa");
+		
 			return map.findForward("userinputisloaded");
 		}
 		

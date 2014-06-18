@@ -49,7 +49,7 @@ public class PaymentAction extends DispatchAction{
 		usersession.invalidate();
 		
 		//return mapping.getInputForward();
-		return mapping.findForward("login");
+		return mapping.findForward("logout");
 	}
 	public ActionForward Save(ActionMapping mapping, ActionForm form, 
 			HttpServletRequest request, HttpServletResponse response) throws Exception{
@@ -99,7 +99,7 @@ public class PaymentAction extends DispatchAction{
 		 }
 		 else{
 			 System.out.println(" Invalid Session");
-			 return mapping.findForward("login");
+			 return mapping.findForward("logout");
 		 }
 		
 		 

@@ -92,12 +92,13 @@ $(function() {
 <h:form>
 <div>
 	 Group By: <select id="chngroup"> 
+			<option value="clear" selected="selected">Remove Grouping</option>
 			<option value="inspContractNo">CtNo</option> 
 			<option value="inspdate">date</option> 
 			<option value="inspqualityctrlr">QCtrlr</option>
 			<option value="article">Article</option> 
 			<option value="color">color</option> 
-			<option value="clear" >Remove Grouping</option>
+			
 		</select> <br/><br/> 
 	</div>	
 	<table id="insptracktbl"></table> 

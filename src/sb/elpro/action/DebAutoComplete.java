@@ -71,7 +71,7 @@ public class DebAutoComplete extends Action {
 				}
 			}else {
 				System.out.println("Invalid User ");
-				mapping.findForward("login");
+				mapping.findForward("logout");
 			}
 			return null;
 	}

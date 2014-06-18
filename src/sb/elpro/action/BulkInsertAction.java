@@ -223,7 +223,7 @@ public class BulkInsertAction extends Action {
 				}
 			 }else{
 				 System.out.println("Error Invalid Session");
-				 return map.findForward("login");
+				 return map.findForward("logout");
 			 }
 			return null;
 		}

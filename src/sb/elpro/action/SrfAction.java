@@ -100,7 +100,7 @@ public class SrfAction extends DispatchAction {
 			 }
 		 }else{	 
 		 System.out.println(" LOgin Credential Fails");
-		 return map.findForward("login");
+		 return map.findForward("logout");
 		 }
 	}
 	
@@ -110,7 +110,7 @@ public class SrfAction extends DispatchAction {
 		usersession = request.getSession(false);
 		usersession.invalidate();			
 		
-		return map.findForward("login");
+		return map.findForward("logout");
 	}
 	
 	public ActionForward Clear(ActionMapping map, ActionForm form, 

@@ -96,6 +96,8 @@ $(function() {
 					sampletrackgrid.jqGrid('groupingGroupBy', vl, {
 			            groupOrder : ['desc'],
 			            groupColumnShow: [true],
+			            groupText : ['<b>{0} - {1} Records</b>'],
+			            //groupSummary : [true],
 			            groupingView: {
 			            	groupCollapse: [true],
 			            }
@@ -134,13 +136,13 @@ $(function() {
     	colModel :[  
                 {name: 'status', index: 'status', align:'center', width:35, search: true, stype:'text', editable:true, sortable: true, hidden: false,  
 		  			edittype: 'select', 
-		 			editoptions:{value:{0:'Select Status',P:'Pending',C:'Closed',CA:'Cancel',IC:'IC',S:'Shipped',D:'Delivered'},defaultValue: 'Pending'},
+		 			editoptions:{value:{P:'Pending',I:'Inspection',IC:'IC',D:'Delivered',S:'Shipped',RW:'Rework',BI:'Billed',C:'Closed',CA:'Cancel',},defaultValue: 'Pending'},
 		  			editrules :{require : true},
 		  			search: true, stype:'select', searchrules:{required:true},   
 		  			//searchoptions:{ sopt:['eq'],value:{P:'Pending',I:'Inspection', IC:'In IC',S:'Shipped',D:'Delivered',RW:'Rework',Bl:'Billed',C:'Closed',CA:'Cancel'}},
-		  			searchoptions:{value:":All;P:Pending;I:Inspection;IC:In IC;D:Delivered;RW:Rework;S:Shipped;BI:Billed;C:Closed;CA:Cancel"},
+		  			searchoptions:{value:":All;P:Pending;I:Inspection;IC:In IC;D:Delivered;S:Shipped;RW:Rework;BI:Billed;C:Closed;CA:Cancel"},
 	  			}, 
-	  			{name: 'sampleno', index: 'sampleno', align:'center', width:60, editable:true, search: true, stype:'text', sortable: true, hidden: false, 			
+	  			{name: 'sampleno', index: 'sampleno', align:'center', width:50, editable:true, search: true, stype:'text', sortable: true, hidden: false, 			
 	  				formatter: "dynamicLink",
 				    formatoptions: {
 				        url: function (cellValue, rowId, rowData) {
@@ -223,10 +225,10 @@ $(function() {
 					
 				},
 				{name: 'quantity', index: 'quantity', align:'center', width:60,  search: true, stype:'text',editable:true, sortable: true, hidden: false, 
-					
+					//summaryType:'sum', summaryTpl:'<b> {0}</b>',
 				},
 				{name: 'pcs', index: 'pcs', align:'center', width:30,  search: true, stype:'text',editable:true, sortable: true, hidden: false, 
-					
+					//summaryType:'sum', summaryTpl:'<b>Sum: {0}</b>',
 				},
 				{name: 'colormatching', index: 'colormatching',  align:'center', width:60,  search: true, stype:'text',editable:true, sortable: true, hidden: true	, 
 					
@@ -320,14 +322,16 @@ $(function() {
 	caption : 'Sample Tracking Report',
 	loadtext: "Sample Tracking is Loading",
 	pager : '#sampletrackpgr',
-	rowNum : 20, 
-	rowList : [5,10,20,40,50,100,200],
+	rowNum : 500, 
+	rowList : [5,10,20,40,50,100,200,500,1000],
 	rownumbers: true,  
 	height: '360',
     width: 'automatic', 
     sortname : 'sampleno',  
     sortorder : 'desc',
     loadonce: true,
+    ignoreCase:true,
+    hidegrid: false,
     editurl : '/Myelclass/SamptrackInsertAction.do',
     sortable : true,
     gridview : true,
@@ -415,9 +419,7 @@ $(function() {
 	   
 	   }
 	});
- 	sampletrackgrid.jqGrid('filterToolbar', {autosearch : true, searchOnEnter:false, stringResult: true  //To Enable AutoSearch please comment Search on Enter to False
-		//xlsold
-	});
+ 	sampletrackgrid.jqGrid('filterToolbar', {autosearch : true, searchOnEnter:false, stringResult: true ,  defaultSearch : "cn"});
  	sampletrackgrid.jqGrid('navButtonAdd', '#sampletrackpgr', {
         caption: "Pdf",
         buttonicon: "ui-icon-print",

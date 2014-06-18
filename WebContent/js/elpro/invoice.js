@@ -5,7 +5,6 @@
 
 $(document).ready(function() {
 	$("#inv_total").focusout(function() {
-		
 		var totamt = (parseFloat ($("#inv_total").val()) - parseFloat ($("#inv_discount").val())) + parseFloat ($("#othercharges").val());		
 		$("#inv_total").val(totamt);
 	});
@@ -37,8 +36,10 @@ $(document).ready(function() {
 				data: { term: str, action: "invtype" },
 				contentType: "application/x-www-form-urlencoded; charset=UTF-8",
 				success: function (data) {
-	                console.log("success"+data);
-	                $("#inv_invoiceno").val(data);
+					if($("#invactionform").val().toLowerCase() == "add" ){		
+						console.log("success"+data);
+		                $("#inv_invoiceno").val(data);
+					}
 	            }, 
 	            error: function (data) {
 	                console.log("error");
@@ -570,13 +571,16 @@ $(document).ready(function() {
 			            groupField : ['invno'],
 			            groupOrder : ['desc'] 
 			        },
-			        loadComplete: function () {	     
+			        loadComplete: function () {	 
+			        	//Need to Provice a Clear Solution here 
+			        	
+			        	/*alert ("hi "+$('#inv_invoiceno').val());
 				        var $self = $(this);
 			            var qshpdsum = $self.jqGrid("getCol", "invqshpd", false, "sum");
 			            var amtsum 	 = $self.jqGrid("getCol", "invamt", false, "sum");
 			            $self.jqGrid("footerData", "set", { invqshpd: qshpdsum});
 			            $self.jqGrid("footerData", "set", { invamt: amtsum});
-			           $("#inv_total").val(amtsum);
+			           $("#inv_total").val(amtsum);*/
 			        }
 				 });			
 				 invgrid.jqGrid('navGrid','#invbillpager',{

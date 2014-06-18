@@ -108,7 +108,7 @@ public class SamptrackInsertAction extends DispatchAction{
              }
 		 }else{
 			 System.out.println("Error Invalid Session");
-			 return map.findForward("login");
+			 return map.findForward("logout");
 		 }
 		
 		return null;
@@ -120,6 +120,6 @@ public class SamptrackInsertAction extends DispatchAction{
 		usersession = request.getSession(false);
 		usersession.invalidate();			
 		
-		return map.findForward("login");
+		return map.findForward("logout");
 	}
 }

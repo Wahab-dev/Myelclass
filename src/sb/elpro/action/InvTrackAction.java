@@ -84,7 +84,7 @@ public class InvTrackAction extends Action {
 			
 		}else{
 			System.out.println("Invalid User pls Login Again");
-			return map.findForward("login");
+			return map.findForward("logout");
 		}
 		return  null;
 	}

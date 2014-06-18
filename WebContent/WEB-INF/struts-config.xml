@@ -30,6 +30,7 @@
  <!-- GLOBAL FOWARDS -->
  <global-forwards>
  	<forward name="login" path="/Login.jsp"></forward>
+ 	<forward name="logout" path="/Logout.jsp" redirect="true"></forward>
  </global-forwards>
  <!-- GLOBAL ERRORS -->
 

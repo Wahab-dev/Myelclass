@@ -2,6 +2,7 @@
  *
  */
 $(document).ready(function() {
+	var finalWord ="";
 	$.get("/Myelclass/DebAutoComplete.do?action="+"debno", 
 		 	function(data){
 			 	if($("#debactionform").val().toLowerCase() == "edit" ){		
@@ -37,7 +38,7 @@ $(document).ready(function() {
 		 grid.jqGrid({
 			 url:"",
 			 datatype: "json",
-			 colNames:['Inv No','Inv date','Ct No','Article','Color','Size','Substance','Quantity','QShipd','QBal','Rate','Inv AMount','Other Chrg','Claim','Total','TC','Comm','Other'],
+			 colNames:['Inv No','Inv date','Ct No','Article','Color','Size','Substance','Quantity','QShipd','QBal','Rate','Inv AMount','Deb AMt ','Other Chrg','Claim','Total','TC','Comm','Other'],
 			 colModel:[
 			     {name: 'invno', index: 'invno' ,align:'center',width:50, hidden: false, },
 				 {name: 'invdt', index: 'invdt' ,align:'center',width:70, hidden: false,},
@@ -51,6 +52,10 @@ $(document).ready(function() {
 				 {name: 'invqbal', index: 'invqbal' ,align:'right',width:60, hidden: false,},
 				 {name: 'invrate', index: 'invrate' ,align:'center',width:50,  hidden: false,},
 				 {name: 'invamt', index: 'invamt' ,align:'right',width:70,  hidden: false,},
+				 {name: 'debamt', index: 'debamt' ,align:'right',width:70,  hidden: false,
+				  formatter:'number',
+                  formatoptions: { decimalSeparator: ".", thousandsSeparator: ",", decimalPlaces: 2, defaultValue: '0.00' },
+                 },
 				 {name: 'invothercrg', index: 'invothercrg' ,align:'right',width:70, hidden: false,},
 				 {name: 'invclaim', index: 'invclaim' ,align:'right',width:50, hidden: false,},
 				 {name: 'invtotamount', index: 'invtotamount' ,align:'right',width:70, hidden: false,},
@@ -66,36 +71,44 @@ $(document).ready(function() {
 				 records: "records" //calls Third
 			 }, 
 			 pager: '#deb_debpager',
-			 rowNum:5, 
-			 rowList:[5,7,9],	       
+			 rowNum:9, 
+			 rowList:[5,7,9,11,15,20],	       
 			 sortorder: 'desc',  
+			 hidegrid: false,
+			 gridview :true,
+			 viewrecords: true,
 			 height : 'automatic',
 			 emptyrecords: 'No records to display',
 			 caption: 'Debit Load',
-			// multiselect : true,
 			 footerrow: true,
 			 loadComplete: function (data){ //load complete fires immeddiately aftr server response
 				 var $self = $(this),
+				 //Sum Total Shipped, Inv Value, Debit Amt
 				 totshpd = $self.jqGrid("getCol", "invqshpd", false, "sum");
 				 totamt = $self.jqGrid("getCol", "invamt", false, "sum");
+				 totdebamt = $self.jqGrid("getCol", "debamt", false, "sum");
+				 //set Total Value 
 				 $self.jqGrid("footerData", "set", {invqshpd: totshpd.toFixed(2)});
 	        	 $self.jqGrid("footerData", "set", {invamt: totamt.toFixed(2)});
+	        	 $self.jqGrid("footerData", "set", {debamt: totdebamt.toFixed(2)});
 				 
-				 
+	        	 //Set Value for Text Box 
+	        	 $("#deb_totalquantity").val(totshpd.toFixed(2));
+	        	 $("#deb_invoiceamt").val(totamt.toFixed(2));
+	        	 $("#deb_elclassamt").val(totdebamt.toFixed(2));
+	        	  
 				 $("#tcbtn").addClass('ui-state-disabled'); // Diable TC btn
 				 $("#tcbutton").attr('disabled' , true);
-				 
 			 },
 			 onSelectRow: function(rowid, status, e) {
-				 var qshippedsum = grid.jqGrid('getCol', 'invqshpd', false, 'sum');
 				 var ctnos = grid.jqGrid('getCol', 'invctno', false);
 				 var selrowid = grid.jqGrid('getGridParam', 'selrow');
 		         var invdetails = grid.jqGrid('getRowData', selrowid);
 
 		         $("#deb_rate").val(invdetails.invrate);
-		         $("#deb_totalquantity").val(qshippedsum);
+		        
 		         $("#deb_commission").val(invdetails.invcomm.substring(0,4));
-		         $("#deb_invoiceamt").val(totamt.toFixed(2));
+		       
 		         $("#deb_invdate").val(invdetails.invdt);
 		         $("#deb_othercommission").val(invdetails.invothercomm);
 		         $("#deb_contractno").val(ctnos);
@@ -227,7 +240,7 @@ $(document).ready(function() {
 	        	$("#tcdeb_totalquantity").val($("#deb_totalquantity").val());
 	        },
 	        buttons:{
-	        	"Clear" : function () {
+	        	"Print" : function () {
 	        		alert("In Print");
 	        		var formdata = $('#tcdebitform').serialize();
 	        		alert("Form Data"+formdata);
@@ -265,7 +278,6 @@ $(document).ready(function() {
 	    				success: function (textStatus) {
 	    	                alert("success"+textStatus);
 	    	                $("#Btndebitsave").removeAttr('disabled');
-	    	               // $(this).dialog("close");
 	    	            }, 
 	    	            error: function (data) {
 	    	            	alert("F "+data);
@@ -303,7 +315,8 @@ $(document).ready(function() {
 	    $("#deb_tds").val(tds.toFixed(2));
 	    var due = total - tds;
 	    $("#deb_due").val(due.toFixed(0));
-	    test_skill();
+	    test_skill( $("#deb_total").val());
+	    $('#debamtinwords').val(finalWord);
 	 });
 	 
 	 $("#tcdeb_elclassamt").focusout(function() {
@@ -317,6 +330,9 @@ $(document).ready(function() {
 			 var amt = (tcpercent * totqty) / 100;
 			 var amtinrs = (amt * exchngrate);
 			 $("#tcdeb_elclassamt").val(Math.round(amtinrs));
+			 finalWord ="";
+			 test_skill( $("#tcdeb_elclassamt").val());
+			 $('#tcdebamtinwords').val(finalWord);
 	 });
 	 
 	 
@@ -358,10 +374,9 @@ $(document).ready(function() {
 			return result;
 		}
 
-		function test_skill() 
+		function test_skill(total) 
 		{
-			
-			    var junkVal=$('#deb_total').val();
+			    var junkVal=total;
 				junkVal=Math.round(junkVal);
 				var obStr=new String(junkVal);
 				numReversed=obStr.split("");
@@ -376,6 +391,7 @@ $(document).ready(function() {
 			    }
 			    if(Number(junkVal)==0){
 			    	$('#debamtinwords').val("Zero Only");
+			    	$('#tcdebamtinwords').val("Zero Only");
 			        return false;
 			    }
 			    if(actnumber.length>9){
@@ -389,7 +405,6 @@ $(document).ready(function() {
 			 
 			    var iWordsLength=numReversed.length;
 			    var inWords=new Array();
-			    var finalWord="";
 			    j=0;
 			    for(var i=0; i<iWordsLength; i++){
 			        switch(i)
@@ -477,6 +492,7 @@ $(document).ready(function() {
 			    for(i=0; i<inWords.length; i++) {
 			        finalWord+=inWords[i];
 			    }
-			    $('#debamtinwords').val(finalWord);
+			    //$('#debamtinwords').val(finalWord);
+			    return finalWord;
 			}
 });

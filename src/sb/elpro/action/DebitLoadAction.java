@@ -49,7 +49,7 @@ public class DebitLoadAction extends Action {
 			return map.findForward("debitisloaded");
 		}else{
 			System.out.println("Error");
-			return map.findForward("login");
+			return map.findForward("logout");
 		}
 		
 	}

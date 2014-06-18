@@ -18,6 +18,7 @@ public class InspectionForm extends ActionForm {
 	 */
 	private static final long serialVersionUID = -1326268577180737805L;
 	private String id; 
+	private String insptype;
 	private String inspid; //inspection id
 	private String inspContractNo;
 	private String inspdate;
@@ -851,6 +852,18 @@ public class InspectionForm extends ActionForm {
 	 */
 	public void setCtdthidden(String ctdthidden) {
 		this.ctdthidden = ctdthidden;
+	}
+	/**
+	 * @return the insptype
+	 */
+	public String getInsptype() {
+		return insptype;
+	}
+	/**
+	 * @param insptype the insptype to set
+	 */
+	public void setInsptype(String insptype) {
+		this.insptype = insptype;
 	}
 }
 

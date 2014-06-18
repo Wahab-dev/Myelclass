@@ -12,16 +12,23 @@
 	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
 	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
 	<parameter name="pinsctno" class="java.lang.String"/>
+	<parameter name="pinspdate" class="java.lang.String"/>
 	<parameter name="pqc" class="java.lang.String"/>
-	<parameter name="ptype" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA[$P{ptype}.equals("sampleno")
-? "SELECT contractno, DATE_FORMAT(orderdt, '%e/%c/%y') as orderdt, concat(articletype,' ',articlename)as article, color, size, substance, selection, concat(quantity,' ',unit)as quantity, inspcdn, shortform, tanshform FROM elpro.tbl_prf_article article left outer join elpro.tbl_prfform form on article.contractno = form.ctno left outer join elpro.tbl_customer cust on cust.custid = form.customerid  left outer join elpro.tbl_tannery tan on tan.tanid = form.tanneryid where contractno = '"+$P{pinsctno}+"'  order by article asc, color asc,  size asc, substance asc, selection asc, quantity asc"
-: "SELECT sampleno, DATE_FORMAT(orderdt, '%e/%c/%y') as orderdt, concat(articletype,' ',articlename)as article, color, size, substance, selection, concat(quantity,'',unit)as quantity, inspcdn, shortform, tanshform FROM elpro.tbl_srf_article article left outer join elpro.tbl_srfform form on article.sampleno = form.sampleno left outer join elpro.tbl_customer cust on cust.custid = form.customerid  left outer join elpro.tbl_tannery tan on tan.tanid = form.tanneryid where sampleno = '"+$P{pinsctno}+"'  order by article asc, color asc,  size asc, substance asc, selection asc, quantity asc"]]></defaultValueExpression>
-	</parameter>
-	<parameter name="ptypesql" class="java.lang.String"/>
+	<parameter name="particleid" class="java.lang.String"/>
 	<queryString language="SQL">
-		<![CDATA[$P!{ptype}]]>
+		<![CDATA[SELECT  
+	contractno, DATE_FORMAT(orderdt, '%e/%c/%y') as orderdt, concat(articletype,' ',articlename)as article, color, size, substance, selection, concat(quantity,' ',unit)as quantity,  
+	 inspcdn, shortform, tanshform
+FROM 
+	elpro.tbl_prf_article article
+left outer join elpro.tbl_prfform form on article.contractno = form.ctno
+left outer join elpro.tbl_customer cust on cust.custid = form.customerid 
+left outer join elpro.tbl_tannery tan on tan.tanid = form.tanneryid
+where contractno =$P{pinsctno}  order by article asc, color asc,  size asc, substance asc, selection asc, quantity asc]]>
 	</queryString>
+	<field name="contractno" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
 	<field name="article" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
@@ -50,9 +57,6 @@
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<field name="tanshform" class="java.lang.String">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="sampleno" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<background>
@@ -173,7 +177,7 @@
 						<textElement textAlignment="Center">
 							<font fontName="Times New Roman" size="9"/>
 						</textElement>
-						<textFieldExpression><![CDATA[$F{sampleno}]]></textFieldExpression>
+						<textFieldExpression><![CDATA[$F{contractno}]]></textFieldExpression>
 					</textField>
 					<staticText>
 						<reportElement mode="Opaque" x="0" y="0" width="80" height="14" forecolor="#000000" backcolor="#C0C0C0" uuid="608caee0-49d5-4239-8323-2f1aa82413a9">
@@ -1238,7 +1242,7 @@
 						<textElement textAlignment="Center">
 							<font fontName="Times New Roman" size="9"/>
 						</textElement>
-						<text><![CDATA[Crocking Wet]]></text>
+						<text><![CDATA[Crocking Dry]]></text>
 					</staticText>
 					<textField isBlankWhenNull="true">
 						<reportElement x="90" y="0" width="60" height="14" uuid="c6bfcdbf-1756-40f6-8854-5b4c51cd78bb">
@@ -1435,7 +1439,7 @@
 						<textElement textAlignment="Center">
 							<font fontName="Times New Roman" size="9"/>
 						</textElement>
-						<text><![CDATA[Crocking Dry]]></text>
+						<text><![CDATA[Crocking Wet]]></text>
 					</staticText>
 					<textField isBlankWhenNull="true">
 						<reportElement x="90" y="0" width="60" height="14" uuid="0b51063e-cdd1-4cab-a1ff-d9ac13e36969">
@@ -3751,7 +3755,7 @@ Inspected]]></text>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font fontName="Times New Roman" size="9" isBold="true"/>
 					</textElement>
-					<text><![CDATA[Stamping Detials :]]></text>
+					<text><![CDATA[Stamping Details :]]></text>
 				</staticText>
 			</frame>
 			<frame>

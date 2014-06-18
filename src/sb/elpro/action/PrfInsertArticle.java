@@ -247,7 +247,7 @@ public class PrfInsertArticle extends Action  {
 				return null;
 			}else{
 				System.out.println("Error Invalid Session");
-				return map.findForward("login");
+				return map.findForward("logout");
 			}	
 		}
 		 

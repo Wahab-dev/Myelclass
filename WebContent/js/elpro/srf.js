@@ -437,7 +437,7 @@ $(document).ready(function() {
 			  } ,
 			}).focus(function(){            
 	            $(this).trigger('keydown.autocomplete');
-	        }).addClass("ui-corner-all"); 
+	        }); 
 		  $('#srf_deliver').autocomplete({
 			 source: function(request, response) {
 				var param = request.term;  

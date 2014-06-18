@@ -29,7 +29,7 @@ public class BulkAction extends DispatchAction  {
 		System.out.println("In Btr Action");
 		usersession = request.getSession(false);
 		usersession.invalidate();			
-		return mapping.findForward("login");  
+		return mapping.findForward("logout");  
 	}	
 			
 	

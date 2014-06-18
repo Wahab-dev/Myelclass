@@ -219,7 +219,7 @@ $(function() {
 	  	<tr>
 	  		<td></td>
 	  		<td>
-	  			<h:text property="debamtinwords" styleId="debamtinwords" value="${editdebform[0].debamtinwords }"/>
+	  			<h:text property="debamtinwords" size="84" styleId="debamtinwords" value="${editdebform[0].debamtinwords }"/>
 	  		</td>
 	  	</tr>
 	  	<tr>
@@ -272,23 +272,19 @@ $(function() {
 		    			<table>
         					<tr>
         						<td>Tcdebit No  :</td>
-        						<td><h:text property="tcdeb_tcdebitno" styleId="tcdeb_tcdebitno" size="28" ></h:text><br/></td>
-        						
+        						<td><h:text property="tcdeb_tcdebitno" styleId="tcdeb_tcdebitno" size="28" ></h:text><br/></td>       						
         					</tr>
         					<tr>
         						<td>TcDebit Date:</td>
-        						<td> <h:text property="tcdeb_tcdebitdate" styleId="tcdeb_tcdebitdate" size="32" styleClass="dtdebit"></h:text></td>
-        						
+        						<td> <h:text property="tcdeb_tcdebitdate" styleId="tcdeb_tcdebitdate" size="32" styleClass="dtdebit"></h:text></td>       						
         					</tr>
         					<tr>
         						<td>Tanner Inv No:</td>
-        						<td><h:text property="tcdeb_taninvno" styleId="tcdeb_taninvno" size="28" ></h:text></td>
-        						
+        						<td><h:text property="tcdeb_taninvno" styleId="tcdeb_taninvno" size="28" ></h:text></td>      						
         					</tr>
         					<tr>
         						<td>elclass ref no:</td>
-        						<td><h:text property="tcdeb_elclassrefno" styleId="tcdeb_elclassrefno" size="28"></h:text></td>
-        						
+        						<td><h:text property="tcdeb_elclassrefno" styleId="tcdeb_elclassrefno" size="28"></h:text></td>       						
         					</tr>
         					
         				</table>
@@ -338,17 +334,14 @@ $(function() {
 						<tr>
         					<td>TC Amount: </td>
         					<td><h:text property="tcdeb_elclassamt" styleId="tcdeb_elclassamt"> </h:text> </td>
-						</tr>  
+						</tr> 
 					</table>
 					</fieldset>	
 					</td>
 				</tr>
-				<%-- <tr>
-					<td><h:submit property="debitaction" value="TcSave" styleId="Btndebitsave"></h:submit>
-					    <input type="button" disabled="disabled" id="tcbutton" value="TC Button"></input> </td>
-			   		<td><h:reset property="debitaction" value="Clear"></h:reset></td> 
-  				</tr> --%>
-	  		
+				<tr>
+					<td><h:text property="tcdebamtinwords" size="84" styleId="tcdebamtinwords" value="${editdebform[0].tcdebamtinwords }"/></td>
+				</tr>				
 		</table>
  	</h:form>
  	

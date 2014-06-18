@@ -938,16 +938,18 @@ public class InvoiceDaoImpl implements InvoiceDao {
 			pst.setString(15, invbean.getInv_awbillno());
 			pst.setString(16, invbean.getInv_awbilldate());
 			pst.setString(17, invbean.getOthercharges());
+			System.out.println("getOthercharges " +invbean.getOthercharges());
 			pst.setString(18, invbean.getInv_discount());
+			System.out.println("getInv_discount " +invbean.getInv_discount());
 			pst.setString(19, invbean.getInv_total());
 			System.out.println("getInv_total " +invbean.getInv_total());
 			noofrows = pst.executeUpdate();
 			if(noofrows == 1){
-				/*
+				/*	
 				 *Insert into the Dispatch Table
 				 */
-				StringBuffer sql_saveinvdispform = new StringBuffer("insert into tbl_inv_dispatchdetails (invno, invdate, ctryoforigin, loadingport, ctryofdesti, destination, dischargeport, precarriage, dimension, marks, grosswt, netwt, container, noofpackages, packno)");
-				sql_saveinvdispform.append("values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+				StringBuffer sql_saveinvdispform = new StringBuffer("insert into tbl_inv_dispatchdetails (invno, invdate, ctryoforigin, loadingport, ctryofdesti, destination, dischargeport, precarriage, dimension, marks, grosswt, netwt, container, noofpackages, packno, vesselno, placeofreciept)");
+				sql_saveinvdispform.append("values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
 				String sqlquery_saveinvdispform = sql_saveinvdispform.toString();
 				pstdischrg = (PreparedStatement) con.prepareStatement(sqlquery_saveinvdispform);
 				System.out.println(" IN INV DISP SAVE IN THE ");
@@ -968,7 +970,9 @@ public class InvoiceDaoImpl implements InvoiceDao {
 				pstdischrg.setString(13, invbean.getInv_precarriageby());
 				pstdischrg.setString(14, invbean.getInv_noofpackages());
 				pstdischrg.setString(15, invbean.getInv_packno());
-				System.out.println("getInv_packno " +invbean.getInv_packno());
+				pstdischrg.setString(16, invbean.getInv_vesselno());
+				pstdischrg.setString(17, invbean.getInv_placeofreciept());
+				System.out.println("getInv_placeofreciept " +invbean.getInv_placeofreciept());
 				rowsdischrg = pstdischrg.executeUpdate();
 			}
 			System.out.println("Sucessfully inserted the record.." + rowsdischrg);
@@ -997,7 +1001,7 @@ public class InvoiceDaoImpl implements InvoiceDao {
 		try{			
 			con = DBConnection.getConnection();
 			st = (Statement) con.createStatement();
-			String sql = "SELECT invtype, form.invno, form.invdate, exportersref, expname, tanname, tanaddr, tanattn, tanphone, tanfax, taninvno, customer, custname, custattn, custaddr ,custfax, custphone, consignee, notify, notifyname, notifyattn, notifyaddr, notifyphone, notifyfax,  otherref, buyer, bank, bankname, bankaddr, bankfax, bankbranch, swiftcode, bankphone, vesselno, placeofreciept, AWBillNo, AWBillDate, othercharges, discounts, totamt, ctryoforigin, ctryofdesti, loadingport,  dischargeport, destination, precarriage, dimension, marks, grosswt, netwt, container, noofpackages, packno,terms, payment FROM elpro.tbl_invform form  left outer join tbl_inv_dispatchdetails dispatch on form.invno= dispatch.invno  left outer join tbl_customer cust on cust.custid=form.customer left outer join tbl_tannery tan on tan.tanid = form.expname left outer join tbl_notify notify on notify.notifyid = form.notify left outer join  tbl_bank bank on bank.bankid = form.bank where form.invno = '"+invno+"' ";
+			String sql = "SELECT invtype, form.invno, form.invdate, exportersref, expname, tanname, tanaddr, tanattn, tanphone, tanfax, taninvno, customer, custname, custattn, custaddr ,custfax, custphone, consignee, notify, notifyname, notifyattn, notifyaddr, notifyphone, notifyfax,  otherref, buyer, bank, bankname, bankaddr, bankfax, bankbranch, swiftcode, bankphone, vesselno, placeofreciept, AWBillNo, AWBillDate, othercharges, discounts, totamt, ctryoforigin, ctryofdesti, loadingport,  dischargeport, destination, precarriage, dimension, marks, grosswt, netwt, container, noofpackages, packno,terms, payment, vesselno, placeofreciept FROM elpro.tbl_invform form  left outer join tbl_inv_dispatchdetails dispatch on form.invno= dispatch.invno  left outer join tbl_customer cust on cust.custid=form.customer left outer join tbl_tannery tan on tan.tanid = form.expname left outer join tbl_notify notify on notify.notifyid = form.notify left outer join  tbl_bank bank on bank.bankid = form.bank where form.invno = '"+invno+"' ";
 			System.out.println(sql);
 			rs = st.executeQuery(sql);			
 			if(rs.next()) {	
@@ -1057,6 +1061,8 @@ public class InvoiceDaoImpl implements InvoiceDao {
 				editinvformbean.setInv_packno(rs.getString("packno"));
 				editinvformbean.setInv_terms(rs.getString("terms"));
 				editinvformbean.setInv_payment(rs.getString("payment"));
+				editinvformbean.setInv_vesselno(rs.getString("vesselno"));
+				editinvformbean.setInv_placeofreciept(rs.getString("placeofreciept"));
 				
 				editinvformlist.add(editinvformbean);
 				}
@@ -1086,34 +1092,38 @@ public class InvoiceDaoImpl implements InvoiceDao {
 		boolean isUpdtd =true;
 		try{
 			con = DBConnection.getConnection();
-			StringBuffer sql_updtsaminvform = new StringBuffer("update tbl_invform set invtype = ? ,  invdate= ? , exportersref= ? , expname= ? , taninvno= ? , customer= ? , consignee= ? , notify= ? , amount= ? , otherref= ? , buyer= ? , bank= ? , AWBillNo= ? , AWBillDate= ? , othercharges= ? , discounts= ? , totamt = ? where invno ='"+invbean.getInv_invoiceno()+"' ");
+			StringBuffer sql_updtsaminvform = new StringBuffer("update tbl_invform set invtype = ? ,  invdate= ? , exportersref= ? , expname= ? , taninvno= ? , customer= ? , consignee= ? , notify= ? , otherref= ? , buyer= ? , bank= ? , terms =? , payment = ?, AWBillNo= ? , AWBillDate= ? , othercharges= ? , discounts= ? , totamt = ? where invno ='"+invbean.getInv_invoiceno()+"' ");
 			String sqlquery_updtsaminvform = sql_updtsaminvform.toString();
 			pst = (PreparedStatement) con.prepareStatement(sqlquery_updtsaminvform);
 			pst.setString(1, invbean.getInv_invoicetype());
 			System.out.println("getInv_invoicetype " +invbean.getInv_invoicetype());
 			pst.setString(2, invbean.getInv_invdate());
 			pst.setString(3, invbean.getInv_expref());
-			pst.setString(4, invbean.getInv_exporter());
+			pst.setString(4, invbean.getInv_exporterid());
 			pst.setString(5, invbean.getInv_otherref());
-			pst.setString(6, invbean.getInv_customer());
-			pst.setString(7, invbean.getInv_buyer());
-			pst.setString(8, invbean.getInv_notify());
+			pst.setString(6, invbean.getInv_custid());
+			pst.setString(7, invbean.getInv_buyerid());
+			pst.setString(8, invbean.getInv_notifyid());
 			pst.setString(9, "NA");
 			pst.setString(10, "NA");
-			pst.setString(11, "NA");
-			pst.setString(12, invbean.getInv_bank());
-			pst.setString(13, invbean.getInv_awbillno());
-			pst.setString(14, invbean.getInv_awbilldate());
-			pst.setString(15, invbean.getInv_courierchrgs());
-			pst.setString(16, invbean.getInv_deduction());
-			pst.setString(17, invbean.getInv_total());
+			//pst.setString(11, "NA");
+			pst.setString(11, invbean.getInv_bankid());
+			pst.setString(12, invbean.getInv_terms());
+			pst.setString(13, invbean.getInv_payment());
+			pst.setString(14, invbean.getInv_awbillno());
+			pst.setString(15, invbean.getInv_awbilldate());
+			pst.setString(16, invbean.getInv_courierchrgs());
+			System.out.println("getInv_courierchrgs " +invbean.getInv_courierchrgs());
+			pst.setString(17, invbean.getInv_deduction());
+			System.out.println("getInv_deduction " +invbean.getInv_deduction());
+			pst.setString(18, invbean.getInv_total());
 			System.out.println("getInv_total " +invbean.getInv_total());
 			noofrows = pst.executeUpdate();
 			if(noofrows == 1){
 				/*
 				 *Insert into the Dispatch Table
 				 */
-				StringBuffer sql_updtsaminvdispform = new StringBuffer("update tbl_inv_dispatchdetails set invdate = ?, ctryoforigin = ?, loadingport = ?, ctryofdesti = ?, destination = ?, dischargeport = ?, precarriage = ?, dimension = ?, marks = ?, grosswt = ?, netwt = ?, container = ?, noofpackages = ?, packno = ?  where invno ='"+invbean.getInv_invoiceno()+"' ");
+				StringBuffer sql_updtsaminvdispform = new StringBuffer("update tbl_inv_dispatchdetails set invdate = ?, ctryoforigin = ?, loadingport = ?, ctryofdesti = ?, destination = ?, dischargeport = ?, precarriage = ?, dimension = ?, marks = ?, grosswt = ?, netwt = ?, container = ?, noofpackages = ?, packno = ?, vesselno = ?, placeofreciept=?  where invno ='"+invbean.getInv_invoiceno()+"' ");
 				
 				String sqlquery_sql_updtsaminvdispform = sql_updtsaminvdispform.toString();
 				pstdischrg = (PreparedStatement) con.prepareStatement(sqlquery_sql_updtsaminvdispform);
@@ -1133,7 +1143,9 @@ public class InvoiceDaoImpl implements InvoiceDao {
 				pstdischrg.setString(12, invbean.getInv_precarriageby());
 				pstdischrg.setString(13, invbean.getInv_noofpackages());
 				pstdischrg.setString(14, invbean.getInv_packno());
-				System.out.println("geInv_packno " +invbean.getInv_packno());
+				pstdischrg.setString(15, invbean.getInv_vesselno());
+				pstdischrg.setString(16, invbean.getInv_placeofreciept());
+				System.out.println("getInv_placeofreciept " +invbean.getInv_placeofreciept());
 				rowsdischrg = pstdischrg.executeUpdate();
 			}
 			System.out.println("Sucessfully inserted the record.." + rowsdischrg);

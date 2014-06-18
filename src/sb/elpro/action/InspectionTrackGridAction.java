@@ -86,7 +86,7 @@ JSONObject jsonobj = new JSONObject();
 	            }
 			}	else{
 				System.out.println("Wrong USer ////");
-				return map.findForward("login");
+				return map.findForward("logout");
 			}
 			return null;
 			

@@ -41,7 +41,8 @@ public class InspAutocomplete extends Action {
 			String action = request.getParameter("action");
 			if(action.equalsIgnoreCase("inspCt")){ 
 				String inspctterm = request.getParameter("term");
-				List<ProductDetails> inspCtlist =  inspbo.getInspCtDetails(inspctterm);
+				String type = request.getParameter("type");
+				List<ProductDetails> inspCtlist =  inspbo.getInspCtDetails(inspctterm, type);
 				System.out.println("List Value " +inspCtlist.size());
 				JSONArray jsonOrdertanArray = JSONArray.fromObject(inspCtlist);
 				out.println(jsonOrdertanArray);
@@ -56,7 +57,7 @@ public class InspAutocomplete extends Action {
 			}	
 	    }else{
 	    	System.out.println("Error Invalid Session");
-			 return mapping.findForward("login");
+			 return mapping.findForward("logout");
 	    }
 	 return null;
 	}

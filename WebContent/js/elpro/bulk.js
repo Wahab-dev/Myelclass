@@ -35,7 +35,7 @@
                     ' href="' + op.url + '">' +
                     (cellValue || '&nbsp;') + '</a>';
             } else {
-                return '&nbsp;';
+                return '&nbsp;';	
             }
         }
     });
@@ -127,6 +127,8 @@ $(function() {
 			}else{
 				bulkgrid.jqGrid('groupingGroupBy', vl, {
 		            groupOrder : ['asc'],
+		            groupText : ['<b>{0} - {1} Records</b>'],
+		            groupSummary : [true],
 		            groupColumnShow: [false],
 				  groupingView: {
 		            groupCollapse: [true],
@@ -152,13 +154,13 @@ $(function() {
 				  {name: 'status', index: 'status', align:'center', width:45, editable:true, sortable: true, hidden:false, 
 					  search: true, stype:'select', searchrules:{required:true},   	
 					  edittype: 'select', 
-					  editoptions:{value:{I:'Inspection', P:'Pending' ,PS:'Partial Ship',S:'Shipped',D:'Delivered',AA:'Await Approval',AP:'Await Payment',C:'Closed',CA:'Cancel'},defaultValue: 'Pending'},
+					  editoptions:{value:{P:'Pending',I:'Inspection',D:'Delivered',PS:'Partial Ship',S:'Shipped',RW:'Rework',AA:'Await Approval',AP:'Await Payment',C:'Closed',CA:'Cancel'},defaultValue: 'Pending'},
 					  //editrules :{require : true},
 					  //searchoptions:{value:{P:'Pending',RW:'Rework', I:'Inspection', PS:'Partial Ship',S:'Shipped',D:'Delivered',AA:'Await Approval',AP:'Await Payment',C:'Closed',CA:'Cancel'}},
-					  searchoptions:{value:":All;P:Pending;I:Inspection;PS:Partial Ship;D:Delivered;RW:Rework;S:Shipped;AA:Await Approval;AP:Await Payment;C:Closed;CA:Cancel"},
+					  searchoptions:{value:":All;P:Pending;I:Inspection;D:Delivered;PS:Partial Ship;S:Shipped;RW:Rework;AA:Await Approval;AP:Await Payment;C:Closed;CA:Cancel"},
 					   
 				  },
-				  {name: 'ctno', index: 'ctno', align:'center', width:60, editable:true, sortable: true, hidden:false, 
+				  {name: 'ctno', index: 'ctno', align:'center', width:60, editable:true, sortable: true, hidden:false, frozen:true,
 					  editrules :{require : true},
 					  formatter: "dynamicLink",
 					    formatoptions: {
@@ -219,14 +221,14 @@ $(function() {
 					  //editrules :{require : true},
 				  },
 				  {name: 'quantity', index: 'quantity', align:'center', width:90, editable:true, sortable: true, hidden:false,  
-					  //editrules :{require : true},
+					  summaryType:'sum', summaryTpl:'<b> {0}</b>',
 					  //formatoptions: {decimalSeparator: ".", thousandsSeparator: ",", decimalPlaces: 2, defaultValue: '0.00' },
 				  },
 				  {name: 'unit', index: 'unit', align:'center', width:70, editable:true, sortable: true, hidden:true,  
 					  //editrules :{require : true},
 				  },
 				  {name: 'qshipped', index: 'qshipped', align:'center', width:50, editable:true, sortable: true, hidden: false,  
-					  //editrules :{require : true},
+					  summaryType:'sum', summaryTpl:'<b> {0}</b>',
 				  },
 				  {name: 'qbal', index: 'qbal', align:'center', width:50, editable:true, sortable: true, hidden:false,  
 					//  editrules :{require : true},
@@ -322,8 +324,8 @@ $(function() {
 				},  
 		       	caption: "Bulk Tracking Report",
 		    	pager: '#bulkktrackpager',
-		    	rowNum: 20, 
-		    	rowList: [5,10,20,40,50,60,80,100,200,250,300],
+		    	rowNum: 500, 
+		    	rowList: [5,10,20,40,50,60,80,100,200,250,300,400,500],
 		    	rownumbers: true,  
 		    	loadtext: "Bulk Tracking is Loading",
 		        height : "360",
@@ -331,7 +333,8 @@ $(function() {
 		        sortname: 'Ctno',  
 		        sortorder: 'desc',
 		        loadonce: true,
-		        //scroll: 1, //Check here
+		        ignoreCase:true,
+		        hidegrid: false,
 		        editurl: "/Myelclass/BulkInsertAction.do",
 		        sortable: true,
 		        toppager:true,
@@ -451,7 +454,7 @@ $(function() {
 					bulkgrid[0].clearToolbar();
 				} 
 			});
-			bulkgrid.jqGrid('filterToolbar', {autosearch : true, searchOnEnter:false, stringResult: true});  //To Enable AutoSearch please comment Search on Enter to False
+			bulkgrid.jqGrid('filterToolbar', {autosearch : true, searchOnEnter:false,  defaultSearch : "cn"});  //Default Search as Contains  //To Disable AutoSearch please change SearchonEnter to true
 			
 			
 			bulkgrid.jqGrid('navButtonAdd', '#bulkktrackpager', {

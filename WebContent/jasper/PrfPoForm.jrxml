@@ -575,7 +575,7 @@
 		</band>
 	</detail>
 	<pageFooter>
-		<band height="276" splitType="Stretch">
+		<band height="360" splitType="Stretch">
 			<frame>
 				<reportElement x="0" y="0" width="555" height="180" uuid="57097bee-4b40-46d8-bdc3-9771726ac6e6">
 					<property name="local_mesure_unitx" value="pixel"/>
@@ -650,7 +650,7 @@
 					<textFieldExpression><![CDATA[$P{pojw_comm}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-					<reportElement x="0" y="32" width="554" height="132" uuid="b5b2c511-56b0-40b9-add7-6be7bd504fa8">
+					<reportElement x="0" y="32" width="555" height="132" uuid="b5b2c511-56b0-40b9-add7-6be7bd504fa8">
 						<property name="local_mesure_unitx" value="pixel"/>
 						<property name="local_mesure_unity" value="pixel"/>
 						<property name="com.jaspersoft.studio.unit.y" value="px"/>
@@ -738,7 +738,7 @@
 				<text><![CDATA[By local Cheque on or before 30 days from invoice date in Indian Rupee at prevailing exchange rates.]]></text>
 			</staticText>
 			<frame>
-				<reportElement x="0" y="196" width="278" height="80" uuid="42f6b5ef-2467-4dcd-bc30-bd0c151c9e87">
+				<reportElement x="0" y="196" width="277" height="80" uuid="42f6b5ef-2467-4dcd-bc30-bd0c151c9e87">
 					<property name="local_mesure_unitwidth" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					<property name="local_mesure_unity" value="pixel"/>
@@ -762,11 +762,11 @@
 					<textElement textAlignment="Center" verticalAlignment="Top">
 						<font size="9"/>
 					</textElement>
-					<text><![CDATA[  Sellers Signature with Seal .]]></text>
+					<text><![CDATA[  Sellers Signature with Seal]]></text>
 				</staticText>
 			</frame>
 			<frame>
-				<reportElement x="278" y="196" width="277" height="80" uuid="d1424735-cef5-4d02-93cb-876b55d607fa">
+				<reportElement x="277" y="196" width="278" height="80" uuid="d1424735-cef5-4d02-93cb-876b55d607fa">
 					<property name="local_mesure_unitwidth" value="pixel"/>
 					<property name="local_mesure_unitx" value="pixel"/>
 					<property name="local_mesure_unity" value="pixel"/>
@@ -779,23 +779,25 @@
 					<rightPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<staticText>
-					<reportElement x="207" y="2" width="70" height="16" uuid="ef71841b-08b9-4af8-9732-55a748ff6cf2">
+					<reportElement x="0" y="1" width="278" height="16" uuid="ef71841b-08b9-4af8-9732-55a748ff6cf2">
 						<property name="local_mesure_unitheight" value="pixel"/>
 						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+						<property name="local_mesure_unity" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.y" value="px"/>
 					</reportElement>
-					<textElement>
+					<textElement textAlignment="Center">
 						<font size="9"/>
 					</textElement>
-					<text><![CDATA[ For el class]]></text>
+					<text><![CDATA[ For International Corporation]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="123" y="61" width="148" height="16" uuid="55196660-488e-4599-9867-b0249c011417">
+					<reportElement x="1" y="61" width="276" height="16" uuid="55196660-488e-4599-9867-b0249c011417">
 						<property name="local_mesure_unitx" value="pixel"/>
 						<property name="com.jaspersoft.studio.unit.x" value="px"/>
 						<property name="local_mesure_unity" value="pixel"/>
 						<property name="com.jaspersoft.studio.unit.height" value="px"/>
 					</reportElement>
-					<textElement textAlignment="Right">
+					<textElement textAlignment="Center">
 						<font size="9"/>
 					</textElement>
 					<text><![CDATA[  Authorised Signatory]]></text>

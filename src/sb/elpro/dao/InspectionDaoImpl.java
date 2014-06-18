@@ -28,16 +28,22 @@ public class InspectionDaoImpl implements InspectionDao {
 
 
 	@Override
-	public ArrayList<ProductDetails> getInspCtList(String inspctterm)
+	public ArrayList<ProductDetails> getInspCtList(String inspctterm,String type)
 			throws SQLException {
 		ArrayList<ProductDetails> inspCtlist = new ArrayList<ProductDetails>();			
 		Connection con = null;
 		Statement st = null;
-		ResultSet rs = null;	
+		ResultSet rs = null;
+		String sql = null;
 		try{			
 			con = DBConnection.getConnection();
 			st = (Statement) con.createStatement();
-			String sql = "SELECT distinct Ctno, inspcdn FROM elpro.tbl_prfform prf where Ctno like '%"+inspctterm+"%' order by Ctno";
+			if(type.equalsIgnoreCase("sample")){
+				sql = "SELECT distinct sampleno as Ctno, inspcdn FROM elpro.tbl_srfform srf where sampleno like '%"+inspctterm+"%' order by sampleno";
+			}else{
+				sql = "SELECT distinct Ctno, inspcdn FROM elpro.tbl_prfform prf where Ctno like '%"+inspctterm+"%' order by Ctno";
+			}
+			
 			rs = st.executeQuery(sql);
 			while(rs.next()) {	
 				ProductDetails inspctbean = new ProductDetails();
@@ -92,16 +98,21 @@ public class InspectionDaoImpl implements InspectionDao {
 	}
 
 	@Override
-	public ArrayList<ProductDetails> getInspArtList(String ctno)
+	public ArrayList<ProductDetails> getInspArtList(String ctno, String type)
 			throws SQLException {
 		ArrayList<ProductDetails> inspCtlist = new ArrayList<ProductDetails>();			
 		Connection con = null;
 		Statement st = null;
-		ResultSet rs = null;	
+		ResultSet rs = null;
+		String sql = null;
 		try{			
 			con = DBConnection.getConnection();
 			st = (Statement) con.createStatement();
-			String sql = "SELECT Ctno, Orderdt, tanname, custname, pono, inspcdn, articlename, size, substance, selection, selectionpercent, color, quantity, unit, pcs, prfarticleid, articletype, articleshfrom  FROM  elpro.tbl_prf_article article  left outer join elpro.tbl_prfform prf on prf.Ctno = article.contractno  left outer join elpro.tbl_tannery tan on  tan.tanid = prf.tanneryid  left outer join elpro.tbl_customer cust on  cust.custid = prf.customerid where Ctno like '%"+ctno+"%' order by articlename";
+			if(type.equalsIgnoreCase("sample")){
+				sql = "SELECT srf.sampleno as Ctno, orderdt, refno as pono, tanshform, shortform, inspcdn, articlename, size, substance, selection, selectionp as selectionpercent, color, quantity, unit, pcs, srfarticleid as prfarticleid, articletype, articleshform as articleshfrom FROM elpro.tbl_srf_article article left outer join elpro.tbl_srfform srf on srf.sampleno = article.sampleno left outer join elpro.tbl_tannery tan on  tan.tanid = srf.tanneryid left outer join elpro.tbl_customer cust on  cust.custid = srf.customerid where srf.sampleno like '%"+ctno+"%' order by articlename";
+			}else{
+				sql = "SELECT Ctno, Orderdt, tanshform, shortform, pono, inspcdn, articlename, size, substance, selection, selectionpercent, color, quantity, unit, pcs, prfarticleid, articletype, articleshfrom  FROM  elpro.tbl_prf_article article  left outer join elpro.tbl_prfform prf on prf.Ctno = article.contractno  left outer join elpro.tbl_tannery tan on  tan.tanid = prf.tanneryid  left outer join elpro.tbl_customer cust on  cust.custid = prf.customerid where Ctno like '%"+ctno+"%' order by articlename";	
+			}			
 			rs = st.executeQuery(sql);
 			while(rs.next()) {	
 				String qty =  rs.getString("quantity")+" "+ rs.getString("unit");
@@ -109,8 +120,8 @@ public class InspectionDaoImpl implements InspectionDao {
 				inspctbean.setPrf_articlename(rs.getString("articlename"));
 				inspctbean.setPrf_articleid(rs.getString("prfarticleid"));
 				inspctbean.setPrf_orderdate(rs.getString("Orderdt"));
-				inspctbean.setPrf_tannid(rs.getString("tanname"));
-				inspctbean.setPrf_custid(rs.getString("custname"));
+				inspctbean.setPrf_tannid(rs.getString("tanshform"));
+				inspctbean.setPrf_custid(rs.getString("shortform"));
 				inspctbean.setPrf_poref(rs.getString("pono"));
 				inspctbean.setPrf_inspcdn(rs.getString("inspcdn"));
 				inspctbean.setPrf_contractno(rs.getString("Ctno"));

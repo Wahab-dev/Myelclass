@@ -520,32 +520,7 @@ $(document).ready(function() {
 					 
 			 }    
 	 	);
-	 //grid.setGridParam({url:"Myelclass/PrfinsertArticle.do"	}, postData: {ctno: $("#prf_contractno").val()},).trigger("reloadGrid"); /
-	//Commision Add 
-	 /*var counter = 2;
-	    $("#addButton").click(function () {
-	 	if(counter>8){
-	         alert("Only 8 Commissions Allowed allow");
-	         return false;
-	 	}   
-	 	var newTextBoxDiv = $(document.createElement('div'))
-	 	     .attr("id", 'TextBoxDiv' + counter);
-	 	newTextBoxDiv.after().html('<label>Commission #'+ counter + ' : </label>' +
-	 	      '<input type="text" name="prf_commission' + counter + 
-	 	      '" styleId="prf_commission' + counter + '" value="" >');
-	 	newTextBoxDiv.appendTo("#TextBoxesGroup");
-	 	counter++;
-	     });
-	    $("#removeButton").click(function () {
-	 			if(counter==2){
-	 		          alert("No more textbox to remove");
-	 		          return false;
-	 		       }
-	 			counter--;
-	 		        $("#TextBoxDiv" + counter).remove();
-	 	});	*/	
-
-	    
+	 
 	//Commssion AutoComplete 		
 	 $('#prf_elclasscommission').autocomplete({
 			minLength: 1,

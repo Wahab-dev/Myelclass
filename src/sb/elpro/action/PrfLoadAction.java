@@ -70,7 +70,7 @@ public class PrfLoadAction extends DispatchAction{
 			return map.findForward("prfisloaded");
 		}else{
 			System.out.println("Error Invalid Session");
-			return map.findForward("login");
+			return map.findForward("logout");
 		}	
 	}
 	/*public ActionForward editform(ActionMapping map, ActionForm form, 

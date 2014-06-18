@@ -91,7 +91,14 @@ $(function() {
    </table>
    </h:form>
 <!-- Bulk Tracking Form  -->
-	Group By: <select id="chngroup"> <option value="ctno">Ct No</option><option value="articlename">Article</option><option value="status">Status</option><option value="color">color</option><option value="clear" >Remove Grouping</option></select> 
+	Group By: <select id="chngroup"> 
+				<option value="ctno">Ct No</option>
+				<option value="articlename">Article</option>
+				<option value="status">Status</option>
+				<option value="color" >color</option>
+				<option value="clear" selected="selected" >Remove Grouping</option>
+			</select> 
+		
 			<table id="bulkktracktbl"></table> 
 			<div id="bulkktrackpager"></div> 
 	 </div>

@@ -32,9 +32,11 @@ public class SampleDebitLoadAction extends Action{
 			HttpServletRequest request, HttpServletResponse response)throws Exception{
 		usersession = request.getSession(false);	
 		if(usersession !=null){		   	
-			//usersession.setAttribute("DebExporter",debitbo.getDebExporter());
+			return mapping.findForward("sampledebitisloaded");
 			
+		}else{
+			return mapping.findForward("logout");
 		}
-		return mapping.findForward("sampledebitisloaded");
+		
 	}
 }

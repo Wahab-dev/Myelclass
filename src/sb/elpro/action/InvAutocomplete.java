@@ -158,7 +158,7 @@ public class InvAutocomplete extends Action {
 				 out.close();
 			}else{
 				System.out.println("Invalid User pls Login Again");
-				return mapping.findForward("login");
+				return mapping.findForward("logout");
 			}
 			
 		return null;

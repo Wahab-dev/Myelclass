@@ -95,7 +95,7 @@ public class InvoiceAction extends DispatchAction{
 			 }
 		  }else{
 			 System.out.println("Invalid Sesssion");
-			 return map.findForward("login"); 
+			 return map.findForward("logout"); 
 		 }
 	}
 	public ActionForward Logout(ActionMapping map, ActionForm form, 
@@ -103,7 +103,7 @@ public class InvoiceAction extends DispatchAction{
 		System.out.println("In INV Form Logout ");
 		usersession = request.getSession(false);
 		usersession.invalidate();			
-		return map.findForward("login");  
+		return map.findForward("logout");  
 	}
 	public ActionForward Clear(ActionMapping map, ActionForm form, 
 			HttpServletRequest request, HttpServletResponse response) throws Exception{

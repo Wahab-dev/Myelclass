@@ -87,7 +87,7 @@ public class SampleInvoiceAction extends DispatchAction {
 			 }
 		 }else{
 			 System.out.println("Invalid Sesssion");
-			 return map.findForward("login");
+			 return map.findForward("logout");
 		 }
 		 
 		
@@ -103,6 +103,6 @@ public class SampleInvoiceAction extends DispatchAction {
 			HttpServletRequest request, HttpServletResponse response) throws Exception{
 		usersession = request.getSession(false);
 		usersession.invalidate();			
-		return map.findForward("login");
+		return map.findForward("logout");
 	}
 }

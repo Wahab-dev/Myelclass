@@ -36,7 +36,7 @@ public class PaymentTrackAction extends  Action {
 			return map.findForward("paytrackisloaded");			
 		}else{
 			System.out.println("In Invalid Session");
-			return map.findForward("login");
+			return map.findForward("logout");
 		}
 		
 	}

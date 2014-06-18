@@ -19,11 +19,12 @@ public interface InspectionBo {
 	
 	/**
 	 * Method to Return 
+	 * @param type 
 	 * @param
 	 * @return 
 	 * etc
 	 */
-	public List<ProductDetails> getInspCtDetails(String inspctterm)throws Exception;
+	public List<ProductDetails> getInspCtDetails(String inspctterm, String type)throws Exception;
 	
 	
 	/**
@@ -38,11 +39,12 @@ public interface InspectionBo {
 	
 	/**
 	 * Method to Return 
+	 * @param type 
 	 * @param
 	 * @return 
 	 * etc
 	 */
-	public List<ProductDetails> getInspArtDetails(String artterm)throws Exception;
+	public List<ProductDetails> getInspArtDetails(String artterm, String type)throws Exception;
 	
 	
 	/**

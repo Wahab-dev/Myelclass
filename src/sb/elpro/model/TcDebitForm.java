@@ -32,6 +32,8 @@ public class TcDebitForm implements Serializable {
 	private String tcdeb_elclassamt;
 	private String tcdeb_elclassamtinrs;
 	private String tcdeb_tcamt;
+	private String tcdebamtinwords;
+	
 	/**
 	 * @return the tcdeb_tcdebitno
 	 */
@@ -221,6 +223,18 @@ public class TcDebitForm implements Serializable {
 	 */
 	public void setTcdeb_commission(String tcdeb_commission) {
 		this.tcdeb_commission = tcdeb_commission;
+	}
+	/**
+	 * @return the tcdebamtinwords
+	 */
+	public String getTcdebamtinwords() {
+		return tcdebamtinwords;
+	}
+	/**
+	 * @param tcdebamtinwords the tcdebamtinwords to set
+	 */
+	public void setTcdebamtinwords(String tcdebamtinwords) {
+		this.tcdebamtinwords = tcdebamtinwords;
 	}
 	
 	

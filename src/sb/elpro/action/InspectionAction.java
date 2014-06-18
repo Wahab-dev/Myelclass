@@ -93,7 +93,7 @@ public class InspectionAction extends DispatchAction {
 				}
 			}else{
 					System.out.println("Invalid Login credentials");
-					mapping.findForward("login");
+					mapping.findForward("logout");
 				 }
 			return null;
 		}
@@ -102,8 +102,9 @@ public class InspectionAction extends DispatchAction {
 				HttpServletRequest request, HttpServletResponse response) throws Exception{
 			System.out.println("IN INSPECTION LOGOUT");
 			usersession = request.getSession(false);
+			//usersession.removeAttribute("");
 			usersession.invalidate();			
-			return mapping.findForward("login");
+			return mapping.findForward("logout");
 		}
 		public ActionForward Print(ActionMapping mapping, ActionForm form, 
 				HttpServletRequest request, HttpServletResponse response) throws Exception{
@@ -128,6 +129,8 @@ public class InspectionAction extends DispatchAction {
 			hm.put("pqc", inspform.getInspqualityctrlr());
 			hm.put("pinspdate", inspform.getInspdate());
 			hm.put("pinsctno", inspform.getInspContractNo());
+			System.out.println("Type "+inspform.getInsptype());
+			hm.put("ptype", inspform.getInsptype());
 			
 			JasperPrint print = JasperFillManager.fillReport(report, hm, conn);
 			

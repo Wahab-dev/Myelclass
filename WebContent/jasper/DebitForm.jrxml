@@ -1153,7 +1153,7 @@
 					<text><![CDATA[1. Kindly Remit the Amount in INR  favouring ]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="0" y="44" width="78" height="14" uuid="262dcac0-57f3-4bd6-b6ff-1f6aaa2c8c01">
+					<reportElement x="0" y="44" width="371" height="26" uuid="262dcac0-57f3-4bd6-b6ff-1f6aaa2c8c01">
 						<property name="local_mesure_unity" value="pixel"/>
 						<property name="com.jaspersoft.studio.unit.y" value="px"/>
 						<property name="com.jaspersoft.studio.unit.x" value="px"/>
@@ -1166,64 +1166,7 @@
 					<textElement>
 						<font fontName="SansSerif" size="10"/>
 					</textElement>
-					<text><![CDATA[2. Please note]]></text>
-				</staticText>
-				<textField>
-					<reportElement x="78" y="44" width="80" height="14" uuid="7dee59fc-fa0e-40cc-811f-04c4f5decf3a">
-						<property name="local_mesure_unitheight" value="pixel"/>
-						<property name="com.jaspersoft.studio.unit.height" value="px"/>
-						<property name="local_mesure_unity" value="pixel"/>
-						<property name="com.jaspersoft.studio.unit.y" value="px"/>
-						<property name="local_mesure_unitx" value="pixel"/>
-						<property name="com.jaspersoft.studio.unit.x" value="px"/>
-					</reportElement>
-					<textElement verticalAlignment="Bottom">
-						<font isBold="true"/>
-					</textElement>
-					<textFieldExpression><![CDATA["Ming Dynasty"]]></textFieldExpression>
-				</textField>
-				<staticText>
-					<reportElement x="158" y="44" width="164" height="14" uuid="e9e8c64e-e38c-4375-a6f9-73146ad9d287">
-						<property name="local_mesure_unity" value="pixel"/>
-						<property name="com.jaspersoft.studio.unit.y" value="px"/>
-						<property name="com.jaspersoft.studio.unit.x" value="px"/>
-						<property name="local_mesure_unitheight" value="pixel"/>
-						<property name="com.jaspersoft.studio.unit.height" value="px"/>
-						<property name="local_mesure_unitx" value="pixel"/>
-						<property name="local_mesure_unitwidth" value="pixel"/>
-						<property name="com.jaspersoft.studio.unit.width" value="px"/>
-					</reportElement>
-					<textElement>
-						<font fontName="SansSerif" size="10"/>
-					</textElement>
-					<text><![CDATA[ will be sending you a debit for  ]]></text>
-				</staticText>
-				<textField>
-					<reportElement x="322" y="44" width="34" height="14" uuid="50c330ce-d1af-4ec7-b70d-034ecc367141">
-						<property name="local_mesure_unitheight" value="pixel"/>
-						<property name="com.jaspersoft.studio.unit.height" value="px"/>
-						<property name="local_mesure_unity" value="pixel"/>
-						<property name="com.jaspersoft.studio.unit.y" value="px"/>
-						<property name="local_mesure_unitx" value="pixel"/>
-						<property name="com.jaspersoft.studio.unit.x" value="px"/>
-					</reportElement>
-					<textElement verticalAlignment="Bottom">
-						<font isBold="true"/>
-					</textElement>
-					<textFieldExpression><![CDATA["3%"]]></textFieldExpression>
-				</textField>
-				<staticText>
-					<reportElement x="2" y="64" width="337" height="14" uuid="28bed833-9ab6-47ed-a5b5-c75d116860f9">
-						<property name="local_mesure_unity" value="pixel"/>
-						<property name="com.jaspersoft.studio.unit.y" value="px"/>
-						<property name="com.jaspersoft.studio.unit.x" value="px"/>
-						<property name="local_mesure_unitheight" value="pixel"/>
-						<property name="com.jaspersoft.studio.unit.height" value="px"/>
-					</reportElement>
-					<textElement>
-						<font fontName="SansSerif" size="10"/>
-					</textElement>
-					<text><![CDATA[commission for above reference which kindly remit accordingly in USD. ]]></text>
+					<text><![CDATA[2. Please note " "   will be sending you a debit for " "    commission for above reference which kindly remit accordingly in USD. ]]></text>
 				</staticText>
 				<staticText>
 					<reportElement x="230" y="16" width="76" height="14" uuid="83d82814-d053-429b-9ec2-26f1064747eb">

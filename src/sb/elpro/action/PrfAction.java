@@ -113,7 +113,7 @@ public class PrfAction extends DispatchAction {
 			 }	 
 		 }	
 		System.out.println(" LOgin Credential Fails");
-		 return map.findForward("login");
+		 return map.findForward("logout");
 	}
 	
 	public ActionForward Clear(ActionMapping map, ActionForm form, 
@@ -208,6 +208,6 @@ public class PrfAction extends DispatchAction {
 		System.out.println("Logout IN PORF ");
 		usersession = request.getSession(false);
 		usersession.invalidate();			
-		return mapping.findForward("login");  
+		return mapping.findForward("logout");  
 	}
 }

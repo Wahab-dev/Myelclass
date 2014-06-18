@@ -53,7 +53,7 @@ public class SampleInvoiceLoadAction extends Action{
 		}
 		else{
 			System.out.println("Error");
-			return map.findForward("login");
+			return map.findForward("logout");
 		}
 		
 	}

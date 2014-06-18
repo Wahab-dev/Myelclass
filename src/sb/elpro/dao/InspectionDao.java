@@ -21,11 +21,11 @@ import sb.elpro.model.QualityCtrlrDetails;
  */
 public interface InspectionDao {
 
-	ArrayList<ProductDetails> getInspCtList(String inspctterm)throws SQLException;
+	ArrayList<ProductDetails> getInspCtList(String inspctterm, String type)throws SQLException;
 
 	ArrayList<QualityCtrlrDetails> getInspQctrlrList(String qcterm)throws SQLException;
 
-	ArrayList<ProductDetails> getInspArtList(String ctno)throws SQLException;
+	ArrayList<ProductDetails> getInspArtList(String ctno, String type)throws SQLException;
 
 	//test
 	ArrayList<ManualTest> getInspTestList(String sidx, String sord, String ctno)throws SQLException;

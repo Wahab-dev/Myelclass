@@ -85,7 +85,7 @@ public class SampleInvoiceTrackAction extends Action{
 			}
 		}else{
 			System.out.println("invalid User Credentials ");
-			mapping.findForward("login");
+			mapping.findForward("logout");
 		}
 		
 		return null;

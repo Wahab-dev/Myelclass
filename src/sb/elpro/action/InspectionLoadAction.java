@@ -49,7 +49,7 @@ public class InspectionLoadAction extends Action {
 			return mapping.findForward("inspectionisloaded");
 		}else{
 				System.out.println("Inspection is not Loaded,,,");
-				return mapping.findForward("login");
+				return mapping.findForward("logout");
 		}		
 	}
 }

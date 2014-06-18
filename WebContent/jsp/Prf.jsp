@@ -140,7 +140,7 @@ $(function() {
         			<td><h:text property="prf_tanname" size="41" styleId="prf_tanname"  value="${editprfform[0].prf_tanname}"></h:text></td>
         		</tr>
         		<tr>
-        			<td><h:hidden property="prf_tannid"  styleId="prf_tannid"   value="${editprfform[0].prf_tannid}"></h:hidden></td>
+        			<td><h:hidden property="prf_tannid"  styleId="prf_tannid"  value="${editprfform[0].prf_tannid}"></h:hidden></td>
         		</tr>
         		<tr>
         			<td>Attn:</td>

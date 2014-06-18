@@ -86,7 +86,7 @@ $(function() {
    </table>
    </div>
 <div id="srfdialogform">
-<h:form action="/Srf" method="post" styleId="saveSrfForm"> 
+<h:form action="/Srf" method="post" styleId="saveSrfForm" styleClass="form"> 
 <table style="border: thin;">
    		<tr>  			
    			<td>Welcome<h:text property="userinsession" styleId="userinsession" value="${user.name}" readonly="true" ></h:text>

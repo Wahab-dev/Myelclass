@@ -12,27 +12,15 @@ $(document).ready(function() {
 	var testgrid = $('#insptesttbl'); 
 	var gradgrid = $('#inspgradtbl'); 
 	var rejgrid = $('#insprejtbl');
-   
-	/* $("#format").buttonset();
-	 $("#format input[type=radio]").change(function() {
-		 alert(this.value);  
-		 if(this.value === 'Sample'){
-			 //set action to Insp sample
-			// var actn = "";
-		 }else{
-			 alert(value);
-			 //set action to Insp Ct 
-			// var actn = "";
-		 }
-		});*/
 	 
 	/*
 	 * AUTOCOMPLETE	
 	 */
 	$('#inspContractNo').autocomplete({		
 		 source: function(request, response) {
+			var type = $('#insptype').val();
 			var param = request.term;  
-			$.getJSON("/Myelclass/InspAutocomplete.do?term="+param+"&action="+"inspCt",
+			$.getJSON("/Myelclass/InspAutocomplete.do?term="+param+"&action="+"inspCt"+"&type="+type,
 				function(result) { 	
 			       response($.map(result, function(item) {
 			           return { 
@@ -44,9 +32,10 @@ $(document).ready(function() {
 		 },
 		 select: function( event, ui ) { 
          	$('#insp_cdn').val(ui.item.splcdn);
+         	var type = $('#insptype').val();
          	var ctno =ui.item.value;
          	alert(ctno);
-         	artgrid.jqGrid('setGridParam',{url:"/Myelclass/InspectionAction.do?event=loadarticle&ctno="+ctno}).trigger("reloadGrid");
+         	artgrid.jqGrid('setGridParam',{url:"/Myelclass/InspectionAction.do?event=loadarticle&ctno="+ctno+"&type="+type}).trigger("reloadGrid");
            } 
 	}); 
 	$('#inspqualityctrlr').autocomplete({
@@ -142,7 +131,6 @@ $(document).ready(function() {
 	    	$("#colorhidden").val(clr); 
 	    	$("#tanhidden").val(artgrid.jqGrid('getCell', rowid, 'prf_tannid')); 
 	    	$("#custhidden").val(artgrid.jqGrid('getCell', rowid, 'prf_custid')); 
-	    	//$("#ctdthidden").val(artgrid.jqGrid('getCell', rowid, 'prf_orderdate')); 
 	    	$("#sizehidden").val(artgrid.jqGrid('getCell', rowid, 'prf_size')); 
 	    	$("#substancehidden").val(artgrid.jqGrid('getCell', rowid, 'prf_substance')); 
 	    	$("#selhidden").val(artgrid.jqGrid('getCell', rowid, 'prf_selection')); 
@@ -172,7 +160,7 @@ $(document).ready(function() {
 				          'CrockingDry Test','CrockingDrytested', 'CrockingDryresult', 'CrockingDrycomments',
 				          'FinishAdhension Test','FinishAdhensiontested', 'FinishAdhensionresult', 'FinishAdhensioncomments',
 				          'FourFolds Test','FourFoldstested', 'FourFoldsresult', 'FourFoldscomments',
-				          'DyeThru Test','DyeThrutested', 'DyeThruresult', 'DyeThrucomments',
+				          'Cross Section','DyeThrutested', 'DyeThruresult', 'DyeThrucomments',
 				          'Organoleptic Test','Organoleptictested', 'Organolepticresult', 'Organolepticcomments',
 				         ],  
 			    colModel:[  
@@ -423,11 +411,6 @@ $(document).ready(function() {
 		        width: "auto",  
 		        sortname: 'testid',  
 		        sortorder: 'desc', 
-		       /* grouping:true, 
-		        groupingView : {                  // Grouping Not Necessary Here 
-		            groupField : ['testid'],
-		            groupOrder : ['desc'] 
-		         },*/
 		        emptyrecords: 'No records to display',
 		      /*  loadComplete: function() {
 		        	alert(testgrid.jqGrid('getGridParam', 'records')); //get number of rows count 
@@ -446,7 +429,12 @@ $(document).ready(function() {
 						/*
 						 * Show Hidden to True
 						 */
-				 		 $("#tr_id").hide();	
+				 		 $("#tr_id").hide();
+				 		 $("#tr_colortest").show();	
+					     $("#tr_colortested").show();
+					     $("#tr_colortestresult").show();
+					     $("#tr_colorcomments").show();
+				 		
 					     $("#tr_subtest").show();	
 					     $("#tr_subtested").show();
 					     $("#tr_subresult").show();
@@ -488,16 +476,16 @@ $(document).ready(function() {
 						  * Set values of test type inside textfield 
 						  */
 						  $("#id").attr("readonly","readonly"); 
-						  $("#colortest").val('Color Test').attr("readonly","readonly"); 
-						  $("#subtest").val('Substance Test').attr("readonly","readonly"); 
-						  $("#teartest").val('Tear Test').attr("readonly","readonly");  
-						  $("#grainbreaktest").val('Grain Break Test').attr("readonly","readonly");  
-						  $("#crockingwettest").val('Crocking Wet Test').attr("readonly","readonly");  
-						  $("#crockingdrytest").val('Crocking Dry Test').attr("readonly","readonly");  
-						  $("#finishadhensiontest").val('Finish Adhension Test').attr("readonly","readonly");  
-						  $("#fourfoldstest").val('FourFolds Test').attr("readonly","readonly");  
-						  $("#dyethrutest").val('Dyethru Test').attr("readonly","readonly");  
-						  $("#organoleptictest").val('Organoleptic Test').attr("readonly","readonly");  
+						  $("#colortest").val('Color').attr("readonly","readonly"); 
+						  $("#subtest").val('Substance').attr("readonly","readonly"); 
+						  $("#teartest").val('Tear Strength').attr("readonly","readonly");  
+						  $("#grainbreaktest").val('Grain Break').attr("readonly","readonly");  
+						  $("#crockingwettest").val('Crocking Wet').attr("readonly","readonly");  
+						  $("#crockingdrytest").val('Crocking Dry').attr("readonly","readonly");  
+						  $("#finishadhensiontest").val('Finish Adhension').attr("readonly","readonly");  
+						  $("#fourfoldstest").val('FourFolds').attr("readonly","readonly");  
+						  $("#dyethrutest").val('Cross Section').attr("readonly","readonly");  
+						  $("#organoleptictest").val('Organoleptic').attr("readonly","readonly");  
 						  
 						 /*
 						  * Hide the TextField Label  	
@@ -557,6 +545,10 @@ $(document).ready(function() {
 			 		    /*
 						 * Show Hidden to True
 						 */
+			 		     $("#tr_colortest").show();	
+						 $("#tr_colortested").show();
+						 $("#tr_colortestresult").show();
+						 $("#tr_colorcomments").show();
 			 		     $("#tr_subtest").show();	
 			 		     $("#tr_subtested").show();
 			 		     $("#tr_subresult").show();
@@ -598,16 +590,16 @@ $(document).ready(function() {
 						  * Set values of test type inside textfield 
 						  * 
 						  */
-						  $("#colortest").val('Color Test').attr("readonly","readonly"); 
-						  $("#subtest").val('Substance Test').attr("readonly","readonly"); 
-						  $("#teartest").val('Tear Test').attr("readonly","readonly");  
-						  $("#grainbreaktest").val('Grain Break Test').attr("readonly","readonly");  
-						  $("#crockingwettest").val('Crocking Wet Test').attr("readonly","readonly");  
-						  $("#crockingdrytest").val('Crocking Dry Test').attr("readonly","readonly");  
-						  $("#finishadhensiontest").val('Finish Adhension Test').attr("readonly","readonly");  
-						  $("#fourfoldstest").val('FourFolds Test').attr("readonly","readonly");  
-						  $("#dyethrutest").val('Dyethru Test').attr("readonly","readonly");  
-						  $("#organoleptictest").val('Organoleptic Test').attr("readonly","readonly");  						  
+						  $("#colortest").val('Color').attr("readonly","readonly"); 
+						  $("#subtest").val('Substance').attr("readonly","readonly"); 
+						  $("#teartest").val('Tear Strength').attr("readonly","readonly");  
+						  $("#grainbreaktest").val('Grain Break').attr("readonly","readonly");  
+						  $("#crockingwettest").val('Crocking Wet').attr("readonly","readonly");  
+						  $("#crockingdrytest").val('Crocking Dry').attr("readonly","readonly");  
+						  $("#finishadhensiontest").val('Finish Adhension').attr("readonly","readonly");  
+						  $("#fourfoldstest").val('FourFolds').attr("readonly","readonly");  
+						  $("#dyethrutest").val('Cross Section').attr("readonly","readonly");  
+						  $("#organoleptictest").val('Organoleptic').attr("readonly","readonly");  						  
 						 /*
 						  * Hide the TextField Label  	
 						  * http://stackoverflow.com/questions/4484220/jqgrid-dynamic-form-change-label-in-formedit-add

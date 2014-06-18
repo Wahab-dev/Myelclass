@@ -91,7 +91,7 @@ public class PaymentTrackGridAction extends Action {
          }
 	 }else{
 		 System.out.println("Error Invalid Session");
-		 return map.findForward("login");
+		 return map.findForward("logout");
 	 }
 	
 	

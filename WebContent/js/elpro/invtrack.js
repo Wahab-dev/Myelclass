@@ -234,17 +234,15 @@ $(document).ready(function() {
         rownumbers: true,  
         loadonce: true,
         sortable: true,
-      //  grouping: true,
         gridview : true,
         viewrecords: true,
         footerrow: true,
-        //userDataOnFooter : true, //Gets Footer Total Recod from Server Side 
         emptyrecords: 'No records to display',
         loadComplete: function() {
         	 var $self = $(this),
         	 qty = $self.jqGrid("getCol", "invqty", false, "sum"),
-        	 qshpd = $self.jqGrid("getCol", "invqshpd", false, "sum"),
-        	 qbal  = $self.jqGrid("getCol", "invqbal", false, "sum");
+        	 qshpd = $self.jqGrid("getCol", "invqshpd", false, "sum");
+        	 var qbal = (qty- qshpd).toFixed(2);
         	 
         	 $self.jqGrid("footerData", "set", {invqty: qty});
         	 $self.jqGrid("footerData", "set", { invqshpd: qshpd});

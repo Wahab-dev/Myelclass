@@ -38,7 +38,7 @@ public class SampleTrackAction extends Action {
 			System.out.println("In Sample Track Action ");
 			 return map.findForward("sampletrackisloaded");	
 		}else{
-			return map.findForward("login");	
+			return map.findForward("logout");	
 		}
 				
 	}

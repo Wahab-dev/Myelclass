@@ -147,9 +147,8 @@ $(function() {
 						<td> Name: </td>
 						<td><h:text property="inv_exporter" styleId="inv_exporter" size="41" value="${editinvform[0].inv_exporter }"></h:text><br/></td>
 					</tr>
-					<tr>
-						<td> ID: </td>
-						<td><h:text property="inv_exporterid" styleId="inv_exporterid" size="41" value="${editinvform[0].inv_exporterid }"></h:text><br/></td>
+					<tr>	
+						<td><h:hidden property="inv_exporterid" styleId="inv_exporterid" value="${editinvform[0].inv_exporterid }"></h:hidden><br/></td>
 					</tr>
 					
 					<tr>
@@ -181,8 +180,7 @@ $(function() {
        	    			<td><h:text property="inv_notify" size="41" styleId="inv_notify" value="${editinvform[0].inv_notify }"></h:text><br/></td>
        	    		</tr>
        	    		<tr>
-       	    			<td> ID: </td>
-       	    			<td><h:text property="inv_notifyid" size="41" styleId="inv_notifyid" value="${editinvform[0].inv_notifyid }"></h:text><br/></td>
+       	    			<td><h:hidden property="inv_notifyid" styleId="inv_notifyid" value="${editinvform[0].inv_notifyid }"></h:hidden><br/></td>
        	    		</tr>
        	    		<tr>
        	    			<td>Attn: </td>
@@ -216,8 +214,7 @@ $(function() {
 						<td><h:text property="inv_bank" size="41" styleId="inv_bank" value="${editinvform[0].inv_bank }"></h:text><br/></td>
 					</tr>
 					<tr>
-						<td> ID: </td>
-						<td><h:text property="inv_bankid" size="41" styleId="inv_bankid" value="${editinvform[0].inv_bankid }"></h:text><br/></td>
+						<td><h:hidden property="inv_bankid" styleId="inv_bankid" value="${editinvform[0].inv_bankid }"></h:hidden><br/></td>
 					</tr>
 					<tr>
 						<td>Branch: </td>
@@ -292,11 +289,7 @@ $(function() {
 						</tr>
 						<tr>
 							<td>Place of Reciept: </td>
-							<td> <h:text property="inv_precarriageby" size="25" styleId="inv_precarriageby" value="${editinvform[0].inv_placeofreciept }"></h:text><br/></td>
-						</tr>
-						<tr>
-							<td> Gross Wt: </td>
-							<td><h:text property="inv_grosswt" size="25" styleId="inv_grosswt" value="${editinvform[0].inv_grosswt }"></h:text><br/></td>
+							<td> <h:text property="inv_placeofreciept" size="25" styleId="inv_placeofreciept" value="${editinvform[0].inv_placeofreciept }"></h:text><br/></td>
 						</tr>
 						<tr>
 							<td>Dimension: </td>
@@ -313,6 +306,10 @@ $(function() {
 						<tr>
 							<td>Pack No:</td>
 							<td><h:text property="inv_packno" size="25" styleId="inv_packno" value="${editinvform[0].inv_packno }"></h:text><br/></td>
+						</tr>
+						<tr>
+							<td> Gross Wt: </td>
+							<td><h:text property="inv_grosswt" size="25" styleId="inv_grosswt" value="${editinvform[0].inv_grosswt }"></h:text><br/></td>
 						</tr>
 						<tr>
 							<td>Net Wt: </td>
@@ -356,8 +353,7 @@ $(function() {
        			  		<td><h:text property="inv_custfax" size="41" styleId="inv_custfax" value="${editinvform[0].inv_custfax }"></h:text><br/></td>
        			  	</tr>
        			  	<tr>
-       			  		<td>ID:	</td>
-       			  		<td><h:text property="inv_custid" size="41" styleId="inv_custid" value="${editinvform[0].inv_custid }"></h:text><br/></td>
+       			  		<td><h:hidden property="inv_custid" styleId="inv_custid" value="${editinvform[0].inv_custid }"></h:hidden><br/></td>
        			  	</tr>
        			  </table>
        			 </fieldset>
@@ -389,7 +385,7 @@ $(function() {
        						<td><h:text property="inv_discount" size="15" styleId="inv_discount" value="${editinvform[0].inv_discount }"> </h:text></td>
        					</tr>
        					<tr>
-       						<td>Other Charges : </td>
+       						<td>Courier Charges : </td>
        						<td> <h:text property="othercharges" size="15" styleId="othercharges" value="${editinvform[0].othercharges }"> </h:text>  <br/></td>
        					</tr>
        					<tr>

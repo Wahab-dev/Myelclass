@@ -30,8 +30,8 @@ public class InspectionBoImpl implements InspectionBo {
 	
 	
 	@Override
-	public List<ProductDetails> getInspCtDetails(String inspctterm) throws Exception {
-		ArrayList<ProductDetails> InspCtList = inspdao.getInspCtList(inspctterm);
+	public List<ProductDetails> getInspCtDetails(String inspctterm, String type) throws Exception {
+		ArrayList<ProductDetails> InspCtList = inspdao.getInspCtList(inspctterm, type);
 		return InspCtList;
 	}
 
@@ -44,8 +44,8 @@ public class InspectionBoImpl implements InspectionBo {
 
 
 	@Override
-	public List<ProductDetails> getInspArtDetails(String ctno) throws Exception {
-		ArrayList<ProductDetails> InspArtList = inspdao.getInspArtList(ctno);
+	public List<ProductDetails> getInspArtDetails(String ctno, String type) throws Exception {
+		ArrayList<ProductDetails> InspArtList = inspdao.getInspArtList(ctno,type);
 		return InspArtList;
 	}
 

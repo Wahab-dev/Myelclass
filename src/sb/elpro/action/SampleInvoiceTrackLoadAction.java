@@ -33,7 +33,7 @@ public class SampleInvoiceTrackLoadAction extends Action {
 			return mapping.findForward("sampleinvoicetrackisloaded");
 		}else{
 			System.out.println("InvaliD User");
-			return mapping.findForward("login");
+			return mapping.findForward("logout");
 		}
 		
 	}

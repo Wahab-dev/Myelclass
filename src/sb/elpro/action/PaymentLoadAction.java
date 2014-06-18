@@ -54,7 +54,7 @@ public class PaymentLoadAction extends Action {
 			return map.findForward("paymntisloaded");
 		}else{
 			System.out.println("Error");
-			return map.findForward("login");
+			return map.findForward("logout");
 		}
 		
 	}
