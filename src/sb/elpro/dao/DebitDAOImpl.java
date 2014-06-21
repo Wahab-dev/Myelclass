@@ -67,12 +67,13 @@ public class DebitDaoImpl implements DebitDao {
 		try{			
 			con = DBConnection.getConnection();
 			st = (Statement) con.createStatement();
-			String sql = "SELECT invno, taninvno, tanname FROM elpro.tbl_invform form left outer join elpro.tbl_tannery tan on tan.tanid = form.expname where tanname like '"+expname+"' and invno like '%"+debinv+"%' and invno NOT IN(select invno from elpro.tbl_debitstatus)";
+			String sql = "SELECT invno, invdate, taninvno, tanname FROM elpro.tbl_invform form left outer join elpro.tbl_tannery tan on tan.tanid = form.expname where tanname like '"+expname+"' and invno like '%"+debinv+"%' and invno NOT IN(select invno from elpro.tbl_debitstatus)";
 			rs = st.executeQuery(sql);
 			while(rs.next()) {	
 				AutoComplete debtaninvbean = new AutoComplete();
 				debtaninvbean.setLabel(rs.getString("invno"));
 				debtaninvbean.setShform(rs.getString("taninvno"));
+				debtaninvbean.setOther(DateConversion.ConverttoNormalDate(rs.getString("invdate")));
 				System.out.println("Result Added Successfully");
 				//System.out.println("Exporter"+debtaninvbean.getDeb_taninvno());
 				debTaninvarray.add(debtaninvbean);
@@ -102,7 +103,6 @@ public class DebitDaoImpl implements DebitDao {
 			rs = st.executeQuery(sql);
 			while(rs.next()) {
 				float debamt = (float) 0.00;
-				//float qshiped = Float.parseFloat(rs.getString("qty"));
 				float invamt= Float.parseFloat(rs.getString("amt"));
 				if(!(rs.getString("comm").isEmpty() || rs.getString("comm").equalsIgnoreCase("null"))){
 					float com = Float.valueOf(rs.getString("comm").replaceAll("[^\\d.]+|\\.(?!\\d)", ""));
@@ -195,8 +195,8 @@ public class DebitDaoImpl implements DebitDao {
 		
 		try{
 			con = DBConnection.getConnection();
-			StringBuffer sql_savedebitform = new StringBuffer("insert into tbl_debitform (debitno, debitdate, tanneryid, invno, ctno, taninvdetails, exchgrate, commission, price, quantity, amount, elclassamount, amountinrs, tax, totaltax, tds, totaldue)");
-			sql_savedebitform.append("values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+			StringBuffer sql_savedebitform = new StringBuffer("insert into tbl_debitform (debitno, debitdate, tanneryid, invno, invdt, ctno, taninvdetails, exchgrate, commission, price, quantity, amount, elclassamount, amountinrs, tax, totaltax, tds, totaldue)");
+			sql_savedebitform.append("values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
 			String sqlquery_savedebitform = sql_savedebitform.toString();
 			pst = (PreparedStatement) con.prepareStatement(sqlquery_savedebitform);
 			System.out.println(" IN Debit Form SAVE ");
@@ -206,19 +206,20 @@ public class DebitDaoImpl implements DebitDao {
 			System.out.println("getDeb_debitdate " +debformbean.getDeb_debitdate());
 			pst.setString(3, debformbean.getDeb_exporterid());
 			pst.setString(4, debformbean.getDeb_elclassrefno());
-			pst.setString(5, debformbean.getDeb_contractno());
-			pst.setString(6, debformbean.getDeb_taninvno());
-			pst.setString(7, debformbean.getDeb_exchangerate());
-			pst.setString(8, debformbean.getDeb_commission());
-			pst.setString(9, debformbean.getDeb_rate());
-			pst.setString(10, debformbean.getDeb_totalquantity());
-			pst.setString(11, debformbean.getDeb_invoiceamt());
-			pst.setString(12, debformbean.getDeb_elclassamt());
-			pst.setString(13, debformbean.getDeb_elclassamtinrs());
-			pst.setString(14, debformbean.getDeb_tax());
-			pst.setString(15, debformbean.getDeb_total());
-			pst.setString(16, debformbean.getDeb_tds());
-			pst.setString(17, debformbean.getDeb_due());
+			pst.setString(5, DateConversion.ConverttoMysqlDate(debformbean.getDeb_elclassrefdt()));
+			pst.setString(6, debformbean.getDeb_contractno());
+			pst.setString(7, debformbean.getDeb_taninvno());
+			pst.setString(8, debformbean.getDeb_exchangerate());
+			pst.setString(9, debformbean.getDeb_commission());
+			pst.setString(10, debformbean.getDeb_rate());
+			pst.setString(11, debformbean.getDeb_totalquantity());
+			pst.setString(12, debformbean.getDeb_invoiceamt());
+			pst.setString(13, debformbean.getDeb_elclassamt());
+			pst.setString(14, debformbean.getDeb_elclassamtinrs());
+			pst.setString(15, debformbean.getDeb_tax());
+			pst.setString(16, debformbean.getDeb_total());
+			pst.setString(17, debformbean.getDeb_tds());
+			pst.setString(18, debformbean.getDeb_due());
 			System.out.println("getDeb_due " +debformbean.getDeb_due());
 			noofrows = pst.executeUpdate();
 			System.out.println("Sucessfully inserted the record.." + noofrows);
@@ -280,7 +281,7 @@ public class DebitDaoImpl implements DebitDao {
 		try{			
 			con = DBConnection.getConnection();
 			st = (Statement) con.createStatement();
-			String sql = "SELECT debitno, debitdate, tanneryid, tan.tanshform as Tannery, invno, ctno, taninvdetails, exchgrate, commission, price, quantity, amount,  elclassamount, amountinrs, tax, totaltax, tds, totaldue  FROM tbl_debitform form left outer join elpro.tbl_tannery tan on tan.tanid = form.tanneryid order by debitno desc";
+			String sql = "SELECT debitno, debitdate, tanneryid, tan.tanshform as Tannery, invno, invdt, ctno, taninvdetails, exchgrate, commission, price, quantity, amount,  elclassamount, amountinrs, tax, totaltax, tds, totaldue  FROM tbl_debitform form left outer join elpro.tbl_tannery tan on tan.tanid = form.tanneryid order by debitno desc";
 			rs = st.executeQuery(sql);
 			while(rs.next()) {	
 		     DebitFormDetails debtrackbean = new DebitFormDetails();
@@ -288,6 +289,7 @@ public class DebitDaoImpl implements DebitDao {
 				debtrackbean.setDeb_debitdate(DateConversion.ConverttoNormalDate(rs.getString("debitdate")));
 				debtrackbean.setDeb_exporter(rs.getString("Tannery"));
 				debtrackbean.setDeb_elclassrefno(rs.getString("invno"));
+				debtrackbean.setDeb_elclassrefdt(DateConversion.ConverttoNormalDate(rs.getString("invdt")));
 				debtrackbean.setDeb_contractno(rs.getString("ctno"));
 				debtrackbean.setDeb_taninvno(rs.getString("taninvdetails"));
 				debtrackbean.setDeb_exchangerate(rs.getString("exchgrate"));
@@ -384,7 +386,7 @@ public class DebitDaoImpl implements DebitDao {
 		try{			
 			con = DBConnection.getConnection();
 			st = (Statement) con.createStatement();
-			String sql = "SELECT debitno, debitdate, tanneryid, tanname, tanaddr, tanphone, invno, ctno, taninvdetails, exchgrate, commission, price, quantity, amount, elclassamount, amountinrs, tax, totaltax, tds, totaldue FROM elpro.tbl_debitform form join elpro.tbl_tannery tan on tan.tanid=form.tanneryid where debitno = '"+deb_debitno+"' ";
+			String sql = "SELECT debitno, debitdate, tanneryid, tanname, tanaddr, tanphone, invno, invdt, ctno, taninvdetails, exchgrate, commission, price, quantity, amount, elclassamount, amountinrs, tax, totaltax, tds, totaldue FROM elpro.tbl_debitform form join elpro.tbl_tannery tan on tan.tanid=form.tanneryid where debitno = '"+deb_debitno+"' ";
 			System.out.println(sql);
 			rs = st.executeQuery(sql);
 			
@@ -398,6 +400,7 @@ public class DebitDaoImpl implements DebitDao {
 				editdebformbean.setDeb_tanaddr(rs.getString("tanaddr"));
 				editdebformbean.setDeb_tantelephone(rs.getString("tanphone"));
 				editdebformbean.setDeb_elclassrefno(rs.getString("invno"));
+				editdebformbean.setDeb_elclassrefdt(DateConversion.ConverttoNormalDate(rs.getString("invdt")));
 				editdebformbean.setDeb_contractno(rs.getString("ctno"));
 				editdebformbean.setDeb_taninvno(rs.getString("taninvdetails"));
 				editdebformbean.setDeb_exchangerate(rs.getString("exchgrate"));
@@ -442,25 +445,26 @@ public class DebitDaoImpl implements DebitDao {
 		boolean isUpdtd =true;
 		try{
 			con = DBConnection.getConnection();
-			StringBuffer sql_updtsaminvform = new StringBuffer("update tbl_debitform set debitdate = ? ,  tanneryid= ? , invno= ? , taninvdetails= ? , exchgrate= ? , commission= ? , price= ? , quantity= ? , amount= ? , elclassamount= ? , amountinrs= ? , tax= ? , totaltax= ? , tds= ? , totaldue= ? where debitno ='"+debformbean.getDeb_debitno()+"' ");
+			StringBuffer sql_updtsaminvform = new StringBuffer("update tbl_debitform set debitdate = ? ,  tanneryid= ? , invno= ? , invdt = ? , taninvdetails= ? , exchgrate= ? , commission= ? , price= ? , quantity= ? , amount= ? , elclassamount= ? , amountinrs= ? , tax= ? , totaltax= ? , tds= ? , totaldue= ? where debitno ='"+debformbean.getDeb_debitno()+"' ");
 			String sqlquery_updtsaminvform = sql_updtsaminvform.toString();
 			pst = (PreparedStatement) con.prepareStatement(sqlquery_updtsaminvform);
 			pst.setString(1, debformbean.getDeb_debitdate());
 			System.out.println("getDeb_invoicetype " +debformbean.getDeb_debitdate());
 			pst.setString(2, debformbean.getDeb_exporterid());
 			pst.setString(3, debformbean.getDeb_elclassrefno());
-			pst.setString(4, debformbean.getDeb_taninvno());
-			pst.setString(5, debformbean.getDeb_exchangerate());
-			pst.setString(6, debformbean.getDeb_commission());
-			pst.setString(7, debformbean.getDeb_rate());
-			pst.setString(8, debformbean.getDeb_totalquantity());
-			pst.setString(9, debformbean.getDeb_invoiceamt());
-			pst.setString(10,debformbean.getDeb_elclassamt());
-			pst.setString(11,debformbean.getDeb_elclassamtinrs());
-			pst.setString(12, debformbean.getDeb_tax());
-			pst.setString(13, debformbean.getDeb_total());
-			pst.setString(14, debformbean.getDeb_tds());
-			pst.setString(15, debformbean.getDeb_due());
+			pst.setString(4, debformbean.getDeb_elclassrefdt());
+			pst.setString(5, debformbean.getDeb_taninvno());
+			pst.setString(6, debformbean.getDeb_exchangerate());
+			pst.setString(7, debformbean.getDeb_commission());
+			pst.setString(8, debformbean.getDeb_rate());
+			pst.setString(9, debformbean.getDeb_totalquantity());
+			pst.setString(10, debformbean.getDeb_invoiceamt());
+			pst.setString(11,debformbean.getDeb_elclassamt());
+			pst.setString(12,debformbean.getDeb_elclassamtinrs());
+			pst.setString(13, debformbean.getDeb_tax());
+			pst.setString(14, debformbean.getDeb_total());
+			pst.setString(15, debformbean.getDeb_tds());
+			pst.setString(16, debformbean.getDeb_due());
 			System.out.println("getDeb_due " +debformbean.getDeb_due());
 			noofrows = pst.executeUpdate();
 			

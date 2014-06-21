@@ -25,6 +25,7 @@ public class DebitFormDetails implements Serializable {
 	private String deb_tanfax;
 	private String deb_taninvno;
 	private String deb_elclassrefno;
+	private String deb_elclassrefdt;
 	private String deb_contractno;
 	private String deb_orderdate;
 	private String deb_article;
@@ -61,6 +62,7 @@ public class DebitFormDetails implements Serializable {
 	private String tcdeb_ctno;
 	private String tcdeb_taninvno;
 	private String tcdeb_elclassrefno;
+	private String tcdeb_elclassrefdt;
 	private String tcdeb_exchangerate;
 	private String tcdeb_commission;
 	private String tcdeb_rate;
@@ -69,7 +71,7 @@ public class DebitFormDetails implements Serializable {
 	private String tcdeb_elclassamt;
 	private String tcdeb_elclassamtinrs;
 	private String tcdeb_tcamt;
-
+	private String tcdebamtinwords;
 	private String debactionform;
 
 	
@@ -702,6 +704,42 @@ public class DebitFormDetails implements Serializable {
 	 */
 	public void setTcdeb_exchangerate(String tcdeb_exchangerate) {
 		this.tcdeb_exchangerate = tcdeb_exchangerate;
+	}
+	/**
+	 * @return the deb_elclassrefdt
+	 */
+	public String getDeb_elclassrefdt() {
+		return deb_elclassrefdt;
+	}
+	/**
+	 * @param deb_elclassrefdt the deb_elclassrefdt to set
+	 */
+	public void setDeb_elclassrefdt(String deb_elclassrefdt) {
+		this.deb_elclassrefdt = deb_elclassrefdt;
+	}
+	/**
+	 * @return the tcdeb_elclassrefdt
+	 */
+	public String getTcdeb_elclassrefdt() {
+		return tcdeb_elclassrefdt;
+	}
+	/**
+	 * @param tcdeb_elclassrefdt the tcdeb_elclassrefdt to set
+	 */
+	public void setTcdeb_elclassrefdt(String tcdeb_elclassrefdt) {
+		this.tcdeb_elclassrefdt = tcdeb_elclassrefdt;
+	}
+	/**
+	 * @return the tcdebamtinwords
+	 */
+	public String getTcdebamtinwords() {
+		return tcdebamtinwords;
+	}
+	/**
+	 * @param tcdebamtinwords the tcdebamtinwords to set
+	 */
+	public void setTcdebamtinwords(String tcdebamtinwords) {
+		this.tcdebamtinwords = tcdebamtinwords;
 	}
 	
 }

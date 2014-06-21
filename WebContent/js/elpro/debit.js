@@ -83,6 +83,7 @@ $(document).ready(function() {
 			 footerrow: true,
 			 loadComplete: function (data){ //load complete fires immeddiately aftr server response
 				 var $self = $(this),
+				 
 				 //Sum Total Shipped, Inv Value, Debit Amt
 				 totshpd = $self.jqGrid("getCol", "invqshpd", false, "sum");
 				 totamt = $self.jqGrid("getCol", "invamt", false, "sum");
@@ -97,11 +98,12 @@ $(document).ready(function() {
 	        	 $("#deb_invoiceamt").val(totamt.toFixed(2));
 	        	 $("#deb_elclassamt").val(totdebamt.toFixed(2));
 	        	  
-				 $("#tcbtn").addClass('ui-state-disabled'); // Diable TC btn
+	        	 // Diable TC btn
 				 $("#tcbutton").attr('disabled' , true);
 			 },
 			 onSelectRow: function(rowid, status, e) {
 				 var ctnos = grid.jqGrid('getCol', 'invctno', false);
+				// alert(ctnos[0]); Need to work here --> find a way to display distinct CT NO 
 				 var selrowid = grid.jqGrid('getGridParam', 'selrow');
 		         var invdetails = grid.jqGrid('getRowData', selrowid);
 
@@ -116,7 +118,7 @@ $(document).ready(function() {
 		         $("#deb_tc").val(tc);
 		         var tcmt =  tc.substring(0,1);
 		      
-				   alert(tcmt);
+				   
 				   if (tc.toLowerCase().indexOf("ic") >= 0 && tcmt != 0){
 						//enable tc button
 						$("#tcbutton").attr('disabled' , false);
@@ -192,17 +194,19 @@ $(document).ready(function() {
 			           return { 
 			              value: item.label,
 			              taninvno: item.shform,
+			              invdt: item.other,
 			              };
 			        }));
 			 });
 		 },
 		 select: function(event, ui){
 			 $('#deb_taninvno').val(ui.item.taninvno);
-			 $('#deb_elclassrefno').val(ui.item.value); 
+			 $('#deb_elclassrefno').val(ui.item.value);
+			 $('#deb_elclassrefdt').val(ui.item.invdt);
 			 if($("#debactionform").val().toLowerCase() == "edit" ){
-				
+
 			 }else{
-				 alert("in select Add"+$("#debactionform").val());
+				 
 				 var elclassrefno = $("#deb_elclassrefno").val();
 				 grid.jqGrid('setGridParam',{url:"/Myelclass/DebSelInvfromCust.do?invno="+elclassrefno+"&action="+"loadGrid",}).trigger("reloadGrid");
 			 }
@@ -217,8 +221,8 @@ $(document).ready(function() {
 	 $("#tcdebit").tabs().dialog({
 			autoOpen: false,
 	        resizable: true,
-	        width: 880,
-	        height: 500,
+	        width: 950,
+	        height: 550,
 	        autoResize: true, 
 	        modal: true,
 	        open: function(event, ui){
@@ -235,25 +239,30 @@ $(document).ready(function() {
 	         	$("#tcdeb_exchangerate").val($("#deb_exchangerate").val());
 	        	$("#tcdeb_taninvno").val($("#deb_taninvno").val());
 	        	$("#tcdeb_elclassrefno").val($("#deb_elclassrefno").val());
+	        	$("#tcdeb_elclassrefdt").val($("#deb_elclassrefdt").val());
 	        	$("#tcdeb_tcamt").val($("#deb_tc").val());
 	        	$("#tcdeb_rate").val($("#deb_rate").val());
 	        	$("#tcdeb_totalquantity").val($("#deb_totalquantity").val());
 	        },
-	        buttons:{
+	        beforeClose: function( event, ui ) {
+	        		
+	        		$("#Btndebitsave").attr('disabled' , false);
+	        		$("#tcbutton").attr('disabled', true);
+	        },
+	        /*buttons:{
 	        	"Print" : function () {
 	        		alert("In Print");
 	        		var formdata = $('#tcdebitform').serialize();
 	        		alert("Form Data"+formdata);
 	        		$.ajax({
-	        			url: "/Myelclass/pojw/print.do",
+	        			url: "/Myelclass/tcdebit/print.do",
 	        			type: "POST",
 	        			async: true,
-	        			dataType: "html",
+	        			dataType: "text",
 	        			data: formdata,
 	        			contentType: "application/x-www-form-urlencoded; charset=UTF-8",
 	        			success: function (data) {
-	        				alert(data);
-	                     $(this).dialog("close");
+	        				alert(data);	
 	        			}, 
 	        			error: function (data) {
 	        				alert("F "+data);
@@ -286,7 +295,7 @@ $(document).ready(function() {
 	    			});
 				},
 				
-	        },
+	        },*/
 		});
 	 
 	$("#tcbutton").click(function(){
@@ -323,15 +332,15 @@ $(document).ready(function() {
 		 	var tc = $("#tcdeb_tcamt").val();
 			var exchngrate = $("#tcdeb_exchangerate").val();
 			var totqty = $("#tcdeb_totalquantity").val();
-			var tcindex = tc.indexOf(' ');
-			var tcpercent = tc.substring(0,tcindex);
+			var tcpercent = tc.substr(0,tc.indexOf('c'));
 			tcpercent.trim();
 			
 			 var amt = (tcpercent * totqty) / 100;
 			 var amtinrs = (amt * exchngrate);
-			 $("#tcdeb_elclassamt").val(Math.round(amtinrs));
+			 $("#tcdeb_elclassamtinrs").val(Math.round(amtinrs));
+			 $("#tcdeb_elclassamt").val(amt.toFixed(2));
 			 finalWord ="";
-			 test_skill( $("#tcdeb_elclassamt").val());
+			 test_skill( $("#tcdeb_elclassamtinrs").val());
 			 $('#tcdebamtinwords').val(finalWord);
 	 });
 	 
@@ -395,7 +404,7 @@ $(document).ready(function() {
 			        return false;
 			    }
 			    if(actnumber.length>9){
-			        alert('The Number is too big to covertes');
+			        alert('The Number is too big to coverte');
 			        return false;
 			    }
 			 

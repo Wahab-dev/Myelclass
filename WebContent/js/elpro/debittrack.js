@@ -105,55 +105,55 @@ $(document).ready(function() {
 						        }
 						    }	
 					},
-					{name: 'deb_debitdate', index: 'deb_debitdate' ,align:'center', width:70, hidden: false,
+					{name: 'deb_debitdate', index: 'deb_debitdate' ,align:'center', width:70, hidden: false, editable:true,
 						
 					},
-					{name: 'deb_exporter', index: 'deb_exporter', align:'center', width:50, hidden: false, 
+					{name: 'deb_exporter', index: 'deb_exporter', align:'center', width:50, hidden: false, editable:true,
 						
 					},
-					{name: 'deb_elclassrefno', index: 'deb_elclassrefno' ,align:'center', width:50,  hidden: false,
+					{name: 'deb_elclassrefno', index: 'deb_elclassrefno' ,align:'center', width:50,  hidden: false, editable:true,
 						
 					},
-					{name: 'deb_invdate', index: 'deb_invdate' ,align:'center', width:70, hidden: true, 
+					{name: 'deb_invdate', index: 'deb_invdate' ,align:'center', width:70, hidden: true, editable:true,
 						
 					},
-					{name: 'deb_taninvno', index: 'deb_taninvno' ,align:'center', width:110, hidden: false,
+					{name: 'deb_taninvno', index: 'deb_taninvno' ,align:'center', width:110, hidden: false, editable:true,
 						
 					},
-					{name: 'deb_contractno', index: 'deb_contractno' ,align:'center', width:70, hidden: true,
+					{name: 'deb_contractno', index: 'deb_contractno' ,align:'center', width:70, hidden: true, editable:true,
 						
 					},
-					{name: 'deb_invoiceamt', index: 'deb_invoiceamt' ,width:70,  hidden: false, align:'right',
+					{name: 'deb_invoiceamt', index: 'deb_invoiceamt' ,width:70,  hidden: false, align:'right', editable:true,
 						
 					},
-					{name: 'deb_exchangerate', index: 'deb_exchangerate' ,width:70,  hidden: false, align:'right',
+					{name: 'deb_exchangerate', index: 'deb_exchangerate' ,width:70,  hidden: false, align:'right', editable:true,
 						
 					},
-					{name: 'deb_commission', index: 'deb_commission' ,width:70, hidden: false,
+					{name: 'deb_commission', index: 'deb_commission' ,width:70, hidden: false, editable:true,
 						
 					},
-					{name: 'deb_rate', index: 'deb_rate' ,width:70, hidden: false, align:'right',
+					{name: 'deb_rate', index: 'deb_rate' ,width:70, hidden: false, align:'right', editable:true,
 						
 					},
-					{name: 'deb_qshipped', index: 'deb_qshipped' ,width:70, hidden: false, align:'right',
+					{name: 'deb_qshipped', index: 'deb_qshipped' ,width:70, hidden: false, align:'right', editable:true,
 						
 					},
-					{name: 'deb_elclassamt', index: 'deb_elclassamt' ,width:70,  align:'right', hidden: false,
+					{name: 'deb_elclassamt', index: 'deb_elclassamt' ,width:70,  align:'right', hidden: false, editable:true,
 						
 					},
-					{name: 'deb_elclassamtinrs', index: 'deb_elclassamtinrs' ,width:70,  align:'right',  hidden: false,
+					{name: 'deb_elclassamtinrs', index: 'deb_elclassamtinrs' ,width:70,  align:'right',  hidden: false, editable:true,
 						
 					},
-					{name: 'deb_tax', index: 'deb_tax' ,width:70,  hidden: false, align:'right',
+					{name: 'deb_tax', index: 'deb_tax' ,width:70,  hidden: false, align:'right', editable:true,
 						
 					},
-					{name: 'deb_total', index: 'deb_total' ,width:50, hidden: false, align:'right',
+					{name: 'deb_total', index: 'deb_total' ,width:50, hidden: false, align:'right', editable:true,
 						
 					},
-					{name: 'deb_tds', index: 'deb_tds' ,width:90, hidden: false, align:'right',
+					{name: 'deb_tds', index: 'deb_tds' ,width:90, hidden: false, align:'right', editable:true,
 						
 					},
-					{name: 'deb_due', index: 'deb_due' ,width:70, hidden: false, align:'right',
+					{name: 'deb_due', index: 'deb_due' ,width:70, hidden: false, align:'right',editable:true,
 						
 					},
 		           ],

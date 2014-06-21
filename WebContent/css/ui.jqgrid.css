@@ -6,3 +6,6 @@
  .form{
  	background-color: #f5f8f9;
  } 
+ div.ui-datepicker{
+ font-size:10px;
+}

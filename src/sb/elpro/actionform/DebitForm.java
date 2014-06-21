@@ -29,6 +29,7 @@ public class DebitForm extends ActionForm{
 	private String deb_tanfax;
 	private String deb_taninvno;
 	private String deb_elclassrefno;
+	private String deb_elclassrefdt;
 	private String deb_contractno;
 	private String deb_orderdate;
 	private String deb_article;
@@ -65,6 +66,7 @@ public class DebitForm extends ActionForm{
 	private String tcdeb_ctno;
 	private String tcdeb_taninvno;
 	private String tcdeb_elclassrefno;
+	private String tcdeb_elclassrefdt;
 	private String tcdeb_exchangerate;
 	private String tcdeb_commission;
 	private String tcdeb_rate;
@@ -778,6 +780,30 @@ public class DebitForm extends ActionForm{
 	 */
 	public void setTcdebamtinwords(String tcdebamtinwords) {
 		this.tcdebamtinwords = tcdebamtinwords;
+	}
+	/**
+	 * @return the deb_elclassrefdt
+	 */
+	public String getDeb_elclassrefdt() {
+		return deb_elclassrefdt;
+	}
+	/**
+	 * @param deb_elclassrefdt the deb_elclassrefdt to set
+	 */
+	public void setDeb_elclassrefdt(String deb_elclassrefdt) {
+		this.deb_elclassrefdt = deb_elclassrefdt;
+	}
+	/**
+	 * @return the tcdeb_elclassrefdt
+	 */
+	public String getTcdeb_elclassrefdt() {
+		return tcdeb_elclassrefdt;
+	}
+	/**
+	 * @param tcdeb_elclassrefdt the tcdeb_elclassrefdt to set
+	 */
+	public void setTcdeb_elclassrefdt(String tcdeb_elclassrefdt) {
+		this.tcdeb_elclassrefdt = tcdeb_elclassrefdt;
 	}
 
 }

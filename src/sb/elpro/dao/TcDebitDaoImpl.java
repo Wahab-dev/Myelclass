@@ -18,6 +18,7 @@ import com.mysql.jdbc.Statement;
 import sb.elpro.model.DebitFormDetails;
 import sb.elpro.model.InvoiceBean;
 import sb.elpro.utility.DBConnection;
+import sb.elpro.utility.DateConversion;
 
 /**
  * @author Wahab
@@ -73,8 +74,9 @@ public class TcDebitDaoImpl implements TcDebitDao {
 		int noofrowsstatus  = 0;
 		try{
 			con = DBConnection.getConnection();
-			StringBuffer sql_savetcdebitform = new StringBuffer("insert into tbl_debitform (debitno, debitdate, tanneryid, invno, ctno, taninvdetails, exchgrate, commission, price, quantity, amount, elclassamount, amountinrs, totaltax, totaldue )");
-			sql_savetcdebitform.append("values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+			StringBuffer sql_savetcdebitform = new StringBuffer("insert into tbl_debitform (debitno, debitdate, tanneryid, invno, invdt, ctno, taninvdetails, exchgrate, commission, price, quantity, amount, elclassamount, amountinrs, tax, totaltax, tds, totaldue )");
+			 																				
+			sql_savetcdebitform.append("values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
 			String sqlquery_savetcdebitform = sql_savetcdebitform.toString();
 			pst = (PreparedStatement) con.prepareStatement(sqlquery_savetcdebitform);
 			System.out.println(" IN TC Debit Form SAVE ");
@@ -84,18 +86,21 @@ public class TcDebitDaoImpl implements TcDebitDao {
 			System.out.println("getTcdeb_tcdebitdate " +tcformbean.getTcdeb_tcdebitdate());
 			pst.setString(3, tcformbean.getTcdeb_exporterid());
 			pst.setString(4, tcformbean.getTcdeb_elclassrefno());
-			pst.setString(5, tcformbean.getTcdeb_ctno());
-			pst.setString(6, tcformbean.getTcdeb_taninvno());
-			pst.setString(7, tcformbean.getTcdeb_exchangerate());
+			pst.setString(5, DateConversion.ConverttoMysqlDate(tcformbean.getTcdeb_elclassrefdt()));
+			pst.setString(6, tcformbean.getTcdeb_ctno());
+			pst.setString(7, tcformbean.getTcdeb_taninvno());
+			pst.setString(8, tcformbean.getTcdeb_exchangerate());
 			System.out.println("getTcdeb_exchangerate " +tcformbean.getTcdeb_exchangerate());
-			pst.setString(8, tcformbean.getTcdeb_commission());
-			pst.setString(9, tcformbean.getTcdeb_rate());
-			pst.setString(10, tcformbean.getTcdeb_totalquantity());
-			pst.setString(11, tcformbean.getTcdeb_invoiceamt());
-			pst.setString(12, tcformbean.getTcdeb_elclassamt());
+			pst.setString(9, tcformbean.getTcdeb_commission());
+			pst.setString(10, tcformbean.getTcdeb_rate());
+			pst.setString(11, tcformbean.getTcdeb_totalquantity());
+			pst.setString(12, tcformbean.getTcdeb_invoiceamt());
 			pst.setString(13, tcformbean.getTcdeb_elclassamt());
 			pst.setString(14, tcformbean.getTcdeb_elclassamt());
-			pst.setString(15, tcformbean.getTcdeb_elclassamt());
+			pst.setString(15, "0");
+			pst.setString(16,tcformbean.getTcdeb_elclassamt());
+			pst.setString(17, "0");
+			pst.setString(18, tcformbean.getTcdeb_elclassamt());
 			noofrows = pst.executeUpdate();
 			System.out.println("Sucessfully inserted the record.." + noofrows);
 			if(noofrows == 1){

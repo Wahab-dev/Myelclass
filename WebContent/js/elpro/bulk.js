@@ -91,13 +91,6 @@ $(function() {
 		    showButtonPanel: true,
 		    gotoCurrent:true, 
         });
-      /*   $(elem).next('button.ui-datepicker-trigger').button({
-            text: false,
-            icons: {primary: 'ui-icon-calculator'}
-        }).css({fontSize: '0.9em', width: '1.7em'})
-        .find('span.ui-button-text')
-        .css({padding: '0.1em'}); */
- 
     },
     DateGrpEdit = function (elem) {
         $(elem).datepicker({

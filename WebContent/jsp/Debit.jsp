@@ -48,11 +48,11 @@ $(function() {
 			<div id="accordionmenu1" class="accordionmenu">
 			  <h3>Samples </h3>
 			        <ul>
-							 <li> <h:link action='/loadSrf' scope="request">SrfScreen</h:link></li>
-							<li> <h:link action='/gotoSampleTracking'>Sample Tracking</h:link></li>
-							<li> <h:link action='/gotoSampleInvoice'>Sample Invoice Screen</h:link></li>
-							  <li> <h:link action='/sit'>Sample Invoice Tracking</h:link></li>
-							 <li> <h:link action='/gotoSampleDebit'>Sample Debit</h:link></li>
+						 <li> <h:link action='/loadSrf' scope="request">SrfScreen</h:link></li>
+						 <li> <h:link action='/gotoSampleTracking'>Sample Tracking</h:link></li>
+						 <li> <h:link action='/gotoSampleInvoice'>Sample Invoice Screen</h:link></li>
+						 <li> <h:link action='/sit'>Sample Invoice Tracking</h:link></li>
+						 <li> <h:link action='/gotoSampleDebit'>Sample Debit</h:link></li>
 			        </ul>
 			        </div>
 			    </td>
@@ -128,13 +128,17 @@ $(function() {
 		    			<td>Debit Date:</td>
 		    			<td><h:text property="deb_debitdate" size="41" styleId="deb_debitdate"  value="${editdebform[0].deb_debitdate }" styleClass="dtdebit"></h:text></td>
 		    		</tr>
-		    		<tr>
+		    		<tr> 
 		    			<td>Tanner Invoice No:</td>
 		    			<td><h:text property="deb_taninvno" size="41" styleId="deb_taninvno"  value="${editdebform[0].deb_taninvno}"></h:text></td>
 		    		</tr>
 		    		<tr>
 		    			<td>elclass ref no : </td>
 		    			<td><h:text property="deb_elclassrefno" size="41" styleId="deb_elclassrefno"  value="${editdebform[0].deb_elclassrefno}"></h:text></td>
+		    		</tr>
+		    		<tr>
+		    			<td>elclass ref Date : </td>
+		    			<td><h:text property="deb_elclassrefdt" size="41" styleId="deb_elclassrefdt"  value="${editdebform[0].deb_elclassrefdt}"></h:text></td>
 		    		</tr>
 		    	</table> 
       		  </fieldset>
@@ -231,11 +235,11 @@ $(function() {
    			    <h:submit property="debitaction" value="Print" styleId="Btndebitsave"  ></h:submit></td>
   		</tr>
 	</table>
-	
-	</h:form>
+</h:form>
+</div>
 <!-- TC DEBIT NOTE  Dialog  -->	
-	<div id="tcdebit" title="TC Debit Note" class="tcform">
- 		<h:form styleId="tcdebitform" action="/Debit.do" method="POST"> 
+<div id="tcdebit" title="TC Debit Note" class="tcform">
+<h:form styleId="tcdebitform" action="/TcDebit" method="POST" target="hiddenframe"> 
  			<table style="border-width: medium;">
     			<tr>
 		   	 		<td>
@@ -248,9 +252,7 @@ $(function() {
         						
         					</tr>
         					<tr>
-        						<td>ID  :</td>
-        						<td><h:text property="tcdeb_exporterid" styleId="tcdeb_exporterid" size="32" ></h:text><br/></td>
-        						
+        						<td><h:hidden property="tcdeb_exporterid" styleId="tcdeb_exporterid" ></h:hidden><br/></td>
         					</tr>
         					<tr>
         						<td>Address:</td>
@@ -286,7 +288,10 @@ $(function() {
         						<td>elclass ref no:</td>
         						<td><h:text property="tcdeb_elclassrefno" styleId="tcdeb_elclassrefno" size="28"></h:text></td>       						
         					</tr>
-        					
+        					<tr>
+				    			<td>elclass ref Date : </td>
+				    			<td><h:text property="tcdeb_elclassrefdt" size="28" styleId="tcdeb_elclassrefdt"  value="${editdebform[0].tcdeb_elclassrefdt}"></h:text></td>
+		    				</tr>
         				</table>
       		  		</fieldset>		
 					</td>
@@ -332,23 +337,34 @@ $(function() {
         					<td> <h:text property="tcdeb_exchangerate" styleId="tcdeb_exchangerate"> </h:text> </td>
 						</tr>  
 						<tr>
-        					<td>TC Amount: </td>
+        					<td>TC Amount(USD): </td>
         					<td><h:text property="tcdeb_elclassamt" styleId="tcdeb_elclassamt"> </h:text> </td>
+						</tr> 
+						<tr>
+        					<td>TC Amount(Rs): </td>
+        					<td><h:text property="tcdeb_elclassamtinrs" styleId="tcdeb_elclassamtinrs"> </h:text> </td>
 						</tr> 
 					</table>
 					</fieldset>	
 					</td>
 				</tr>
 				<tr>
-					<td><h:text property="tcdebamtinwords" size="84" styleId="tcdebamtinwords" value="${editdebform[0].tcdebamtinwords }"/></td>
+					<td colspan="2"><h:text property="tcdebamtinwords" size="108" styleId="tcdebamtinwords" value="${editdebform[0].tcdebamtinwords }"/></td>
+				</tr>
+				<tr>	
+					<td>
+		    			<h:submit property="debitaction" value="TCSave" title="Save" styleId="tcsave"></h:submit>
+		    		</td>
+   					<td>
+   						
+   			    		<h:submit property="debitaction" value="TCPrint" title="Print" styleId="tcprint"></h:submit>
+   			    	</td>
 				</tr>				
 		</table>
- 	</h:form>
- 	
- </div>
- 
- 
-
+</h:form>
 </div>
+<iframe name="hiddenframe" style="display: none;">
+
+</iframe>
 </body>
 </html>

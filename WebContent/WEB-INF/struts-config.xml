@@ -198,15 +198,9 @@
 	 
 
 <!-- ==== TC Debit Screen ==================================================================================================================================================================== -->
-	<action path="/gototcdebit" name="DebitForm" type="sb.elpro.action.TcDebitLoadAction" input="/jsp/TcDebit.jsp" scope="session" parameter="action">
-	  	<forward name="tcdebitisloaded" path="/jsp/Debit.jsp"></forward>
-	</action> 
 	 
-	<action path="/TcDebit" name="DebitForm" type="sb.elpro.action.TcDebitLoadAction" input="/jsp/TcDebit.jsp" scope="session" parameter="action">
-		<forward name="tcdebissaved" path="/jsp/Debit.jsp"></forward>
+	<action path="/TcDebit" name="DebitForm" type="sb.elpro.action.DebitAction" input="/jsp/Debit.jsp" scope="session" parameter="debitaction">
 	</action> 
-	  
-	<action path="/TcDebInvDetails" name="TcDebitForm" type="sb.elpro.action.TcDebitAction" input="/jsp/TcDebit.jsp" scope="session"></action>
 <!-- ==== Payment Screen ==================================================================================================================================================================== -->	  
 	<action path="/gotopayment" name="PaymentForm" type="sb.elpro.action.PaymentLoadAction" input="/jsp/Menu.jsp" scope="session" parameter="paymntaction">
 	  	<forward name="paymntisloaded" path="/jsp/Payment.jsp"></forward>

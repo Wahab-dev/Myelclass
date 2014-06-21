@@ -11,7 +11,7 @@ public class AutoComplete implements Serializable {
 	private static final long serialVersionUID = 1273690433844895976L;
 		private String label;
 		private String value;
-		
+		private String other;
 		private String shform;
 		
 		
@@ -51,6 +51,18 @@ public class AutoComplete implements Serializable {
 		 */
 		public void setShform(String shform) {
 			this.shform = shform;
+		}
+		/**
+		 * @return the other
+		 */
+		public String getOther() {
+			return other;
+		}
+		/**
+		 * @param other the other to set
+		 */
+		public void setOther(String other) {
+			this.other = other;
 		}
 		
 }
