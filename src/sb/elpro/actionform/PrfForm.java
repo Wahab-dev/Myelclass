@@ -33,6 +33,7 @@ public class PrfForm extends ActionForm implements Serializable {
 	private String prf_poref;
 	private String prf_poreftype;
 	private String prf_exporter;
+	private String prf_exporterid;
 	private String prf_exporterattn;
 	private String prf_exporteraddr;
 	private String prf_exportertele;
@@ -80,7 +81,6 @@ public class PrfForm extends ActionForm implements Serializable {
 	private String prf_add;
 	private String prf_special;
 	private String prf_inspcdn;
-	private String prf_pojw;
 	
 	
 	
@@ -115,15 +115,25 @@ public class PrfForm extends ActionForm implements Serializable {
 	private String prf_selectionp;
 	private String prf_price;
 	private String prf_tc;
-	
+	private String prf_pojwno; 
 	private String formaction;
 	
+	//POJW  form Details
+	private String pojw_pojwno; 
 	private String pojw_orderdate; 
 	private String pojw_cddate; 
+	private String pojw_contractno;
+	private String pojw_comm; 
 	private String pojw_splcdn; 
 	private String pojw_payterms; 
-	private String pojw_comm; 
-	private String pojw_contractno;
+	
+	private String pojw_tanid;
+	private String pojw_tanname;
+	private String pojw_tanattn;
+	private String pojw_tanaddr;
+	private String pojw_tanphone;
+	private String pojw_tanfax;
+	
 	
 	/**
 	 * @return the pojw_orderdate
@@ -1135,17 +1145,7 @@ public class PrfForm extends ActionForm implements Serializable {
 		this.prf_inspcdn = prf_inspcdn;
 	}
 	/**
-	 * @return the prf_pojw
-	 */
-	public String getPrf_pojw() {
-		return prf_pojw;
-	}
-	/**
-	 * @param prf_pojw the prf_pojw to set
-	 */
-	public void setPrf_pojw(String prf_pojw) {
-		this.prf_pojw = prf_pojw;
-	}
+	
 	/**
 	 * @return the formaction
 	 */
@@ -1231,7 +1231,7 @@ public class PrfForm extends ActionForm implements Serializable {
 		prf_add = "";
 		prf_special = "";
 		prf_inspcdn = "";
-		prf_pojw = "";
+		setPrf_pojwno("");
 		
 		
 		
@@ -1339,6 +1339,114 @@ public class PrfForm extends ActionForm implements Serializable {
 	public void setPojw_contractno(String pojw_contractno) {
 		this.pojw_contractno = pojw_contractno;
 	}
-	 
+	/**
+	 * @return the pojw_tanid
+	 */
+	public String getPojw_tanid() {
+		return pojw_tanid;
+	}
+	/**
+	 * @param pojw_tanid the pojw_tanid to set
+	 */
+	public void setPojw_tanid(String pojw_tanid) {
+		this.pojw_tanid = pojw_tanid;
+	}
+	/**
+	 * @return the pojw_tanname
+	 */
+	public String getPojw_tanname() {
+		return pojw_tanname;
+	}
+	/**
+	 * @param pojw_tanname the pojw_tanname to set
+	 */
+	public void setPojw_tanname(String pojw_tanname) {
+		this.pojw_tanname = pojw_tanname;
+	}
+	/**
+	 * @return the pojw_tanattn
+	 */
+	public String getPojw_tanattn() {
+		return pojw_tanattn;
+	}
+	/**
+	 * @param pojw_tanattn the pojw_tanattn to set
+	 */
+	public void setPojw_tanattn(String pojw_tanattn) {
+		this.pojw_tanattn = pojw_tanattn;
+	}
+	/**
+	 * @return the pojw_tanaddr
+	 */
+	public String getPojw_tanaddr() {
+		return pojw_tanaddr;
+	}
+	/**
+	 * @param pojw_tanaddr the pojw_tanaddr to set
+	 */
+	public void setPojw_tanaddr(String pojw_tanaddr) {
+		this.pojw_tanaddr = pojw_tanaddr;
+	}
+	/**
+	 * @return the pojw_tanphone
+	 */
+	public String getPojw_tanphone() {
+		return pojw_tanphone;
+	}
+	/**
+	 * @param pojw_tanphone the pojw_tanphone to set
+	 */
+	public void setPojw_tanphone(String pojw_tanphone) {
+		this.pojw_tanphone = pojw_tanphone;
+	}
+	/**
+	 * @return the pojw_tanfax
+	 */
+	public String getPojw_tanfax() {
+		return pojw_tanfax;
+	}
+	/**
+	 * @param pojw_tanfax the pojw_tanfax to set
+	 */
+	public void setPojw_tanfax(String pojw_tanfax) {
+		this.pojw_tanfax = pojw_tanfax;
+	}
+	/**
+	 * @return the prf_exporterid
+	 */
+	public String getPrf_exporterid() {
+		return prf_exporterid;
+	}
+	/**
+	 * @param prf_exporterid the prf_exporterid to set
+	 */
+	public void setPrf_exporterid(String prf_exporterid) {
+		this.prf_exporterid = prf_exporterid;
+	}
+	/**
+	 * @return the pojw_pojwno
+	 */
+	public String getPojw_pojwno() {
+		return pojw_pojwno;
+	}
+	/**
+	 * @param pojw_pojwno the pojw_pojwno to set
+	 */
+	public void setPojw_pojwno(String pojw_pojwno) {
+		this.pojw_pojwno = pojw_pojwno;
+	}
+	/**
+	 * @return the prf_pojwno
+	 */
+	public String getPrf_pojwno() {
+		return prf_pojwno;
+	}
+	/**
+	 * @param prf_pojwno the prf_pojwno to set
+	 */
+	public void setPrf_pojwno(String prf_pojwno) {
+		this.prf_pojwno = prf_pojwno;
+	}
+	
 	
 }

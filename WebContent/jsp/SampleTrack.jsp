@@ -91,7 +91,6 @@ $(function() {
    			</tr>
  	  </table>
 </h:form>
-<h:form action="/SamptrackInsertAction.do">   
 	 <div id="bulkgroup">
 	 	Group By: <select id="chngroup"> 
 	 		<option value="clear" selected="selected">Remove Grouping</option>
@@ -103,15 +102,12 @@ $(function() {
 			<option value="deliverid">Deliver</option> 
 			<option value="isinvraised">Free / Invoice</option>
 			<option value="articlename">Article</option> 
-			<option value="color">Color</option> 
-			<option value="reps">Agent</option> 
-			
+			<option value="color">Color</option> 		
 		</select> <br/><br/> 
 	 </div>
 		<div id="sampletracking grid">
 			<table id="sampletrack"></table> 
 			<div id="sampletrackpgr"></div> 
 		</div> 
-</h:form> 
 </body>
 </html>

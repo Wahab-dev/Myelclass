@@ -179,7 +179,10 @@ $(document).ready(function() {
 			 $('#deb_tanaddr').val(ui.item.addr);
 			 $('#deb_exporterid').val(ui.item.id);
 			 $('#deb_tantelephone').val(ui.item.ctno);
-		 }
+		 },
+		 change: function(event,ui){
+	    	 $(this).val((ui.item ? ui.item.value : ""));
+	   }
 	}); 
 	
 	
@@ -204,13 +207,14 @@ $(document).ready(function() {
 			 $('#deb_elclassrefno').val(ui.item.value);
 			 $('#deb_elclassrefdt').val(ui.item.invdt);
 			 if($("#debactionform").val().toLowerCase() == "edit" ){
-
 			 }else{
-				 
 				 var elclassrefno = $("#deb_elclassrefno").val();
 				 grid.jqGrid('setGridParam',{url:"/Myelclass/DebSelInvfromCust.do?invno="+elclassrefno+"&action="+"loadGrid",}).trigger("reloadGrid");
 			 }
-		}
+		},
+		 change: function(event,ui){
+	    	 $(this).val((ui.item ? ui.item.value : ""));
+	   }
 	}); 
 	
 	
@@ -225,6 +229,7 @@ $(document).ready(function() {
 	        height: 550,
 	        autoResize: true, 
 	        modal: true,
+	        jqModal:true,
 	        open: function(event, ui){
 	        	var debitno = $("#deb_debitno").val()+"-A";
 	        	$("#tcdeb_tcdebitno").val(debitno);

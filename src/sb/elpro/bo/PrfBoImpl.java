@@ -302,7 +302,7 @@ public class PrfBoImpl implements PrfBo {
 	 * @see sb.elpro.bo.PrfBo#savePoJwForm(sb.elpro.model.PoJwBean)
 	 */
 	@Override
-	public boolean savePoJwForm(PoJwBean pojw) throws Exception{
+	public boolean savePoJwForm(ProductDetails pojw) throws Exception{
 		boolean isSavePoJw = prfdao.savePoJwForm(pojw);
 		return isSavePoJw;
 	}

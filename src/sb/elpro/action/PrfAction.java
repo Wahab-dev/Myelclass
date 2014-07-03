@@ -75,7 +75,7 @@ public class PrfAction extends DispatchAction {
 		 prfbean.setPrf_add(DateConversion.ConverttoMysqlDate(request.getParameter("prf_add")));
 		 prfbean.setPrf_exporterid(prfbean.getPrf_tannid());
 		
-		 prfbean.setPrf_pojw("N/A");
+		 prfbean.setPrf_pojwno("N/A");
 		// prfbean.setFormaction("edit");
 		 usersession = request.getSession(false);
 		 if(!(usersession == null)){
@@ -210,4 +210,109 @@ public class PrfAction extends DispatchAction {
 		usersession.invalidate();			
 		return mapping.findForward("logout");  
 	}
+	public ActionForward POSave(ActionMapping mapping, ActionForm form, 
+			HttpServletRequest request, HttpServletResponse response) throws Exception{
+		System.out.println(" in POJW SAVE FORM ACTION");
+		PrintWriter out = response.getWriter();
+		 response.setContentType("application/json");
+		 response.setCharacterEncoding("UTF-8");
+		 PrfForm pojwsaveform =(PrfForm) form;
+		 ProductDetails pojwprintbean = new ProductDetails();
+		 BeanUtils.copyProperties(pojwprintbean, pojwsaveform);
+		 pojwprintbean.setPojw_orderdate(DateConversion.ConverttoMysqlDate(request.getParameter("pojw_orderdate")));
+		 pojwprintbean.setPojw_cddate(DateConversion.ConverttoMysqlDate(request.getParameter("pojw_cddate")));
+		
+		usersession = request.getSession(false);
+		 if(!(usersession == null)){
+			 JSONObject prfjsonobj = new JSONObject();
+			 System.out.println("usersession "+usersession.getId());
+			 System.out.println("request  "+usersession.getAttribute("actionform"));
+			 if(usersession.getAttribute("actionform").equals("add")){
+				 boolean issavedPojw = prfbo.savePoJwForm(prfbean);
+				 if(issavedPojw){
+						prfjsonobj.put("result", issavedPojw);
+						prfjsonobj.put("success", "Successfully Saved The Form");
+						pojwsaveform.reset(mapping, request);
+						out.println(prfjsonobj);
+						return mapping.findForward("prfissaved");
+					}else{
+						prfjsonobj.put("result", issavedPojw);
+						prfjsonobj.put("error", "Error in Saving The Form");
+						out.println(prfjsonobj);
+						return null;
+					}
+			 }else{
+				/* boolean isupdatePrf = prfbo.updatePrfform(prfbean); // Incomplete
+				 if(isupdatePrf){
+						prfjsonobj.put("result", isupdatePrf);
+						prfjsonobj.put("success", "Successfully Updated The Form");
+						pojwsaveform.reset(mapping, request);
+						out.println(prfjsonobj);
+						return mapping.findForward("bulkisloaded");
+					}else{
+						prfjsonobj.put("result", isupdatePrf);
+						prfjsonobj.put("error", "Error in Updated The Form");
+						out.println(prfjsonobj);
+						return null;
+					}	*/		
+			 }	 
+		 }	
+		System.out.println(" Login Credential Fails");
+		 return mapping.findForward("logout");
+		
+	}
+	public ActionForward POPrint(ActionMapping mapping, ActionForm form, 
+			HttpServletRequest request, HttpServletResponse response) throws Exception{
+		System.out.println("POSAVE Print ");
+		Connection conn = null;
+		try {
+            Class.forName("com.mysql.jdbc.Driver");
+            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/elpro","root","tiger");
+            System.out.println("conn "+conn.getCatalog());
+            } catch (SQLException ex) {
+            } catch (ClassNotFoundException ex) {
+            }
+		response.setContentType("application/ms-excel"); 
+		response.setHeader("Content-Disposition", "attachment; filename=PRFPO.xls");
+		ServletOutputStream  myout = response.getOutputStream();
+		JasperReport report = JasperCompileManager.compileReport("C:/Users/meetw_000/Desktop/report/PrfPoForm.jrxml");
+		HashMap<String, Object> hm = new HashMap<String, Object>();
+		hm.put("pojw_pojwno",request.getParameter("pojw_pojwno"));
+		hm.put("pojw_orderdate", request.getParameter("pojw_orderdate"));
+		hm.put("pojw_cddate", request.getParameter("pojw_cddate"));
+		hm.put("pojw_contractno", request.getParameter("pojw_contractno"));
+		hm.put("pojw_comm", request.getParameter("pojw_comm"));
+		hm.put("pojw_tanname", request.getParameter("pojw_tanname"));
+		hm.put("pojw_tanattn", request.getParameter("pojw_tanattn"));
+		hm.put("pojw_tanaddr", request.getParameter("pojw_tanaddr"));
+		hm.put("pojw_tanphone", request.getParameter("pojw_tanphone"));
+		hm.put("pojw_tanfax", request.getParameter("pojw_tanfax"));
+		hm.put("pojw_splcdn", request.getParameter("pojw_splcdn"));
+		hm.put("pojw_payterms", request.getParameter("pojw_payterms"));
+		
+		JasperPrint print = JasperFillManager.fillReport(report, hm, conn);
+		
+		JRXlsxExporter excelexporter = new JRXlsxExporter(); // supports jaspersoft 5.5.1 
+      
+ 		// Here we assign the parameters jp and baos to the exporter
+         excelexporter.setParameter(JRXlsExporterParameter.JASPER_PRINT, print);
+         excelexporter.setParameter(JRXlsExporterParameter.OUTPUT_STREAM, myout);
+ 	
+         // Excel specific parameters
+         excelexporter.setParameter(JRXlsAbstractExporterParameter.IS_ONE_PAGE_PER_SHEET, Boolean.TRUE);
+         excelexporter.setParameter(JRXlsAbstractExporterParameter.IS_REMOVE_EMPTY_SPACE_BETWEEN_ROWS, Boolean.FALSE);
+         excelexporter.setParameter(JRXlsAbstractExporterParameter.IS_WHITE_PAGE_BACKGROUND, Boolean.TRUE);
+         excelexporter.setParameter(JRXlsAbstractExporterParameter.IS_IGNORE_GRAPHICS,Boolean.FALSE);
+         
+        try {
+        	excelexporter.exportReport();
+			
+		} catch (JRException e) {
+			throw new RuntimeException(e);
+		}catch (Exception e) {
+   			e.printStackTrace();
+		}
+		return null;
+	}
+	
 }

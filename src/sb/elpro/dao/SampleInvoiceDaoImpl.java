@@ -91,12 +91,9 @@ public class SampleInvoiceDaoImpl implements SampleInvoiceDao{
 		try{			
 			con = DBConnection.getConnection();
 			st = (Statement) con.createStatement();
-			System.out.println(" Type in Daoimpl "+type);
 			if(type.equalsIgnoreCase("sample")){
-				System.out.println(" in IF");
 				sql =  "SELECT articletype, articlename, color, size, substance, selection , quantity ,unit, pcs, shpd, bal,  rate, articleid,  art.sampleno, art.srfarticleid, status, rdd_date, courierdetails, reps, feedbackdetails FROM elpro.tbl_srf_article art, elpro.tbl_srfarticle_status statuse Where art.srfarticleid = statuse.srfarticleid and art.sampleno in ("+samno+") order by art.sampleno";
 			}else{
-				System.out.println(" in else");
 				sql = "(SELECT articletype, articlename, color, size, substance, selection , quantity ,unit, pcs, shpd, bal,  rate, articleid,  art.sampleno, art.srfarticleid, status, rdd_date, courierdetails, reps, feedbackdetails FROM elpro.tbl_srf_article art, elpro.tbl_srfarticle_status statuse Where art.srfarticleid = statuse.srfarticleid and art.sampleno in ("+samno+")) union (SELECT articletype, articlename, color, size, substance, selection, quantity, unit, pcs, qshipped, qbal, rate, tc, article.contractno, prfarticleid, status, rdd_date, comments, reps, feddback  from tbl_prf_article article, elpro.tbl_prfarticle_status statuse where prf_articleid = prfarticleid and article.contractno in ("+samno+")) ";
 			}
 			//String sql = "SELECT articleid, articlename, size, substance, selection, selectionpercent, color, quantity, qshipped, qbal, unit, pcs, rate, tc, article.contractno, prfarticleid from tbl_prf_article article, elpro.tbl_prfarticle_status statuse where  prf_articleid = prfarticleid and article.contractno in ("+ctno+") order by article.contractno";
@@ -152,8 +149,8 @@ public class SampleInvoiceDaoImpl implements SampleInvoiceDao{
 		boolean isInserted = true;
 		try{			
 			con = DBConnection.getConnection();
-			StringBuffer sql_saveprfArticle = new StringBuffer("insert into tbl_sampleinv_bill (sampleno, artname, color, size, subs, selc, unit, qty, pcs, rate, invno, invdate, qshpd, qbal, amt,articleid)");
-			sql_saveprfArticle.append("values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+			StringBuffer sql_saveprfArticle = new StringBuffer("insert into tbl_sampleinv_bill (sampleno, artname, color, size, subs, selc, unit, qty, pcs, rate, invno, invdate, qshpd, qbal, amt,articleid, user)");
+			sql_saveprfArticle.append("values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
 			String sqlquery_saveprfArticle = sql_saveprfArticle.toString();
 			System.out.println("Insert quert" +sqlquery_saveprfArticle);
 			pst = (PreparedStatement) con.prepareStatement(sqlquery_saveprfArticle);
@@ -175,6 +172,7 @@ public class SampleInvoiceDaoImpl implements SampleInvoiceDao{
 			pst.setString(14, saminvbill.getInvqbal());
 			pst.setString(15, saminvbill.getInvamt());
 			pst.setString(16, saminvbill.getInvartid());
+			pst.setString(17, saminvbill.getUser());
 			noofrows = pst.executeUpdate();
 			System.out.println("Sucessfully inserted the record.." + noofrows);
 			if(noofrows == 1){
@@ -243,7 +241,7 @@ public class SampleInvoiceDaoImpl implements SampleInvoiceDao{
 		try{			
 			con = DBConnection.getConnection();
 			st = (Statement) con.createStatement();
-			String sql = "SELECT invbillid, articleid, artname, color, size, subs, selc, unit,  qty, pcs, rate,  sampleno, invno, invdate, qshpd, qbal, amt FROM elpro.tbl_sampleinv_bill where sampleno in ("+samno+") order by invno, artname ";
+			String sql = "SELECT invbillid, articleid, artname, color, size, subs, selc, unit,  qty, pcs, rate,  sampleno, invno, invdate, qshpd, qbal, amt, user FROM elpro.tbl_sampleinv_bill where sampleno in ("+samno+") order by invno, artname ";
 			System.out.println((sql));
 			rs = st.executeQuery(sql);
 			System.out.println((sql));
@@ -266,6 +264,7 @@ public class SampleInvoiceDaoImpl implements SampleInvoiceDao{
 				saminvbillbean.setInvqshpd(rs.getString("qshpd"));
 				saminvbillbean.setInvqbal(rs.getString("qbal"));
 				saminvbillbean.setInvamt(rs.getString("amt"));
+				saminvbillbean.setUser(rs.getString("user"));
 				System.out.println("Sample Bill  List"+saminvbillbean.getInvctno());
 				saminvBilllist.add(saminvbillbean);
 			}
@@ -328,8 +327,8 @@ public class SampleInvoiceDaoImpl implements SampleInvoiceDao{
 		boolean isInserted = true;
 		try{			
 			con = DBConnection.getConnection();
-			StringBuffer sql_saveprfArticle = new StringBuffer("insert into tbl_sampleinv_bill (sampleno, artname, color, size, subs, selc, qty, unit, pcs, rate, invno, invdate, qshpd, qbal, amt, articleid)");
-			sql_saveprfArticle.append("values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+			StringBuffer sql_saveprfArticle = new StringBuffer("insert into tbl_sampleinv_bill (sampleno, artname, color, size, subs, selc, qty, unit, pcs, rate, invno, invdate, qshpd, qbal, amt, articleid, user)");
+			sql_saveprfArticle.append("values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
 			String sqlquery_saveprfArticle = sql_saveprfArticle.toString();
 			System.out.println("Insert quert" +sqlquery_saveprfArticle);
 			pst = (PreparedStatement) con.prepareStatement(sqlquery_saveprfArticle);
@@ -354,6 +353,7 @@ public class SampleInvoiceDaoImpl implements SampleInvoiceDao{
 			pst.setString(15, saminvaddagainbill.getInvamt());
 			System.out.println("getInvamt " +saminvaddagainbill.getInvamt());
 			pst.setString(16, saminvaddagainbill.getInvartid());
+			pst.setString(17, saminvaddagainbill.getUser());
 			noofrows = pst.executeUpdate();
 			if(noofrows == 1){
 				if(saminvaddagainbill.getInvctno().startsWith("L")){
@@ -421,7 +421,7 @@ public class SampleInvoiceDaoImpl implements SampleInvoiceDao{
 		
 		try{			
 			con = DBConnection.getConnection();
-			StringBuffer sql_saveprfArticle = new StringBuffer("UPDATE elpro.tbl_sampleinv_bill SET rate = ? , qshpd = ? , qbal = ? , amt = ? WHERE invbillid = '"+saminveditbill.getInvid()+"' ");
+			StringBuffer sql_saveprfArticle = new StringBuffer("UPDATE elpro.tbl_sampleinv_bill SET rate = ? , qshpd = ? , qbal = ? , amt = ?, user = ? WHERE invbillid = '"+saminveditbill.getInvid()+"' ");
 			String sqlquery_saveprfArticle = sql_saveprfArticle.toString();
 			pst = (PreparedStatement) con.prepareStatement(sqlquery_saveprfArticle);
 			pst.setString(1, saminveditbill.getInvrate());
@@ -430,6 +430,7 @@ public class SampleInvoiceDaoImpl implements SampleInvoiceDao{
 			System.out.println("getInvqshpd " +saminveditbill.getInvqshpd());
 			pst.setString(3, saminveditbill.getInvqbal());
 			pst.setString(4, saminveditbill.getInvamt());
+			pst.setString(5, saminveditbill.getUser());
 			//pst.setString(15, artindertdetail.getArtshform() );
 			System.out.println("INV Article ID " +saminveditbill.getInvid());
 			noofrows = pst.executeUpdate();
@@ -587,15 +588,15 @@ public class SampleInvoiceDaoImpl implements SampleInvoiceDao{
 			System.out.println("getInv_invoiceno " +sampinvbean.getSaminv_invoiceno());
 			pst.setString(3, sampinvbean.getSaminv_invdate());
 			pst.setString(4, sampinvbean.getSaminv_expref());
-			pst.setString(5, sampinvbean.getSaminv_exporter());
+			pst.setString(5, sampinvbean.getSaminv_exporterid());
 			pst.setString(6, sampinvbean.getSaminv_otherref());
-			pst.setString(7, sampinvbean.getSaminv_customer());
-			pst.setString(8, sampinvbean.getSaminv_buyer());
-			pst.setString(9, sampinvbean.getSaminv_notify());
+			pst.setString(7, sampinvbean.getSaminv_custid());
+			pst.setString(8, sampinvbean.getSaminv_buyerid());
+			pst.setString(9, sampinvbean.getSaminv_notifyid());
 			pst.setString(10, "NA");
 			pst.setString(11, "NA");
 			pst.setString(12, "NA");
-			pst.setString(13, sampinvbean.getSaminv_bank());
+			pst.setString(13, sampinvbean.getSaminv_bankid());
 			pst.setString(14, sampinvbean.getSaminv_awbillno());
 			pst.setString(15, sampinvbean.getSaminv_awbilldate());
 			pst.setString(16, sampinvbean.getSaminv_courierchrgs());
@@ -607,8 +608,8 @@ public class SampleInvoiceDaoImpl implements SampleInvoiceDao{
 				/*
 				 *Insert into the Dispatch Table
 				 */
-				StringBuffer sql_savesaminvdispform = new StringBuffer("insert into tbl_sampleinv_dispatchdetails (invno, invdate, ctryoforigin, loadingport, ctryofdesti, destination, dischargeport, precarriage, dimension, marks, grosswt, netwt, container, noofpackages, packno)");
-				sql_savesaminvdispform.append("values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+				StringBuffer sql_savesaminvdispform = new StringBuffer("insert into tbl_sampleinv_dispatchdetails (invno, invdate, ctryoforigin, loadingport, ctryofdesti, destination, dischargeport, precarriage, dimension, marks, grosswt, netwt, container, noofpackages, packno, vessel)");
+				sql_savesaminvdispform.append("values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,? )");
 				String sqlquery_savesaminvdispform = sql_savesaminvdispform.toString();
 				pstdischrg = (PreparedStatement) con.prepareStatement(sqlquery_savesaminvdispform);
 				System.out.println(" IN PRF SAVE IN THE ");
@@ -629,6 +630,7 @@ public class SampleInvoiceDaoImpl implements SampleInvoiceDao{
 				pstdischrg.setString(13, sampinvbean.getSaminv_precarriageby());
 				pstdischrg.setString(14, sampinvbean.getSaminv_noofpackages());
 				pstdischrg.setString(15, sampinvbean.getSaminv_packno());
+				pstdischrg.setString(16, sampinvbean.getSaminv_vesselno());
 				System.out.println("getInv_packno " +sampinvbean.getSaminv_packno());
 				rowsdischrg = pstdischrg.executeUpdate();
 			}
@@ -658,10 +660,9 @@ public class SampleInvoiceDaoImpl implements SampleInvoiceDao{
 		try{			
 			con = DBConnection.getConnection();
 			st = (Statement) con.createStatement();
-			String sql = "SELECT * FROM elpro.tbl_sampleinvform form , tbl_sampleinv_dispatchdetails dispatch where form.invno= dispatch.invno and form.invno = '"+saminvno+"' ";
+			String sql = "SELECT invtype, form.invno, form.invdate, exportersref, expname, tan.tanname, tan.tanattn, tan.tanaddr, tan.tanphone, tan.tanfax, taninvno, custname, custattn, custaddr, custphone, custfax, custid, Consignee, notifyid, notifyname, notifyattn, notifyaddr, notifyphone, notifyfax, amount, otherref, buyer, bank, bankname, bankaddr, bankbranch, swiftcode, bankphone, bankfax, AWBillNo, AWBillDate, othercharges, discounts, totamt, ctryoforigin, loadingport,ctryofdesti, destination, dischargeport, precarriage, dimension, marks, grosswt, netwt, container, noofpackages, packno, vessel FROM elpro.tbl_sampleinvform form join  tbl_sampleinv_dispatchdetails dispatch on  form.invno= dispatch.invno and form.invno =  '"+saminvno+"' left outer join tbl_tannery tan on tan.tanid = form.expname left outer join tbl_customer cust on cust.custid = form.customer left outer join tbl_notify notify on notify.notifyid = form.notify left outer join tbl_bank bank on bank.bankid = form.bank order by form.invdate desc,  form.invno desc ";
 			System.out.println(sql);
 			rs = st.executeQuery(sql);
-			
 			if(rs.next()) {	
 				SampleInvoiceBean editsinvformbean = new SampleInvoiceBean();
 				editsinvformbean.setSaminv_invoicetype(rs.getString("invtype"));
@@ -669,16 +670,41 @@ public class SampleInvoiceDaoImpl implements SampleInvoiceDao{
 				editsinvformbean.setSaminv_invdate(DateConversion.ConverttoNormalDate(rs.getString("invdate")));
 				System.out.println("DT "+editsinvformbean.getSaminv_invdate());
 				editsinvformbean.setSaminv_expref(rs.getString("exportersref"));
-				editsinvformbean.setSaminv_exporter(rs.getString("expname"));
+				
+				editsinvformbean.setSaminv_exporterid(rs.getString("expname"));
+				editsinvformbean.setSaminv_exporter(rs.getString("tanname"));
+				editsinvformbean.setSaminv_exporterattn(rs.getString("tanattn"));
+				editsinvformbean.setSaminv_exporteraddress(rs.getString("tanaddr"));
+				editsinvformbean.setSaminv_exportertele(rs.getString("tanphone"));
+				editsinvformbean.setSaminv_exporterfax(rs.getString("tanfax"));
+				
 				editsinvformbean.setSaminv_otherref(rs.getString("taninvno"));
-				editsinvformbean.setSaminv_customer(rs.getString("customer"));
-				editsinvformbean.setSaminv_buyer(rs.getString("consignee"));
-				editsinvformbean.setSaminv_notify(rs.getString("notify"));
-				//editsinvformbean.setSaminv_destination(rs.getString("amount"));
-				//editsinvformbean.setSaminv_endusage(rs.getString("otherref"));
-				//editsinvformbean.setSaminv_paymentterms(rs.getString("buyer"));
+				
+				editsinvformbean.setSaminv_customer(rs.getString("custname"));
+				editsinvformbean.setSaminv_custaddr(rs.getString("custaddr"));
+				editsinvformbean.setSaminv_custtele(rs.getString("custphone"));
+				editsinvformbean.setSaminv_custfax(rs.getString("custfax"));
+				editsinvformbean.setSaminv_custid(rs.getString("custid"));
+				editsinvformbean.setSaminv_custattn(rs.getString("custattn"));
+				
+				editsinvformbean.setSaminv_buyerid(rs.getString("consignee"));
+				
+				editsinvformbean.setSaminv_notifyid(rs.getString("notifyid"));
+				editsinvformbean.setSaminv_notify(rs.getString("notifyname"));
+				editsinvformbean.setSaminv_notifyattn(rs.getString("notifyattn"));
+				editsinvformbean.setSaminv_notifyaddress(rs.getString("notifyaddr"));
+				editsinvformbean.setSaminv_notifytele(rs.getString("notifyphone"));
+				editsinvformbean.setSaminv_notifyfax(rs.getString("notifyfax"));
+				editsinvformbean.setSaminv_awbillno(rs.getString("AWBillNo"));
 				editsinvformbean.setSaminv_awbilldate(DateConversion.ConverttoNormalDate(rs.getString("AWBillDate")));
-				editsinvformbean.setSaminv_bank(rs.getString("bank"));
+				editsinvformbean.setSaminv_bankid(rs.getString("bank"));
+				editsinvformbean.setSaminv_bank(rs.getString("bankname"));
+				editsinvformbean.setSaminv_bankaddress(rs.getString("bankaddr"));
+				editsinvformbean.setSaminv_bankbranch(rs.getString("bankbranch"));
+				editsinvformbean.setSaminv_bankswiftcode(rs.getString("swiftcode"));
+				editsinvformbean.setSaminv_banktele(rs.getString("bankphone"));
+				editsinvformbean.setSaminv_bankfax(rs.getString("bankfax"));
+				
 				editsinvformbean.setSaminv_courierchrgs(rs.getString("othercharges"));
 				editsinvformbean.setSaminv_deduction(rs.getString("discounts"));
 				editsinvformbean.setSaminv_total(rs.getString("totamt"));
@@ -695,6 +721,7 @@ public class SampleInvoiceDaoImpl implements SampleInvoiceDao{
 				editsinvformbean.setSaminv_precarriageby(rs.getString("container"));
 				editsinvformbean.setSaminv_noofpackages(rs.getString("noofpackages"));
 				editsinvformbean.setSaminv_packno(rs.getString("packno"));
+				editsinvformbean.setSaminv_vesselno(rs.getString("vessel"));
 				
 				editsaminvformlist.add(editsinvformbean);
 				}
@@ -732,15 +759,15 @@ public class SampleInvoiceDaoImpl implements SampleInvoiceDao{
 			System.out.println("getInv_invoicetype " +sampinvbean.getSaminv_invoicetype());
 			pst.setString(2, sampinvbean.getSaminv_invdate());
 			pst.setString(3, sampinvbean.getSaminv_expref());
-			pst.setString(4, sampinvbean.getSaminv_exporter());
+			pst.setString(4, sampinvbean.getSaminv_exporterid());
 			pst.setString(5, sampinvbean.getSaminv_otherref());
-			pst.setString(6, sampinvbean.getSaminv_customer());
-			pst.setString(7, sampinvbean.getSaminv_buyer());
-			pst.setString(8, sampinvbean.getSaminv_notify());
+			pst.setString(6, sampinvbean.getSaminv_custid());
+			pst.setString(7, sampinvbean.getSaminv_buyerid());
+			pst.setString(8, sampinvbean.getSaminv_notifyid());
 			pst.setString(9, "NA");
 			pst.setString(10, "NA");
 			pst.setString(11, "NA");
-			pst.setString(12, sampinvbean.getSaminv_bank());
+			pst.setString(12, sampinvbean.getSaminv_bankid());
 			pst.setString(13, sampinvbean.getSaminv_awbillno());
 			pst.setString(14, sampinvbean.getSaminv_awbilldate());
 			pst.setString(15, sampinvbean.getSaminv_courierchrgs());
@@ -752,7 +779,7 @@ public class SampleInvoiceDaoImpl implements SampleInvoiceDao{
 				/*
 				 *Insert into the Dispatch Table
 				 */
-				StringBuffer sql_updtsaminvdispform = new StringBuffer("update tbl_sampleinv_dispatchdetails set invdate = ?, ctryoforigin = ?, loadingport = ?, ctryofdesti = ?, destination = ?, dischargeport = ?, precarriage = ?, dimension = ?, marks = ?, grosswt = ?, netwt = ?, container = ?, noofpackages = ?, packno = ?  where invno ='"+sampinvbean.getSaminv_invoiceno()+"' ");
+				StringBuffer sql_updtsaminvdispform = new StringBuffer("update tbl_sampleinv_dispatchdetails set invdate = ?, ctryoforigin = ?, loadingport = ?, ctryofdesti = ?, destination = ?, dischargeport = ?, precarriage = ?, dimension = ?, marks = ?, grosswt = ?, netwt = ?, container = ?, noofpackages = ?, packno = ? , vessel = ?  where invno ='"+sampinvbean.getSaminv_invoiceno()+"' ");
 				
 				String sqlquery_sql_updtsaminvdispform = sql_updtsaminvdispform.toString();
 				pstdischrg = (PreparedStatement) con.prepareStatement(sqlquery_sql_updtsaminvdispform);
@@ -772,6 +799,7 @@ public class SampleInvoiceDaoImpl implements SampleInvoiceDao{
 				pstdischrg.setString(12, sampinvbean.getSaminv_precarriageby());
 				pstdischrg.setString(13, sampinvbean.getSaminv_noofpackages());
 				pstdischrg.setString(14, sampinvbean.getSaminv_packno());
+				pstdischrg.setString(15, sampinvbean.getSaminv_vesselno());
 				System.out.println("geInv_packno " +sampinvbean.getSaminv_packno());
 				rowsdischrg = pstdischrg.executeUpdate();
 			}

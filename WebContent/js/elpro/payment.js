@@ -46,7 +46,10 @@ $(function() {
 			 $('#deb_tantelephone').val(ui.item.ctno);
 			 var payexpo = ui.item.label;
 			 paymentgrid.jqGrid('setGridParam',{url:"/Myelclass/PaymentGridAction.do?exporter="+payexpo+"&action="+"loadGrid",}).trigger("reloadGrid");
-		 }
+		 },
+		 change: function(event,ui){
+	    	 $(this).val((ui.item ? ui.item.value : ""));
+	   }
 	}); 
     
 	 var paymentgrid = $("#tbl_paymentDetails");

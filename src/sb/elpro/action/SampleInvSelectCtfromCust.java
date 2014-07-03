@@ -94,7 +94,7 @@ public class SampleInvSelectCtfromCust extends Action {
 				jsonobj.put("rows", saminvctlist);
 				System.out.println(jsonobj);		
 				out.println(jsonobj);
-			}else  if(action.equalsIgnoreCase("loadsubgrid")){
+			}else if(action.equalsIgnoreCase("loadsubgrid")){
 				String samno = request.getParameter("samno");
 				System.out.println("samno Id "+samno);		
 				String type = request.getParameter("type");
@@ -141,17 +141,13 @@ public class SampleInvSelectCtfromCust extends Action {
 				   saminvbill.setInvqbal(request.getParameter("qbal"));
 				   saminvbill.setInvamt(request.getParameter("amount"));
 				   saminvbill.setInvpcs(request.getParameter("pieces"));
-				   System.out.println("pieces"+request.getParameter("pieces"));
 				   saminvbill.setInvartid(request.getParameter("srfarticleid"));
 				   saminvbill.setInvno(request.getParameter("saminvoiceno"));
 				   saminvbill.setInvtype(request.getParameter("saminvoicetype"));
+				   saminvbill.setUser(request.getParameter("user"));
 				   saminvbill.setInvdt(request.getParameter("saminvoicedt"));
 				   String oper = request.getParameter("oper");
-				   if(oper.equalsIgnoreCase("edit")){
-					   /*
-					    * Perform Edit Function
-					    */
-				   }else if(oper.equalsIgnoreCase("add")){//Grid 2 - Add Bill. For the 1 Grade 
+				   if(oper.equalsIgnoreCase("add")){//Grid 2 - Add Bill. For the 1 Grade 
 					   boolean saminvbilllist = saminvbo.getSampleInvAddBillDetails(saminvbill);
 					   if(saminvbilllist){
 						   jsonobj.clear();

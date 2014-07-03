@@ -381,13 +381,13 @@ $(function() {
        				<legend>Other Charges</legend>
        				<table>
        					<tr>
-       						<td>Deduction: </td>
-       						<td><h:text property="inv_discount" size="15" styleId="inv_discount" value="${editinvform[0].inv_discount }"> </h:text></td>
-       					</tr>
-       					<tr>
        						<td>Courier Charges : </td>
        						<td> <h:text property="othercharges" size="15" styleId="othercharges" value="${editinvform[0].othercharges }"> </h:text>  <br/></td>
        					</tr>
+       					<tr>
+       						<td>Deduction: </td>
+       						<td><h:text property="inv_discount" size="15" styleId="inv_discount" value="${editinvform[0].inv_discount }"> </h:text></td>
+       					</tr>       					
        					<tr>
        						<td>Total Amount :  </td>
        						<td><h:text property="inv_total" size="15" styleId="inv_total" value="${editinvform[0].inv_total }"> </h:text>  <br/></td>

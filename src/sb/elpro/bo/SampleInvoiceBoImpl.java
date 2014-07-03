@@ -34,6 +34,7 @@ public class SampleInvoiceBoImpl implements SampleInvoiceBo {
 	public List<CustomerInvoice> getSamInvCustsampleDetails(String custid,
 			String type, String sidx, String sord) throws Exception {
 		ArrayList<CustomerInvoice> saminvCustomerarr = sampleinvdao.getSamInvCustsampleDet(custid, type, sidx, sord);
+		
 		return saminvCustomerarr;
 	}
 	

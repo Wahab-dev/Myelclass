@@ -40,6 +40,7 @@ public class InvoiceTrackDaoImpl implements InvoiceTrackDao {
 			System.out.println(sql);
 			rs = st.executeQuery(sql);
 			while(rs.next()) {	
+			 // String currency = rs.getString("rate").substring(0,1).equalsIgnoreCase("$") ? "$" : rs.getString("rate").substring(0,1).equalsIgnoreCase("E")? "Euro" : "Rs";
 			  InvBillDetails invtrackbean = new InvBillDetails();
 				invtrackbean.setInvtype(rs.getString("invtype"));
 				invtrackbean.setInvno(rs.getString("invno"));
@@ -67,7 +68,7 @@ public class InvoiceTrackDaoImpl implements InvoiceTrackDao {
 				invtrackbean.setInvclaim(rs.getString("discounts"));
 				invtrackbean.setInvtotamount(rs.getString("totamt"));
 				invtrackbean.setAwbillno(rs.getString("AWBillNo"));
-				invtrackbean.setAwbillno(DateConversion.ConverttoNormalDate(rs.getString("AWBillDate")));
+				invtrackbean.setAwbilldate(DateConversion.ConverttoNormalDate(rs.getString("AWBillDate")));
 				invtrackbean.setInvcomm(rs.getString("comm"));
 				invtrackbean.setInvothercomm(rs.getString("othercomm"));
 				invtrackbean.setConsignee(rs.getString("consignee"));

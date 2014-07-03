@@ -134,7 +134,7 @@ public interface PrfDao {
 	 * @return
 	 * etc
 	 */
-	boolean savePoJwForm(PoJwBean pojw)throws SQLException;
+	boolean savePoJwForm(ProductDetails pojw)throws SQLException;
 
 	/**  
 	 * (Method description)

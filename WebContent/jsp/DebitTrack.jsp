@@ -12,6 +12,8 @@
 </style>	
 <script src="js/jquery-1.9.1.js"></script>
 <script src="js/jquery-ui.js"></script>
+<link rel="stylesheet" type="text/css" href="css/ui.multiselect.css" />
+<script type="text/javascript" src="js/ui.multiselect.js"></script>
 <link rel="stylesheet" type="text/css" media="screen" href="css/redmond/jquery-ui-1.10.3.custom.css" />
 <link rel="stylesheet" type="text/css" media="screen" href="css/ui.jqgrid.css" />
 <script src="js/i18n/grid.locale-en.js" type="text/javascript"></script>
@@ -89,8 +91,6 @@ $(function() {
    </table>
    </div>
 <!-- Debit Tracking Form  -->
-<h:form >   
-	<div id="blk">Debit tracking</div> 
 	 Group By: <select id="chngroup"> 
 			 <option value="clear">Remove Grouping</option>
 	 		<option value="deb_exporter">Tannery</option> 
@@ -101,7 +101,7 @@ $(function() {
 		</select> <br/><br/> 
 			<table id="debittracktbl"></table> 
 			<div id="debittrackpager"></div> 
-	 </h:form>  
+
 
 </body>
 </html>

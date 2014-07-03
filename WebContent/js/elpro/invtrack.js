@@ -85,10 +85,12 @@ $(document).ready(function() {
 			}else{
 				invtrackgrid.jqGrid('groupingGroupBy', vl, {
 					groupOrder : ['asc'],
-		            groupColumnShow: [false],
-		            groupingView: {
-		                groupCollapse: [true],
-		            }
+					groupText : ['<b>{0} - {1} Records</b>'],
+					groupSummary : [true],
+					groupColumnShow: [false],
+					groupingView: {
+						groupCollapse: [true],
+					}
 		        });
 			}	
 		}else{
@@ -100,12 +102,12 @@ $(document).ready(function() {
 	invtrackgrid.jqGrid({
 		url:"/Myelclass/InvTrackAction.do?action=load",
 		datatype: "json",
-		colNames:['invtype','invno','invdate','expname','taninvno','customer','invbillid','ctno','articleid','artname','color','size','subs','selc','unit','pcs','rate','tc','qty','qshpd','qbal','amt','othercharges','discounts','totalamount','AWBillNo','AWBillDate','comm','othercomm','consignee','notify','exporterref','buyer','bank'],
+		colNames:['Type','Inv No','Date','Exporter','Tan InvNo','Customer','Invbillid','Ct No','articleid','Article','Color','Size','Subs','Selc','Unit','Pcs','Rate', 'Qty','Shipd','Bal','Amt','Courier','Discounts','Total','AWBill No','AWBill Date','Comm','Other Ccomm','Tc','Consignee','Notify','Exporterref','Buyer','Bank'],
 	    colModel:[
-					{name: 'invtype', index: 'invtype', align:'center', width:90, editable:true, sortable: true, hidden: false,  
+					{name: 'invtype', index: 'invtype', align:'center', width:40, editable:true, sortable: true, hidden: false,  
 						
 					 },
-					 {name: 'invno', index: 'invno', align:'center', width:90, editable:true, sortable: true, hidden: false,  
+					 {name: 'invno', index: 'invno', align:'center', width:60, editable:true, sortable: true, hidden: false,  
 						 formatter: "dynamicLink",
 						 formatoptions: {
 						        url: function (cellValue, rowId, rowData) {
@@ -116,76 +118,74 @@ $(document).ready(function() {
 						        }
 						    }
 					 },
-					 {name: 'invdt', index: 'invdt', align:'center', width:90, editable:true, sortable: true, hidden: false,  
+					 {name: 'invdt', index: 'invdt', align:'center', width:60, editable:true, sortable: true, hidden: false,  
 						
 					 },
-					 {name: 'exporter', index: 'exporter', align:'center', width:90, editable:true, sortable: true, hidden: false,  
+					 {name: 'exporter', index: 'exporter', align:'center', width:60, editable:true, sortable: true, hidden: false,  
 						
 					 },
-					 {name: 'taninvno', index: 'taninvno', align:'center', width:90, editable:true, sortable: true, hidden: false,  
+					 {name: 'taninvno', index: 'taninvno', align:'center', width:100, editable:true, sortable: true, hidden: false,  
 						
 					 },
-					 {name: 'customer', index: 'customer', align:'center', width:90, editable:true, sortable: true, hidden: false,  
+					 {name: 'customer', index: 'customer', align:'center', width:60, editable:true, sortable: true, hidden: false,  
 						
 					 },
-					 {name: 'invid', index: 'invid', align:'center', width:90, editable:true, sortable: true, hidden: true,  
+					 {name: 'invid', index: 'invid', align:'center', width:50, editable:true, sortable: true, hidden: true,  
 						
 					 },
-					 {name: 'invctno', index: 'invctno', align:'center', width:90, editable:true, sortable: true, hidden: false,  
+					 {name: 'invctno', index: 'invctno', align:'center', width:50, editable:true, sortable: true, hidden: false,  
 						
 					 },
-					 {name: 'invartid', index: 'invartid', align:'center', width:90, editable:true, sortable: true, hidden: true,  
+					 {name: 'invartid', index: 'invartid', align:'center', width:50, editable:true, sortable: true, hidden: true,  
 						
 					 },
-					 {name: 'invartname', index: 'invartname', align:'center', width:90, editable:true, sortable: true, hidden: false,  
+					 {name: 'invartname', index: 'invartname', align:'center', width:100, editable:true, sortable: true, hidden: false,  
 						
 					 },
 					 {name: 'invcolor', index: 'invcolor', align:'center', width:90, editable:true, sortable: true, hidden: false,  
 						
 					 },
-					 {name: 'invsize', index: 'invsize', align:'center', width:90, editable:true, sortable: true, hidden: false,  
+					 {name: 'invsize', index: 'invsize', align:'center', width:60, editable:true, sortable: true, hidden: false,  
 						
 					 },
-					 {name: 'invsubs', index: 'invsubs', align:'center', width:90, editable:true, sortable: true, hidden: false,  
+					 {name: 'invsubs', index: 'invsubs', align:'center', width:60, editable:true, sortable: true, hidden: false,  
 						
 					 },
-					 {name: 'invselc', index: 'invselc', align:'center', width:90, editable:true, sortable: true, hidden: true,  
+					 {name: 'invselc', index: 'invselc', align:'center', width:40, editable:true, sortable: true, hidden: true,  
 						
 					 },
-					 {name: 'invunit', index: 'invunit', align:'center', width:90, editable:true, sortable: true, hidden: true,  
+					 {name: 'invunit', index: 'invunit', align:'center', width:40, editable:true, sortable: true, hidden: true,  
 						
 					 },
 	              
-					 {name: 'invpcs', index: 'invpcs', align:'center', width:90, editable:true, sortable: true, hidden: true,  
+					 {name: 'invpcs', index: 'invpcs', align:'center', width:40, editable:true, sortable: true, hidden: true,  
 						
 					 },
-					 {name: 'invrate', index: 'invrate', align:'center', width:90, editable:true, sortable: true, hidden: false,  
+					 {name: 'invrate', index: 'invrate', align:'right', width:80, editable:true, sortable: true, hidden: false,  
 						
 					 },
-					 {name: 'invtc', index: 'invtc', align:'center', width:90, editable:true, sortable: true, hidden: false,  
-						
+					
+					 {name: 'invqty', index: 'invqty', align:'right', width:70, editable:true, sortable: true, hidden: false,  
+						 summaryType:'sum', summaryTpl:'<b> {0}</b>',
 					 },
-					 {name: 'invqty', index: 'invqty', align:'center', width:90, editable:true, sortable: true, hidden: false,  
+					 
+					 {name: 'invqshpd', index: 'invqshpd', align:'right', width:50, editable:true, sortable: true, hidden: false,  
+						 summaryType:'sum', summaryTpl:'<b> {0}</b>',
+					 },
+					 {name: 'invqbal', index: 'invqbal', align:'right', width:50, editable:true, sortable: true, hidden: false,  
 						
 					 },
 					 
-					 {name: 'invqshpd', index: 'invqshpd', align:'center', width:90, editable:true, sortable: true, hidden: false,  
-						
+					 {name: 'invamt', index: 'invamt', align:'right', width:60, editable:true, sortable: true, hidden: false,  
+						 summaryType:'sum', summaryTpl:'<b> {0}</b>',
 					 },
-					 {name: 'invqbal', index: 'invqbal', align:'center', width:90, editable:true, sortable: true, hidden: false,  
-						
+					 {name: 'invothercrg', index: 'invothercrg', align:'right', width:60, editable:true, sortable: true, hidden: false,  
+						 summaryType:'sum', summaryTpl:'<b> {0}</b>',
 					 },
-					 
-					 {name: 'invamt', index: 'invamt', align:'center', width:90, editable:true, sortable: true, hidden: false,  
-						
+					 {name: 'invclaim', index: 'invclaim', align:'right', width:60, editable:true, sortable: true, hidden: false,  
+						 summaryType:'sum', summaryTpl:'<b> {0}</b>',
 					 },
-					 {name: 'invothercrg', index: 'invothercrg', align:'center', width:90, editable:true, sortable: true, hidden: true,  
-						
-					 },
-					 {name: 'invclaim', index: 'invclaim', align:'center', width:90, editable:true, sortable: true, hidden: true,  
-						
-					 },
-					 {name: 'invtotamount', index: 'invtotamount', align:'center', width:90, editable:true, sortable: true, hidden: false,  
+					 {name: 'invtotamount', index: 'invtotamount', align:'right', width:60, editable:true, sortable: true, hidden: false,  
 						
 					 },
 					 {name: 'awbillno', index: 'awbillno', align:'center', width:90, editable:true, sortable: true, hidden: true,  
@@ -199,7 +199,10 @@ $(document).ready(function() {
 					 },   
 					 {name: 'invothercomm', index: 'invothercomm', align:'center', width:90, editable:true, sortable: true, hidden: true,  
 						
-					 },   
+					 }, 
+					 {name: 'invtc', index: 'invtc', align:'center', width:90, editable:true, sortable: true, hidden: false,  
+							
+					 },
 					 {name: 'consignee', index: 'consignee', align:'center', width:90, editable:true, sortable: true, hidden: true,  
 						
 					 },   
@@ -225,41 +228,55 @@ $(document).ready(function() {
 	     	records: "records" 
 		},  
 		caption: "Invoice Tracking Report",
+		loadtext: "Invoice Tracking is Loading",
     	pager: '#invtrackpager',
-    	rowNum: 50, 
-    	rowList: [5,10,20,50,100,150,200,250,300],
-        loadtext: "Loading the Invoice Tracking Page ",
+    	rowNum: 500, 
+    	rowList: [20,50,100,200,500,1000],
+    	rownumbers: true,
         height : "360",
         width: "auto",  
-        rownumbers: true,  
+        sortname: 'invno',
+		sortorder: 'desc',
         loadonce: true,
+        ignoreCase:true,
+        hidegrid: false,
+       // editurl: "",
         sortable: true,
+        toppager:true,
         gridview : true,
         viewrecords: true,
         footerrow: true,
+        altRows: true,
         emptyrecords: 'No records to display',
         loadComplete: function() {
         	 var $self = $(this),
         	 qty = $self.jqGrid("getCol", "invqty", false, "sum"),
-        	 qshpd = $self.jqGrid("getCol", "invqshpd", false, "sum");
+        	 qshpd = $self.jqGrid("getCol", "invqshpd", false, "sum"),
+        	 amt = $self.jqGrid("getCol", "invamt", false, "sum");
+        	 courier = $self.jqGrid("getCol", "invothercrg", false, "sum"),
+        	 discount = $self.jqGrid("getCol", "invclaim", false, "sum");
         	 var qbal = (qty- qshpd).toFixed(2);
         	 
-        	 $self.jqGrid("footerData", "set", {invqty: qty});
-        	 $self.jqGrid("footerData", "set", { invqshpd: qshpd});
+        	 $self.jqGrid("footerData", "set", {invtype: "Total",invqty: qty.toFixed(2)});
+        	 $self.jqGrid("footerData", "set", { invqshpd: qshpd.toFixed(2)});
         	 $self.jqGrid("footerData", "set", { invqbal: qbal});
+        	 $self.jqGrid("footerData", "set", { invamt: amt.toFixed(2)});
+        	 $self.jqGrid("footerData", "set", { invothercrg: courier.toFixed(2)});
+        	 $self.jqGrid("footerData", "set", { invclaim: discount.toFixed(2)});
         }
 	 });
 	invtrackgrid.jqGrid('navGrid','#invtrackpager',{
-		 	edit: false,
-		 	add: false,
-		 	del: false, 
-		 	search: true, 
-		 	view: true, 
-		 	addtext: 'Add', edittext: 'Edit', deltext: 'Delete', searchtext: 'Search', refreshtext: 'Reload', viewtext: 'View',
-		 		 beforeRefresh: function(){
-		 			invtrackgrid.jqGrid('setGridParam',{datatype:'json'}).trigger('reloadGrid');
-				 }
-	});
+		edit: false, add: false, del: false, search: true, view: true, cloneToTop:true,
+		addtext: 'Add', edittext: 'Edit', deltext: 'Delete', searchtext: 'Search', refreshtext: 'Reload', viewtext: 'View',
+		beforeRefresh: function(){
+			invtrackgrid.jqGrid('setGridParam',{datatype:'json'}).trigger('reloadGrid');
+		},},{},{},{},
+		{
+	 		multipleSearch:true,
+	 		stringResult  :true,
+	 		multipleGroup:true,
+	 	}	
+	);
 	invtrackgrid.jqGrid('navButtonAdd',"#invtrackpager",{caption:"Toggle",title:"Toggle Search Toolbar", buttonicon :'ui-icon-pin-s',
 		onClickButton:function(){
 			invtrackgrid[0].toggleToolbar();
@@ -270,7 +287,7 @@ $(document).ready(function() {
 			invtrackgrid[0].clearToolbar();
 		} 
 	});
-	invtrackgrid.jqGrid('filterToolbar', {autosearch : true, searchOnEnter:false, stringResult: true});  //To Enable AutoSearch please comment Search on Enter to False
+	invtrackgrid.jqGrid('filterToolbar', {autosearch : true, searchOnEnter:false, defaultSearch : "cn"});
 	invtrackgrid.jqGrid('navButtonAdd', '#invtrackpager', {
         caption: "Pdf",
         buttonicon: "ui-icon-print",
@@ -282,6 +299,14 @@ $(document).ready(function() {
         title: "Print in Excel Format",
         onClickButton: downloadExcel,
     });
+	
+	//Bootom Pager Customization
+	  var bottomPagerDiv = $("div#invtrackpager")[0];
+	  $("#view_" + invtrackgrid[0].id, bottomPagerDiv).remove();
+	  $("#search_" + invtrackgrid[0].id, bottomPagerDiv).remove(); 
+	  $("#refresh_" + invtrackgrid[0].id, bottomPagerDiv).remove(); 
+		
+	
 	/*
 	*  Function to print the Master Page 
 	*/
@@ -314,19 +339,16 @@ $(document).ready(function() {
 				}
 		});
 	}	
-	/*.navButtonAdd('#invtrackpager',{
-		caption: "Column",
-	    buttonicon: 'ui-icon-extlink',
-	    onClickButton: function() {
-	    	invtrackgrid.jqGrid('columnChooser', { // to enable Column Chooser include ui.multiselect.css and ui.multiselect.js 
-	            done: function(perm) {
-	            	alert("PERM "+perm);
-	                if (!perm) { return false; }
-	                this.jqGrid('remapColumns', perm, true);                            
-	           	}
-	         });
-	      }		
-	})*/
+	invtrackgrid.jqGrid('navButtonAdd',"#invtrackpager",{caption:"columnChooser",title:"Column Chooser",buttonicon :'ui-icon-extlink',
+		onClickButton:function(){
+			invtrackgrid.jqGrid('columnChooser', {
+		           done: function(perm) {
+		                    if (!perm) { return false; }
+		                     this.jqGrid('remapColumns', perm, true);
+		           }
+		      });
+		}
+		});
 	
 });
 			

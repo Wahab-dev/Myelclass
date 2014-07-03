@@ -62,6 +62,12 @@
 	   	 <forward name="login" redirect="true" path="/Login.jsp"></forward>
 	</action>	 
 	 
+	<action path="/PoJw" name="PrfForm" type="sb.elpro.action.PrfAction" input="/jsp/Prf.jsp" parameter="prfaction" scope="session">
+	   	
+	   	 <forward name="login" redirect="true" path="/Login.jsp"></forward>
+	</action>	  
+	 
+	 
 	<action path="/generateprfform" type="sb.elpro.action.GeneratePrfFormAction" name="GeneratePrfForm" scope="request" input="/jsp/Print/Prfform.jsp"></action>
 	
 	<action path="/LoadPrf" name="PrfForm" type="sb.elpro.action.PrfLoadAction" input="/jsp/Menu.jsp" scope="session">
@@ -74,8 +80,7 @@
 	 
 	<action path="/PrfinsertArticle" name="PrfForm" type="sb.elpro.action.PrfInsertArticle" input="/jsp/Prf.jsp" scope="session"></action>
 		 
-	 <action path="/pojw" type="sb.elpro.action.PojwAction" input="/jsp/Prf.jsp" scope="session"></action>
-	 
+	
 	 <action path="/pojw/print" name="PrfForm"  type="sb.elpro.action.PojwPrintAction" input="/jsp/Prf.jsp" scope="session"></action>
 <!-- ==== Bulk Tracking ==================================================================================================================================================================== -->
 	<action path="/gotoBulkTracking" name="BulkTrackForm" type="sb.elpro.action.BulkTrackAction" input="/jsp/Bulk.jsp" scope="session" parameter="action"> 
@@ -276,6 +281,12 @@
  	<set-property property="pathnames" value="/WEB-INF/validator-rules.xml, /WEB-INF/validator-user.xml" />
  </plug-in>
  
+<!--  <plug-in className="org.apache.struts.tiles.TilesPlugin">
+    <set-property property="definitions-config" value="/WEB-INF/tiles-definitions.xml" />
+    <set-property property="moduleAware" value="true" />
+</plug-in> -->
+
+
 </struts-config>		
  
  

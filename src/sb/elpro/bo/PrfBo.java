@@ -138,7 +138,7 @@ public interface PrfBo  {
 	 * @return
 	 * etc
 	 */
-	public boolean savePoJwForm(PoJwBean pojw)throws Exception;
+	public boolean savePoJwForm(ProductDetails prfbean)throws Exception;
 
 	/**  
 	 * (Method description)

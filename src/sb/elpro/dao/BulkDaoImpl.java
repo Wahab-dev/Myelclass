@@ -34,7 +34,7 @@ public class BulkDaoImpl implements BulkDao {
 			
 			con = DBConnection.getConnection();
 			st = (Statement) con.createStatement();// limit "+pag+", "+rows+" 
-			String sql = "SELECT distinct article.prfarticleid, form.agent, form.Ctno, Orderdt, pono, exporterid, tanneryid, customerid, cdd_date, add_date, destination, terms, payment, commission, splcdn, inspcdn, consigneeid, form.notifyid,  form.bankid,  pojw, article.articleid, articletype, articleshfrom, articlename, color, size, substance, selection, selectionpercent, quantity , unit,pcs, rate, tc, article.prfarticleid, user, stats.prf_articleid, status, qshipped, qbal, invdetails, reps,  comments,  feddback, stats.contractno, rdd_date, tan.tanshform, cust.shortform as custshform,consig.shortform as consigshform ,notify.shortform as notifyshform ,bank.shortform as bankshform FROM  elpro.tbl_prf_article article left outer join elpro.tbl_prfarticle_status stats on article.prfarticleid = stats.prf_articleid left outer join elpro.tbl_prfform form on form.Ctno = article.contractno left outer join elpro.tbl_tannery tan on  tan.tanid = form.tanneryid left outer join elpro.tbl_customer cust on  cust.custid = form.customerid left outer join elpro.tbl_consignee consig on  consig.consigid = form.consigneeid left outer join elpro.tbl_notify notify on  notify.notifyid = form.notifyid left outer join elpro.tbl_bank bank on  bank.bankid = form.bankid order by form.Ctno desc, articletype asc, articlename asc, color asc ";
+			String sql = "SELECT article.prfarticleid, form.agent, form.Ctno, Orderdt, pono,  tan.tanshform as Tanner,  exp.tanshform as Exporter, cust.shortform as custshform, cdd_date, add_date, destination, terms, payment, commission, form.splcdn, inspcdn, consigneeid, form.notifyid,  form.bankid,  pojw.pojwno as pojw, article.articleid, articletype, articleshfrom,  articlename, color, size, substance, selection, selectionpercent, quantity , unit, pcs, rate, tc, article.prfarticleid, user,  stats.prf_articleid, status, qshipped, qbal, invdetails, reps,  comments,  feddback, stats.contractno, rdd_date, consig.shortform as consigshform ,notify.shortform as notifyshform ,bank.shortform as bankshform  FROM  elpro.tbl_prf_article article  join elpro.tbl_prfarticle_status stats on article.prfarticleid = stats.prf_articleid  join elpro.tbl_prfform form on form.Ctno = article.contractno  left outer join elpro.tbl_pojw pojw on  pojw.Ctno = form.Ctno  left outer join elpro.tbl_tannery exp on  exp.tanid = form.tanneryid  left outer join elpro.tbl_tannery tan on  tan.tanid = pojw.Tannery  left outer join elpro.tbl_customer cust on  cust.custid = form.customerid  left outer join elpro.tbl_consignee consig on  consig.consigid = form.consigneeid  left outer join elpro.tbl_notify notify on  notify.notifyid = form.notifyid  left outer join elpro.tbl_bank bank on  bank.bankid = form.bankid  order by form.Orderdt desc, articletype asc, articlename asc, color asc";
 			System.out.println(sql);
 			System.out.println(" Rows "+rows);
 			System.out.println(" Page "+pag);
@@ -45,8 +45,8 @@ public class BulkDaoImpl implements BulkDao {
 				bulkbean.setAgent(rs.getString("agent"));
 				bulkbean.setOrderdt(DateConversion.ConverttoNormalDate(rs.getString("Orderdt")));
 				bulkbean.setPono(rs.getString("pono"));
-				bulkbean.setTanneryid(rs.getString("tan.tanshform"));
-				bulkbean.setExporterid(rs.getString("tan.tanshform"));
+				bulkbean.setTanneryid(rs.getString("Tanner"));
+				bulkbean.setExporterid(rs.getString("Exporter"));
 				bulkbean.setCustomerid(rs.getString("custshform"));
 				bulkbean.setCdd_date(DateConversion.ConverttoNormalDate(rs.getString("cdd_date")));
 				bulkbean.setAdd_date(DateConversion.ConverttoNormalDate(rs.getString("add_date")));
@@ -71,7 +71,7 @@ public class BulkDaoImpl implements BulkDao {
 				bulkbean.setSubstance(rs.getString("substance"));
 				bulkbean.setSelection(rs.getString("selection"));
 				bulkbean.setSelectionpercent(rs.getString("selectionpercent"));
-				bulkbean.setQuantity(rs.getString("quantity")+rs.getString("unit"));
+				bulkbean.setQuantity(rs.getString("quantity")+" "+rs.getString("unit"));
 				bulkbean.setUnit(rs.getString("unit"));
 				bulkbean.setPcs(rs.getString("pcs"));
 				bulkbean.setRate(rs.getString("rate"));

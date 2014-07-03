@@ -107,7 +107,7 @@ case
 				<property name="local_mesure_unitheight" value="pixel"/>
 				<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				<textField>
-					<reportElement x="0" y="0" width="842" height="16" uuid="80ac188e-f1d0-437f-8d2c-02a2c2851ef3">
+					<reportElement x="0" y="0" width="1020" height="16" uuid="80ac188e-f1d0-437f-8d2c-02a2c2851ef3">
 						<property name="com.jaspersoft.studio.unit.y" value="px"/>
 						<property name="local_mesure_unitx" value="pixel"/>
 						<property name="com.jaspersoft.studio.unit.x" value="px"/>

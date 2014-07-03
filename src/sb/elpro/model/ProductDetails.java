@@ -22,7 +22,12 @@ public class ProductDetails implements Serializable {
 	private String prf_orderdate;
 	private String prf_poref;
 	private String prf_poreftype;
-	private String prf_exporterid ;
+	private String prf_exporter;
+	private String prf_exporterid;
+	private String prf_exporterattn;
+	private String prf_exporteraddr;
+	private String prf_exportertele;
+	private String prf_exporterfax;
 	private String prf_tannid ;
 	private String prf_tanname;
 	private String prf_tanaddr;
@@ -66,9 +71,6 @@ public class ProductDetails implements Serializable {
 	private String prf_add;
 	private String prf_special;
 	private String prf_inspcdn;
-	private String prf_pojw;
-	private String prf_status;
-	private String checkboxValue;
 	
 	//Artilce Details
 	private String prf_articleid;
@@ -101,11 +103,27 @@ public class ProductDetails implements Serializable {
 	private String prf_selectionp;
 	private String prf_price;
 	private String prf_tc;
+	private String prf_pojwno;
 	
 	private String formaction;
 	
-	//For Autocomplete
-	private String label;
+	//POJW  form Details
+	private String pojw_pojwno; 
+	private String pojw_orderdate; 
+	private String pojw_cddate; 
+	private String pojw_contractno;
+	private String pojw_comm; 
+	private String pojw_splcdn; 
+	private String pojw_payterms; 
+	
+	private String pojw_tanid;
+	private String pojw_tanname;
+	private String pojw_tanattn;
+	private String pojw_tanaddr;
+	private String pojw_tanphone;
+	private String pojw_tanfax;
+	
+	
 	/**
 	 * @return the prf_agentid
 	 */
@@ -1015,18 +1033,7 @@ public class ProductDetails implements Serializable {
 	public void setArticleid(String articleid) {
 		this.articleid = articleid;
 	}
-	/**
-	 * @return the checkboxValue
-	 */
-	public String getCheckboxValue() {
-		return checkboxValue;
-	}
-	/**
-	 * @param checkboxValue the checkboxValue to set
-	 */
-	public void setCheckboxValue(String checkboxValue) {
-		this.checkboxValue = checkboxValue;
-	}
+
 	/**
 	 * @return the prf_elclasscommission
 	 */
@@ -1051,18 +1058,7 @@ public class ProductDetails implements Serializable {
 	public void setPrf_inspcdn(String prf_inspcdn) {
 		this.prf_inspcdn = prf_inspcdn;
 	}
-	/**
-	 * @return the label
-	 */
-	public String getLabel() {
-		return label;
-	}
-	/**
-	 * @param label the label to set
-	 */
-	public void setLabel(String label) {
-		this.label = label;
-	}
+	
 	/**
 	 * @return the prf_poreftype
 	 */
@@ -1075,30 +1071,8 @@ public class ProductDetails implements Serializable {
 	public void setPrf_poreftype(String prf_poreftype) {
 		this.prf_poreftype = prf_poreftype;
 	}
-	/**
-	 * @return the prf_exporterid
-	 */
-	public String getPrf_exporterid() {
-		return prf_exporterid;
-	}
-	/**
-	 * @param prf_exporterid the prf_exporterid to set
-	 */
-	public void setPrf_exporterid(String prf_exporterid) {
-		this.prf_exporterid = prf_exporterid;
-	}
-	/**
-	 * @return the prf_pojw
-	 */
-	public String getPrf_pojw() {
-		return prf_pojw;
-	}
-	/**
-	 * @param prf_pojw the prf_pojw to set
-	 */
-	public void setPrf_pojw(String prf_pojw) {
-		this.prf_pojw = prf_pojw;
-	}
+	
+	
 	/**
 	 * @return the formaction
 	 */
@@ -1124,20 +1098,245 @@ public class ProductDetails implements Serializable {
 		this.prf_commission = prf_commission;
 	}
 	/**
-	 * @return the prf_status
+	 * @return the prf_exporter
 	 */
-	public String getPrf_status() {
-		return prf_status;
+	public String getPrf_exporter() {
+		return prf_exporter;
 	}
 	/**
-	 * @param prf_status the prf_status to set
+	 * @param prf_exporter the prf_exporter to set
 	 */
-	public void setPrf_status(String prf_status) {
-		this.prf_status = prf_status;
+	public void setPrf_exporter(String prf_exporter) {
+		this.prf_exporter = prf_exporter;
 	}
 	/**
-	 * @return the formactn
+	 * @return the prf_exporterid
 	 */
+	public String getPrf_exporterid() {
+		return prf_exporterid;
+	}
+	/**
+	 * @param prf_exporterid the prf_exporterid to set
+	 */
+	public void setPrf_exporterid(String prf_exporterid) {
+		this.prf_exporterid = prf_exporterid;
+	}
+	/**
+	 * @return the prf_exporterattn
+	 */
+	public String getPrf_exporterattn() {
+		return prf_exporterattn;
+	}
+	/**
+	 * @param prf_exporterattn the prf_exporterattn to set
+	 */
+	public void setPrf_exporterattn(String prf_exporterattn) {
+		this.prf_exporterattn = prf_exporterattn;
+	}
+	/**
+	 * @return the prf_exporteraddr
+	 */
+	public String getPrf_exporteraddr() {
+		return prf_exporteraddr;
+	}
+	/**
+	 * @param prf_exporteraddr the prf_exporteraddr to set
+	 */
+	public void setPrf_exporteraddr(String prf_exporteraddr) {
+		this.prf_exporteraddr = prf_exporteraddr;
+	}
+	/**
+	 * @return the prf_exportertele
+	 */
+	public String getPrf_exportertele() {
+		return prf_exportertele;
+	}
+	/**
+	 * @param prf_exportertele the prf_exportertele to set
+	 */
+	public void setPrf_exportertele(String prf_exportertele) {
+		this.prf_exportertele = prf_exportertele;
+	}
+	/**
+	 * @return the prf_exporterfax
+	 */
+	public String getPrf_exporterfax() {
+		return prf_exporterfax;
+	}
+	/**
+	 * @param prf_exporterfax the prf_exporterfax to set
+	 */
+	public void setPrf_exporterfax(String prf_exporterfax) {
+		this.prf_exporterfax = prf_exporterfax;
+	}
+	/**
+	 * @return the pojw_orderdate
+	 */
+	public String getPojw_orderdate() {
+		return pojw_orderdate;
+	}
+	/**
+	 * @param pojw_orderdate the pojw_orderdate to set
+	 */
+	public void setPojw_orderdate(String pojw_orderdate) {
+		this.pojw_orderdate = pojw_orderdate;
+	}
+	/**
+	 * @return the pojw_cddate
+	 */
+	public String getPojw_cddate() {
+		return pojw_cddate;
+	}
+	/**
+	 * @param pojw_cddate the pojw_cddate to set
+	 */
+	public void setPojw_cddate(String pojw_cddate) {
+		this.pojw_cddate = pojw_cddate;
+	}
+	/**
+	 * @return the pojw_contractno
+	 */
+	public String getPojw_contractno() {
+		return pojw_contractno;
+	}
+	/**
+	 * @param pojw_contractno the pojw_contractno to set
+	 */
+	public void setPojw_contractno(String pojw_contractno) {
+		this.pojw_contractno = pojw_contractno;
+	}
+	/**
+	 * @return the pojw_comm
+	 */
+	public String getPojw_comm() {
+		return pojw_comm;
+	}
+	/**
+	 * @param pojw_comm the pojw_comm to set
+	 */
+	public void setPojw_comm(String pojw_comm) {
+		this.pojw_comm = pojw_comm;
+	}
+	/**
+	 * @return the pojw_splcdn
+	 */
+	public String getPojw_splcdn() {
+		return pojw_splcdn;
+	}
+	/**
+	 * @param pojw_splcdn the pojw_splcdn to set
+	 */
+	public void setPojw_splcdn(String pojw_splcdn) {
+		this.pojw_splcdn = pojw_splcdn;
+	}
+	/**
+	 * @return the pojw_payterms
+	 */
+	public String getPojw_payterms() {
+		return pojw_payterms;
+	}
+	/**
+	 * @param pojw_payterms the pojw_payterms to set
+	 */
+	public void setPojw_payterms(String pojw_payterms) {
+		this.pojw_payterms = pojw_payterms;
+	}
+	/**
+	 * @return the pojw_tanid
+	 */
+	public String getPojw_tanid() {
+		return pojw_tanid;
+	}
+	/**
+	 * @param pojw_tanid the pojw_tanid to set
+	 */
+	public void setPojw_tanid(String pojw_tanid) {
+		this.pojw_tanid = pojw_tanid;
+	}
+	/**
+	 * @return the pojw_tanname
+	 */
+	public String getPojw_tanname() {
+		return pojw_tanname;
+	}
+	/**
+	 * @param pojw_tanname the pojw_tanname to set
+	 */
+	public void setPojw_tanname(String pojw_tanname) {
+		this.pojw_tanname = pojw_tanname;
+	}
+	/**
+	 * @return the pojw_tanattn
+	 */
+	public String getPojw_tanattn() {
+		return pojw_tanattn;
+	}
+	/**
+	 * @param pojw_tanattn the pojw_tanattn to set
+	 */
+	public void setPojw_tanattn(String pojw_tanattn) {
+		this.pojw_tanattn = pojw_tanattn;
+	}
+	/**
+	 * @return the pojw_tanaddr
+	 */
+	public String getPojw_tanaddr() {
+		return pojw_tanaddr;
+	}
+	/**
+	 * @param pojw_tanaddr the pojw_tanaddr to set
+	 */
+	public void setPojw_tanaddr(String pojw_tanaddr) {
+		this.pojw_tanaddr = pojw_tanaddr;
+	}
+	/**
+	 * @return the pojw_tanphone
+	 */
+	public String getPojw_tanphone() {
+		return pojw_tanphone;
+	}
+	/**
+	 * @param pojw_tanphone the pojw_tanphone to set
+	 */
+	public void setPojw_tanphone(String pojw_tanphone) {
+		this.pojw_tanphone = pojw_tanphone;
+	}
+	/**
+	 * @return the pojw_tanfax
+	 */
+	public String getPojw_tanfax() {
+		return pojw_tanfax;
+	}
+	/**
+	 * @param pojw_tanfax the pojw_tanfax to set
+	 */
+	public void setPojw_tanfax(String pojw_tanfax) {
+		this.pojw_tanfax = pojw_tanfax;
+	}
+	/**
+	 * @return the prf_pojwno
+	 */
+	public String getPrf_pojwno() {
+		return prf_pojwno;
+	}
+	/**
+	 * @param prf_pojwno the prf_pojwno to set
+	 */
+	public void setPrf_pojwno(String prf_pojwno) {
+		this.prf_pojwno = prf_pojwno;
+	}
+	/**
+	 * @return the pojw_pojwno
+	 */
+	public String getPojw_pojwno() {
+		return pojw_pojwno;
+	}
+	/**
+	 * @param pojw_pojwno the pojw_pojwno to set
+	 */
+	public void setPojw_pojwno(String pojw_pojwno) {
+		this.pojw_pojwno = pojw_pojwno;
+	}
 	
 
 }

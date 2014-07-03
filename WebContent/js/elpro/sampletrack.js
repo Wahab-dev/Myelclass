@@ -94,13 +94,13 @@ $(function() {
 					sampletrackgrid.jqGrid('groupingRemove',true);	
 				}else{
 					sampletrackgrid.jqGrid('groupingGroupBy', vl, {
-			            groupOrder : ['desc'],
-			            groupColumnShow: [true],
-			            groupText : ['<b>{0} - {1} Records</b>'],
-			            //groupSummary : [true],
-			            groupingView: {
-			            	groupCollapse: [true],
-			            }
+						groupOrder : ['asc'],
+						groupText : ['<b>{0} - {1} Records</b>'],
+						groupSummary : [true],
+						groupColumnShow: [false],
+						groupingView: {
+							groupCollapse: [true],
+						}
 			        });
 				}	
 			}else{
@@ -130,7 +130,7 @@ $(function() {
 	 	url: '/Myelclass/SamptrackInsertAction.do', 	
 		colNames:['Status','Srf No','Order Date','Ref no','Priority','Handled by','Customer','Tannery','Deliver to','Destination',
 		          'endusage','Terms', 'splcdn','inspcdn','forwaderid','isinvraised','articleid','Animal Type',
-		          'articleshform','Article','Color','Size','Substance','Selection','selectionp','Quantity','Pcs','colormatching','Price',
+		          'articleshform','Article','Color','Size','Substance','Selection','selectionp','Quantity','Shpd','Bal','Pcs','colormatching','Price',
 		          'tapetest','crockingwet','crockingdry','fourfolds','keytest','srfarticleid','ADD','CDD','RDD','Reps','Courier', 
 		          'Feedback','User','ApplytoAll'],
     	colModel :[  
@@ -200,7 +200,7 @@ $(function() {
 				{name: 'articleid', index: 'articleid', align:'center', width:60,  search: true, stype:'text',editable:true, sortable: true, hidden: true, 
 					
 				},
-				{name: 'articletype', index: 'articletype', align:'center', width:40,  search: true, stype:'text',editable:true, sortable: true, hidden: false, 
+				{name: 'articletype', index: 'articletype', align:'center', width:40,  search: true, stype:'text',editable:true, sortable: true, hidden: true, 
 					
 				},
 				{name: 'articleshform', index: 'articleshform', align:'center', width:40,  search: true, stype:'text',editable:true, sortable: true, hidden: true, 
@@ -224,16 +224,22 @@ $(function() {
 				{name: 'selectionp', index: 'selectionp', align:'center', width:60,  search: true, stype:'text',editable:true, sortable: true, hidden: true, 
 					
 				},
-				{name: 'quantity', index: 'quantity', align:'center', width:60,  search: true, stype:'text',editable:true, sortable: true, hidden: false, 
+				{name: 'quantity', index: 'quantity', align:'right', width:60,  search: true, stype:'text',editable:true, sortable: true, hidden: false, 
+					summaryType:'sum', summaryTpl:'<b> {0}</b>',
+				},
+				{name: 'shpd', index: 'shpd', align:'right', width:60,  search: true, stype:'text',editable:true, sortable: true, hidden: false, 
+					summaryType:'sum', summaryTpl:'<b> {0}</b>',
+				},
+				{name: 'bal', index: 'bal', align:'right', width:60,  search: true, stype:'text',editable:true, sortable: true, hidden: false, 
 					//summaryType:'sum', summaryTpl:'<b> {0}</b>',
 				},
-				{name: 'pcs', index: 'pcs', align:'center', width:30,  search: true, stype:'text',editable:true, sortable: true, hidden: false, 
-					//summaryType:'sum', summaryTpl:'<b>Sum: {0}</b>',
+				{name: 'pcs', index: 'pcs', align:'right', width:30,  search: true, stype:'text',editable:true, sortable: true, hidden: false, 
+					summaryType:'sum', summaryTpl:'<b> {0}</b>',
 				},
 				{name: 'colormatching', index: 'colormatching',  align:'center', width:60,  search: true, stype:'text',editable:true, sortable: true, hidden: true	, 
 					
 				},
-				{name: 'rate', index: 'rate', align:'center', width:60,  search: true, stype:'text',editable:true, sortable: true, hidden: false, 
+				{name: 'rate', index: 'rate', align:'right', width:60,  search: true, stype:'text',editable:true, sortable: true, hidden: false, 
 					
 				},
 				
@@ -301,7 +307,7 @@ $(function() {
 					edittype: 'textarea', 
 				},
 				
-				{name: 'feedbackdetails', index: 'feedbackdetails', align:'center', width:100,  search: true, stype:'text',editable:true, sortable: true, hidden: false, 
+				{name: 'feedbackdetails', index: 'feedbackdetails', align:'center', width:100,  search: true, stype:'text',editable:true, sortable: true, hidden: true, 
 					edittype: 'textarea', 
 				},
 				
@@ -323,7 +329,7 @@ $(function() {
 	loadtext: "Sample Tracking is Loading",
 	pager : '#sampletrackpgr',
 	rowNum : 500, 
-	rowList : [5,10,20,40,50,100,200,500,1000],
+	rowList : [20,50,100,200,500,1000],
 	rownumbers: true,  
 	height: '360',
     width: 'automatic', 
@@ -334,31 +340,40 @@ $(function() {
     hidegrid: false,
     editurl : '/Myelclass/SamptrackInsertAction.do',
     sortable : true,
+    toppager:true,
+    toppager:true,
     gridview : true,
     viewrecords: true,
     footerrow: true,
-    toppager:true,
-    shrinktofit:false,
+    altRows: true,
     emptyrecords: 'No records to display',
-    //grouping:true, 
-   // groupingView : { groupField : ['sampleno'] },
     loadComplete: function () {
         var $self = $(this),
-            sum = $self.jqGrid("getCol", "pcs", false, "sum");
+        pcstot = $self.jqGrid("getCol", "pcs", false, "sum");
+        qtytot = $self.jqGrid("getCol", "quantity", false, "sum");
+        shpdtot = $self.jqGrid("getCol", "shpd", false, "sum");
+        baltot =  (parseFloat(qtytot) - parseFloat(shpdtot));
 
-        $self.jqGrid("footerData", "set", {quantity: "Total:", pcs: sum});
+        $self.jqGrid("footerData", "set", {status: "Total:", quantity: qtytot.toFixed(2)});
+        $self.jqGrid("footerData", "set", { pcs: pcstot.toFixed(2)});
+        $self.jqGrid("footerData", "set", { shpd: shpdtot.toFixed(2)});
+        $self.jqGrid("footerData", "set", { bal: baltot.toFixed(2)});
+        
     }
     }).jqGrid('navGrid','#sampletrackpgr',{
-    	position : 'left',
-    	edit: false,
-	 	add: false,
-	 	del: false, 
-	 	search: true, 
-	 	view: true, beforeRefresh: function(){
+    	position : 'left', edit: false,add: false,del: false,search: true,view: true,cloneToTop:true,
+	 	beforeRefresh: function(){
 	 		sampletrackgrid.jqGrid('setGridParam',{datatype:'json'}).trigger('reloadGrid');
 	    },
 	    addtext: 'Add', edittext: 'Edit', deltext: 'Delete', searchtext: 'Search', refreshtext: 'Reload', viewtext: 'View',
-	}).navButtonAdd('#sampletrackpgr',{
+	},{},{},{},
+	{
+ 		multipleSearch:true,
+ 		stringResult  :true,
+ 		multipleGroup:true,
+ 	}	
+);
+ sampletrackgrid.jqGrid('navButtonAdd','#'+sampletrackgrid[0].id+'_toppager_left',{
 	   caption:"Status", 
 	   buttonicon:"ui-icon-lightbulb", 
 	   position:"first",
@@ -420,6 +435,16 @@ $(function() {
 	   }
 	});
  	sampletrackgrid.jqGrid('filterToolbar', {autosearch : true, searchOnEnter:false, stringResult: true ,  defaultSearch : "cn"});
+ 	sampletrackgrid.jqGrid('navButtonAdd',"#sampletrackpgr",{caption:"Toggle",title:"Toggle Search Toolbar", buttonicon :'ui-icon-pin-s',
+		onClickButton:function(){
+			sampletrackgrid[0].toggleToolbar();
+		} 
+	});
+ 	sampletrackgrid.jqGrid('navButtonAdd',"#sampletrackpgr",{caption:"Clear",title:"Clear Search",buttonicon :'ui-icon-refresh',
+		onClickButton:function(){
+			sampletrackgrid[0].clearToolbar();
+		} 
+	});
  	sampletrackgrid.jqGrid('navButtonAdd', '#sampletrackpgr', {
         caption: "Pdf",
         buttonicon: "ui-icon-print",
@@ -438,16 +463,7 @@ $(function() {
         title: "Print in Excel Format",
         onClickButton: downloadExcelold,
     });
- 	sampletrackgrid.jqGrid('navButtonAdd',"#sampletrackpgr",{caption:"Toggle",title:"Toggle Search Toolbar", buttonicon :'ui-icon-pin-s',
-		onClickButton:function(){
-			sampletrackgrid[0].toggleToolbar();
-		} 
-	});
- 	sampletrackgrid.jqGrid('navButtonAdd',"#sampletrackpgr",{caption:"Clear",title:"Clear Search",buttonicon :'ui-icon-refresh',
-		onClickButton:function(){
-			sampletrackgrid[0].clearToolbar();
-		} 
-	});
+ 	
  	sampletrackgrid.jqGrid('navButtonAdd',"#sampletrackpgr",{caption:"Column Chooser",title:"Column Chooser",buttonicon :'ui-icon-extlink',
 		onClickButton:function(){
 			sampletrackgrid.jqGrid('columnChooser', {
@@ -458,6 +474,11 @@ $(function() {
          }).jqGrid('setGridWidth',1600);
 		} 
 	});
+ 	 //Bootom Pager Customization
+ 	  var bottomPagerDiv = $("div#sampletrackpgr")[0];
+ 	  $("#view_" + sampletrackgrid[0].id, bottomPagerDiv).remove();
+ 	  $("#search_" + sampletrackgrid[0].id, bottomPagerDiv).remove(); 
+ 	  $("#refresh_" + sampletrackgrid[0].id, bottomPagerDiv).remove(); 
  
  /*
 	*  Function to print the Master Page 

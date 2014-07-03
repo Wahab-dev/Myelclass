@@ -65,7 +65,10 @@ $(document).ready(function() {
 			              };
 			        }));//END response
 			 });
-		 }
+		 }, 
+		 change: function(event,ui){
+	    	 $(this).val((ui.item ? ui.item.value : ""));
+	   }
 	});
 	 
 	 
@@ -80,7 +83,10 @@ $(document).ready(function() {
 			              };
 			        }));//END response
 			 });
-		 }
+		 },
+		 change: function(event,ui){
+	    	 $(this).val((ui.item ? ui.item.value : ""));
+	   }
 	});
 	 
 	 $('#saminv_loadingport').autocomplete({
@@ -95,7 +101,10 @@ $(document).ready(function() {
 			              };
 			        }));//END response
 			 });
-		 }
+		 }, 
+		 change: function(event,ui){
+	    	 $(this).val((ui.item ? ui.item.value : ""));
+	   }
 	});
 	 
 	 $('#saminv_ctryoforigngoods').autocomplete({
@@ -109,6 +118,9 @@ $(document).ready(function() {
 			              };
 			        }));//END response
 			 });
+		 },
+		 change: function(event,ui){
+	    	 $(this).val((ui.item ? ui.item.value : ""));
 		 },
 		 close: function () {
 			    $(this).removeClass("ui-corner-top").addClass("ui-corner-all");
@@ -131,6 +143,7 @@ $(document).ready(function() {
 		                    fone: item.expphone,	
 		                    attn : item.expattn,
 		                    fax: item.expfax,
+		                    id: item.expid,
 		                    };
 		                 }));//END Response	
 					});//End getJSon
@@ -139,9 +152,13 @@ $(document).ready(function() {
 		          	  $('#saminv_exporteraddress').val(ui.item.addr);
 		          	  $('#saminv_exportertele').val(ui.item.fone);
 		          	  $('#saminv_exporterattn').val(ui.item.attn);
-		          	  $('#inv_exporterfax').val(ui.item.fax);
-		              $('#saminv_exporterfax').val(ui.item.ref);
-				    }
+		          	  $('#saminv_exporterfax').val(ui.item.fax);
+		              $('#saminv_expref').val(ui.item.ref);
+		              $('#saminv_exporterid').val(ui.item.id);
+				    },
+				    change: function(event,ui){
+				    	 $(this).val((ui.item ? ui.item.value : ""));
+				   }
 		  	    });
 	 
 	 
@@ -159,6 +176,7 @@ $(document).ready(function() {
 		                    fone: item.notifyConsigneeContactNo,	
 		                    attn : item.notifyConsigneeAttention,
 		                    fax: item.notifyConsigneefax,
+		                    id: item.notifyConsigneeId,
 		                    };
 		                 }));//END Response	
 					});//End getJSon
@@ -168,7 +186,11 @@ $(document).ready(function() {
 		          	  $('#saminv_notifytele').val(ui.item.fone);
 		          	  $('#saminv_notifyattn').val(ui.item.attn);
 		          	  $('#saminv_notifyfax').val(ui.item.fax);
-				    }
+		          	  $('#saminv_notifyid').val(ui.item.id);
+				},
+				 change: function(event,ui){
+			    	 $(this).val((ui.item ? ui.item.value : ""));
+			   }
 		  	});
 	 
 		$('#saminv_terms').autocomplete({
@@ -182,7 +204,10 @@ $(document).ready(function() {
 				              };
 				        }));//END response
 				 });
-			 }
+			 },
+			 change: function(event,ui){
+		    	 $(this).val((ui.item ? ui.item.value : ""));
+		   }
 		});
 		$('#saminv_payment').autocomplete({
 			 source: function(request, response) {
@@ -195,7 +220,10 @@ $(document).ready(function() {
 				              };
 				        }));//END response
 				 });
-			 }
+			 },
+			 change: function(event,ui){
+		    	 $(this).val((ui.item ? ui.item.value : ""));
+		   }
 		});
 		
 	 $('#saminv_bank').autocomplete({
@@ -214,6 +242,7 @@ $(document).ready(function() {
 		                    acctno : item.bankAcctNo,
 		                    ctno: item.bankContactNo,
 		                    fax: item.bankFax,
+		                    id: item.bankId,
 		                    };
 		                 }));//END Response	
 					});//End getJSon
@@ -224,8 +253,11 @@ $(document).ready(function() {
 		          	  $('#saminv_banktele').val(ui.item.ctno);
 		          	  $('#saminv_bankfax').val(ui.item.fax);
 		          	  $('#saminv_bankswiftcode').val(ui.item.swiftcode);
-		          	  $('#saminv_bankacno').val(ui.item.acctno);
-				    }
+		          	  $('#saminv_bankid').val(ui.item.id);
+				},
+				 change: function(event,ui){
+			    	 $(this).val((ui.item ? ui.item.value : ""));
+			   }
 		  	});
 	 
 	 $('#saminv_customer').autocomplete({
@@ -258,7 +290,10 @@ $(document).ready(function() {
 		          	type = $('#saminv_includeSample').val();
 					
 					saminvctgrid.jqGrid('setGridParam',{url:"/Myelclass/sampleInvSelectCtfromCust.do?custid="+custid+"&type="+type+"&action="+"load"}).trigger("reloadGrid");				 
-				    }
+				},
+				 change: function(event,ui){
+			    	 $(this).val((ui.item ? ui.item.value : ""));
+			   }
 		  	 });
 function clickheremethod(){
 	 var selsamnos="";
@@ -294,16 +329,15 @@ function clickheremethod(){
 			 colModel:[
 			           {name: 'sampleno', index:'sampleno', width:60, hidden: false, sortable: true,}, 
 			           {name: 'orderdt', index:'orderdt',  width:60, hidden: false, sortable: true,},
-			           {name: 'refno', index:'refno', width:110, hidden: false, sortable: true,},
+			           {name: 'refno', index:'refno', width:120, hidden: false, sortable: true,},
 			           {name: 'customer', index:'customer', width:60, hidden:true, sortable: true,},
-			           {name: 'tannery', index:'tannery', width:80, hidden:false, sortable: true,},
-			           {name: 'deliverid', index:'deliverid', width:80, hidden: false, sortable: true,},
-			           {name: 'destination', index:'destination', width:80, hidden: false, sortable: true,},
-			           {name: 'add_date', index:'add_date', width:60, hidden: false, sortable: true,},
-			           {name: 'cdd_date', index:'cdd_date', width:60, hidden: false, sortable: true,},
-			           {name: 'handledby', index:'handledby', width:80, hidden: false, sortable: true,},
-			           {name: 'isinvraised', index:'isinvraised', width:60, hidden: true, sortable: true,},		           
-			           
+			           {name: 'tannery', index:'tannery', width:80, hidden:true, sortable: true,},
+			           {name: 'deliverid', index:'deliverid', width:80, hidden: true, sortable: true,},
+			           {name: 'destination', index:'destination', width:100, hidden: false, sortable: true,},
+			           {name: 'add_date', index:'add_date', width:80, hidden: false, sortable: true,},
+			           {name: 'cdd_date', index:'cdd_date', width:80, hidden: false, sortable: true,},
+			           {name: 'handledby', index:'handledby', width:120, hidden: false, sortable: true,},
+			           {name: 'isinvraised', index:'isinvraised', width:60, hidden: false, sortable: true,},		                      
 			          ],
 			  jsonReader : {  
 				       repeatitems:false,
@@ -312,47 +346,32 @@ function clickheremethod(){
 				       total: "total" ,//calls Second
 				       records: "records", //calls Third
 				       },
+		       caption  : "Contract / Sample List To Raise Invoice",
+			   loadtext: "List is Loading",
 			   pager : '#tbl_saminvpager',
-			   rowNum: 10, 
-			   multiselect : true,
-			   multiboxonly: true, // what is this ??
-			   rowList:[10,20,30],	
+			   rowNum: 20,
+			   rowList: [10,20,50,100,200,500],
+			   rownumbers: true, 
+			   height : "200",
+			   width: "auto",
 			   sortname: 'sampleno',
-			   sortorder: 'desc',  
-			   height: '100%',	
-			   //hide: false,
-		       emptyrecords: 'No records to display',
-		       caption  : "Select Contract From List",
+			   sortorder: 'desc',
+			   multiselect : true,
+			   multiboxonly: true, // Works with multiselec true. enables checkbox by simply clicking the row
+			   sortable: true,
+			   gridview : true,
+			   viewrecords: true,
+			   altRows: true,
+		       emptyrecords: 'No records to display',		
 		       });
 	 	saminvctgrid.jqGrid('navGrid','#tbl_saminvpager',{
-			add : false,
-			edit: false, 
-			del : false,
-			view: false,
-			search : false,
-			reload: true,
-			refreshtext: 'Reload',
+			add : false, edit: false, del : false, view: false, search : false, reload: true, refreshtext: 'Reload',
 		}).jqGrid('navButtonAdd', '#tbl_saminvpager', {
 		 	   caption:"Click Here",    
-		 	   buttonicon: "ui-icon-print",
+		 	   buttonicon: "ui-icon-circle-arrow-s",
 		       title: "Click here to load",	 		 	   
 		       onClickButton: function(){
 		    	   clickheremethod();
-		 		 /*var selsamnos="";
-		 		 var ids = saminvctgrid.jqGrid('getGridParam','selarrrow');
-		 		 for (var i=0; i<ids.length;i++){
-		 		     var rowData = saminvctgrid.jqGrid('getRowData',ids[i]);
-		 			 var sam = " '"+rowData.sampleno+"',";
-		 			selsamnos = selsamnos+sam;
-		 		   }
-		 		 var itemp = selsamnos.lastIndexOf(",");
-				 var samnoselc = selsamnos.substring(0, itemp);
-				 alert("samnoselc"+samnoselc);
-				 type = $('#saminv_includeSample').val();
-				 alert("asd"+type);
-				 sambillgrid.jqGrid('setGridParam',{url:"/Myelclass/sampleInvSelectCtfromCust.do?samno="+samnoselc+"&type="+type+"&action="+"loadsubgrid",page:1});
-				 sambillgrid.jqGrid('setCaption',"Raise Invoice").trigger('reloadGrid');
-				 saminvgrid.jqGrid('setGridParam',{url:"/Myelclass/sampleInvSelectCtfromCust.do?action="+"loadBill&samno="+samnoselc+"&type="+type ,page:1}).trigger('reloadGrid');*/
 		 	   },
 		 	
 		});
@@ -367,15 +386,15 @@ function clickheremethod(){
 	 	sambillgrid.jqGrid({
 			url:"",
 			datatype: "json",
-			colNames:['Status','Sample No','Art Id','Type','Article','Color','Size','Substance','Selection','Pcs','Quantity','Unit','Shipped','Balance','Rate','RDD','Comments','Reps','Feedback','Amount','Total'],
+			colNames:['Status','Sample No','Art Id','Type','Article','Color','Size','Substance','Sel','Pcs','Quantity','Unit','Shipped','Balance','Rate','RDD','Comments','Reps','Feedback','Amount','Total', 'User'],
 		    colModel:[
 		              {name:'status', index:'status',align:'center', width :40, editable:false, sortable: true, hidden:false, search: true, 
 		            	 
 		              },
-		              {name:'sampleno', index:'sampleno',align:'center', width :40, editable:true, sortable: true, hidden:false, search: true,
+		              {name:'sampleno', index:'sampleno',align:'center', width :60, editable:true, sortable: true, hidden:false, search: true,
 		            	  editoptions: { readonly: 'readonly' },
 					  },
-					  {name:'srfarticleid', index:'srfarticleid',align:'center', width :40, editable:true, sortable: true, hidden:false, search: true,
+					  {name:'srfarticleid', index:'srfarticleid',align:'center', width :40, editable:true, sortable: true, hidden:true, search: true,
 						  
 
 					  },
@@ -387,11 +406,11 @@ function clickheremethod(){
 						  editoptions: { readonly: 'readonly' }, 
 					  
 					  },
-					  {name:'color', index:'color',align:'center', width :70, editable:true, sortable: true, hidden:false, search: true,
+					  {name:'color', index:'color',align:'center', width :100, editable:true, sortable: true, hidden:false, search: true,
 						  editoptions: { readonly: 'readonly' },
 						
 					  },
-					  {name:'size', index:'size',align:'center', width :60, editable:true, sortable: true, hidden:false, search: true,
+					  {name:'size', index:'size',align:'center', width :50, editable:true, sortable: true, hidden:false, search: true,
 						  editoptions: { readonly: 'readonly' },
 						  
 					  },
@@ -403,7 +422,7 @@ function clickheremethod(){
 						  editoptions: { readonly: 'readonly' }, 
 						  
 					  },
-					  {name:'pieces', index:'pieces',align:'center', width :40, editable:true, sortable: true, hidden:false, search: true,
+					  {name:'pieces', index:'pieces',align:'center', width :30, editable:true, sortable: true, hidden:false, search: true,
 						  
 					  },
 					  {name:'quantity', index:'quantity',align:'center', width :60, editable:true, sortable: true, hidden:false, search: true,
@@ -448,24 +467,25 @@ function clickheremethod(){
 					  {name:'rdd', index:'rdd',align:'center', width :70, editable:false, sortable: true, hidden:false, search: true,
 						  
 					  },
-					  {name:'comments', index:'comments',align:'center', width :70, editable:false, sortable: true, hidden:false, search: true,
+					  {name:'comments', index:'comments',align:'center', width :150, editable:false, sortable: true, hidden:false, search: true,
 						  
 					  },
 					  {name:'reps', index:'reps',align:'center', width :50, editable:false, sortable: true, hidden:true, search: true,
 						  
 					  },
-					  {name:'feedback', index:'feedback',align:'center', width :50, editable:false, sortable: true, hidden:false, search: true,
+					  {name:'feedback', index:'feedback',align:'center', width :100, editable:false, sortable: true, hidden:true, search: true,
 						  
 					  },
-					  {name:'amount', index:'amount',align:'center', width :50, editable:true, sortable: true, hidden:false, search: true,
+					  {name:'amount', index:'amount',align:'center', width :60, editable:true, sortable: true, hidden:false, search: true,
 						  
 						  formatter : 'number', formatoptions: {decimalSeparator:".", decimalPlaces: 2, defaultValue: '0.00'},
 					  },
 					  {name:'total', index:'total',align:'center', width :50, editable:true, sortable: true, hidden:true, search: true,
 						  
 					  },
-					 
-					  
+					  {name:'user', index:'user',align:'center', width :80, editable:true, sortable: true, hidden: true, search: true,
+						  editoptions: { readonly: 'readonly' },
+					  },
 		          ],
 			jsonReader : {  
 					repeatitems:false,
@@ -474,34 +494,37 @@ function clickheremethod(){
 				    total: "total" ,//calls Second
 				    records: "records", //calls Third
 				  }, 
+			caption: "Raise Bill",
+			loadtext: "Bill data is Loading",
 			pager: '#tbl_saminvbillpager',
-			rowNum:10, 
-			height: 'automatic',
-			rowList:[10,20,30,40],
+			rowNum: 20,
+			rowList: [20,50,100,200,500,1000],
+			rownumbers: true,
+			height : "auto",
+			width: "auto",
 			sortname: 'sampleno',
 			sortorder: 'desc',  
+			sortable: true,
+			gridview : true,
+			viewrecords: true,
 			editurl: "/Myelclass/sampleInvSelectCtfromCust.do?action="+"addBill",
 			emptyrecords: 'No records to display',
 			grouping:true, 
-	        groupingView : { 
-	            groupField : ['sampleno'],
+			groupingView: {
+				groupField : ['sampleno'],
 	            groupOrder : ['desc'] 
-	        },
+			},
 	        loadComplete: function () {
-	        
+	        	/*alert("hi");
+	        	var row = saminvgrid.jqGrid('getGridParam', 'reccount');
+	        	alert(row);*/
 	        }
 		});		
 	 	sambillgrid.jqGrid('navGrid','#tbl_saminvbillpager',{
-			add : true, addCaption :"Raise Bill",
-			edit: false,
-			del : false, 
-			view: false, 
-			search : false, 
-			reload: false,
-			addtext: 'Add', refreshtext: 'Reload',
-			
+			add : true, edit: false,del : false,view: false,search : false,reload: false,addtext: 'Add', refreshtext: 'Reload',			
 	 	}, 
-			{},
+			{//Space for Edit//
+	 		},
 			{
 				/*
 				 * Add Method 
@@ -519,7 +542,8 @@ function clickheremethod(){
 				},
 				//Add 
 				beforeShowForm : function(formID){
-				
+					$('#user').val($("#userinsession").val());
+					$('#tr_user').show();
 					var selRowData;
 					var rowids = sambillgrid.jqGrid('getGridParam', 'selrow');
 			           	selRowData = sambillgrid.jqGrid('getRowData', rowids);
@@ -562,11 +586,7 @@ function clickheremethod(){
                  },
 			},
 			afterSubmit: function (response, postdata) {
-				/*var saminvno = $('#saminv_invoiceno').val();
-				var samno = $("#sampleno").val();
-				samno = "'"+samno+"'";
-				sambillgrid.jqGrid('setGridParam',{url:"/Myelclass/sampleInvSelectCtfromCust.do?action="+"loadBill&saminvno="+saminvno+"&samno="+samno ,page:1}).trigger('reloadGrid');*/
-				 clickheremethod();
+				clickheremethod();
 				if(response.responseText != ""){
 					return [true,"Success"];
                 }else{
@@ -585,7 +605,7 @@ function clickheremethod(){
 	 	saminvgrid.jqGrid({
 			 url:"",
 			 datatype: "json",
-			 colNames:['Inv Id','Inv No','InvDt','articleid','Ct No','Article','Color','Size','Substance','Selection','Unit','Quantity','Pcs','Rate','Q Shipped','Q Balance','amount'],
+			 colNames:['Inv Id','Inv No','InvDt','articleid','Ct No','Article','Color','Size','Substance','Selection','Unit','Quantity','Pcs','Rate','Q Shipped','Q Balance','amount','User'],
 			 colModel:[
 			           	{name: 'invid', index:'invid',align:'center', width :80, editable:true, sortable: true, hidden:true, search: true,
 			           		editoptions: { readonly: 'readonly' },
@@ -677,6 +697,9 @@ function clickheremethod(){
 						{name: 'invamt', index:'amt',align:'center', width :80, editable:true, sortable: true, hidden:false, search: true,
 							formatter : 'number', formatoptions:{decimalSeparator:".", decimalPlaces: 2, },	
 						},
+						{name:'user', index:'invuser',align:'center', width :80, editable:true, sortable: true, hidden: true, search: true,
+							editoptions: { readonly: 'readonly' },
+						},
 					  ],
 			 jsonReader : {  
 				   repeatitems:false,
@@ -701,17 +724,17 @@ function clickheremethod(){
 	            groupField : ['invno'],
 	            groupOrder : ['desc'] 
 	        },
-	        loadComplete: function () {	        	
-	            var $self = $(this);
+	        loadComplete: function () {	
+	        	//Need to Provice a Clear Solution here
+	        	
+	           /* var $self = $(this);
 	            var qshpdsum = $self.jqGrid("getCol", "invqshpd", false, "sum");
 	            var amtsum 	 = $self.jqGrid("getCol", "invamt", false, "sum");
 	            $self.jqGrid("footerData", "set", { invqshpd: qshpdsum});
 	            $self.jqGrid("footerData", "set", { invamt: amtsum});
-	           $("#saminv_total").val(amtsum);
-	           
+	           $("#saminv_total").val(amtsum);*/   
 	        }
 		 });
-	 	
 	 	saminvgrid.jqGrid('navGrid','#saminvbillpager',{
 				add : true,
 				edit: true, 
@@ -738,6 +761,7 @@ function clickheremethod(){
 						$('#tr_invdt').hide();
 						$('#tr_invartid').hide();
 						$('#tr_invtc').hide();
+						$('#tr_invuser').show();
 						
 						var invqbal = parseFloat( $("#invqshpd").val()) + parseFloat ($("#invqbal").val() );
 						var qbals = invqbal.toFixed(2);
@@ -762,6 +786,9 @@ function clickheremethod(){
 					beforeShowForm : function(formID){
 						 $("#invno").val($("#saminv_invoiceno").val());
 						 $("#invdt").val($("#saminv_invdate").val());
+						 $("#user").val( $("#userinsession").val());
+						 $('#tr_user').show();
+						
 						 $('#tr_invid').hide();
 						 $('#tr_invtc').hide();
 						
@@ -785,6 +812,7 @@ function clickheremethod(){
 			            $('#' + 'invqshpd' + '.FormElement', formID).val("0.00");
 			            $('#' + 'invqbal' + '.FormElement', formID).val(selRowData.invqbal);
 			            $('#' + 'invamt' + '.FormElement', formID).val(selRowData.invamt);
+			            $('#' + 'user' + '.FormElement', formID).val(selRowData.user);
 			           // $('#' + 'prfarticleid' + '.FormElement', formID).val(selRowData.prfarticleid);
 				    }, 							
 				},

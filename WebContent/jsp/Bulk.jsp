@@ -15,8 +15,6 @@
 <style type="text/css">
 #ui-datepicker-div { font-size: 11px; } 
 .myAltRowClass { background-color: Light; background-image: none; }
-
-
 </style>
 <script src="js/i18n/grid.locale-en.js" type="text/javascript"></script>
 <script src="js/jquery.jqGrid.min.js" type="text/javascript"></script>
@@ -93,9 +91,14 @@ $(function() {
 <!-- Bulk Tracking Form  -->
 	Group By: <select id="chngroup"> 
 				<option value="ctno">Ct No</option>
-				<option value="articlename">Article</option>
-				<option value="status">Status</option>
+				<option value="tanneryid">Tannery </option>
+				<option value="customerid">Customer</option>
+				<option value="articlename">Article</option>				
 				<option value="color" >color</option>
+				<option value="unit">Unit</option>
+				<option value="tc">Tc</option>
+				<option value="cdd_date">Delivery Date</option>
+				<option value="status">Status</option>
 				<option value="clear" selected="selected" >Remove Grouping</option>
 			</select> 
 		

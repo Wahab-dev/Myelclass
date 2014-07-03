@@ -77,11 +77,13 @@ $(document).ready(function() {
 				debtrackgrid.jqGrid('groupingRemove',true);	
 			}else{
 				debtrackgrid.jqGrid('groupingGroupBy', vl, {
-					groupOrder : ['desc'],
-		            groupColumnShow: [false],
-		            groupingView: {
-		                groupCollapse: true
-		            }
+					groupOrder : ['asc'],
+					groupText : ['<b>{0} - {1} Records</b>'],
+					groupSummary : [true],
+					groupColumnShow: [false],
+					groupingView: {
+						groupCollapse: [true],
+					}
 		        });
 			}	
 		}else{
@@ -92,7 +94,10 @@ $(document).ready(function() {
 	 debtrackgrid.jqGrid({
 		 url:'/Myelclass/DebitTrackInsertAction.do',
 		 datatype: "json",
-		 colNames:['Debit No','Debit date','Tannery','ref no','Inv Date','Inv no','Ct No','Inv Amt','Exchange Rate','Commission','Price','Quantity','Commision Amt','INR','Service Tax','Total','TDS','Total Due'],
+		 colNames:['Debit No','Debit date','Tannery','Ref no','Inv Date',
+		           'Inv no','Ct No','Inv Amt','ExRate','Com','Price',
+		           'Quantity','Comm in $','Comm in Rs','Service Tax','Total',
+		           'TDS','Total Due'],
 		 colModel:[
 					{name: 'deb_debitno', index: 'deb_debitno' , align:'center', width:90, hidden: false, 
 						 formatter: "dynamicLink",
@@ -114,47 +119,54 @@ $(document).ready(function() {
 					{name: 'deb_elclassrefno', index: 'deb_elclassrefno' ,align:'center', width:50,  hidden: false, editable:true,
 						
 					},
-					{name: 'deb_invdate', index: 'deb_invdate' ,align:'center', width:70, hidden: true, editable:true,
+					{name: 'deb_elclassrefdt', index: 'deb_elclassrefdt' ,align:'center', width:70, hidden: false, editable:true,
 						
 					},
 					{name: 'deb_taninvno', index: 'deb_taninvno' ,align:'center', width:110, hidden: false, editable:true,
 						
 					},
-					{name: 'deb_contractno', index: 'deb_contractno' ,align:'center', width:70, hidden: true, editable:true,
+					{name: 'deb_contractno', index: 'deb_contractno' ,align:'center', width:70, hidden: false, editable:true,
 						
 					},
-					{name: 'deb_invoiceamt', index: 'deb_invoiceamt' ,width:70,  hidden: false, align:'right', editable:true,
+					{name: 'deb_invoiceamt', index: 'deb_invoiceamt' ,width:60,  hidden: false, align:'right', editable:true,
 						
 					},
-					{name: 'deb_exchangerate', index: 'deb_exchangerate' ,width:70,  hidden: false, align:'right', editable:true,
+					{name: 'deb_exchangerate', index: 'deb_exchangerate' ,width:40,  hidden: false, align:'right', editable:true,
 						
 					},
-					{name: 'deb_commission', index: 'deb_commission' ,width:70, hidden: false, editable:true,
+					{name: 'deb_commission', index: 'deb_commission' , align:'center', width:40, hidden: false, editable:true,
 						
 					},
 					{name: 'deb_rate', index: 'deb_rate' ,width:70, hidden: false, align:'right', editable:true,
 						
 					},
-					{name: 'deb_qshipped', index: 'deb_qshipped' ,width:70, hidden: false, align:'right', editable:true,
-						
+					{name: 'deb_qshipped', index: 'deb_qshipped' ,width:60, hidden: false, align:'right', editable:true,
+						summaryType:'sum', summaryTpl:'<b> {0}</b>',
+						formatter:'number',formatoptions: {decimalSeparator: ".", thousandsSeparator: ",", decimalPlaces: 2, defaultValue: '0.00' },
 					},
-					{name: 'deb_elclassamt', index: 'deb_elclassamt' ,width:70,  align:'right', hidden: false, editable:true,
-						
+					{name: 'deb_elclassamt', index: 'deb_elclassamt' ,width:80,  align:'right', hidden: false, editable:true,
+						summaryType:'sum', summaryTpl:'<b> {0}</b>',
+						formatter:'number',formatoptions: {decimalSeparator: ".", thousandsSeparator: ",", decimalPlaces: 2, defaultValue: '0.00' },
 					},
-					{name: 'deb_elclassamtinrs', index: 'deb_elclassamtinrs' ,width:70,  align:'right',  hidden: false, editable:true,
-						
+					{name: 'deb_elclassamtinrs', index: 'deb_elclassamtinrs' ,width:80,  align:'right',  hidden: false, editable:true,
+						summaryType:'sum', summaryTpl:'<b> {0}</b>',
+						formatter:'number',formatoptions: {decimalSeparator: ".", thousandsSeparator: ",", decimalPlaces: 2, defaultValue: '0.00' },
 					},
-					{name: 'deb_tax', index: 'deb_tax' ,width:70,  hidden: false, align:'right', editable:true,
-						
+					{name: 'deb_tax', index: 'deb_tax' ,width:80,  hidden: false, align:'right', editable:true,
+						summaryType:'sum', summaryTpl:'<b> {0}</b>',
+						formatter:'number',formatoptions: {decimalSeparator: ".", thousandsSeparator: ",", decimalPlaces: 2, defaultValue: '0.00' },
 					},
-					{name: 'deb_total', index: 'deb_total' ,width:50, hidden: false, align:'right', editable:true,
-						
+					{name: 'deb_total', index: 'deb_total' ,width:80, hidden: false, align:'right', editable:true,
+						summaryType:'sum', summaryTpl:'<b> {0}</b>',
+						formatter:'number',formatoptions: {decimalSeparator: ".", thousandsSeparator: ",", decimalPlaces: 2, defaultValue: '0.00' },
 					},
-					{name: 'deb_tds', index: 'deb_tds' ,width:90, hidden: false, align:'right', editable:true,
-						
+					{name: 'deb_tds', index: 'deb_tds' ,width:80, hidden: false, align:'right', editable:true,
+						summaryType:'sum', summaryTpl:'<b> {0}</b>',
+						formatter:'number',formatoptions: {decimalSeparator: ".", thousandsSeparator: ",", decimalPlaces: 2, defaultValue: '0.00' },
 					},
-					{name: 'deb_due', index: 'deb_due' ,width:70, hidden: false, align:'right',editable:true,
-						
+					{name: 'deb_due', index: 'deb_due' ,width:80, hidden: false, align:'right',editable:true,
+						summaryType:'sum', summaryTpl:'<b> {0}</b>',
+						formatter:'number',formatoptions: {decimalSeparator: ".", thousandsSeparator: ",", decimalPlaces: 2, defaultValue: '0.00' },
 					},
 		           ],
 		 jsonReader : {  
@@ -164,39 +176,59 @@ $(document).ready(function() {
 			 total: "total" ,//calls Second
 			 records: "records" //calls Third
 		 }, 
-		 pager: '#debittrackpager',
+		 caption: "Debit Tracking Report",
 		 loadtext: "Debit Tracking is Loading",
-		 caption: 'Debit Tracking Page', 
-		 emptyrecords: 'No records to display',
-		 rowNum:30, 
+		 pager: '#debittrackpager',
+		 rowNum:500, 
+		 rowList:[20,50,100,200,500,1000],
 		 rownumbers:true,
+		 height : "360",
+		 width: "auto",
+		 sortname: 'deb_debitno',
+		 sortorder: 'desc', 
 		 loadonce: true,
-		 rowList:[30,50,70],	       
-		 sortorder: 'asc',  
-		 height : '360',
-		 sortname : 'deb_debitno',  
+		 ignoreCase:true,
+		 hidegrid: false,
+		// editurl: "/Myelclass/BulkInsertAction.do",
+		 sortable: true,
+		 toppager:true,
 		 gridview : true,
 		 viewrecords: true,
 		 footerrow: true,
+		 altRows: true,
+		 emptyrecords: 'No records to display',
 		 loadComplete: function() { //deb_total
 			 var $self = $(this),
+			 qty = parseFloat($self.jqGrid("getCol", "deb_qshipped", false, "sum")).toFixed(2);
 			 amt = parseFloat($self.jqGrid("getCol", "deb_elclassamtinrs", false, "sum")).toFixed(2);
         	 tax = parseFloat($self.jqGrid("getCol", "deb_tax", false, "sum")).toFixed(2);
         	 due = parseFloat($self.jqGrid("getCol", "deb_due", false, "sum")).toFixed(2);
         	 tot = parseFloat($self.jqGrid("getCol", "deb_total", false, "sum")).toFixed(2);
-        	 $self.jqGrid("footerData", "set", {deb_elclassamtinrs: parseFloat(amt)});
-        	 $self.jqGrid("footerData", "set", {deb_tax: parseFloat(tax)});
-        	 $self.jqGrid("footerData", "set", {deb_due: parseFloat(due)});
-        	 $self.jqGrid("footerData", "set", {deb_total: parseFloat(tot)});
+        	 tds = parseFloat($self.jqGrid("getCol", "deb_tds", false, "sum")).toFixed(2);
+        	 commamt = parseFloat($self.jqGrid("getCol", "deb_elclassamt", false, "sum")).toFixed(2);
+        	 
+        	 $self.jqGrid("footerData", "set", {deb_rate: "Total",deb_elclassamtinrs: parseFloat(amt)});
+        	 $self.jqGrid("footerData", "set", {deb_qshipped: qty});
+        	 $self.jqGrid("footerData", "set", {deb_tax: tax});
+        	 $self.jqGrid("footerData", "set", {deb_due: due});
+        	 $self.jqGrid("footerData", "set", {deb_total: tot});
+        	 $self.jqGrid("footerData", "set", {deb_tds: tds});
+        	 $self.jqGrid("footerData", "set", {deb_elclassamt: commamt});
         	 //$(this).jqGrid('showCol', 'rn');
         }
 	 }).jqGrid('navGrid','#debittrackpager',{
-		 edit: true, add: false, del: false,  search: true, view: true, 
+		 edit: true, add: false, del: false,  search: true, view: true, cloneToTop:true,
 		 	addtext: 'Add', edittext: 'Edit', deltext: 'Delete', searchtext: 'Search', refreshtext: 'Reload', viewtext: 'View',
 		 	 beforeRefresh: function(){
 		 		debtrackgrid.jqGrid('setGridParam',{datatype:'json'}).trigger('reloadGrid');
-			 }
-		});
+		 	},	
+		},{},{},{},
+		{
+		 		multipleSearch:true,
+		 		stringResult  :true,
+		 		multipleGroup:true,
+		 	}	
+		);
 	 debtrackgrid.jqGrid('navButtonAdd',"#debittrackpager",{caption:"Toggle",title:"Toggle Search Toolbar", buttonicon :'ui-icon-pin-s',
 			onClickButton:function(){
 				debtrackgrid[0].toggleToolbar();
@@ -207,6 +239,25 @@ $(document).ready(function() {
 				debtrackgrid[0].clearToolbar();
 			} 
 		});
-	 debtrackgrid.jqGrid('filterToolbar', {autosearch : true, searchOnEnter:false, stringResult: true});  //To Enable AutoSearch please comment Search on Enter to False
-		
+	 debtrackgrid.jqGrid('navButtonAdd',"#debittrackpager",{caption:"columnChooser",title:"Column Chooser",buttonicon :'ui-icon-extlink',
+		 onClickButton:function(){
+			 debtrackgrid.jqGrid('columnChooser', {
+		            done: function(perm) {
+		                     if (!perm) { return false; }
+		                      this.jqGrid('remapColumns', perm, true);
+		            }
+		       });
+		 }
+		 });
+	// debtrackgrid.jqGrid('filterToolbar', {autosearch : true, searchOnEnter:false, stringResult: true});  //To Enable AutoSearch please comment Search on Enter to False
+	 debtrackgrid.jqGrid('filterToolbar', {autosearch : true, searchOnEnter:false, defaultSearch : "cn"});
+	 
+	//Bootom Pager Customization
+	 var bottomPagerDiv = $("div#debittrackpager")[0];
+	 $("#edit_" + debtrackgrid[0].id, bottomPagerDiv).remove();
+	 $("#view_" + debtrackgrid[0].id, bottomPagerDiv).remove(); 
+	 $("#search_" + debtrackgrid[0].id, bottomPagerDiv).remove();
+	 $("#refresh_" + debtrackgrid[0].id, bottomPagerDiv).remove();
+	 	
 });
+

@@ -36,7 +36,10 @@ $(document).ready(function() {
          	var ctno =ui.item.value;
          	alert(ctno);
          	artgrid.jqGrid('setGridParam',{url:"/Myelclass/InspectionAction.do?event=loadarticle&ctno="+ctno+"&type="+type}).trigger("reloadGrid");
-           } 
+         },
+         change: function(event,ui){
+	    	 $(this).val((ui.item ? ui.item.value : ""));
+	   }
 	}); 
 	$('#inspqualityctrlr').autocomplete({
 		 source: function(request, response) {
@@ -53,7 +56,10 @@ $(document).ready(function() {
 			              };
 			        }));//END response
 			 	});
-		 	}
+		 	},
+		 	 change: function(event,ui){
+		    	 $(this).val((ui.item ? ui.item.value : ""));
+		   }
 	}); 
 	 //DATEPICKER
      $("#inspdate").datepicker({
@@ -105,12 +111,13 @@ $(document).ready(function() {
 		},
 		caption: "Load Article Details On Selected CT",
 		pager: '#insp_CtDetalspager',
-	   	rowNum:4, 
-	   	rowList:[4,8,6],
+	   	rowNum:5, 
+	   	rowList:[5,10,15,20],
 	    loadtext: "Bow Bow........... ",
 	    height : "auto",
 	    width:"auto",
 	    multiselect: true,
+	    loadonce: true,
 	    sortname: 'articlename',  
 	    sortorder: 'desc',  
 	    viewrecords: true,

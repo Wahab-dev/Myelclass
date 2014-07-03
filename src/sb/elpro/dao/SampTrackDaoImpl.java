@@ -65,6 +65,8 @@ public class SampTrackDaoImpl implements SampTrackDao {
 			 	samptrackbean.setSelectionp(rs.getString("selectionp"));
 			 	samptrackbean.setSelection(rs.getString("selection"));
 			 	samptrackbean.setQuantity(rs.getString("quantity"));
+			 	samptrackbean.setShpd(rs.getString("shpd"));
+			 	samptrackbean.setBal(rs.getString("bal"));
 			 	samptrackbean.setPcs(rs.getString("pcs"));
 			 	samptrackbean.setRate(rs.getString("rate"));
 			 	samptrackbean.setColormatching(rs.getString("colormatching"));

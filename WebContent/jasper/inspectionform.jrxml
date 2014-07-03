@@ -20,22 +20,21 @@
 	</parameter>
 	<parameter name="ptypesql" class="java.lang.String"/>
 	<queryString language="SQL">
-		<![CDATA[SELECT
-	 form.sampleno, DATE_FORMAT(orderdt, '%e/%c/%y') as orderdt, concat(articletype,' ',articlename)as article, color, size,
-	 	 substance, selection, concat(quantity,'',unit)as quantity, inspcdn, shortform, tanshform 
-	 	 	FROM elpro.tbl_srf_article article left outer join elpro.tbl_srfform form on article.sampleno = form.sampleno 
-	 left outer join elpro.tbl_customer cust on cust.custid = form.customerid  
-	 left outer join elpro.tbl_tannery tan on tan.tanid = form.tanneryid 
-	  where form.sampleno = $P{pinsctno}  
-	  order by article asc, color asc,  size asc, substance asc, selection asc, quantity asc]]>
+		<![CDATA[SELECT  
+	form.sampleno, DATE_FORMAT(orderdt, '%e/%c/%y') as orderdt, concat(articletype,' ',articlename)as article, color, size, substance, selection, concat(quantity,' ',unit)as quantity,  
+	 inspcdn, shortform, tanshform
+FROM 
+	elpro.tbl_srf_article article
+left outer join elpro.tbl_srfform form on article.sampleno = form.sampleno
+left outer join elpro.tbl_customer cust on cust.custid = form.customerid 
+left outer join elpro.tbl_tannery tan on tan.tanid = form.tanneryid
+where form.sampleno = $P{pinsctno}  order by article asc, color asc,  size asc, substance asc, selection asc, quantity asc
+]]>
 	</queryString>
 	<field name="article" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<field name="color" class="java.lang.String">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="inspcdn" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<field name="orderdt" class="java.lang.String">
@@ -53,13 +52,16 @@
 	<field name="quantity" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
+	<field name="sampleno" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="inspcdn" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
 	<field name="shortform" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<field name="tanshform" class="java.lang.String">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="sampleno" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<background>

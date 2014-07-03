@@ -6,15 +6,19 @@
 $(document).ready(function() {
 	
 	
-	 $("#prf_pojw").focusin(function() {
+	 $("#pojw_pojwno").focusin(function() {
 		 $.get("/Myelclass/PrfAutocomplete.do?action="+"pojwno", 
 		 	function(data){
-	  		 $("#prf_pojw").val(data); 	
+			 if($("#formaction").val().toLowerCase() == "add" ){
+				 $("#pojw_pojwno").val(data); 
+			 }else{
+				 $("#pojw_pojwno").val($("#prf_pojwno").val()); 
+			 }
 		 	},"text"); 
 		 
 	 });
 		 
-	  $('#prf_exporter').autocomplete({
+	  $('#pojw_tanname').autocomplete({
 		 source: function(request, response) {
 				var param = request.term;  
 			 	$.getJSON("/Myelclass/PrfAutocomplete.do?term="+param+"&action="+"tan",
@@ -34,11 +38,11 @@ $(document).ready(function() {
 			 	$('.ui-autocomplete').css('zIndex',1234);
 		 	},
 			select: function( event, ui) {
-			     $('#prf_exporteraddr').val(ui.item.addr);
-			     $('#prf_exportertele').val(ui.item.phone);
-			     $('#prf_exporterattn').val(ui.item.attn);
-			     $('#prf_exporterfax').val(ui.item.fax);
-			     $('#prf_exporterid').val(ui.item.id);
+			     $('#pojw_tanaddr').val(ui.item.addr);
+			     $('#pojw_tanphone').val(ui.item.phone);
+			     $('#pojw_tanattn').val(ui.item.attn);
+			     $('#pojw_tanfax').val(ui.item.fax);
+			     $('#pojw_tanid').val(ui.item.id);
 			     $('#pojw_payterms').val('By local Cheque on or before 30 days from invoice date in Indian Rupee at prevailing exchange rates.');
 	        } ,	
 	        change: function(event,ui){
@@ -82,24 +86,7 @@ $(document).ready(function() {
 			}); 
 	 
 	 
-	/*
-     * Function To disabe Specific Dates
-     */ 
-     natDays = [
-                [1, 26, 'au'], [2, 6, 'nz'], [3, 17, 'ie'],
-                [4, 27, 'za'], [5, 25, 'ar'], [6, 6, 'se'],
-                [7, 4, 'us'], [8, 17, 'id'], [9, 7, 'br'],
-                [10, 1, 'cn'], [11, 22, 'lb'], [12, 12, 'ke']
-              ];
-
-     function noWeekendsOrHolidays(date) {
-           for (var i = 0; i < natDays.length; i++) {
-              if (date.getMonth() == natDays[i][0] - 1 && date.getDate() == natDays[i][1]) {
-                   return [false, natDays[i][2] + '_day'];
-               }
-            }
-            return [true, ''];
-     }
+	
 	$.extend($.jgrid.edit, {
 	    bSubmit: "Save",
 	    bCancel: "Cancel",
@@ -109,35 +96,6 @@ $(document).ready(function() {
 	     
 	    }
 	});
-	
-	 
-	/* $("#prfform").dialog({
-			autoOpen: false,
-	        resizable: true,
-	        position: ['left','top'],
-			width: 'auto',
-			height: 'auto',
-	        autoResize: true, 
-	        modal: true,
-		});
-			* Min Max Button for Jquery UI Dialog from jquery.dialogextend plugin 
-			*/
-	 /*.dialogExtend({
-	        "close" : true,
-	        "maximize" : true,
-	        "minimize" : true,
-	        "dblclick" : "collapse",
-	        "titlebar" : "transparent",
-	        "icons" : {
-	          "close" : "ui-icon-circle-close",
-	          "maximize" : "ui-icon-circle-plus",
-	          "minimize" : "ui-icon-circle-minus",
-	          "restore" : "ui-icon-bullet"
-	         },
-		});*/
-	
-	 //$("#prfform").dialog( "open" );
-	
 	function selecpcheck(value,colName){
 		var sum = 0;
 		$.map(($("#prf_selectionp").val()).split('-'), function(value){
@@ -156,7 +114,7 @@ $(document).ready(function() {
 		postData: {
 		        ctno: function (){return $("#prf_contractno").val();},
 	    },
-		colNames:['Article Type','Name','Article Shform', 'Article ID','Color','Size','Size avg','Size Rem','Substance','Selection','Selection percent','Quantity','Unit','Pcs','Pric','Currency','Price','Shipment','T c','Price','Currency','tccust','Contract','Prfarticleid','User'],  
+		colNames:['Article Type','Article ','Article Shform', 'Article ID','Color','Size','Size avg','Size Rem','Substance','Selection','Selection percent','Quantity','Unit','Pcs','Price','Currency','Price','Shipment','T c','Price','Currency','tccust','Contract','Prfarticleid','User'],  
 	    colModel:[   
 			 {name:'prf_articletype', index:'articletype', width:80, align:'center', sortable:true, editable:true, hidden: false, edittype:'select', 
 				 editoptions: { 
@@ -165,7 +123,7 @@ $(document).ready(function() {
           		  	var response = jQuery.parseJSON(data);
                     	var s = '<select style="width: 520px">';
                     	if (response && response.length) {
-                        	s += '<option value="0">--- Select Article Type ---</option>';
+                        	s += '<option value="NA">--- Select Article Type ---</option>';
                     		for (var i = 0, l=response.length; i<l ; i++) {
                           	var ri = response[i].value;
                            	s += '<option value="'+ri+'">'+ri+'</option>';
@@ -173,6 +131,7 @@ $(document).ready(function() {
                       	}
                      	return s + "</select>";
                    	},
+
                  } ,
                  editrules :{required : true},
                  formoptions:{rowpos: 1, colpos: 1}, 
@@ -227,7 +186,10 @@ $(document).ready(function() {
 						          	 $('#prf_tcamt').val(ui.item.tcamt);
 						          	 $('#prf_tcagent').val(ui.item.tcagt);
 						          	 $('#prf_tccurrency').val(ui.item.tcsign);
-						            } 
+						            },	
+							        change: function(event,ui){
+								    	 $(this).val((ui.item ? ui.item.value : ""));
+								   }
 							 });
 							$('.ui-autocomplete').css('zIndex',1000); // z index for jqgfrid and autocomplete has been misalignment so we are manually setting it 
 							}
@@ -261,7 +223,10 @@ $(document).ready(function() {
 						             }));//END Response
 						           },//END Success
 						        });//END AJAX
-							},
+							},	
+					        change: function(event,ui){
+						    	 $(this).val((ui.item ? ui.item.value : ""));
+						   }
 						});
 					$('.ui-autocomplete').css('zIndex',1000); // z index for jqgfrid and autocomplete has been misalignment so we are manually setting it 
 					}
@@ -356,6 +321,7 @@ $(document).ready(function() {
 					  },editrules :{required : true},formoptions: {rowpos: 8, colpos: 2},
 			 }, 	
 			{name:'prf_pieces', index:'pcs', width:90, align:'center', sortable:true, hidden: false, editable:true,
+				 editrules :{required : true},
 				 formoptions: {rowpos: 8, colpos: 3},
 			}, 	
 			{name:'prf_rate', index:'rate', width:90, align:'center', sortable:true, hidden: false, editable:true,
@@ -380,8 +346,9 @@ $(document).ready(function() {
 			     // editrules:{edithidden:true, required : true},	
    			      formoptions:{rowpos: 10, colpos: 3},
 			}, 
-			{name:'prf_tc', index:'tc', width:90, align:'center', sortable:true, editable:true, hidden: false}, 
-			 	
+			{name:'prf_tc', index:'tc', width:90, align:'center', sortable:true, editable:true, hidden: false,
+				
+			},  	
 			{name:'prf_tcamt', index:'tcamt', width:90, align:'center', sortable:true, editable:true, hidden: true,
 				 editrules:{edithidden:true}, formoptions: {rowpos: 12, colpos: 2},
 			}, 	
@@ -395,11 +362,13 @@ $(document).ready(function() {
 			      editoptions:{value:{0:'Select TC Customer',IC:'IC',Cust:'Cust',ICMD:'IC/MD',MD:'MD',NA:'NA'}},
 			      editrules:{edithidden:true, required : true}, formoptions: {rowpos: 12, colpos: 3},
 			}, 	
-			{name:'prf_contractnum', index:'contractno', width:90, align:'center', sortable:true, editable:true,editoptions:{required : true}, hidden: false}, 	
+			{name:'prf_contractnum', index:'contractno', width:90, align:'center', sortable:true, editable:true,
+				editoptions:{required : true}, hidden: false
+			}, 	
 			{name:'prf_articleid', index:'prfarticleid', width:90, align:'center', sortable:true, editable:true, hidden: true}, 	
 			
 			{name:'user', index:'user', width:90, align:'center', sortable:true, editable:true, hidden: true,
-				//${user.name}.	
+				editoptions:{required : true, readonly: 'readonly'},
 			
 			}, 						  
 		],  
@@ -540,6 +509,9 @@ $(document).ready(function() {
 				        }
 				 });//END AJAX
 		    },
+	        change: function(event,ui){
+		    	 $(this).val((ui.item ? ui.item.value : ""));
+		   }
 		});
 	 
 	 	
@@ -572,7 +544,10 @@ $(document).ready(function() {
 			          	 $('#prf_consigneeattn').val(ui.item.attn);
 			          	 $('#prf_consigneefax').val(ui.item.fax);
 			          	 $('#prf_consigneeid').val(ui.item.id);
-			            } 
+			       },
+			        change: function(event,ui){
+				    	 $(this).val((ui.item ? ui.item.value : ""));
+				   } 
 		});
 		 $('#prf_bankname').autocomplete({
 				minLength: 1,
@@ -597,14 +572,17 @@ $(document).ready(function() {
 			                    }
 			            });//END AJAX
 					},
-					select: function( event, ui ) { 
-			          	  $('#prf_bankaddr').val(ui.item.addr);
-			          	 $('#prf_bankphone').val(ui.item.fone);
-			          	 $('#prf_bankbranch').val(ui.item.brnch);
-			          	 $('#prf_bankfax').val(ui.item.fax);
-			          	 $('#prf_bankid').val(ui.item.id);
-			            } 
-		});
+				select: function( event, ui ) { 
+			       $('#prf_bankaddr').val(ui.item.addr);
+			       $('#prf_bankphone').val(ui.item.fone);
+			       $('#prf_bankbranch').val(ui.item.brnch);
+			       $('#prf_bankfax').val(ui.item.fax);
+			       $('#prf_bankid').val(ui.item.id);
+			    }, 
+			    change: function(event,ui){
+				 	 $(this).val((ui.item ? ui.item.value : ""));
+				} 
+		 });
 		 $('#prf_notifyname').autocomplete({
 				minLength: 1,
 				source: function(request, response,term) {
@@ -634,7 +612,10 @@ $(document).ready(function() {
 			          	 $('#prf_notifyattn').val(ui.item.attn);
 			          	 $('#prf_notifyfax').val(ui.item.fax);
 			          	 $('#prf_notifyid').val(ui.item.id);
-			            } 
+			        },
+			        change: function(event,ui){
+				    	 $(this).val((ui.item ? ui.item.value : ""));
+				   } 
 		 	});
 		
 		        //DATEPICKER
@@ -727,7 +708,10 @@ $(document).ready(function() {
 							select: function( event, ui) { 
 							     $('#prf_agentname').val(ui.item.value);
 							     $('#prf_contractno').val(ui.item.ctno);
-					         } 
+					         },
+					         change: function(event,ui){
+							   	 $(this).val((ui.item ? ui.item.value : ""));
+							 }
 						}).focus(function() {
 							    $(this).autocomplete("search", "");
 						});
@@ -743,14 +727,7 @@ $(document).ready(function() {
 					    }
 				
 					    
-					    $("#prf_destination")
-					      // don't navigate away from the field on tab when selecting an item
-					    /*  .bind( "keydown", function( event ) {
-					        if ( event.keyCode === $.ui.keyCode.TAB &&
-					            $( this ).data( "ui-autocomplete" ).menu.active ) {
-					          event.preventDefault();
-					        }
-					      })*/.autocomplete({
+					    $("#prf_destination").autocomplete({
 					        minLength: 1,
 					        source: function( request, response ) {
 					        	$.getJSON("/Myelclass/PrfAutocomplete.do?&action="+"desti", 
@@ -765,24 +742,12 @@ $(document).ready(function() {
 					                    }));
 					        		});	//done
 					        	//});//End Ajax
-					        }});
-					        /*focus: function() {
-					          // prevent value inserted on focus
-					          return false;
 					        },
-					        select: function( event, ui ) {
-					          var terms = split( this.value );
-					          // remove the current input
-					          terms.pop();
-					          // add the selected item
-					          terms.push( ui.item.value );
-					          // add placeholder to get the comma-and-space at the end
-					          terms.push( "" );
-					          this.value = terms.join( ", " );
-					          return false;
+					        change: function(event,ui){
+					        	$(this).val((ui.item ? ui.item.value : ""));
 					        }
-					      .autosize({append: "\n"});*/
-					    
+					    });
+					        
 					    
 					    /*
 					     * 
@@ -825,7 +790,10 @@ $(document).ready(function() {
 							   terms.push( "" );
 							   this.value = terms.join( "." );
 							   return false;
-							} 
+							},
+					        change: function(event,ui){
+						    	 $(this).val((ui.item ? ui.item.value : ""));
+						   }
 					}).autosize({append: "\n"});
 					  			 
 				 
@@ -879,7 +847,7 @@ $(document).ready(function() {
  
 					    
 //UI MODAL FORM FOR POJW
- $("#pojwdiv").dialog({
+ $("#pojwdiv").tabs().dialog({
 	autoOpen: false,
     resizable: true,
     width: 980,
@@ -889,59 +857,18 @@ $(document).ready(function() {
     jqModal:true,
     title : "Raise PO Form",
     open: function(event, ui){
+    	$("#Btnprfsave").attr('disabled' , true);
        	var pojwctno = $("#prf_contractno").val();
        	$("#pojw_contractno").val(pojwctno);
       	$("#pojw_orderdate").val($("#prf_orderdate").val());
       	$('#pojw_splcdn').val($("#prf_special").val());
+    	$("#pojw_cddate").val($("#prf_cdd").val());
+      	$('#pojw_comm').val($("#prf_elclasscommission").val());
        	pojwgrid.jqGrid('setGridParam',{url:"/Myelclass/PrfinsertArticle.do?ctno="+pojwctno}).trigger("reloadGrid");
     },
-    buttons:{
-    	"Save": function () {
-    		var formdata = $('#pojwform').serialize();
-    		alert("Form Data"+formdata);
-    		$.ajax({
-				url: "/Myelclass/pojw.do",
-				type: "POST",
-				async: true,
-				dataType: "html",
-				data: formdata,
-				contentType: "application/x-www-form-urlencoded; charset=UTF-8",
-				success: function (data) {
-					alert(data);
-	                $(this).dialog("close");
-	            }, 
-	            error: function (data) {
-	            	alert("F "+data);
-	                console.log("error");
-	            } 
-			});
-    	},
-    	"Cancel": function () {
-    		alert("In Cancel");
-    	},
-    	"Print" : function (){
-    		alert("In Print");
-    		var formdata = $('#pojwform').serialize();
-    		alert("Form Data"+formdata);
-    		$.ajax({
-    			url: "/Myelclass/pojw/print.do",
-    			type: "POST",
-    			async: true,
-    			dataType: "html",
-    			data: formdata,
-    			contentType: "application/x-www-form-urlencoded; charset=UTF-8",
-    			success: function (data) {
-    				alert(data);
-                 $(this).dialog("close");
-    			}, 
-    			error: function (data) {
-    				alert("F "+data);
-    				console.log("error");
-    			} 
-    		});
-    		
-    	}
-    }
+    beforeClose: function( event, ui ) {
+		$("#Btnprfsave").attr('disabled' , false);
+    },
  	}).css("font-size", "12px");
  
  function callprint(){
@@ -957,49 +884,45 @@ $(document).ready(function() {
  * 
  */
 	var pojwgrid = $("#pojwtbl");
-	var pojwno = $("#prf_pojw").val();
+	var pojwno = $("#pojw_pojwno").val();
 	//pojwgrid.jqGrid('setGridParam',{url:"/Myelclass/PrfinsertArticle.do?oper=pojw&action=load&ctno="+pojwno}).trigger("reloadGrid");
 	 pojwgrid.jqGrid({ 
 			url:"/Myelclass/PrfinsertArticle.do?oper=pojw&action=load&ctno="+pojwno,  
 			datatype:"json",
 			mtype: "GET",
-							/*postData: {
-							        ctno: function (){return $("#pojw_contractno").val();
-							  
-							        },
-						    },*/
-							colNames:['Article Type','Name','Article Shform', 'Article ID','Color','Size','Size avg','Size Rem','Substance','Selection','Selp','Quantity','Unit','Pcs','Pric','Currency','Price','Shipment','T c','Price','Currency','tccust','Contract','User','Prfarticleid'],  
-						    colModel:[   
-								 {name:'prf_articletype', index:'articletype', width:80, align:'center', sortable:true, editable:true, hidden: false, edittype:'select', 
-									 editoptions: { 
-					          		 dataUrl:'/Myelclass/PrfAutocomplete.do?action=arttype',
-					          		 buildSelect: function(data) {
-					          		  	var response = jQuery.parseJSON(data);
-					                    	var s = '<select style="width: 520px">';
-					                    	if (response && response.length) {
-					                        	s += '<option value="0">--- Select Article Type ---</option>';
-					                    		for (var i = 0, l=response.length; i<l ; i++) {
-					                          	var ri = response[i].value;
-					                           	s += '<option value="'+ri+'">'+ri+'</option>';
-					                        	}
-					                      	}
-					                     	return s + "</select>";
-					                   	},
-					                 } ,
-					                 editrules :{required : true},
-					                 formoptions:{rowpos: 1, colpos: 1}, 
-								 },  
-								 {name:'prf_articlename', index:'articlename', width:90,  align:'center', editable:true, hidden: false, edittype:'text',
-							    	  editoptions:{
-											dataInit:function (elem) { 
-												$(elem).autocomplete({
-													minLength: 2,
-													source: function(request, response,term) {
-														var param = request.term;
-											            $.ajax({
-											                url: "/Myelclass/PrfAutocomplete.do?term="+param+"&action="+"artname",
-											                dataType: "json",
-											                type:"GET",
+		  /*postData: {
+			        ctno: function (){return $("#pojw_contractno").val();},
+			},*/
+			colNames:['Article Type','Name','Article Shform', 'Article ID','Color','Size','Size avg','Size Rem','Substance','Selection','Selp','Quantity','Unit','Pcs','Pric','Currency','Price','Shipment','T c','Price','Currency','tccust','Contract','User','Prfarticleid'],  
+			colModel:[   
+				 {name:'prf_articletype', index:'articletype', width:80, align:'center', sortable:true, editable:true, hidden: false, edittype:'select', 
+					 editoptions: { 
+			         		 dataUrl:'/Myelclass/PrfAutocomplete.do?action=arttype',
+			          		 buildSelect: function(data) { 
+				          		  	var response = jQuery.parseJSON(data);
+			                    	var s = '<select style="width: 520px">';
+			                    	if (response && response.length) {
+			                        	s += '<option value="0">--- Select Article Type ---</option>';
+			                    		for (var i = 0, l=response.length; i<l ; i++) {
+			                    			var ri = response[i].value;
+					                        s += '<option value="'+ri+'">'+ri+'</option>';
+					                     }
+					                 }
+					          return s + "</select>";
+		           	       },
+			         } , editrules :{required : true}, formoptions:{rowpos: 1, colpos: 1}, 
+	    		 },  
+				 {name:'prf_articlename', index:'articlename', width:90,  align:'center', editable:true, hidden: false, edittype:'text',
+				   	  editoptions:{
+				 		dataInit:function (elem) { 
+							$(elem).autocomplete({
+								minLength: 2,
+				    			source: function(request, response,term) {
+								var param = request.term;
+					            $.ajax({
+					                url: "/Myelclass/PrfAutocomplete.do?term="+param+"&action="+"artname",
+					                dataType: "json",
+					                type:"GET",
 											                success: function (data) {
 											                	 response($.map(data, function(item) {
 											                		 return { 
@@ -1039,7 +962,10 @@ $(document).ready(function() {
 											          	 $('#prf_tcamt').val(ui.item.tcamt);
 											          	 $('#prf_tcagent').val(ui.item.tcagt);
 											          	 $('#prf_tccurrency').val(ui.item.tcsign);
-											            } 
+											            },
+												        change: function(event,ui){
+													    	 $(this).val((ui.item ? ui.item.value : ""));
+													   }
 												 });
 												$('.ui-autocomplete').css('zIndex',1234); // z index for jqgfrid and autocomplete has been misalignment so we are manually setting it 
 												}
@@ -1074,6 +1000,9 @@ $(document).ready(function() {
 											           },//END Success
 											        });//END AJAX
 												},
+										        change: function(event,ui){
+											    	 $(this).val((ui.item ? ui.item.value : ""));
+											   }
 											});
 										$('.ui-autocomplete').css('zIndex',1234); // z index for jqgfrid and autocomplete has been misalignment so we are manually setting it 
 										}
@@ -1136,8 +1065,7 @@ $(document).ready(function() {
 								}, 	
 							
 								{name:'prf_quantity', index:'quantity', width:90, align:'center', sortable:true, hidden: false, 
-									editable:true, editrules:{required : true, number:true}, formatter: 'number',  
-									  formatoptions: {decimalSeparator: ".", thousandsSeparator: ",", decimalPlaces: 2, defaultValue: '0.0000' },
+									editable:true, editrules:{required : true, number:true}, formatter: 'integer', 
 									  formoptions:{rowpos: 8, colpos: 1} 
 								}, 	
 								{name:'prf_unit', index:'unit', width:90, align:'center', sortable:true, hidden: false, editable:true,
@@ -1203,9 +1131,7 @@ $(document).ready(function() {
 								{name:'user', index:'user', width:90, align:'center', sortable:true, editable:true, hidden: true,
 									formoptions: {rowpos: 13, colpos: 2},	
 								},
-								{name:'prf_articleid', index:'prfarticleid', width:90, align:'center', sortable:true, editable:true, hidden: true}, 	
-								
-														  
+								{name:'prf_articleid', index:'prfarticleid', width:90, align:'center', sortable:true, editable:true, hidden: true}, 							  
 							],  
 							jsonReader : {  
 							  	repeatitems:false,
@@ -1214,26 +1140,32 @@ $(document).ready(function() {
 						      	total: "total" ,//calls Second
 						      	records: "records" //calls Third
 							},
-							caption: "Add Article",
+							caption: "Add POJW Article",
+							loadtext: "POJW Article is Loading",							
 							pager: '#pojwpager',
-							//toppager:true,
-				            //cloneToTop:true,
 							rowNum:6, 
-							rowList:[6,8,10],
-					        loadtext: "Bow Bow........... ",
+							rowList:[6,8,10,12],
+							rownumbers: true,
+							height: "100%", 
+						    width: "auto",
 					        sortname: 'articlename',  
 					        sortorder: 'desc', 
+					        hidegrid: false,
 					        viewrecords: true,
-					        gridview: true, // if used cant use subgrid, treegrid and aftertInsertRow 
-					        height: "100%", 
+					        sortable: true,
+					        toppager:true,
+					        gridview: true, 
+					        altRows: true, 
 					        emptyrecords: 'No records to display',
 					        loadComplete: function (data){
-					        	//var pojwno = $("#prf_pojw").val();
-					        	//pojwgrid.jqGrid('setGridParam',{url:"/Myelclass/PrfinsertArticle.do?oper=pojw&action=load&ctno="+pojwno}).trigger("reloadGrid");
+					        
+					        
 					        }
-							}).jqGrid('navGrid','#pojwpager',{add:true, edit:true, del:true, search: true, refresh : true,  view: true, 
+							}).jqGrid('navGrid','#pojwpager',{
+								add:true, edit:true, del:true, search: false, refresh : true,  view: true, cloneToTop:true,
+								addtext: ' Add ', edittext: ' Edit ', deltext: ' Delete ' , searchtext: ' Search ', refreshtext: ' Reload ', viewtext: ' View ',
 								beforeRefresh: function(){
-									var pojwno = $("#prf_pojw").val();
+									var pojwno = $("#pojw_pojwno").val();
 									pojwgrid.jqGrid('setGridParam',{url:"/Myelclass/PrfinsertArticle.do?oper=pojw&action=load&ctno="+pojwno}).trigger("reloadGrid");
 								}, 
 							},
@@ -1282,7 +1214,7 @@ $(document).ready(function() {
 									 $("#prf_tcamt").val(tcamt);
 									 $("#prf_tcagent").val(agent);
 									 $("#prf_tccurrency").val(tcsign);
-									 $("#prf_contractnum").val($("#prf_pojw").val());
+									 $("#prf_contractnum").val($("#pojw_pojwno").val());
 									 
 									 $("#tr_prf_tc").hide();
 									 $("#tr_prf_rate").hide();
@@ -1301,7 +1233,7 @@ $(document).ready(function() {
 								 	left: 200,
 								 	width : 850,
 							        beforeShowForm: function(form) { 
-							           	 $("#prf_contractnum").val($("#prf_pojw").val());
+							           	 $("#prf_contractnum").val($("#pojw_pojwno").val());
 							           	 $("#user").val($("#userinsession").val());		   
 							             $("#tr_prf_tc").hide(); // hide the tr prf_rate
 							             $("#tr_artshform").hide();
@@ -1330,7 +1262,7 @@ $(document).ready(function() {
 					                recreateForm: true,
 					            	url: "/Myelclass/PrfinsertArticle.do?oper=pojw&action=del",
 								 });
-						 pojwgrid.jqGrid('navButtonAdd','#pojwpager',  { // "#list_toppager_left"
+						 pojwgrid.jqGrid('navButtonAdd','#' + pojwgrid[0].id + '_toppager_left', {
 				                caption: "Copy",
 				                buttonicon: 'ui-icon-scissors',
 				                onClickButton: function() {
@@ -1341,10 +1273,9 @@ $(document).ready(function() {
 										 width : 650,
 										 top: 550,
 										 left:120,
-										   recreateForm: true,
+										   //recreateForm: true,
 										 // edit option
-										 beforeShowForm: function(form) { 
-											 alert("Hi");
+										 beforeShowForm: function(form) {
 											 $("#tr_prf_tc").hide();
 											 $("#tr_prf_rate").hide();
 									
@@ -1369,21 +1300,21 @@ $(document).ready(function() {
 											 $("#prf_shipment").val(ratec.substring(ratemplast+1));
 											 				 
 											//TC Calculation
-											 var tctec = $("#prf_tc").val(); 
+											 var tctec = $("#prf_tc").val();
 											 var tcindex = tctec.indexOf(" ");
 											 var tcindex1 = tctec.lastIndexOf(" ");
 											 var tcamt = tctec.substring(0, tcindex);
 											 var tcsign = tctec.substring(tcindex+1, tcindex1);
 											 var agent = tctec.substring(tcindex1+1);
 											 var rateamt = ratec.substring(ratemp+1, ratemplast);
-											 var tcamtdecimal = "0."+tcamt;
+											 var tcamtdecimal = tcamt/100;
 											 var actualrate = (parseFloat(rateamt)- parseFloat(tcamtdecimal));
 											 $("#prf_rateamt").val(actualrate.toFixed(2));
 											 
 											 $("#prf_tcamt").val('0');
 											 $("#prf_tcagent").val(agent);
 											 $("#prf_tccurrency").val(tcsign);
-											 $("#prf_contractnum").val($("#prf_pojw").val());
+											 $("#prf_contractnum").val($("#pojw_pojwno").val());
 											// var ctno = $("#prf_contractnum").val();		
 											
 											
@@ -1401,4 +1332,16 @@ $(document).ready(function() {
 				                }
 				            });
 						 pojwgrid.jqGrid('setGridWidth', 930);
+						 
+						 //Bootom Pager Customization
+						  var bottomPagerDiv = $("div#pojwpager")[0];
+						  $("#view_" + pojwgrid[0].id, bottomPagerDiv).remove();
+						  $("#refresh_" + pojwgrid[0].id, bottomPagerDiv).remove(); 
+						  
+						//Top Pager Customization
+						  var topPagerDiv =  $('#' + pojwgrid[0].id + '_toppager')[0];
+						  $("#add_" + pojwgrid[0].id + "_top", topPagerDiv).remove();	
+						  $("#edit_" + pojwgrid[0].id + "_top", topPagerDiv).remove();      // "#search_list_top"
+						  $("#del_" + pojwgrid[0].id + "_top", topPagerDiv).remove();  
+						  $("#view_" + pojwgrid[0].id + "_top", topPagerDiv).remove(); // "#refresh_list_top" 
 		 });

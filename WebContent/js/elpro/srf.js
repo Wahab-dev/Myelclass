@@ -110,7 +110,10 @@ $(document).ready(function() {
 			      						          	 $('#srf_ratesign').val(ui.item.ratesign);
 			      						          	 $('#srf_rateamt').val(ui.item.rateamt);
 			      						          	 $('#srf_shipment').val(ui.item.shipment);
-			      						            } 
+			      						            },
+			      						        change: function(event,ui){
+			      							    	 $(this).val((ui.item ? ui.item.value : ""));
+			      							   }   
 			      							 });
 			      							$('.ui-autocomplete').css('zIndex',1000); // z index for jqgfrid and autocomplete has been misalignment so we are manually setting it 
 			      							}
@@ -132,14 +135,16 @@ $(document).ready(function() {
 			       						                	 response($.map(data, function(item) {
 			       						                		 return { 
 			       						                             label: item.value,
-			       						                             //shform: item.shform, //can add number of attributes here 
-			       						                             value: item.value // I am displaying both labe and value
+			       						                             value: item.value
 			       						                             };
 			       						                         }));//END Response
 			       	
 			       						                },//END Success
 			       						            });//END AJAX
 			       								},
+			       							 change: function(event,ui){
+			       						    	 $(this).val((ui.item ? ui.item.value : ""));
+			       						   }
 			       								
 			       							});
 			       							$('.ui-autocomplete').css('zIndex',1000); // z index for jqgfrid and autocomplete has been misalignment so we are manually setting it 
@@ -211,7 +216,7 @@ $(document).ready(function() {
 			                    {name:'srf_unit', index:'unit' , align:'center', width:80, editable:true, sortable:true, hidden:false, 
 			                    	edittype:'select',
 			      				  editoptions:{
-			      					  value:{0:'Select Quantity Unit',skins:'skins',skin:'skin',sqft:'sq ft',Garment:'Garment',NA:'NA'},
+			      					  value:{0:'Select Quantity Unit',skins:'skins',skin:'skin',sqft:'sq ft',Garment:'Garment',A4Swatch:'A4 Swatch',NA:'NA'},
 			      					  dataEvents:[{
 			      							type: 'focusout',
 			      							fn: function(e){
@@ -235,7 +240,6 @@ $(document).ready(function() {
 			                    {name:'srf_ratesign', index:'currency',  align:'center', editable:true, sortable:true, hidden:true, 
 			                    	 edittype:'select',
 			       				     editoptions:{value:{0:'--- Select Currency --- ',$:'$',Rs:'Rs',Euro:'Euro',NA:' Not Available'}},
-			                    	//   editoptions:{value:  "TBA:TBA;$:$; �:�; NA:NA;"},
 			       				     editrules:{edithidden:true},	
 			       				  formoptions:{rowpos: 8, colpos: 1},
 			                    },  
@@ -434,7 +438,10 @@ $(document).ready(function() {
 			        $('#srf_tanattn').val(ui.item.attn);
 			        $('#srf_tanfax').val(ui.item.fax);
 			        $('#srf_tannameid').val(ui.item.id);
-			  } ,
+			  } , 
+			  change: function(event,ui){
+			    	 $(this).val((ui.item ? ui.item.value : ""));
+			   }
 			}).focus(function(){            
 	            $(this).trigger('keydown.autocomplete');
 	        }); 
@@ -462,7 +469,10 @@ $(document).ready(function() {
 			          	 $('#srf_deliverattn').val(ui.item.attn);
 			          	 $('#srf_deliverfax').val(ui.item.fax);
 			          	$('#srf_deliverid').val(ui.item.id);
-			           } 
+			       },
+					 change: function(event,ui){
+				    	 $(this).val((ui.item ? ui.item.value : ""));
+				   }
 			}); 
 		  
 		  $('#srf_customer').autocomplete({
@@ -481,7 +491,10 @@ $(document).ready(function() {
 			    },
 			    select: function( event, ui) { 
 		          	$('#srf_customerid').val(ui.item.id);
-		           } 
+		        },
+		        change: function(event,ui){
+			    	 $(this).val((ui.item ? ui.item.value : ""));
+			   }
 			});
 	$('#srf_destination').autocomplete({
 	    source: function(request, response) {
@@ -496,7 +509,10 @@ $(document).ready(function() {
 	                	};
 	            }));
 	        });
-	    }
+	    },
+	    change: function(event,ui){
+	    	 $(this).val((ui.item ? ui.item.value : ""));
+	   }
 
 	});
 	
@@ -513,7 +529,10 @@ $(document).ready(function() {
 	                		};
 	            }));
 	        });
-	    }
+	    },
+	    change: function(event,ui){
+	    	 $(this).val((ui.item ? ui.item.value : ""));
+	   }
 
 	});
 	/*
@@ -549,6 +568,9 @@ $(document).ready(function() {
 	            }));
 	        });
 	    },
+	    change: function(event,ui){
+	    	 $(this).val((ui.item ? ui.item.value : ""));
+	   },
 	    focus: function() {
 	          // prevent value inserted on focus
 	          return false;
@@ -579,7 +601,10 @@ $(document).ready(function() {
 	                		};
 	            }));
 	        });
-	    }
+	    },
+	    change: function(event,ui){
+	    	 $(this).val((ui.item ? ui.item.value : ""));
+	   }
 
 	});
 	 var unavailableDates = ["14-04-2014", "01-01-2014", "14-01-2014", "01-05-2014", "01-01-2014", "15-08-2014"];

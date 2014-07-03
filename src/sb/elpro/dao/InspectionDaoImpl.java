@@ -49,7 +49,7 @@ public class InspectionDaoImpl implements InspectionDao {
 				ProductDetails inspctbean = new ProductDetails();
 				inspctbean.setPrf_contractno(rs.getString("Ctno"));
 				inspctbean.setPrf_inspcdn(rs.getString("inspcdn"));
-				System.out.println("Insp CT  name "+inspctbean.getLabel());
+				System.out.println("Insp CT  name "+inspctbean.getPrf_contractno());
 				inspCtlist.add(inspctbean);
 			}
 			System.out.println("Insp Name Added Successfully");
@@ -131,7 +131,7 @@ public class InspectionDaoImpl implements InspectionDao {
 				inspctbean.setPrf_selectionp(rs.getString("selectionpercent"));
 				inspctbean.setPrf_color(rs.getString("color"));
 				inspctbean.setPrf_quantity(qty);
-				System.out.println("Insp CT  name "+inspctbean.getLabel());
+				System.out.println("Insp CT  name "+inspctbean.getPrf_contractno());
 				inspCtlist.add(inspctbean);
 			}
 			System.out.println("Insp Name Added Successfully");

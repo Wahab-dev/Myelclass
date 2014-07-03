@@ -28,9 +28,13 @@ $(document).ready(function() {
 				sampledebgrid.jqGrid('groupingRemove',true);	
 			}else{
 				sampledebgrid.jqGrid('groupingGroupBy', vl, {
-		            groupOrder : ['desc'],
-		            groupColumnShow: [false],
-		            groupCollapse: [true],
+					groupOrder : ['asc'],
+					groupText : ['<b>{0} - {1} Records</b>'],
+					groupSummary : [true],
+					groupColumnShow: [false],
+					groupingView: {
+						groupCollapse: [true],
+					}
 		        });
 			}	
 		}else{
@@ -42,110 +46,59 @@ $(document).ready(function() {
 	sampledebgrid.jqGrid({
 		url:"/Myelclass/sid.do?action=load",
 		datatype: "json",
-		colNames:['invtype','invno','expname','taninvno','invdate','customer','invbillid','ctno','articleid','artname','color','size','subs','selc','unit','pcs','rate','qty','qshpd','qbal','amt','othercharges','discounts','totalamount','AWBillNo','AWBillDate','consignee','notify','exporterref','buyer','bank','bank charge','Realized Amt','Ex rate','Amt in Inr','Deb Date','Remarks'],
+		colNames:['Type','Inv No','Exporter','Tan Invno','Inv Date','Customer',
+		          'Courier','Discount','Total','AWBillNo',
+		          'AWBillDate','Notify','Exporterref','Bank','Bank Charge','Realized Amt','Ex rate',
+		          'Amt in Rs','Credit Date','Remarks'
+		          ],
 	    colModel:[
-					{name: 'invtype', index: 'invtype', align:'center', width:90, editable:true, sortable: true, hidden: true,  
+					{name: 'invtype', index: 'invtype', align:'center', width:40, editable:true, sortable: true, hidden: true,  
 						
 					 },
-					 {name: 'invno', index: 'invno', align:'center', width:90, editable:true, sortable: true, hidden: true,  
+					 {name: 'invno', index: 'invno', align:'center', width:80, editable:true, sortable: true, hidden: false,  
 				
 					 },
 					
-					 {name: 'exporter', index: 'exporter', align:'center', width:90, editable:true, sortable: true, hidden: false,  
+					 {name: 'exporter', index: 'exporter', align:'center', width:50, editable:true, sortable: true, hidden: false,  
 						
 					 },
-					 {name: 'taninvno', index: 'taninvno', align:'center', width:90, editable:true, sortable: true, hidden: false,  
+					 {name: 'taninvno', index: 'taninvno', align:'center', width:160, editable:true, sortable: true, hidden: false,  
 						
 					 },
-					 {name: 'invdt', index: 'invdt', align:'center', width:90, editable:true, sortable: true, hidden: true,  
+					 {name: 'invdt', index: 'invdt', align:'center', width:65, editable:true, sortable: true, hidden: false,  
 							
 					 },
-					 {name: 'customer', index: 'customer', align:'center', width:90, editable:true, sortable: true, hidden: false,  
+					 {name: 'customer', index: 'customer', align:'center', width:70, editable:true, sortable: true, hidden: false,  
 						
 					 },
-					 {name: 'invid', index: 'invid', align:'center', width:90, editable:true, sortable: true, hidden: true,  
-						
+					 {name: 'invothercrg', index: 'invothercrg', align:'right', width:50, editable:true, sortable: true, hidden: false,  
+						 summaryType:'sum', summaryTpl:'<b> {0}</b>',
 					 },
-					 {name: 'invctno', index: 'invctno', align:'center', width:90, editable:true, sortable: true, hidden: false,  
-						
+					 {name: 'invclaim', index: 'invclaim', align:'right', width:50, editable:true, sortable: true, hidden: false,  
+						 summaryType:'sum', summaryTpl:'<b> {0}</b>',
 					 },
-					 {name: 'invartid', index: 'invartid', align:'center', width:90, editable:true, sortable: true, hidden: true,  
-						
-					 },
-					 {name: 'invartname', index: 'invartname', align:'center', width:90, editable:true, sortable: true, hidden: false,  
-						
-					 },
-					 {name: 'invcolor', index: 'invcolor', align:'center', width:90, editable:true, sortable: true, hidden: false,  
-						
-					 },
-					 {name: 'invsize', index: 'invsize', align:'center', width:90, editable:true, sortable: true, hidden: false,  
-						
-					 },
-					 {name: 'invsubs', index: 'invsubs', align:'center', width:90, editable:true, sortable: true, hidden: true,  
-						
-					 },
-					 {name: 'invselc', index: 'invselc', align:'center', width:90, editable:true, sortable: true, hidden: true,  
-						
-					 },
-					 {name: 'invunit', index: 'invunit', align:'center', width:90, editable:true, sortable: true, hidden: true,  
-						
-					 },
-	              
-					 {name: 'invpcs', index: 'invpcs', align:'center', width:90, editable:true, sortable: true, hidden: true,  
-						
-					 },
-					 {name: 'invrate', index: 'invrate', align:'center', width:90, editable:true, sortable: true, hidden: false,  
-						
-					 },
-					
-					 {name: 'invqty', index: 'invqty', align:'center', width:90, editable:true, sortable: true, hidden: false,  
-						
-					 },
-					 
-					 {name: 'invqshpd', index: 'invqshpd', align:'center', width:90, editable:true, sortable: true, hidden: false,  
-						
-					 },
-					 {name: 'invqbal', index: 'invqbal', align:'center', width:90, editable:true, sortable: true, hidden: true,  
-						
-					 },
-					 
-					 {name: 'invamt', index: 'invamt', align:'center', width:90, editable:true, sortable: true, hidden: false,  
-						
-					 },
-					 {name: 'invothercrg', index: 'invothercrg', align:'center', width:90, editable:true, sortable: true, hidden: false,  
-						
-					 },
-					 {name: 'invclaim', index: 'invclaim', align:'center', width:90, editable:true, sortable: true, hidden: true,  
-						
-					 },
-					 {name: 'invtotamount', index: 'invtotamount', align:'center', width:90, editable:true, sortable: true, hidden: false,  
+					 {name: 'invtotamount', index: 'invtotamount', align:'right', width:60, editable:true, sortable: true, hidden: false,  
 						
 					 },
 					 {name: 'awbillno', index: 'awbillno', align:'center', width:90, editable:true, sortable: true, hidden: false,  
 						
 					 },   
-					 {name: 'awbilldate', index: 'awbilldate', align:'center', width:90, editable:true, sortable: true, hidden: true,  
+					 {name: 'awbilldate', index: 'awbilldate', align:'center', width:65, editable:true, sortable: true, hidden: false,  
 						
-					 },   
-					
-					 {name: 'consignee', index: 'consignee', align:'center', width:90, editable:true, sortable: true, hidden: true,  
-						
-					 },   
-					 
-					 {name: 'notify', index: 'notify', align:'center', width:90, editable:true, sortable: true, hidden: true,  
+					 },    
+					 {name: 'notify', index: 'notify', align:'center', width:60, editable:true, sortable: true, hidden: true,  
 						
 					 },  
 					 {name: 'exporterref', index: 'exporterref', align:'center', width:90, editable:true, sortable: true, hidden: true,  
 						
 					 }, 
-					 {name: 'buyer', index: 'buyer', align:'center', width:90, editable:true, sortable: true, hidden: true,  
-						
-					 },  
-					 {name: 'bank', index: 'bank', align:'center', width:90, editable:true, sortable: true, hidden: true,  
+					 {name: 'bank', index: 'bank', align:'center', width:45, editable:true, sortable: true, hidden: false,  
 						
 					 },
-					 {name: 'bankcharge', index: 'bankcharge', align:'center', width:90, editable:true, sortable: true, hidden: true,  
+					 {name: 'bankcharge', index: 'bankcharge', align:'right', width:80, editable:true, sortable: true, hidden: false,  
 						 editrules: { number:true},
+						 summaryType:'sum', summaryTpl:'<b> {0}</b>',
+						 formatter: 'number',  formatoptions: { defaultValue: '0.00' },
 						 editoptions:{
 							 dataEvents:[{
 								type: 'focusout',
@@ -158,11 +111,15 @@ $(document).ready(function() {
 							}],
 						 },
 					 },
-					 {name: 'realizedamt', index: 'realizedamt', align:'center', width:90, editable:true, sortable: true, hidden: false,  
+					 {name: 'realizedamt', index: 'realizedamt', align:'right', width:80, editable:true, sortable: true, hidden: false,  
 						 editrules: {required: true, number:true},
+						 summaryType:'sum', summaryTpl:'<b> {0}</b>',
+						 formatter: 'number',  formatoptions: { defaultValue: '0.00' },
 					 },
-					 {name: 'exchngrate', index: 'exchngrate', align:'center', width:90, editable:true, sortable: true, hidden: true,  
+					 {name: 'exchngrate', index: 'exchngrate', align:'right', width:45, editable:true, sortable: true, hidden: false,  
 						 editrules:{number:true},
+						 summaryType:'sum', summaryTpl:'<b> {0}</b>',
+						 formatter: 'number',  formatoptions: { defaultValue: '0.00' },
 						 editoptions:{
 							 dataEvents:[{
 								type: 'focusout',
@@ -175,62 +132,73 @@ $(document).ready(function() {
 							}],
 						 },
 					 },
-					 {name: 'amtininr', index: 'amtininr', align:'center', width:90, editable:true, sortable: true, hidden: true,  
+					 {name: 'amtininr', index: 'amtininr', align:'right', width:70, editable:true, sortable: true, hidden: false,  
 						 formatter: 'number',  
+						 summaryType:'sum', summaryTpl:'<b> {0}</b>',
 						  formatoptions: {decimalSeparator: ".", thousandsSeparator: ",", decimalPlaces: 2, defaultValue: '0.00' },	
 					 },
-					 {name: 'debdt', index: 'debdt', align:'center', width:90, editable:true, sortable: true, hidden: true,  
+					 {name: 'debdt', index: 'debdt', align:'center', width:60, editable:true, sortable: true, hidden: false,  
+						 sorttype: 'date',
 						 editoptions: { dataInit: DateGrpEdit },
 						  editrules :{require : true},
 					 },
-					 {name: 'remarks', index: 'remarks', align:'center', width:90, editable:true, sortable: true, hidden: false,  
+					 {name: 'remarks', index: 'remarks', align:'center', width:100, editable:true, sortable: true, hidden: false,  
 						 edittype: 'textarea',
 						 editrules: {required: true},
 					 },
 					 
 	              ],
-	    jsonReader : {  
+	    jsonReader :{  
 			repeatitems:false,
 			root: "rows",
 			page: "page", 
 		  	total: "total" ,
 	     	records: "records" 
 		},  
-		caption: "Invoice Tracking Report",
+		caption: "Sample Credit Report",
+		loadtext: "Sample Credit is Loading",
     	pager: '#sampledebpager',
-    	rowNum: 15, 
-    	rowList: [15,25,50],
-        loadtext: "Bow Bow",
-        height : "auto",
-        width: "auto",  
-        sortname: 'Ctno',  
+    	rowNum: 500,
+		rowList: [20,50,100,200,500,1000],
+		rownumbers: true,
+		height : "360",
+		width: "auto",
+        sortname: 'invno',  
         sortorder: 'desc',
         loadonce: true,
-        sortable: true,
-        grouping: true,
-        gridview : true,
-        viewrecords: true,
-        footerrow: true,
-        userDataOnFooter : true, //Gets Footer Total Recod from Server Side 
-        emptyrecords: 'No records to display',
-        editurl: "/Myelclass/sid.do",
+		ignoreCase:true,
+		hidegrid: false,
+		editurl: "/Myelclass/sid.do",
+		sortable: true,
+		toppager:true,
+		gridview : true,
+		viewrecords: true,
+		footerrow: true,
+		altRows: true, 
+		emptyrecords: 'No records to display',
         loadComplete: function() {
         	 var $self = $(this),
+        	 courier = $self.jqGrid("getCol", "invothercrg", false, "sum");
+        	 discount = $self.jqGrid("getCol", "invclaim", false, "sum");
+        	 total = $self.jqGrid("getCol", "invtotamount", false, "sum");
+        	 bankchrg = $self.jqGrid("getCol", "bankcharge", false, "sum");
+        	 realamt = $self.jqGrid("getCol", "realizedamt", false, "sum");
+        	 amtininr = $self.jqGrid("getCol", "amtininr", false, "sum");
         	
-        	 qshpd = $self.jqGrid("getCol", "invqshpd", false, "sum");
-        	 
-        	// $self.jqGrid("footerData", "set", {selection: "Total:", invqty: qty});
-        	 $self.jqGrid("footerData", "set", {selection: "Total:", invqshpd: qshpd});
-        	// $self.jqGrid("footerData", "set", {selection: "Total:", invqbal: qbal});
+        	 $self.jqGrid("footerData", "set", { invno: "Total"});
+        	 $self.jqGrid("footerData", "set", { invothercrg: courier.toFixed(2)});
+        	 $self.jqGrid("footerData", "set", { invclaim: discount.toFixed(2)});
+        	 $self.jqGrid("footerData", "set", { invtotamount: total.toFixed(2)});
+        	 $self.jqGrid("footerData", "set", { bankcharge: bankchrg.toFixed(2)});
+        	 $self.jqGrid("footerData", "set", { realizedamt: realamt.toFixed(2)});
+        	 $self.jqGrid("footerData", "set", { amtininr: amtininr.toFixed(2)});
         }
 	 });
 	sampledebgrid.jqGrid('navGrid','#sampledebpager',{
-	 	edit: false,
-	 	add: false,
-	 	del: false, 
-	 	search: false, 
-	 	view: true, 
-	 	searchtext: 'Search', refreshtext: 'Reload', viewtext: 'View',
+	 	edit: false, add: false, del: false, search: true, view: true, cloneToTop:true, searchtext: 'Search', refreshtext: 'Reload', viewtext: 'View',
+	 	beforeRefresh: function(){
+	 		sampledebgrid.jqGrid('setGridParam',{datatype:'json'}).trigger('reloadGrid');
+		},
 	}).navButtonAdd('#sampledebpager',{
 	 	   caption:"UpDate Debit Details", 
 		   buttonicon:"ui-icon-lightbulb", 
@@ -241,13 +209,16 @@ $(document).ready(function() {
 		 	    {
 		 		  beforeShowForm:  function(form) { 
 		 			   var exporter = $("#exporter").val();
-		 			   var isic = exporter.toUpperCase() == "INTERNATIONAL CORPORATION";
+		 			   var isic = exporter.toUpperCase() == "IC";
 			 		   if(isic){
 			 			 $("#tr_bankcharge").show();
 			 			 $("#tr_exchngrate").show();
 			 			 $("#tr_amtininr").show();
 			 			 $("#tr_debdt").show();
 		 				}else{
+		 				 $("#tr_bankcharge").hide();
+				 		 $("#tr_exchngrate").hide();
+				 		 $("#tr_amtininr").hide();
 		 				 $("#tr_debdt").show();
 		 				}
 		 		  },
@@ -270,7 +241,23 @@ $(document).ready(function() {
 			sampledebgrid[0].clearToolbar();
 		} 
 	});
-	sampledebgrid.jqGrid('filterToolbar', {autosearch : true, searchOnEnter:false, stringResult: true});  //To Enable AutoSearch please comment Search on Enter to False
+	sampledebgrid.jqGrid('filterToolbar', {autosearch : true, searchOnEnter:false, defaultSearch : "cn"});  //To Enable AutoSearch please comment Search on Enter to False
+	sampledebgrid.jqGrid('navButtonAdd',"#sampledebpager",{caption:"Column Chooser",title:"Column Chooser",buttonicon :'ui-icon-extlink',
+		onClickButton:function(){
+			sampledebgrid.jqGrid('columnChooser', {
+				done: function(perm) {
+					if (!perm) { return false; }
+					this.jqGrid('remapColumns', perm, true);
+				}
+			});
+		}
+	});
+	//Bootom Pager Customization
+	  var bottomPagerDiv = $("div#sampledebpager")[0];
+	  $("#view_" + sampledebgrid[0].id, bottomPagerDiv).remove();
+	  $("#search_" + sampledebgrid[0].id, bottomPagerDiv).remove(); 
+	  $("#refresh_" + sampledebgrid[0].id, bottomPagerDiv).remove(); 
+		
 	
 		 	    
 });

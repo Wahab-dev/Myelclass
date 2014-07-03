@@ -86,7 +86,7 @@ public class SampleDebitAction extends Action {
 				InvBillDetails sampledeb = new  InvBillDetails();
 					sampledeb.setInvtype(request.getParameter("invtype"));
 					sampledeb.setInvno(request.getParameter("invno"));
-					sampledeb.setInvamt(request.getParameter("invamt"));
+					sampledeb.setInvamt(request.getParameter("invtotamount"));
 					sampledeb.setBankcharge(request.getParameter("bankcharge"));
 					sampledeb.setRealizedamt(request.getParameter("realizedamt"));
 					sampledeb.setExchngrate(request.getParameter("exchngrate"));

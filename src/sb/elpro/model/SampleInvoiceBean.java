@@ -22,12 +22,14 @@ public class SampleInvoiceBean implements Serializable {
 	private String saminv_otherref;
 	
 	private String saminv_exporter;
+	private String saminv_exporterid;
 	private String saminv_exporterattn;
 	private String saminv_exporteraddress; 
 	private String saminv_exportertele;
 	private String saminv_exporterfax;
 	
 	private String saminv_notify;
+	private String saminv_notifyid;
 	private String saminv_notifyattn;
 	private String saminv_notifyaddress;
 	private String saminv_notifytele;
@@ -41,6 +43,7 @@ public class SampleInvoiceBean implements Serializable {
 	private String saminv_buyerid;
 	
 	private String saminv_bank;
+	private String saminv_bankid;
 	private String saminv_bankbranch;
 	private String saminv_bankaddress;
 	private String saminv_bankswiftcode;
@@ -878,6 +881,48 @@ public class SampleInvoiceBean implements Serializable {
 	 */
 	public void setSaminv_payment(String saminv_payment) {
 		this.saminv_payment = saminv_payment;
+	}
+
+	/**
+	 * @return the saminv_exporterid
+	 */
+	public String getSaminv_exporterid() {
+		return saminv_exporterid;
+	}
+
+	/**
+	 * @param saminv_exporterid the saminv_exporterid to set
+	 */
+	public void setSaminv_exporterid(String saminv_exporterid) {
+		this.saminv_exporterid = saminv_exporterid;
+	}
+
+	/**
+	 * @return the saminv_notifyid
+	 */
+	public String getSaminv_notifyid() {
+		return saminv_notifyid;
+	}
+
+	/**
+	 * @param saminv_notifyid the saminv_notifyid to set
+	 */
+	public void setSaminv_notifyid(String saminv_notifyid) {
+		this.saminv_notifyid = saminv_notifyid;
+	}
+
+	/**
+	 * @return the saminv_bankid
+	 */
+	public String getSaminv_bankid() {
+		return saminv_bankid;
+	}
+
+	/**
+	 * @param saminv_bankid the saminv_bankid to set
+	 */
+	public void setSaminv_bankid(String saminv_bankid) {
+		this.saminv_bankid = saminv_bankid;
 	}
 	
 	

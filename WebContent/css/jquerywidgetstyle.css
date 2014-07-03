@@ -54,3 +54,13 @@
 	position:relative;
 	top:1px;
 }
+.ui-autocomplete { height: 200px; overflow-y: scroll; overflow-x: hidden;}
+/*
+ Form Color */
+ 
+ .form{
+ 	background-color: #f5f8f9;
+ } 
+ div.ui-datepicker{
+ font-size:10px;
+}

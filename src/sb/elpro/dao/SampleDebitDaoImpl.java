@@ -34,56 +34,28 @@ public class SampleDebitDaoImpl implements SampleDebitDao {
 		Statement st = null;
 		ResultSet rs = null;
 		try{	
-			
 			con = DBConnection.getConnection();
-			st = (Statement) con.createStatement();// limit "+pag+", "+rows+" 
-			String sql = "SELECT * FROM elpro.tbl_sampleinvform  form left join  elpro.tbl_sample_debform debit ON debit.invno=form.invno INNER JOIN elpro.tbl_sampleinv_bill bill on bill.invno = form.invno order by form.invno";
+			st = (Statement) con.createStatement();
+			String sql = "SELECT distinct form.invno, form.invtype, form.invdate, tan.tanshform, taninvno,  cust.shortform as Cust, notify.shortform as Notify, bank.shortform, AWBillNo, AWBillDate, othercharges, discounts, totamt, debid, invamt, bankcharg, realizedamt, exrate, amtinrs, debdate, remarks FROM elpro.tbl_sampleinvform form left join  elpro.tbl_sample_debform debit ON debit.invno=form.invno left outer join tbl_tannery tan on tan.tanid = form.expname left outer join tbl_customer cust on cust.custid = form.customer left outer join tbl_notify notify on notify.notifyid = form.notify left outer join tbl_bank bank on bank.bankid = form.bank  order by form.invdate desc, form.invno desc";
 			System.out.println(sql);
 			rs = st.executeQuery(sql);
 			while(rs.next()) {	
 				 InvBillDetails samdebbean = new InvBillDetails();
-				 /*String dt = rs.getString("debdate");
-				 System.out.println("DT "+dt);
-				 System.out.println("Trim "+dt.equalsIgnoreCase(null));
-				 if(!(dt.trim().length()== 0)){
-					 System.out.println("HI");
-					 
-				 }else{
-					 dt = "2014-01-01";
-				 }*/
 					samdebbean.setInvtype(rs.getString("invtype"));
 					samdebbean.setInvno(rs.getString("invno"));
 					samdebbean.setInvdt(DateConversion.ConverttoNormalDate(rs.getString("invdate")));
-					samdebbean.setExporter(rs.getString("expname"));
+					samdebbean.setExporter(rs.getString("tan.tanshform"));
 					samdebbean.setTaninvno(rs.getString("taninvno"));
-					samdebbean.setCustomer(rs.getString("customer"));
-					samdebbean.setInvid(rs.getString("invbillid"));
-					samdebbean.setInvctno(rs.getString("sampleno"));
-					samdebbean.setInvartid(rs.getString("articleid"));
-					samdebbean.setInvartname(rs.getString("artname"));
-					samdebbean.setInvcolor(rs.getString("color"));
-					samdebbean.setInvsize(rs.getString("size"));
-					samdebbean.setInvsubs(rs.getString("subs"));
-					samdebbean.setInvselc(rs.getString("selc"));
-					samdebbean.setInvunit(rs.getString("unit"));
-					samdebbean.setInvpcs(rs.getString("pcs"));
-					samdebbean.setInvrate(rs.getString("rate"));
-					samdebbean.setInvqty(rs.getString("qty")+" "+rs.getString("unit"));
-					samdebbean.setInvqshpd(rs.getString("qshpd"));
-					samdebbean.setInvqbal(rs.getString("qbal"));
-					samdebbean.setInvamt(rs.getString("amt"));
+					samdebbean.setCustomer(rs.getString("Cust"));
 					samdebbean.setInvothercrg(rs.getString("othercharges"));
 					samdebbean.setInvclaim(rs.getString("discounts"));
 					samdebbean.setInvtotamount(rs.getString("totamt"));
 					samdebbean.setAwbillno(rs.getString("AWBillNo"));
 					samdebbean.setAwbilldate(DateConversion.ConverttoNormalDate(rs.getString("AWBillDate")));
-					samdebbean.setConsignee(rs.getString("consignee"));
-					samdebbean.setNotify(rs.getString("notify"));
-					samdebbean.setOtherref(rs.getString("otherref"));
-					samdebbean.setBuyer(rs.getString("buyer"));
-					samdebbean.setBank(rs.getString("bank"));
+					samdebbean.setNotify(rs.getString("Notify"));
+					samdebbean.setBank(rs.getString("bank.shortform"));
 					samdebbean.setDebid(rs.getString("debid"));
-					samdebbean.setDebdt(rs.getString("debdate"));
+					samdebbean.setDebdt(DateConversion.ConverttoNormalDate(rs.getString("debdate")));
 					samdebbean.setBankcharge(rs.getString("bankcharg"));
 					samdebbean.setRealizedamt(rs.getString("realizedamt"));
 					samdebbean.setExchngrate(rs.getString("exrate"));
@@ -123,6 +95,7 @@ public class SampleDebitDaoImpl implements SampleDebitDao {
 			pst.setString(2, sampledeb.getInvno());
 			System.out.println("getInvno " +sampledeb.getInvno());
 			pst.setString(3, sampledeb.getInvamt());
+			System.out.println("getAmtininr "+sampledeb.getInvamt());
 			pst.setString(4, sampledeb.getBankcharge());
 			pst.setString(5, sampledeb.getRealizedamt());
 			pst.setString(6, sampledeb.getExchngrate());

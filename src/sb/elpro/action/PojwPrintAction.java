@@ -37,12 +37,7 @@ import org.apache.struts.action.ActionMapping;
  *
  */
 public class PojwPrintAction extends Action {
-	/*public void init() throws IOException, JRException {
-	    JRBeanCollectionDataSource beanCollectionDataSource = new JRBeanCollectionDataSource(listReportObjects);
-	    String reportPath = FacesContext.getCurrentInstance().getExternalContext().getRealPath("/web/ireport/monthlyReport.jasper");
-	    jasperPrint = JasperFillManager.fillReport(reportPath, new HashMap(), beanCollectionDataSource);
-		//HttpServletResponse myresponse = ;
-	}*/
+
 		/* (non-Javadoc)
 		 * @see org.apache.struts.action.Action#execute(org.apache.struts.action.ActionMapping, org.apache.struts.action.ActionForm, javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)
 		 */

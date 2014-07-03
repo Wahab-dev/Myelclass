@@ -36,17 +36,18 @@ public class SampleInvTrackDaoImpl implements SampleInvoiceTrackDao {
 			
 			con = DBConnection.getConnection();
 			st = (Statement) con.createStatement();// limit "+pag+", "+rows+" 
-			String sql = "SELECT  invtype, form.invno, form.invdate, exportersref, expname, taninvno, customer, consignee, notify, amount, otherref, buyer, bank, AWBillNo, AWBillDate, othercharges, discounts, totamt, invbillid, articleid, artname, color, size, subs, selc, unit, qty, pcs, rate, sampleno, qshpd,qbal, amt, total FROM  elpro.tbl_sampleinv_bill bill , elpro.tbl_sampleinvform form where form.invno = bill.invno order by form.invno";
+			String sql = "SELECT invtype, form.invno, form.invdate, exportersref, expname, tan.tanshform,  taninvno, customer, cust.shortform, consignee, notify, notify.shortform, amount, otherref, buyer, bank, bank.shortform , AWBillNo, AWBillDate, othercharges, discounts, totamt, invbillid, articleid, artname, color, size, subs, selc, unit, qty, pcs, rate, sampleno, qshpd,qbal, amt, user  FROM  elpro.tbl_sampleinv_bill bill join elpro.tbl_sampleinvform form on form.invno = bill.invno  left outer join tbl_tannery tan on tan.tanid = form.expname left outer join tbl_customer cust on cust.custid = form.customer left outer join tbl_notify notify on notify.notifyid = form.notify left outer join tbl_bank bank on bank.bankid = form.bank order by form.invdate desc,  form.invno desc, artname asc, color asc, selc asc ";
 			System.out.println(sql);
 			rs = st.executeQuery(sql);
-			while(rs.next()) {	
-				 InvBillDetails invtrackbean = new InvBillDetails();
+			while(rs.next()) {
+				//String currency = rs.getString("rate").substring(0,1).equalsIgnoreCase("$") ? "$" : rs.getString("rate").substring(0,1).equalsIgnoreCase("E")? "Euro" : "Rs";
+				InvBillDetails invtrackbean = new InvBillDetails();
 					invtrackbean.setInvtype(rs.getString("invtype"));
 					invtrackbean.setInvno(rs.getString("invno"));
 					invtrackbean.setInvdt(DateConversion.ConverttoNormalDate(rs.getString("invdate")));
-					invtrackbean.setExporter(rs.getString("expname"));
+					invtrackbean.setExporter(rs.getString("tanshform"));
 					invtrackbean.setTaninvno(rs.getString("taninvno"));
-					invtrackbean.setCustomer(rs.getString("customer"));
+					invtrackbean.setCustomer(rs.getString("cust.shortform"));
 					invtrackbean.setInvid(rs.getString("invbillid"));
 					invtrackbean.setInvctno(rs.getString("sampleno"));
 					invtrackbean.setInvartid(rs.getString("articleid"));
@@ -59,19 +60,20 @@ public class SampleInvTrackDaoImpl implements SampleInvoiceTrackDao {
 					invtrackbean.setInvpcs(rs.getString("pcs"));
 					invtrackbean.setInvrate(rs.getString("rate"));
 					invtrackbean.setInvqty(rs.getString("qty")+" "+rs.getString("unit"));
-					invtrackbean.setInvqshpd(rs.getString("qshpd"));
+					invtrackbean.setInvqshpd(rs.getString("qshpd")+" sqft");
 					invtrackbean.setInvqbal(rs.getString("qbal"));
 					invtrackbean.setInvamt(rs.getString("amt"));
 					invtrackbean.setInvothercrg(rs.getString("othercharges"));
 					invtrackbean.setInvclaim(rs.getString("discounts"));
-					invtrackbean.setInvtotamount(rs.getString("amount"));
+					invtrackbean.setInvtotamount(rs.getString("totamt"));
 					invtrackbean.setAwbillno(rs.getString("AWBillNo"));
-					invtrackbean.setAwbillno(DateConversion.ConverttoNormalDate(rs.getString("AWBillDate")));
+					invtrackbean.setUser(rs.getString("user"));
+					invtrackbean.setAwbilldate(DateConversion.ConverttoNormalDate(rs.getString("AWBillDate")));
 					invtrackbean.setConsignee(rs.getString("consignee"));
-					invtrackbean.setNotify(rs.getString("notify"));
+					invtrackbean.setNotify(rs.getString("notify.shortform"));
 					invtrackbean.setOtherref(rs.getString("otherref"));
 					invtrackbean.setBuyer(rs.getString("buyer"));
-					invtrackbean.setBank(rs.getString("bank"));
+					invtrackbean.setBank(rs.getString("bank.shortform"));
 					saminvtrackarray.add(invtrackbean);
 				}		
 		}catch(Exception e){

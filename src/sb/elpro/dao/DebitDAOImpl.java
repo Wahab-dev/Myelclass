@@ -452,7 +452,7 @@ public class DebitDaoImpl implements DebitDao {
 			System.out.println("getDeb_invoicetype " +debformbean.getDeb_debitdate());
 			pst.setString(2, debformbean.getDeb_exporterid());
 			pst.setString(3, debformbean.getDeb_elclassrefno());
-			pst.setString(4, debformbean.getDeb_elclassrefdt());
+			pst.setString(4, DateConversion.ConverttoMysqlDate(debformbean.getDeb_elclassrefdt()));
 			pst.setString(5, debformbean.getDeb_taninvno());
 			pst.setString(6, debformbean.getDeb_exchangerate());
 			pst.setString(7, debformbean.getDeb_commission());

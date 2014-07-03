@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+   
     <%@ taglib uri="http://struts.apache.org/tags-html" prefix="h"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -9,6 +10,8 @@
 <script src="js/jquery-1.9.1.js"></script>
 <script src="js/jquery-ui.js"></script>
 <script src="js/jquery.dialogextend.1_0_1.js"></script>
+<link rel="stylesheet" type="text/css" href="css/ui.multiselect.css" />
+<script type="text/javascript" src="js/ui.multiselect.js"></script>	
 <link rel="stylesheet" type="text/css" media="screen" href="css/redmond/jquery-ui-1.10.3.custom.css" />
 <link rel="stylesheet" type="text/css" href="css/ui.multiselect.css" />
 <link rel="stylesheet" type="text/css" media="screen" href="css/jquerywidgetstyle.css" />

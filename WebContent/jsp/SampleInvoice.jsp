@@ -117,19 +117,19 @@ $(function() {
        			 </tr>
        			  <tr>
        			 	 <td> Exporters Ref. :</td>
-       			 	 <td> <h:textarea property="saminv_expref" cols="17"  rows="2" styleId="saminv_expref"  value="${editsaminvform[0].saminv_expref}"> </h:textarea><br/></td>
+       			 	 <td><h:text property="saminv_expref" styleId="saminv_expref"  value="${editsaminvform[0].saminv_expref}"> </h:text><br/></td>
        			 </tr>
        			 <tr>
        			 	 <td> Other ref : </td>
-       			 	 <td><h:textarea property="saminv_otherref" cols="17"  rows="2" styleId="saminv_otherref"  value="${editsaminvform[0].saminv_otherref}"> </h:textarea>  <br/>
+       			 	 <td><h:textarea property="saminv_otherref" cols="30"  rows="2" styleId="saminv_otherref"  value="${editsaminvform[0].saminv_otherref}"> </h:textarea>  <br/>
        			 </tr>  
        			 <tr>
-       	    		<td>terms :</td>
-       	    		<td><h:text property="saminv_terms" size="41" styleId="saminv_terms" value="${editinvform[0].saminv_terms }"> </h:text>  <br/></td>
+       	    		<td>Terms :</td>
+       	    		<td><h:text property="saminv_terms" size="41" styleId="saminv_terms" value="${editsaminvform[0].saminv_terms }"> </h:text>  <br/></td>
        	    	 </tr>
        	    	 <tr>
        	    		<td>Payment :</td>
-       	    	    <td><h:text property="saminv_payment" size="41" styleId="saminv_payment" value="${editinvform[0].saminv_payment }"> </h:text>  <br/></td>
+       	    	    <td><h:text property="saminv_payment" size="41" styleId="saminv_payment" value="${editsaminvform[0].saminv_payment }"> </h:text>  <br/></td>
        	         </tr> 
    			</table>
    			</fieldset>
@@ -142,6 +142,9 @@ $(function() {
        				  	<td>Name :</td>
        				  	<td><h:text property="saminv_exporter" styleId="saminv_exporter" size="41" value="${editsaminvform[0].saminv_exporter}"></h:text><br/></td>
        				  </tr>
+       				  <tr>	
+						<td><h:hidden property="saminv_exporterid" styleId="saminv_exporterid" value="${editsaminvform[0].saminv_exporterid }"></h:hidden><br/></td>
+					  </tr>
        				  <tr>
        				  	<td>Attn :</td>
        				  	<td><h:text property="saminv_exporterattn" styleId="saminv_exporterattn" size="41"  value="${editsaminvform[0].saminv_exporterattn}"></h:text><br/></td>
@@ -170,6 +173,9 @@ $(function() {
        				  	<td>Name :</td>
        				  	<td><h:text property="saminv_notify" styleId="saminv_notify" size="41" value="${editsaminvform[0].saminv_notify}"></h:text><br/></td>
        				  </tr>
+       				  <tr>	
+						<td><h:hidden property="saminv_notifyid" styleId="saminv_notifyid" value="${editsaminvform[0].saminv_notifyid }"></h:hidden><br/></td>
+					  </tr>
        				  <tr>
        				  	<td>Attn :</td>
        				  	<td><h:text property="saminv_notifyattn" styleId="saminv_notifyattn" size="41"  value="${editsaminvform[0].saminv_notifyattn}"></h:text><br/></td>
@@ -201,6 +207,9 @@ $(function() {
        				  		<td>Bank: </td>
        				  		<td><h:text property="saminv_bank" styleId="saminv_bank"  size="41"  value="${editsaminvform[0].saminv_bank}"></h:text><br/></td>
        				  	</tr>
+       				  	 <tr>	
+							<td><h:hidden property="saminv_bankid" styleId="saminv_bankid" value="${editsaminvform[0].saminv_bankid }"></h:hidden><br/></td>
+					 	 </tr>
        				  	<tr>
        				  		<td>Branch: </td>
        				  		<td><h:text property="saminv_bankbranch" styleId="saminv_bankbranch"  size="41"  value="${editsaminvform[0].saminv_bankbranch}"></h:text><br/></td>
@@ -374,11 +383,11 @@ $(function() {
        				<legend>Other Charges</legend>
        				<table>
        					<tr>
-       						<td>Courier Discount: </td>
+       						<td>Courier Charges: </td>
        						<td><h:text property="saminv_courierchrgs" styleId="saminv_courierchrgs"  value="${editsaminvform[0].saminv_courierchrgs}"> </h:text></td>
        					</tr>
        					<tr>
-       						<td>Discount :  </td>
+       						<td>Deduction :  </td>
        						<td><h:text property="saminv_deduction" styleId="saminv_deduction"  value="${editsaminvform[0].saminv_deduction}"> </h:text>  <br/></td>
        					</tr>
        					<tr>

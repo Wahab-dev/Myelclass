@@ -1,8 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="h"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c"%>
+<%@ taglib uri="http://struts.apache.org/tags-bean" prefix="b"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+
 <h:html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -193,7 +195,6 @@ $(function() {
            </td>
         <tr>
           	<td colspan="3">
-          	 <b>Response:</b> <span id="rsperror" style="color:red"></span> <br/>
             	<table id="list" class="list"></table> 
 			 	<div id="pager" class="pager"></div> 
           	</td>
@@ -365,13 +366,12 @@ $(function() {
 	       		 </table>  
       		</fieldset>
             </td>
-       <!--  <tr>
-            td>Running Since : <b:write name="datestarted" scope="application" format="MM/dd/yy"/> </td>
-        </tr> -->
+        <tr>
+            <td> <h:text property="prf_pojwno" styleId="prf_pojwno" value="${editprfform[0].prf_pojwno}"></h:text> </td>
         </tr>
         <tr>
   			<td>
-  				<h:submit  property="prfaction" styleId="Save" value="Save" ></h:submit>
+  				<h:submit  property="prfaction" styleId="Btnprfsave" value="Save" ></h:submit>
   				<h:button property="prfaction" styleId="pojw" value="PO/JW" disabled="true" ></h:button>
   			</td>
   			<td><h:reset property="prfaction" styleId="Clear" value="Clear" ></h:reset></td>
@@ -382,8 +382,8 @@ $(function() {
     </table>
 </h:form>		
 </div>
-<div id="pojwdiv">
-  	<form id="pojwform" method="post">
+<div id="pojwdiv" title="Po/Jw Form" class="pojwform">
+  	<h:form action="/PoJw" styleId="pojwform" method="post" target="pojwhiddenframe" > 
   		<table>
   		  <tr>	
   			<td>
@@ -392,24 +392,28 @@ $(function() {
 			 	<table>
 				  <tr>
 				    <td>PO No: </td>
-				     <td><input type="text" id="prf_pojw" size="41" name="prf_pojw" value=""></input><br/></td>
+				     <td><h:text  property="pojw_pojwno" size="41" styleId="pojw_pojwno" value="${editprfform[0].pojw_pojwno}"></h:text><br/></td>
 				  </tr>
 				  <tr>
 				  	<td>Order Date:</td>
-				    <td><input type="text" id="pojw_orderdate" size="41" name="pojw_orderdate" value="" class="prf_orderdate" ></input><br /></td>
+				    <td><h:text property="pojw_orderdate" size="41" styleId="pojw_orderdate" value="${editprfform[0].pojw_orderdate}" styleClass="prf_orderdate" ></h:text><br /></td>
 				  </tr>
 				  <tr>
 				  	<td>CDD:</td>
-				  	<td><input type="text" id="pojw_cddate" size="41" name="pojw_cddate" value="" class="prf_delivrydate" ></input><br /></td>
+				  	<td><h:text property="pojw_cddate" size="41" styleId="pojw_cddate" value="${editprfform[0].pojw_cddate}" styleClass="prf_delivrydate" ></h:text><br /></td>
 				  </tr>
 				  <tr>
 				    <td>Ct No: </td>
-				    <td><input type="text" id="pojw_contractno" size="41" name="pojw_contractno" value=""></input><br /></td>
+				    <td><h:text property="pojw_contractno" size="41" styleId="pojw_contractno" value="${editprfform[0].pojw_contractno}"></h:text><br /></td>
 				  </tr>
 				  <tr>
 				  	<td>Commission :</td>
-				  	<td> <input type="text" id="pojw_comm" size="41" name="pojw_comm" value="" ></input></td>
+				  	<td> <h:text property="pojw_comm" size="41" styleId="pojw_comm" value="${editprfform[0].pojw_comm}"  ></h:text></td>
 				  </tr>  
+				  <tr>
+				  	<td>Payment Terms :</td>
+				  	<td> <h:textarea property="pojw_payterms"  cols="38" rows="3"  styleId="pojw_payterms" value="${editprfform[0].pojw_payterms}"  ></h:textarea></td>
+				  </tr>
 				</table>
 			</fieldset>
 			</td>
@@ -418,28 +422,27 @@ $(function() {
 			<legend>Tannery Details</legend>
 				<table>
 				  <tr>
-				  	<td>Name: </td>
-				    <td><input type="text" id="prf_exporter" size="41" name="prf_exporter" value=""></input><br /></td>
+				  	<td>Tanner: </td>
+				    <td><h:text property="pojw_tanname" size="41" styleId="pojw_tanname" value="${editprfform[0].pojw_tanname}"></h:text><br /></td>
 				  </tr>
 				   <tr>
-				  	
-				    <td><input type="text" id="prf_exporterid" size="41" name="prf_exporterid" value=""></input><br /></td>
+				    <td><h:hidden property="pojw_tanid" styleId="pojw_tanid" value="${editprfform[0].pojw_tanid}"></h:hidden></td>
 				  </tr>
 				  <tr>
 				    <td>Attn:</td>
-				  	<td><input type="text" id="prf_exporterattn" size="41" name="prf_exporterattn" value="" ></input><br /></td>
+				  	<td><h:text property="pojw_tanattn" size="41" styleId="pojw_tanattn" value="${editprfform[0].pojw_tanattn}" ></h:text><br /></td>
 				  </tr>
 				  <tr>
 				  	<td>Addr:</td>
-				  	<td><textarea id="prf_exporteraddr" cols="38" rows="3" name="prf_exporteraddr"  cols="38" rows="3" ></textarea><br /></td>
+				  	<td><h:textarea property="pojw_tanaddr" styleId="pojw_tanaddr"  cols="38" rows="3" value="${editprfform[0].pojw_tanaddr}"></h:textarea><br /></td>
 				  </tr>
 				  <tr>
 				  	<td>Tele: </td>
-				  	<td><input type="text" id="prf_exportertele" size="41" name="prf_exportertele" value="" ></input><br/></td>
+				  	<td><h:text property="pojw_tanphone" size="41" styleId="pojw_tanphone" value="${editprfform[0].pojw_tanphone}" ></h:text><br/></td>
 				  </tr>
 				  <tr>
 				  	<td>Fax :</td>
-				  	<td><input type="text" id="prf_exporterfax" size="41" name="prf_exporterfax" value=""></input></td>
+				  	<td><h:text property="pojw_tanfax" size="41" styleId="pojw_tanfax" value="${editprfform[0].pojw_tanfax}"></h:text></td>
 				  </tr>
 				</table>
 			</fieldset>
@@ -455,29 +458,30 @@ $(function() {
          	<td colspan="2"> 
         	<fieldset>
         	<legend>Special Condition</legend>
-			    <textarea id="pojw_splcdn" name="pojw_splcdn"  cols="38" rows="3" ></textarea><br />
+			    <h:textarea property="pojw_splcdn" styleId="pojw_splcdn"  cols="170" rows="10" value="${editprfform[0].pojw_splcdn}"></h:textarea><br />
 			</fieldset>
 			</td>
           </tr>
-          <tr>
+         <%--  <tr>
         	<td colspan="2"> 
         	<fieldset>
         	<legend>Payment Terms</legend>
-        		<textarea id="pojw_payterms" name="pojw_payterms"  cols="38" rows="3"></textarea><br />
+        		<h:textarea property="pojw_payterms"  styleId="pojw_payterms"  cols="140" rows="1" value="${editprfform[0].pojw_payterms}"></h:textarea><br />
         	</fieldset>
         	</td>
-          </tr>	
-         <!--  <tr>	
+          </tr>	 --%>
+          <tr>	
         	<td>
-        		<button id="save" name="Save" type="submit" title="Save">Save</button>
-        	</td>
-        	<td>
-        		<button id="clear" name="Clear" type="reset" title="Clear">Clear</button>
-        		<button id="print" name="Print" type="button" title="Print">Print</button>
-        	</td>
-          </tr> -->
+		    	<h:submit property="prfaction" value="POSave" title="Save" styleId="posave"></h:submit>
+		   </td>
+   		   <td>
+   						
+   			    <h:submit property="prfaction" value="POPrint" title="Print" styleId="poprint"></h:submit>
+   		   </td>
+          </tr>
      	</table>
-	</form>
+	</h:form>
  </div>
+ <iframe name="pojwhiddenframe" style="display: none;"></iframe >
 </body>
 </h:html>		

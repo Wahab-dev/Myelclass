@@ -268,11 +268,11 @@
 		</band>
 	</title>
 	<pageHeader>
-		<band height="130" splitType="Stretch">
+		<band height="140" splitType="Stretch">
 			<property name="local_mesure_unitheight" value="pixel"/>
 			<property name="com.jaspersoft.studio.unit.height" value="px"/>
 			<frame>
-				<reportElement x="0" y="0" width="555" height="130" uuid="76d7b4c0-6bdb-45c6-9f2e-695c4da055dd">
+				<reportElement x="0" y="0" width="555" height="140" uuid="76d7b4c0-6bdb-45c6-9f2e-695c4da055dd">
 					<property name="local_mesure_unitx" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.x" value="px"/>
 					<property name="local_mesure_unitwidth" value="pixel"/>
@@ -368,7 +368,7 @@
 					</textField>
 				</frame>
 				<frame>
-					<reportElement x="0" y="12" width="555" height="48" uuid="b05607ea-16c0-4c85-be8e-67b7593e4ed8">
+					<reportElement stretchType="RelativeToTallestObject" x="0" y="12" width="555" height="48" uuid="b05607ea-16c0-4c85-be8e-67b7593e4ed8">
 						<property name="local_mesure_unitx" value="pixel"/>
 						<property name="com.jaspersoft.studio.unit.x" value="px"/>
 						<property name="local_mesure_unity" value="pixel"/>
@@ -394,8 +394,8 @@
 						</textElement>
 						<textFieldExpression><![CDATA[$P{ptanneryname}]]></textFieldExpression>
 					</textField>
-					<textField>
-						<reportElement x="0" y="12" width="555" height="12" uuid="f50a9202-cee5-449c-90d8-c9b3d65dcc24">
+					<textField isBlankWhenNull="false">
+						<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="0" y="12" width="555" height="12" uuid="f50a9202-cee5-449c-90d8-c9b3d65dcc24">
 							<property name="local_mesure_unity" value="pixel"/>
 							<property name="com.jaspersoft.studio.unit.x" value="px"/>
 							<property name="com.jaspersoft.studio.unit.y" value="px"/>
@@ -455,7 +455,7 @@
 					<text><![CDATA[We confirm having sold on your behalf the following goods as per term and condition stated below to]]></text>
 				</staticText>
 				<frame>
-					<reportElement positionType="FixRelativeToBottom" x="0" y="72" width="555" height="48" uuid="e1a65d5d-6768-4d9f-99f7-7825f5360a36">
+					<reportElement positionType="FixRelativeToBottom" x="0" y="72" width="555" height="68" uuid="e1a65d5d-6768-4d9f-99f7-7825f5360a36">
 						<property name="local_mesure_unity" value="pixel"/>
 					</reportElement>
 					<box>
@@ -480,7 +480,7 @@
 						<textFieldExpression><![CDATA[$P{pcustname}]]></textFieldExpression>
 					</textField>
 					<textField>
-						<reportElement x="0" y="36" width="555" height="12" uuid="0b206f5d-a8e1-487e-8997-b081bcf79876">
+						<reportElement x="0" y="48" width="555" height="12" uuid="0b206f5d-a8e1-487e-8997-b081bcf79876">
 							<property name="local_mesure_unity" value="pixel"/>
 							<property name="com.jaspersoft.studio.unit.x" value="px"/>
 							<property name="com.jaspersoft.studio.unit.height" value="px"/>
@@ -492,7 +492,7 @@
 						<textFieldExpression><![CDATA[$P{pcustfax}]]></textFieldExpression>
 					</textField>
 					<textField>
-						<reportElement x="0" y="24" width="555" height="12" uuid="b4a4a1d7-d04e-41c3-ad04-9e862e77c4ae">
+						<reportElement x="0" y="36" width="555" height="12" uuid="b4a4a1d7-d04e-41c3-ad04-9e862e77c4ae">
 							<property name="local_mesure_unity" value="pixel"/>
 							<property name="com.jaspersoft.studio.unit.x" value="px"/>
 							<property name="com.jaspersoft.studio.unit.height" value="px"/>
@@ -503,11 +503,12 @@
 						</textElement>
 						<textFieldExpression><![CDATA[$P{pcusttel}]]></textFieldExpression>
 					</textField>
-					<textField>
-						<reportElement positionType="Float" x="0" y="12" width="555" height="12" uuid="ca622991-74a2-465d-a987-84fbff014d11">
+					<textField isBlankWhenNull="false">
+						<reportElement stretchType="RelativeToTallestObject" isPrintRepeatedValues="false" x="0" y="12" width="555" height="24" uuid="ca622991-74a2-465d-a987-84fbff014d11">
 							<property name="local_mesure_unity" value="pixel"/>
 							<property name="com.jaspersoft.studio.unit.x" value="px"/>
 							<property name="local_mesure_unitheight" value="pixel"/>
+							<property name="com.jaspersoft.studio.unit.y" value="px"/>
 						</reportElement>
 						<textElement verticalAlignment="Top">
 							<font fontName="Times New Roman" size="9"/>
@@ -903,7 +904,7 @@
 		</band>
 	</detail>
 	<pageFooter>
-		<band height="580" splitType="Stretch">
+		<band height="456" splitType="Stretch">
 			<property name="local_mesure_unitheight" value="pixel"/>
 			<property name="com.jaspersoft.studio.unit.height" value="px"/>
 			<frame>

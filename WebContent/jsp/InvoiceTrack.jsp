@@ -8,6 +8,8 @@
 <title>Invoice Tracking Screen</title>
 <script src="js/jquery-1.9.1.js"></script>
 <script src="js/jquery-ui.js"></script>
+<link rel="stylesheet" type="text/css" href="css/ui.multiselect.css" />
+<script type="text/javascript" src="js/ui.multiselect.js"></script>	
 <script src="js/jquery.dialogextend.1_0_1.js"></script>
 <link rel="stylesheet" type="text/css" media="screen" href="css/redmond/jquery-ui-1.10.3.custom.css" />
 <link rel="stylesheet" type="text/css" href="css/ui.multiselect.css" />
@@ -92,6 +94,9 @@ $(function() {
 			<option value="invctno">Ct No</option> 
 			<option value="invartname">Article</option>
 			<option value="invcolor">Color</option>
+			<option value="invcomm">Commission</option>
+			<option value="invothercomm">Other Commission</option>
+			<option value="invtc">TC</option>
 		</select> <br/><br/> 
 		
 		<div>
