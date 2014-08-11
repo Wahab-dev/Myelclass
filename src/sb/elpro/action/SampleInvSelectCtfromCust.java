@@ -41,11 +41,11 @@ public class SampleInvSelectCtfromCust extends Action {
 	
 	public ActionForward execute(ActionMapping map, ActionForm form, 
 			HttpServletRequest request, HttpServletResponse response) throws Exception {
-		usersession = request.getSession(false);
 		PrintWriter out = response.getWriter();
 		response.setContentType("application/json");
 		response.setCharacterEncoding("UTF-8");
-		if(usersession != null){
+		usersession = request.getSession(false);
+		if(!(usersession == null)){
 			String action = request.getParameter("action");
 			String rows = request.getParameter("rows");
             String pag = request.getParameter("page");
@@ -292,7 +292,6 @@ public class SampleInvSelectCtfromCust extends Action {
 			System.out.println("Invalid User pls Login Again");
 			return map.findForward("logout");
 		}
-		
 		return null;
 	}
 }

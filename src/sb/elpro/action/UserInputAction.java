@@ -11,6 +11,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import net.sf.json.JSONObject;
 
@@ -39,14 +40,14 @@ import sb.elpro.model.TermsDetails;
  */
 public class UserInputAction extends Action{
 	UserInputBo userinputbo  =  new UserInputBoImpl();
-		/* (non-Javadoc)
-		 * @see org.apache.struts.action.Action#execute(org.apache.struts.action.ActionMapping, org.apache.struts.action.ActionForm, javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)
-		 */
-		@Override
-		public ActionForward execute(ActionMapping mapping, ActionForm form,
-				HttpServletRequest request, HttpServletResponse response)
-				throws Exception {
-			//usersession = request.getSession(false);
+	HttpSession usersession;
+	/* (non-Javadoc)
+	 * @see org.apache.struts.action.Action#execute(org.apache.struts.action.ActionMapping, org.apache.struts.action.ActionForm, javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)
+	 */
+	@Override
+	public ActionForward execute(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response) throws Exception {
+		
 			PrintWriter out = response.getWriter();
 			JSONObject jsonobj = new JSONObject();
 			response.setContentType("application/json");
@@ -792,9 +793,7 @@ public class UserInputAction extends Action{
 						out.println(jsonobj);
 					}
 				}
-			}else{
-				
 			}
-            return null;
-		}
+			return null;
+	}
 }

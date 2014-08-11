@@ -1,0 +1,14 @@
+#ui-datepicker-div { font-size: 11px; } 
+#tabs-1, #tabs-2{
+	font-size: 12.5px;
+}
+#registernewUserDialogForm{
+font-size: 12.5px; 
+}
+#buttons{
+size: 12.5px; 
+}
+
+#pwderror{
+ color:red;
+}

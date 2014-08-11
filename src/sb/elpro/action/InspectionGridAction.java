@@ -38,7 +38,8 @@ public class InspectionGridAction extends Action{
 		JSONObject jsonobj = new JSONObject();
 		response.setContentType("application/json");
 		response.setCharacterEncoding("UTF-8");
-		 if(usersession != null){
+		usersession = request.getSession(false);
+		if(!(usersession == null)){
 			 String oper =   request.getParameter("oper");
 			 String rows = request.getParameter("rows");
              String pag = request.getParameter("page");
@@ -54,8 +55,7 @@ public class InspectionGridAction extends Action{
              System.out.println("event "+event);
              System.out.println("artid "+artid);
              
-             if(event.equalsIgnoreCase("manualtest")){
-            	
+             if(event.equalsIgnoreCase("manualtest")){         	
             	 System.out.println("In INsp test ");
 		             if(oper == null){
 						System.out.println(" In Insp Test Load");
@@ -89,8 +89,7 @@ public class InspectionGridAction extends Action{
 		            		insptest.setTestid(request.getParameter("testid"));
 		            		insptest.setArticleid(request.getParameter("articleid"));
 		            		insptest.setTestcolor(request.getParameter("testcolor"));
-		            		insptest.setContractno(request.getParameter("")); 
-		            		
+		            		insptest.setInspid(request.getParameter("inspid")); 
 		            		insptest.setColortest(request.getParameter("colortest"));
 		            		insptest.setColortested(request.getParameter("colortested"));
 		            		insptest.setColorresult(request.getParameter("colorresult"));
@@ -194,7 +193,7 @@ public class InspectionGridAction extends Action{
 						out.println(jsonobj);
 		             }else {
 		            	 InspectionGrade inspgrad = new InspectionGrade();
-		            	 	inspgrad.setId(request.getParameter("id"));
+		            	 	inspgrad.setGradeinspid(request.getParameter("gradeinspid"));
 		            	 	inspgrad.setGradeid(request.getParameter("gradeid"));
 		            	 	inspgrad.setArtid(request.getParameter("articleid"));
 		            	 	inspgrad.setGradecolor(request.getParameter("gradecolor"));
@@ -286,7 +285,7 @@ public class InspectionGridAction extends Action{
 						out.println(jsonobj);
 		             }else {
 		            	 InspectionBean insprej = new InspectionBean();
-		            	 	insprej.setId(request.getParameter("id"));
+		            	 	insprej.setRejinspid(request.getParameter("rejinspid"));
 		            	 	insprej.setArticleid(request.getParameter("articleid"));
 		            	 	insprej.setArttype(request.getParameter("arttype"));
 		            	 	insprej.setRejcolor(request.getParameter("rejcolor"));
@@ -363,8 +362,7 @@ public class InspectionGridAction extends Action{
 				System.out.println(jsonobj);		
 				out.println(jsonobj);
              	}
-             
-			 }else{
+		 }else{
 			 System.out.println("Error Invalid Session");
 			 return map.findForward("logout");
 		 }

@@ -36,7 +36,7 @@ public class DebAutoComplete extends Action {
 		 response.setCharacterEncoding("UTF-8");
 			PrintWriter out = response.getWriter();
 			usersession = request.getSession(false);
-			if(usersession != null){
+			if(!(usersession == null)){
 				String action = request.getParameter("action");
 				if(action.equalsIgnoreCase("debExp")){ 
 					System.out.println("In debExp Autocomplete");
@@ -73,6 +73,6 @@ public class DebAutoComplete extends Action {
 				System.out.println("Invalid User ");
 				mapping.findForward("logout");
 			}
-			return null;
+		return null;
 	}
 }

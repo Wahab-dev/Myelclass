@@ -25,12 +25,13 @@ import sb.elpro.model.SampleInvoiceBean;
 public class InspectionLoadAction extends Action {
 
 	HttpSession usersession;
-	//InspectionBo  inspbo = new InspectionBoImpl();
+	//Integer inspid = new Integer();
+	InspectionBo  inspbo = new InspectionBoImpl();
 	public ActionForward execute(ActionMapping mapping, ActionForm form, 
 			HttpServletRequest request, HttpServletResponse response)throws Exception{
 		System.out.println("Sacre Soutane ");
-		usersession = request.getSession(false);	
-		if(usersession !=null){	
+		usersession = request.getSession(false);
+		if(!(usersession == null)){
 			String action = request.getParameter("action");
 			System.out.println("In Inspection ADD Form");
 			if(action == null){
@@ -48,8 +49,8 @@ public class InspectionLoadAction extends Action {
 			}
 			return mapping.findForward("inspectionisloaded");
 		}else{
-				System.out.println("Inspection is not Loaded,,,");
-				return mapping.findForward("logout");
-		}		
+			System.out.println("Inspection is not Loaded,,,");
+			return mapping.findForward("logout");
+		}	
 	}
 }

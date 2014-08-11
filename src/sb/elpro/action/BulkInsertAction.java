@@ -32,45 +32,33 @@ public class BulkInsertAction extends Action {
 
 	HttpSession usersession;
 	BulkBo bulkbo =new BulkBoImpl();
-		/* (non-Javadoc)
-		 * @see org.apache.struts.action.Action#execute(org.apache.struts.action.ActionMapping, org.apache.struts.action.ActionForm, javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)
-		 */
-		/* (non-Javadoc)
-		 * @see org.apache.struts.action.Action#execute(org.apache.struts.action.ActionMapping, org.apache.struts.action.ActionForm, javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)
-		 */
-		/* (non-Javadoc)
-		 * @see org.apache.struts.action.Action#execute(org.apache.struts.action.ActionMapping, org.apache.struts.action.ActionForm, javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)
-		 */
-		/* (non-Javadoc)
-		 * @see org.apache.struts.action.Action#execute(org.apache.struts.action.ActionMapping, org.apache.struts.action.ActionForm, javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)
-		 */
-		/* (non-Javadoc)
-		 * @see org.apache.struts.action.Action#execute(org.apache.struts.action.ActionMapping, org.apache.struts.action.ActionForm, javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)
-		 */
-		public ActionForward execute (ActionMapping map, ActionForm form, 
+	/* (non-Javadoc)
+	 * @see org.apache.struts.action.Action#execute(org.apache.struts.action.ActionMapping, org.apache.struts.action.ActionForm, javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)
+	 */
+	public ActionForward execute (ActionMapping map, ActionForm form, 
 				HttpServletRequest request, HttpServletResponse response) throws Exception{
-			usersession = request.getSession(false);
-			PrintWriter out = response.getWriter();
-			JSONObject jsonobj = new JSONObject();
-			response.setContentType("application/json");
-			response.setCharacterEncoding("UTF-8");
-			System.out.println("In Bulk Action ");
-			 if(usersession != null){	
-				 String oper =   request.getParameter("oper");
-				 System.out.println("oper "+oper);
-				 String action = request.getParameter("action");
-				 String rows = request.getParameter("rows");
-	             String pag = request.getParameter("page");
-	             String sidx = request.getParameter("sidx");
-	             String sord = request.getParameter("sord");
-	             Boolean  search = Boolean.valueOf( request.getParameter("_search"));
-	             String filters = request.getParameter("filters");
-	                
-	             System.out.println("rows "+rows); //4
-	             System.out.println("page "+pag); //1
-	             System.out.println("sidx "+sidx);
-	             System.out.println("sord "+sord);
-	             System.out.println("action "+action);
+		PrintWriter out = response.getWriter();
+		JSONObject jsonobj = new JSONObject();
+		response.setContentType("application/json");
+		response.setCharacterEncoding("UTF-8");
+		System.out.println("In Bulk Action ");
+		usersession = request.getSession(false);
+		if(!(usersession == null)){	
+			String oper =   request.getParameter("oper");
+			System.out.println("oper "+oper);
+			String action = request.getParameter("action");
+			String rows = request.getParameter("rows");
+		    String pag = request.getParameter("page");
+		    String sidx = request.getParameter("sidx");
+		    String sord = request.getParameter("sord");
+		    Boolean search = Boolean.valueOf( request.getParameter("_search"));
+		    String filters = request.getParameter("filters");
+		                
+		    System.out.println("rows "+rows); //4
+		    System.out.println("page "+pag); //1
+		    System.out.println("sidx "+sidx);
+		    System.out.println("sord "+sord);
+		    System.out.println("action "+action);
 	             System.out.println("search  "+search);
 	             System.out.println("filters  "+filters);
 	             //System.out.println("filters  "+filters);
@@ -221,12 +209,10 @@ public class BulkInsertAction extends Action {
 						out.println(jsonobj);
 					}*/
 				}
-			 }else{
-				 System.out.println("Error Invalid Session");
-				 return map.findForward("logout");
-			 }
+			}else{
+			 System.out.println("Error Invalid Session");
+			 return map.findForward("logout");
+		 }
 			return null;
-		}
-			
-			
+	}		
 }

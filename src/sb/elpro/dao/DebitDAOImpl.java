@@ -67,7 +67,7 @@ public class DebitDaoImpl implements DebitDao {
 		try{			
 			con = DBConnection.getConnection();
 			st = (Statement) con.createStatement();
-			String sql = "SELECT invno, invdate, taninvno, tanname FROM elpro.tbl_invform form left outer join elpro.tbl_tannery tan on tan.tanid = form.expname where tanname like '"+expname+"' and invno like '%"+debinv+"%' and invno NOT IN(select invno from elpro.tbl_debitstatus)";
+			String sql = "SELECT invno, invdate, taninvno, tanname FROM elpro.tbl_invform form left outer join elpro.tbl_tannery tan on tan.tanid = form.expname where tanname like '"+expname+"' and invno like '%"+debinv+"%' and invno NOT like '%OC%' and invno NOT IN(select invno from elpro.tbl_debitstatus)";
 			rs = st.executeQuery(sql);
 			while(rs.next()) {	
 				AutoComplete debtaninvbean = new AutoComplete();
@@ -286,7 +286,7 @@ public class DebitDaoImpl implements DebitDao {
 			while(rs.next()) {	
 		     DebitFormDetails debtrackbean = new DebitFormDetails();
 				debtrackbean.setDeb_debitno(rs.getString("debitno"));
-				debtrackbean.setDeb_debitdate(DateConversion.ConverttoNormalDate(rs.getString("debitdate")));
+				debtrackbean.setDeb_debitdate((rs.getString("debitdate")));
 				debtrackbean.setDeb_exporter(rs.getString("Tannery"));
 				debtrackbean.setDeb_elclassrefno(rs.getString("invno"));
 				debtrackbean.setDeb_elclassrefdt(DateConversion.ConverttoNormalDate(rs.getString("invdt")));
@@ -488,20 +488,15 @@ public class DebitDaoImpl implements DebitDao {
 		Connection con = null;
 		Statement st = null;
 		ResultSet rs = null;	
-		String debit = null;
+		String payno = null;
 		try{			
 			con = DBConnection.getConnection();
 			st = (Statement) con.createStatement();
 			String sql = "SELECT max(paymentno) as paymentno FROM elpro.tbl_paymentno";
 			rs = st.executeQuery(sql);
 			while(rs.next()) {	
-				String debitno = rs.getString("paymentno").trim();
-				int iprefix = debitno.indexOf('/');
-				String debitnoi = debitno.substring(2, iprefix);
-				int ideit = Integer.parseInt(debitnoi)+1;
-				System.out.println(" Debit No val "+ ideit);
-				debit = "PL"+ideit+"/13-14";
-				System.out.println("SAmpleNo "+debit);	
+				payno = rs.getString("paymentno").trim();
+				System.out.println("payno "+payno);	
 			}
 		}catch(Exception e){
 			System.out.println("Result ERROR RESULT");
@@ -511,7 +506,7 @@ public class DebitDaoImpl implements DebitDao {
 			 st.close();
 			 rs.close();
 	   }			
-		return debit;
+		return payno;
 	}
 
 

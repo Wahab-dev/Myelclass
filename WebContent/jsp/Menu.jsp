@@ -12,18 +12,14 @@
 <script src="js/i18n/grid.locale-en.js" type="text/javascript"></script>
 <script src="js/jquery.jqGrid.min.js" type="text/javascript"></script>	
 <script type="text/javascript">
-
 $(function() {
 	$("#accordionmenu").accordion({
 		heightStyle: "content"
 	});
 });
-	
-
 </script>
 </head>
 <body onload="">
-	<!--  Login Form  -->
 <h:form action="/login" method="post" >
 	<table style="border: thin;">
    		<tr>  			

@@ -28,10 +28,9 @@ public class InspectionTrackBoImpl implements InspectionTrackBo {
 	 * @see sb.elpro.bo.InspectionTrackBo#getInspectionTrackDetails(java.lang.String, java.lang.String)
 	 */
 	@Override
-	public List<InspectionBean> getInspectionTrackDetails(String sidx,
-			String sord) throws Exception {
+	public List<InspectionBean> getInspectionTrackDetails() throws Exception {
 		System.out.println("In INSp Trac BOIMPL");
-		List<InspectionBean> getInspTrackList = insptrackdao.getInspectionTrackLoad(sidx, sord);
+		List<InspectionBean> getInspTrackList = insptrackdao.getInspectionTrackLoad();
  		return getInspTrackList;
 	}
 

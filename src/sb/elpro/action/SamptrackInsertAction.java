@@ -32,13 +32,13 @@ public class SamptrackInsertAction extends DispatchAction{
 	SampTrackBo samptrackbo  =  new SampTrackBoImpl();
 	public ActionForward execute (ActionMapping map, ActionForm form, 
 			HttpServletRequest request, HttpServletResponse response) throws Exception{
-		usersession = request.getSession(false);
 		PrintWriter out = response.getWriter();
 		JSONObject jsonobj = new JSONObject();
 		response.setContentType("application/json");
 		response.setCharacterEncoding("UTF-8");
 		System.out.println("In Sample Track Action ");
-		 if(usersession != null){
+		usersession = request.getSession(false);
+		if(!(usersession == null)){
 			 String oper =   request.getParameter("oper");
 			 System.out.println("oper "+oper);
 			 
@@ -104,13 +104,13 @@ public class SamptrackInsertAction extends DispatchAction{
 					}
 					System.out.println(jsonobj);		
 					out.println(jsonobj);
-				}
+				} 
              }
 		 }else{
 			 System.out.println("Error Invalid Session");
 			 return map.findForward("logout");
 		 }
-		
+
 		return null;
 	}
 	
@@ -119,7 +119,6 @@ public class SamptrackInsertAction extends DispatchAction{
 		
 		usersession = request.getSession(false);
 		usersession.invalidate();			
-		
 		return map.findForward("logout");
 	}
 }

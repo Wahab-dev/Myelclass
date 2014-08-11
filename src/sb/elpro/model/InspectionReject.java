@@ -20,5 +20,5 @@ public class InspectionReject implements Serializable {
 	private static final long serialVersionUID = -7345671232209473537L;
 
 		private String rejid;
-		
+		private String inspid;
 }

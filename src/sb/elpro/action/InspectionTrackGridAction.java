@@ -31,15 +31,16 @@ import sb.elpro.model.InspectionBean;
 public class InspectionTrackGridAction extends Action {
 HttpSession usersession;
 InspectionTrackBo insptrackbo = new InspectionTrackBoImpl();
-JSONObject jsonobj = new JSONObject();
+
 		public ActionForward execute (ActionMapping map, ActionForm form, 
 				HttpServletRequest request, HttpServletResponse response ) throws Exception {
 			System.out.println("Insp In Track Load ");
-			usersession = request.getSession(false);
 			PrintWriter out = response.getWriter();
+			JSONObject jsonobj = new JSONObject();
 			response.setContentType("application/json");
 			response.setCharacterEncoding("UTF-8");
-			if(usersession != null){
+			usersession = request.getSession(false);
+			if(!(usersession == null)){
 				// String oper =   request.getParameter("oper");
 				 String rows = request.getParameter("rows");
 	             String pag = request.getParameter("page");
@@ -57,40 +58,37 @@ JSONObject jsonobj = new JSONObject();
 	             
 	            if(action.equalsIgnoreCase("load")){
 	            	 System.out.println("In INsp Track Load ");
-	            	 List<InspectionBean> trackingload = insptrackbo.getInspectionTrackDetails(sidx,sord);
-						int records = trackingload.size();
-						System.out.println("Reords  "+records);
-							int page = Integer.parseInt(pag);
-			                int totalPages = 0;
-			                int totalCount = records;
-			                if (totalCount > 0) {
-			                	 if (totalCount % Integer.parseInt(rows) == 0) {
-			                		 System.out.println("STEP 1 "+totalCount % Integer.parseInt(rows) );
-			                         totalPages = totalCount / Integer.parseInt(rows);
-			                         System.out.println("STEP 2 "+totalPages);
-			                     } else {
-			                         totalPages = (totalCount / Integer.parseInt(rows)) + 1;
-			                         System.out.println("STEP 3 "+totalPages);
-			                     }
-			                }else {
-			                    totalPages = 0;
-			                }
-						jsonobj.put("total", totalPages);
-						jsonobj.put("page", page);
-						jsonobj.put("records", records);
-						jsonobj.put("rows", trackingload);
-						System.out.println(jsonobj);		
-						out.println(jsonobj);
-	             
-				return null;
-	            }
-			}	else{
-				System.out.println("Wrong USer ////");
-				return map.findForward("logout");
-			}
-			return null;
-			
+	            	 List<InspectionBean> trackingload = insptrackbo.getInspectionTrackDetails();
+	            	 int records = trackingload.size();
+	            	 System.out.println("Records  "+records);
+	            	 int page = Integer.parseInt(pag);
+	            	 int totalPages = 0;
+			         int totalCount = records;
+			         if (totalCount > 0) {
+			           	 if (totalCount % Integer.parseInt(rows) == 0) {
+			           		 System.
+			           		 out.println("STEP 1 "+totalCount % Integer.parseInt(rows) );
+			                 totalPages = totalCount / Integer.parseInt(rows);
+			                 System.out.println("STEP 2 "+totalPages);
+			              } else {
+			                  totalPages = (totalCount / Integer.parseInt(rows)) + 1;
+			                  System.out.println("STEP 3 "+totalPages);
+			              }
+			         }else {
+			              totalPages = 0;
+			         }
+					 jsonobj.put("total", totalPages);
+					 jsonobj.put("page", page);
+					 jsonobj.put("records", records);
+					 jsonobj.put("rows", trackingload);
+					 System.out.println(jsonobj);		
+					 out.println(jsonobj);             
+	          }
+				
+		} else{
+			System.out.println("Wrong USer ////");
+			return map.findForward("logout");
 		}
-		  
-		
+			return null;
+	}
 }

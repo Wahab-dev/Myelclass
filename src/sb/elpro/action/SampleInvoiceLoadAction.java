@@ -33,7 +33,7 @@ public class SampleInvoiceLoadAction extends Action{
 	public ActionForward execute(ActionMapping map, ActionForm form, 
 			HttpServletRequest request, HttpServletResponse response) throws Exception, ServletException{
 		usersession = request.getSession(false);
-		if(usersession != null){
+		if(!(usersession == null)){
 			String action = request.getParameter("action");
 			System.out.println("STR  action"+action);
 			if(action == null){
@@ -50,11 +50,9 @@ public class SampleInvoiceLoadAction extends Action{
 				
 			}
 			return map.findForward("sampleinvoiceisloaded");
-		}
-		else{
+		}else{
 			System.out.println("Error");
 			return map.findForward("logout");
 		}
-		
 	}
 }

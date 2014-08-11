@@ -14,7 +14,7 @@
 	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
 	<queryString language="SQL">
 		<![CDATA[SELECT 
-	form.Ctno, DATE_FORMAT(Orderdt, '%e/%c/%y') as orderdt,  cust.shortform as Customer, exp.tanshform as Tanner,  tan.tanshform as Exporter, 
+	form.Ctno, DATE_FORMAT(Orderdt, '%e/%c/%y') as orderdt,  cust.shortform as Customer, tan.tanshform as Tanner,  tan.tanshform as Exporter, 
 	concat (articletype,' ' ,articlename) as Article, color, size, substance, selection, rate, 
 	   quantity , case 
 		 when (unit = 'sqft') then ''
@@ -29,9 +29,7 @@ FROM
 	elpro.tbl_prf_article article 
  join elpro.tbl_prfarticle_status stats on article.prfarticleid = stats.prf_articleid 
  join elpro.tbl_prfform form on form.Ctno = article.contractno 
-left outer join elpro.tbl_pojw pojw on  pojw.Ctno = form.Ctno  
-left outer join elpro.tbl_tannery exp on  exp.tanid = form.tanneryid 
-left outer join elpro.tbl_tannery tan on  tan.tanid = pojw.Tannery 
+left outer join elpro.tbl_tannery tan on  tan.tanid = form.tanneryid 
 left outer join elpro.tbl_customer cust on  cust.custid = form.customerid 
 left outer join elpro.tbl_consignee consig on  consig.consigid = form.consigneeid 
 left outer join elpro.tbl_notify notify on  notify.notifyid = form.notifyid 
@@ -110,7 +108,7 @@ order by form.Ctno asc, articletype asc, articlename asc, color asc]]>
 				<property name="local_mesure_unitheight" value="pixel"/>
 				<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				<textField>
-					<reportElement x="0" y="0" width="1020" height="16" uuid="80ac188e-f1d0-437f-8d2c-02a2c2851ef3">
+					<reportElement x="0" y="0" width="842" height="16" uuid="80ac188e-f1d0-437f-8d2c-02a2c2851ef3">
 						<property name="com.jaspersoft.studio.unit.y" value="px"/>
 						<property name="local_mesure_unitx" value="pixel"/>
 						<property name="com.jaspersoft.studio.unit.x" value="px"/>

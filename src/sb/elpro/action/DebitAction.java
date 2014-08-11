@@ -62,9 +62,9 @@ public class DebitAction extends DispatchAction {
 		 PrintWriter out = response.getWriter();
 		 DebitForm debsaveform =(DebitForm) form;
 		 BeanUtils.copyProperties(debformbean, debsaveform);
-		 usersession = request.getSession(false);
 		 System.out.println("Sessio n "+usersession);
 		 debformbean.setDeb_debitdate(DateConversion.ConverttoMysqlDate(request.getParameter("deb_debitdate")));
+		 usersession = request.getSession(false);
 		 if(!(usersession == null)){
 			 JSONObject debjsonobj = new JSONObject();
 			 System.out.println("usersession "+usersession.getId());
@@ -102,14 +102,15 @@ public class DebitAction extends DispatchAction {
 		 }
 		 else{
 			 System.out.println(" Invalid Session");
-			 return mapping.findForward("logout");
+			 usersession.invalidate();			
+			 return mapping.findForward("logout");  			
 		 } 
 	}
 	public ActionForward TCSave(ActionMapping mapping, ActionForm form, 
 			HttpServletRequest request, HttpServletResponse response) throws Exception{
 		System.out.println("in TC SAVE");
 		usersession = request.getSession(false);	
-		if(usersession !=null){	
+		if(usersession.getAttribute("user")!= null){
 			String tcdeb_tcdebitno = request.getParameter("tcdeb_tcdebitno");
 			System.out.println("tcdeb_tcdebitno????"+tcdeb_tcdebitno);
 			 
@@ -138,6 +139,7 @@ public class DebitAction extends DispatchAction {
 				}
 		}else{
 			 System.out.println(" Invalid Session");
+			 usersession.invalidate();			 			
 			 return mapping.findForward("logout");
 		}
 	}

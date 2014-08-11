@@ -55,7 +55,7 @@ public class SampleDebitDaoImpl implements SampleDebitDao {
 					samdebbean.setNotify(rs.getString("Notify"));
 					samdebbean.setBank(rs.getString("bank.shortform"));
 					samdebbean.setDebid(rs.getString("debid"));
-					samdebbean.setDebdt(DateConversion.ConverttoNormalDate(rs.getString("debdate")));
+					samdebbean.setDebdt((rs.getString("debdate")));
 					samdebbean.setBankcharge(rs.getString("bankcharg"));
 					samdebbean.setRealizedamt(rs.getString("realizedamt"));
 					samdebbean.setExchngrate(rs.getString("exrate"));
@@ -115,6 +115,41 @@ public class SampleDebitDaoImpl implements SampleDebitDao {
 			 pst.close();
 	   }	
 		return isupdate;
+	}
+
+	/* (non-Javadoc)
+	 * @see sb.elpro.dao.SampleDebitDao#updatSamDebEditStatus(sb.elpro.model.InvBillDetails)
+	 */
+	@Override
+	public boolean updatSamDebEditStatus(InvBillDetails sampledeb)
+			throws SQLException {
+		Connection con = null;
+		PreparedStatement pst = null;
+		int noofrows = 0;
+		boolean isedited = true;
+		try{		
+			con = DBConnection.getConnection();
+			StringBuffer sql_editdebstatus = new StringBuffer("UPDATE elpro.tbl_sample_debform SET invamt = ? , bankcharg = ? , realizedamt = ? , exrate = ? , amtinrs = ? , debdate = ? , remarks = ? WHERE invno = '"+sampledeb.getInvno()+"' ");
+			String sqlquery_editdebstatus = sql_editdebstatus.toString();
+			pst = (PreparedStatement) con.prepareStatement(sqlquery_editdebstatus);
+			pst.setString(1, sampledeb.getInvamt());
+			pst.setString(2, sampledeb.getBankcharge());
+			pst.setString(3, sampledeb.getRealizedamt());
+			pst.setString(4, sampledeb.getExchngrate());
+			pst.setString(5, sampledeb.getAmtininr());
+			pst.setString(6, sampledeb.getDebdt());
+			pst.setString(7, sampledeb.getRemarks());
+			System.out.println("getRemarks " +sampledeb.getRemarks());
+			noofrows = pst.executeUpdate();
+		}catch(Exception e){
+		e.printStackTrace();
+		isedited = false;
+		System.out.println("ERROR RESULT");
+		}finally{
+		 con.close() ;
+		 pst.close();
+		}	
+		return isedited;
 	}
 
 }

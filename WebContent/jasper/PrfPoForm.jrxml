@@ -180,7 +180,7 @@
 						<rightPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Center" verticalAlignment="Middle"/>
-					<textFieldExpression><![CDATA[$P{pojw_contractno}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[ $P{pojw_contractno}]]></textFieldExpression>
 				</textField>
 				<staticText>
 					<reportElement mode="Opaque" x="388" y="0" width="92" height="16" backcolor="#C0C0C0" uuid="d14e1098-db24-41f3-b8e8-5ca905cfd33a">
@@ -213,7 +213,7 @@
 						<rightPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Center" verticalAlignment="Middle"/>
-					<textFieldExpression><![CDATA[$P{pojw_orderdate}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[ $P{pojw_orderdate}]]></textFieldExpression>
 				</textField>
 			</frame>
 			<frame>
@@ -234,7 +234,7 @@
 						<property name="local_mesure_unitwidth" value="pixel"/>
 						<property name="com.jaspersoft.studio.unit.y" value="px"/>
 					</reportElement>
-					<textFieldExpression><![CDATA[$P{pojw_tanphone}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[ $P{pojw_tanphone}.equals("0") ? "" :$P{pojw_tanphone}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="false">
 					<reportElement positionType="Float" x="0" y="38" width="580" height="28" uuid="fcba9c50-0925-4ca3-afdf-e86a5b2ca835">
@@ -244,7 +244,7 @@
 						<property name="com.jaspersoft.studio.unit.height" value="px"/>
 						<property name="com.jaspersoft.studio.unit.y" value="px"/>
 					</reportElement>
-					<textFieldExpression><![CDATA[$P{pojw_tanaddr}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[ $P{pojw_tanaddr}.equals("NA") ? "" :$P{pojw_tanaddr}]]></textFieldExpression>
 				</textField>
 				<textField>
 					<reportElement x="0" y="24" width="580" height="14" uuid="e237654e-5f1e-496f-9c57-422ece69d953">
@@ -252,7 +252,7 @@
 						<property name="com.jaspersoft.studio.unit.x" value="px"/>
 						<property name="com.jaspersoft.studio.unit.y" value="px"/>
 					</reportElement>
-					<textFieldExpression><![CDATA[$P{pojw_tanattn}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[ $P{pojw_tanattn}.equals("NA") ? "" :$P{pojw_tanattn}]]></textFieldExpression>
 				</textField>
 				<textField>
 					<reportElement x="0" y="10" width="580" height="14" uuid="5e8f240d-e1f5-48f0-832d-6c4661f29f8f">
@@ -262,7 +262,7 @@
 						<property name="local_mesure_unitwidth" value="pixel"/>
 						<property name="com.jaspersoft.studio.unit.y" value="px"/>
 					</reportElement>
-					<textFieldExpression><![CDATA[$P{pojw_tanname}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[ $P{pojw_tanname}]]></textFieldExpression>
 				</textField>
 			</frame>
 			<staticText>
@@ -794,7 +794,7 @@
 					<textElement markup="styled">
 						<font size="10"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$P{pojw_splcdn}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[ $P{pojw_splcdn}]]></textFieldExpression>
 				</textField>
 				<textField>
 					<reportElement x="410" y="0" width="170" height="16" uuid="be0d4388-dfe0-4075-9db1-346563ef08fd">
@@ -882,7 +882,7 @@
 						<rightPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<staticText>
-						<reportElement x="0" y="0" width="260" height="16" uuid="19215b21-bfaa-4e03-b9d2-663a3d0b4c63">
+						<reportElement x="0" y="0" width="290" height="16" uuid="19215b21-bfaa-4e03-b9d2-663a3d0b4c63">
 							<property name="local_mesure_unitx" value="pixel"/>
 							<property name="com.jaspersoft.studio.unit.x" value="px"/>
 							<property name="local_mesure_unity" value="pixel"/>
@@ -910,7 +910,7 @@
 						<rightPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<staticText>
-						<reportElement x="0" y="2" width="290" height="16" uuid="ef71841b-08b9-4af8-9732-55a748ff6cf2">
+						<reportElement x="0" y="0" width="290" height="16" uuid="ef71841b-08b9-4af8-9732-55a748ff6cf2">
 							<property name="local_mesure_unitheight" value="pixel"/>
 							<property name="com.jaspersoft.studio.unit.height" value="px"/>
 							<property name="local_mesure_unity" value="pixel"/>

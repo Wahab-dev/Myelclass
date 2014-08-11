@@ -10,17 +10,13 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>Sample Request Form</title>
-<style type="text/css">
-#ui-datepicker-div { font-size: 11px; } 	
-</style>
 <script src="js/jquery-1.9.1.js"></script>
 <script src="js/jquery-ui.js"></script>
 <link rel="stylesheet" type="text/css" media="screen" href="css/redmond/jquery-ui-1.10.3.custom.css" />
 <link rel="stylesheet" type="text/css" media="screen" href="css/jquerywidgetstyle.css" />
 <link rel="stylesheet" type="text/css" media="screen" href="css/ui.jqgrid.css" />
-
+<link rel="stylesheet" type="text/css" href="css/elpro/Srf.css" />
 <script src="js/i18n/grid.locale-en.js" type="text/javascript"></script>
-
 <script src="js/jquery.jqGrid.min.js" type="text/javascript"></script>		
 <script src="js/elpro/srf.js"></script> 
 <script src="js/jquery.autosize.js"></script> 
@@ -28,20 +24,19 @@
 $(function() {
 	 var icons = {
 			 header: "ui-icon-circle-arrow-e",
-			 activeHeader: "ui-icon-circle-arrow-s"
+			 activeHeader: "ui-icon-circle-arrow-s",
 	};
 	$(".accordionmenu").accordion({
 		heightStyle: "content",
 		 icons: icons,
 		 active: false,
 		 collapsible: true ,
-		 heightStyle: "content"
+		 heightStyle: "content",
 	});
 });
 </script>
 </head>
 <body>
-<!--  Login Form  -->
 <div id="accordionwidth">
 <table  style="border: thin;">
    		<tr>  
@@ -49,7 +44,7 @@ $(function() {
 			<div id="accordionmenu1" class="accordionmenu">
 			  <h3>Samples </h3>
 			        <ul>
-			              <li> <h:link action='/loadSrf' scope="request">SrfScreen</h:link></li>
+			            <li> <h:link action='/loadSrf' scope="request">SrfScreen</h:link></li>
 							<li> <h:link action='/gotoSampleTracking'>Sample Tracking</h:link></li>
 							<li> <h:link action='/gotoSampleInvoice'>Sample Invoice Screen</h:link></li>
 							  <li> <h:link action='/sit'>Sample Invoice Tracking</h:link></li>
@@ -61,7 +56,7 @@ $(function() {
 				<div id="accordionmenu2" class="accordionmenu">
 					<h3>Contracts</h3>
 			        <ul>
-			            	<li><h:link action='/LoadPrf' scope="request">Prf Screen</h:link></li>
+			            <li><h:link action='/LoadPrf' scope="request">Prf Screen</h:link></li>
 							 <li><h:link action='/gotoBulkTracking'>Bulk Tacking</h:link></li>
 							<li><h:link action='/loadInspection'>Inspection Screen</h:link></li>
 							<li><h:link action='/gotoInspectionTracking'>Inspection Tacking</h:link></li>
@@ -84,7 +79,7 @@ $(function() {
    			</td>
    		</tr>
    </table>
-   </div>
+</div>
 <div id="srfdialogform">
 <h:form action="/Srf" method="post" styleId="saveSrfForm" styleClass="form"> 
 <table style="border: thin;">

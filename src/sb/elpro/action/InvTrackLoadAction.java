@@ -29,13 +29,12 @@ public class InvTrackLoadAction extends Action {
 	
 	public ActionForward execute(ActionMapping mapping, ActionForm form, 
 			HttpServletRequest request, HttpServletResponse response)throws Exception{
-		usersession = request.getSession(false);	
-		if(usersession !=null){		   	
+		usersession = request.getSession(false);
+		if(!(usersession == null)){
 			//usersession.setAttribute("DebExporter",debitbo.getDebExporter());
 			//usersession.setAttribute("DebTanInvno",debitbo.getDebTanInvno());
 			//usersession.setAttribute(arg0, arg1)
-			
 		}
-		return mapping.findForward("invtrackisloaded");
+			return mapping.findForward("invtrackisloaded");
 	}
 }

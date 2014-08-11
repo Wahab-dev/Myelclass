@@ -16,7 +16,6 @@ import com.mysql.jdbc.Statement;
 
 import sb.elpro.model.InspectionBean;
 import sb.elpro.utility.DBConnection;
-import sb.elpro.utility.DateConversion;
 
 
 
@@ -30,7 +29,7 @@ public class InspectionTrackDaoImpl implements InspectionTrackDao {
 	 * @see sb.elpro.dao.InspectionTrackDao#getInspectionTrackLoad(java.lang.String, java.lang.String)
 	 */
 	@Override
-	public List<InspectionBean> getInspectionTrackLoad(String sidx, String sord)
+	public ArrayList<InspectionBean> getInspectionTrackLoad()
 			throws SQLException {
 		ArrayList<InspectionBean> insptracklist = new ArrayList<InspectionBean>();			
 		Connection con = null;
@@ -39,13 +38,14 @@ public class InspectionTrackDaoImpl implements InspectionTrackDao {
 		try{			
 			con = DBConnection.getConnection();
 			st = (Statement) con.createStatement();
-			String sql = "SELECT inspid, inspdate, qualitycontroller, form.contractno, art.articlename as art, sart.articlename as sart, concat_ws('-',art.articlename,sart.articlename) as articlename, grade.color, testid, gradeid, rejectid, rjtotinspected, reject.totpassed, skincount1, skincount2, skincount3, skincount4, skincount5, skincount6, totrejects, form.inspcomments, inspcdn FROM elpro.tbl_inspgradedetails grade join elpro.tbl_insprejectdetails reject on grade.id = reject.id join elpro.tbl_insptestdetails test on grade.id = test.id join elpro.tbl_inspform form on form.inspid = grade.id left join elpro.tbl_prf_article art on art.prfarticleid = grade.articleid left join elpro.tbl_srf_article sart on sart.srfarticleid = grade.articleid order by contractno desc, art.articlename desc, color desc";
+			//String sql = "SELECT invno FROM elpro.tbl_invform";
+			String sql = "SELECT inspid, inspdate, qualitycontroller, form.contractno, concat_ws('-',art.articlename,sart.articlename) as articlename, grade.color, testid, gradeid, rejectid, rjtotinspected, rej.totpassed, skincount1, skincount2, skincount3, skincount4, skincount5, skincount6, totrejects, form.inspcomments, inspcdn FROM elpro.tbl_inspform form left outer join elpro.tbl_inspgradedetails grade on form.inspid = grade.id and form.articleid = grade.articleid left outer join elpro.tbl_insptestdetails test on  form.inspid = test.id and form.articleid = test.articleid left outer join elpro.tbl_insprejectdetails rej on form.inspid = rej.id and form.articleid = rej.articleid left outer join elpro.tbl_prf_article art on art.prfarticleid = grade.articleid left outer join elpro.tbl_srf_article sart on sart.srfarticleid = grade.articleid order by form.inspdate desc, form.contractno, art.articlename desc, color desc";
 			rs = st.executeQuery(sql);
 			while(rs.next()) {	
 			InspectionBean insptrackbean = new InspectionBean();
 				insptrackbean.setInspid(rs.getString("inspid"));
-				insptrackbean.setInspdate( DateConversion.ConverttoNormalDate(rs.getString("inspdate")));
-				insptrackbean.setInspqualityctrlr(rs.getString("qualitycontroller"));
+				insptrackbean.setInspdate((rs.getString("inspdate")));
+				insptrackbean.setInspqualityctrlr(rs.getString("qualitycontroller"));	
 				insptrackbean.setInspContractNo(rs.getString("contractno"));
 				insptrackbean.setArticle(rs.getString("articlename"));
 				insptrackbean.setColor(rs.getString("color"));

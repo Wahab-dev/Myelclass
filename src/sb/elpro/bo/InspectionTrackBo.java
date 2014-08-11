@@ -22,7 +22,7 @@ public interface InspectionTrackBo {
 	 * @return
 	 * etc
 	 */
-	List<InspectionBean> getInspectionTrackDetails(String sidx, String sord) throws Exception;
+	List<InspectionBean> getInspectionTrackDetails() throws Exception;
 
 	
 }

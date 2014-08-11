@@ -4,14 +4,10 @@
 <%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c"%>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="b"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-
 <h:html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>PRF PAGE</title> 
-<style type="text/css">
-
-</style>
 <script src="js/jquery-1.9.1.js"></script>
 <script src="js/jquery-ui.js"></script>
 <!-- <script src="js/jquery.dialogextend.1_0_1.js"></script> -->
@@ -20,40 +16,34 @@
 <link rel="stylesheet" type="text/css" media="screen" href="css/ui.jqgrid.css" />
 <script src="js/i18n/grid.locale-en.js" type="text/javascript"></script>
 <script src="js/jquery.jqGrid.min.js" type="text/javascript"></script>	
-<!-- <script src="/js/jquery.barcode.2.0.3.js" type="text/javascript"> </script> -->
-
-<!-- <script src="js/jquery.dialogextend.js" type="text/javascript"></script>	 -->
 <script src="js/elpro/prf.js"></script> 
 <script src="js/jquery.autosize.js"></script> 
-
-<!-- <script>!window.jQuery && document.write('<script src="js/elpro/prf.js"><\/script>');</script>  -->
 <script type="text/javascript">
 $(function() {
 	 var icons = {
 			 header: "ui-icon-circle-arrow-e",
-			 activeHeader: "ui-icon-circle-arrow-s"
+			 activeHeader: "ui-icon-circle-arrow-s",
 	};
 	$(".accordionmenu").accordion({
 		heightStyle: "content",
 		 icons: icons,
 		 active: false,
 		 collapsible: true ,
-		 heightStyle: "content"
+		 heightStyle: "content",
 	});
 });
+
 </script>
 </head>
-
 <body>
-<!--  Login Form  -->
-<div id="accordionwidth" style="width: 1100px">
-<table  style="border: thin; background-color: #f5f8f9">
+<div id="accordionwidth">
+	<table  style="border: thin;">
    		<tr>  
    			<td>		
 			<div id="accordionmenu1" class="accordionmenu">
 			  <h3>Samples </h3>
 			        <ul>
-			             <li> <h:link action='/loadSrf' scope="request">SrfScreen</h:link></li>
+			            <li> <h:link action='/loadSrf' scope="request">SrfScreen</h:link></li>
 							<li> <h:link action='/gotoSampleTracking'>Sample Tracking</h:link></li>
 							<li> <h:link action='/gotoSampleInvoice'>Sample Invoice Screen</h:link></li>
 							  <li> <h:link action='/sit'>Sample Invoice Tracking</h:link></li>
@@ -88,11 +78,11 @@ $(function() {
    			</td>
    		</tr>
    </table>
-   </div>
+</div>
 <div>
-<h:form action="/Prf.do" method="post" styleId="savePrfForm" onreset="" styleClass="form">
-	   				<td >Welcome<h:text property="userinsession" styleId="userinsession" value="${user.name}" readonly="true" ></h:text></td >
-	   				<td ><h:text property="formaction" styleId="formaction" value="${actionform}"></h:text></td> 
+	<h:form action="/Prf.do" method="post" styleId="savePrfForm" onreset="" styleClass="form">
+	   		<td >Welcome<h:text property="userinsession" styleId="userinsession" value="${user.name}" readonly="true" ></h:text></td >
+	   				<td ><h:text property="formaction" styleId="formaction" value="${prfactionform}"></h:text></td> 
 	   				<td><h:submit property="prfaction" value="Logout"></h:submit></td> 
     <table border="1" cellspacing="0" cellpadding="0">
         <tr>

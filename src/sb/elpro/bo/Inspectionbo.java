@@ -165,8 +165,14 @@ public interface InspectionBo {
 	 */
 	public boolean saveInspectionform(InspectionBean inspbean)throws Exception;
 
-	
 
+	/**  
+	 * (Method description)
+	 * @param
+	 * @return
+	 * etc
+	 */
+	public int getInspid()throws Exception;
 	
 	
 }

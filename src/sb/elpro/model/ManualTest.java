@@ -19,6 +19,7 @@ public class ManualTest implements Serializable {
 	 */
 	private static final long serialVersionUID = 8763501654795880854L;
 		private String id;
+		private String inspid;
 		private String testid;
 		private String articleid;
 		private String testcolor;
@@ -603,6 +604,18 @@ public class ManualTest implements Serializable {
 		 */
 		public void setId(String id) {
 			this.id = id;
+		}
+		/**
+		 * @return the inspid
+		 */
+		public String getInspid() {
+			return inspid;
+		}
+		/**
+		 * @param inspid the inspid to set
+		 */
+		public void setInspid(String inspid) {
+			this.inspid = inspid;
 		}
 		
 		

@@ -6,16 +6,12 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>User Input Screen</title>
-<style type="text/css">
-.myclass 
-{
-    text-transform:capitalize;
-}
-</style>
+
 <script src="js/jquery-1.9.1.js"></script>
 <script src="js/jquery-ui.js"></script>
 <link rel="stylesheet" type="text/css" media="screen" href="css/redmond/jquery-ui-1.10.3.custom.css" />
 <link rel="stylesheet" type="text/css" media="screen" href="css/ui.jqgrid.css" />
+<link rel="stylesheet" type="text/css" href="css/elpro/UserInput.css" />
 <script src="js/i18n/grid.locale-en.js" type="text/javascript"></script>
 <script src="js/jquery.jqGrid.min.js" type="text/javascript"></script>
 <script src="js/elpro/userinput.js"></script> 
@@ -40,19 +36,9 @@ $(function() {
 		 heightStyle: "content"
 	});
 });
-
-
 </script>
 </head>
 <body>
-<h:form action="/login" method="post" >
-<table style="border: 15px; ">
-   		<tr>  			
-   			<td>Welcome <h:text property="userinsession" styleId="userinsession" value="${user.name}" readonly="true" ></h:text></td> 	
-   			<td><h:submit property="action" value="Logout"></h:submit></td> 
-   		</tr>
-   </table>
- </h:form>
 <div id="accordionwidth">
 <table  style="border: thin;">
    		<tr>  
@@ -60,8 +46,8 @@ $(function() {
 			<div id="accordionmenu1" class="accordionmenu">
 			  <h3>Samples </h3>
 			        <ul>
-			             <li> <h:link action='/loadSrf' scope="request">SrfScreen</h:link></li>
-							<li> <h:link action='/gotoSampleTracking'>Sample Tacking</h:link></li>
+			            <li> <h:link action='/loadSrf' scope="request">SrfScreen</h:link></li>
+							<li> <h:link action='/gotoSampleTracking'>Sample Tracking</h:link></li>
 							<li> <h:link action='/gotoSampleInvoice'>Sample Invoice Screen</h:link></li>
 							  <li> <h:link action='/sit'>Sample Invoice Tracking</h:link></li>
 							 <li> <h:link action='/gotoSampleDebit'>Sample Debit</h:link></li>
@@ -73,15 +59,15 @@ $(function() {
 					<h3>Contracts</h3>
 			        <ul>
 			            <li><h:link action='/LoadPrf' scope="request">Prf Screen</h:link></li>
-						 <li><h:link action='/gotoBulkTracking'>Bulk Tacking</h:link></li>
-						<li><h:link action='/loadInspection'>Inspection Screen</h:link></li>
-						<li><h:link action='/gotoInspectionTracking'>Inspection Tacking</h:link></li>
-						<li><h:link action='/gotoinvoice'>Invoice Screen</h:link></li>
-						<li><h:link action='/InvoiceTracking'>Invoice Tracking</h:link></li>
-						<li><h:link action='/gotodebit'>Debit Screen</h:link></li>
-						<li><h:link action='/gotodebittracking'>Debit Tacking</h:link></li>
-						<li><h:link action='/gotopayment'>Payment Screen</h:link></li>
-						<li><h:link action='/gotoMasterTracking'>Master Tacking</h:link></li>
+							 <li><h:link action='/gotoBulkTracking'>Bulk Tacking</h:link></li>
+							<li><h:link action='/loadInspection'>Inspection Screen</h:link></li>
+							<li><h:link action='/gotoInspectionTracking'>Inspection Tacking</h:link></li>
+							<li><h:link action='/gotoinvoice'>Invoice Screen</h:link></li>
+							<li><h:link action='/InvoiceTracking'>Invoice Tracking</h:link></li>
+							<li><h:link action='/gotodebit'>Debit Screen</h:link></li>
+							<li><h:link action='/gotodebittracking'>Debit Tacking</h:link></li>
+							<li><h:link action='/gotopayment'>Payment Screen</h:link></li>
+							<li><h:link action='/gotoMasterTracking'>Master Tacking</h:link></li>
 			        </ul>
 			        </div>
 			   </td>
@@ -96,6 +82,14 @@ $(function() {
    		</tr>
    </table>
 </div>
+<h:form action="/login" method="post" >
+<table style="border: 15px; ">
+   		<tr>  			
+   			<td>Welcome <h:text property="userinsession" styleId="userinsession" value="${user.name}" readonly="true" ></h:text></td> 	
+   			<td><h:submit property="action" value="Logout"></h:submit></td> 
+   		</tr>
+   </table>
+ </h:form>
 
 <ul id="jqgriduserinput">
  <li> <h3>Tanner </h3>	

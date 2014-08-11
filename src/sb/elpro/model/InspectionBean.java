@@ -90,6 +90,7 @@ public class InspectionBean implements Serializable {
 	
 	// Rejects 
 	private String rejectid;
+	private String rejinspid;
 	private String arttype;
 	private String rejcolor;
 	private String totinspected;
@@ -107,18 +108,7 @@ public class InspectionBean implements Serializable {
 	private String rjtotinspected;
 	private String status;
 	
-	/**
-	 * @return the inspid
-	 */
-	public String getInspid() {
-		return inspid;
-	}
-	/**
-	 * @param inspid the inspid to set
-	 */
-	public void setInspid(String inspid) {
-		this.inspid = inspid;
-	}
+	
 	/**
 	 * @return the inspContractNo
 	 */
@@ -840,6 +830,30 @@ public class InspectionBean implements Serializable {
 	 */
 	public void setInsptype(String insptype) {
 		this.insptype = insptype;
+	}
+	/**
+	 * @return the inspid
+	 */
+	public String getInspid() {
+		return inspid;
+	}
+	/**
+	 * @param inspid the inspid to set
+	 */
+	public void setInspid(String inspid) {
+		this.inspid = inspid;
+	}
+	/**
+	 * @return the rejinspid
+	 */
+	public String getRejinspid() {
+		return rejinspid;
+	}
+	/**
+	 * @param rejinspid the rejinspid to set
+	 */
+	public void setRejinspid(String rejinspid) {
+		this.rejinspid = rejinspid;
 	}
 
 

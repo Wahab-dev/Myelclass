@@ -8,17 +8,19 @@
 <title>Inspection Tracking Page</title>
 <script src="js/jquery-1.9.1.js"></script>
 <script src="js/jquery-ui.js"></script>
+<link rel="stylesheet" type="text/css" href="css/ui.multiselect.css" />
+<script type="text/javascript" src="js/ui.multiselect.js"></script>
 <link rel="stylesheet" type="text/css" media="screen" href="css/redmond/jquery-ui-1.10.3.custom.css" />
 <link rel="stylesheet" type="text/css" media="screen" href="css/ui.jqgrid.css" />
+<script src="js/i18n/grid.locale-en.js" type="text/javascript"></script>
+<script src="js/jquery.jqGrid.min.js" type="text/javascript"></script>
+<script src="js/elpro/insptrack.js"></script>
 <style type="text/css">
 #ui-datepicker-div { font-size: 11px; } 
 .myAltRowClass { background-color: Light; background-image: none; }
-</style>
-<script src="js/i18n/grid.locale-en.js" type="text/javascript"></script>
-<script src="js/jquery.jqGrid.min.js" type="text/javascript"></script>
-<script src="js/elpro/insptrack.js"></script> 	
+</style> 
 <script type="text/javascript">
-$(function() {
+ $(function() {
 	 var icons = {
 			 header: "ui-icon-circle-arrow-e",
 			 activeHeader: "ui-icon-circle-arrow-s"
@@ -30,7 +32,7 @@ $(function() {
 		 collapsible: true ,
 		 heightStyle: "content"
 	});
-});
+}); 
 </script>
 </head>
 <body>
@@ -81,16 +83,12 @@ $(function() {
 <h:form action="/login" method="post" >
 	<table style="border: thin;">
    		<tr>  			
-   		<td>Welcome <h:text property="userinsession" styleId="userinsession" value="${user.name}" readonly="true" ></h:text></td> 		
+   			<td>Welcome <h:text property="userinsession" styleId="userinsession" value="${user.name}" readonly="true" ></h:text></td> 		
    			<td><h:submit property="action" value="Logout"></h:submit></td> 
    		</tr>
    </table>
 </h:form >
-
-
 <!--  Inspection Tracking Form  -->
-<h:form>
-<div>
 	 Group By: <select id="chngroup"> 
 			<option value="clear" selected="selected">Remove Grouping</option>
 			<option value="inspContractNo">CtNo</option> 
@@ -98,12 +96,8 @@ $(function() {
 			<option value="inspqualityctrlr">QCtrlr</option>
 			<option value="article">Article</option> 
 			<option value="color">color</option> 
-			
 		</select> <br/><br/> 
-	</div>	
 	<table id="insptracktbl"></table> 
 	<div id="insptrackpager"></div> 
-</h:form> 
-
 </body>
 </html>

@@ -9,12 +9,13 @@
 <link type="text/css" href="css/ui-lightness/jquery-ui-1.7.3.custom.css" rel="Stylesheet" />
 <link rel="stylesheet" type="text/css" media="screen" href="css/jquerywidgetstyle.css" />
 <style type="text/css">
-#ui-datepicker-div { font-size: 11px; } 	
+	
 </style>	
 <script src="js/jquery-1.9.1.js"></script>
 <script src="js/jquery-ui.js"></script>
 <link rel="stylesheet" type="text/css" media="screen" href="css/redmond/jquery-ui-1.10.3.custom.css" />
 <link rel="stylesheet" type="text/css" media="screen" href="css/ui.jqgrid.css" />
+<link rel="stylesheet" type="text/css" href="css/elpro/payment.css" />
 <script src="js/i18n/grid.locale-en.js" type="text/javascript"></script>
 <script src="js/jquery.jqGrid.min.js" type="text/javascript"></script>
 <script src="js/elpro/payment.js"></script> 		
@@ -92,6 +93,9 @@ $(function() {
         			<tr>
         				<td>Tanner  :</td>
         				<td><h:text property="deb_exporter" styleId="deb_exporter" value="${editpayform[0].deb_exporter}"></h:text></td>
+        			</tr>
+        			<tr>
+        				<td><h:hidden property="deb_exporterid"  styleId="deb_exporterid"  value="${editpayform[0].deb_exporterid}"></h:hidden></td>
         			</tr>
         			<tr>
         				<td>Address:</td>

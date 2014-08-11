@@ -102,6 +102,7 @@ public class SrfForm extends ActionForm{
 	private String srf_isSample;
 	private String srfactionform;
 	
+	private String srfaction;
 	/**
 	 * @return the srf_sampleno
 	 */
@@ -972,5 +973,17 @@ public class SrfForm extends ActionForm{
 		 */
 		public void setSrf_deliveracctno(String srf_deliveracctno) {
 			this.srf_deliveracctno = srf_deliveracctno;
+		}
+		/**
+		 * @return the srfaction
+		 */
+		public String getSrfaction() {
+			return srfaction;
+		}
+		/**
+		 * @param srfaction the srfaction to set
+		 */
+		public void setSrfaction(String srfaction) {
+			this.srfaction = srfaction;
 		}
 }

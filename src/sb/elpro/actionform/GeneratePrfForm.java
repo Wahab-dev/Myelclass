@@ -12,7 +12,7 @@ import org.apache.struts.action.ActionForm;
  * @author Wahab
  *
  */
-public class GeneratePrfForm extends  ActionForm{
+public class GeneratePrfForm extends ActionForm{
 
 	/**
 	 * 

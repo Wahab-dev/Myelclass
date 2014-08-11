@@ -156,6 +156,16 @@ public class InspectionBoImpl implements InspectionBo {
 	}
 
 
+	/* (non-Javadoc)
+	 * @see sb.elpro.bo.InspectionBo#getInspid()
+	 */
+	@Override
+	public int getInspid() throws Exception {
+		int inspid =  inspdao.getInspid();
+		return inspid;
+	}
+
+
 	
 	
 	

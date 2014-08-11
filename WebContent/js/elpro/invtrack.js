@@ -76,7 +76,42 @@ $(document).ready(function() {
 	
 	var invtrackgrid = $("#invtracktbl");
 	
-	
+	initDateSearch = function (elem) {
+        setTimeout(function () {
+            $(elem).datepicker({
+                dateFormat: 'd-m-yy',
+                autoSize: true,
+                changeYear: true,
+                changeMonth: true,
+                showWeek: true,
+                showButtonPanel: true
+            });
+        }, 100);
+    },
+    
+    DateGrpEdit = function (elem) {
+        $(elem).datepicker({
+        	beforeShowDay: function(date) {
+        		/*
+        		*Function 2 disable Sundays
+        		*/
+                var day = date.getDay();
+                return [(day != 0), ''];
+            },
+        	autoSize: true,
+		    changeMonth:false,
+		    dateFormat: "dd-mm-yy",
+		    showWeek: true,
+		    firstDay: 1,
+		    changeYear: true,
+            changeMonth: true,
+		    numberOfMonths: 2,
+		    showButtonPanel: true,
+		    gotoCurrent:true, 
+        });
+    },
+
+    
     $('#chngroup').change(function(){
 		var vl = $(this).val();
 		if(vl){
@@ -102,7 +137,10 @@ $(document).ready(function() {
 	invtrackgrid.jqGrid({
 		url:"/Myelclass/InvTrackAction.do?action=load",
 		datatype: "json",
-		colNames:['Type','Inv No','Date','Exporter','Tan InvNo','Customer','Invbillid','Ct No','articleid','Article','Color','Size','Subs','Selc','Unit','Pcs','Rate', 'Qty','Shipd','Bal','Amt','Courier','Discounts','Total','AWBill No','AWBill Date','Comm','Other Ccomm','Tc','Consignee','Notify','Exporterref','Buyer','Bank'],
+		colNames:['Type','Inv No','Date','Exporter','Tan InvNo','Customer','Invbillid','Ct No','articleid','Article',
+		          'Color','Size','Subs','Selc','Unit','Pcs','Rate', 'Qty','Shipd','Bal','Amt','Courier','Discounts',
+		          'Total','AWBill No','AWBill Date','Comm','Other Ccomm','Tc','Consignee','Notify','Exporterref','Buyer',
+		          'Bank','Deduction','BankCharge','Amount Recieved','Balance Amt','Ex rate','Amt in Rs','Reciept Date','Remarks'],
 	    colModel:[
 					{name: 'invtype', index: 'invtype', align:'center', width:40, editable:true, sortable: true, hidden: false,  
 						
@@ -118,8 +156,11 @@ $(document).ready(function() {
 						        }
 						    }
 					 },
-					 {name: 'invdt', index: 'invdt', align:'center', width:60, editable:true, sortable: true, hidden: false,  
-						
+					 {name: 'invdt', index: 'invdt', align:'center', width:60, editable:true, sortable: true, hidden: false, search: true, 
+						 sorttype: 'date',
+						 formatter: 'date', formatoptions: { newformat: 'd-m-Y' }, editable: true, datefmt: 'd-M-Y',
+		                searchoptions: { sopt: ['eq', 'ne', 'lt', 'le', 'gt', 'ge'], dataInit: initDateSearch } 	
+							
 					 },
 					 {name: 'exporter', index: 'exporter', align:'center', width:60, editable:true, sortable: true, hidden: false,  
 						
@@ -219,6 +260,78 @@ $(document).ready(function() {
 					 {name: 'bank', index: 'bank', align:'center', width:90, editable:true, sortable: true, hidden: true,  
 						
 					 },
+					 {name: 'deduction', index: 'deduction', align:'right', width:90, editable:true, sortable: true, hidden: false,  
+						 formatter: 'number',  formatoptions: { defaultValue: '0.00' },
+					 },
+					 {name: 'bankcharge', index: 'bankcharge', align:'right', width:80, editable:true, sortable: true, hidden: false,  
+							editrules: { number:true},
+							formatter: 'number',  formatoptions: { defaultValue: '0.00' },
+							/*editoptions:{
+								dataEvents:[{
+									type: 'focusout',
+									fn: function(e){
+										var amt = $("#invtotamount").val();
+										var bankchrg = $("#bankcharge").val();	
+										var deduct = $("#deduction").val();
+										var realamt = (parseFloat(amt) - (parseFloat(bankchrg) + parseFloat(deduct)).toFixed(2));
+										$("#amtrecieved").val(realamt);
+									}
+								}],
+							},*/
+						},
+						{name: 'amtrecieved', index: 'amtrecieved', align:'right', width:80, editable:true, sortable: true, hidden: false,  
+							 editrules: {required: true, number:true},
+							 editoptions:{
+								 dataEvents:[{
+									type: 'focusout',
+									fn: function(e){
+										var amt = $("#amtrecieved").val();
+										var tot = $("#invtotamount").val();
+										var bankchrg = $("#bankcharge").val();	
+										var deduct = $("#deduction").val();
+										var balance = (parseFloat(tot) - (parseFloat(amt) +parseFloat(bankchrg)+parseFloat(deduct))).toFixed(2);
+										$("#balanceamt").val(balance);
+									}
+								}],
+							 },
+							 formatter: 'number',  formatoptions: { defaultValue: '0.00' },
+						},
+						{name: 'balanceamt', index: 'balanceamt', align:'right', width:80, editable:true, sortable: true, hidden: true,  
+							 editrules: {required: true, number:true},
+							 formatter: 'number',  formatoptions: { defaultValue: '0.00' },
+						},
+						
+						{name: 'exchngrate', index: 'exchngrate', align:'right', width:45, editable:true, sortable: true, hidden: true,  
+							 editrules:{number:true},
+							 formatter: 'number',  formatoptions: { defaultValue: '0.00' },
+							 editoptions:{
+								 dataEvents:[{
+									type: 'focusout',
+									fn: function(e){
+										var amt = $("#amtrecieved").val();
+										var exrt = $("#exchngrate").val();									
+										var amtinrs = (parseFloat(amt) * parseFloat(exrt)).toFixed(2);
+										$("#amtininr").val(amtinrs);
+									}
+								}],
+							 },
+						},
+						{name: 'amtininr', index: 'amtininr', align:'right', width:70, editable:true, sortable: true, hidden: true,  
+							 formatter: 'number',  
+							 formatoptions: {decimalSeparator: ".", thousandsSeparator: ",", decimalPlaces: 2, defaultValue: '0.00' },
+							 editrules: {required: true},
+						},
+						{name: 'recieptdate', index: 'recieptdate', align:'center', width:60, editable:true, sortable: true, hidden: false,  
+							 sorttype: 'date',
+							 formatter: 'date', formatoptions: { newformat: 'd-m-Y' },  datefmt: 'd-M-Y', defaultValue:null,
+			                 searchoptions: { sopt: ['eq', 'ne', 'le', 'ge'], dataInit: initDateSearch }, 	
+							 editoptions: { dataInit: DateGrpEdit },
+							 editrules :{required : true},
+						},
+						{name: 'remarks', index: 'remarks', align:'center', width:100, editable:true, sortable: true, hidden: false,  
+							 edittype: 'textarea',
+							 editrules: {required: true},
+						},	 
 	              ],
 	    jsonReader : {  
 			repeatitems:false,
@@ -240,7 +353,7 @@ $(document).ready(function() {
         loadonce: true,
         ignoreCase:true,
         hidegrid: false,
-       // editurl: "",
+        editurl: "/Myelclass/InvTrackAction.do?action=paymnt",
         sortable: true,
         toppager:true,
         gridview : true,
@@ -261,22 +374,121 @@ $(document).ready(function() {
         	 $self.jqGrid("footerData", "set", { invqshpd: qshpd.toFixed(2)});
         	 $self.jqGrid("footerData", "set", { invqbal: qbal});
         	 $self.jqGrid("footerData", "set", { invamt: amt.toFixed(2)});
-        	 $self.jqGrid("footerData", "set", { invothercrg: courier.toFixed(2)});
-        	 $self.jqGrid("footerData", "set", { invclaim: discount.toFixed(2)});
+        	 //$self.jqGrid("footerData", "set", { invothercrg: courier.toFixed(2)});
+        	 //$self.jqGrid("footerData", "set", { invclaim: discount.toFixed(2)});
+        },
+        onSelectRow: function(rowid, status, e) {
+      
+        	var selrowid = sampledebgrid.jqGrid('getGridParam', 'selrow');
+        	var realzdamt = sampledebgrid.jqGrid('getCell',selrowid,'amtrecieved');
+        	if(realzdamt != 0.00){
+        		//disable add button -> 
+        		$("#payadd").addClass('ui-state-disabled');
+        	}else{
+        		$("#payadd").removeClass('ui-state-disabled');
+        	}
         }
 	 });
 	invtrackgrid.jqGrid('navGrid','#invtrackpager',{
-		edit: false, add: false, del: false, search: true, view: true, cloneToTop:true,
-		addtext: 'Add', edittext: 'Edit', deltext: 'Delete', searchtext: 'Search', refreshtext: 'Reload', viewtext: 'View',
+		edit: true, add: false, del: false, search: true, view: true, cloneToTop:true,
+		addtext: 'Add', edittext: 'Edit Payment', deltext: 'Delete', searchtext: 'Search', refreshtext: 'Reload', viewtext: 'View',
 		beforeRefresh: function(){
 			invtrackgrid.jqGrid('setGridParam',{datatype:'json'}).trigger('reloadGrid');
-		},},{},{},{},
+		},},
+		{
+			beforeShowForm:  function(form) { 
+		 		$("#tr_debdt").show();
+		 		$("#tr_balanceamt").show();
+		 		$("#tr_invtype").hide();
+		 		$("#tr_invdt").hide();
+		 		$("#tr_exporter").hide();
+		 		$("#tr_customer").hide();
+		 		$("#tr_invctno").hide();
+		 		$("#tr_invartname").hide();
+		 		$("#tr_invcolor").hide();
+		 		$("#tr_invsize").hide();
+		 		$("#tr_invsubs").hide();
+		 		$("#tr_invselc").hide();
+		 		$("#tr_invrate").hide();
+		 		$("#tr_invqty").hide();
+		 		$("#tr_invqshpd").hide();
+		 		$("#tr_invqbal").hide();
+		 		$("#tr_invamt").hide();
+		 		var exporter = $("#exporter").val();
+			 	if(exporter.toUpperCase() == "IC"){
+			 		$("#tr_deduction").show();
+			 		$("#tr_bankcharge").show();
+			 		$("#tr_exchngrate").show();
+			 		$("#tr_amtininr").show();
+			 	}else{
+		 			$("#tr_deduction").hide();
+		 			$("#tr_bankcharge").hide();
+					$("#tr_exchngrate").hide();
+					$("#tr_amtininr").hide();
+		 		}
+		 	},
+		 	recreateForm: true,
+		 		editData: {//Function to Add parameters to the status 
+		 			oper: 'editpay',
+                },
+            closeAfterEdit : true,
+    		reloadAfterSubmit : true,
+		},
+		{},{},
 		{
 	 		multipleSearch:true,
 	 		stringResult  :true,
 	 		multipleGroup:true,
 	 	}	
-	);
+	).navButtonAdd('#invtrackpager',{
+		id:'payadd',
+	 	caption:"Payment Reciept", 
+		buttonicon:"ui-icon-circle-minus", 
+		position:"first",
+		onClickButton: function(){ 
+			var $self = $(this);
+		 	$self.jqGrid("editGridRow", $self.jqGrid("getGridParam", "selrow"),
+		 	{
+		 		beforeShowForm:  function(form) { 
+		 		$("#tr_debdt").show();
+		 		$("#tr_balanceamt").show();
+		 		$("#tr_invtype").hide();
+		 		$("#tr_invdt").hide();
+		 		$("#tr_exporter").hide();
+		 		$("#tr_customer").hide();
+		 		$("#tr_invctno").hide();
+		 		$("#tr_invartname").hide();
+		 		$("#tr_invcolor").hide();
+		 		$("#tr_invsize").hide();
+		 		$("#tr_invsubs").hide();
+		 		$("#tr_invselc").hide();
+		 		$("#tr_invrate").hide();
+		 		$("#tr_invqty").hide();
+		 		$("#tr_invqshpd").hide();
+		 		$("#tr_invqbal").hide();
+		 		$("#tr_invamt").hide();
+		 		var exporter = $("#exporter").val();
+			 	if(exporter.toUpperCase() == "IC"){
+			 		$("#tr_deduction").show();
+			 		$("#tr_bankcharge").show();
+			 		$("#tr_exchngrate").show();
+			 		$("#tr_amtininr").show();
+			 	}else{
+		 			$("#tr_deduction").hide();
+		 			$("#tr_bankcharge").hide();
+					$("#tr_exchngrate").hide();
+					$("#tr_amtininr").hide();
+		 		}
+		 	},
+		 	recreateForm: true,
+		 		editData: {//Function to Add parameters to the status 
+		 			oper: 'addpay',
+                },
+            closeAfterEdit : true,
+    		reloadAfterSubmit : true,
+		 	});
+		}
+	});
 	invtrackgrid.jqGrid('navButtonAdd',"#invtrackpager",{caption:"Toggle",title:"Toggle Search Toolbar", buttonicon :'ui-icon-pin-s',
 		onClickButton:function(){
 			invtrackgrid[0].toggleToolbar();
@@ -302,6 +514,7 @@ $(document).ready(function() {
 	
 	//Bootom Pager Customization
 	  var bottomPagerDiv = $("div#invtrackpager")[0];
+	  $("#edit_" + invtrackgrid[0].id, bottomPagerDiv).remove();
 	  $("#view_" + invtrackgrid[0].id, bottomPagerDiv).remove();
 	  $("#search_" + invtrackgrid[0].id, bottomPagerDiv).remove(); 
 	  $("#refresh_" + invtrackgrid[0].id, bottomPagerDiv).remove(); 

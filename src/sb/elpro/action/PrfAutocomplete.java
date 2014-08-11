@@ -46,7 +46,7 @@ public class PrfAutocomplete extends Action {
 		 response.setCharacterEncoding("UTF-8");
 			PrintWriter out = response.getWriter();
 			usersession = request.getSession(false);
-			if(usersession != null){
+			if(!(usersession == null)){
 				String action = request.getParameter("action");
 				if(action.equalsIgnoreCase("tan")){ 
 					String tanterm = request.getParameter("term");
@@ -77,6 +77,12 @@ public class PrfAutocomplete extends Action {
 			 		out.println(jsonOrdertanArray);
 				}else if (action.equalsIgnoreCase("selec")){
 					List<AutoComplete> seleclist =  prfbo.getPrfSelection();
+					System.out.println("List Value " +seleclist.size());
+					JSONArray jsonOrdertanArray = JSONArray.fromObject(seleclist);
+					 System.out.println(jsonOrdertanArray);
+			 		out.println(jsonOrdertanArray);
+				}else if (action.equalsIgnoreCase("sizerem")){
+					List<AutoComplete> seleclist =  prfbo.getPrfSizeRem();
 					System.out.println("List Value " +seleclist.size());
 					JSONArray jsonOrdertanArray = JSONArray.fromObject(seleclist);
 					 System.out.println(jsonOrdertanArray);
@@ -198,7 +204,6 @@ public class PrfAutocomplete extends Action {
 				System.out.println("Invalid User pls Login Again");
 				return mapping.findForward("logout");
 			}
-			
 		return null;
 	}
 

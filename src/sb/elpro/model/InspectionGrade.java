@@ -18,7 +18,8 @@ public class InspectionGrade implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = -6097156017848517466L;
-	private String id;
+	private String gradeinspid;
+	private String inspid;
 	private String gradeid;
 	private String artid;
 	private String gradecolor;
@@ -47,18 +48,8 @@ public class InspectionGrade implements Serializable {
 	private String skincount6;
 	private String percent6;
 	private String comment6;
-	/**
-	 * @return the id
-	 */
-	public String getId() {
-		return id;
-	}
-	/**
-	 * @param id the id to set
-	 */
-	public void setId(String id) {
-		this.id = id;
-	}
+	
+	
 	/**
 	 * @return the gradeid
 	 */
@@ -398,6 +389,30 @@ public class InspectionGrade implements Serializable {
 	 */
 	public void setSkincount6(String skincount6) {
 		this.skincount6 = skincount6;
+	}
+	/**
+	 * @return the inspid
+	 */
+	public String getInspid() {
+		return inspid;
+	}
+	/**
+	 * @param inspid the inspid to set
+	 */
+	public void setInspid(String inspid) {
+		this.inspid = inspid;
+	}
+	/**
+	 * @return the gradeinspid
+	 */
+	public String getGradeinspid() {
+		return gradeinspid;
+	}
+	/**
+	 * @param gradeinspid the gradeinspid to set
+	 */
+	public void setGradeinspid(String gradeinspid) {
+		this.gradeinspid = gradeinspid;
 	}
 	
 	

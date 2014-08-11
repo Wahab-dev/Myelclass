@@ -15,6 +15,7 @@ import sb.elpro.dao.InvoiceTrackDao;
 import sb.elpro.dao.InvoiceTrackDaoImpl;
 import sb.elpro.model.ExporterDetails;
 import sb.elpro.model.InvBillDetails;
+import sb.elpro.model.Invpaymentdetails;
 
 /**
  * @author Wahab
@@ -36,6 +37,26 @@ public class InvoiceTrackBoImpl implements InvoiceTrackBo {
 	public List<InvBillDetails> getInvTrackDetails() throws Exception {
 		ArrayList<InvBillDetails> invtrackarr = invtrackdao.getInvTrackList();
 		return invtrackarr;
+	}
+
+
+	/* (non-Javadoc)
+	 * @see sb.elpro.bo.InvoiceTrackBo#addPayment(sb.elpro.model.Invpaymentdetails)
+	 */
+	@Override
+	public boolean addPayment(Invpaymentdetails invpay) throws Exception {
+		boolean isdPayadded = invtrackdao.addPayment(invpay);
+		return isdPayadded;
+	}
+
+
+	/* (non-Javadoc)
+	 * @see sb.elpro.bo.InvoiceTrackBo#editPayment(sb.elpro.model.Invpaymentdetails)
+	 */
+	@Override
+	public boolean editPayment(Invpaymentdetails invpay) throws Exception {
+		boolean isPayupdate = invtrackdao.editPayment(invpay);
+		return isPayupdate;
 	}
 	 
 	 

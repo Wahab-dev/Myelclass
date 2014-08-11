@@ -38,19 +38,14 @@ public class ArticleSelectList extends Action{
 		PrintWriter out = response.getWriter();
 		System.out.println("In Article Selected List Servlet");
 		usersession = request.getSession(false);
-		if(usersession != null){
+		if(!(usersession == null)){
+		
 			List<SelectArticle> articlelist = prfbo.getarticlename();
-		//	JSONObject myjsonobj = new JSONObject();
-		//	JsonConfig myjsonobj = new JsonConfig();
-			
-		JSONArray jsonOrderArray = JSONArray.fromObject(articlelist);
-			//myjsonobj.accumulate(articlelist);
-			//jsonOrderArray.
-			//JSONString myjason = JSONString(String);
-			//((JSONString) articlelist).toJSONString();
+			JSONArray jsonOrderArray = JSONArray.fromObject(articlelist);
 			System.out.println("articlelist  "+jsonOrderArray);
 			out.println(jsonOrderArray);
 		}
-		return null;
+			return null;
 	}
+		
 }

@@ -34,11 +34,15 @@ $(document).ready(function() {
          	$('#insp_cdn').val(ui.item.splcdn);
          	var type = $('#insptype').val();
          	var ctno =ui.item.value;
-         	alert(ctno);
+         	//$('#inspid').val();
          	artgrid.jqGrid('setGridParam',{url:"/Myelclass/InspectionAction.do?event=loadarticle&ctno="+ctno+"&type="+type}).trigger("reloadGrid");
          },
          change: function(event,ui){
 	    	 $(this).val((ui.item ? ui.item.value : ""));
+	    	 $.getJSON("/Myelclass/InspAutocomplete.do?action=inspid",
+	 				function(result) { 	
+	 			        $('#inspid').val(result);
+	 			 });
 	   }
 	}); 
 	$('#inspqualityctrlr').autocomplete({
@@ -117,7 +121,6 @@ $(document).ready(function() {
 	    height : "auto",
 	    width:"auto",
 	    multiselect: true,
-	    loadonce: true,
 	    sortname: 'articlename',  
 	    sortorder: 'desc',  
 	    viewrecords: true,
@@ -131,18 +134,16 @@ $(document).ready(function() {
 	        return(true);
 	    },
 	    onSelectRow: function(rowid){
+	    	arid = artgrid.jqGrid('getCell', rowid, 'prf_articleid');
+	    	$("#artidhidden").val(arid); 	
 	    	clr = artgrid.jqGrid('getCell', rowid, 'prf_color');
-	       	arid = artgrid.jqGrid('getCell', rowid, 'prf_articleid'); 
-	       	$("#artidhidden").val(arid); 
-	    	$("#articlehidden").val(artgrid.jqGrid('getCell', rowid, 'prf_articlename'));  
-	    	$("#colorhidden").val(clr); 
-	    	$("#tanhidden").val(artgrid.jqGrid('getCell', rowid, 'prf_tannid')); 
-	    	$("#custhidden").val(artgrid.jqGrid('getCell', rowid, 'prf_custid')); 
-	    	$("#sizehidden").val(artgrid.jqGrid('getCell', rowid, 'prf_size')); 
-	    	$("#substancehidden").val(artgrid.jqGrid('getCell', rowid, 'prf_substance')); 
-	    	$("#selhidden").val(artgrid.jqGrid('getCell', rowid, 'prf_selection')); 
+	    	$("#colorhidden").val(clr);
+	    	$("#tanhidden").val(artgrid.jqGrid('getCell', rowid, 'prf_tannid'));
+	    	$("#custhidden").val(artgrid.jqGrid('getCell', rowid, 'prf_custid'));
+	    	$("#sizehidden").val(artgrid.jqGrid('getCell', rowid, 'prf_size'));
+	    	$("#substancehidden").val(artgrid.jqGrid('getCell', rowid, 'prf_substance'));
+	    	$("#selhidden").val(artgrid.jqGrid('getCell', rowid, 'prf_selection'));
 	    	$("#quantityhidden").val(artgrid.jqGrid('getCell', rowid, 'prf_quantity')); 
-	    	
 	       	testgrid.jqGrid('setGridParam',{url:"/Myelclass/InspectionAction.do?event=manualtest&artid="+arid}).trigger("reloadGrid");
 	       	gradgrid.jqGrid('setGridParam',{url:"/Myelclass/InspectionAction.do?event=grade&artid="+arid}).trigger("reloadGrid");
 	       	rejgrid.jqGrid('setGridParam',{url:"/Myelclass/InspectionAction.do?event=reject&artid="+arid}).trigger("reloadGrid");	       	
@@ -171,10 +172,9 @@ $(document).ready(function() {
 				          'Organoleptic Test','Organoleptictested', 'Organolepticresult', 'Organolepticcomments',
 				         ],  
 			    colModel:[  
-					{name:'id', index:'id', align:'center', width:60, editable:true, hidden: true, 
-						
+					{name: 'id', index:'id', align:'center', width:60, editable:true, hidden: true, 
 						formoptions: {rowpos: 1, colpos: 1},
-					},	
+					},
 					{name: 'testid', index:'testid', align:'center', width:60, editable:true, hidden: false, 
 						editoptions: {size:12},
 						formoptions: {rowpos: 2, colpos: 1},
@@ -436,12 +436,11 @@ $(document).ready(function() {
 						/*
 						 * Show Hidden to True
 						 */
-				 		 $("#tr_id").hide();
+				 		 $("#tr_id").val($("#inspid").val());
 				 		 $("#tr_colortest").show();	
 					     $("#tr_colortested").show();
 					     $("#tr_colortestresult").show();
 					     $("#tr_colorcomments").show();
-				 		
 					     $("#tr_subtest").show();	
 					     $("#tr_subtested").show();
 					     $("#tr_subresult").show();
@@ -482,7 +481,7 @@ $(document).ready(function() {
 						 /*
 						  * Set values of test type inside textfield 
 						  */
-						  $("#id").attr("readonly","readonly"); 
+					    //  $("#id").attr("readonly","readonly"); 
 						  $("#colortest").val('Color').attr("readonly","readonly"); 
 						  $("#subtest").val('Substance').attr("readonly","readonly"); 
 						  $("#teartest").val('Tear Strength').attr("readonly","readonly");  
@@ -512,8 +511,6 @@ $(document).ready(function() {
 						  
 						  $("#testcolor").val(clr);
 						  $("#articleid").val(arid);
-						  /*$("#tr_testid").hide();
-						  $("#tr_articleid").hide();*/
 						  
 						  /*
 						   * Grouping fields with Header
@@ -538,20 +535,22 @@ $(document).ready(function() {
 								  '<b>Comments</b></div></td></tr>')
 							      .insertBefore('#tr_colortest');
 						 },
+						
 						 reloadAfterSubmit: true,
 						 closeAfterEdit: true,
 						
 					},
 					{
-						 width : 700,
-						 top:120,
-						 left:120,
-						 recreateForm: true,
-					   //  Add 
+						//  Add 
+						width : 700,
+						top:120,
+						left:120,
+						recreateForm: true,
 			 		    beforeShowForm: function(formID){
 			 		    /*
 						 * Show Hidden to True
 						 */
+			 		     $("#id").val($("#inspid").val());
 			 		     $("#tr_colortest").show();	
 						 $("#tr_colortested").show();
 						 $("#tr_colortestresult").show();
@@ -611,7 +610,7 @@ $(document).ready(function() {
 						  * Hide the TextField Label  	
 						  * http://stackoverflow.com/questions/4484220/jqgrid-dynamic-form-change-label-in-formedit-add
 						  */
-						  jQuery('tr#tr_id > td.CaptionTD', formID[0]).html('');
+						 // jQuery('tr#tr_id > td.CaptionTD', formID[0]).html('');
 						  jQuery('tr#tr_colortest > td.CaptionTD', formID[0]).html('');
 						  jQuery('tr#tr_subtest > td.CaptionTD', formID[0]).html('');
 						  jQuery('tr#tr_teartest > td.CaptionTD', formID[0]).html('');
@@ -623,11 +622,8 @@ $(document).ready(function() {
 						  jQuery('tr#tr_dyethrutest > td.CaptionTD', formID[0]).html('');
 						  jQuery('tr#tr_organoleptictest > td.CaptionTD', formID[0]).html('');
 						 
-						  
 						  $("#testcolor").val(clr);
 						  $("#articleid").val(arid);
-						  $("#id").hide();
-						  /*$("#tr_articleid").hide();*/
 						  
 						  /*
 						   * Grouping fields with Header
@@ -652,6 +648,7 @@ $(document).ready(function() {
 								  '<b>Comments</b></div></td></tr>')
 							      .insertBefore('#tr_colortest');
 					 },
+					 
 					 reloadAfterSubmit: true,
 					 closeAfterAdd: true,
 					});//testgrid.jqGrid('setGridWidth', 930);
@@ -668,10 +665,10 @@ $(document).ready(function() {
 				          'Grade5', 'Skin Count5', 'Percentage5','Comments5',
 				          'Improvement ', 'Skin Count6', 'Percentage6','Comments6',
 				          ],  
-			    colModel:[   
-					{name:'id', index:'id',align:'center', width:80, editable:true, sortable: true, hidden: true, 
-						formoptions: {rowpos: 1, colpos: 1},
-					},
+			    colModel:[  
+			        {name:'gradeinspid', index:'gradeinspid',align:'center', width:80, editable:true, sortable: true, hidden: true,
+			        	formoptions: {rowpos: 1, colpos: 1},
+			        },      
 					{name:'gradeid', index:'gradeid', align:'center', width:80, editable:true, sortable: true, hidden: false,
 						formoptions: {rowpos: 2, colpos: 1},
 					},
@@ -916,8 +913,10 @@ $(document).ready(function() {
 				 top:120,
 				 left:120,
 				 recreateForm : true,
+				 beforeShowForm: function(formID){
+					 var inspid = $("#inspid").val();
+					 $("#gradeinspid").val(inspid);
 				
-				beforeShowForm: function(formID){
 					 $("#tr_comment1").show();	
 		 		     $("#tr_comment2").show();
 		 		     $("#tr_comment3").show();
@@ -979,21 +978,23 @@ $(document).ready(function() {
 				},
 				editData:{
 					articleid: function (){
-						var ival =arid ;
-						return ival;
+					var ival =arid ;
+					return ival;
 					}
 				},	
 				reloadAfterSubmit: true,
 				closeAfterEdit: true,
 			},
 			{
-					
-				 width : 800,
-				 top:180,
-				 left:120,
-				 recreateForm : true,
-				//Add
-				 beforeShowForm: function(formID){
+				//Add	
+				width : 800,
+				top:180,
+				left:120,
+				recreateForm : true,
+				beforeShowForm: function(formID){
+					 var inspid = $("#inspid").val();
+					 $("#gradeinspid").val(inspid);
+					 
 					 $("#tr_comment1").show();	
 		 		     $("#tr_comment2").show();
 		 		     $("#tr_comment3").show();
@@ -1035,9 +1036,7 @@ $(document).ready(function() {
 					  $("#grtotinspected").val($("#totinspected").val());
 					  $("#gradecolor").val(clr);
 					  $("#artid").val(arid);
-					
-					 
-					 
+										 
 					 $('<td class="CaptionTD ui-widget-content" colspan="2">' +
 						      '<div style="padding:3px; text-align: center;" class="ui-widget-header ui-corner-all">' +
 						      '<b>Grade Type</b></div></td></tr>')
@@ -1056,27 +1055,27 @@ $(document).ready(function() {
 						      .insertBefore('#tr_grade1');
 					 
 				 }, 
-				reloadAfterSubmit: true,
-				closeAfterAdd: true,
 				editData:{
 					articleid: function (){
 						var ival =arid ;
 						return ival;
 					}
-				}
+				},	
+				reloadAfterSubmit: true,
+				closeAfterAdd: true,
 	});gradgrid.jqGrid('setGridWidth', 930);
 
 //Rejects Grid
 rejgrid.jqGrid({  
 	url:"",   
 	datatype:"json",
-	colNames:[ 'Hides/Sides', 'id', 'RejectID ', 'Color ', 'Substance','Size','Selec','Color','Org','Others','Tot Rej','Tot Insp', 'Tot Pass'],  
+	colNames:[ 'Hides/Sides','id', 'RejectID ', 'Color ', 'Substance','Size','Selec','Color','Org','Others','Tot Rej','Tot Insp', 'Tot Pass'],  
     colModel:[ 
 		{name:'arttype', index:'arttype', align:'center', width:120, editable:true, sortable: true, hidden: false, 
 			edittype: 'select', editoptions: {value: {H:'Hides',S:'Sides',HS:'H&S'}},
 		},
-		{name:'id', index:'id', align:'center', width:120, editable:true, sortable: true,  hidden: true, 
-	
+		{name:'rejinspid', index:'rejinspid', align:'center', width:120, editable:true, sortable: true, hidden: true,
+
 		},
 		{name:'rejectid', index:'rejectid',align:'center', width:120, editable:true, sortable: true,  hidden: false, 
 				
@@ -1175,6 +1174,14 @@ rejgrid.jqGrid({
 		addtext: 'Add', edittext: 'Edit', deltext: 'Delete', searchtext: 'Search', refreshtext: 'Reload', viewtext: 'View'
 		},
 		{ //Edit 
+			
+			top:180,
+			left:120,
+		  beforeShowForm: function(form){
+			  var inspid = $("#inspid").val();
+			  $("#rejinspid").val(inspid);
+			  
+		  },	
 		  reloadAfterSubmit: true,
 		  closeAfterEdit: true,
 		  editData:{
@@ -1185,8 +1192,14 @@ rejgrid.jqGrid({
 			},
 		},
 		{
-			//Add 
+			//Add	
+			
+			top:180,
+			left:120,
 			 beforeShowForm: function(form){
+				 var inspid = $("#inspid").val();
+				 $("#rejinspid").val(inspid);
+				 
 				 $("#rejcolor").val(clr);
 				 $("#totpassed").val($("#totinspected").val());		
 			 },

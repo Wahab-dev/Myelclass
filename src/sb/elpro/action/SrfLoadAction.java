@@ -32,13 +32,10 @@ public class SrfLoadAction extends Action  {
 				HttpServletResponse response) throws Exception{
 			System.out.println("It is SRF Load Action");
 			usersession = request.getSession(false);
-			if(usersession != null){
-				//usersession.setAttribute("customerarray", srfbo.getCustomerDetails());
-				//usersession.setAttribute("sampleno", srfbo.getSampleno());
+			if(!(usersession == null)){
 				String action = request.getParameter("action");
 				System.out.println("STR  action"+action);
 				if(action == null){
-					//System.out.println("Sample Number "+sampleno.toString());
 					usersession.setAttribute("srfactionform", "add");
 					System.out.println("IN SRF IS LOADED");
 					
@@ -61,6 +58,5 @@ public class SrfLoadAction extends Action  {
 			}else{
 				return map.findForward("logout");
 			}
-		
 		}
 }

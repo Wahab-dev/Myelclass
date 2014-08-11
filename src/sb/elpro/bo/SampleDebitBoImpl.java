@@ -9,11 +9,8 @@ package sb.elpro.bo;
 import java.util.ArrayList;
 import java.util.List;
 
-import sb.elpro.dao.BulkDao;
-import sb.elpro.dao.BulkDaoImpl;
 import sb.elpro.dao.SampleDebitDao;
 import sb.elpro.dao.SampleDebitDaoImpl;
-import sb.elpro.model.BulkArticle;
 import sb.elpro.model.InvBillDetails;
 
 /**
@@ -46,5 +43,15 @@ public class SampleDebitBoImpl implements SampleDebitBo {
 	public boolean addSamDebStatus(InvBillDetails sampledeb) throws Exception {
 		boolean isdebstatusupdate = samdebdao.updatSamDebStatus(sampledeb);
 		return isdebstatusupdate;
+	}
+
+	/* (non-Javadoc)
+	 * @see sb.elpro.bo.SampleDebitBo#addSamDebEditStatus(sb.elpro.model.InvBillDetails)
+	 */
+	@Override
+	public boolean addSamDebEditStatus(InvBillDetails sampledeb)
+			throws Exception {
+		boolean isdebstatusedit = samdebdao.updatSamDebEditStatus(sampledeb);
+		return isdebstatusedit;
 	}
 }

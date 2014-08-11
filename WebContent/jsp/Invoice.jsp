@@ -101,14 +101,11 @@ $(function() {
        		  		<td>Type: </td>
        		  		<td><h:select property ="inv_invoicetype"  styleId="inv_invoicetype" value="${editinvform[0].inv_invoicetype }">
        			  		  <h:option value="0">Select Type</h:option>
-   		 				  <h:option value="IC-L">IC-Local</h:option>
-   		 				  <h:option value="IC-E">IC-Exports</h:option>
-   		 				  <h:option value="IC-C">IC-Courier</h:option>
-   		 				  <h:option value="O-C">Other-Tanner Courier</h:option> 
+   		 				  <h:option value="IC-E">IC-Invoice</h:option>
+   		 				  <h:option value="IC-P">IC-PO</h:option> 
    		 				  <h:option value="O-E">Other-Tanner Exports</h:option> 
-   		 				  <h:option value="O-L">Other-Tanner Local</h:option>
-   		 				  <h:option value="IC-P">IC-PO</h:option>  
-   		 				  <h:option value="IC-J">IC-JW</h:option>  
+   		 				  <h:option value="O-C">Other-Tanner Sample</h:option> 
+   		 				 
        		    		</h:select><br/>
        		    	</td>
        		  	</tr>

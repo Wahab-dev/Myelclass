@@ -3,13 +3,14 @@
  */
 
 $(document).ready(function() {
-	$("#saminv_total").focusout(function() {
+	$("#saminv_deduction").focusout(function() {
 		var discnt = $("#saminv_deduction").val();
 		var courchrg = $("#saminv_courierchrgs").val();
 		var tot = $("#saminv_total").val();
 		totamt = (parseFloat (tot) - parseFloat (discnt)) + parseFloat (courchrg);
-		$("#saminv_total").val(totamt);
+		$("#saminv_total").val(totamt).toFixed(2);
 	});
+	
 	var billInvisInEdit = false; //boolean value need to Check High Priority 
 	var type =null;//get whether the inv for only ct or sample included
 	var saminvgrid = $("#saminvBill");

@@ -27,19 +27,16 @@ public class MasterTrackAction extends Action {
 		public ActionForward execute (ActionMapping map, ActionForm form, 
 					HttpServletRequest request, HttpServletResponse response) throws Exception{			
 			usersession = request.getSession(false);
-			
+			if(!(usersession == null)){
 			/*
-			 * Check for Valid USer - If S Load the Grid 
-			 * 
-			 */
-			if(usersession != null){
-				 
-				
-				System.out.println("In Master Tracking Form");
-				return map.findForward("masterisloaded");			
-			 }else{
-				 System.out.println("Error Invalid Session");
-				 return map.findForward("logout");
-			 }	
-		}
+			* Check for Valid USer - If S Load the Grid 
+			* 
+			*/
+			System.out.println("In Master Tracking Form");
+			return map.findForward("masterisloaded");
+		} else{
+			 System.out.println("Error Invalid Session");
+			 return map.findForward("logout");
+		}	
+	}
 }

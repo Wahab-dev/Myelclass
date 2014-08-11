@@ -18,7 +18,6 @@ public class DateConversion {
 		String converteddate ="01-01-2014";
 		System.out.println("Convert Normal Date to MySqlDate");
 		if(date != null && !date.isEmpty()){
-				System.out.println("null not catchd");
 			SimpleDateFormat desiredDateformat = new SimpleDateFormat("yyyy-MM-dd");
 			Date ordate = new SimpleDateFormat("dd-MM-yyyy").parse(date);
 			converteddate = desiredDateformat.format(ordate);
@@ -31,7 +30,6 @@ public class DateConversion {
 		String converteddate = "01-01-2014";
 		 SimpleDateFormat desiredDateformat = new SimpleDateFormat("dd-MM-yyyy");
 		 if(date != null && !date.isEmpty()){ //Be sure to use the parts of && in this order, because java will not proceed to evaluating the the second if the first part of && fails, thus ensuring you will not get a null pointer exception from str.isEmpty() if str is null.
-			 System.out.println("null catchd");
 			 Date ordate = new SimpleDateFormat("yyyy-MM-dd").parse(date);
 			 converteddate = desiredDateformat.format(ordate);	
 			 System.out.println(" converteddate "+converteddate);

@@ -1,4 +1,16 @@
-$(function() { 	
+$(function() {
+	 initDateSearch = function (elem) {
+         setTimeout(function () {
+             $(elem).datepicker({
+                 dateFormat: 'd-m-yy',
+                 autoSize: true,
+                 changeYear: true,
+                 changeMonth: true,
+                 showWeek: true,
+                 showButtonPanel: true
+             });
+         }, 100);
+     },	
 	insptrackgrid = $("#insptracktbl") ;
 	 $('#chngroup').change(function(){
 			var vl = $(this).val();
@@ -20,7 +32,36 @@ $(function() {
 				alert("Please Select field to Group");
 			}
 		}); 
+	 var mydata = [
+		    {inspid:"1",inspContractNo:"L6464",inspdate:"2014-05-05",inspqualityctrlr:"Mujahid",article:"Cow Soft Nappa",color:"Balck",
+		    	testid:"1",gradeid:"1",rejectid:"1",rjtotinspected:"1500",skincount1:"500",skincount2:"500",skincount3:"500",skincount4:"0",
+		    	skincount5:"0",skincount6:"0",totrejects:"0",totpassed:"1500",inspcomments:"NANNANA",insp_cdn:"REGBYVUHNJ"
+		     },
+		     {inspid:"21",inspContractNo:"L6464",inspdate:"2014-05-05",inspqualityctrlr:"Mujahid",article:"Cow Soft Nappa",color:"Balck",
+			    	testid:"1",gradeid:"1",rejectid:"1",rjtotinspected:"1500",skincount1:"500",skincount2:"500",skincount3:"500",skincount4:"0",
+			    	skincount5:"0",skincount6:"0",totrejects:"0",totpassed:"1500",inspcomments:"NANNANA",insp_cdn:"REGBYVUHNJ"
+			 },
+			 {inspid:"20",inspContractNo:"L6464",inspdate:"2014-05-05",inspqualityctrlr:"Mujahid",article:"Cow Soft Nappa",color:"Balck",
+			    	testid:"1",gradeid:"1",rejectid:"1",rjtotinspected:"1500",skincount1:"500",skincount2:"500",skincount3:"500",skincount4:"0",
+			    	skincount5:"0",skincount6:"0",totrejects:"0",totpassed:"1500",inspcomments:"NANNANA",insp_cdn:"REGBYVUHNJ"
+			},
+			 {inspid:"31",inspContractNo:"L6464",inspdate:"2014-05-05",inspqualityctrlr:"Mujahid",article:"Cow Soft Nappa",color:"Balck",
+		    	testid:"1",gradeid:"1",rejectid:"1",rjtotinspected:"1500",skincount1:"500",skincount2:"500",skincount3:"500",skincount4:"0",
+		    	skincount5:"0",skincount6:"0",totrejects:"0",totpassed:"1500",inspcomments:"NANNANA",insp_cdn:"REGBYVUHNJ"
+		     },
+		     {inspid:"12",inspContractNo:"L6464",inspdate:"2014-05-05",inspqualityctrlr:"Mujahid",article:"Cow Soft Nappa",color:"Balck",
+			    	testid:"1",gradeid:"1",rejectid:"1",rjtotinspected:"1500",skincount1:"500",skincount2:"500",skincount3:"500",skincount4:"0",
+			    	skincount5:"0",skincount6:"0",totrejects:"0",totpassed:"1500",inspcomments:"NANNANA",insp_cdn:"REGBYVUHNJ"
+			 },
+			 {inspid:"44",inspContractNo:"L6464",inspdate:"2014-05-05",inspqualityctrlr:"Mujahid",article:"Cow Soft Nappa",color:"Balck",
+			    	testid:"1",gradeid:"1",rejectid:"1",rjtotinspected:"1500",skincount1:"500",skincount2:"500",skincount3:"500",skincount4:"0",
+			    	skincount5:"0",skincount6:"0",totrejects:"0",totpassed:"1500",inspcomments:"NANNANA",insp_cdn:"REGBYVUHNJ"
+			 },
+		    
+		  ]; 
 	insptrackgrid.jqGrid({ 
+		//datatype: 'local',
+        //data: mydata,
 		datatype: 'json',
         url:"/Myelclass/InspectionTracGridAction.do?action=load", 
         colNames:['ID','CtNo','Inspn Dt','QC','Article','Color','TestID','GradeID','RejID','Inspctd',
@@ -28,13 +69,16 @@ $(function() {
                   'Comments','Inspn Condition'	
                   ],  
     	colModel :[ 
-			{name:'inspid', index:'inspid', align:'center', width:35, editable:true, sortable: true, hidden:false, search: true,
-				
+			{name: 'inspid', index: 'inspid', align: 'center', width: 65, editable:true, //sortable: true, hidden:false, //search: true,
+				//formatter: 'integer',
 			},
 			{name:'inspContractNo', index:'inspContractNo',  width:60, align:'center', editable:true, sortable: true, hidden:false, search: true,
 				
 			},
 			{name:'inspdate', index:'inspdate', align:'center',  width:60, editable:true, sortable: true, hidden:false, search: true, 
+				sorttype: 'date',
+				formatter: 'date', formatoptions: { newformat: 'd-m-Y' }, editable: true, datefmt: 'd-M-Y',
+                searchoptions: { sopt: ['eq', 'ne', 'lt', 'le', 'gt', 'ge'], dataInit: initDateSearch } 	
 				
 			},
 			{name:'inspqualityctrlr', index:'inspqualityctrlr', width:70,  align:'center', editable:true, sortable: true, hidden:false, search: true, 
@@ -83,14 +127,14 @@ $(function() {
 				
 			},
 			{name:'inspcomments', index:'inspcomments', align:'center', width:250, editable:true, sortable: true, hidden:false, search: true,
-				
+				fixed: true,
 			},
 			{name:'insp_cdn', index:'insp_cdn', align:'center', width:250, editable:true, sortable: true, hidden:false, search: true,
-				
+				fixed: true,
 			},
     	],
-		jsonReader : {  
-		  	repeatitems:false,
+    	jsonReader : {  
+    		repeatitems:false,
 		    root: "rows",
 		    page: "page", //calls first
 		    total: "total" ,//calls Second
@@ -104,6 +148,7 @@ $(function() {
 		rownumbers: true,
 		height : "360",
 		width: "auto",
+		//width: "360",
 		sortname: 'inspid',
 		sortorder: 'desc',
 		loadonce: true,
@@ -117,28 +162,28 @@ $(function() {
 		footerrow: true,
 		altRows: true, 
 	    emptyrecords: 'No records to display',
-	    loadComplete: function () {
-          /*var $self = $(this),
+		loadComplete: function () {
+	   	  var $self = $(this),
           totinspsum = $self.jqGrid("getCol", "rjtotinspected", false, "sum");
           totpasssum = $self.jqGrid("getCol", "totpassed", false, "sum");
           totrejsum = $self.jqGrid("getCol", "totrejects", false, "sum");
           $self.jqGrid("footerData", "set", {rjtotinspected: totinspsum});
           $self.jqGrid("footerData", "set", {totpassed: totpasssum}); 
-          $self.jqGrid("footerData", "set", {totrejects: totrejsum});*/
-        }
+          $self.jqGrid("footerData", "set", {totrejects: totrejsum});
+       }
 	 });
 	insptrackgrid.jqGrid('navGrid','#insptrackpager',{
-	 	edit: true, add: false, del: false, search: true, view: true, cloneToTop:true,
+	 	edit: true, add: false, del: false, search: false, view: false, cloneToTop:false,
 	 	addtext: 'Add', edittext: 'Edit', deltext: 'Delete', searchtext: 'Search', refreshtext: 'Reload', viewtext: 'View',
 		beforeRefresh: function(){
-			bulkgrid.jqGrid('setGridParam',{datatype:'json'}).trigger('reloadGrid');
+			insptrackgrid.jqGrid('setGridParam',{datatype:'json'}).trigger('reloadGrid');
 		},	
 	},{},{},{},
 	{
 	 		multipleSearch:true,
 	 		stringResult  :true,
 	 		multipleGroup:true,
-	 	}	
+	 }	
 	);
 
 	insptrackgrid.jqGrid('navButtonAdd',"#insptrackpager",{caption:"Toggle",title:"Toggle Search Toolbar", buttonicon :'ui-icon-pin-s',
@@ -151,7 +196,7 @@ $(function() {
 			insptrackgrid[0].clearToolbar();
 		} 
 	});
-	insptrackgrid.jqGrid('filterToolbar', {autosearch : true, searchOnEnter:false, stringResult: true}); 
+	insptrackgrid.jqGrid('filterToolbar', {autosearch : true, searchOnEnter:false, stringResult: true, defaultSearch : "cn"}); 
 	insptrackgrid.jqGrid('navButtonAdd', '#insptrackpager', {
         caption: "Pdf",
         buttonicon: "ui-icon-print",
@@ -163,17 +208,17 @@ $(function() {
         title: "Print in Excel Format",
         onClickButton: downloadExcel,
     });
-	 //Bootom Pager Customization
-	  var bottomPagerDiv = $("div#insptrackpager")[0];
-	  $("#view_" + insptrackgrid[0].id, bottomPagerDiv).remove();
-	  $("#search_" + insptrackgrid[0].id, bottomPagerDiv).remove(); 
-	  $("#refresh_" + insptrackgrid[0].id, bottomPagerDiv).remove(); 
-	  $("#edit_" + insptrackgrid[0].id, bottomPagerDiv).remove(); 
+	//Bootom Pager Customization
+	var bottomPagerDiv = $("div#insptrackpager")[0];
+	$("#view_" + insptrackgrid[0].id, bottomPagerDiv).remove();
+	$("#search_" + insptrackgrid[0].id, bottomPagerDiv).remove(); 
+	$("#refresh_" + insptrackgrid[0].id, bottomPagerDiv).remove(); 
+	$("#edit_" + insptrackgrid[0].id, bottomPagerDiv).remove(); 
 		
 	
-	/*
-	*  Function to print the Master Page 
-	*/
+	
+	  //Function to print the Master Page 
+	
 	
 	function downloadPdf() 
 	{

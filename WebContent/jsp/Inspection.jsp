@@ -34,14 +34,14 @@ function onlyNumbers(evt)
 $(function() {
 	 var icons = {
 			 header: "ui-icon-circle-arrow-e",
-			 activeHeader: "ui-icon-circle-arrow-s"
+			 activeHeader: "ui-icon-circle-arrow-s",
 	};
 	$(".accordionmenu").accordion({
 		heightStyle: "content",
 		 icons: icons,
 		 active: false,
 		 collapsible: true ,
-		 heightStyle: "content"
+		 heightStyle: "content",
 	});
 });
 </script>
@@ -115,6 +115,9 @@ $(function() {
         					 <h:option value="sample">Sample</h:option>
         				   </h:select>         												
 		     		</td>
+		     		<td>
+		     			 <h:hidden property="inspid" styleId="inspid"></h:hidden><br />	
+		     		</td>
 		   		 </tr>
 		     	 <tr>
 		     	    <td>
@@ -132,7 +135,7 @@ $(function() {
 		     		</td>
 		    		<td>
 		     		 Total Passed:
-		     		 <h:text property="totinspected" styleId="totinspected" maxlength="5" onkeypress="return onlyNumbers(event);"></h:text>	
+		     		 <h:text property="totinspected" styleId="totinspected" maxlength="5" ></h:text>	
 		     		 </td>
 		    	</tr>
 		      </table>
@@ -149,8 +152,9 @@ $(function() {
 	          	<div>Please make sure you check the following before Inspection of Goods</div>
 	            <h:textarea  property="insp_cdn" styleId="insp_cdn" rows="4" cols="113"></h:textarea>
 	         
-	            <h:hidden property="artidhidden" styleId="artidhidden" ></h:hidden>
-	            <h:hidden property="colorhidden" styleId="colorhidden"></h:hidden>
+	         
+	         	 <h:hidden property="artidhidden" styleId="artidhidden" ></h:hidden>
+	              <h:hidden property="colorhidden" styleId="colorhidden"></h:hidden>
 	            <h:hidden property="articlehidden" styleId="articlehidden"></h:hidden>
 	            <h:hidden property="sizehidden" styleId="sizehidden"></h:hidden>
 	            <h:hidden property="substancehidden" styleId="substancehidden"></h:hidden>

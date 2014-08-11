@@ -29,12 +29,12 @@ public class PrfInsertArticle extends Action  {
 		public ActionForward execute (ActionMapping map, ActionForm form, 
 				HttpServletRequest request, HttpServletResponse response) throws Exception{
 			System.out.println("In PRFINSERT ARTICLE");
-			usersession = request.getSession(false);
 			PrintWriter out = response.getWriter();
 			JSONObject jsonobj = new JSONObject();
 			response.setContentType("application/json");
 			response.setCharacterEncoding("UTF-8");
-			 if(usersession != null){	
+			usersession = request.getSession(false);
+			if(!(usersession == null)){
 				String oper =   request.getParameter("oper");
 				System.out.println("oper "+oper);
 				String action = request.getParameter("action");
@@ -43,14 +43,12 @@ public class PrfInsertArticle extends Action  {
                 String sidx = request.getParameter("sidx");
                 String sord = request.getParameter("sord");
                 String ctno = request.getParameter("ctno");
-                
                 System.out.println("rows "+rows); //4
                 System.out.println("page "+pag); //1
                 System.out.println("sidx "+sidx);
                 System.out.println("sord "+sord);
                 System.out.println("action "+action);
                 System.out.println("ctno "+ctno);
-				
 				if(oper == null){
 					 System.out.println(" In PRF Article LAOD");
 					List<PrfArticle> article = prfbo.getPrfArticleDetails(ctno,sidx,sord);
@@ -81,10 +79,9 @@ public class PrfInsertArticle extends Action  {
 				}else if(oper.equalsIgnoreCase("pojw")){
 					if(action.equalsIgnoreCase("load")){
 						 System.out.println(" In POJW Article LAOD");
-							List<PrfArticle> pojwarticle = prfbo.getPrfArticleDetails(ctno,sidx,sord);
+							List<PrfArticle> pojwarticle = prfbo.getPojwArticleDetails(ctno);
 							int records = pojwarticle.size();
-							System.out.println("Reords  "+records);
-																		
+							System.out.println("Reords  "+records);										
 								int page = Integer.parseInt(pag);
 				                int totalPages = 0;
 				                int totalCount = records;

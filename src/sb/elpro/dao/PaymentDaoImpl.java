@@ -85,7 +85,6 @@ public class PaymentDaoImpl implements PaymentDao {
 		PreparedStatement pst = null;
 		int noofrows  = 0;
 		boolean isSaved =true;
-		
 		try{
 			con = DBConnection.getConnection();
 			StringBuffer sql_savedebitform = new StringBuffer("insert into tbl_paymentform (paymentno, paymentdate, exporter, cheqdetails, debno, debdate, quantity, invamt, elclassamt, total, tax, tds, due, creditedamt, balance, reciptdate, comments)");
@@ -95,7 +94,7 @@ public class PaymentDaoImpl implements PaymentDao {
 			System.out.println(" IN Payment Form SAVE ");
 			pst.setString(1, paymntformbean.getPaymentno());
 			pst.setString(2, paymntformbean.getPaymentdate());
-			pst.setString(3, paymntformbean.getDeb_exporter());
+			pst.setString(3, paymntformbean.getDeb_exporterid());
 			pst.setString(4, paymntformbean.getChequedetails());
 			pst.setString(5, paymntformbean.getDeb_debitno());
 			System.out.println("getDeb_debitno " +paymntformbean.getDeb_debitno());
@@ -114,9 +113,7 @@ public class PaymentDaoImpl implements PaymentDao {
 			pst.setString(17, paymntformbean.getOtherdetails());
 			System.out.println("getOtherdetails " +paymntformbean.getOtherdetails());
 			noofrows = pst.executeUpdate();
-			System.out.println("Sucessfully inserted the record.." + noofrows);
-			
-			
+			System.out.println("Sucessfully inserted the record.." + noofrows);	
 	}catch(Exception e){
 		e.printStackTrace();
 		isSaved = false;

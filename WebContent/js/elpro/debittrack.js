@@ -89,7 +89,20 @@ $(document).ready(function() {
 		}else{
 			alert("Please Select field to Group");
 		}
-	}); 
+	});  
+    
+    initDateSearch = function (elem) {
+        setTimeout(function () {
+            $(elem).datepicker({
+                dateFormat: 'd-m-yy',
+                autoSize: true,
+                changeYear: true,
+                changeMonth: true,
+                showWeek: true,
+                showButtonPanel: true
+            });
+        }, 100);
+    },
 	
 	 debtrackgrid.jqGrid({
 		 url:'/Myelclass/DebitTrackInsertAction.do',
@@ -110,8 +123,10 @@ $(document).ready(function() {
 						        }
 						    }	
 					},
-					{name: 'deb_debitdate', index: 'deb_debitdate' ,align:'center', width:70, hidden: false, editable:true,
-						
+					{name: 'deb_debitdate', index: 'deb_debitdate' ,align:'center', width:70,  editable:true, sortable: true, hidden: false, search: true,
+						sorttype: 'date',
+						formatter: 'date', formatoptions: { newformat: 'd-m-Y' }, editable: true, datefmt: 'd-M-Y',
+	                    searchoptions: { sopt: ['eq', 'ne', 'lt', 'le', 'gt', 'ge'], dataInit: initDateSearch } 							
 					},
 					{name: 'deb_exporter', index: 'deb_exporter', align:'center', width:50, hidden: false, editable:true,
 						

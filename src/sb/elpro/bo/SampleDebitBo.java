@@ -32,5 +32,13 @@ public interface SampleDebitBo {
 	 */
 	boolean addSamDebStatus(InvBillDetails sampledeb)throws Exception;
 
+	/**  
+	 * (Method description)
+	 * @param
+	 * @return
+	 * etc
+	 */
+	boolean addSamDebEditStatus(InvBillDetails sampledeb)throws Exception;
+
 
 }

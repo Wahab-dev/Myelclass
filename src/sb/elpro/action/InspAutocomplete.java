@@ -33,11 +33,12 @@ public class InspAutocomplete extends Action {
 	HttpSession usersession;
 	public ActionForward execute(ActionMapping mapping, ActionForm form, 
 			HttpServletRequest request,  HttpServletResponse response) throws Exception{
+		System.out.println("Afa");
 		response.setContentType("application/json");
 		response.setCharacterEncoding("UTF-8");
 		PrintWriter out = response.getWriter();
 		usersession = request.getSession(false);
-		if(usersession != null){
+		if(!(usersession == null)){
 			String action = request.getParameter("action");
 			if(action.equalsIgnoreCase("inspCt")){ 
 				String inspctterm = request.getParameter("term");
@@ -52,13 +53,18 @@ public class InspAutocomplete extends Action {
 				System.out.println("List Value " +inspqtrllist.size());
 				JSONArray jsonOrdertanArray = JSONArray.fromObject(inspqtrllist);
 				out.println(jsonOrdertanArray);
+			}else if(action.equalsIgnoreCase("inspid")) {
+				int inspid = inspbo.getInspid();
+				System.out.println("ID " +inspid);
+				JSONArray jsonOrdertanArray = JSONArray.fromObject(inspid);
+				out.println(jsonOrdertanArray);
 			}else{
 			System.out.println("No Action !!");
 			}	
-	    }else{
-	    	System.out.println("Error Invalid Session");
+		}else{
+		   	System.out.println("Error Invalid Session");
 			 return mapping.findForward("logout");
-	    }
+		}
 	 return null;
 	}
 }

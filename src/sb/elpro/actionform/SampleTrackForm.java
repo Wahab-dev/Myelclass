@@ -59,15 +59,14 @@ public class SampleTrackForm extends ActionForm implements Serializable {
 	private String keytest;
 	private String srfarticleid;
 	private String user;
-	
-	
+
 	private String status;
 	private String rdd_date;
 	private String courierdetails;
 	private String reps	;
 	private String feedbackdetails;
 	
-	
+	private String straction;
 	/**
 	 * @return the sampleno
 	 */
@@ -584,6 +583,18 @@ public class SampleTrackForm extends ActionForm implements Serializable {
 	 */
 	public void setFeedbackdetails(String feedbackdetails) {
 		this.feedbackdetails = feedbackdetails;
+	}
+	/**
+	 * @return the straction
+	 */
+	public String getStraction() {
+		return straction;
+	}
+	/**
+	 * @param straction the straction to set
+	 */
+	public void setStraction(String straction) {
+		this.straction = straction;
 	}
 	
 	

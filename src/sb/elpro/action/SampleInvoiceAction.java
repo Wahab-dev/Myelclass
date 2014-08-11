@@ -44,16 +44,16 @@ public class SampleInvoiceAction extends DispatchAction {
 		 PrintWriter out = response.getWriter();
 		 response.setContentType("application/json");
 		 response.setCharacterEncoding("UTF-8");
-		 usersession = request.getSession(false);
 		 JSONObject sampinvjsonobj = new JSONObject();
+		 usersession = request.getSession(false);
 		 if(!(usersession == null)){
-		 SampleInvoiceForm sampinvform =  (SampleInvoiceForm) form;
-		 BeanUtils.copyProperties(sampinvbean, sampinvform);
-		 sampinvbean.setSaminv_invdate(DateConversion.ConverttoMysqlDate(request.getParameter("saminv_invdate")));
-		 sampinvbean.setSaminv_awbilldate(DateConversion.ConverttoMysqlDate(request.getParameter("saminv_awbilldate")));
-		 System.out.println("Sample Inv Type"+sampinvbean.getSaminv_invoicetype());
-		 System.out.println("Sample Inv No"+sampinvbean.getSaminv_invoiceno());
-		
+			 SampleInvoiceForm sampinvform =  (SampleInvoiceForm) form;
+			 BeanUtils.copyProperties(sampinvbean, sampinvform);
+			 sampinvbean.setSaminv_invdate(DateConversion.ConverttoMysqlDate(request.getParameter("saminv_invdate")));
+			 sampinvbean.setSaminv_awbilldate(DateConversion.ConverttoMysqlDate(request.getParameter("saminv_awbilldate")));
+			 System.out.println("Sample Inv Type"+sampinvbean.getSaminv_invoicetype());
+			 System.out.println("Sample Inv No"+sampinvbean.getSaminv_invoiceno());
+			
 			 System.out.println("usersession "+usersession.getId());
 			 System.out.println("request  "+usersession.getAttribute("sampleinvactionform"));
 			 if(usersession.getAttribute("sampleinvactionform").equals("edit")){
@@ -87,7 +87,8 @@ public class SampleInvoiceAction extends DispatchAction {
 			 }
 		 }else{
 			 System.out.println("Invalid Sesssion");
-			 return map.findForward("logout");
+			 usersession.invalidate();			
+			 return map.findForward("logout");  	
 		 }
 		 
 		

@@ -25,6 +25,7 @@ public class PaymentForm extends ActionForm{
 	private String deb_debitno;
 	private String deb_debitdate;
 	private String deb_exporter;
+	private String deb_exporterid;
 	private String deb_tanaddr;
 	private String deb_tanattn;
 	private String deb_tantelephone;
@@ -79,6 +80,8 @@ public class PaymentForm extends ActionForm{
 	private String tcdeb_invoiceamt;
 	private String tcdeb_elclassamt;
 	private String tcdeb_elclassamtinrs;
+	
+	private String paymntaction;
 	//TcDebit 
 
 	/**
@@ -715,6 +718,7 @@ public class PaymentForm extends ActionForm{
 		deb_debitno= "";
 		deb_debitdate ="";
 		deb_exporter="";
+		deb_exporterid="";
 		deb_tanaddr="";
 		deb_tanattn="";
 		deb_tantelephone="";
@@ -771,6 +775,8 @@ public class PaymentForm extends ActionForm{
 		creditamt="";
 		balanceamt="";
 		otherdetails="";
+		
+		paymntaction="";
 	}
 	/**
 	 * @return the paymentdate
@@ -807,5 +813,29 @@ public class PaymentForm extends ActionForm{
 	 */
 	public void setPaymentno(String paymentno) {
 		this.paymentno = paymentno;
+	}
+	/**
+	 * @return the deb_exporterid
+	 */
+	public String getDeb_exporterid() {
+		return deb_exporterid;
+	}
+	/**
+	 * @param deb_exporterid the deb_exporterid to set
+	 */
+	public void setDeb_exporterid(String deb_exporterid) {
+		this.deb_exporterid = deb_exporterid;
+	}
+	/**
+	 * @return the paymntaction
+	 */
+	public String getPaymntaction() {
+		return paymntaction;
+	}
+	/**
+	 * @param paymntaction the paymntaction to set
+	 */
+	public void setPaymntaction(String paymntaction) {
+		this.paymntaction = paymntaction;
 	}
 }

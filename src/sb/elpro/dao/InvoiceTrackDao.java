@@ -10,6 +10,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import sb.elpro.model.InvBillDetails;
+import sb.elpro.model.Invpaymentdetails;
 
 /**
  * @author Wahab
@@ -24,5 +25,21 @@ public interface InvoiceTrackDao {
 	 * etc
 	 */
 	ArrayList<InvBillDetails> getInvTrackList()throws SQLException;
+
+	/**  
+	 * (Method description)
+	 * @param
+	 * @return
+	 * etc
+	 */
+	boolean addPayment(Invpaymentdetails invpay)throws SQLException;
+
+	/**  
+	 * (Method description)
+	 * @param
+	 * @return
+	 * etc
+	 */
+	boolean editPayment(Invpaymentdetails invpay)throws SQLException;
 
 }

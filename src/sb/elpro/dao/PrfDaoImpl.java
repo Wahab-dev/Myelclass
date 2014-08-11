@@ -807,7 +807,7 @@ public class PrfDaoImpl implements PrfDao {
 				consigbean.setConsigneeAddress(rs.getString("consigaddr"));
 				consigbean.setConsigneeAttention(rs.getString("consigattn"));
 				consigbean.setConsigneefax(rs.getString("consigfax"));
-				consigbean.setLabel(rs.getString("shortform"));
+				consigbean.setLabel(rs.getString("consigname"));
 				consigbean.setValue(rs.getString("consigname"));
 				consigbean.setConsigneeId(rs.getString("consigid"));
 				consigbean.setConsigneeContactNo(rs.getString("consigphone"));
@@ -959,7 +959,7 @@ public class PrfDaoImpl implements PrfDao {
 				pst1.setString(8, "NA");
 				pst1.setString(9, "NA");
 				pst1.setString(10, artindertdetail.getPrf_contractnum());
-				pst1.setString(11, "");
+				pst1.setString(11, "2014-01-01");
 				addstatusrow = pst1.executeUpdate();
 				System.out.println("Sucessfully Inseerter in Status Table." + addstatusrow);
 			}
@@ -1308,12 +1308,11 @@ public class PrfDaoImpl implements PrfDao {
 		Connection con = null;
 		PreparedStatement pst = null;
 		int noofrows  = 0;
-		boolean isSaved =true;
-		
+		boolean isSaved =true;		
 		try{
 			con = DBConnection.getConnection();
-			StringBuffer sql_savepojwform = new StringBuffer("insert into tbl_pojw (pojwno, orderdate, CDD, Tannery, splcdn, paymentterm, Ctno, Category)");
-			sql_savepojwform.append("values (?,?,?,?,?,?,?,?)");
+			StringBuffer sql_savepojwform = new StringBuffer("insert into tbl_pojw (pojwno, orderdate, CDD, Tannery, splcdn, com, paymentterm, Ctno, Category)");
+			sql_savepojwform.append("values (?,?,?,?,?,?,?,?,?)");
 			String sqlquery_savepojwform = sql_savepojwform.toString();
 			pst = (PreparedStatement) con.prepareStatement(sqlquery_savepojwform);
 			pst.setString(1, pojw.getPojw_pojwno());
@@ -1321,11 +1320,12 @@ public class PrfDaoImpl implements PrfDao {
 			pst.setString(2, pojw.getPojw_orderdate());
 			System.out.println("getPojw_orderdate " +pojw.getPojw_orderdate());
 			pst.setString(3, pojw.getPojw_cddate());
-			pst.setString(4, pojw.getPrf_exporterid());
+			pst.setString(4, pojw.getPojw_tanid());
 			pst.setString(5, pojw.getPojw_splcdn());
-			pst.setString(6, pojw.getPojw_payterms());
-			pst.setString(7, pojw.getPojw_contractno());
-			pst.setString(8,"PO");
+			pst.setString(6, pojw.getPojw_comm());
+			pst.setString(7, pojw.getPojw_payterms());
+			pst.setString(8, pojw.getPojw_contractno());
+			pst.setString(9,"PO");
 			noofrows = pst.executeUpdate();
 			/*if(noofrows == 1){ 
 				
@@ -1449,6 +1449,89 @@ public class PrfDaoImpl implements PrfDao {
 				 rs.close();
 		   }	
 		return colormatchlist;
+	}
+
+	/* (non-Javadoc)
+	 * @see sb.elpro.dao.PrfDao#getPojwArticleDetails(java.lang.String)
+	 */
+	@Override
+	public ArrayList<PrfArticle> getPojwArticleDetails(String ctno)
+			throws SQLException {
+		ArrayList<PrfArticle> pojwarticlearray = new ArrayList<PrfArticle>();
+		Connection con = null;
+		Statement st = null;
+		ResultSet rs = null;
+		try{			
+			con = DBConnection.getConnection();
+			st = (Statement) con.createStatement();
+			String sql = "SELECT articleid, articletype, articleshfrom, articlename, size, substance, selection, selectionpercent, color, quantity, unit, pcs, rate, tc, user, contractno, prfarticleid FROM tbl_prf_article where contractno = '"+ctno+"' ";
+			System.out.println(sql);
+			rs = st.executeQuery(sql);
+			while(rs.next()) {	
+			PrfArticle pojwartbean = new PrfArticle();
+				pojwartbean.setArticleid(rs.getString("articleid"));
+				pojwartbean.setPrf_articletype(rs.getString("articletype"));
+				pojwartbean.setArtshform(rs.getString("articleshfrom"));
+				pojwartbean.setPrf_articlename(rs.getString("articlename"));
+				pojwartbean.setPrf_size(rs.getString("size"));
+				pojwartbean.setPrf_substance(rs.getString("substance"));
+				pojwartbean.setPrf_selection(rs.getString("selection"));
+				pojwartbean.setPrf_selectionp(rs.getString("selectionpercent"));
+				pojwartbean.setPrf_color(rs.getString("color"));
+				pojwartbean.setPrf_quantity(rs.getString("quantity"));
+				pojwartbean.setPrf_contractnum(rs.getString("contractno"));
+				pojwartbean.setPrf_articleid(rs.getString("color"));
+				pojwartbean.setPrf_unit(rs.getString("unit"));
+				pojwartbean.setPrf_pieces(rs.getString("pcs"));
+				pojwartbean.setPrf_rate(rs.getString("rate"));
+				pojwartbean.setPrf_tc(rs.getString("tc"));
+				System.out.println(" tC  "+pojwartbean.getPrf_tc());
+				pojwartbean.setUser(rs.getString("user"));
+				pojwartbean.setPrf_articleid(rs.getString("prfarticleid"));		
+				System.out.println("Article name "+pojwartbean.getPrf_articlename());
+				pojwarticlearray.add(pojwartbean);
+				}
+			}catch(Exception e){
+				e.printStackTrace();
+				System.out.println("ERROR RESULT");
+			}finally{
+				 con.close() ;
+				 st.close();
+				 rs.close();
+		   }	
+		return pojwarticlearray;
+	}
+
+	/* (non-Javadoc)
+	 * @see sb.elpro.dao.PrfDao#getSizeRemList()
+	 */
+	@Override
+	public ArrayList<AutoComplete> getSizeRemList() throws SQLException {
+		ArrayList<AutoComplete> sizeremarraylist = new ArrayList<AutoComplete>();
+		Connection con = null;
+		Statement st = null;
+		ResultSet rs = null;
+		try{			
+			con = DBConnection.getConnection();
+			st = (Statement) con.createStatement();
+			String sql = "SELECT shform, sizeremarksid FROM elpro.tbl_sizeremarks order by sizeremarks";
+			rs = st.executeQuery(sql);
+			while(rs.next()) {	
+				AutoComplete sizerembean = new AutoComplete();
+				sizerembean.setValue(rs.getString("shform"));		
+				System.out.println("selection name "+sizerembean.getValue());
+				sizeremarraylist.add(sizerembean);
+				}
+			System.out.println("selection Result Added Successfully");
+			}catch(Exception e){
+				e.printStackTrace();
+				System.out.println("selection ERROR RESULT");
+			}finally{
+				 con.close() ;
+				 st.close();
+				 rs.close();
+			}
+		return sizeremarraylist;
 	}
 
 	

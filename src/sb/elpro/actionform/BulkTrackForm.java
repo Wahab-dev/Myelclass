@@ -67,6 +67,9 @@ public class BulkTrackForm extends ActionForm {
 	private String totqty;
 	private String totshpd;
 	private String totbal;
+	
+	private String action;
+	
 	/**
 	 * @return the articleid
 	 */
@@ -643,6 +646,18 @@ public class BulkTrackForm extends ActionForm {
 	 */
 	public void setTotbal(String totbal) {
 		this.totbal = totbal;
+	}
+	/**
+	 * @return the action
+	 */
+	public String getAction() {
+		return action;
+	}
+	/**
+	 * @param action the action to set
+	 */
+	public void setAction(String action) {
+		this.action = action;
 	}
 		
 		

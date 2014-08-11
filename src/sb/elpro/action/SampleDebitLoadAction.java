@@ -30,13 +30,11 @@ public class SampleDebitLoadAction extends Action{
 	
 	public ActionForward execute(ActionMapping mapping, ActionForm form, 
 			HttpServletRequest request, HttpServletResponse response)throws Exception{
-		usersession = request.getSession(false);	
-		if(usersession !=null){		   	
+		usersession = request.getSession(false);
+		if(!(usersession == null)){
 			return mapping.findForward("sampledebitisloaded");
-			
 		}else{
 			return mapping.findForward("logout");
 		}
-		
 	}
 }

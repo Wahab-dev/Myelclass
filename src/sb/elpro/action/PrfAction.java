@@ -3,33 +3,22 @@
  */
 package sb.elpro.action;
 
-
-import java.io.InputStream;
 import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
-
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import net.sf.jasperreports.engine.JREmptyDataSource;
 import net.sf.jasperreports.engine.JRException;
-import net.sf.jasperreports.engine.JRExporterParameter;
 import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
-import net.sf.jasperreports.engine.JasperRunManager;
-import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
-import net.sf.jasperreports.engine.data.JRMapCollectionDataSource;
-import net.sf.jasperreports.engine.export.JRPdfExporter;
 import net.sf.jasperreports.engine.export.JRXlsAbstractExporterParameter;
 import net.sf.jasperreports.engine.export.JRXlsExporterParameter;
 import net.sf.jasperreports.engine.export.ooxml.JRXlsxExporter;
@@ -40,9 +29,6 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.actions.DispatchAction;
-
-
-
 
 import sb.elpro.actionform.PrfForm;
 import sb.elpro.bo.PrfBo;
@@ -55,7 +41,6 @@ import sb.elpro.utility.DateConversion;
  *
  */
 public class PrfAction extends DispatchAction {
-
 	PrfBo prfbo  =  new PrfBoImpl();
 	HttpSession usersession;
 	ProductDetails prfbean = new ProductDetails();
@@ -63,7 +48,6 @@ public class PrfAction extends DispatchAction {
 	
 	public ActionForward Save(ActionMapping map, ActionForm form, 
 			HttpServletRequest request, HttpServletResponse response) throws Exception{
-		 System.out.println("In Save Prf Form");
 		 PrintWriter out = response.getWriter();
 		 response.setContentType("application/json");
 		 response.setCharacterEncoding("UTF-8");
@@ -74,46 +58,53 @@ public class PrfAction extends DispatchAction {
 		 prfbean.setPrf_cdd(DateConversion.ConverttoMysqlDate(request.getParameter("prf_cdd")));
 		 prfbean.setPrf_add(DateConversion.ConverttoMysqlDate(request.getParameter("prf_add")));
 		 prfbean.setPrf_exporterid(prfbean.getPrf_tannid());
-		
-		 prfbean.setPrf_pojwno("N/A");
-		// prfbean.setFormaction("edit");
+		 if(!(prfbean.getPrf_pojwno().startsWith("PO"))){
+			 prfbean.setPrf_pojwno("N/A");
+		 }
+		 System.out.println("Alpha "+prfbean.getPrf_pojwno());
 		 usersession = request.getSession(false);
+		 System.out.println("Session in PRF  "+usersession);
 		 if(!(usersession == null)){
 			 JSONObject prfjsonobj = new JSONObject();
 			 System.out.println("usersession "+usersession.getId());
-			 System.out.println("request  "+usersession.getAttribute("actionform"));
-			 if(usersession.getAttribute("actionform").equals("add")){
-				 boolean issavedPrf = prfbo.savePrfform(prfbean);
-				 if(issavedPrf){
-						prfjsonobj.put("result", issavedPrf);
-						prfjsonobj.put("success", "Successfully Saved The Form");
-						prfsaveform.reset(map, request);
-						out.println(prfjsonobj);
-						return map.findForward("prfissaved");
-					}else{
-						prfjsonobj.put("result", issavedPrf);
-						prfjsonobj.put("error", "Error in Saving The Form");
-						out.println(prfjsonobj);
-						return null;
-					}
+			 System.out.println("request  "+usersession.getAttribute("prfactionform"));
+			 if(usersession.getAttribute("prfactionform").equals("add")){
+				boolean issavedPrf = prfbo.savePrfform(prfbean);
+				if(issavedPrf){
+				    System.out.println("In ADD ");
+					prfjsonobj.put("result", issavedPrf);
+					prfjsonobj.put("success", "Successfully Saved The Form");
+					prfsaveform.reset(map, request);
+					out.println(prfjsonobj);
+					return map.findForward("prfissaved");
+				}else{
+					prfjsonobj.put("result", issavedPrf);
+					prfjsonobj.put("error", "Error in Saving The Form");
+					out.println(prfjsonobj);
+					return null;
+				}
 			 }else{
-				 boolean isupdatePrf = prfbo.updatePrfform(prfbean);
-				 if(isupdatePrf){
-						prfjsonobj.put("result", isupdatePrf);
-						prfjsonobj.put("success", "Successfully Updated The Form");
-						prfsaveform.reset(map, request);
-						out.println(prfjsonobj);
-						return map.findForward("bulkisloaded");
-					}else{
-						prfjsonobj.put("result", isupdatePrf);
-						prfjsonobj.put("error", "Error in Updated The Form");
-						out.println(prfjsonobj);
-						return null;
-					}			
+				System.out.println("In Edit ");
+			    boolean isupdatePrf = prfbo.updatePrfform(prfbean);
+				//boolean isupdatePrf = prfbo.savePrfform(prfbean);
+				if(isupdatePrf){
+					prfjsonobj.put("result", isupdatePrf);
+					prfjsonobj.put("success", "Successfully Updated The Form");
+					prfsaveform.reset(map, request);
+					out.println(prfjsonobj);
+					return map.findForward("bulkisloaded");
+				}else{
+					prfjsonobj.put("result", isupdatePrf);
+					prfjsonobj.put("error", "Error in Updated The Form");
+					out.println(prfjsonobj);
+					return null;
+				}			
 			 }	 
-		 }	
-		System.out.println(" LOgin Credential Fails");
-		 return map.findForward("logout");
+		 }else{	
+		   usersession.invalidate();
+		   System.out.println(" LOgin Credential Fails");
+		   return map.findForward("logout");
+		 }
 	}
 	
 	public ActionForward Clear(ActionMapping map, ActionForm form, 
@@ -135,7 +126,6 @@ public class PrfAction extends DispatchAction {
             } catch (SQLException ex) {
             } catch (ClassNotFoundException ex) {
             }
-		
 		response.setContentType("application/ms-excel"); 
 		response.setHeader("Content-Disposition", "attachment; filename=PRF.xls");
         ServletOutputStream out = response.getOutputStream();
@@ -212,29 +202,34 @@ public class PrfAction extends DispatchAction {
 	}
 	public ActionForward POSave(ActionMapping mapping, ActionForm form, 
 			HttpServletRequest request, HttpServletResponse response) throws Exception{
-		System.out.println(" in POJW SAVE FORM ACTION");
-		PrintWriter out = response.getWriter();
-		 response.setContentType("application/json");
-		 response.setCharacterEncoding("UTF-8");
-		 PrfForm pojwsaveform =(PrfForm) form;
-		 ProductDetails pojwprintbean = new ProductDetails();
-		 BeanUtils.copyProperties(pojwprintbean, pojwsaveform);
-		 pojwprintbean.setPojw_orderdate(DateConversion.ConverttoMysqlDate(request.getParameter("pojw_orderdate")));
-		 pojwprintbean.setPojw_cddate(DateConversion.ConverttoMysqlDate(request.getParameter("pojw_cddate")));
-		
 		usersession = request.getSession(false);
 		 if(!(usersession == null)){
-			 JSONObject prfjsonobj = new JSONObject();
-			 System.out.println("usersession "+usersession.getId());
-			 System.out.println("request  "+usersession.getAttribute("actionform"));
-			 if(usersession.getAttribute("actionform").equals("add")){
-				 boolean issavedPojw = prfbo.savePoJwForm(prfbean);
+			JSONObject prfjsonobj = new JSONObject();
+			System.out.println("usersession "+usersession.getId());
+			System.out.println("request  "+usersession.getAttribute("prfactionform"));
+			System.out.println(" in POJW SAVE FORM ACTION");
+			PrintWriter out = response.getWriter();
+			response.setContentType("application/json");
+			response.setCharacterEncoding("UTF-8");
+			
+			 ProductDetails posavebean = new ProductDetails();
+			 posavebean.setPojw_pojwno(request.getParameter("pojw_pojwno"));
+			 posavebean.setPojw_contractno(request.getParameter("pojw_contractno"));
+			 posavebean.setPojw_comm(request.getParameter("pojw_comm"));
+			 posavebean.setPojw_payterms(request.getParameter("pojw_payterms"));
+			 posavebean.setPojw_tanid(request.getParameter("pojw_tanid"));
+			 posavebean.setPojw_splcdn(request.getParameter("pojw_splcdn"));
+			 posavebean.setPojw_orderdate(DateConversion.ConverttoMysqlDate(request.getParameter("pojw_orderdate")));
+			 posavebean.setPojw_cddate(DateConversion.ConverttoMysqlDate(request.getParameter("pojw_cddate")));
+			
+			 if(usersession.getAttribute("prfactionform").equals("add")){
+				 boolean issavedPojw = prfbo.savePoJwForm(posavebean);
 				 if(issavedPojw){
 						prfjsonobj.put("result", issavedPojw);
 						prfjsonobj.put("success", "Successfully Saved The Form");
-						pojwsaveform.reset(mapping, request);
+						//pojwsaveform.reset(mapping, request);
 						out.println(prfjsonobj);
-						return mapping.findForward("prfissaved");
+						return null;
 					}else{
 						prfjsonobj.put("result", issavedPojw);
 						prfjsonobj.put("error", "Error in Saving The Form");
@@ -249,7 +244,7 @@ public class PrfAction extends DispatchAction {
 						pojwsaveform.reset(mapping, request);
 						out.println(prfjsonobj);
 						return mapping.findForward("bulkisloaded");
-					}else{
+				 }else{
 						prfjsonobj.put("result", isupdatePrf);
 						prfjsonobj.put("error", "Error in Updated The Form");
 						out.println(prfjsonobj);
@@ -257,8 +252,10 @@ public class PrfAction extends DispatchAction {
 					}	*/		
 			 }	 
 		 }	
+		
 		System.out.println(" Login Credential Fails");
-		 return mapping.findForward("logout");
+		usersession.invalidate();	
+		return mapping.findForward("logout");
 		
 	}
 	public ActionForward POPrint(ActionMapping mapping, ActionForm form, 

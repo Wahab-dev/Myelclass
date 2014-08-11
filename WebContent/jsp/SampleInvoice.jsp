@@ -98,12 +98,10 @@ $(function() {
        			 	<td>Type: </td>
        			 	<td><h:select property ="saminv_invoicetype"  styleId="saminv_invoicetype" value="${editsaminvform[0].saminv_invoicetype}">
        			  		  <h:option value="0">Select Type</h:option>
-   		 				  <h:option value="IC-L">IC-Local</h:option>
-   		 				  <h:option value="IC-E">IC-Exports</h:option>
-   		 				  <h:option value="IC-C">IC-Courier</h:option>
-   		 				  <h:option value="O-C">Other-Tanner Courier</h:option> 
-   		 				  <h:option value="O-E">Other-Tanner Exports</h:option> 
-   		 				  <h:option value="O-L">Other-Tanner Local</h:option>
+   		 				 <h:option value="IC-E">IC-Invoice</h:option>
+   		 				  <h:option value="O-C">Other-Tanner Contract</h:option> 
+   		 				  <h:option value="O-E">Other-Tanner Sample</h:option> 
+   		 				 <%--  <h:option value="O-L">Other-Tanner Local</h:option> --%>
        		    		</h:select><br/>
        		    	</td>
        			 </tr>

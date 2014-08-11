@@ -4,7 +4,7 @@
  */
 
 $(document).ready(function() {
-	$("#inv_total").focusout(function() {
+	$("#inv_discount").focusout(function() {
 		var totamt = (parseFloat ($("#inv_total").val()) - parseFloat ($("#inv_discount").val())) + parseFloat ($("#othercharges").val());		
 		$("#inv_total").val(totamt);
 	});
@@ -202,13 +202,13 @@ $(document).ready(function() {
 				        	   name: 'othercommission', index:'othercommission',width :140, hidden:false, sortable: true,
 				           },
 				          ],
-				  jsonReader : {  
-					       repeatitems:false,
-					       root: "rows",
-					       page: "page", //calls first
-					       total: "total" ,//calls Second
-					       records: "records", //calls Third
-					       },
+				   jsonReader : {  
+					   repeatitems:false,
+					   root: "rows",
+					   page: "page", //calls first
+					   total: "total" ,//calls Second
+					   records: "records", //calls Third
+				   },
 				   caption  : "Contract / Sample List To Raise Invoice",
 				   loadtext: "List is Loading",
 				   pager : '#tbl_invpager',
@@ -469,11 +469,11 @@ $(document).ready(function() {
 		 	 *  Methods .  Crud Methods + Search ... 
 		 	 */
 			
-				 invgrid.jqGrid({
-					 url:"",
-					 datatype: "json",
-					 colNames:['Inv Id','Inv No','InvDt','articleid','Ct No','Article','Color','Size','Sub','Sel','Quantity','Unit','Pcs','Rate','TC','Shipped','Balance','amount','Comm','Other Comm','User' ],
-					 colModel:[
+			 invgrid.jqGrid({
+				 url:"",
+				 datatype: "json",
+				 colNames:['Inv Id','Inv No','InvDt','articleid','Ct No','Article','Color','Size','Sub','Sel','Quantity','Unit','Pcs','Rate','TC','Shipped','Balance','amount','Comm','Other Comm','User' ],
+				 colModel:[
 					           	{name: 'invid', index:'invid',align:'center', width :80, editable:true, sortable: true, hidden:true, search: true,
 					           		editoptions: { readonly: 'readonly' },
 					           	},

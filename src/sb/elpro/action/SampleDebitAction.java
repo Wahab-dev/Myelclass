@@ -41,25 +41,24 @@ public class SampleDebitAction extends Action {
 	public ActionForward execute(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response)
 			throws Exception {
-		usersession = request.getSession(false);
 		PrintWriter out = response.getWriter();
 		response.setContentType("application/json");
 		response.setCharacterEncoding("UTF-8");
-		if(usersession != null){
-			String action = request.getParameter("action");
+		usersession = request.getSession(false);
+		if(!(usersession == null)){
+			String oper = request.getParameter("oper");
 			String rows = request.getParameter("rows");
             String pag = request.getParameter("page");
             String sidx = request.getParameter("sidx");
             String sord = request.getParameter("sord");
-            System.out.println("rows "+rows); //4
-            System.out.println("page "+pag); //1
+            System.out.println("rows "+rows); 
+            System.out.println("page "+pag); 
             System.out.println("sidx "+sidx);
             System.out.println("sord "+sord);
-			System.out.println("action "+action);
-			if(action.equalsIgnoreCase("load")){
+			System.out.println("action "+oper);
+			if(oper.equalsIgnoreCase("load")){
 				List<InvBillDetails> sampledebblist = samdebbo.getSamDebitDetails();
 				int records = sampledebblist.size();
-				
 				int page = Integer.parseInt(pag);
                 int totalPages = 0;
                 int totalCount = records;
@@ -93,22 +92,29 @@ public class SampleDebitAction extends Action {
 					sampledeb.setAmtininr(request.getParameter("amtininr"));
 					sampledeb.setDebdt(DateConversion.ConverttoMysqlDate(request.getParameter("debdt")));
 					sampledeb.setRemarks(request.getParameter("remarks"));
-					
-					boolean isSamDebUpdated = samdebbo.addSamDebStatus(sampledeb);
-					if(isSamDebUpdated){
-						jsonobj.put("success", "Successfully Inserted The Record");
+					if(oper.equalsIgnoreCase("edit")){
+						boolean isSamDebEdit = samdebbo.addSamDebEditStatus(sampledeb);
+						if(isSamDebEdit){
+							jsonobj.put("success", "Successfully Edited The Record");
+						}else{
+							jsonobj.put("Error", "Error in Editing");
+						}
 					}else{
-						jsonobj.put("Error", "Error in Inserrting");
+						boolean isSamDebUpdated = samdebbo.addSamDebStatus(sampledeb);
+						if(isSamDebUpdated){
+							jsonobj.put("success", "Successfully Inserted The Record");
+						}else{
+							jsonobj.put("Error", "Error in Inserrting");
+						}
 					}
 					System.out.println(jsonobj);		
 					out.println(jsonobj);
 		}
 		}else{
 			System.out.println("invalid User Credentials ");
-			mapping.findForward("logout");
+			usersession.invalidate();			
+			return mapping.findForward("logout");
 		}
-
-		
 		return null;
 	}
 }

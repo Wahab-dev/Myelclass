@@ -71,12 +71,26 @@ $(function() {
 	$.extend(jQuery.jgrid.edit, {recreateForm: true,});
 	$.jgrid.edit.editCaption = "Edit Article";
 	var bulkgrid = $('#bulkktracktbl');
-	initDateEdit = function (elem) {
+	
+	 initDateSearch = function (elem) {
+         setTimeout(function () {
+             $(elem).datepicker({
+                 dateFormat: 'd-m-yy',
+                 autoSize: true,
+                 changeYear: true,
+                 changeMonth: true,
+                 showWeek: true,
+                 showButtonPanel: true
+             });
+         }, 100);
+     },
+	
+	/*initDateEdit = function (elem) {
 		$(elem).datepicker({
 			beforeShowDay: function(date) {
-				/*
+				
 				 *Function 2 disable Sundays
-				 */
+				 
 				var day = date.getDay();
 				return [(day != 0), ''];
 			},
@@ -89,7 +103,7 @@ $(function() {
 			showButtonPanel: true,
 			gotoCurrent:true,
 		});
-	},
+	},*/
 	DateGrpEdit = function (elem) {
 		$(elem).datepicker({
 			beforeShowDay: function(date) {
@@ -104,6 +118,8 @@ $(function() {
 			dateFormat: "dd-mm-yy",
 			showWeek: true,
 			firstDay: 1,
+			changeYear: true,
+            changeMonth: true,
 			numberOfMonths: 2,
 			showButtonPanel: true,
 			gotoCurrent:true,
@@ -135,13 +151,13 @@ $(function() {
 	bulkgrid.jqGrid({
 		datatype: 'json',
 		url:"/Myelclass/BulkInsertAction.do",
-		colNames:['Status', 'Ct No', 'Agent', 'Order Date', 'PO No', 'Tannery', 'Exporter', 'Customer',  'Article', 'Color', 'Size',
+		colNames:['Status', 'Ct No', 'Agent', 'Order Date', 'PO No', 'Tannery', 'Exporter', 'Customer','Article Type', 'Article', 'Color', 'Size',
 		          'Substance', 'Selection', 'Selp', 'Price', 'Quantity', 'Unit', 'Shipped', 'Balance', 'Comment', 'InvDetails',
 		          'Customer Feedback', 'Tc', 'ADD', 'CDD', 'RDD', 'Commission', 'PO/JW', 'Consignee', 'Notify',
 		          'Bank', 'Destination', 'Splcdn', 'Representative', 'Prfarticleid', 'User','ApplytoAll'
 		          ],
-		colModel:[
-		          {name: 'status', index: 'status', align:'center', width:45, editable:true, sortable: true, hidden:false,
+		colModel :[
+		          {name: 'status', index: 'status', align: 'center', width:45, editable:true, sortable: true, hidden:false,
 						search: true, stype:'select', searchrules:{required:true}, edittype: 'select',
 						editoptions:{value:{P:'Pending',I:'Inspection',D:'Delivered',PS:'Partial Ship',S:'Shipped',RW:'Rework',AA:'Await Approval',AP:'Await Payment',C:'Closed',CA:'Cancel'},defaultValue: 'Pending'},
 						searchoptions:{value:":All;P:Pending;I:Inspection;D:Delivered;PS:Partial Ship;S:Shipped;RW:Rework;AA:Await Approval;AP:Await Payment;C:Closed;CA:Cancel"},
@@ -161,11 +177,14 @@ $(function() {
 				  {name: 'agent', index: 'agent', align:'center', width:30, editable:true, sortable: true, hidden:true, search: true, stype:'text',
 					      editrules :{require : true},			
 				  },
-				  {name: 'orderdt', index: 'orderdt', align:'center', width:65, editable:true, sortable: true, hidden: false, search: true, stype:'text',								
+				  {name: 'orderdt', index: 'orderdt', align:'center', width:65, editable:true, sortable: true, hidden: false, search: true, 								
 						sorttype: 'date',
-								editoptions: { size: 12, maxlengh: 12, dataInit: initDateEdit, },
-									editrules :{require : true,},
-							},
+						//stype:'date',
+						formatter: 'date', formatoptions: { newformat: 'd-m-Y' }, editable: true, datefmt: 'd-M-Y',
+	                       // editoptions: { dataInit: initDateEdit },
+	                        searchoptions: { sopt: ['eq', 'ne', 'lt', 'le', 'gt', 'ge'], dataInit: initDateSearch } 	
+						
+				  },
 							{name: 'pono', index: 'pono', align:'center', width:90, editable:true, sortable: true, hidden:true,
 								editrules :{require : true},
 							},
@@ -178,7 +197,9 @@ $(function() {
 							{name: 'customerid', index: 'customerid', align:'center', width:60, editable:true, sortable: true, hidden:false,
 								editrules :{require : true},
 							},
-							
+							{name: 'articletype', index: 'articletype', align:'center', width:90, editable:true, sortable: true, hidden:true,
+								//	editrules :{require : true},
+							},							
 							{name: 'articlename', index: 'articlename', align:'center', width:90, editable:true, sortable: true, hidden:false,
 							//	editrules :{require : true},
 							},
@@ -226,8 +247,6 @@ $(function() {
 								edittype: 'textarea',
 								editrules :{require : true},
 							},
-							
-							
 							{name: 'tc', index: 'tc', align:'center', width:90, editable:true, sortable: true, hidden: true,
 							//	editrules :{require : true},
 							},
@@ -296,11 +315,11 @@ $(function() {
 							},
 						],
 		jsonReader : {
-					repeatitems:false,
-					root: "rows",
-					page: "page", //calls first
-					total: "total" ,//calls Second
-					records: "records" //calls Third
+			repeatitems:false,
+			root: "rows",
+			page: "page", //calls first
+			total: "total" ,//calls Second
+			records: "records" //calls Third
 		},
 		caption: "Bulk Tracking Report",
 		loadtext: "Bulk Tracking is Loading",
@@ -342,10 +361,10 @@ $(function() {
 		},	
 	},{},{},{},
 	{
-	 		multipleSearch:true,
-	 		stringResult  :true,
-	 		multipleGroup:true,
-	 	}	
+	 	multipleSearch:true,
+	 	stringResult  :true,
+	 	multipleGroup:true,
+	 }	
 	);
 	bulkgrid.jqGrid('navButtonAdd','#'+bulkgrid[0].id+'_toppager_left',{
 		caption:"Status",
@@ -375,26 +394,30 @@ $(function() {
 					$("#tr_destination").hide();
 					$("#tr_prfarticleid").hide();
 					$("#tr_user").hide();
-					$("#tr_qshipped").hide();
-					$("#tr_qbal").hide();
+					$("#tr_add_date").hide();
+					$("#tr_cdd_date").hide();
+					
 					$("#tr_pojw").hide();
 					$("#tr_feddback").show();
 					$("#tr_isupdtar").show();
 
-
-
+					
+					$("#tr_qshipped").show();
+					$("#tr_qbal").show();
 					$("#ctno").attr("readonly","readonly");
 					$("#articlename").attr("readonly","readonly");
 					$("#color").attr("readonly","readonly");
 					$("#size").attr("readonly","readonly");
 					$("#quantity").attr("readonly","readonly");
+					$("#qshipped").attr("readonly","readonly");
+					$("#qbal").attr("readonly","readonly");
 				},
 				recreateForm: true,
 				editData: {//Function to Add parameters to the status
 					oper: 'status',
 				},
-				closeAfterEdit : true,
-				reloadAfterSubmit : true,
+				//closeAfterEdit : true,
+				//reloadAfterSubmit : true,
 				top : 50,
 				left : 100,
 				width : 'auto',
@@ -410,8 +433,8 @@ $(function() {
 		onClickButton:function(){
 			bulkgrid[0].clearToolbar();
 		}
-	});
-	bulkgrid.jqGrid('filterToolbar', {autosearch : true, searchOnEnter:false, defaultSearch : "cn"}); //Default Search as Contains //To Disable AutoSearch please change SearchonEnter to true
+	});										//multipleSearch:true, multipleGroup:true, showQuery: true 
+	bulkgrid.jqGrid('filterToolbar', {autosearch : true, searchOnEnter:false, defaultSearch : "cn",}); //Default Search as Contains //To Disable AutoSearch please change SearchonEnter to true
 
 
 	bulkgrid.jqGrid('navButtonAdd', '#bulkktrackpager', {

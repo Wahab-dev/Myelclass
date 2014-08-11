@@ -12,10 +12,7 @@
 <script type="text/javascript" src="js/ui.multiselect.js"></script>
 <link rel="stylesheet" type="text/css" media="screen" href="css/redmond/jquery-ui-1.10.3.custom.css" />
 <link rel="stylesheet" type="text/css" media="screen" href="css/ui.jqgrid.css" />
-<style type="text/css">
-#ui-datepicker-div { font-size: 11px; } 
-.myAltRowClass { background-color: Light; background-image: none; }
-</style>
+<link rel="stylesheet" type="text/css"  href="css/bulk.css" />
 <script src="js/i18n/grid.locale-en.js" type="text/javascript"></script>
 <script src="js/jquery.jqGrid.min.js" type="text/javascript"></script>
 <script src="js/elpro/bulk.js"></script> 
@@ -23,14 +20,14 @@
 $(function() {
 	 var icons = {
 			 header: "ui-icon-circle-arrow-e",
-			 activeHeader: "ui-icon-circle-arrow-s"
+			 activeHeader: "ui-icon-circle-arrow-s",
 	};
 	$(".accordionmenu").accordion({
 		heightStyle: "content",
 		 icons: icons,
 		 active: false,
 		 collapsible: true ,
-		 heightStyle: "content"
+		 heightStyle: "content",
 	});
 });
 </script>
@@ -43,7 +40,7 @@ $(function() {
 			<div id="accordionmenu1" class="accordionmenu">
 			  <h3>Samples </h3>
 			        <ul>
-							 <li> <h:link action='/loadSrf' scope="request">SrfScreen</h:link></li>
+			            <li> <h:link action='/loadSrf' scope="request">SrfScreen</h:link></li>
 							<li> <h:link action='/gotoSampleTracking'>Sample Tracking</h:link></li>
 							<li> <h:link action='/gotoSampleInvoice'>Sample Invoice Screen</h:link></li>
 							  <li> <h:link action='/sit'>Sample Invoice Tracking</h:link></li>
@@ -55,7 +52,7 @@ $(function() {
 				<div id="accordionmenu2" class="accordionmenu">
 					<h3>Contracts</h3>
 			        <ul>
-							 <li><h:link action='/LoadPrf' scope="request">Prf Screen</h:link></li>
+			            <li><h:link action='/LoadPrf' scope="request">Prf Screen</h:link></li>
 							 <li><h:link action='/gotoBulkTracking'>Bulk Tacking</h:link></li>
 							<li><h:link action='/loadInspection'>Inspection Screen</h:link></li>
 							<li><h:link action='/gotoInspectionTracking'>Inspection Tacking</h:link></li>
@@ -78,7 +75,7 @@ $(function() {
    			</td>
    		</tr>
    </table>
-   </div>
+</div>
    <div>
   	<h:form action="/login" method="post" >	  
   	<table>
@@ -91,7 +88,7 @@ $(function() {
 <!-- Bulk Tracking Form  -->
 	Group By: <select id="chngroup"> 
 				<option value="ctno">Ct No</option>
-				<option value="tanneryid">Tannery </option>
+				<option value="exporterid">Tannery </option>
 				<option value="customerid">Customer</option>
 				<option value="articlename">Article</option>				
 				<option value="color" >color</option>

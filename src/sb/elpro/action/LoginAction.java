@@ -32,6 +32,7 @@ public class LoginAction extends DispatchAction {
 	NewUserDetails userdetails = new NewUserDetails();
 	String forward = "gotoMenu";
 	HttpSession usersession;
+	
 	public ActionForward Login(ActionMapping map, ActionForm form, 
 			HttpServletRequest request, HttpServletResponse response) throws Exception{
 		usersession = request.getSession();

@@ -9,9 +9,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import net.sf.json.JSONObject;
-
-import org.apache.struts.action.Action;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -21,6 +18,8 @@ import sb.elpro.actionform.PrfForm;
 import sb.elpro.bo.PrfBo;
 import sb.elpro.bo.PrfBoImpl;
 import sb.elpro.model.ProductDetails;
+
+import net.sf.json.JSONObject;
 
 /**
  * @author Wahab
@@ -33,12 +32,9 @@ public class PrfLoadAction extends DispatchAction{
 	
 	public ActionForward execute(ActionMapping map, ActionForm form, 
 			HttpServletRequest request, HttpServletResponse response)throws Exception{
-		System.out.println("In PRf Load");
 		usersession = request.getSession(false);
-		if(usersession != null){
+		if(!(usersession == null)){
 			String action = request.getParameter("action");
-			System.out.println("Bulb  action"+action);
-			
 			usersession.setAttribute("paymentarray", prfbo.getPaymentDetails());
 			usersession.setAttribute("termsarray", prfbo.getTermsDetails());	
 			usersession.setAttribute("colorarray", prfbo.getColorDetails());
@@ -49,7 +45,7 @@ public class PrfLoadAction extends DispatchAction{
 			usersession.setAttribute("tcagentarray", prfbo.getTcAgentDetails());
 			if(action == null){
 				PrfForm prfsaveform =(PrfForm) form;
-				usersession.setAttribute("actionform", "add");
+				usersession.setAttribute("prfactionform", "add");
 				System.out.println("IN PRF IS LOADED");
 				prfsaveform.reset(map, request);
 				return map.findForward("prfisloaded");
@@ -60,11 +56,10 @@ public class PrfLoadAction extends DispatchAction{
 				System.out.println("Session value");
 				System.out.println("In Edit Form");
 				String ctno = request.getParameter("ctno");
-				usersession.setAttribute("actionform", "edit");
+				usersession.setAttribute("prfactionform", "edit");
 				request.setAttribute("editprfctno", ctno);
 				List<ProductDetails> editprfform = prfbo.getEditPrfFormValues(ctno);
 				usersession.setAttribute("editprfform", editprfform);
-				
 				return map.findForward("prfisloaded");
 			}
 			return map.findForward("prfisloaded");
@@ -73,10 +68,5 @@ public class PrfLoadAction extends DispatchAction{
 			return map.findForward("logout");
 		}	
 	}
-	/*public ActionForward editform(ActionMapping map, ActionForm form, 
-			HttpServletRequest request, HttpServletResponse response)throws Exception{
-		System.out.println("What The Hell IS This >>>>>");
-		
-		return null;
-	}*/
+	
 }

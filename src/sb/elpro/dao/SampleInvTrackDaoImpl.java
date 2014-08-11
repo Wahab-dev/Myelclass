@@ -44,7 +44,7 @@ public class SampleInvTrackDaoImpl implements SampleInvoiceTrackDao {
 				InvBillDetails invtrackbean = new InvBillDetails();
 					invtrackbean.setInvtype(rs.getString("invtype"));
 					invtrackbean.setInvno(rs.getString("invno"));
-					invtrackbean.setInvdt(DateConversion.ConverttoNormalDate(rs.getString("invdate")));
+					invtrackbean.setInvdt((rs.getString("invdate")));
 					invtrackbean.setExporter(rs.getString("tanshform"));
 					invtrackbean.setTaninvno(rs.getString("taninvno"));
 					invtrackbean.setCustomer(rs.getString("cust.shortform"));

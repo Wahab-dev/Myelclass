@@ -51,10 +51,9 @@ public class InspectionAction extends DispatchAction {
 			 PrintWriter out = response.getWriter();
 			 response.setContentType("application/json");
 			 response.setCharacterEncoding("UTF-8");
-			 usersession = request.getSession(false);
 			 JSONObject inspjsonobj = new JSONObject();
+			 usersession = request.getSession(false);
 			 if(!(usersession == null)){
-				
 				 InspectionForm inspform =  (InspectionForm) form;
 				 BeanUtils.copyProperties(inspbean, inspform);
 				 inspbean.setInspdate(DateConversion.ConverttoMysqlDate(request.getParameter("inspdate")));
@@ -63,7 +62,7 @@ public class InspectionAction extends DispatchAction {
 				 System.out.println("usersession "+usersession.getId());
 				 System.out.println("request  "+usersession.getAttribute("inspactionform"));
 				 if(usersession.getAttribute("inspactionform").equals("edit")){
-					/* boolean isupdtsampleinv = sampinvbo.updtSampleInvoiceform(sampinvbean);
+					 /* boolean isupdtsampleinv = sampinvbo.updtSampleInvoiceform(sampinvbean);
 					 if(isupdtsampleinv){
 						 sampinvjsonobj.put("result", isupdtsampleinv);
 						 sampinvjsonobj.put("success", "Successfully UPdt The Form");
@@ -93,6 +92,7 @@ public class InspectionAction extends DispatchAction {
 				}
 			}else{
 					System.out.println("Invalid Login credentials");
+					usersession.invalidate();			
 					mapping.findForward("logout");
 				 }
 			return null;

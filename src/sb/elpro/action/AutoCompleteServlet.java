@@ -41,7 +41,7 @@ public class AutoCompleteServlet extends Action{
 		 response.setCharacterEncoding("UTF-8");
 		PrintWriter out = response.getWriter();
 		usersession = request.getSession(false);
-		if(usersession != null){
+		if(!(usersession == null)){
 			//get the request from the jsp
 			/*String tan = request.getParameter("tan");
 			System.out.println();
@@ -76,19 +76,9 @@ public class AutoCompleteServlet extends Action{
 			 System.out.println(jsonOrderArray);
 	 		out.println(jsonOrderArray);
 			}
-			
-			
-		/*PrintWriter out = response.getWriter();
-        response.setContentType("text/html");
-        response.setHeader("Cache-control", "no-cache, no-store");
-        response.setHeader("Pragma", "no-cache");
-    //   response.setHeader("Expires", "-1");
-	//	private static final long serialVersionUID = 1L;*/
        
 			 out.close();
-	}
-		return null;
-	}
-	
-	
+		}
+			return null;
+	}		
 }

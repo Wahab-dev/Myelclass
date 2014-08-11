@@ -123,6 +123,7 @@ public class ProductDetails implements Serializable {
 	private String pojw_tanphone;
 	private String pojw_tanfax;
 	
+	private String prfaction;
 	
 	/**
 	 * @return the prf_agentid
@@ -1336,6 +1337,18 @@ public class ProductDetails implements Serializable {
 	 */
 	public void setPojw_pojwno(String pojw_pojwno) {
 		this.pojw_pojwno = pojw_pojwno;
+	}
+	/**
+	 * @return the prfaction
+	 */
+	public String getPrfaction() {
+		return prfaction;
+	}
+	/**
+	 * @param prfaction the prfaction to set
+	 */
+	public void setPrfaction(String prfaction) {
+		this.prfaction = prfaction;
 	}
 	
 

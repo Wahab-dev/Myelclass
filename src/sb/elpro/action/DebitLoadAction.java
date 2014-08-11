@@ -29,8 +29,8 @@ public class DebitLoadAction extends Action {
 	
 	public ActionForward execute(ActionMapping map, ActionForm form, 
 			HttpServletRequest request, HttpServletResponse response)throws Exception{
-		usersession = request.getSession(false);	
-		if(usersession !=null){		   	
+		usersession = request.getSession(false);
+		if(!(usersession == null)){
 			String action = request.getParameter("action");
 			System.out.println("Debit  action PPP"+action);
 			if(action == null){
@@ -51,6 +51,5 @@ public class DebitLoadAction extends Action {
 			System.out.println("Error");
 			return map.findForward("logout");
 		}
-		
 	}
 }

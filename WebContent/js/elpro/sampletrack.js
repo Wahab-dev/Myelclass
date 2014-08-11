@@ -107,21 +107,30 @@ $(function() {
 				alert("Please Select field to Group");
 			}
 		}); 
-	/*var mydata=[
-	            
-	            {status:'P',sampleno:'S2345'},
-	            {status:'P',sampleno:'S2346'},
-	            ];*/
+	 initDateSearch = function (elem) {
+         setTimeout(function () {
+             $(elem).datepicker({
+                 dateFormat: 'd-m-yy',
+                 autoSize: true,
+                 changeYear: true,
+                 changeMonth: true,
+                 showWeek: true,
+                 showButtonPanel: true
+             });
+         }, 100);
+     },
 	DateGrpEdit = function (elem) {
         $(elem).datepicker({
         	autoSize: true,
-		    changeMonth:false,
-		    dateFormat: "dd-mm-yy",
-		    showWeek: true,
-		    firstDay: 1,
-		    numberOfMonths: 2,
-		    showButtonPanel: true,
-		    gotoCurrent:true, 
+			changeMonth:false,
+			dateFormat: "dd-mm-yy",
+			showWeek: true,
+			firstDay: 1,
+			changeYear: true,
+            changeMonth: true,
+			numberOfMonths: 2,
+			showButtonPanel: true,
+			gotoCurrent:true,
         });
 	};
  var sampletrackgrid = $('#sampletrack');
@@ -153,7 +162,10 @@ $(function() {
 				        }
 				    }
 				},
-				{name: 'orderdt', index: 'orderdt', align:'center', width:60, editable:true, search: true, stype:'text', sortable: true, hidden: false, 
+				{name: 'orderdt', index: 'orderdt', align:'center', width:60, editable:true, search: true,  sortable: true, hidden: false, 
+					sorttype: 'date',
+					formatter: 'date', formatoptions: { newformat: 'd-m-Y' }, editable: true, datefmt: 'd-M-Y',
+                     searchoptions: { sopt: ['eq', 'ne', 'lt', 'le', 'gt', 'ge'], dataInit: initDateSearch } 	
 					
 				},
 				{name: 'refno', index: 'refno', align:'center', width:60, editable:true, search: true, stype:'text', sortable: true, hidden: true, 
@@ -352,12 +364,12 @@ $(function() {
         pcstot = $self.jqGrid("getCol", "pcs", false, "sum");
         qtytot = $self.jqGrid("getCol", "quantity", false, "sum");
         shpdtot = $self.jqGrid("getCol", "shpd", false, "sum");
-        baltot =  (parseFloat(qtytot) - parseFloat(shpdtot));
+       // baltot =  (parseFloat(qtytot) - parseFloat(shpdtot));
 
         $self.jqGrid("footerData", "set", {status: "Total:", quantity: qtytot.toFixed(2)});
         $self.jqGrid("footerData", "set", { pcs: pcstot.toFixed(2)});
         $self.jqGrid("footerData", "set", { shpd: shpdtot.toFixed(2)});
-        $self.jqGrid("footerData", "set", { bal: baltot.toFixed(2)});
+      //  $self.jqGrid("footerData", "set", { bal: baltot.toFixed(2)});
         
     }
     }).jqGrid('navGrid','#sampletrackpgr',{
@@ -423,6 +435,8 @@ $(function() {
 			 $("#substance").attr("readonly","readonly"); 
 			 $("#selection").attr("readonly","readonly"); 
 			 $("#quantity").attr("readonly","readonly"); 
+			// $("#add_date").attr("readonly","readonly"); 
+			 //$("#cdd_date").attr("readonly","readonly"); 
 		 },
         recreateForm: true,
         editData: {//Function to Add parameters to the status 

@@ -31,16 +31,14 @@ public class DebSelInvfromCust extends Action{
 	JSONObject jsonobj = new JSONObject();
 	public ActionForward execute(ActionMapping map, ActionForm form, 
 			HttpServletRequest request, HttpServletResponse response) throws Exception {
-		usersession = request.getSession(false);
 		PrintWriter out = response.getWriter();
 		response.setContentType("application/json");
 		response.setCharacterEncoding("UTF-8");
-		if(usersession != null){	
+		usersession = request.getSession(false);
+		if(!(usersession == null)){
 			String action = request.getParameter("action");
 			String rows = request.getParameter("rows");
             String pag = request.getParameter("page");
-            //String sidx = request.getParameter("sidx");
-            //String sord = request.getParameter("sord");
 			String inv = request.getParameter("invno");
 			
 			System.out.println("inv N0 "+inv);
@@ -83,10 +81,9 @@ public class DebSelInvfromCust extends Action{
 				}
 			}
 		}else{
-			
+
 		}
-		
-		return null;
+			return null;
 	}
 	
 }	

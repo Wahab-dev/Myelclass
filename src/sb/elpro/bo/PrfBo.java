@@ -17,6 +17,7 @@ import sb.elpro.model.CustomerDetails;
 import sb.elpro.model.NotifyConsigneeDetails;
 import sb.elpro.model.PaymentDetails;
 import sb.elpro.model.PoJwBean;
+import sb.elpro.model.PojwArticle;
 import sb.elpro.model.PrfArticle;
 import sb.elpro.model.ProductDetails;
 import sb.elpro.model.RateDetails;
@@ -163,6 +164,22 @@ public interface PrfBo  {
 	 * etc
 	 */
 	public List<AutoComplete> getPrfColormatch()throws Exception;
+
+	/**  
+	 * (Method description)
+	 * @param
+	 * @return
+	 * etc
+	 */
+	public List<PrfArticle> getPojwArticleDetails(String ctno)throws Exception;
+
+	/**  
+	 * (Method description)
+	 * @param
+	 * @return
+	 * etc
+	 */
+	public List<AutoComplete> getPrfSizeRem()throws Exception;
 	
 
 }

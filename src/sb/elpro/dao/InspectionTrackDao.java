@@ -23,6 +23,6 @@ public interface InspectionTrackDao {
 	 * @return
 	 * etc
 	 */
-	List<InspectionBean> getInspectionTrackLoad(String sidx, String sord) throws SQLException;
+	List<InspectionBean> getInspectionTrackLoad() throws SQLException;
 
 }

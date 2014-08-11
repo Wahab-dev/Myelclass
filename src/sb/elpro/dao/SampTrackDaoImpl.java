@@ -38,7 +38,7 @@ public class SampTrackDaoImpl implements SampTrackDao {
 			while(rs.next()) {	
 			 SampleTrack samptrackbean = new SampleTrack();
 			 	samptrackbean.setSampleno(rs.getString("sampleno"));
-			 	samptrackbean.setOrderdt(DateConversion.ConverttoNormalDate(rs.getString("orderdt")));
+			 	samptrackbean.setOrderdt((rs.getString("orderdt")));
 			 	samptrackbean.setRefno(rs.getString("refno"));
 			 	samptrackbean.setPriority(rs.getString("priority"));
 			 	samptrackbean.setHandledby(rs.getString("handledby"));

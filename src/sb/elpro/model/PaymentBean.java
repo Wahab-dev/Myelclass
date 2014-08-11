@@ -21,6 +21,7 @@ public class PaymentBean implements Serializable {
 	private String deb_debitno;
 	private String deb_debitdate;
 	private String deb_exporter;
+	private String deb_exporterid;
 	private String deb_tanaddr;
 	private String deb_tanattn;
 	private String deb_tantelephone;
@@ -734,5 +735,17 @@ public class PaymentBean implements Serializable {
 	 */
 	public void setPaymentno(String paymentno) {
 		this.paymentno = paymentno;
+	}
+	/**
+	 * @return the deb_exporterid
+	 */
+	public String getDeb_exporterid() {
+		return deb_exporterid;
+	}
+	/**
+	 * @param deb_exporterid the deb_exporterid to set
+	 */
+	public void setDeb_exporterid(String deb_exporterid) {
+		this.deb_exporterid = deb_exporterid;
 	}
 }

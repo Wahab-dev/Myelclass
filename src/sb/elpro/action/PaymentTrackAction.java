@@ -32,12 +32,11 @@ public class PaymentTrackAction extends  Action {
 		response.setCharacterEncoding("UTF-8");
 		//PrintWriter out = response.getWriter();
 		usersession = request.getSession(false);
-		if(usersession != null){
-			return map.findForward("paytrackisloaded");			
+		if(!(usersession == null)){
+			return map.findForward("paytrackisloaded");
 		}else{
 			System.out.println("In Invalid Session");
 			return map.findForward("logout");
-		}
-		
+		}	
 	}
 }

@@ -35,7 +35,6 @@ public class MasterInsertAction extends Action{
 	MasterBo masterbo = new MasterBoImpl();
 	public ActionForward execute (ActionMapping map, ActionForm form, 
 			HttpServletRequest request, HttpServletResponse response) throws Exception{
-		usersession = request.getSession(false);
 		System.out.println("usersession ID" +usersession.getId());
 		PrintWriter out = response.getWriter();
 		JSONObject jsonobj = new JSONObject();
@@ -46,7 +45,8 @@ public class MasterInsertAction extends Action{
 		 * Check for Valid USer - If S Load the Grid 
 		 * 
 		 */
-		if(usersession != null){
+		usersession = request.getSession(false);
+		if(!(usersession == null)){
 			 /*
 			  * Load Parameters for the Grid Load 
 			  * 
@@ -126,7 +126,6 @@ public class MasterInsertAction extends Action{
 		}else{
 			System.out.println("Error in Loading MAster Grid");
 		}
-		
 		return null;
 	}
 }

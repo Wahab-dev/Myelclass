@@ -41,7 +41,7 @@ public class SrfAutoComplete extends Action  {
 			response.setCharacterEncoding("UTF-8");
 			PrintWriter out = response.getWriter();
 			usersession = request.getSession(false);
-			if(usersession != null){
+			if(!(usersession == null)){
 				String action = request.getParameter("action");
 				if(action.equalsIgnoreCase("handlby")){
 					String handlbyterm = request.getParameter("term");
@@ -72,12 +72,8 @@ public class SrfAutoComplete extends Action  {
 					 System.out.println(sampleno);
 					 out.println(sampleno);
 				}
-		
-		
+				
 			}
-		
-		return null;
+			return null;	
 	}
-	
-	
 }

@@ -19,6 +19,7 @@ import sb.elpro.model.CustomerDetails;
 import sb.elpro.model.NotifyConsigneeDetails;
 import sb.elpro.model.PaymentDetails;
 import sb.elpro.model.PoJwBean;
+import sb.elpro.model.PojwArticle;
 import sb.elpro.model.PrfArticle;
 import sb.elpro.model.ProductDetails;
 import sb.elpro.model.RateDetails;
@@ -44,6 +45,7 @@ public class PrfBoImpl implements PrfBo {
 	}
 	
 	@Override
+	
 	public ArrayList<AgentDetails> getAgentDetails(String term) throws Exception {
 		ArrayList<AgentDetails> agentList = prfdao.getAgentList(term);
 		return agentList;
@@ -144,33 +146,7 @@ public class PrfBoImpl implements PrfBo {
 	@Override
 	public int saveprfArticle(PrfArticle prfarticlebean) 
 			throws Exception  {
-		int rowsinserted = 0;
-		/*String selectp1 = null; 
-		String selectp2 = null; 
-		String selectp3 = null;
-		String selectp4 = null;
-		
-		String sizemin = prfarticlebean.getPrf_sizemin();
-		String sizemax = prfarticlebean.getPrf_sizemax();
-		String unit = prfarticlebean.getPrf_unit();
-		String sizeremarks = prfarticlebean.getPrf_sizeremarks();		
-		String size  = sizemin +" / "+ sizemax + " "+unit + " "+sizeremarks;
-		prfarticlebean.setPrf_size(size); 	
-		
-		String subatancemin = prfarticlebean.getPrf_substancemin();
-		String subatancemax = prfarticlebean.getPrf_substancemax();
-		String substance = subatancemin + " / " +subatancemax + " mm";
-		prfarticlebean.setPrf_substance(substance);
-		
-		
-		 selectp1 = prfarticlebean.getPrf_selectionp1();
-		 selectp2 = prfarticlebean.getPrf_selectionp2();
-		 selectp3 = prfarticlebean.getPrf_selectionp3();		
-		 selectp4 = prfarticlebean.getPrf_selectionp4();*/
-		 
-		// String selecp = selectp1+"%"+selectp2+"%"+selectp3+"%"+selectp4;
-		// prfarticlebean.setPrf_selectionp(selecp);
-		 
+		int rowsinserted = 0;		 
 		 String rate  = prfarticlebean.getPrf_ratesign() +" "+  prfarticlebean.getPrf_rate() +" "+  prfarticlebean.getPrf_shipment();
 		 prfarticlebean.setPrf_price(rate);
 		 	
@@ -332,6 +308,24 @@ public class PrfBoImpl implements PrfBo {
 	public List<AutoComplete> getPrfColormatch() throws Exception {
 		ArrayList<AutoComplete> colormatchList = prfdao.getPrfColorMatchList();
 		return colormatchList;
+	}
+
+	/* (non-Javadoc)
+	 * @see sb.elpro.bo.PrfBo#getPojwArticleDetails(java.lang.String)
+	 */
+	@Override
+	public List<PrfArticle> getPojwArticleDetails(String ctno)  throws Exception {
+		ArrayList<PrfArticle> pojwaticlearray = prfdao.getPojwArticleDetails(ctno);
+		return pojwaticlearray;
+	}
+
+	/* (non-Javadoc)
+	 * @see sb.elpro.bo.PrfBo#getPrfSizeRem()
+	 */
+	@Override
+	public List<AutoComplete> getPrfSizeRem() throws Exception {
+		ArrayList<AutoComplete> sizeremList = prfdao.getSizeRemList();
+		return sizeremList;
 	}
 
 

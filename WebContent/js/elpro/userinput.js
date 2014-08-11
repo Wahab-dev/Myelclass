@@ -310,7 +310,7 @@ $(document).ready(function() {
 	  viewrecords: true,
 	  altRows: true, // altrows and altclass for alternate color on grid rows
 	  emptyrecords: 'No records to display',     
-	}).jqGrid('navGrid','#consigpager',{add:true, edit:true, del: false, search: false,
+	}).jqGrid('navGrid','#consigpager',{add:true, edit:true, del: true, search: false,
 		addtext: 'Add', edittext: 'Edit', deltext: 'Delete', searchtext: 'Search', refreshtext: 'Reload',
 		beforeRefresh: function(){
 		 consiggrid.jqGrid('setGridParam',{datatype:'json'}).trigger('reloadGrid');
@@ -393,7 +393,7 @@ $(document).ready(function() {
 		gridview : true,
 		viewrecords: true,
 		altRows: true,
-	}).jqGrid('navGrid','#notifypager',{add:true, edit:true, del: false, search: false, 
+	}).jqGrid('navGrid','#notifypager',{add:true, edit:true, del: true, search: false, 
 		addtext: 'Add', edittext: 'Edit', deltext: 'Delete', searchtext: 'Search', refreshtext: 'Reload',
 		beforeRefresh: function(){
 			notifygrid.jqGrid('setGridParam',{datatype:'json'}).trigger('reloadGrid');
@@ -485,7 +485,7 @@ $(document).ready(function() {
 		gridview : true,
 		viewrecords: true,
 		altRows: true,
-	}).jqGrid('navGrid','#bankpager',{add:true, edit:true, del: false, search: false, 
+	}).jqGrid('navGrid','#bankpager',{add:true, edit:true, del: true, search: false, 
 		addtext: 'Add', edittext: 'Edit', deltext: 'Delete', searchtext: 'Search', refreshtext: 'Reload',
 		beforeRefresh: function(){
 			bankgrid.jqGrid('setGridParam',{datatype:'json'}).trigger('reloadGrid');
@@ -521,7 +521,7 @@ $(document).ready(function() {
 		autoencode: true,
 		colNames:['ID','Type','Name','Size','Size Remarks','Substance','Sel','Rate','Currency','Amount','Shipment','TC','TC Amount','TC Sign','TC Agent','Short Form'],  
 	    colModel:[
-				   {name: 'articleid',index :'articleid', editable:true,  hidden:true,
+	               {name: 'articleid',index :'articleid', editable:true,  hidden:true,
 					   editoptions: { readonly: 'readonly'},
 				   },
 	               {name: 'articletype',index :'articletype', editable:true, edittype:'select',
@@ -549,7 +549,24 @@ $(document).ready(function() {
 	            	   
 	               },
 	               {name: 'size_remarks',index :'size_remarks', sortable: true, editable:true, hidden: true, 
-       					edittype:'select',
+	            	   edittype:'select',
+	   					/*editoptions: { 
+	           			  dataUrl:'/Myelclass/PrfAutocomplete.do?action=sizerem',
+	           			  type:"GET",
+	           			  buildSelect: function(data) {
+	           			   	var response = jQuery.parseJSON(data);
+	           			        	var s = '<select style="width: 520px">';
+	           			        	if (response && response.length) {
+	           			            	s += '<option value="0">--- Select Article Type ---</option>';
+	           			  	            for (var i = 0, l=response.length; i<l ; i++) {
+	           			                  var ri = response[i].value;
+	           			               	  s += '<option value="'+ri+'">'+ri+'</option>';
+	           			            	}
+	           			          	}
+	           			       return s + "</select>";
+	           			   },
+	           			 } ,*/
+	            	   //edittype:'select',
        					editoptions:{value:{0: 'Select Size Remarks', F:'F', S:'S', FS:'FS', DB:'Double Butt'}}, 
 	               },
 	               {name: 'substance',index :'substance', editable:true, sortable:true, hidden:false,
@@ -565,7 +582,7 @@ $(document).ready(function() {
 	               },
 	               {name: 'ratesign',index :'ratesign', editable:true, sortable:true, hidden: true,
 	            	   edittype:'select',
-     				   editoptions:{value:{0:'--- Select Currency --- ',$:'$',Rs:'Rs',Euro:'€',NA:' Not Available'}},
+     				   editoptions:{value:{0:'--- Select Currency --- ',$:'$',Rs:'Rs',Euro:'Euro',NA:' Not Available'}},
 	               },
  				   {name: 'rateamt',index :'rateamt', editable:true, sortable:true, hidden: true,
 	            	  // editrules :{custom:true, custom_func : pricecheck},  
@@ -849,7 +866,7 @@ $(document).ready(function() {
 		gridview : true,
 		viewrecords: true,
 		altRows: true,
-	}).jqGrid('navGrid','#destipager',{add:true, edit:true, del: false, search: false, 
+	}).jqGrid('navGrid','#destipager',{add:true, edit:true, del: true, search: false, 
 		addtext: 'Add', edittext: 'Edit', deltext: 'Delete', searchtext: 'Search', refreshtext: 'Reload',
 		beforeRefresh: function(){
 			destigrid.jqGrid('setGridParam',{datatype:'json'}).trigger('reloadGrid');
@@ -1004,7 +1021,7 @@ $(document).ready(function() {
 		gridview : true,
 		viewrecords: true,
 		altRows: true,
-	}).jqGrid('navGrid','#termspager',{add:true, edit:true, del: false, search: false, 
+	}).jqGrid('navGrid','#termspager',{add:true, edit:true, del: true, search: false, 
 		addtext: 'Add', edittext: 'Edit', deltext: 'Delete', searchtext: 'Search', refreshtext: 'Reload',
 		beforeRefresh: function(){
 			termsgrid.jqGrid('setGridParam',{datatype:'json'}).trigger('reloadGrid');
@@ -1078,7 +1095,7 @@ $(document).ready(function() {
 		gridview : true,
 		viewrecords: true,
 		altRows: true,
-	}).jqGrid('navGrid','#paymntpager',{add:true, edit:true, del: false, search: false, 
+	}).jqGrid('navGrid','#paymntpager',{add:true, edit:true, del: true, search: false, 
 		addtext: 'Add', edittext: 'Edit', deltext: 'Delete', searchtext: 'Search', refreshtext: 'Reload',
 		beforeRefresh: function(){
 			paymntgrid.jqGrid('setGridParam',{datatype:'json'}).trigger('reloadGrid');

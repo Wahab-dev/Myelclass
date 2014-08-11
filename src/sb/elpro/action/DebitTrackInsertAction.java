@@ -36,13 +36,13 @@ public class DebitTrackInsertAction extends Action{
 	
 	public ActionForward execute (ActionMapping map, ActionForm form, 
 			HttpServletRequest request, HttpServletResponse response) throws Exception{
-		usersession = request.getSession(false);
 		PrintWriter out = response.getWriter();
 		JSONObject jsonobj = new JSONObject();
 		response.setContentType("application/json");
 		response.setCharacterEncoding("UTF-8");
 		System.out.println("In Bulk Action ");
-		 if(usersession != null){	
+		usersession = request.getSession(false);
+		if(!(usersession == null)){
 			 String oper =   request.getParameter("oper");
 			 System.out.println("oper "+oper);
 			 String action = request.getParameter("action");

@@ -18,6 +18,7 @@ import sb.elpro.model.CustomerDetails;
 import sb.elpro.model.NotifyConsigneeDetails;
 import sb.elpro.model.PaymentDetails;
 import sb.elpro.model.PoJwBean;
+import sb.elpro.model.PojwArticle;
 import sb.elpro.model.PrfArticle;
 import sb.elpro.model.ProductDetails;
 import sb.elpro.model.RateDetails;
@@ -160,7 +161,21 @@ public interface PrfDao {
 	 */
 	ArrayList<AutoComplete> getPrfColorMatchList()throws SQLException;
 
+	/**  
+	 * (Method description)
+	 * @param
+	 * @return
+	 * etc
+	 */
+	ArrayList<PrfArticle> getPojwArticleDetails(String ctno)throws SQLException;
 
-	
-	
+	/**  
+	 * (Method description)
+	 * @param
+	 * @return
+	 * etc
+	 */
+	ArrayList<AutoComplete> getSizeRemList()throws SQLException;
+
+
 }

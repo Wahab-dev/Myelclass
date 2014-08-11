@@ -28,7 +28,7 @@ public class LoginDaoImpl implements LoginDao{
 		try{			
 			con = DBConnection.getConnection();
 			//Query String
-			String sql = "Select Name From elpro.login where UserName = ? and Password = ? and Role= ?";
+			String sql = "Select Name, Role From elpro.login where UserName = ? and Password = ? and Role= ?";
 			pst = con.prepareStatement(sql);
 			pst.setString(1, user.getUsername());
 			pst.setString(2, user.getPassword());
@@ -36,11 +36,12 @@ public class LoginDaoImpl implements LoginDao{
 			rs = pst.executeQuery();
 			
 			if(rs.next()){
-				user.setName(rs.getString("Name"));		
+				user.setName(rs.getString("Name"));	
+				user.setRole(rs.getString("Role"));
 			}else{
 				user.setName("WrongUser");	// Need to Add Guest in the Future
 			}
-			System.out.println(" User Name "+user.getName());
+			System.out.println(" User Namess "+user.getName());
 		}catch(Exception e){
 			e.printStackTrace();
 		}finally{

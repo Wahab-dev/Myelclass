@@ -45,9 +45,7 @@ public class PaymentAction extends DispatchAction{
 			HttpServletRequest request, HttpServletResponse response) throws Exception{
 		
 		usersession = request.getSession(false);
-	
 		usersession.invalidate();
-		
 		//return mapping.getInputForward();
 		return mapping.findForward("logout");
 	}
@@ -57,12 +55,11 @@ public class PaymentAction extends DispatchAction{
 		 PrintWriter out = response.getWriter();
 		 PaymentForm paymentsaveform =(PaymentForm) form;
 		 BeanUtils.copyProperties(paymntformbean, paymentsaveform);
-		 usersession = request.getSession(false);
 		 System.out.println("Sessio n "+usersession);
 		 paymntformbean.setPaymentdate(DateConversion.ConverttoMysqlDate(request.getParameter("deb_debitdate")));
 		 paymntformbean.setRecieptdate(DateConversion.ConverttoMysqlDate(request.getParameter("recieptdate")));
+		 usersession = request.getSession(false);
 		 if(!(usersession == null)){
-			 
 			 JSONObject debjsonobj = new JSONObject();
 			 System.out.println("usersession "+usersession.getId());
 			 System.out.println("request  "+usersession.getAttribute("payactionform"));
@@ -99,6 +96,7 @@ public class PaymentAction extends DispatchAction{
 		 }
 		 else{
 			 System.out.println(" Invalid Session");
+			 usersession.invalidate();	
 			 return mapping.findForward("logout");
 		 }
 		

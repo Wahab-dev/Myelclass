@@ -3,6 +3,9 @@
  */
 
 $(function() {
+	
+	 var paymentgrid = $("#tbl_paymentDetails");
+	 
 	$.get("/Myelclass/DebAutoComplete.do?action="+"payno", 
 		 	function(data){
 			 	if($("#payactionform").val().toLowerCase() == "edit" ){
@@ -37,41 +40,41 @@ $(function() {
 			              label: item.tanneryName,
 			              addr: item.tanneryAddress,
 			              ctno: item.tanneryContactNo,
+			              id: item.tanneryId,
 			              };
 			        }));//END response
 			 });
 		 },
 		 select: function(event, ui){
 			 $('#deb_tanaddr').val(ui.item.addr);
+			 $('#deb_exporterid').val(ui.item.id);
 			 $('#deb_tantelephone').val(ui.item.ctno);
-			 var payexpo = ui.item.label;
-			 paymentgrid.jqGrid('setGridParam',{url:"/Myelclass/PaymentGridAction.do?exporter="+payexpo+"&action="+"loadGrid",}).trigger("reloadGrid");
+			 var payexpoid = ui.item.id;
+			 paymentgrid.jqGrid('setGridParam',{url:"/Myelclass/PaymentGridAction.do?exporter="+payexpoid+"&action="+"loadGrid",}).trigger("reloadGrid");
 		 },
 		 change: function(event,ui){
 	    	 $(this).val((ui.item ? ui.item.value : ""));
 	   }
 	}); 
-    
-	 var paymentgrid = $("#tbl_paymentDetails");
-	 
+	
 	 paymentgrid.jqGrid({
 		 url:"",
 		 datatype: "json",
-		 colNames:['Deb No','Deb date','Inv No','QShipd','Rate','Inv Amount','Ex Rate','Commission','Commisison Amt','Tax','Toal Amount','TDS','Total Due'],
+		 colNames:['Deb No','Deb date','Inv No','QShipd','Rate','Inv Amt','Ex Rate','Comm%','Comm Amt','Tax','Toal Amount','TDS','Total Due'],
 		 colModel:[
-             	{name: 'deb_debitno', index: 'deb_debitno' ,width:90, hidden: false, },
+             	{name: 'deb_debitno', index: 'deb_debitno' ,width:70, hidden: false, },
 				{name: 'deb_debitdate', index: 'deb_debitdate' ,width:70, hidden: false,},
-				{name: 'deb_taninvno', index: 'deb_taninvno' ,width:50, hidden: false, },
-				{name: 'deb_qshipped', index: 'deb_qshipped' ,width:70, hidden: false, },
+				{name: 'deb_taninvno', index: 'deb_taninvno' ,width:80, hidden: false, },
+				{name: 'deb_qshipped', index: 'deb_qshipped' ,width:50, hidden: false, },
 				{name: 'deb_rate', index: 'deb_rate' ,width:70, hidden: false,},
-				{name: 'deb_invoiceamt', index: 'deb_invoiceamt' ,width:70, hidden: false,},
-				{name: 'deb_exchangerate', index: 'deb_exchangerate' ,width:70,  hidden: false,},
-				{name: 'deb_commission', index: 'deb_commission' ,width:70,  hidden: false,},
-				{name: 'deb_elclassamtinrs', index: 'deb_elclassamtinrs' ,width:70,  hidden: false,},
-				{name: 'deb_tax', index: 'deb_tax' ,width:70, hidden: false,},
-				{name: 'deb_total', index: 'deb_total' ,width:70,  hidden: false,},
-				{name: 'deb_tds', index: 'deb_tds' ,width:70,  hidden: false,},
-				{name: 'deb_due', index: 'deb_due' ,width:50, hidden: false,}
+				{name: 'deb_invoiceamt', index: 'deb_invoiceamt' ,width:60, hidden: false,},
+				{name: 'deb_exchangerate', index: 'deb_exchangerate' ,width:40,  hidden: false,},
+				{name: 'deb_commission', index: 'deb_commission' ,width:40,  hidden: false,},
+				{name: 'deb_elclassamtinrs', index: 'deb_elclassamtinrs' ,width:70, align:'right', hidden: false,},
+				{name: 'deb_tax', index: 'deb_tax' ,width:70, align:'right', hidden: false,},
+				{name: 'deb_total', index: 'deb_total' ,width:70, align:'right', hidden: false,},
+				{name: 'deb_tds', index: 'deb_tds' ,width:70,  align:'right', hidden: false,},
+				{name: 'deb_due', index: 'deb_due' ,width:50, align:'right', hidden: false,}
 			],
 		 jsonReader : {  
 			 repeatitems:false,
@@ -80,16 +83,42 @@ $(function() {
 			 total: "total" ,//calls Second
 			 records: "records" //calls Third
 		 }, 
+		 caption: "Commission List",
+		 loadtext: "Commission List is Loading",
 		 pager: '#paymentpager',
-		 rowNum:3, 
-		 rowList:[3,5,7],	       
-		 sortorder: 'desc',  
-		 height : 'automatic',
+		 rownumbers:true,
+		 rowNum:100, 
+		 rowList:[10,20,50,100,200,500,1000],	
+		 height : '150',
+		 width: "auto",
+		 sortname: 'deb_debitdate',
+		 sortorder: 'desc', 
+		 ignoreCase:true,
+		 hidegrid: false,
+		 sortable: true,
+		 gridview : true,
+		 viewrecords: true,
+		 footerrow: true,
+		 altRows: true,
 		 emptyrecords: 'No records to display',
-		 caption: 'Payment Details',
+		 caption: 'Commssion List',
 		 multiselect : true,
 		 loadComplete: function (data){ //load complete fires immeddiately aftr server response
+			 var $self = $(this),
 			
+			 amt = parseFloat($self.jqGrid("getCol", "deb_elclassamtinrs", false, "sum")).toFixed(2);
+        	 tax = parseFloat($self.jqGrid("getCol", "deb_tax", false, "sum")).toFixed(2);
+        	 due = parseFloat($self.jqGrid("getCol", "deb_due", false, "sum")).toFixed(2);
+        	 tot = parseFloat($self.jqGrid("getCol", "deb_total", false, "sum")).toFixed(2);
+        	 tds = parseFloat($self.jqGrid("getCol", "deb_tds", false, "sum")).toFixed(2);
+        	 commamt = parseFloat($self.jqGrid("getCol", "deb_elclassamt", false, "sum")).toFixed(2);
+        	 
+        	 $self.jqGrid("footerData", "set", {deb_debitno: "Total",deb_elclassamtinrs: parseFloat(amt)});
+        	 $self.jqGrid("footerData", "set", {deb_tax: tax});
+        	 $self.jqGrid("footerData", "set", {deb_due: due});
+        	 $self.jqGrid("footerData", "set", {deb_total: tot});
+        	 $self.jqGrid("footerData", "set", {deb_tds: tds});
+        	 $self.jqGrid("footerData", "set", {deb_elclassamt: commamt});
 		 },
 		 onSelectRow:  function(rowid, status, e) {
 			 
@@ -119,7 +148,7 @@ $(function() {
 		 var total = 0.00;
 		 var tds = 0.00;
 		 var due = 0.00;
-	 		 var ids = paymentgrid.jqGrid('getGridParam','selarrrow');
+	 	 var ids = paymentgrid.jqGrid('getGridParam','selarrrow');
 	 		 for (var i=0; i<ids.length;i++){
 	 		     var rowData = paymentgrid.jqGrid('getRowData',ids[i]);
 	 			 var deb_qshipped = parseFloat(rowData.deb_qshipped).toFixed(2);
@@ -130,13 +159,13 @@ $(function() {
 	 			 var deb_tds = parseFloat(rowData.deb_tds).toFixed(2);
 	 			 var deb_due = parseFloat(rowData.deb_due).toFixed(0);
 	 			 
-	 			qshipped =  parseFloat(qshipped) + parseFloat(deb_qshipped);
-	 			invamt =  parseFloat(invamt) + parseFloat(deb_invamt);
-	 			amtinrs =  parseFloat(amtinrs) + parseFloat(deb_amtinrs);
-	 			tax =  parseFloat(tax) + parseFloat(deb_tax);
-	 			total =  parseFloat(total) + parseFloat(deb_total);
-	 			tds =  parseFloat(tds) + parseFloat(deb_tds);
-	 			due =  parseFloat(due) + parseFloat(deb_due);
+	 			qshipped =  (parseFloat(qshipped) + parseFloat(deb_qshipped)).toFixed(2);
+	 			invamt =  (parseFloat(invamt) + parseFloat(deb_invamt)).toFixed(2);
+	 			amtinrs =  (parseFloat(amtinrs) + parseFloat(deb_amtinrs)).toFixed(2);
+	 			tax =  (parseFloat(tax) + parseFloat(deb_tax)).toFixed(2);
+	 			total =  (parseFloat(total) + parseFloat(deb_total)).toFixed(2);
+	 			tds =  (parseFloat(tds) + parseFloat(deb_tds)).toFixed(2);
+	 			due =  (parseFloat(due) + parseFloat(deb_due)).toFixed(2);
 	 		   }
 	 		
 	 		$("#deb_totalquantity").val(qshipped);

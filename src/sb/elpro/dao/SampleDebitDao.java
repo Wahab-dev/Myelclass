@@ -33,5 +33,13 @@ public interface SampleDebitDao {
 	 */
 	boolean updatSamDebStatus(InvBillDetails sampledeb)throws SQLException;
 
+	/**  
+	 * (Method description)
+	 * @param
+	 * @return
+	 * etc
+	 */
+	boolean updatSamDebEditStatus(InvBillDetails sampledeb)throws SQLException;
+
 
 }

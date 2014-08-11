@@ -227,7 +227,7 @@
 	</action>
 		
 <!-- ==== Master Screen ==================================================================================================================================================================== --> 
-	<action path="/gotoMasterTracking" name="MasterTrackForm" type="sb.elpro.action.MasterTrackAction" input="/jsp/Menu.jsp" scope="request" parameter="action" >
+	<action path="/gotoMasterTracking" name="MasterTrackForm" type="sb.elpro.action.MasterTrackAction" input="/jsp/Menu.jsp" scope="session" parameter="action" >
 	  	<forward name="masterisloaded" path="/jsp/Master.jsp"></forward>
 	</action>
 	<action path="/MasterInsertAction" name="MasterTrackForm" type="sb.elpro.action.MasterInsertAction"  input="/jsp/Master.jsp" scope="session"></action>
@@ -235,7 +235,7 @@
 	 
 <!-- ====Sample Master Screen s================================================================================================================================================================ -->	  
 
-<action path="/sm" name="SampleMasterForm" type="sb.elpro.action.SampleMasterLoadAction" input="/jsp/Menu.jsp" scope="request" parameter="action" >
+<action path="/sm" name="SampleMasterForm" type="sb.elpro.action.SampleMasterLoadAction" input="/jsp/Menu.jsp" scope="session" parameter="action" >
 	  	<forward name="samplemasterisloaded" path="/jsp/SampleMaster.jsp"></forward>
 	</action>
 <!-- ==== User input Settings ==================================================================================================================================================================== -->	 
@@ -274,18 +274,17 @@
 	  
  </action-mappings> 
  
-<!-- ==== MESSAGE RESOURC ==================================================================================================================================================================== -->
- <message-resources  parameter="ApplicationResources"></message-resources>
+<!-- ==== MESSAGE RESOURCE ==================================================================================================================================================================== -->
+ <message-resources parameter="ApplicationResources"></message-resources>
  
  <plug-in className="org.apache.struts.validator.ValidatorPlugIn">
  	<set-property property="pathnames" value="/WEB-INF/validator-rules.xml, /WEB-INF/validator-user.xml" />
  </plug-in>
  
 <!--  <plug-in className="org.apache.struts.tiles.TilesPlugin">
-    <set-property property="definitions-config" value="/WEB-INF/tiles-definitions.xml" />
+    <set-property property="definitions-config" value="/WEB-INF/tiles-defs.xml" />
     <set-property property="moduleAware" value="true" />
 </plug-in> -->
-
 
 </struts-config>		
  

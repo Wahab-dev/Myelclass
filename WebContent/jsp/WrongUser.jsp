@@ -5,18 +5,11 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>Insert title here</title>
+<title>Insert title here</title>\
+<link rel="stylesheet" type="text/css" href="css/elpro/wronguser.css" />
 </head>
 <body>
 <h1>Invalid  User Page</h1>
-<%-- <h:form action="/login" method="post" >
-	<table style="border: thin;">
-   		<tr>  			
-   			 	
-   			<td>Click Here<h:link action="login"></h:link>to login Again</td> 
-   		</tr>
-   </table>
-</h:form> --%>
  <ul>
             <li><h:link action="/login"> Click here </h:link>to go to Login Page</li>
 </ul>

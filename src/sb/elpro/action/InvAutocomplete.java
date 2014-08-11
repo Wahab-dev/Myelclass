@@ -46,7 +46,7 @@ public class InvAutocomplete extends Action {
 		 response.setCharacterEncoding("UTF-8");
 			PrintWriter out = response.getWriter();
 			usersession = request.getSession(false);
-			if(usersession != null){
+			if(!(usersession == null)){
 				String action = request.getParameter("action");
 				if(action.equalsIgnoreCase("customer")){ 
 					System.out.println("In Customer Autocomplete");
@@ -155,12 +155,12 @@ public class InvAutocomplete extends Action {
 					 * Failed All Condition
 					 */
 				}
-				 out.close();
+				out.close();
 			}else{
 				System.out.println("Invalid User pls Login Again");
 				return mapping.findForward("logout");
 			}
-			
+
 		return null;
 	}
 }

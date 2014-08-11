@@ -27,7 +27,6 @@ public class BulkAction extends DispatchAction  {
 	public ActionForward Logout(ActionMapping mapping, ActionForm form, 
 			HttpServletRequest request, HttpServletResponse response) throws Exception{
 		System.out.println("In Btr Action");
-		usersession = request.getSession(false);
 		usersession.invalidate();			
 		return mapping.findForward("logout");  
 	}	

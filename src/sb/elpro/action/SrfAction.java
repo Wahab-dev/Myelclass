@@ -15,8 +15,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-
-import net.sf.jasperreports.engine.JREmptyDataSource;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperFillManager;
@@ -33,7 +31,6 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.actions.DispatchAction;
 
-import sb.elpro.actionform.PrfForm;
 import sb.elpro.actionform.SrfForm;
 import sb.elpro.bo.SrfBo;
 import sb.elpro.bo.SrfBoImpl;
@@ -54,21 +51,18 @@ public class SrfAction extends DispatchAction {
 	
 	public ActionForward Save(ActionMapping map, ActionForm form, 
 			HttpServletRequest request, HttpServletResponse response) throws Exception{
-		 usersession = request.getSession(false); 
 		 PrintWriter out = response.getWriter();
 		 JSONObject srfjsonobj = new JSONObject();
-		if(!(usersession == null)){
-		System.out.println("In Save Srf Form  >>>");
-		
-		 SrfForm srfsaveform =(SrfForm) form;
-		 BeanUtils.copyProperties(srfbean, srfsaveform);
-		 srfbean.setSrf_orderdate(DateConversion.ConverttoMysqlDate(request.getParameter("srf_orderdate")));
-		 srfbean.setSrf_cdd(DateConversion.ConverttoMysqlDate(request.getParameter("srf_cdd")));
-		 srfbean.setSrf_add(DateConversion.ConverttoMysqlDate(request.getParameter("srf_add")));
-			 System.out.println("usersession "+usersession.getId());
+		 usersession = request.getSession(false);
+		 if(!(usersession == null)){
+			 SrfForm srfsaveform =(SrfForm) form;
+			 BeanUtils.copyProperties(srfbean, srfsaveform);
+			 srfbean.setSrf_orderdate(DateConversion.ConverttoMysqlDate(request.getParameter("srf_orderdate")));
+			 srfbean.setSrf_cdd(DateConversion.ConverttoMysqlDate(request.getParameter("srf_cdd")));
+			 srfbean.setSrf_add(DateConversion.ConverttoMysqlDate(request.getParameter("srf_add")));
+
 			 System.out.println("request  "+usersession.getAttribute("srfactionform"));
 			 if(usersession.getAttribute("srfactionform").equals("edit")){
-				 System.out.println("In Update SRF FORM");
 				  boolean isupdtSrf = srfbo.updtSrfform(srfbean);
 				  if(isupdtSrf){	 
 						srfjsonobj.put("result", isupdtSrf);
@@ -99,6 +93,7 @@ public class SrfAction extends DispatchAction {
 				 }
 			 }
 		 }else{	 
+		 usersession.invalidate();	
 		 System.out.println(" LOgin Credential Fails");
 		 return map.findForward("logout");
 		 }
@@ -109,7 +104,6 @@ public class SrfAction extends DispatchAction {
 		
 		usersession = request.getSession(false);
 		usersession.invalidate();			
-		
 		return map.findForward("logout");
 	}
 	

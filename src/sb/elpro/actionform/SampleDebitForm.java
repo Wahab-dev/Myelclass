@@ -96,7 +96,7 @@ public class SampleDebitForm extends ActionForm {
 	private String samdeb_remarks;
 	
 	
-	
+	private String sampledebitaction;
 	/**
 	 * @return the saminv_invoicetype
 	 */
@@ -905,7 +905,21 @@ public void reset(ActionMapping mapping, HttpServletRequest request) {
 	samdeb_amtininr="";
 	samdeb_debdt="";
 	samdeb_remarks="";
+	
+	sampledebitaction="";
 	}
+/**
+ * @return the sampledebitaction
+ */
+public String getSampledebitaction() {
+	return sampledebitaction;
+}
+/**
+ * @param sampledebitaction the sampledebitaction to set
+ */
+public void setSampledebitaction(String sampledebitaction) {
+	this.sampledebitaction = sampledebitaction;
+}
 
 	
 	

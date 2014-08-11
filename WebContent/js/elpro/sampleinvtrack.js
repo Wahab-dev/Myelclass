@@ -92,6 +92,21 @@ $(document).ready(function() {
 			alert("Please Select field to Group");
 		}
 	});
+	
+	initDateSearch = function (elem) {
+        setTimeout(function () {
+            $(elem).datepicker({
+                dateFormat: 'd-m-yy',
+                autoSize: true,
+                changeYear: true,
+                changeMonth: true,
+                showWeek: true,
+                showButtonPanel: true
+            });
+        }, 100);
+    },
+	
+	
 	sampleinvtrackgrid.jqGrid({
 		url:"/Myelclass/sita.do?action=load",
 		datatype: "json",
@@ -111,8 +126,11 @@ $(document).ready(function() {
 		        		  }
 		        	  }
 		          },
-		          {name: 'invdt', index: 'invdt', align:'center', width:65, editable:true, sortable: true, hidden: false,  
-
+		          {name: 'invdt', index: 'invdt', align:'center', width:65, editable:true, sortable: true, hidden: false,  search: true,
+		        	  sorttype: 'date',
+		        	  formatter: 'date', formatoptions: { newformat: 'd-m-Y' }, editable: true, datefmt: 'd-M-Y',
+	                  searchoptions: { sopt: ['eq', 'ne', 'lt', 'le', 'gt', 'ge'], dataInit: initDateSearch } 	
+						
 		          },
 		          {name: 'exporter', index: 'exporter', align:'center', width:50, editable:true, sortable: true, hidden: false,  
 
@@ -258,8 +276,14 @@ $(document).ready(function() {
 		addtext: 'Add', edittext: 'Edit', deltext: 'Delete', searchtext: 'Search', refreshtext: 'Reload', viewtext:'View',
 		beforeRefresh: function(){
 			sampleinvtrackgrid.jqGrid('setGridParam',{datatype:'json'}).trigger('reloadGrid');
-		}
-	}).jqGrid('navButtonAdd',"#sampleinvtrackpager",{caption:"Toggle",title:"Toggle Search Toolbar", buttonicon :'ui-icon-pin-s',
+		},	
+	},{},{},{},
+	{
+	 		multipleSearch:true,
+	 		stringResult  :true,
+	 		multipleGroup:true,
+	 	}	
+	).jqGrid('navButtonAdd',"#sampleinvtrackpager",{caption:"Toggle",title:"Toggle Search Toolbar", buttonicon :'ui-icon-pin-s',
 		onClickButton:function(){
 			sampleinvtrackgrid[0].toggleToolbar();
 		} 

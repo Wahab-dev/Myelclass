@@ -37,13 +37,13 @@ public class PaymentTrackGridAction extends Action {
 	PaymentBo paymenttrackbo =new PaymentBoImpl();
 	public ActionForward execute (ActionMapping map, ActionForm form, 
 			HttpServletRequest request, HttpServletResponse response) throws Exception{
-	usersession = request.getSession(false);
 	PrintWriter out = response.getWriter();
 	JSONObject payjsonobj = new JSONObject();
 	response.setContentType("application/json");
 	response.setCharacterEncoding("UTF-8");
 	System.out.println("In Payment Track Action ");
-	 if(usersession != null){	
+	usersession = request.getSession(false);
+	if(!(usersession == null)){
 		 String oper =   request.getParameter("oper");
 		 System.out.println("oper "+oper);
 		 String action = request.getParameter("action");
@@ -93,9 +93,6 @@ public class PaymentTrackGridAction extends Action {
 		 System.out.println("Error Invalid Session");
 		 return map.findForward("logout");
 	 }
-	
-	
-	
 	return null;
 	}
 	

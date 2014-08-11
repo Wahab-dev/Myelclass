@@ -99,12 +99,11 @@ public class InspectionForm extends ActionForm {
 	private String colorrejects;
 	private String orgrejects;
 	private String otherrejects;
-	
-	
 	private String grtotinspected;
 	private String rjtotinspected;
 	private String status;
 	
+	private String inspaction;
 	
 	/**
 	 * @return the id
@@ -121,15 +120,7 @@ public class InspectionForm extends ActionForm {
 	/**
 	 * @return the inspid
 	 */
-	public String getInspid() {
-		return inspid;
-	}
-	/**
-	 * @param inspid the inspid to set
-	 */
-	public void setInspid(String inspid) {
-		this.inspid = inspid;
-	}
+	
 	/**
 	 * @return the inspContractNo
 	 */
@@ -656,7 +647,7 @@ public class InspectionForm extends ActionForm {
 	public void reset(ActionMapping mapping, HttpServletRequest request) {
 		System.out.println(" IN RESET INSPECTION FORM");
 		id=""; 
-		inspid=""; //inspection id
+		inspid =""; //inspection id
 		inspContractNo="";
 		inspdate="";
 		inspqualityctrlr="";
@@ -731,6 +722,8 @@ public class InspectionForm extends ActionForm {
 		grtotinspected="";
 		rjtotinspected="";
 		status="";
+		
+		inspaction="";
 	}
 
 	/**
@@ -864,6 +857,30 @@ public class InspectionForm extends ActionForm {
 	 */
 	public void setInsptype(String insptype) {
 		this.insptype = insptype;
+	}
+	/**
+	 * @return the inspid
+	 */
+	public String getInspid() {
+		return inspid;
+	}
+	/**
+	 * @param inspid the inspid to set
+	 */
+	public void setInspid(String inspid) {
+		this.inspid = inspid;
+	}
+	/**
+	 * @return the inspaction
+	 */
+	public String getInspaction() {
+		return inspaction;
+	}
+	/**
+	 * @param inspaction the inspaction to set
+	 */
+	public void setInspaction(String inspaction) {
+		this.inspaction = inspaction;
 	}
 }
 

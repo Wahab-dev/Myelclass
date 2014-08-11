@@ -134,7 +134,7 @@ public class PrfForm extends ActionForm implements Serializable {
 	private String pojw_tanphone;
 	private String pojw_tanfax;
 	
-	
+	private String prfaction;
 	/**
 	 * @return the pojw_orderdate
 	 */
@@ -1266,6 +1266,8 @@ public class PrfForm extends ActionForm implements Serializable {
 		prf_selectionp = "";
 		prf_price = "";
 		prf_tc = "";
+		
+		prfaction="";
 	}
 	/**
 	 * @return the prf_exporter
@@ -1446,6 +1448,18 @@ public class PrfForm extends ActionForm implements Serializable {
 	 */
 	public void setPrf_pojwno(String prf_pojwno) {
 		this.prf_pojwno = prf_pojwno;
+	}
+	/**
+	 * @return the prfaction
+	 */
+	public String getPrfaction() {
+		return prfaction;
+	}
+	/**
+	 * @param prfaction the prfaction to set
+	 */
+	public void setPrfaction(String prfaction) {
+		this.prfaction = prfaction;
 	}
 	
 	

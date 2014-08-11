@@ -249,8 +249,7 @@ $(document).ready(function() {
 	        	$("#tcdeb_rate").val($("#deb_rate").val());
 	        	$("#tcdeb_totalquantity").val($("#deb_totalquantity").val());
 	        },
-	        beforeClose: function( event, ui ) {
-	        		
+	        beforeClose: function( event, ui ) {      		
 	        		$("#Btndebitsave").attr('disabled' , false);
 	        		$("#tcbutton").attr('disabled', true);
 	        },
@@ -316,7 +315,6 @@ $(document).ready(function() {
 		var invamt = $("#deb_invoiceamt").val();
 		var commindex = comm.indexOf('%');
 		var commpercent = comm.substring(0,commindex);
-		commpercent.trim();
 	    var elclassamt = ((commpercent * invamt)/100);
 	    $("#deb_elclassamt").val(elclassamt.toFixed(2));
 	    var amtinrs = (elclassamt * $("#deb_exchangerate").val()); 
@@ -347,8 +345,7 @@ $(document).ready(function() {
 			 finalWord ="";
 			 test_skill( $("#tcdeb_elclassamtinrs").val());
 			 $('#tcdebamtinwords').val(finalWord);
-	 });
-	 
+	 }); 
 	 
 	 /*
 	  * Function to Convert the Number To Words Print

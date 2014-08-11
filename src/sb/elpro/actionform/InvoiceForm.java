@@ -110,7 +110,7 @@ public class InvoiceForm extends ActionForm implements Serializable{
 	private String inv_type;
 	private String inv_total;
 	
-	
+	private String invaction;
 	
 	
 	/**
@@ -1542,7 +1542,24 @@ public class InvoiceForm extends ActionForm implements Serializable{
 		inv_type="";
 		inv_total="";
 		
+		invaction="";
 		//inv_includeSample="";
+	}
+
+
+	/**
+	 * @return the invaction
+	 */
+	public String getInvaction() {
+		return invaction;
+	}
+
+
+	/**
+	 * @param invaction the invaction to set
+	 */
+	public void setInvaction(String invaction) {
+		this.invaction = invaction;
 	}
 	
 }

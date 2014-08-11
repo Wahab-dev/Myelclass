@@ -68,6 +68,13 @@ public class InvBillDetails implements Serializable{
 	private String user;
 	private String debamt;
 	
+	//Payment Details  for Invoice
+	private String invtotamt;
+	private String deduction; 
+	private String amtrecieved; 
+	private String balanceamt;
+	private String recieptdate;
+	
 	/**
 	 * @return the bankcharge
 	 */
@@ -614,6 +621,66 @@ public class InvBillDetails implements Serializable{
 	 */
 	public void setDebamt(String debamt) {
 		this.debamt = debamt;
+	}
+	/**
+	 * @return the invtotamt
+	 */
+	public String getInvtotamt() {
+		return invtotamt;
+	}
+	/**
+	 * @param invtotamt the invtotamt to set
+	 */
+	public void setInvtotamt(String invtotamt) {
+		this.invtotamt = invtotamt;
+	}
+	/**
+	 * @return the amtrecieved
+	 */
+	public String getAmtrecieved() {
+		return amtrecieved;
+	}
+	/**
+	 * @param amtrecieved the amtrecieved to set
+	 */
+	public void setAmtrecieved(String amtrecieved) {
+		this.amtrecieved = amtrecieved;
+	}
+	/**
+	 * @return the deduction
+	 */
+	public String getDeduction() {
+		return deduction;
+	}
+	/**
+	 * @param deduction the deduction to set
+	 */
+	public void setDeduction(String deduction) {
+		this.deduction = deduction;
+	}
+	/**
+	 * @return the balanceamt
+	 */
+	public String getBalanceamt() {
+		return balanceamt;
+	}
+	/**
+	 * @param balanceamt the balanceamt to set
+	 */
+	public void setBalanceamt(String balanceamt) {
+		this.balanceamt = balanceamt;
+	}
+	/**
+	 * @return the recieptdate
+	 */
+	public String getRecieptdate() {
+		return recieptdate;
+	}
+	/**
+	 * @param recieptdate the recieptdate to set
+	 */
+	public void setRecieptdate(String recieptdate) {
+		this.recieptdate = recieptdate;
 	}
 	
 		

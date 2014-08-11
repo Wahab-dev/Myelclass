@@ -9,8 +9,6 @@ package sb.elpro.action;
 import java.io.PrintWriter;
 import java.util.List;
 
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -40,11 +38,11 @@ public class SampleInvoiceTrackAction extends Action{
 	@Override
 	public ActionForward execute(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response) throws Exception {
-		usersession = request.getSession(false);
 		PrintWriter out = response.getWriter();
 		response.setContentType("application/json");
 		response.setCharacterEncoding("UTF-8");
-		if(usersession != null){
+		usersession = request.getSession(false);
+		if(!(usersession == null)){
 			String action = request.getParameter("action");
 			String rows = request.getParameter("rows");
             String pag = request.getParameter("page");
@@ -87,7 +85,6 @@ public class SampleInvoiceTrackAction extends Action{
 			System.out.println("invalid User Credentials ");
 			mapping.findForward("logout");
 		}
-		
 		return null;
 	}
 }

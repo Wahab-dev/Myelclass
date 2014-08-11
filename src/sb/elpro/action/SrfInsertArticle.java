@@ -35,9 +35,9 @@ public class SrfInsertArticle extends Action{
 			response.setContentType("application/json");
 			response.setCharacterEncoding("UTF-8");
 			PrintWriter out = response.getWriter();
-			usersession = request.getSession(false);
 			JSONObject jsonobj = new JSONObject();
-			if(usersession != null){
+			usersession = request.getSession(false);
+			if(!(usersession == null)){
 				String oper =   request.getParameter("oper");
 				System.out.println("oper "+oper);
 				String action = request.getParameter("action");
@@ -145,14 +145,13 @@ public class SrfInsertArticle extends Action{
 						System.out.println(jsonobj);		
 						out.println(jsonobj);
 						
-					}
-					 	
+					}	 	
 			}
 			
 			System.out.println("In Article Selected List Servlet");
-			
 		}
-			return null;
+		return null;
+			
 	}
 }
     

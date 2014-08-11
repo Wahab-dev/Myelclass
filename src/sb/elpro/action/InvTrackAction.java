@@ -25,6 +25,9 @@ import sb.elpro.bo.InvoiceTrackBo;
 import sb.elpro.bo.InvoiceTrackBoImpl;
 import sb.elpro.model.CustomerInvoice;
 import sb.elpro.model.InvBillDetails;
+import sb.elpro.model.Invpaymentdetails;
+import sb.elpro.model.SampleDebBean;
+import sb.elpro.utility.DateConversion;
 
 /**
  * @author Wahab
@@ -36,11 +39,11 @@ public class InvTrackAction extends Action {
 	JSONObject jsonobj = new JSONObject();
 	public ActionForward execute(ActionMapping map, ActionForm form, 
 			HttpServletRequest request, HttpServletResponse response) throws Exception {		
-		usersession = request.getSession(false);
 		PrintWriter out = response.getWriter();
 		response.setContentType("application/json");
 		response.setCharacterEncoding("UTF-8");
-		if(usersession != null){
+		usersession = request.getSession(false);
+		if(!(usersession == null)){
 			String action = request.getParameter("action");
 			String rows = request.getParameter("rows");
             String pag = request.getParameter("page");
@@ -51,7 +54,6 @@ public class InvTrackAction extends Action {
             System.out.println("page "+pag); //1
             System.out.println("sidx "+sidx);
             System.out.println("sord "+sord);
-           // System.out.println("ctno "+ctno);
 			System.out.println("action "+action);
 			
 			if(action.equalsIgnoreCase("load")){
@@ -80,8 +82,38 @@ public class InvTrackAction extends Action {
 				jsonobj.put("rows", invtracklist);
 				System.out.println(jsonobj);		
 				out.println(jsonobj);				
+			}else if(action.equalsIgnoreCase("paymnt")){
+				String oper = request.getParameter("oper");
+				System.out.println("In Pymenbt Recieved ");
+				Invpaymentdetails invpay = new Invpaymentdetails();				
+				invpay.setInvno(request.getParameter("invno"));
+				invpay.setInvtotamt(request.getParameter("invtotamount"));
+				invpay.setDeduction(request.getParameter("deduction"));
+				invpay.setBankcharge(request.getParameter("bankcharge"));
+				invpay.setAmtrecieved(request.getParameter("amtrecieved"));
+				invpay.setBalanceamt(request.getParameter("balanceamt"));
+				invpay.setExchngrate(request.getParameter("exchngrate"));
+				invpay.setAmtininr(request.getParameter("amtininr"));
+				invpay.setRecieptdate(DateConversion.ConverttoMysqlDate(request.getParameter("recieptdate")));
+				invpay.setRemarks(request.getParameter("remarks"));
+				if(oper.equalsIgnoreCase("addpay")){
+					boolean isAddedPaymnet = invtrackbo.addPayment(invpay);
+					if(isAddedPaymnet){
+						jsonobj.put("success", "Successfully Edited The Record");
+					}else{
+						jsonobj.put("Error", "Error in Editing");
+					}
+				}else{
+					boolean isPaymnetUpdated = invtrackbo.editPayment(invpay);
+					if(isPaymnetUpdated){
+						jsonobj.put("success", "Successfully Inserted The Record");
+					}else{
+						jsonobj.put("Error", "Error in Inserrting");
+					}
+				}
+				System.out.println(jsonobj);		
+				out.println(jsonobj);
 			}
-			
 		}else{
 			System.out.println("Invalid User pls Login Again");
 			return map.findForward("logout");

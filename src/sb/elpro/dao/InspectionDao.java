@@ -69,7 +69,15 @@ public interface InspectionDao {
 	 * @return
 	 * etc
 	 */
-	boolean saveInspectionForm(InspectionBean inspbean)throws SQLException;	
+	boolean saveInspectionForm(InspectionBean inspbean)throws SQLException;
+
+	/**  
+	 * (Method description)
+	 * @param
+	 * @return
+	 * etc
+	 */
+	int getInspid()throws SQLException;	
 
 
 	

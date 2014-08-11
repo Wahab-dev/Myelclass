@@ -52,8 +52,8 @@ public class InvoiceAction extends DispatchAction{
 		 PrintWriter out = response.getWriter();
 		 response.setContentType("application/json");
 		 response.setCharacterEncoding("UTF-8");
-		 usersession = request.getSession(false);
 		 JSONObject invjsonobj = new JSONObject();
+		 usersession = request.getSession(false);
 		 if(!(usersession == null)){
 			 InvoiceForm invform =  (InvoiceForm) form;
 			 BeanUtils.copyProperties(invbean, invform);
@@ -95,6 +95,7 @@ public class InvoiceAction extends DispatchAction{
 			 }
 		  }else{
 			 System.out.println("Invalid Sesssion");
+			 usersession.invalidate();
 			 return map.findForward("logout"); 
 		 }
 	}
