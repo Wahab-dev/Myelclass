@@ -45,7 +45,9 @@ $(function() {
 			var vl = $(this).val();
 			if(vl){
 				if(vl == "clear"){
-					mastergrid.jqGrid('groupingRemove',true);	
+					mastergrid.jqGrid('groupingRemove',true,{
+						groupColumnShow: [true]
+					});	
 					//mastergrid.jqGrid('groupColumnShow',false);
 					//groupColumnShow : [false]
 				}else{

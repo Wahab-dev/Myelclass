@@ -4,28 +4,27 @@
 package sb.elpro.actionform;
 
 
-
-
-import java.io.Serializable;
-
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionMapping;
+import org.apache.struts.action.ActionMessage;
+import org.apache.struts.validator.ValidatorActionForm;
+import org.apache.struts.validator.ValidatorForm;
 
 
 /**
  * @author Wahab
  *
  */
-public class PrfForm extends ActionForm implements Serializable {
+public class PrfForm extends ActionForm  {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -3495410020625737320L;
 	
-
 	private String prf_agentid;
 	private String prf_agentname;
 	private String prf_contractno;
@@ -1170,105 +1169,6 @@ public class PrfForm extends ActionForm implements Serializable {
 	public void setPrf_commission(String prf_commission) {
 		this.prf_commission = prf_commission;
 	}
-	
-	/* (non-Javadoc)
-	 * @see org.apache.struts.action.ActionForm#reset(org.apache.struts.action.ActionMapping, javax.servlet.ServletRequest)
-	 */
-	@Override
-	public void reset(ActionMapping map, HttpServletRequest request) {
-		System.out.println(" IN RESET IN FORM EXAMPLP");
-		prf_agentid = "";
-		prf_agentname = "";
-		prf_contractno = "";
-		prf_orderdate = "";
-		prf_poref = "";
-		prf_poreftype = "";
-		prf_exporter = "";
-		prf_exporterattn = "";
-		prf_exporteraddr ="";
-		prf_exportertele="";
-		prf_exporterfax="";
-		prf_tannid  = "";
-		prf_tanname = "";
-		prf_tanaddr = "";
-		prf_tanattn = "";
-		prf_tanphone = "";
-		prf_tanfax = "";
-		prf_custid = "";
-		prf_custname = "";
-		prf_custattn = "";
-		prf_custaddr = "";
-		prf_custphone = "";
-		prf_custfax = "";
-		prf_consigneeid = "";
-		prf_consigneename = "";
-		prf_consigneeattn = "";
-		prf_consigneeaddr = "";
-		prf_consigneephone = "";
-		prf_consigneefax = "";
-		prf_notifyid = "";
-		prf_notifyname = "";
-		prf_notifyattn = "";
-		prf_notifyaddr = "";
-		prf_notifyphone = "";
-		prf_notifyfax = "";
-		prf_bankid = "";
-		prf_bankname = "";
-		prf_bankbranch = "";
-		prf_bankaddr = "";
-		prf_bankphone = "";
-		prf_bankfax = "";
-		prf_destination = "";
-		prf_destinationid = "";
-		prf_terms = "";
-		prf_termsid = "";
-		prf_payment = "";
-		prf_paymentid = "";
-		prf_elclasscommission = "";	
-		prf_commission = "";
-		prf_insurance = "";
-		prf_cdd = "";
-		prf_add = "";
-		prf_special = "";
-		prf_inspcdn = "";
-		setPrf_pojwno("");
-		
-		
-		
-		//Artilce Details
-		prf_articleid = "";
-		articleid = "";
-		prf_articlename = "";
-		prf_color = "";
-		prf_substancemin = "";
-		prf_substancemax = "";
-		prf_substance = "";
-		prf_sizemin = "";
-		prf_sizemax = "";
-		prf_sizeavg = "";
-		prf_sizeremarks = "";
-		prf_articletype = "";
-		prf_selection = "";
-		prf_selectionp1 = "";
-		prf_selectionp2 = "";
-		prf_selectionp3 = "";
-		prf_selectionp4 = "";
-		prf_quantity = "";
-		prf_unit = "";
-		prf_pieces = "";
-		prf_ratesign = "";
-		prf_rate = "";	
-		prf_shipment = "";
-		prf_tcamt = "";
-		prf_tccurrency = "";
-		prf_tcagent = "";
-		prf_size = "";
-		prf_selectionp = "";
-		prf_price = "";
-		prf_tc = "";
-		
-		prfaction="";
-	}
 	/**
 	 * @return the prf_exporter
 	 */
@@ -1461,6 +1361,157 @@ public class PrfForm extends ActionForm implements Serializable {
 	public void setPrfaction(String prfaction) {
 		this.prfaction = prfaction;
 	}
+	
+	/* (non-Javadoc)
+	 * @see org.apache.struts.action.ActionForm#validate(org.apache.struts.action.ActionMapping, javax.servlet.http.HttpServletRequest)
+	 */
+	/*	@Override
+	public ActionErrors validate(ActionMapping map,
+			HttpServletRequest request) {
+		
+		ActionErrors prfformerrors = new ActionErrors();
+		
+		if(null ==  getPrf_agentname() || 0==  getPrf_agentname().length()){
+			prfformerrors.add("prf_agentname",new ActionMessage("error.prf_agentname.required"));
+		}/*else if(prf_contractno.equalsIgnoreCase("null") || prf_contractno.trim().equals("")){
+			prfformerrors.add("prf_contractno", new ActionMessage("error.prf.prf_contractno.required"));
+		}else if(prf_orderdate.equalsIgnoreCase("null") || prf_orderdate.trim().equals("")){
+			prfformerrors.add("prf_orderdate", new ActionMessage("error.prf_orderdate.required"));
+		}else if(prf_poref.equalsIgnoreCase("null") || prf_poref.trim().equals("")){
+			prfformerrors.add("prf_poref", new ActionMessage("error.prf_poref.required"));
+		}else if(prf_exporter.equalsIgnoreCase("null") || prf_exporter.trim().equals("")){
+			prfformerrors.add("prf_exporter", new ActionMessage("error.prf_exporter.required"));
+		}else if(prf_tanname.equalsIgnoreCase("null") || prf_tanname.trim().equals("")){
+			prfformerrors.add("prf_tanname", new ActionMessage("error.prf_tanname.required"));
+		}else if(prf_custname.equalsIgnoreCase("null") || prf_custname.trim().equals("")){
+			prfformerrors.add("prf_custname", new ActionMessage("error.prf_custname.required"));
+		}else if(prf_consigneename.equalsIgnoreCase("null") || prf_consigneename.trim().equals("")){
+			prfformerrors.add("prf_consigneename", new ActionMessage("error.prf_consigneename.required"));
+		}else if(prf_notifyname.equalsIgnoreCase("null") || prf_notifyname.trim().equals("")){
+			prfformerrors.add("prf_notifyname", new ActionMessage("error.prf_notifyname.required"));
+		}else if(prf_bankname.equalsIgnoreCase("null") || prf_bankname.trim().equals("")){
+			prfformerrors.add("prf_bankname", new ActionMessage("error.prf_bankname.required"));
+		}else if(prf_terms.equalsIgnoreCase("null") || prf_terms.trim().equals("")){
+			prfformerrors.add("prf_terms", new ActionMessage("error.prf_terms.required"));
+		}else if(prf_payment.equalsIgnoreCase("null") || prf_payment.trim().equals("")){
+			prfformerrors.add("prf_payment", new ActionMessage("error.prf_payment.required"));
+		}else if(prf_elclasscommission.equalsIgnoreCase("null") || prf_elclasscommission.trim().equals("")){
+			prfformerrors.add("prf_elclasscommission", new ActionMessage("error.prf_elclasscommission.required"));
+		}else if(prf_commission.equalsIgnoreCase("null") || prf_commission.trim().equals("")){
+			prfformerrors.add("prf_commission", new ActionMessage("error.prf_commission.required"));
+		}else if(prf_insurance.equalsIgnoreCase("null") || prf_insurance.trim().equals("")){
+			prfformerrors.add("prf_insurance", new ActionMessage("error.prf_insurance.required"));
+		}else if(prf_cdd.equalsIgnoreCase("null") || prf_cdd.trim().equals("")){
+			prfformerrors.add("prf_cdd", new ActionMessage("error.prf_cdd.required"));
+		}else if(prf_add.equalsIgnoreCase("null") || prf_add.trim().equals("")){
+			prfformerrors.add("prf_add", new ActionMessage("error.prf_add.required"));
+		}else if(prf_special.equalsIgnoreCase("null") || prf_special.trim().equals("")){
+			prfformerrors.add("prf_special", new ActionMessage("error.prf_special.required"));
+		}else if(prf_destination.equalsIgnoreCase("null") || prf_destination.trim().equals("")){
+			prfformerrors.add("prf_destination", new ActionMessage("error.prf_destination.required"));
+		}
+		return prfformerrors;
+	}
+	*/
+	/* (non-Javadoc)
+	 * @see org.apache.struts.action.ActionForm#reset(org.apache.struts.action.ActionMapping, javax.servlet.ServletRequest)
+	 *
+	 * When Extended Validation Ajax Call gets Disabled and for every Ajax Call Reset Method Calls
+	 */
+	@Override
+	public void reset(ActionMapping map, HttpServletRequest request) {
+		System.out.println(" IN RESET PRF FORM EXAMPLP");
+		this.prf_agentid = null;
+		this.prf_agentname = null;
+		this.prf_contractno = null;
+		this.prf_orderdate = null;
+		this.prf_poref = null;
+		this.prf_poreftype = null;
+		this.prf_exporter = null;
+		this.prf_exporterattn = null;
+		this.prf_exporteraddr = null;
+		this.prf_exportertele = null;
+		this.prf_exporterfax = null;
+		this.prf_tannid = null;
+		this.prf_tanname = null;
+		this.prf_tanaddr = null;
+		this.prf_tanattn = null;
+		this.prf_tanphone = null;
+		this.prf_tanfax = null;
+		this.prf_custid = null;
+		this.prf_custname = null;
+		this.prf_custattn = null;
+		this.prf_custaddr = null;
+		this.prf_custphone = null;
+		this.prf_custfax = null;
+		this.prf_consigneeid = null;
+		this.prf_consigneename = null;
+		this.prf_consigneeattn = null;
+		this.prf_consigneeaddr = null;
+		this.prf_consigneephone = null;
+		this.prf_consigneefax = null;
+		this.prf_notifyid = null;
+		this.prf_notifyname = null;
+		this.prf_notifyattn = null;
+		this.prf_notifyaddr = null;
+		this.prf_notifyphone = null;
+		this.prf_notifyfax = null;
+		this.prf_bankid = null;
+		this.prf_bankname = null;
+		this.prf_bankbranch = null;
+		this.prf_bankaddr = null;
+		this.prf_bankphone = null;
+		this.prf_bankfax = null;
+		this.prf_destination = null;
+		this.prf_destinationid = null;
+		this.prf_terms = null;
+		this.prf_termsid = null;
+		this.prf_payment = null;
+		this.prf_paymentid = null;
+		this.prf_elclasscommission = null;
+		this.prf_commission = null;
+		this.prf_insurance = null;
+		this.prf_cdd = null;
+		this.prf_add = null;
+		this.prf_special = null;
+		this.prf_inspcdn = null;
+		
+		
+		this.prf_articleid = null;
+		this.articleid = null;
+		this.prf_articlename = null;
+		this.prf_color = null;
+		this.prf_substancemin = null;
+		this.prf_substancemax = null;
+		this.prf_substance = null;
+		this.prf_sizemin = null;
+		this.prf_sizemax = null;
+		this.prf_sizeavg = null;
+		this.prf_sizeremarks  = null;
+		this.prf_articletype = null;
+		this.prf_selection = null;
+		this.prf_selectionp1 = null;
+		this.prf_selectionp2 = null;
+		this.prf_selectionp3 = null;
+		this.prf_selectionp4 = null;
+		this.prf_quantity = null;
+		this.prf_unit = null;
+		this.prf_pieces = null;
+		this.prf_ratesign = null;
+		this.prf_rate = null;
+		this.prf_shipment = null;
+		this.prf_tcamt = null;
+		this.prf_tccurrency = null;
+		this.prf_tcagent = null;
+		this.prf_size  = null;
+		this.prf_selectionp = null;
+		this.prf_price = null;
+		this.prf_tc = null;
+		
+		this.prfaction = null;
+		System.out.println(" IN RESET PRF FORM EXAMPLP Exit ");
+	}
+	
 	
 	
 }

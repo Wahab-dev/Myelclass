@@ -43,11 +43,13 @@ public class LoginAction extends DispatchAction {
 		if(user.getName().equals("WrongUser")){
 			String myforward = "failure";
 			return map.findForward(myforward);	
+		}else if(user.getRole().equalsIgnoreCase("user")) {
+			
 		}
 		return map.findForward(forward);	
 	}
 	
-	public ActionForward Clear(ActionMapping map, ActionForm form, 
+	/*public ActionForward Clear(ActionMapping map, ActionForm form, 
 			HttpServletRequest request, HttpServletResponse response) throws Exception{
 		System.out.println("IN CLEAR ");
 		LoginForm loginform = (LoginForm) form;
@@ -62,7 +64,6 @@ public class LoginAction extends DispatchAction {
 		NewUserForm newuserfrm = (NewUserForm) form;
 		BeanUtils.copyProperties(userdetails, newuserfrm);
 		userdetails = loginbo.createNewUser(userdetails);
-		
 		return map.findForward("newuser");
 	}
 	
@@ -90,7 +91,6 @@ public class LoginAction extends DispatchAction {
 	
 	public ActionForward Clearpwdform(ActionMapping map, ActionForm form, 
 			HttpServletRequest request, HttpServletResponse response) throws Exception{
-		System.out.println("In Clear Forget PWD Form");
 		NewUserForm newuserfrm = (NewUserForm) form;
 		newuserfrm.reset(map, request);
 		return map.findForward("reset");
@@ -103,5 +103,5 @@ public class LoginAction extends DispatchAction {
 		usersession = request.getSession(false);
 		usersession.invalidate();			
 		return map.findForward("logout");  
-	}
+	}*/
 }

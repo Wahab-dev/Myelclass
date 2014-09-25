@@ -4,19 +4,29 @@
  * 
  */
 $(document).ready(function() {
+	/*
+	 * Function to check the select tag is not selected 
+	 */
+	function fnc_chkselecttagempty(value, colName) {
+		if (value.toUpperCase() === "NULL")
+			return [false, colName + ": Shouldnot be Empty "];
+		else
+			return [true, ""];
+		} 
+	
+	
 	$("#pojw_pojwno").focusin(function() {
 		 $.get("/Myelclass/PrfAutocomplete.do?action="+"pojwno", 
 		 	function(data){
-			 if($("#formaction").val().toLowerCase() == "add" ){
+			 if($("#prfactionform").val().toLowerCase() == "add" ){
 				 $("#pojw_pojwno").val(data); 
 			 }else{
 				 $("#pojw_pojwno").val($("#prf_pojwno").val()); 
 			 }
 		 	},"text"); 
-		 
 	 });
 		 
-	  $('#pojw_tanname').autocomplete({
+	 $('#pojw_tanname').autocomplete({
 		 source: function(request, response) {
 				var param = request.term;  
 			 	$.getJSON("/Myelclass/PrfAutocomplete.do?term="+param+"&action="+"tan",
@@ -47,6 +57,7 @@ $(document).ready(function() {
 		    	 $(this).val((ui.item ? ui.item.value : ""));
 		   }
 	 });  
+	 
 	 $('#prf_tanname').autocomplete({
 		 source: function(request, response) {
 				var param = request.term;  
@@ -75,20 +86,18 @@ $(document).ready(function() {
 			          		$('#pojw').attr('disabled','disabled');
 			          		$('#Btnprfsave').removeAttr('disabled');
 			          	}
-			          	 $('#prf_tanaddr').val(ui.item.addr);
-			          	 $('#prf_tanphone').val(ui.item.phone);
-			          	 $('#prf_tanattn').val(ui.item.attn);
-			          	 $('#prf_tanfax').val(ui.item.fax);
-			        	 $('#prf_tannid').val(ui.item.id);
+			          	$('#prf_tanaddr').val(ui.item.addr);
+			          	$('#prf_tanphone').val(ui.item.phone);
+			          	$('#prf_tanattn').val(ui.item.attn);
+			          	$('#prf_tanfax').val(ui.item.fax);
+			        	$('#prf_tannid').val(ui.item.id);
 			       },
 			       change: function(event,ui){
 				    	 $(this).val((ui.item ? ui.item.value : ""));
 				   }
 			}); 
 	 
-	 
-	
-	$.extend($.jgrid.edit, {
+/*	$.extend($.jgrid.edit, {
 	    bSubmit: "Save",
 	    bCancel: "Cancel",
 	    width: 370,
@@ -96,17 +105,22 @@ $(document).ready(function() {
 	    beforeShowForm: function () {
 	     
 	    }
-	});
+	});*/
+	
 	function selecpcheck(value,colName){
+		/*
+		 * Fuction to check the selection percent always 100 
+		 * Will Work with split type % also
+		 */
 		var sum = 0;
 		$.map(($("#prf_selectionp").val()).split('-'), function(value){
 			sum += parseInt(value, 10);
 			return sum;
 		});
 		if(!(sum == 100))return [false,"Sum of Selection Percent Should be 100"];
-		else return [true,""];
-	    
+		else return [true,""]; 
 	}
+	
 	var grid = $("#list"); //table id artinsert
 	 grid.jqGrid({ 
 		url:"/Myelclass/PrfinsertArticle.do", ///   
@@ -115,94 +129,93 @@ $(document).ready(function() {
 		postData: {
 		        ctno: function (){return $("#prf_contractno").val();},
 	    },
-		colNames:['Article Type','Article ','Article Shform', 'Article ID','Color','Size','Size avg','Size Rem','Substance','Selection','Selection percent','Quantity','Unit','Pcs','Price','Currency','Price','Shipment','T c','Price','Currency','tccust','Contract','Prfarticleid','User'],  
+		colNames:['Article Type','Article ','Article Shform', 'Article ID','Color','Size','Size Avg','Size Rem','Substance','Selection','Selection Percent','Quantity','Unit','Pcs','Price','Currency','Price','Shipment','T c','TC Price','TC Currency','TC Cust','Contract','User','Prfarticleid'],  
 	    colModel:[   
-			 {name:'prf_articletype', index:'articletype', width:80, align:'center', sortable:true, editable:true, hidden: false, edittype:'select', 
+			 {name:'prf_articletype', index:'articletype', width:80, align:'center', sortable:true, editable:true, hidden: false, edittype:'select',
 				 editoptions: { 
-          		 dataUrl:'/Myelclass/PrfAutocomplete.do?action=arttype',
-          		 buildSelect: function(data) {
+				   dataUrl:'/Myelclass/PrfAutocomplete.do?action=arttype',
+          		   buildSelect: function(data) {
           		  	var response = jQuery.parseJSON(data);
                     	var s = '<select style="width: 520px">';
                     	if (response && response.length) {
-                        	s += '<option value="NA">--- Select Article Type ---</option>';
+                        	s += '<option value="NULL">--- Select Article Type ---</option>';
                     		for (var i = 0, l=response.length; i<l ; i++) {
                           	var ri = response[i].value;
                            	s += '<option value="'+ri+'">'+ri+'</option>';
                         	}
                       	}
                      	return s + "</select>";
-                   	},
-
+                   },
                  } ,
-                 editrules :{required : true},
+                 editrules: {required: true, custom:true, custom_func: fnc_chkselecttagempty},
                  formoptions:{rowpos: 1, colpos: 1}, 
 			 },  
 			 {name:'prf_articlename', index:'articlename', width:90,  align:'center', editable:true, hidden: false, edittype:'text',
-		    	  editoptions:{
-						dataInit:function (elem) { 
-							$(elem).autocomplete({
-								minLength: 2,
-								source: function(request, response,term) {
-									var param = request.term;
-						            $.ajax({
-						                url: "/Myelclass/PrfAutocomplete.do?term="+param+"&action="+"artname",
-						                dataType: "json",
-						                type:"GET",
-						                success: function (data) {
-						                	 response($.map(data, function(item) {
-						                		 return { 
-						                             id: item.articleid,
-						                             shform: item.articleshortform, //can add number of attributes here 
-						                             value: item.articlename, // I am displaying both labe and value
-						                             clr : item.color, 
-						                             size: item.size,
-						                             sizeremar:item.size_remarks,
-						                             subs: item.substance,
-						                             selec:item.selection ,
-						                             selp:item.selp ,
-						                             ratesign: item.rate_sign,
-						                             rateamt: item.rateamt,
-						                             shipment: item.shipment,
-						                             tcsign: item.tc_currency,
-						                             tcamt: item.tc_amount,
-						                             tcagt: item.tc_agent
-						                             };
-						                         }));//END Response
-	
-						                },//END Success
-						            });//END AJAX
-								},
-								select: function( event, ui ) { 
-									 $('#articleid').val(ui.item.id);
-						          	 $('#artshform').val(ui.item.shform);
-						        	 $('#prf_color').val(ui.item.clr);
-						          	 $('#prf_size').val(ui.item.size);
-						          	 $('#prf_sizeremarks').val(ui.item.sizeremar);
-						          	 $('#prf_substance').val(ui.item.subs);
-						          	 $('#prf_selection').val(ui.item.selec);
-						          	 $('#prf_selectionp').val(ui.item.selp);
-						          	 $('#prf_ratesign').val(ui.item.ratesign);
-						          	 $('#prf_rateamt').val(ui.item.rateamt);
-						          	 $('#prf_shipment').val(ui.item.shipment);
-						          	 $('#prf_tcamt').val(ui.item.tcamt);
-						          	 $('#prf_tcagent').val(ui.item.tcagt);
-						          	 $('#prf_tccurrency').val(ui.item.tcsign);
-						            },	
-							        change: function(event,ui){
-								    	 $(this).val((ui.item ? ui.item.value : ""));
-								   }
-							 });
-							$('.ui-autocomplete').css('zIndex',1000); // z index for jqgfrid and autocomplete has been misalignment so we are manually setting it 
-							}
-		    	  	}, editrules :{required : true},
-		    	  	formoptions:{rowpos: 1, colpos: 2} 
+				editoptions:{
+					dataInit:function (elem) { 
+						$(elem).autocomplete({
+							minLength: 2,
+							source: function(request, response,term) {
+								var param = request.term;
+					            $.ajax({
+					                url: "/Myelclass/PrfAutocomplete.do?term="+param+"&action="+"artname",
+					                dataType: "json",
+					                type:"GET",
+					                success: function (data) {
+					                	response($.map(data, function(item) {
+					                		return { 
+					                			id: item.articleid,
+					                            shform: item.articleshortform, //can add number of attributes here 
+					                            value: item.articlename, // I am displaying both labe and value
+					                            clr : item.color, 
+					                            size: item.size,
+					                            sizeremar:item.size_remarks,
+					                            subs: item.substance,
+					                            selec:item.selection ,
+					                            selp:item.selp ,
+					                            ratesign: item.rate_sign,
+					                            rateamt: item.rateamt,
+					                            shipment: item.shipment,
+					                            tcsign: item.tc_currency,
+					                            tcamt: item.tc_amount,
+					                            tcagt: item.tc_agent
+					                        };
+					                    }));//END Response
+					                },//END Success
+					            });//END AJAX
+							},
+							select: function( event, ui ) { 
+								$('#articleid').val(ui.item.id);
+					          	$('#artshform').val(ui.item.shform);
+					        	$('#prf_color').val(ui.item.clr);
+					          	$('#prf_size').val(ui.item.size);
+					          	$('#prf_sizeremarks').val(ui.item.sizeremar);
+					          	$('#prf_substance').val(ui.item.subs);
+					          	$('#prf_selection').val(ui.item.selec);
+					          	$('#prf_selectionp').val(ui.item.selp);
+					          	$('#prf_ratesign').val(ui.item.ratesign);
+					          	$('#prf_rateamt').val(ui.item.rateamt);
+					          	$('#prf_shipment').val(ui.item.shipment);
+					          	$('#prf_tcamt').val(ui.item.tcamt);
+					          	$('#prf_tcagent').val(ui.item.tcagt);
+					          	$('#prf_tccurrency').val(ui.item.tcsign);
+					        },	
+						    change: function(event,ui){
+						    	$(this).val((ui.item ? ui.item.value : ""));
+						    }
+						 });
+					$('.ui-autocomplete').css('zIndex',1000); // z index for jqgfrid and autocomplete has been misalignment so we are manually setting it 
+					}
+		    	}, 
+		    	editrules :{required : true},
+		    	formoptions:{rowpos: 1, colpos: 2} 
 			}, 
-			{name:'artshform', index:'articleshfrom', width:55, align:'center', editable:true, hidden: true,
-				formoptions:{rowpos: 1, colpos: 3},
-				 editrules :{required : true},
+			{name:'artshform', index:'articleshfrom', width:55, align:'center', sortable:true, editable:true, hidden: true,	
+				//formoptions:{rowpos: 1, colpos: 3},
+				//editrules :{required : true},
 			}, 
-			{name:'articleid', index:'articleid', align: 'center', width:40, sortable:true,  editable:true,  hidden: true,					     				 
-				 editrules :{required : true},
+			{name:'articleid', index:'articleid', align: 'center', width:40, sortable:true,  editable:true, hidden: true,					     				 
+				editrules :{required : true},
 		    },
 			{name:'prf_color', index:'color', width:90, align:'center', sortable:true, hidden: false, editable:true, edittype:'text',
 				 editoptions:{
@@ -214,7 +227,7 @@ $(document).ready(function() {
 						        $.ajax({
 						           url: "/Myelclass/PrfAutocomplete.do?term="+param+"&action="+"color",
 						           dataType: "json",
-						           type:"POST",
+						           type:"GET",
 						           success: function (data) {
 						           	 response($.map(data, function(item) {
 						            	 return { 
@@ -233,22 +246,23 @@ $(document).ready(function() {
 					}
 				 },
 			     editrules :{required : true},
+			     formoptions:{rowpos: 1, colpos: 3},
 			}, 	
 			{name:'prf_size', index:'size', width:80, align:'center', hidden: false, editable:true,sortable:true,
-					editoptions: { 
-						dataEvents:[{
-							type: 'focusout',
-							fn: function(e){
-								var sizeval = $("#prf_size").val();
-								var size_minindex = sizeval.indexOf('/');
-								//var size_maxindex = sizeval.indexOf(' '); // in order to avoid Size remarks. Make Size remrk seperate row in Table
-								var sizemin = sizeval.substring(0, size_minindex);
-								var sizemax=  sizeval.substring(size_minindex+1);
-								var sizeavg = ( (parseFloat (sizemin) + parseFloat(sizemax)) /2) ;
-								$("#prf_sizeavg").val(sizeavg);
-							}
-						}]  
-					  },
+				editoptions: { 
+					dataEvents:[{
+						type: 'focusout',
+						fn: function(e){
+							var sizeval = $("#prf_size").val();
+							var size_minindex = sizeval.indexOf('/');
+							//var size_maxindex = sizeval.indexOf(' '); // in order to avoid Size remarks. Make Size remrk seperate row in Table
+							var sizemin = sizeval.substring(0, size_minindex);
+							var sizemax=  sizeval.substring(size_minindex+1);
+							var sizeavg = ( (parseFloat (sizemin) + parseFloat(sizemax)) /2) ;
+							$("#prf_sizeavg").val(sizeavg);
+						}
+					}]  
+				},
 				editrules: {required: true},
 			    formoptions:{rowpos: 6, colpos: 1} 
 			},  
@@ -258,30 +272,28 @@ $(document).ready(function() {
 			}, 
 			{name:'prf_sizeremarks', index:'sizerem', width:40, align:'center',  editable:true, hidden: true, 
 				edittype:'select',
-				/*editoptions: { 
-        			  dataUrl:'/Myelclass/PrfAutocomplete.do?action=sizerem',
-        			  type:"GET",
-        			  buildSelect: function(data) {
-        			   	var response = jQuery.parseJSON(data);
-        			        	var s = '<select style="width: 520px">';
-        			        	if (response && response.length) {
-        			            	s += '<option value="0">--- Select Article Type ---</option>';
-        			  	            for (var i = 0, l=response.length; i<l ; i++) {
-        			                  var ri = response[i].value;
-        			               	  s += '<option value="'+ri+'">'+ri+'</option>';
-        			            	}
-        			          	}
-        			       return s + "</select>";
-        			   },
-        			 } ,*/
-				
-				//edittype:'select',
-				 editoptions:{value:{0: 'Select Size Remarks', F:'F', S:'S', FS:'FS', DB:'Double Butt', sqinchSingleButt:'sq inch /SingleButt',  NA:'NA', }},
-				  editrules: {required: true},
-				  formoptions:{rowpos: 6, colpos: 2} ,	
+				editoptions: { 
+					dataUrl:'/Myelclass/PrfAutocomplete.do?action=sizerem',
+        			type:"GET",
+        			buildSelect: function(data) {
+        				var response = jQuery.parseJSON(data);
+        			    var s = '<select style="width: 520px">';
+        			    if (response && response.length) {
+        			    	s += '<option value="NULL">-- Select Size Remarks --</option>';
+        			  	    for (var i = 0, l=response.length; i<l ; i++) {
+        			  	    	var ri = response[i].value;
+        			            s += '<option value="'+ri+'">'+ri+'</option>';
+        			       	}
+        			    }
+        			return s + "</select>";
+        			},
+        		} ,
+				// editoptions:{value:{0: 'Select Size Remarks', F:'F', S:'S', FS:'FS', DB:'Double Butt', sqinchSingleButt:'sq inch / SingleButt',  NA:'NA', }},
+				editrules: {required: true, custom:true, custom_func: fnc_chkselecttagempty},
+				formoptions:{rowpos: 6, colpos: 2} ,	
 			}, 
 			{name:'prf_substance', index:'substance', align:'center', sortable:true, hidden: false, width:80,
-					  editable:true, formoptions:{rowpos: 7, colpos: 1},editrules :{required : true}, 	
+				editable:true, formoptions:{rowpos: 7, colpos: 1},editrules :{required : true}, 	
 			},  
 			{name:'prf_selection', index:'selection', align:'center', width:90, sortable:true, hidden: false, editable:true,
 				edittype:'select',
@@ -292,7 +304,7 @@ $(document).ready(function() {
         			   	var response = jQuery.parseJSON(data);
         			        	var s = '<select style="width: 520px">';
         			        	if (response && response.length) {
-        			            	s += '<option value="0">--- Select Article Type ---</option>';
+        			            	s += '<option value="NULL">--Select Article Selection--</option>';
         			  	            for (var i = 0, l=response.length; i<l ; i++) {
         			                  var ri = response[i].value;
         			               	  s += '<option value="'+ri+'">'+ri+'</option>';
@@ -301,19 +313,12 @@ $(document).ready(function() {
         			       return s + "</select>";
         			   },
         			 } ,
-				  editrules :{required : true},formoptions:{rowpos: 7, colpos: 2} 
+        		editrules: {required: true, custom:true, custom_func: fnc_chkselecttagempty},
+				formoptions:{rowpos: 7, colpos: 2} 
 			}, 
 			{name:'prf_selectionp', index:'selectionpercent', align:'center', width:90, sortable:true, editable:true, hidden: false,
 				editrules :{required : true},
 				editrules:{custom:true, custom_func:selecpcheck}, 
-				editoptions: { 
-					dataEvents:[{
-					type: 'focusout',
-					fn: function(e){
-					
-					}
-				}],
-				},
 				formoptions:{rowpos: 7, colpos: 3} ,
 			}, 	
 		
@@ -325,7 +330,21 @@ $(document).ready(function() {
 			{name:'prf_unit', index:'unit', width:90, align:'center', sortable:true, hidden: false, editable:true,
 				edittype:'select',
 				  editoptions:{
-					  value:{0:'Select Quantity Unit',sqft:'sq ft',skin:'skin',skins:'skins',Garment:'Garment',NA:'NA'},
+					  dataUrl:'/Myelclass/PrfAutocomplete.do?action=qtyunit',
+						type:"GET",
+						buildSelect: function(data) {
+							var response = jQuery.parseJSON(data);
+							var s = '<select style="width: 520px">';
+							if (response && response.length) {
+								s += '<option value="NULL">--- Select Quantity Unit ---</option>';
+								for (var i = 0, l=response.length; i<l ; i++) {
+									var ri = response[i].value;
+								    s += '<option value="'+ri+'">'+ri+'</option>';
+								}
+							}
+							return s + "</select>";
+						},
+					 // value:{0:'Select Quantity Unit',sqft:'sq ft',skin:'skin',skins:'skins',Garment:'Garment',NA:'NA'},
 					  dataEvents:[{
 							type: 'focusout',
 							fn: function(e){
@@ -337,22 +356,41 @@ $(document).ready(function() {
 							}
 						}],
 						
-					  },editrules :{required : true},formoptions: {rowpos: 8, colpos: 2},
+					  },
+				 editrules: {required: true, custom:true, custom_func: fnc_chkselecttagempty},
+				 formoptions: {rowpos: 8, colpos: 2},
 			 }, 	
 			{name:'prf_pieces', index:'pcs', width:90, align:'center', sortable:true, hidden: false, editable:true,
-				 editrules :{required : true},
-				 formoptions: {rowpos: 8, colpos: 3},
+				editrules :{required : true},
+				formoptions: {rowpos: 8, colpos: 3},
 			}, 	
 			{name:'prf_rate', index:'rate', width:90, align:'center', sortable:true, hidden: false, editable:true,
-				 editrules:{edithidden:true}, 
+				editrules:{edithidden:true}, 
 				formoptions: {rowpos: 9, colpos: 1},
 				
 			}, 
 			{name:'prf_ratesign', index:'ratesign', width:90, align:'center', sortable:true, hidden: true, editable:true,
-				  edittype:'select',
-				  editoptions:{value:{0:'--- Select Currency --- ',$:'$',Rs:'Rs',Euro:'Euro',NA:' Not Available'}},
-				  editrules:{edithidden:true,required : true}, 
-				  formoptions: {rowpos: 10, colpos: 1},
+				 edittype:'select',
+				 editoptions: { 
+					dataUrl:'/Myelclass/PrfAutocomplete.do?action=currency',
+					type:"GET",
+					buildSelect: function(data) {
+						var response = jQuery.parseJSON(data);
+						var s = '<select style="width: 520px">';
+						if (response && response.length) {
+							s += '<option value="NULL">--- Select Currency Type---</option>';
+							for (var i = 0, l=response.length; i<l ; i++) {
+								var ri = response[i].value;
+							    s += '<option value="'+ri+'">'+ri+'</option>';
+							}
+						}
+					return s + "</select>";
+					},
+				 } ,
+				 // editoptions:{value:{0:'--- Select Currency --- ',$:'$',Rs:'Rs',Euro:'Euro',NA:' Not Available'}},
+				 // editrules:{edithidden:true,required : true}, 
+				 editrules: {edithidden:true,required: true, custom:true, custom_func: fnc_chkselecttagempty},
+				 formoptions: {rowpos: 10, colpos: 1},
 			},  
 			{name:'prf_rateamt', index:'rateamt', width:90, align:'center', sortable:true, hidden: true, editable:true,
 				 editrules:{edithidden:true,required : true}, 
@@ -360,36 +398,94 @@ $(document).ready(function() {
 			}, 
 			{name:'prf_shipment', index:'shipment', width:90, align:'center', sortable:true, editable:true, hidden: true,
 			      edittype:'select',
-			      //editoptions:{value:{0:'--- Select Shipment --- ',Air:'Air',Sea:'Sea',Courier:'Courier',Truck:'Truck',Fob:'Fob'}},
-			      editoptions:{value:{0:'--- Select Shipment --- ',Air:'Air',Sea:'Sea',Courier:'Courier',Truck:'Truck',Train:'Train',Fob:'Fob',ExChennai:'Ex Chennai',ExRanipet:'Ex Ranipet',ExFactory:'Ex-Factory',NA:'NA',TBA:'TBA'}},
-			     // editrules:{edithidden:true, required : true},	
-   			      formoptions:{rowpos: 10, colpos: 3},
+			      editoptions: { 
+			      	dataUrl:'/Myelclass/PrfAutocomplete.do?action=shipment',
+			      	type:"GET",
+			      	buildSelect: function(data) {
+			      		var response = jQuery.parseJSON(data);
+			      		var s = '<select style="width: 520px">';
+			      		if (response && response.length) {
+			      			s += '<option value="NULL">--- Select Shipment Type---</option>';
+			      			for (var i = 0, l=response.length; i<l ; i++) {
+			      				var ri = response[i].value;
+			      			    s += '<option value="'+ri+'">'+ri+'</option>';
+			      			}
+			      		}
+			      	return s + "</select>";
+			      	},
+			      } ,
+			    //  editoptions:{value:{0:'--- Select Shipment --- ',Air:'Air',Sea:'Sea',Courier:'Courier',Truck:'Truck',Train:'Train',Fob:'Fob',ExChennai:'Ex Chennai',ExRanipet:'Ex Ranipet',ExFactory:'Ex-Factory',NA:'NA',TBA:'TBA'}},
+			    //editrules:{edithidden:true, required : true},	
+			    editrules: {edithidden:true,required: true, custom:true, custom_func: fnc_chkselecttagempty},
+   			    formoptions:{rowpos: 10, colpos: 3},
 			}, 
 			{name:'prf_tc', index:'tc', width:90, align:'center', sortable:true, editable:true, hidden: false,
 				
 			},  	
 			{name:'prf_tcamt', index:'tcamt', width:90, align:'center', sortable:true, editable:true, hidden: true,
-				 editrules:{edithidden:true}, formoptions: {rowpos: 12, colpos: 2},
+				editrules:{edithidden:true}, 
+				formoptions: {rowpos: 12, colpos: 2},
 			}, 	
 			{name:'prf_tccurrency', index:'tcsign', width:90, align:'center', sortable:true, editable:true, hidden: true,
 				edittype:'select',
-			  	  editoptions:{value:{0:'Select TC currency ',cents:'cents',paise:'paise',shillings:'shillings',NA:'NA'}},
-			  	 editrules:{edithidden:true}, formoptions: {rowpos: 12, colpos: 1},
+				editoptions: { 
+					dataUrl:'/Myelclass/PrfAutocomplete.do?action=subcurrency',
+					type:"GET",
+					buildSelect: function(data) {
+						var response = jQuery.parseJSON(data);
+						var s = '<select style="width: 520px">';
+						if (response && response.length) {
+							s += '<option value="NULL">--- Select TC Currency---</option>';
+							for (var i = 0, l=response.length; i<l ; i++) {
+								var ri = response[i].value;
+							    s += '<option value="'+ri+'">'+ri+'</option>';
+							}
+						}
+					return s + "</select>";
+					},
+				 } ,			
+				//editoptions:{value:{0:'Select TC currency ',cents:'cents',paise:'paise',shillings:'shillings',NA:'NA'}},
+			  	//editrules:{edithidden:true}, 
+			  	editrules: {edithidden:true,required: true, custom:true, custom_func: fnc_chkselecttagempty},
+			  	formoptions: {rowpos: 12, colpos: 1},
 			},
 			{name:'prf_tcagent', index:'tccust', width:90, align:'center', sortable:true, editable:true, hidden: true,
-				 edittype:'select',
-			      editoptions:{value:{0:'Select TC Customer',IC:'IC',Cust:'Cust',ICMD:'IC/MD',MD:'MD',NA:'NA'}},
-			      editrules:{edithidden:true, required : true}, formoptions: {rowpos: 12, colpos: 3},
+				edittype:'select',
+				editoptions: { 
+					dataUrl:'/Myelclass/PrfAutocomplete.do?action=tccust',
+					type:"GET",
+					buildSelect: function(data) {
+						var response = jQuery.parseJSON(data);
+						var s = '<select style="width: 520px">';
+						if (response && response.length) {
+							s += '<option value="NULL">---Select TC Customer---</option>';
+							for (var i = 0, l=response.length; i<l ; i++) {
+								var ri = response[i].value;
+							    s += '<option value="'+ri+'">'+ri+'</option>';
+							}
+						}
+					return s + "</select>";
+					},
+				} ,
+			      //editoptions:{value:{0:'Select TC Customer',IC:'IC',Cust:'Cust',ICMD:'IC/MD',MD:'MD',NA:'NA'}},
+			    //editrules:{edithidden:true, required : true}, 
+			    editrules: {edithidden:true,required: true, custom:true, custom_func: fnc_chkselecttagempty},
+			    formoptions: {rowpos: 12, colpos: 3},
 			}, 	
-			{name:'prf_contractnum', index:'contractno', width:90, align:'center', sortable:true, editable:true,
-				editoptions:{required : true}, hidden: false
-			}, 	
-			{name:'prf_articleid', index:'prfarticleid', width:90, align:'center', sortable:true, editable:true, hidden: true}, 	
-			
-			{name:'user', index:'user', width:90, align:'center', sortable:true, editable:true, hidden: true,
+			{name:'prf_contractnum', index:'contractno', width:90, align:'center', sortable:true, editable:true,hidden: false,
+				editrules:{required : true},
 				editoptions:{required : true, readonly: 'readonly'},
+				formoptions: {rowpos: 13, colpos: 1},
+			}, 	
+			 	
+			{name:'user', index:'user', width:90, align:'center', sortable:true, editable:true, hidden: true,
+				editrules:{required : true},
+				editoptions:{required : true, readonly: 'readonly'},
+				formoptions: {rowpos: 13, colpos: 2},
+			}, 	
+			{name:'prf_articleid', index:'prfarticleid', width:90, align:'center', sortable:true, editable:true, hidden: true
 			
-			}, 						  
+			},
 		],  
 		jsonReader : {  
 		  	repeatitems:false,
@@ -417,11 +513,10 @@ $(document).ready(function() {
 			/*
 	         *  // edit option
 			 */
-		   { 
-		  	
-				top: 150,
-			 	left: 200,
-			 	width : 850,
+		   { 		  	
+			 top: 150,
+			 left: 200,
+		 	 width : 750,
 			 beforeShowForm: function(form) { 
 				 /*
 				  * Code to Implement Save as New in Edit form
@@ -465,7 +560,7 @@ $(document).ready(function() {
 				 $("#prf_tccurrency").val(tcsign);
 				 $("#tr_prf_tc").hide();
 				 $("#tr_prf_rate").hide();
-		      },
+		        },
 		        closeAfterEdit: true,
 				reloadAfterSubmit: true,
 		      },
@@ -475,12 +570,7 @@ $(document).ready(function() {
 				*/	    				     	 
 		    	top: 150,
 			 	left: 200,
-			 	width : 850,
-			 	/* onCellSelect : function(rowid, iCol, cellcontent) {
-			 		alert("2345");
-			 		var myval =grid.jqGrid('getCell', rowid,'substance');
-			 		alert("myval  "+myval);
-			 	},*/
+			 	width : 750,
 		        beforeShowForm: function(form) { 
 		           	 $("#prf_contractnum").val($("#prf_contractno").val());
 		           	 $("#user").val($("#userinsession").val());		   
@@ -492,7 +582,6 @@ $(document).ready(function() {
 				reloadAfterSubmit: true
 			 },
 			 {
-				// del option
 				//Del Article
 				delData: {
 					//Function to Add parameters to the delete 
@@ -503,9 +592,7 @@ $(document).ready(function() {
                            return value;
                      },
 			 		reloadAfterSubmit: true,
-                },
-						
-					 
+                },	 
 			 }    
 	 	);
 	 
@@ -515,17 +602,17 @@ $(document).ready(function() {
 			source: function(request, response,term) {
 				var param = request.term;
 				$.ajax({
-				        url: "/Myelclass/PrfAutocomplete.do?term="+param+"&action="+"commision",
-				        dataType: "json",
-				        type:"GET",
-				        success: function (data) {
-				              response($.map(data, function(item) {
-				            	  return { 
-				                	label : item.value,
-				                    value: item.value+", "+item.commplace+".",
-				                   };
-				               }));//END Success
-				        }
+					url: "/Myelclass/PrfAutocomplete.do?term="+param+"&action="+"commision",
+				    dataType: "json",
+				    type:"GET",
+				    success: function (data) {
+				    	response($.map(data, function(item) {
+				    		return { 
+				    			label : item.value,
+				                value: item.value+", "+item.commplace+".",
+				            };
+				        }));//END Success
+				    }
 				 });//END AJAX
 		    },
 	        change: function(event,ui){
@@ -603,27 +690,27 @@ $(document).ready(function() {
 				} 
 		 });
 		 $('#prf_notifyname').autocomplete({
-				minLength: 1,
-				source: function(request, response,term) {
-					var param = request.term;
-					 $.ajax({
-			                url: "/Myelclass/PrfAutocomplete.do?term="+param+"&action="+"notify",
-			                dataType: "json",
-			                type:"GET",
-			                success: function (data) {
-			                	 response($.map(data, function(item) {
-			                		 return { 
-			                			 label : item.notifyConsigneeName,
-			                			 value: item.notifyConsigneeName,
-			                             addr: item.notifyConsigneeAddress,
-			                             fone: item.notifyConsigneeContactNo,	
-			                             attn : item.notifyConsigneeAttention,
-			                             fax: item.notifyConsigneefax,
-			                             id: item.notifyConsigneeId
-			                             };
-			                         }));//END Success
-			                    }
-			            });//END AJAX
+			minLength: 1,
+			source: function(request, response,term) {
+				var param = request.term;
+				 $.ajax({
+					 url: "/Myelclass/PrfAutocomplete.do?term="+param+"&action="+"notify",
+			         dataType: "json",
+			         type:"GET",
+			         success: function (data) {
+			        	 response($.map(data, function(item) {
+			        		 return { 
+			        			 label : item.notifyConsigneeName,
+			                	 value: item.notifyConsigneeName,
+			                     addr: item.notifyConsigneeAddress,
+			                     fone: item.notifyConsigneeContactNo,	
+			                     attn : item.notifyConsigneeAttention,
+			                     fax: item.notifyConsigneefax,
+			                     id: item.notifyConsigneeId
+			                  };
+			             }));//END Success
+			           }
+			        });//END AJAX
 					},
 					select: function( event, ui ) {
 			          	  $('#prf_notifyaddr').val( ui.item.addr);
@@ -654,7 +741,6 @@ $(document).ready(function() {
 				        return [(day != 0), ''];
 				    } 
 				});
-		       
 		                 
 		        $(".prf_delivrydate").datepicker({
 				   // changeYear: true,
@@ -676,35 +762,79 @@ $(document).ready(function() {
 			 
 		
 			 //Customer Autocomplete
-				 $('#prf_custname').autocomplete({
-					 source: function(request, response) {
-							var param = request.term;  
-						 	$.getJSON("/Myelclass/PrfAutocomplete.do?term="+param+"&action="+"custname",
-								function(result) { 	
-						             response($.map(result, function(item) {
-						                return { 
-						                       value: item.label,
-						                       addr: item.customerAddress,
-						                       phone: item.customerTelephone,	
-						                       attn : item.customerAttention,
-						                       fax: item.customerFax,
-						                       id: item.customerId
-						                       };
-						                     }));//END response
-						                    }
-								 );
-								},
-								select: function( event, ui) { 
-									 $('#prf_custaddr').val(ui.item.addr);
-						          	 $('#prf_custphone').val(ui.item.phone);
-						          	 $('#prf_custattn').val(ui.item.attn);
-						          	 $('#prf_custfax').val(ui.item.fax);
-						          	 $('#prf_custid').val(ui.item.id);
-						           } ,
-						           change: function(event,ui){
-								    	 $(this).val((ui.item ? ui.item.value : ""));
-								   }
-						}); 
+				$('#prf_custname').autocomplete({
+					source: function(request, response) {
+						var param = request.term;  
+						$.getJSON("/Myelclass/PrfAutocomplete.do?term="+param+"&action="+"custname",
+						   function(result) { 	
+							 response($.map(result, function(item) {
+								 return { 
+									 value: item.label,
+						             addr: item.customerAddress,
+						             phone: item.customerTelephone,	
+						             attn : item.customerAttention,
+						             fax: item.customerFax,
+						             id: item.customerId
+								 };
+						      }));//END response
+						  }
+						);
+					 },
+					 select: function( event, ui) { 
+						$('#prf_custaddr').val(ui.item.addr);
+						$('#prf_custphone').val(ui.item.phone);
+						$('#prf_custattn').val(ui.item.attn);
+						$('#prf_custfax').val(ui.item.fax);
+						$('#prf_custid').val(ui.item.id);
+					 } ,
+				     change: function(event,ui){
+					 	$(this).val((ui.item ? ui.item.value : ""));
+		    	     }
+				}); 
+				
+				 //Terms Autocomplete
+				$('#prf_terms').autocomplete({
+					source: function(request, response) {
+						var param = request.term;  
+						$.getJSON("/Myelclass/PrfAutocomplete.do?term="+param+"&action="+"terms",
+						   function(result) { 	
+							 response($.map(result, function(item) {
+								 return { 
+									 value: item.value,
+								 };
+						      }));//END response
+						  }
+						);
+					 },
+					 select: function( event, ui) { 
+						$('#prf_terms').val(ui.item.value);
+					 } ,
+				     change: function(event,ui){
+					 	$(this).val((ui.item ? ui.item.value : ""));
+		    	     }
+				}); 
+				
+				 //Payment Autocomplete
+				$('#prf_payment').autocomplete({
+					source: function(request, response) {
+						var param = request.term;  
+						$.getJSON("/Myelclass/PrfAutocomplete.do?term="+param+"&action="+"payment",
+						   function(result) { 	
+							 response($.map(result, function(item) {
+								 return { 
+									 value: item.value,
+								 };
+						      }));//END response
+						  }
+						);
+					 },
+					 select: function( event, ui) { 
+						$('#prf_payment').val(ui.item.value);
+					 } ,
+				     change: function(event,ui){
+					 	$(this).val((ui.item ? ui.item.value : ""));
+		    	     }
+				}); 
 
 					/*
 					 * Jquery  Agent Autocomplete
@@ -734,6 +864,8 @@ $(document).ready(function() {
 						}).focus(function() {
 							    $(this).autocomplete("search", "");
 						});
+					 
+					 
 					
 					/*
 					 * Autocomple for Local Data Types
@@ -879,13 +1011,13 @@ $(document).ready(function() {
 		jqModal:true,
 		title : "Raise PO Form",
 		open: function(event, ui){
-		   	$("#Btnprfsave").attr('disabled' , true);
+			$("#Btnprfsave").attr('disabled' , true);
 		   	var pojwctno = $("#prf_contractno").val();
 			$("#pojw_contractno").val(pojwctno);
 			$("#pojw_orderdate").val($("#prf_orderdate").val());
 			$('#pojw_splcdn').val($("#prf_special").val());
 			$("#pojw_cddate").val($("#prf_cdd").val());
-			pojwgrid.jqGrid('setGridParam',{url:"/Myelclass/PrfinsertArticle.do?ctno="+pojwctno}).trigger("reloadGrid");
+			pojwgrid.jqGrid('setGridParam',{url:"/Myelclass/PrfinsertArticle.do?ctno="+pojwctno}).trigger("reloadGrid");	
 	   }, 
 	   beforeClose: function( event, ui ) {
 			$("#Btnprfsave").attr('disabled' , false);
@@ -893,10 +1025,11 @@ $(document).ready(function() {
 	   },
 	 }).css("font-size", "12px");
 					    
+    
     $('#pojw').click(function(){
     	  //Dialog Box 	
     	  $("#pojwdiv").dialog('open');
-    	 });		
+     });		
 
    /*
     * POJW ARTICLE TABLE
@@ -904,11 +1037,10 @@ $(document).ready(function() {
     */
 	var pojwgrid = $("#pojwtbl");
 	var pojwno = $("#pojw_pojwno").val();
-	//var pojwctno = $("#prf_contractno").val();
 	pojwgrid.jqGrid({ 
 		url:"/Myelclass/PrfinsertArticle.do?ctno="+pojwno,
     	datatype:"json",
-    	colNames:['Article Type','Name','Article Shform', 'Article ID','Color','Size','Size avg','Size Rem','Substance','Selection','Selp',
+    	colNames:['Article Type','Name', 'Article ID','Color','Size','Size avg','Size Rem','Substance','Selection','Selp',
     	          'Quantity','Unit','Pcs','Pric','Currency','Price','Shipment','T c','Price','Currency','tccust','Contract','User','Prfarticleid'],  
     	colModel:[   
     	 	 {name:'prf_articletype', index:'articletype', width:80, align:'center', sortable:true, editable:true, hidden: false, edittype:'select', 
@@ -986,10 +1118,7 @@ $(document).ready(function() {
     	 			}
     	 		}, editrules :{required : true}, formoptions:{rowpos: 1, colpos: 2} 
     	 	 }, 
-    	 	 {name:'artshform', index:'articleshfrom', width:55, align:'center', editable:true, hidden: true,
-    	 		formoptions:{rowpos: 1, colpos: 3},
-    	 	    //editrules :{required : true},
-    	 	 }, 
+    	 	
     	 	 {name:'articleid', index:'articleid', align: 'center', width:40, sortable:true,  editable:true,  hidden: true,					     				 
     	 		 editrules :{required : true},
     	 	 },
@@ -1022,6 +1151,7 @@ $(document).ready(function() {
     	 			}
     	 		},
     	 		editrules :{required : true},
+    	 		formoptions:{rowpos: 1, colpos: 3},
     	 	 }, 	
     	 	 {name:'prf_size', index:'size', width:80, align:'center', hidden: false, editable:true,sortable:true,
     	 		editoptions: { 
@@ -1039,47 +1169,34 @@ $(document).ready(function() {
     	 			}]  
     	 		},
     	 		editrules: {required: true},
-    	 		formoptions:{rowpos: 6, colpos: 1} 
+    	 		formoptions:{rowpos: 2, colpos: 1} 
     	 	},  
     	 	{name:'prf_sizeavg', index:'sizeavg', width:20, align:'center', editable:true, hidden: true,
     	 		editrules: {required: true},
-    	 		formoptions:{rowpos: 6, colpos: 3} 	
+    	 		formoptions:{rowpos: 2, colpos: 2} 	
     	 	}, 
     	 	{name:'prf_sizeremarks', index:'sizerem', width:40, align:'center',  editable:true, hidden: true, 
     	 		edittype:'select',
     	 		editoptions:{value:{0: 'Select Size Remarks', F:'F', S:'S', FS:'FS', DB:'Double Butt'}},
     	 		editrules: {required: true},
-    	 		formoptions:{rowpos: 6, colpos: 2} ,	
+    	 		formoptions:{rowpos: 2, colpos: 3} ,	
     		 }, 
     	 	 {name:'prf_substance', index:'substance', align:'center', sortable:true, hidden: false, width:80,
-    			 editable:true, formoptions:{rowpos: 7, colpos: 1},editrules :{required : true}, 	
+    			 editable:true, formoptions:{rowpos: 4, colpos: 1},editrules :{required : true}, 	
     	 	 },  
     	 	 {name:'prf_selection', index:'selection', align:'center', width:90, sortable:true, hidden: false, editable:true,
     	 		edittype:'select',
     	 		editoptions:{value:{0:'Select Selection %',A:'A',AB:'AB',ABC:'ABC',TR:'TR',Available:'Available'}},
-    	 		editrules :{required : true},formoptions:{rowpos: 7, colpos: 2} 
+    	 		editrules :{required : true},formoptions:{rowpos: 4, colpos: 2} 
     	 	 }, 
     	 	 {name:'prf_selectionp', index:'selectionpercent', align:'center', width:90, sortable:true, editable:true, hidden: false,
     	 		editrules :{required : true},
-    	 		//editrules:{custom:true, custom_func:mypricecheck}, 
-    	 		editoptions: { 
-    	 			dataEvents:[{
-    	 				type: 'focusout',
-    	 				fn: function(e){
-    	 					var sum = 0;
-    	 					$.map(($("#prf_selectionp").val()).split('-'), function(value){
-    	 						sum += parseInt(value, 10);
-    	 						return sum;
-    	 					});
-    	 					if(!(sum == 100))alert("selection percent should be 100. Please Enter valid percentage");
-    	 				}
-    	 			}],
-    	 		},
-    	 		formoptions:{rowpos: 7, colpos: 3} ,
+				editrules:{custom:true, custom_func:selecpcheck}, 
+				formoptions:{rowpos: 4, colpos: 3} 
     	 	 }, 	
     	 	 {name:'prf_quantity', index:'quantity', width:90, align:'center', sortable:true, hidden: false, 
     	 		editable:true, editrules:{required : true, number:true}, formatter: 'integer', 
-    	 		formoptions:{rowpos: 8, colpos: 1} 
+    	 		formoptions:{rowpos: 5, colpos: 1} 
     	 	 }, 	
     	 	 {name:'prf_unit', index:'unit', width:90, align:'center', sortable:true, hidden: false, editable:true,
     	 		edittype:'select',
@@ -1095,50 +1212,50 @@ $(document).ready(function() {
     	 					$("#prf_pieces").val(parseInt(piecs));
     	 				}
     	 			}],
-    			},editrules :{required : true},formoptions: {rowpos: 8, colpos: 2},
+    			},editrules :{required : true},formoptions: {rowpos: 5, colpos: 2},
     	 	 }, 	
     	 	 {name:'prf_pieces', index:'pcs', width:90, align:'center', sortable:true, hidden: false, editable:true,
-    	 		formoptions: {rowpos: 8, colpos: 3},
+    	 		formoptions: {rowpos: 5, colpos: 3},
     	 	 }, 	
     	 	 {name:'prf_rate', index:'rate', width:90, align:'center', sortable:true, hidden: false, editable:true,
     	 		editrules:{edithidden:true}, 
-    	 		formoptions: {rowpos: 9, colpos: 1},
+    	 		formoptions: {rowpos: 6, colpos: 1},
     	 	 }, 
     	 	 {name:'prf_ratesign', index:'ratesign', width:90, align:'center', sortable:true, hidden: true, editable:true,
     	 	      edittype:'select',
     	 		  editoptions:{value:{0:'--- Select Currency --- ',$:'$',Rs:'Rs',Euro:'Euro',NA:' Not Available'}},
     	 		  editrules:{edithidden:true,required : true}, 
-    	 		  formoptions: {rowpos: 10, colpos: 1},
+    	 		  formoptions: {rowpos: 7, colpos: 1},
     	 	 },  
     	 	 {name:'prf_rateamt', index:'rateamt', width:90, align:'center', sortable:true, hidden: true, editable:true,
     	 		  editrules:{edithidden:true,required : true}, 
-    	 		  formoptions: {rowpos: 10, colpos: 2},	
+    	 		  formoptions: {rowpos: 7, colpos: 2},	
     	 	 }, 
     	 	 {name:'prf_shipment', index:'shipment', width:90, align:'center', sortable:true, editable:true, hidden: true,
     	 	      edittype:'select',
     	 	      editoptions:{value:{0:'--- Select Shipment ---',Air:'Air',Sea:'Sea',Courier:'Courier',Truck:'Truck'}},
-    	 	      editrules:{edithidden:true,required : true},  formoptions: {rowpos: 10, colpos: 3},	
+    	 	      editrules:{edithidden:true,required : true},  formoptions: {rowpos: 7, colpos: 3},	
     	 	 }, 
     	 	 {name:'prf_tc', index:'tc', width:90, align:'center', sortable:true, editable:true, hidden: false
     	 	 }, 
     	 	 {name:'prf_tcamt', index:'tcamt', width:90, align:'center', sortable:true, editable:true, hidden: true,
-    	 		 editrules:{edithidden:true}, formoptions: {rowpos: 12, colpos: 2},
+    	 		 editrules:{edithidden:true}, formoptions: {rowpos: 9, colpos: 1},
     	 	 }, 	
     	 	 {name:'prf_tccurrency', index:'tcsign', width:90, align:'center', sortable:true, editable:true, hidden: true,
     	 		edittype:'select',
     	 		editoptions:{value:{0:'--- Select TC Currency ---',cents:'cents',paise:'paise',shillings:'shillings',NA:'NA'}},
-    	 		editrules:{edithidden:true}, formoptions: {rowpos: 12, colpos: 1},
+    	 		editrules:{edithidden:true}, formoptions: {rowpos: 9, colpos: 2},
     	 	 },
     	 	 {name:'prf_tcagent', index:'tccust', width:90, align:'center', sortable:true, editable:true, hidden: true,
     	 	    edittype:'select',
     	 		editoptions:{value:{0:'--- Select TC Customer ---',IC:'IC',Cust:'Cust',ICMD:'IC/MD',MD:'MD',NA:'NA'}},
-    	 		editrules:{edithidden:true, required : true}, formoptions: {rowpos: 12, colpos: 3},
+    	 		editrules:{edithidden:true, required : true}, formoptions: {rowpos: 9, colpos: 3},
     	 	 }, 	
     	 	 {name:'prf_contractnum', index:'contractno', width:90, align:'center', sortable:true, editable:true,editoptions:{required : true}, hidden: false,
-    	 		formoptions: {rowpos: 13, colpos: 3},	
+    	 		formoptions: {rowpos: 10, colpos: 1},	
     	 	 }, 
     	 	 {name:'user', index:'user', width:90, align:'center', sortable:true, editable:true, hidden: true,
-    	 		formoptions: {rowpos: 13, colpos: 2},	
+    	 		formoptions: {rowpos: 10, colpos: 2},	
     	 	 },
     	 	 {name:'prf_articleid', index:'prfarticleid', width:90, align:'center', sortable:true, editable:true, hidden: true}, 							  
     	],  
@@ -1150,7 +1267,9 @@ $(document).ready(function() {
     	   	records: "records" //calls Third
     	},
     	caption: "Add POJW Article",
-    	loadtext: "POJW Article is Loading",							
+    	loadtext: "POJW Article is Loading",
+    	//multiselect : true,
+		//multiboxonly: true, 
     	pager: '#pojwpager',
     	rowNum:6, 
     	rowList:[6,8,10,12],
@@ -1169,182 +1288,196 @@ $(document).ready(function() {
     	loadComplete: function (data){
     	/*
     	 * Load Complete Events 
+    	 * Diable Edit and Add Functions 
     	 */	
+    		/* $("#edit_" + this.id).addClass('ui-state-disabled');
+             $("#del_" + this.id).addClass('ui-state-disabled'); 
+             $("#add_" + this.id).addClass('ui-state-disabled'); */
+    		
     	}
     }).jqGrid('navGrid','#pojwpager',{
-    	 	add:true, edit:true, del:true, search: false, refresh : true,  view: true, cloneToTop:true,
-    	 	addtext: ' Add ', edittext: ' Edit ', deltext: ' Delete ' , searchtext: ' Search ', refreshtext: ' Reload ', viewtext: ' View ',
-    		beforeRefresh: function(){
-    			var pojwno = $("#pojw_pojwno").val();
-    				pojwgrid.jqGrid('setGridParam',{url:"/Myelclass/PrfinsertArticle.do?oper=pojw&action=load&ctno="+pojwno}).trigger("reloadGrid");
-    	 		}, 
-    	 	},
-    	 	/*
-    	 	 *  // edit option
-    	 	*/
-    	 	{ 
-    	 	 zIndex:1234,
-    	 	 width : 650,
-    	 	 top: 550,
-    	 	 left:120,
-    	 	 // edit option
-    	 	 beforeShowForm: function(form) { 
-    	 		var sizec = $("#prf_size").val();
-    	 		var temp = sizec.indexOf(' ');
-    	 		$("#prf_size").val(sizec.substring(0, temp));
-    	 		$("#prf_sizeremarks").val(sizec.substring(temp+1));
+	 	add:true, edit:true, del:true, search: false, refresh : true,  view: true, cloneToTop:true,
+	 	addtext: ' Add ', edittext: ' Edit ', deltext: ' Delete ' , searchtext: ' Search ', refreshtext: ' Reload ', viewtext: ' View ',
+		beforeRefresh: function(){
+			alert("in B4 refresh ");
+			var pojwno = $("#pojw_pojwno").val();
+				pojwgrid.jqGrid('setGridParam',{url:"/Myelclass/PrfinsertArticle.do?oper=pojw&action=load&ctno="+pojwno}).trigger("reloadGrid");
+	 		}, 
+	 	},
+	 	/*
+	 	 *  // edit option
+	 	*/
+	 	{ 
+	 	 zIndex:1234,
+	 	 width : 650,
+	 	 top: 550,
+	 	 left:120,
+	 	 // edit option
+	 	 beforeShowForm: function(form) { 
+	 		var sizec = $("#prf_size").val();
+	 		var temp = sizec.indexOf(' ');
+	 		$("#prf_size").val(sizec.substring(0, temp));
+	 		$("#prf_sizeremarks").val(sizec.substring(temp+1));
 
-    	 		 //Size Avg Calculation
-    	 		var sizeval = $("#prf_size").val();
-    	 		var size_minindex = sizeval.indexOf('/');
-    	 		var sizemin = sizeval.substring(0, size_minindex);
-    	 		var sizemax=  sizeval.substring(size_minindex+1);
-    	 		var sizeavg = ( (parseFloat (sizemin) + parseFloat(sizemax)) /2) ;
-    	 		$("#prf_sizeavg").val(sizeavg);
+	 		 //Size Avg Calculation
+	 		var sizeval = $("#prf_size").val();
+	 		var size_minindex = sizeval.indexOf('/');
+	 		var sizemin = sizeval.substring(0, size_minindex);
+	 		var sizemax=  sizeval.substring(size_minindex+1);
+	 		var sizeavg = ( (parseFloat (sizemin) + parseFloat(sizemax)) /2) ;
+	 		$("#prf_sizeavg").val(sizeavg);
+	 		
+	 			//Rate Calculation
+	 			var ratec = $("#prf_rate").val();
+	 			var ratemp = ratec.indexOf(' ');
+	 			var ratemplast = ratec.lastIndexOf(' ');
+	 			$("#prf_ratesign").val(ratec.substring(0, ratemp));
+	 			$("#prf_shipment").val(ratec.substring(ratemplast+1));
 
-   	 			//Rate Calculation
-   	 			var ratec = $("#prf_rate").val();
-   	 			var ratemp = ratec.indexOf(' ');
-   	 			var ratemplast = ratec.lastIndexOf(' ');
-   	 			$("#prf_ratesign").val(ratec.substring(0, ratemp));
-   	 			$("#prf_shipment").val(ratec.substring(ratemplast+1));
+	 			//TC Calculation
+	 			var tctec = $("#prf_tc").val(); 
+	 			var tcindex = tctec.indexOf(" ");
+	 			var tcindex1 = tctec.lastIndexOf(" ");
+	 			var tcamt = tctec.substring(0, tcindex);
+	 			var tcsign = tctec.substring(tcindex+1, tcindex1);
+	 			var agent = tctec.substring(tcindex1+1);
+	 			var rateamt = ratec.substring(ratemp+1, ratemplast);
+	 			var tcamtdecimal = "0."+tcamt;
+	 			var actualrate = (parseFloat(rateamt)- parseFloat(tcamtdecimal));
+	 			$("#prf_rateamt").val(actualrate.toFixed(2));
+	 			$("#prf_tcamt").val(tcamt);
+	 			$("#prf_tcagent").val(agent);
+	 			$("#prf_tccurrency").val(tcsign);
+	 			$("#prf_contractnum").val($("#pojw_pojwno").val());
 
-   	 			//TC Calculation
-   	 			var tctec = $("#prf_tc").val(); 
-   	 			var tcindex = tctec.indexOf(" ");
-   	 			var tcindex1 = tctec.lastIndexOf(" ");
-   	 			var tcamt = tctec.substring(0, tcindex);
-   	 			var tcsign = tctec.substring(tcindex+1, tcindex1);
-   	 			var agent = tctec.substring(tcindex1+1);
-   	 			var rateamt = ratec.substring(ratemp+1, ratemplast);
-   	 			var tcamtdecimal = "0."+tcamt;
-   	 			var actualrate = (parseFloat(rateamt)- parseFloat(tcamtdecimal));
-   	 			$("#prf_rateamt").val(actualrate.toFixed(2));
-   	 			$("#prf_tcamt").val(tcamt);
-   	 			$("#prf_tcagent").val(agent);
-   	 			$("#prf_tccurrency").val(tcsign);
-   	 			$("#prf_contractnum").val($("#pojw_pojwno").val());
+	 			$("#tr_prf_tc").hide();
+	 			$("#tr_prf_rate").hide();
+	 		 },
+	 	 closeAfterEdit: true,
+	 	 reloadAfterSubmit: true,
+	 	// recreateForm: true,
+	 	 url: "/Myelclass/PrfinsertArticle.do?oper=pojw&action=edit",
+	 	},
+		{
+	 	 /*
+	 	  * add option
+	 	  */	    
+	 	  zIndex:1234,		     	 
+	 	  top: 450,
+	 	  left: 200,
+	 	  width : 850,
+	 	  beforeShowForm: function(form) { 
+	 	   	 $("#prf_contractnum").val($("#pojw_pojwno").val());
+	 	   	 $("#user").val($("#userinsession").val());		   
+	 	     $("#tr_prf_tc").hide(); // hide the tr prf_rate
+	 	     $("#tr_artshform").hide();
+	 	     $("#tr_prf_rate").hide();
+	 	     $("#tr_user").show();
+	 	  },
+	 	  closeAfterAdd: true,
+	 	  reloadAfterSubmit: true,
+	 	 // recreateForm: true,
+	 	  url: "/Myelclass/PrfinsertArticle.do?oper=pojw&action=add",
+	 	},
+	 	{
+	 	 //Del Article
+	 	 zIndex:1234,
+	 	 delData: {
+	 		 //Function to Add parameters to the delete 
+	 		 //Here i am passing artid with val 
+	 		 prf_articleid: function() {
+	 			 var sel_id = pojwgrid.jqGrid('getGridParam', 'selrow');
+	 		     var value = pojwgrid.jqGrid('getCell', sel_id, 'prf_articleid');
+	 		     return value;
+	 		 },
+	 	},
+	 	reloadAfterSubmit: true,
+	 	recreateForm: true,
+	 	url: "/Myelclass/PrfinsertArticle.do?oper=pojw&action=del",
+}).jqGrid('navButtonAdd','#' + pojwgrid[0].id + '_toppager_left', {
+	caption: "Copy",
+	buttonicon: 'ui-icon-scissors',
+	onClickButton: function() {
+	var $self = $(this);
+	$self.jqGrid("editGridRow", $self.jqGrid("getGridParam", "selrow"),
+	{
+		zIndex:1234,
+		width : 650,
+		top: 550,
+		left:120,
+		recreateForm: true,
+		// Copy option
+		beforeInitData: function (formID) {
+			alert("In B4 init Data "+formID);
+			$("#tr_prf_tc").hide();
+	 			$("#tr_prf_rate").hide();
+	 			var posizec = $("#prf_size").val();
+	 			alert(posizec);
+		},
+		beforeShowForm: function(form) {			
+		
+			var posizec = $("#prf_size").val();
+	 		var potemp = posizec.indexOf(' ');
+	 		$("#prf_size").val(posizec.substring(0, potemp));
+	 		$("#prf_sizeremarks").val(posizec.substring(potemp+1));
+	 		alert(posizec);
+	 		alert(posizec.substring(potemp+1));
+	 		
+	 		//Size Avg Calculation
+	 		var posizeval = $("#prf_size").val();
+	 		var posize_minindex = posizeval.indexOf('/');
+	 		var posizemin = posizeval.substring(0, posize_minindex);
+	 		var posizemax=  posizeval.substring(posize_minindex+1);
+	 		var posizeavg = ( (parseFloat (posizemin) + parseFloat(posizemax)) /2) ;
+	 		$("#prf_sizeavg").val(posizeavg);
+	 		
+	 		//Rate Calculation
+	 		var ratec = $("#prf_rate").val();
+	 		var ratemp = ratec.indexOf(' ');
+	 		var ratemplast = ratec.lastIndexOf(' ');
+	 		$("#prf_ratesign").val(ratec.substring(0, ratemp));
+	 		$("#prf_shipment").val(ratec.substring(ratemplast+1));
 
-   	 			$("#tr_prf_tc").hide();
-   	 			$("#tr_prf_rate").hide();
-   	 		 },
-    	 	 closeAfterEdit: true,
-    	 	 reloadAfterSubmit: true,
-    	 	 recreateForm: true,
-    	 	 	url: "/Myelclass/PrfinsertArticle.do?oper=pojw&action=edit",
-    	 	},
-    		{
-    	 	 /*
-    	 	  * add option
-    	 	  */	    
-    	 	  zIndex:1234,		     	 
-    	 	  top: 450,
-    	 	  left: 200,
-    	 	  width : 850,
-    	 	  beforeShowForm: function(form) { 
-    	 	   	 $("#prf_contractnum").val($("#pojw_pojwno").val());
-    	 	   	 $("#user").val($("#userinsession").val());		   
-    	 	     $("#tr_prf_tc").hide(); // hide the tr prf_rate
-    	 	     $("#tr_artshform").hide();
-    	 	     $("#tr_prf_rate").hide();
-    	 	     $("#tr_user").show();
-    	 	  },
-    	 	  closeAfterAdd: true,
-    	 	  reloadAfterSubmit: true,
-    	 	  recreateForm: true,
-    	 	  url: "/Myelclass/PrfinsertArticle.do?oper=pojw&action=add",
-    	 	},
-    	 	{
-    	 	 //Del Article
-    	 	 zIndex:1234,
-    	 	 delData: {
-    	 		 //Function to Add parameters to the delete 
-    	 		 //Here i am passing artid with val 
-    	 		 prf_articleid: function() {
-    	 			 var sel_id = pojwgrid.jqGrid('getGridParam', 'selrow');
-    	 		     var value = pojwgrid.jqGrid('getCell', sel_id, 'prf_articleid');
-    	 		     return value;
-    	 		 },
-    	 	},
-    	 	reloadAfterSubmit: true,
-    	 	recreateForm: true,
-    	 	url: "/Myelclass/PrfinsertArticle.do?oper=pojw&action=del",
-    }).jqGrid('navButtonAdd','#' + pojwgrid[0].id + '_toppager_left', {
-    	 //recreateForm: true,
-    		caption: "Copy",
-    		buttonicon: 'ui-icon-scissors',
-    		onClickButton: function() {
-    		var $self = $(this);
-    		$self.jqGrid("editGridRow", $self.jqGrid("getGridParam", "selrow"),
-    		{
-    			zIndex:1234,
-    			width : 650,
-    			top: 550,
-    			left:120,
-    			recreateForm: true,
-    			// Copy option
-    			beforeShowForm: function(form) {
-    				var sizec = $("#prf_size").val();
-        	 		var temp = sizec.indexOf(' ');
-        	 		$("#prf_size").val(sizec.substring(0, temp));
-        	 		$("#prf_sizeremarks").val(sizec.substring(temp+1));
-
-        	 		 //Size Avg Calculation
-        	 		var sizeval = $("#prf_size").val();
-        	 		var size_minindex = sizeval.indexOf('/');
-        	 		var sizemin = sizeval.substring(0, size_minindex);
-        	 		var sizemax=  sizeval.substring(size_minindex+1);
-        	 		var sizeavg = ( (parseFloat (sizemin) + parseFloat(sizemax)) /2) ;
-        	 		$("#prf_sizeavg").val(sizeavg);
-
-       	 			//Rate Calculation
-       	 			var ratec = $("#prf_rate").val();
-       	 			var ratemp = ratec.indexOf(' ');
-       	 			var ratemplast = ratec.lastIndexOf(' ');
-       	 			$("#prf_ratesign").val(ratec.substring(0, ratemp));
-       	 			$("#prf_shipment").val(ratec.substring(ratemplast+1));
-
-       	 			//TC Calculation
-       	 			var tctec = $("#prf_tc").val(); 
-       	 			var tcindex = tctec.indexOf(" ");
-       	 			var tcindex1 = tctec.lastIndexOf(" ");
-       	 			var tcamt = tctec.substring(0, tcindex);
-       	 			var tcsign = tctec.substring(tcindex+1, tcindex1);
-       	 			var agent = tctec.substring(tcindex1+1);
-       	 			var rateamt = ratec.substring(ratemp+1, ratemplast);
-       	 			var tcamtdecimal = "0."+tcamt;
-       	 			var actualrate = (parseFloat(rateamt)- parseFloat(tcamtdecimal));
-       	 			$("#prf_rateamt").val(actualrate.toFixed(2));
-       	 			$("#prf_tcamt").val(tcamt);
-       	 			$("#prf_tcagent").val(agent);
-       	 			$("#prf_tccurrency").val(tcsign);
-       	 			$("#prf_contractnum").val($("#pojw_pojwno").val());
-
-       	 			$("#tr_prf_tc").hide();
-       	 			$("#tr_prf_rate").hide();
-
-    			$("#prf_tcamt").val('0');
-    			$("#prf_tcagent").val(agent);
-    			$("#prf_tccurrency").val(tcsign);
-    			$("#prf_contractnum").val($("#pojw_pojwno").val());
-    			// var ctno = $("#prf_contractnum").val();
-    			},
-    			closeAfterEdit: true,
-    			reloadAfterSubmit: true,
-    			url:"/Myelclass/PrfinsertArticle.do?oper=pojw&action=copy",
-    			
-    			
-    			/*afterSubmit: function(response, postdata) {
-    				if(response.responseText != ""){ // Actually iam passing success / Error as responseText 
-    	            	  alert("Inserte Successfully "+response.responseText);
-    	                  //return [false, response.responseText];	
-    	              }else{alert("Inserte Failutre "+response.responseText);
-    	                  return [true,"Ok"];
-    	       		  }
-    			}*/
-    		});
-    	}
-    });
+	 		//TC Calculation
+	 		var tctec = $("#prf_tc").val(); 
+	 		var tcindex = tctec.indexOf(" ");
+	 		var tcindex1 = tctec.lastIndexOf(" ");
+	 		var tcamt = tctec.substring(0, tcindex);
+	 		var tcsign = tctec.substring(tcindex+1, tcindex1);
+	 		var agent = tctec.substring(tcindex1+1);
+	 		var rateamt = ratec.substring(ratemp+1, ratemplast);
+	 		var tcamtdecimal = "0."+tcamt;
+	 		var actualrate = (parseFloat(rateamt)- parseFloat(tcamtdecimal));
+	 		
+	 		$("#prf_rateamt").val(actualrate.toFixed(2));
+	 		$("#prf_tcamt").val(tcamt);
+	 		$("#prf_tcagent").val(agent);
+	 		$("#prf_tccurrency").val(tcsign);
+	 		$("#prf_contractnum").val($("#pojw_pojwno").val());
+	 		$("#tr_prf_tc").hide();
+	 		$("#tr_prf_rate").hide();
+	 		
+			$("#prf_tcamt").val('0');
+			$("#prf_tcagent").val(agent);
+			$("#prf_tccurrency").val(tcsign);
+			$("#prf_contractnum").val($("#pojw_pojwno").val());
+			// var ctno = $("#prf_contractnum").val();
+		},
+		closeAfterEdit: true,
+		reloadAfterSubmit: true,
+		url:"/Myelclass/PrfinsertArticle.do?oper=pojw&action=copy",
+		   			
+		afterSubmit: function(response, postdata) {
+			if(response.responseText != ""){ // Actually iam passing success / Error as responseText 
+            	  alert("Inserte Successfully "+response.responseText);
+                  //return [false, response.responseText];	
+              }else{alert("Inserte Failutre "+response.responseText);
+                  return [true,"Ok"];
+       		  }
+		}
+	});
+}
+});
     pojwgrid.jqGrid('setGridWidth', 930);
 
     //Bootom Pager Customization

@@ -32,17 +32,17 @@ $(function() {
 	<ul id="accordionmenu">
     <li> <h3>Samples </h3>
         <ul>
-            <li> <h:link action='/loadSrf' scope="request">SrfScreen</h:link></li>
-            <li> <h:link action='/gotoSampleTracking'>Sample Tracking</h:link></li>
-            <li> <h:link action='/gotoSampleInvoice'>Sample Invoice Screen</h:link></li>
-            <li> <h:link action='/sit'>Sample Invoice Tracking</h:link></li>
-            <li> <h:link action='/gotoSampleDebit'>Sample Debit</h:link></li>
-            <li> <h:link action='/sm'>Sample Master Tracking</h:link></li>
+            <li><h:link action='/loadSrf' scope="request">SrfScreen</h:link></li>
+            <li><h:link action='/gotoSampleTracking'>Sample Tracking</h:link></li>
+            <li><h:link action='/gotoSampleInvoice'>Sample Invoice Screen</h:link></li>
+            <li><h:link action='/sit'>Sample Invoice Tracking</h:link></li>
+            <li><h:link action='/gotoSampleDebit'>Sample Debit</h:link></li>
+            <li><h:link action='/sm'>Sample Master Tracking</h:link></li>
         </ul>
     </li>
     <li><h3>Contracts</h3>
         <ul>
-            <li><h:link action='/LoadPrf' scope="request">Prf Screen</h:link></li>
+            <li><h:link action='/LoadPrf'>Prf Screen</h:link></li>
             <li><h:link action='/gotoBulkTracking'>Bulk Tacking</h:link></li>
             <li><h:link action='/loadInspection'>Inspection Screen</h:link></li>
             <li><h:link action='/gotoInspectionTracking'>Inspection Tacking</h:link></li>

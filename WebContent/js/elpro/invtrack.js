@@ -116,7 +116,9 @@ $(document).ready(function() {
 		var vl = $(this).val();
 		if(vl){
 			if(vl == "clear"){
-				invtrackgrid.jqGrid('groupingRemove',true);	
+				invtrackgrid.jqGrid('groupingRemove',true,{
+					groupColumnShow: [true]
+				});	
 			}else{
 				invtrackgrid.jqGrid('groupingGroupBy', vl, {
 					groupOrder : ['asc'],

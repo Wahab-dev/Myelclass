@@ -21,18 +21,17 @@
 <script type="text/javascript">
 $(function() {
 	 var icons = {
-			 header: "ui-icon-circle-arrow-e",
-			 activeHeader: "ui-icon-circle-arrow-s",
+		header: "ui-icon-circle-arrow-e",
+		activeHeader: "ui-icon-circle-arrow-s",
 	};
 	$(".accordionmenu").accordion({
 		heightStyle: "content",
-		 icons: icons,
-		 active: false,
-		 collapsible: true ,
-		 heightStyle: "content",
+		icons: icons,
+		active: false,
+		collapsible: true ,
+		heightStyle: "content",
 	});
 });
-
 </script>
 </head>
 <body>
@@ -43,11 +42,11 @@ $(function() {
 			<div id="accordionmenu1" class="accordionmenu">
 			  <h3>Samples </h3>
 			        <ul>
-			            <li> <h:link action='/loadSrf' scope="request">SrfScreen</h:link></li>
-							<li> <h:link action='/gotoSampleTracking'>Sample Tracking</h:link></li>
-							<li> <h:link action='/gotoSampleInvoice'>Sample Invoice Screen</h:link></li>
-							  <li> <h:link action='/sit'>Sample Invoice Tracking</h:link></li>
-							 <li> <h:link action='/gotoSampleDebit'>Sample Debit</h:link></li>
+			           <li> <h:link action='/loadSrf' scope="request">SrfScreen</h:link></li>
+					   <li> <h:link action='/gotoSampleTracking'>Sample Tracking</h:link></li>
+					   <li> <h:link action='/gotoSampleInvoice'>Sample Invoice Screen</h:link></li>
+					   <li> <h:link action='/sit'>Sample Invoice Tracking</h:link></li>
+					   <li> <h:link action='/gotoSampleDebit'>Sample Debit</h:link></li>
 			        </ul>
 			        </div>
 			    </td>
@@ -56,15 +55,15 @@ $(function() {
 					<h3>Contracts</h3>
 			        <ul>
 			            <li><h:link action='/LoadPrf' scope="request">Prf Screen</h:link></li>
-							 <li><h:link action='/gotoBulkTracking'>Bulk Tacking</h:link></li>
-							<li><h:link action='/loadInspection'>Inspection Screen</h:link></li>
-							<li><h:link action='/gotoInspectionTracking'>Inspection Tacking</h:link></li>
-							<li><h:link action='/gotoinvoice'>Invoice Screen</h:link></li>
-							<li><h:link action='/InvoiceTracking'>Invoice Tracking</h:link></li>
-							<li><h:link action='/gotodebit'>Debit Screen</h:link></li>
-							<li><h:link action='/gotodebittracking'>Debit Tacking</h:link></li>
-							<li><h:link action='/gotopayment'>Payment Screen</h:link></li>
-							<li><h:link action='/gotoMasterTracking'>Master Tacking</h:link></li>
+						<li><h:link action='/gotoBulkTracking'>Bulk Tacking</h:link></li>
+						<li><h:link action='/loadInspection'>Inspection Screen</h:link></li>
+						<li><h:link action='/gotoInspectionTracking'>Inspection Tacking</h:link></li>
+						<li><h:link action='/gotoinvoice'>Invoice Screen</h:link></li>
+						<li><h:link action='/InvoiceTracking'>Invoice Tracking</h:link></li>
+						<li><h:link action='/gotodebit'>Debit Screen</h:link></li>
+						<li><h:link action='/gotodebittracking'>Debit Tacking</h:link></li>
+						<li><h:link action='/gotopayment'>Payment Screen</h:link></li>
+						<li><h:link action='/gotoMasterTracking'>Master Tacking</h:link></li>
 			        </ul>
 			        </div>
 			   </td>
@@ -79,12 +78,18 @@ $(function() {
    		</tr>
    </table>
 </div>
-<div>
-	<h:form action="/Prf.do" method="post" styleId="savePrfForm" onreset="" styleClass="form">
-	   		<td >Welcome<h:text property="userinsession" styleId="userinsession" value="${user.name}" readonly="true" ></h:text></td >
-	   				<td ><h:text property="formaction" styleId="formaction" value="${prfactionform}"></h:text></td> 
-	   				<td><h:submit property="prfaction" value="Logout"></h:submit></td> 
-    <table border="1" cellspacing="0" cellpadding="0">
+<div style="color: red; font-style: italic;"><h:errors/></div>
+<!-- <div> -->
+<%-- <h:javascript formName="PrfForm" /> --%>
+	<h:form action="/Prf" method="post" styleId="PrfForm">
+		<table>
+			<tr>
+	   			<td>Welcome<h:text property="userinsession" styleId="userinsession" value="${user.name}" readonly="true"></h:text></td >
+	   			<td><h:text property="prfactionform" styleId="prfactionform" value="${prfactionform}"></h:text></td> 
+	   			<td><h:submit property="prfaction" value="Logout"></h:submit></td> 
+	   		</tr>
+	  	</table>
+    	<table border="1" cellspacing="0" cellpadding="0">
         <tr>
            <td>
            	<fieldset>
@@ -208,32 +213,19 @@ $(function() {
             	</tr>
             	<tr>
             		<td>Terms: </td>
-            		<td><h:select  property="prf_terms" styleId="prf_terms" value="${editprfform[0].prf_terms}">
-       		 		   		<h:option value="0">select Terms</h:option>
-          			    	 <c:forEach items="${termsarray}" var ="termsList">
-          			      		<h:option value="${termsList.termname}">
-          			      		<c:out value="${termsList.termname}"></c:out>
-          			      		</h:option>  
-          			    	 </c:forEach> 
-       		 		  	  </h:select></td>
+            		<td><h:text  property="prf_terms" styleId="prf_terms" value="${editprfform[0].prf_terms}"></h:text></td>
             	</tr>
             	<tr>
             		<td>Payment:</td>
-            		<td><h:select property="prf_payment" styleId="prf_payment"  value="${editprfform[0].prf_payment}">
-       		 				<h:option value="0">select Payment</h:option>
-          					 <c:forEach items="${paymentarray}" var ="paymList">
-          				 		 <h:option value="${paymList.paymentname}">
-          			      		 <c:out value="${paymList.paymentname}"></c:out>
-          				  	</h:option>        		
-          				 	</c:forEach>
-       	  	  		  	  </h:select></td>
+            		<td><h:text property="prf_payment" styleId="prf_payment" value="${editprfform[0].prf_payment}"></h:text></td>
             	</tr>
             	<tr>
             		<td>Insurance: </td>
-            		<td><h:select property="prf_insurance" styleId="prf_insurance"  value="${editprfform[0].prf_insurance}">  
-          	  			 	<h:option value="Consignee">By Consignee</h:option>     
-          				 	<h:option value="Shipper">By Shipper</h:option>      			    													         															
-       		 		  	 </h:select></td>
+            		<td><h:select property="prf_insurance" styleId="prf_insurance" value="${editprfform[0].prf_insurance}">  
+          	  			 <h:option value="Consignee">By Consignee</h:option>     
+          				 <h:option value="Shipper">By Shipper</h:option>     
+          				 <h:option value="NA">Not Applicable</h:option>      	 			    													         															
+       		 		  	</h:select></td>
             	</tr>	
             	<tr>
             		<td>elclass Comm:</td>
@@ -241,13 +233,7 @@ $(function() {
             	</tr>
             	<tr>
             		<td>Other Comm: </td>
-            		<td>
-            			<div id='TextBoxesGroup'>
-						<div id="TextBoxDiv1">
-            				<h:textarea property="prf_commission" cols="30" rows="2"  styleId="prf_commission" value="${editprfform[0].prf_commission}" ></h:textarea>
-            		 	 </div> 	   
-						</div>	
-					</td>
+            		<td> <h:textarea property="prf_commission" cols="30" rows="2"  styleId="prf_commission" value="${editprfform[0].prf_commission}"></h:textarea></td>
             	</tr>
             </table>
       		</fieldset>
@@ -328,7 +314,7 @@ $(function() {
             </td>
             <td>
             <fieldset>
-       		<legend>Bank Details</legend>
+       		<legend>Bank Detail	</legend>
 			 <table>
 	       			<tr>
 	       				<td>Name :</td>
@@ -370,8 +356,12 @@ $(function() {
   			</td>
   		 </tr>
     </table>
+    
 </h:form>		
-</div>
+<!-- </div> -->
+
+
+
 <div id="pojwdiv" title="Po/Jw Form" class="pojwform">
   	<h:form action="/PoJw" styleId="pojwform" method="post" target="pojwhiddenframe" > 
   		<table>

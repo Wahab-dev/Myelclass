@@ -91,7 +91,9 @@ $(function() {
 			var vl = $(this).val();
 			if(vl){
 				if(vl == "clear"){
-					sampletrackgrid.jqGrid('groupingRemove',true);	
+					sampletrackgrid.jqGrid('groupingRemove',true,{
+						groupColumnShow: [true],
+					});	
 				}else{
 					sampletrackgrid.jqGrid('groupingGroupBy', vl, {
 						groupOrder : ['asc'],
@@ -138,7 +140,7 @@ $(function() {
 	 	datatype: 'json',
 	 	url: '/Myelclass/SamptrackInsertAction.do', 	
 		colNames:['Status','Srf No','Order Date','Ref no','Priority','Handled by','Customer','Tannery','Deliver to','Destination',
-		          'endusage','Terms', 'splcdn','inspcdn','forwaderid','isinvraised','articleid','Animal Type',
+		          'endusage','Terms', 'splcdn','inspcdn','forwaderid','isinvraised','articleid','Article Type',
 		          'articleshform','Article','Color','Size','Substance','Selection','selectionp','Quantity','Shpd','Bal','Pcs','colormatching','Price',
 		          'tapetest','crockingwet','crockingdry','fourfolds','keytest','srfarticleid','ADD','CDD','RDD','Reps','Courier', 
 		          'Feedback','User','ApplytoAll'],
@@ -212,7 +214,7 @@ $(function() {
 				{name: 'articleid', index: 'articleid', align:'center', width:60,  search: true, stype:'text',editable:true, sortable: true, hidden: true, 
 					
 				},
-				{name: 'articletype', index: 'articletype', align:'center', width:40,  search: true, stype:'text',editable:true, sortable: true, hidden: true, 
+				{name: 'articletype', index: 'articletype', align:'center', width:65,  search: true, stype:'text',editable:true, sortable: true, hidden: false, 
 					
 				},
 				{name: 'articleshform', index: 'articleshform', align:'center', width:40,  search: true, stype:'text',editable:true, sortable: true, hidden: true, 
@@ -281,9 +283,9 @@ $(function() {
 				},
 				{name: 'rdd_date', index: 'rdd_date', align:'center', width:60, editable:true, sortable: true, hidden: false, 
 					 sorttype: 'date',
-						//formatter: 'date', //datefmt: 'yy/MM/d',//formatoptions: {newformat: 'd-m-y'}, 
-						  editoptions: { dataInit: DateGrpEdit, size:8 },
-						  editrules :{require : true},
+					 //formatter: 'date', //datefmt: 'yy/MM/d',//formatoptions: {newformat: 'd-m-y'}, 
+					 editoptions: { dataInit: DateGrpEdit, size:8 },
+					 editrules :{require : true},
 				},
 				{name: 'reps', index: 'reps', align:'center', width:60,  search: true, stype:'text',editable:true, sortable: true, hidden: true, 
 					edittype: 'select', 
@@ -318,11 +320,9 @@ $(function() {
 				{name: 'courierdetails', index: 'courierdetails', align:'center', width:100,  search: true, stype:'text',editable:true, sortable: true, hidden: false, 
 					edittype: 'textarea', 
 				},
-				
 				{name: 'feedbackdetails', index: 'feedbackdetails', align:'center', width:100,  search: true, stype:'text',editable:true, sortable: true, hidden: true, 
 					edittype: 'textarea', 
 				},
-				
 				{name: 'user', index: 'user', align:'center', width:60,  search: true, stype:'text',editable:true, sortable: true, hidden: false, 
 					
 				},
@@ -364,20 +364,19 @@ $(function() {
         pcstot = $self.jqGrid("getCol", "pcs", false, "sum");
         qtytot = $self.jqGrid("getCol", "quantity", false, "sum");
         shpdtot = $self.jqGrid("getCol", "shpd", false, "sum");
-       // baltot =  (parseFloat(qtytot) - parseFloat(shpdtot));
 
         $self.jqGrid("footerData", "set", {status: "Total:", quantity: qtytot.toFixed(2)});
         $self.jqGrid("footerData", "set", { pcs: pcstot.toFixed(2)});
-        $self.jqGrid("footerData", "set", { shpd: shpdtot.toFixed(2)});
-      //  $self.jqGrid("footerData", "set", { bal: baltot.toFixed(2)});
-        
+        $self.jqGrid("footerData", "set", { shpd: shpdtot.toFixed(2)});       
     }
     }).jqGrid('navGrid','#sampletrackpgr',{
-    	position : 'left', edit: false,add: false,del: false,search: true,view: true,cloneToTop:true,
-	 	beforeRefresh: function(){
+    	//position : 'left', 
+    	edit: false,add: false,del: false,search: true,view: true,cloneToTop:true,
+    	addtext: 'Add', edittext: 'Edit', deltext: 'Delete', searchtext: 'Search', refreshtext: 'Reload', viewtext: 'View',
+    	beforeRefresh: function(){
 	 		sampletrackgrid.jqGrid('setGridParam',{datatype:'json'}).trigger('reloadGrid');
 	    },
-	    addtext: 'Add', edittext: 'Edit', deltext: 'Delete', searchtext: 'Search', refreshtext: 'Reload', viewtext: 'View',
+	    
 	},{},{},{},
 	{
  		multipleSearch:true,
@@ -390,62 +389,64 @@ $(function() {
 	   buttonicon:"ui-icon-lightbulb", 
 	   position:"first",
 	   onClickButton: function(){ 
-	   var $self = $(this);
-	   $self.jqGrid("editGridRow", $self.jqGrid("getGridParam", "selrow"),
-	    {
-		 beforeShowForm: function(form) {
-			 $("#tr_orderdt").hide();
-			 $("#tr_refno").hide(); 
-			 $("#tr_priority").hide();
-			 $("#tr_handledby").hide(); 
-			 $("#tr_customerid").hide(); 
-			 $("#tr_tanneryid").hide(); 
-			 $("#tr_deliverid").hide();
-			 $("#tr_agentid").hide(); 
-			 $("#tr_destination").hide();
-			 $("#tr_terms").hide(); 
-			 $("#tr_add_date").hide(); 
-			 $("#tr_cdd_date").hide(); 
-			 $("#tr_splcdn").hide();
-			 $("#tr_inspcdn").hide();
-			 $("#tr_forwaderid").hide();
-			 $("#tr_isinvraised").hide(); 
-			 $("#tr_articleid").hide();
-			 $("#tr_articletype").hide(); 
-			 $("#tr_articleshform").hide();
-			 $("#tr_selection").hide(); 
-			 $("#tr_selectionp").hide(); 
-			 $("#tr_colormatching").hide();
-			 $("#tr_tapetest").hide();
-			 $("#tr_crockingwet").hide();
-			 $("#tr_crockingdry").hide();
-			 $("#tr_fourfolds").hide(); 
-			 $("#tr_keytest").hide();
-			 $("#tr_srfarticleid").hide(); 
-			 $("#tr_user").hide();
-			 $("#tr_pcs").hide();
-			 $("#tr_reps").show();
-			 $("#tr_isupdtar").show();
-			 $("#tr_selection").show();
-			 
-			 $("#sampleno").attr("readonly","readonly"); 
-			 $("#articlename").attr("readonly","readonly"); 
-			 $("#color").attr("readonly","readonly"); 
-			 $("#size").attr("readonly","readonly"); 
-			 $("#substance").attr("readonly","readonly"); 
-			 $("#selection").attr("readonly","readonly"); 
-			 $("#quantity").attr("readonly","readonly"); 
-			// $("#add_date").attr("readonly","readonly"); 
+		   var $self = $(this);
+		   $self.jqGrid("editGridRow", $self.jqGrid("getGridParam", "selrow"),
+		    {
+			 beforeShowForm: function(form) {
+				 $("#tr_orderdt").hide();
+				 $("#tr_refno").hide(); 
+				 $("#tr_priority").hide();
+				 $("#tr_handledby").hide(); 
+				 $("#tr_customerid").hide(); 
+				 $("#tr_tanneryid").hide(); 
+				 $("#tr_deliverid").hide();
+				 $("#tr_agentid").hide(); 
+				 $("#tr_destination").hide();
+				 $("#tr_terms").hide(); 
+				 $("#tr_add_date").hide(); 
+				 $("#tr_cdd_date").hide(); 
+				 $("#tr_splcdn").hide();
+				 $("#tr_inspcdn").hide();
+				 $("#tr_forwaderid").hide();
+				 $("#tr_isinvraised").hide(); 
+				 $("#tr_articleid").hide();
+				 $("#tr_articletype").hide(); 
+				 $("#tr_articleshform").hide();
+				 $("#tr_selection").hide(); 
+				 $("#tr_selectionp").hide(); 
+				 $("#tr_colormatching").hide();
+				 $("#tr_tapetest").hide();
+				 $("#tr_crockingwet").hide();
+				 $("#tr_crockingdry").hide();
+				 $("#tr_fourfolds").hide(); 
+				 $("#tr_keytest").hide();
+				 $("#tr_srfarticleid").hide(); 
+				 $("#tr_user").hide();
+				 $("#tr_pcs").hide();
+				 $("#tr_reps").show();
+				 $("#tr_isupdtar").show();
+				 $("#tr_selection").show();
+				 
+				 $("#sampleno").attr("readonly","readonly"); 
+				 $("#articlename").attr("readonly","readonly"); 
+				 $("#color").attr("readonly","readonly"); 
+				 $("#size").attr("readonly","readonly"); 
+				 $("#substance").attr("readonly","readonly"); 
+				 $("#selection").attr("readonly","readonly"); 
+				 $("#quantity").attr("readonly","readonly"); 
+			 //$("#add_date").attr("readonly","readonly"); 
 			 //$("#cdd_date").attr("readonly","readonly"); 
 		 },
         recreateForm: true,
         editData: {//Function to Add parameters to the status 
 		 		oper: 'status',
         },
-     	closeAfterEdit: true,
-		reloadAfterSubmit: true,
+     	//closeAfterEdit: true,
+		//reloadAfterSubmit: true,
+        top : 50,
+		left : 100,
+		width : 'auto',
 	    });
-	   
 	   }
 	});
  	sampletrackgrid.jqGrid('filterToolbar', {autosearch : true, searchOnEnter:false, stringResult: true ,  defaultSearch : "cn"});

@@ -50,7 +50,7 @@ public class PrfLoadForm extends ActionForm {
 	private String commname;
 	private String commid;
 	
-	
+	private String action;
 	/**
 	 * @return the agentname
 	 */
@@ -530,6 +530,18 @@ public class PrfLoadForm extends ActionForm {
 	 */
 	public void setCommid(String commid) {
 		this.commid = commid;
+	}
+	/**
+	 * @return the action
+	 */
+	public String getAction() {
+		return action;
+	}
+	/**
+	 * @param action the action to set
+	 */
+	public void setAction(String action) {
+		this.action = action;
 	}
 	
 }

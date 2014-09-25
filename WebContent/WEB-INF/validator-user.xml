@@ -3,48 +3,89 @@
         "http://jakarta.apache.org/commons/dtds/validator_1_3_0.dtd">
 
 <form-validation>
+  <formset>
+  	<form name="LoginForm">
+  		<field property="username" depends="required">
+  			<arg key="error.username.required"/>
+  			<msg name="required" key="error.username.required" />
+  		</field>
+  		<field property="password" depends="required">	
+  			<arg key="error.password.required"/>
+  			<msg name="required" key="error.password.required" />
+  		</field>
+  		<field property="role" depends="required">
+  			<arg key="error.role.required"/>
+  			<msg name="required" key="error.role.required" />
+  			<!--  <var>  
+                <var-name>test</var-name>  
+             	<var-value>(*this* == "NULL")</var-value>  
+             </var> -->
+  		</field>
+  	</form>
+  </formset>
+
    <formset>
       <form name="PrfForm">
          <field property="prf_contractno" depends="required"> 
-         	<msg name="required" key="error.prf.contractno.required" />
+         	<msg name="required" key="error.prf_contractno.required" />
 		 </field>
-        <!--  <field property="prf_tanname" depends="required"> 
-         	<msg name="required" key="error.prf.tannery.required" />
+         <field property="prf_agentname" depends="required"> 
+         	<msg name="required" key="error.prf_agentname.required" />
+		 </field>
+		 <field property="prf_orderdate" depends="required"> 
+         	<msg name="required" key="error.prf_orderdate.required" />
+		 </field>
+		 <field property="prf_poref" depends="required"> 
+         	<msg name="required" key="error.prf_poref.required" />
+		 </field>
+		 <field property="prf_exporter" depends="required"> 
+         	<msg name="required" key="error.prf_exporter.required " />
+		 </field>
+		 <field property="prf_tanname" depends="required"> 
+         	<msg name="required" key="error.prf_tanname.required" />
 		 </field>
 		 <field property="prf_custname" depends="required"> 
-         	<msg name="required" key="error.prf.customer.required" />
-		 </field>
-		 <field property="prf_cdd" depends="required"> 
-         	<msg name="required" key="error.prf.cDD.required" />
-		 </field>
-		 <field property="prf_add" depends="required"> 
-         	<msg name="required" key="error.prf.aDD.required" />
-		 </field>
-		 <field property="prf_destination" depends="required"> 
-         	<msg name="required" key="error.prf.destination.required" />
-		 </field>
-		 <field property="prf_terms" depends="required"> 
-         	<msg name="required" key="error.prf.terms.required" />
-		 </field>
-		 <field property="prf_payment" depends="required"> 
-         	<msg name="required" key="error.prf.payment.required" />
-		 </field>
-		 <field property="prf_elclasscommission" depends="required"> 
-         	<msg name="required" key="error.prf.elclassCommission.required" />
-		 </field>
-		 <field property="prf_commission1" depends="required"> 
-         	<msg name="required" key="error.prf.commission1.required" />
+         	<msg name="required" key="error.prf_custname.required" />
 		 </field>
 		 <field property="prf_consigneename" depends="required"> 
-         	<msg name="required" key="error.prf.consignee.required" />
+         	<msg name="required" key="error.prf_consigneename.required" />
 		 </field>
 		 <field property="prf_notifyname" depends="required"> 
-         	<msg name="required" key="error.prf.notify.required" />
+         	<msg name="required" key="error.prf_notifyname.required" />
 		 </field>
 		 <field property="prf_bankname" depends="required"> 
-         	<msg name="required" key="error.prf.bank.required" />
-		 </field> -->
-		
+         	<msg name="required" key="error.prf_bankname.required" />
+		 </field>
+		 <field property="prf_terms" depends="required"> 
+         	<msg name="required" key="error.prf_terms.required " />
+		 </field>
+		 <field property="prf_payment" depends="required"> 
+         	<msg name="required" key="error.prf_payment.required " />
+		 </field>
+		 <field property="prf_elclasscommission" depends="required"> 
+         	<msg name="required" key="error.prf_elclasscommission.required" />
+		 </field>
+		  <field property="prf_commission" depends="required"> 
+         	<msg name="required" key="error.prf_commission.required" />
+		 </field>
+		 <field property="prf_insurance" depends="required"> 
+         	<msg name="required" key="error.prf_insurance.required" />
+		 </field>
+		 <field property="prf_cdd" depends="required"> 
+         	<msg name="required" key="error.prf_cdd.required" />
+		 </field>
+		 <field property="prf_add" depends="required"> 
+         	<msg name="required" key="error.prf_add.required" />
+		 </field>
+		 <field property="prf_special" depends="required"> 
+         	<msg name="required" key="error.prf_special.required" />
+		 </field>
+		  <field property="prf_destination" depends="required"> 
+         	<msg name="required" key="error.prf_destination.required" />
+		 </field>
+		 
      </form>
   </formset>
+  
+  
 </form-validation>

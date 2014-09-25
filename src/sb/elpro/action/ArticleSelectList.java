@@ -40,11 +40,12 @@ public class ArticleSelectList extends Action{
 		usersession = request.getSession(false);
 		if(!(usersession == null)){
 		
-			List<SelectArticle> articlelist = prfbo.getarticlename();
+			/*List<SelectArticle> articlelist = prfbo.getarticlename();
 			JSONArray jsonOrderArray = JSONArray.fromObject(articlelist);
 			System.out.println("articlelist  "+jsonOrderArray);
-			out.println(jsonOrderArray);
-		}
+			out.println(jsonOrderArray);*/       
+			//  Not sure where it calls so commented 
+		} 
 			return null;
 	}
 		

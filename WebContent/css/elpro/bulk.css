@@ -1,4 +1,19 @@
 @CHARSET "ISO-8859-1";
 
+ /* .cvteste {
+            background-color: green !important; column color 
+        } */
+
+span.cellWithoutBackground
+        {
+            display:block;
+            background-image:none;
+            margin-right:-2px;
+            margin-left:-2px;
+            height:14px;
+            padding:4px;
+        }
 #ui-datepicker-div { font-size: 11px; } 
 .myAltRowClass { background-color: Light; background-image: none; }
+
+.grpingrid{ background-color: Light; background-image: none; }

@@ -146,26 +146,26 @@ $(function() {
         			<table width="300">
         				<tr>
         					<td>Name: </td>
-        					<td><h:text property="srf_tanname" size="41" styleId="srf_tanname" value="${editsrfform[0].srf_tanname}"></h:text></td>
+        					<td><h:text property="srf_tanname" size="38" styleId="srf_tanname" value="${editsrfform[0].srf_tanname}"></h:text></td>
         				</tr>
         				<tr>
         					<td><h:hidden property="srf_tannameid" styleId="srf_tannameid" value="${editsrfform[0].srf_tannameid}"></h:hidden></td>
         				</tr>
         				<tr>
         					<td>Attn: </td>
-        					<td><h:text property="srf_tanattn" size="41" styleId="srf_tanattn" value="${editsrfform[0].srf_tanattn}"></h:text> </td>
+        					<td><h:text property="srf_tanattn" size="38" styleId="srf_tanattn" value="${editsrfform[0].srf_tanattn}"></h:text> </td>
         				</tr>
         				<tr>
         					<td>Addr:</td>
-        					<td><h:textarea property="srf_tanaddr" cols="35" rows="4" value="${editsrfform[0].srf_tanaddr}" styleId="srf_tanaddr"></h:textarea> </td>
+        					<td><h:textarea property="srf_tanaddr" cols="29" rows="4" value="${editsrfform[0].srf_tanaddr}" styleId="srf_tanaddr"></h:textarea> </td>
         				</tr>
         				<tr>
         					<td>Tele: </td>
-        					<td><h:text property="srf_tanphone" size="41" value="${editsrfform[0].srf_tanphone}" styleId="srf_tanphone"> </h:text></td>
+        					<td><h:text property="srf_tanphone" size="38" value="${editsrfform[0].srf_tanphone}" styleId="srf_tanphone"> </h:text></td>
         				</tr>
         				<tr>
         					<td>Fax :</td>
-        					<td><h:text property="srf_tanfax" size="41" styleId="srf_tanfax" value="${editsrfform[0].srf_tanfax}"> </h:text></td>
+        					<td><h:text property="srf_tanfax" size="38" styleId="srf_tanfax" value="${editsrfform[0].srf_tanfax}"> </h:text></td>
         				</tr>
         				<tr>
         					<td>Type:</td>
@@ -185,30 +185,30 @@ $(function() {
        				<table width="300">
        					<tr>
        						<td>Name:</td>
-       						<td><h:text property="srf_deliver" size="41" styleId="srf_deliver" value="${editsrfform[0].srf_deliver}"></h:text></td>
+       						<td><h:text property="srf_deliver" size="38" styleId="srf_deliver" value="${editsrfform[0].srf_deliver}"></h:text></td>
        					</tr>
        					<tr>
        						<td><h:hidden property="srf_deliverid" styleId="srf_deliverid" value="${editsrfform[0].srf_deliverid}"></h:hidden></td>
        					</tr>
        					<tr>
        						<td>Attn:</td>
-       						<td><h:text property="srf_deliverattn" size="41" styleId="srf_deliverattn" value="${editsrfform[0].srf_deliverattn}" ></h:text></td>
+       						<td><h:text property="srf_deliverattn" size="38" styleId="srf_deliverattn" value="${editsrfform[0].srf_deliverattn}" ></h:text></td>
        					</tr>
        					<tr>
        						<td>Addr:</td>
-       						<td><h:textarea property="srf_deliveraddr" cols="35" rows="4" value="${editsrfform[0].srf_deliveraddr}" styleId="srf_deliveraddr"></h:textarea></td>
+       						<td><h:textarea property="srf_deliveraddr" cols="29" rows="4" value="${editsrfform[0].srf_deliveraddr}" styleId="srf_deliveraddr"></h:textarea></td>
        					</tr>
        					<tr>
        						<td>Tele: </td>
-       						<td><h:text property="srf_deliverphone" size="41" styleId="srf_deliverphone" value="${editsrfform[0].srf_deliverphone}"> </h:text></td>
+       						<td><h:text property="srf_deliverphone" size="38" styleId="srf_deliverphone" value="${editsrfform[0].srf_deliverphone}"> </h:text></td>
        					</tr>
        					<tr>
        						<td>Fax :</td>
-       						<td><h:text property="srf_deliverfax" size="41" styleId="srf_deliverfax" value="${editsrfform[0].srf_deliverfax}"> </h:text></td>
+       						<td><h:text property="srf_deliverfax" size="38" styleId="srf_deliverfax" value="${editsrfform[0].srf_deliverfax}"> </h:text></td>
        					</tr>
        					<tr>
-       						<td>A/C No:</td>
-       						<td><h:text property="srf_deliveracctno" size="41" styleId="srf_deliveracctno" value=""> </h:text> </td>
+       						<td>Commission Details:</td>
+       						<td><h:text property="srf_deliveracctno" size="38" styleId="srf_deliveracctno" value=""> </h:text> </td>
        					</tr>
        				</table>
       			</fieldset>

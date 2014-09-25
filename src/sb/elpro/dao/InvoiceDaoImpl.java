@@ -463,7 +463,7 @@ public class InvoiceDaoImpl implements InvoiceDao {
 			noofrows = pst.executeUpdate();
 			System.out.println("Sucessfully inserted the record.." + noofrows);
 			if(noofrows == 1){
-				if(invbill.getInvctno().startsWith("L")){
+				if(invbill.getInvctno().startsWith("L") || invbill.getInvctno().startsWith("M") ){
 					System.out.println(" Update PRF Status QTy "+noofrows);
 					StringBuffer sql_updartqty = new StringBuffer("UPDATE elpro.tbl_prfarticle_status SET qshipped = ? , qbal = ? , invdetails = ?  WHERE prf_articleid = '"+invbill.getInvartid()+"' ");
 					String sqlquery_updartqty = sql_updartqty.toString();
@@ -636,7 +636,7 @@ public class InvoiceDaoImpl implements InvoiceDao {
 			pst.setString(20, invaddagainbill.getInvartid());
 			noofrows = pst.executeUpdate();
 			if(noofrows == 1){
-				if(invaddagainbill.getInvctno().startsWith("L")){
+				if(invaddagainbill.getInvctno().startsWith("L") || invaddagainbill.getInvctno().startsWith("M")){
 					System.out.println(" Update PRF Status QTy "+noofrows);
 					float qshped = (Float.parseFloat(invaddagainbill.getInvqty()) - Float.parseFloat(invaddagainbill.getInvqbal()));
 					String qshiped = String.valueOf(qshped);
@@ -707,7 +707,7 @@ public class InvoiceDaoImpl implements InvoiceDao {
 			System.out.println("INV Article ID " +inveditbill.getInvid());
 			noofrows = pst.executeUpdate();
 			if(noofrows == 1){
-				if(inveditbill.getInvctno().startsWith("L")){
+				if(inveditbill.getInvctno().startsWith("L")|| inveditbill.getInvctno().startsWith("M")){
 					System.out.println(" Update PRF Status QTy "+noofrows);
 					float qshped = (Float.parseFloat(inveditbill.getInvqty()) - Float.parseFloat(inveditbill.getInvqbal()));
 					String qshiped = String.valueOf(qshped);
@@ -774,7 +774,7 @@ public class InvoiceDaoImpl implements InvoiceDao {
 			System.out.println("Sucessfully deleted the record.." + noofrows);
 			if(noofrows == 1){
 				System.out.println("CT NO "+invaddagainbill.getInvctno());
-				if(invaddagainbill.getInvctno().startsWith("L")){
+				if(invaddagainbill.getInvctno().startsWith("L") || invaddagainbill.getInvctno().startsWith("M") ){
 					System.out.println(" Revert PRF Status QTy "+noofrows);
 					float qbal = (Float.parseFloat(invaddagainbill.getInvqshpd()) + (Float.parseFloat(invaddagainbill.getInvqbal())));
 					float qshped = (Float.parseFloat(invaddagainbill.getInvqty()) - qbal);

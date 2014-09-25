@@ -6,6 +6,17 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>Bulk Page</title>
+<style type="text/css">
+/* .statusbgcolor {
+    background-color: #FFFFCC !important;
+}
+.qshpdbgcolor {
+    background-color: #FFF5FF !important;
+}
+.qbalbgcolor {
+    background-color: #E0E0FF !important;
+} */
+</style>
 <script src="js/jquery-1.9.1.js"></script>
 <script src="js/jquery-ui.js"></script>
 <link rel="stylesheet" type="text/css" href="css/ui.multiselect.css" />
@@ -76,7 +87,7 @@ $(function() {
    		</tr>
    </table>
 </div>
-   <div>
+
   	<h:form action="/login" method="post" >	  
   	<table>
   		<tr>
@@ -85,7 +96,7 @@ $(function() {
    		</tr>
    </table>
    </h:form>
-<!-- Bulk Tracking Form  -->
+	<div class="grpingrid">
 	Group By: <select id="chngroup"> 
 				<option value="ctno">Ct No</option>
 				<option value="exporterid">Tannery </option>
@@ -98,9 +109,9 @@ $(function() {
 				<option value="status">Status</option>
 				<option value="clear" selected="selected" >Remove Grouping</option>
 			</select> 
-		
+	</div>	
 			<table id="bulkktracktbl"></table> 
 			<div id="bulkktrackpager"></div> 
-	 </div>
+	 
 </body>
 </html>

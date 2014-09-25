@@ -71,10 +71,11 @@ $(document).ready(function() {
 				 records: "records" //calls Third
 			 }, 
 			 pager: '#deb_debpager',
-			 rowNum:9, 
+			 rowNum:15, 
 			 rowList:[5,7,9,11,15,20],	       
 			 sortorder: 'desc',  
 			 hidegrid: false,
+			 //scroll: 1, Implement this in Future. So can be avoid Pagination
 			 gridview :true,
 			 viewrecords: true,
 			 height : 'automatic',
@@ -87,6 +88,7 @@ $(document).ready(function() {
 				 //Sum Total Shipped, Inv Value, Debit Amt
 				 totshpd = $self.jqGrid("getCol", "invqshpd", false, "sum");
 				 totamt = $self.jqGrid("getCol", "invamt", false, "sum");
+				 alert(totamt);
 				 totdebamt = $self.jqGrid("getCol", "debamt", false, "sum");
 				 //set Total Value 
 				 $self.jqGrid("footerData", "set", {invqshpd: totshpd.toFixed(2)});

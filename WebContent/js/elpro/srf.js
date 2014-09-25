@@ -26,7 +26,6 @@ $(document).ready(function() {
 		 	}
 		 },"text");
 	
-	
 	 var grid = $("#srfArticletbl"); 
 		grid.jqGrid({ 
 			         datatype: "json",
@@ -176,7 +175,7 @@ $(document).ready(function() {
 			                    },
 			                    {name:'srf_sizeremarks', index:'sizerem', width:40, align:'center',  editable:true, hidden: true, 
 			        				edittype:'select',
-			        				/*editoptions: { 
+			        				editoptions: { 
 			              			  dataUrl:'/Myelclass/PrfAutocomplete.do?action=sizerem',
 			              			  type:"GET",
 			              			  buildSelect: function(data) {
@@ -191,7 +190,7 @@ $(document).ready(function() {
 			              			          	}
 			              			       return s + "</select>";
 			              			   },
-			              			 } ,*/
+			              			 } ,
 			        				editrules:{edithidden:true},
 			        				formoptions:{rowpos: 3, colpos: 3}, 
 			        			}, 
@@ -347,7 +346,10 @@ $(document).ready(function() {
 			        emptyrecords: 'No records to display',
 			        editurl: "/Myelclass/SrfinsertArticle.do", 
 			        }); 
-		grid.jqGrid('navGrid','#srfArticlepager',{edit:true,add:true,del:true, search:true, view:false},
+		grid.jqGrid('navGrid','#srfArticlepager',{
+			edit:true,add:true,del:true, search:true, view:false,
+			addtext: 'Add', edittext: 'Edit', deltext: 'Delete', searchtext: 'Search', refreshtext: 'Reload',
+			},
 		{
 		  //Edit 
 		  top: 150,

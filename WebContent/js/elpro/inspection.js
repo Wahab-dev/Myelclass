@@ -163,9 +163,9 @@ $(document).ready(function() {
 				          'Colortest','Colortested', 'Colorresult', 'Colorcomments',
 				          'Subtest','Subtested', 'Subresult', 'Subcomments',
 				          'Teartest','Teartested', 'Tearresult', 'Tearcomments',
-				          'GrainBreak Test','GrainBreaktested', 'GrainBreakresult', 'GrainBreakcomments',
-				          'CrockingWet Test','CrockingWettested', 'CrockingWetresult', 'CrockingWetcomments',
+				          'GrainBreak Test','GrainBreaktested', 'GrainBreakresult', 'GrainBreakcomments',			         
 				          'CrockingDry Test','CrockingDrytested', 'CrockingDryresult', 'CrockingDrycomments',
+				          'CrockingWet Test','CrockingWettested', 'CrockingWetresult', 'CrockingWetcomments',
 				          'FinishAdhension Test','FinishAdhensiontested', 'FinishAdhensionresult', 'FinishAdhensioncomments',
 				          'FourFolds Test','FourFoldstested', 'FourFoldsresult', 'FourFoldscomments',
 				          'Cross Section','DyeThrutested', 'DyeThruresult', 'DyeThrucomments',
@@ -273,27 +273,6 @@ $(document).ready(function() {
 						editoptions:{ defaultValue:"NA" },
 						formoptions: {rowpos: 6, colpos: 4},
 					},	
-					{name:'crockingwettest', index:'crockingwettest', align:'center', width:120, editable:true, hidden: true, 
-						editoptions: {size:25}, 
-						formoptions: {rowpos: 7, colpos: 1},
-						
-					},
-					{name:'crockingwettested', index:'crockingwettest', align:'center', width:80, editable:true, hidden:false, 
-						edittype:'text',
-						editoptions:{ size: 15, maxlength:2, defaultValue:"0"},
-						editrules:{integer: true, required: true},
-						formoptions: {rowpos: 7, colpos: 2},
-					},
-					{name:'crockingwetresult', index:'crockingwetresult', align:'center', width:130, editable:true, hidden:true, 
-						 edittype: 'select', 
-						 editoptions: {value: {P:'Pass',F:'Fail',N:'Not Applicable'}},		
-						 formoptions: {rowpos: 7, colpos: 3},
-					},
-					{name:'crockingwetcomments', index:'crockingwetcomments', align:'center', width:120, editable:true, hidden:true, 
-						edittype: 'text',
-						editoptions:{ defaultValue:"NA" },
-						formoptions: {rowpos: 7, colpos: 4},
-					},	
 					{name:'crockingdrytest', index:'crockingdrytest', align:'center', width:120, editable:true, hidden: true, 
 						editoptions: {size:25}, 
 						formoptions: {rowpos: 8, colpos: 1},
@@ -314,6 +293,27 @@ $(document).ready(function() {
 						edittype: 'text',
 						editoptions:{ defaultValue:"NA" },
 						formoptions: {rowpos: 8, colpos: 4},
+					},	
+					{name:'crockingwettest', index:'crockingwettest', align:'center', width:120, editable:true, hidden: true, 
+						editoptions: {size:25}, 
+						formoptions: {rowpos: 7, colpos: 1},
+						
+					},
+					{name:'crockingwettested', index:'crockingwettest', align:'center', width:80, editable:true, hidden:false, 
+						edittype:'text',
+						editoptions:{ size: 15, maxlength:2, defaultValue:"0"},
+						editrules:{integer: true, required: true},
+						formoptions: {rowpos: 7, colpos: 2},
+					},
+					{name:'crockingwetresult', index:'crockingwetresult', align:'center', width:130, editable:true, hidden:true, 
+						 edittype: 'select', 
+						 editoptions: {value: {P:'Pass',F:'Fail',N:'Not Applicable'}},		
+						 formoptions: {rowpos: 7, colpos: 3},
+					},
+					{name:'crockingwetcomments', index:'crockingwetcomments', align:'center', width:120, editable:true, hidden:true, 
+						edittype: 'text',
+						editoptions:{ defaultValue:"NA" },
+						formoptions: {rowpos: 7, colpos: 4},
 					},	
 					{name:'finishadhensiontest', index:'finishadhensiontest', align:'center', width:120, editable:true, hidden: true, 
 						editoptions: {size:25}, 
@@ -486,8 +486,8 @@ $(document).ready(function() {
 						  $("#subtest").val('Substance').attr("readonly","readonly"); 
 						  $("#teartest").val('Tear Strength').attr("readonly","readonly");  
 						  $("#grainbreaktest").val('Grain Break').attr("readonly","readonly");  
-						  $("#crockingwettest").val('Crocking Wet').attr("readonly","readonly");  
 						  $("#crockingdrytest").val('Crocking Dry').attr("readonly","readonly");  
+						  $("#crockingwettest").val('Crocking Wet').attr("readonly","readonly");  
 						  $("#finishadhensiontest").val('Finish Adhension').attr("readonly","readonly");  
 						  $("#fourfoldstest").val('FourFolds').attr("readonly","readonly");  
 						  $("#dyethrutest").val('Cross Section').attr("readonly","readonly");  
@@ -500,9 +500,9 @@ $(document).ready(function() {
 						  jQuery('tr#tr_colortest > td.CaptionTD', formID[0]).html('');
 						  jQuery('tr#tr_subtest > td.CaptionTD', formID[0]).html('');
 						  jQuery('tr#tr_teartest > td.CaptionTD', formID[0]).html('');
-						  jQuery('tr#tr_grainbreaktest > td.CaptionTD', formID[0]).html('');
-						  jQuery('tr#tr_crockingwettest > td.CaptionTD', formID[0]).html('');
+						  jQuery('tr#tr_grainbreaktest > td.CaptionTD', formID[0]).html('');					  
 						  jQuery('tr#tr_crockingdrytest > td.CaptionTD', formID[0]).html('');
+						  jQuery('tr#tr_crockingwettest > td.CaptionTD', formID[0]).html('');
 						  jQuery('tr#tr_finishadhensiontest > td.CaptionTD', formID[0]).html('');
 						  jQuery('tr#tr_fourfoldstest > td.CaptionTD', formID[0]).html('');
 						  jQuery('tr#tr_dyethrutest > td.CaptionTD', formID[0]).html('');
@@ -600,8 +600,8 @@ $(document).ready(function() {
 						  $("#subtest").val('Substance').attr("readonly","readonly"); 
 						  $("#teartest").val('Tear Strength').attr("readonly","readonly");  
 						  $("#grainbreaktest").val('Grain Break').attr("readonly","readonly");  
-						  $("#crockingwettest").val('Crocking Wet').attr("readonly","readonly");  
 						  $("#crockingdrytest").val('Crocking Dry').attr("readonly","readonly");  
+						  $("#crockingwettest").val('Crocking Wet').attr("readonly","readonly");  
 						  $("#finishadhensiontest").val('Finish Adhension').attr("readonly","readonly");  
 						  $("#fourfoldstest").val('FourFolds').attr("readonly","readonly");  
 						  $("#dyethrutest").val('Cross Section').attr("readonly","readonly");  
@@ -615,8 +615,8 @@ $(document).ready(function() {
 						  jQuery('tr#tr_subtest > td.CaptionTD', formID[0]).html('');
 						  jQuery('tr#tr_teartest > td.CaptionTD', formID[0]).html('');
 						  jQuery('tr#tr_grainbreaktest > td.CaptionTD', formID[0]).html('');
-						  jQuery('tr#tr_crockingwettest > td.CaptionTD', formID[0]).html('');
 						  jQuery('tr#tr_crockingdrytest > td.CaptionTD', formID[0]).html('');
+						  jQuery('tr#tr_crockingwettest > td.CaptionTD', formID[0]).html('');	  
 						  jQuery('tr#tr_finishadhensiontest > td.CaptionTD', formID[0]).html('');
 						  jQuery('tr#tr_fourfoldstest > td.CaptionTD', formID[0]).html('');
 						  jQuery('tr#tr_dyethrutest > td.CaptionTD', formID[0]).html('');

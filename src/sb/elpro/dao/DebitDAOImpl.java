@@ -201,9 +201,7 @@ public class DebitDaoImpl implements DebitDao {
 			pst = (PreparedStatement) con.prepareStatement(sqlquery_savedebitform);
 			System.out.println(" IN Debit Form SAVE ");
 			pst.setString(1, debformbean.getDeb_debitno());
-			System.out.println("getDeb_debitno " +debformbean.getDeb_debitno());
 			pst.setString(2, debformbean.getDeb_debitdate());
-			System.out.println("getDeb_debitdate " +debformbean.getDeb_debitdate());
 			pst.setString(3, debformbean.getDeb_exporterid());
 			pst.setString(4, debformbean.getDeb_elclassrefno());
 			pst.setString(5, DateConversion.ConverttoMysqlDate(debformbean.getDeb_elclassrefdt()));
@@ -220,7 +218,6 @@ public class DebitDaoImpl implements DebitDao {
 			pst.setString(16, debformbean.getDeb_total());
 			pst.setString(17, debformbean.getDeb_tds());
 			pst.setString(18, debformbean.getDeb_due());
-			System.out.println("getDeb_due " +debformbean.getDeb_due());
 			noofrows = pst.executeUpdate();
 			System.out.println("Sucessfully inserted the record.." + noofrows);
 			if(noofrows == 1){
@@ -232,11 +229,8 @@ public class DebitDaoImpl implements DebitDao {
 				sql_savedebitformstatus.append("values (?,?,?)");
 				String sqlquery_savedebitformstatus= sql_savedebitformstatus.toString();
 				pststatus = (PreparedStatement) con.prepareStatement(sqlquery_savedebitformstatus);
-				System.out.println(" IN Debit Form Status ");
 				pststatus.setString(1, debformbean.getDeb_debitno());
-				System.out.println("getDeb_debitno " +debformbean.getDeb_debitno());
 				pststatus.setString(2, debformbean.getDeb_elclassrefno());
-				System.out.println("getDeb_invno " +debformbean.getDeb_elclassrefno());
 				pststatus.setString(3, "NA");
 				noofrowsstatus = pststatus.executeUpdate();
 				System.out.println("Sucessfully inserted the record.." + noofrowsstatus);
@@ -249,10 +243,8 @@ public class DebitDaoImpl implements DebitDao {
 				StringBuffer sql_updtdebitno = new StringBuffer("update tbl_debitno set debitno = ? where agent =?");
 				String sqlquery_updtdebitno = sql_updtdebitno.toString();
 				pstupdt = (PreparedStatement) con.prepareStatement(sqlquery_updtdebitno);
-				System.out.println(" IN Debit Form Status ");
 				pstupdt.setString(1, debformbean.getDeb_debitno());
 				pstupdt.setString(2, "elclass");
-				System.out.println("getDeb_debitno " +debformbean.getDeb_debitno());
 				noofrowsupdt = pstupdt.executeUpdate();
 				System.out.println("Sucessfully Updtsd the record.." + noofrowsupdt);
 			}
@@ -334,7 +326,6 @@ public class DebitDaoImpl implements DebitDao {
 			while(rs.next()) {	
 				String debitno = rs.getString("debitno").trim();
 				int iprefix = debitno.indexOf('/');
-				System.out.println("iprefix"+iprefix);
 				String ident = debitno.substring(0, 2); 
 				System.out.println("ident"+ident);
 				int debno =Integer.parseInt(debitno.substring(2, iprefix));

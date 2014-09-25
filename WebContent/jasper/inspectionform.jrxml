@@ -4,23 +4,18 @@
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="MySql"/>
 	<property name="com.jaspersoft.studio.unit." value="pixel"/>
 	<parameter name="pinsctno" class="java.lang.String"/>
-	<parameter name="pinspdate" class="java.lang.String"/>
-	<parameter name="pqc" class="java.lang.String"/>
-	<parameter name="particleid" class="java.lang.String"/>
 	<queryString language="SQL">
-		<![CDATA[SELECT  
-	contractno, DATE_FORMAT(orderdt, '%e/%c/%y') as orderdt, concat(articletype,' ',articlename)as article, color, size, substance, selection, concat(quantity,' ',unit)as quantity,  
-	 inspcdn, shortform, tanshform
+		<![CDATA[$P{pinsctno}.equals("test")
+? " select SQL query"
+: " else SELECT form.sampleno, DATE_FORMAT(orderdt, '%e/%c/%y') as orderdt, concat(articletype,' ',articlename)as article,  color, size, substance, selection, concat(quantity,' ',unit)as
+	quantity, inspcdn, shortform, tanshform
 FROM 
-	elpro.tbl_prf_article article
-left outer join elpro.tbl_prfform form on article.contractno = form.ctno
+	elpro.tbl_srf_article article
+left outer join elpro.tbl_srfform form on article.sampleno = form.sampleno
 left outer join elpro.tbl_customer cust on cust.custid = form.customerid 
 left outer join elpro.tbl_tannery tan on tan.tanid = form.tanneryid
-where contractno =$P{pinsctno}  order by article asc, color asc,  size asc, substance asc, selection asc, quantity asc]]>
+where form.sampleno ='S2650'  order by article asc, color asc,  size asc, substance asc, selection asc, quantity asc"]]>
 	</queryString>
-	<field name="contractno" class="java.lang.String">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
 	<field name="article" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
@@ -49,6 +44,9 @@ where contractno =$P{pinsctno}  order by article asc, color asc,  size asc, subs
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<field name="tanshform" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="sampleno" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<pageHeader>
@@ -143,7 +141,7 @@ where contractno =$P{pinsctno}  order by article asc, color asc,  size asc, subs
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textField>
-						<reportElement x="97" y="0" width="96" height="14" uuid="01b7a447-9d88-4518-818e-b7c6b59ff011">
+						<reportElement x="70" y="0" width="123" height="14" uuid="01b7a447-9d88-4518-818e-b7c6b59ff011">
 							<property name="local_mesure_unitwidth" value="pixel"/>
 							<property name="com.jaspersoft.studio.unit.width" value="px"/>
 							<property name="local_mesure_unitheight" value="pixel"/>
@@ -160,10 +158,9 @@ where contractno =$P{pinsctno}  order by article asc, color asc,  size asc, subs
 						<textElement textAlignment="Center">
 							<font fontName="Times New Roman" size="9"/>
 						</textElement>
-						<textFieldExpression><![CDATA[$F{contractno}]]></textFieldExpression>
 					</textField>
 					<staticText>
-						<reportElement mode="Opaque" x="0" y="0" width="97" height="14" forecolor="#000000" backcolor="#C0C0C0" uuid="608caee0-49d5-4239-8323-2f1aa82413a9">
+						<reportElement mode="Opaque" x="0" y="0" width="70" height="14" forecolor="#000000" backcolor="#C0C0C0" uuid="608caee0-49d5-4239-8323-2f1aa82413a9">
 							<property name="local_mesure_unitheight" value="pixel"/>
 							<property name="com.jaspersoft.studio.unit.height" value="px"/>
 							<property name="local_mesure_unitx" value="pixel"/>
@@ -201,7 +198,7 @@ where contractno =$P{pinsctno}  order by article asc, color asc,  size asc, subs
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<staticText>
-						<reportElement mode="Opaque" x="0" y="0" width="97" height="14" forecolor="#000000" backcolor="#C0C0C0" uuid="30d6dab1-140c-43c6-882c-6436d1f83c7d">
+						<reportElement mode="Opaque" x="0" y="0" width="70" height="14" forecolor="#000000" backcolor="#C0C0C0" uuid="30d6dab1-140c-43c6-882c-6436d1f83c7d">
 							<property name="local_mesure_unitheight" value="pixel"/>
 							<property name="com.jaspersoft.studio.unit.height" value="px"/>
 						</reportElement>
@@ -217,7 +214,7 @@ where contractno =$P{pinsctno}  order by article asc, color asc,  size asc, subs
 						<text><![CDATA[Article :]]></text>
 					</staticText>
 					<textField>
-						<reportElement x="97" y="0" width="96" height="14" uuid="d400b7cd-d755-418c-9e8c-579596fd3a43">
+						<reportElement x="70" y="0" width="123" height="14" uuid="d400b7cd-d755-418c-9e8c-579596fd3a43">
 							<property name="local_mesure_unitwidth" value="pixel"/>
 							<property name="com.jaspersoft.studio.unit.width" value="px"/>
 							<property name="local_mesure_unitheight" value="pixel"/>
@@ -257,7 +254,7 @@ where contractno =$P{pinsctno}  order by article asc, color asc,  size asc, subs
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<staticText>
-						<reportElement mode="Opaque" x="0" y="0" width="97" height="14" forecolor="#000000" backcolor="#C0C0C0" uuid="cd9d71e0-e06c-44fa-ace5-b249c4a302f0">
+						<reportElement mode="Opaque" x="0" y="0" width="70" height="14" forecolor="#000000" backcolor="#C0C0C0" uuid="cd9d71e0-e06c-44fa-ace5-b249c4a302f0">
 							<property name="local_mesure_unitheight" value="pixel"/>
 							<property name="com.jaspersoft.studio.unit.height" value="px"/>
 						</reportElement>
@@ -273,7 +270,7 @@ where contractno =$P{pinsctno}  order by article asc, color asc,  size asc, subs
 						<text><![CDATA[Substance :]]></text>
 					</staticText>
 					<textField>
-						<reportElement x="97" y="0" width="96" height="14" uuid="057c0883-e655-42d2-a5f7-3ce96a3bee84">
+						<reportElement x="70" y="0" width="123" height="14" uuid="057c0883-e655-42d2-a5f7-3ce96a3bee84">
 							<property name="local_mesure_unitwidth" value="pixel"/>
 							<property name="com.jaspersoft.studio.unit.width" value="px"/>
 							<property name="local_mesure_unitheight" value="pixel"/>
@@ -310,7 +307,7 @@ where contractno =$P{pinsctno}  order by article asc, color asc,  size asc, subs
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<staticText>
-						<reportElement mode="Opaque" x="0" y="0" width="97" height="14" forecolor="#000000" backcolor="#C0C0C0" uuid="8cf2f2f9-676b-4d4d-b852-be00274d9035">
+						<reportElement mode="Opaque" x="0" y="0" width="70" height="14" forecolor="#000000" backcolor="#C0C0C0" uuid="8cf2f2f9-676b-4d4d-b852-be00274d9035">
 							<property name="local_mesure_unitheight" value="pixel"/>
 							<property name="com.jaspersoft.studio.unit.height" value="px"/>
 						</reportElement>
@@ -326,7 +323,7 @@ where contractno =$P{pinsctno}  order by article asc, color asc,  size asc, subs
 						<text><![CDATA[Size :]]></text>
 					</staticText>
 					<textField>
-						<reportElement x="97" y="0" width="96" height="14" uuid="06107e23-1800-450d-a7da-3febbd4772e0">
+						<reportElement x="70" y="0" width="123" height="14" uuid="06107e23-1800-450d-a7da-3febbd4772e0">
 							<property name="local_mesure_unitwidth" value="pixel"/>
 							<property name="com.jaspersoft.studio.unit.width" value="px"/>
 							<property name="local_mesure_unitheight" value="pixel"/>
@@ -787,7 +784,6 @@ where contractno =$P{pinsctno}  order by article asc, color asc,  size asc, subs
 						<textElement textAlignment="Center">
 							<font fontName="Times New Roman" size="9"/>
 						</textElement>
-						<textFieldExpression><![CDATA[$P{pqc}]]></textFieldExpression>
 					</textField>
 				</frame>
 			</frame>
@@ -820,7 +816,7 @@ where contractno =$P{pinsctno}  order by article asc, color asc,  size asc, subs
 				<text><![CDATA[Please make sure you Check the following before Inspection of Goods ]]></text>
 			</staticText>
 			<frame>
-				<reportElement x="0" y="13" width="580" height="57" uuid="e7c4dcbf-3149-4deb-9ac7-d8d9b26eacb7">
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="0" y="13" width="580" height="57" uuid="e7c4dcbf-3149-4deb-9ac7-d8d9b26eacb7">
 					<property name="local_mesure_unitx" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.x" value="px"/>
 					<property name="local_mesure_unity" value="pixel"/>
@@ -833,7 +829,7 @@ where contractno =$P{pinsctno}  order by article asc, color asc,  size asc, subs
 					<rightPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textField>
-					<reportElement x="1" y="0" width="579" height="57" uuid="4f072cfb-3240-419d-8f65-72f498c060a1">
+					<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="1" y="0" width="579" height="57" uuid="4f072cfb-3240-419d-8f65-72f498c060a1">
 						<property name="local_mesure_unitx" value="pixel"/>
 						<property name="com.jaspersoft.studio.unit.x" value="px"/>
 						<property name="local_mesure_unitheight" value="pixel"/>
@@ -849,8 +845,7 @@ where contractno =$P{pinsctno}  order by article asc, color asc,  size asc, subs
 					<textElement textAlignment="Left">
 						<font fontName="Times New Roman" size="9"/>
 					</textElement>
-					<textFieldExpression><![CDATA[
-$F{inspcdn}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{inspcdn}]]></textFieldExpression>
 				</textField>
 			</frame>
 			<frame>

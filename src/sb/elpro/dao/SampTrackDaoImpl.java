@@ -123,11 +123,8 @@ public class SampTrackDaoImpl implements SampTrackDao {
 			String sqlquery_updateBtrStatus = sql_updateBtrStatus.toString();
 			pst = (PreparedStatement) con.prepareStatement(sqlquery_updateBtrStatus);
 			pst.setString(1, samplemodel.getArticlename());
-			System.out.println("SNo " +samplemodel.getArticlename());
 			pst.setString(2, samplemodel.getStatus());
-			System.out.println("STATUS " +samplemodel.getStatus());
 			pst.setString(3, samplemodel.getCourierdetails());
-			System.out.println("getCourierdetails " +samplemodel.getCourierdetails());
 			pst.setString(4, samplemodel.getReps());
 			pst.setString(5, samplemodel.getFeedbackdetails());
 			pst.setString(6, samplemodel.getSampleno());

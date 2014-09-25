@@ -180,10 +180,51 @@ public class PrfAutocomplete extends Action {
 			 		out.println(jsonOrdershipArray);
 				}else if(action.equalsIgnoreCase("pojwno")){
 					System.out.println("In pojwno Autocomplete");
-				
 					String pojwno  =  prfbo.getPoJWno();
 					System.out.println(pojwno);
 					out.println(pojwno);
+				}else if(action.equalsIgnoreCase("qtyunit")){
+					String term = request.getParameter("term");
+					List<AutoComplete> qtyunitlist =  prfbo.getQtyUnitDetails(term);
+					System.out.println("List Value " +qtyunitlist.size());
+					JSONArray jsonOrdershipArray = JSONArray.fromObject(qtyunitlist);
+					System.out.println(jsonOrdershipArray);
+			 		out.println(jsonOrdershipArray);
+				}else if(action.equalsIgnoreCase("currency")){
+					String term = request.getParameter("term");
+					List<AutoComplete> currencylist =  prfbo.getCurrencyDetails(term);
+					System.out.println("List Value " +currencylist.size());
+					JSONArray jsonOrdershipArray = JSONArray.fromObject(currencylist);
+					System.out.println(jsonOrdershipArray);
+			 		out.println(jsonOrdershipArray);
+				}else if(action.equalsIgnoreCase("subcurrency")){
+					String term = request.getParameter("term");
+					List<AutoComplete> subcurrencylist =  prfbo.getSubCurrencyDetails(term);
+					System.out.println("List Value " +subcurrencylist.size());
+					JSONArray jsonOrdershipArray = JSONArray.fromObject(subcurrencylist);
+					System.out.println(jsonOrdershipArray);
+			 		out.println(jsonOrdershipArray);
+				}else if(action.equalsIgnoreCase("tccust")){
+					String term = request.getParameter("term");
+					List<AutoComplete> tccustlist =  prfbo.getTcCustDetails(term);
+					System.out.println("List Value " +tccustlist.size());
+					JSONArray jsonOrdershipArray = JSONArray.fromObject(tccustlist);
+					System.out.println(jsonOrdershipArray);
+			 		out.println(jsonOrdershipArray);
+				}else if(action.equalsIgnoreCase("terms")){
+					String term = request.getParameter("term");
+					List<AutoComplete> prftermstlist =  prfbo.getTermsDetails(term);
+					System.out.println("List Value " +prftermstlist.size());
+					JSONArray prftermstArray = JSONArray.fromObject(prftermstlist);
+					System.out.println(prftermstArray);
+			 		out.println(prftermstArray);
+				}else if(action.equalsIgnoreCase("payment")){
+					String term = request.getParameter("term");
+					List<AutoComplete> prfpaymentlist =  prfbo.getPaymentDetails(term);
+					System.out.println("List Value " +prfpaymentlist.size());
+					JSONArray jsonprfpaymentArray = JSONArray.fromObject(prfpaymentlist);
+					System.out.println(jsonprfpaymentArray);
+			 		out.println(jsonprfpaymentArray);
 				}else{
 				
 					/*
@@ -191,13 +232,7 @@ public class PrfAutocomplete extends Action {
 					 * and passing the value
 					 * 
 					 */
-					String term = request.getParameter("term");
-					System.out.println(" Term "+term);
-					List<AutoComplete> destinationlist =  srfbo.getDestinationDetails(term);
-					System.out.println("List Value " +destinationlist.size());
-					JSONArray jsonOrderArray = JSONArray.fromObject(destinationlist);
-					 System.out.println(jsonOrderArray);
-			 		out.println(jsonOrderArray);
+					  
 					}
 				 out.close();
 			}else{

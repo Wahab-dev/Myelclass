@@ -1,8 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version last-->
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="PrfPoForm" pageWidth="595" pageHeight="542" columnWidth="585" leftMargin="5" rightMargin="5" topMargin="0" bottomMargin="0" uuid="377aeff9-cf9a-4eeb-8e6c-7fcc19840d3e">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="PrfPoForm" pageWidth="595" pageHeight="792" columnWidth="585" leftMargin="5" rightMargin="5" topMargin="0" bottomMargin="0" uuid="377aeff9-cf9a-4eeb-8e6c-7fcc19840d3e">
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="MySql"/>
 	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.topMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.bottomMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.leftMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
 	<parameter name="pojw_payterms" class="java.lang.String"/>
 	<parameter name="pojw_pojwno" class="java.lang.String"/>
 	<parameter name="pojw_orderdate" class="java.lang.String"/>
@@ -180,7 +188,7 @@
 						<rightPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Center" verticalAlignment="Middle"/>
-					<textFieldExpression><![CDATA[ $P{pojw_contractno}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$P{pojw_contractno}]]></textFieldExpression>
 				</textField>
 				<staticText>
 					<reportElement mode="Opaque" x="388" y="0" width="92" height="16" backcolor="#C0C0C0" uuid="d14e1098-db24-41f3-b8e8-5ca905cfd33a">
@@ -213,7 +221,7 @@
 						<rightPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Center" verticalAlignment="Middle"/>
-					<textFieldExpression><![CDATA[ $P{pojw_orderdate}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$P{pojw_orderdate}]]></textFieldExpression>
 				</textField>
 			</frame>
 			<frame>
@@ -234,7 +242,7 @@
 						<property name="local_mesure_unitwidth" value="pixel"/>
 						<property name="com.jaspersoft.studio.unit.y" value="px"/>
 					</reportElement>
-					<textFieldExpression><![CDATA[ $P{pojw_tanphone}.equals("0") ? "" :$P{pojw_tanphone}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$P{pojw_tanphone}.equals("0") ? "" :$P{pojw_tanphone}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="false">
 					<reportElement positionType="Float" x="0" y="38" width="580" height="28" uuid="fcba9c50-0925-4ca3-afdf-e86a5b2ca835">
@@ -244,7 +252,7 @@
 						<property name="com.jaspersoft.studio.unit.height" value="px"/>
 						<property name="com.jaspersoft.studio.unit.y" value="px"/>
 					</reportElement>
-					<textFieldExpression><![CDATA[ $P{pojw_tanaddr}.equals("NA") ? "" :$P{pojw_tanaddr}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$P{pojw_tanaddr}.equals("NA") ? "" :$P{pojw_tanaddr}]]></textFieldExpression>
 				</textField>
 				<textField>
 					<reportElement x="0" y="24" width="580" height="14" uuid="e237654e-5f1e-496f-9c57-422ece69d953">
@@ -252,7 +260,7 @@
 						<property name="com.jaspersoft.studio.unit.x" value="px"/>
 						<property name="com.jaspersoft.studio.unit.y" value="px"/>
 					</reportElement>
-					<textFieldExpression><![CDATA[ $P{pojw_tanattn}.equals("NA") ? "" :$P{pojw_tanattn}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$P{pojw_tanattn}.equals("NA") ? "" :$P{pojw_tanattn}]]></textFieldExpression>
 				</textField>
 				<textField>
 					<reportElement x="0" y="10" width="580" height="14" uuid="5e8f240d-e1f5-48f0-832d-6c4661f29f8f">
@@ -262,7 +270,7 @@
 						<property name="local_mesure_unitwidth" value="pixel"/>
 						<property name="com.jaspersoft.studio.unit.y" value="px"/>
 					</reportElement>
-					<textFieldExpression><![CDATA[ $P{pojw_tanname}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$P{pojw_tanname}]]></textFieldExpression>
 				</textField>
 			</frame>
 			<staticText>
@@ -304,7 +312,7 @@
 					<rightPen lineWidth="0.8" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="9" isBold="true"/>
+					<font size="11" isBold="true"/>
 				</textElement>
 				<text><![CDATA[We confirm to place an order for below said leather ]]></text>
 			</staticText>
@@ -701,9 +709,9 @@
 		</band>
 	</columnFooter>
 	<pageFooter>
-		<band height="259" splitType="Stretch">
+		<band height="408" splitType="Stretch">
 			<frame>
-				<reportElement x="0" y="0" width="580" height="158" uuid="57097bee-4b40-46d8-bdc3-9771726ac6e6">
+				<reportElement x="0" y="0" width="580" height="268" uuid="57097bee-4b40-46d8-bdc3-9771726ac6e6">
 					<property name="local_mesure_unitx" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.x" value="px"/>
 					<property name="local_mesure_unity" value="pixel"/>
@@ -777,7 +785,7 @@
 					<textFieldExpression><![CDATA[$P{pojw_comm}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-					<reportElement x="0" y="32" width="580" height="126" uuid="b5b2c511-56b0-40b9-add7-6be7bd504fa8">
+					<reportElement x="0" y="32" width="580" height="236" uuid="b5b2c511-56b0-40b9-add7-6be7bd504fa8">
 						<property name="local_mesure_unitx" value="pixel"/>
 						<property name="local_mesure_unity" value="pixel"/>
 						<property name="com.jaspersoft.studio.unit.y" value="px"/>
@@ -794,7 +802,7 @@
 					<textElement markup="styled">
 						<font size="10"/>
 					</textElement>
-					<textFieldExpression><![CDATA[ $P{pojw_splcdn}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$P{pojw_splcdn}]]></textFieldExpression>
 				</textField>
 				<textField>
 					<reportElement x="410" y="0" width="170" height="16" uuid="be0d4388-dfe0-4075-9db1-346563ef08fd">
@@ -830,7 +838,7 @@
 				</staticText>
 			</frame>
 			<staticText>
-				<reportElement positionType="FixRelativeToBottom" mode="Opaque" x="0" y="174" width="580" height="16" backcolor="#C0C0C0" uuid="5f9b9e13-f263-459c-8b59-83a427fee693">
+				<reportElement positionType="FixRelativeToBottom" mode="Opaque" x="0" y="284" width="580" height="16" backcolor="#C0C0C0" uuid="5f9b9e13-f263-459c-8b59-83a427fee693">
 					<property name="local_mesure_unity" value="pixel"/>
 					<property name="local_mesure_unitx" value="pixel"/>
 					<property name="local_mesure_unitwidth" value="pixel"/>
@@ -852,7 +860,7 @@
 				<text><![CDATA[By local Cheque on or before 30 days from invoice date in Indian Rupee at prevailing exchange rates.]]></text>
 			</staticText>
 			<frame>
-				<reportElement x="0" y="190" width="580" height="64" uuid="42f6b5ef-2467-4dcd-bc30-bd0c151c9e87">
+				<reportElement x="0" y="300" width="580" height="64" uuid="42f6b5ef-2467-4dcd-bc30-bd0c151c9e87">
 					<property name="local_mesure_unitwidth" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					<property name="local_mesure_unity" value="pixel"/>
@@ -941,7 +949,7 @@
 				</frame>
 			</frame>
 			<staticText>
-				<reportElement mode="Opaque" x="0" y="158" width="580" height="16" backcolor="#C0C0C0" uuid="22b29ac6-2d91-4ca8-860e-521954848b9b">
+				<reportElement mode="Opaque" x="0" y="268" width="580" height="16" backcolor="#C0C0C0" uuid="22b29ac6-2d91-4ca8-860e-521954848b9b">
 					<property name="local_mesure_unity" value="pixel"/>
 					<property name="local_mesure_unitx" value="pixel"/>
 					<property name="local_mesure_unitwidth" value="pixel"/>

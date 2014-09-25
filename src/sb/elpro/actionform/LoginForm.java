@@ -9,12 +9,13 @@ import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionMessage;
+import org.apache.struts.validator.ValidatorForm;
 
 /**
  * @author Wahab
  *
  */
-public class LoginForm extends ActionForm {
+public class LoginForm extends ValidatorForm  {
 	/**
 	 * 
 	 */
@@ -26,6 +27,23 @@ public class LoginForm extends ActionForm {
 	private String dob;
 	private String emailid;
 	private String repassword;
+	
+	
+	//Register User
+	
+	private String fName;
+	private String lName;
+	private String age;
+	private String gender;
+	private String dOB;
+	private String emailId;
+	private String contactNo;
+	private String userType;
+	private String userName;
+	private String passWord;
+	private String regID;
+		
+	
 	
 	/**
 	 * @return the name
@@ -101,47 +119,7 @@ public class LoginForm extends ActionForm {
 	}
 	
 	
-	//Validation
 	
-	@Override
-	public ActionErrors validate(ActionMapping mapping,
-			HttpServletRequest request) {
-		
-		ActionErrors loginerrors = new ActionErrors();
-		
-		if(username.equalsIgnoreCase("null") || username.trim().equals("")){
-			loginerrors.add("username",new ActionMessage("error.username.required"));
-		}else if(password.equalsIgnoreCase("null") || password.trim().equals("")){
-			loginerrors.add("password", new ActionMessage("error.password.required"));
-		}else if(role.equalsIgnoreCase("0") || role.trim().equals("")){
-			loginerrors.add("role", new ActionMessage("error.role.required"));
-		}								
-		return loginerrors;
-	}
-		
-	@Override
-	public void reset(ActionMapping mapping, HttpServletRequest request) {
-		
-		super.reset(mapping, request);
-		username = "";
-		password = "";
-		role ="";
-		}	
-	
-	
-	//Register User
-	
-	private String fName;
-	private String lName;
-	private String age;
-	private String gender;
-	private String dOB;
-	private String emailId;
-	private String contactNo;
-	private String userType;
-	private String userName;
-	private String passWord;
-	private String regID;
 
 	/**
 	 * @return the fName
@@ -287,6 +265,34 @@ public class LoginForm extends ActionForm {
 	public void setRepassword(String repassword) {
 		this.repassword = repassword;
 	}
+	
+	
+
+	/*//Validation
+	@Override
+	public ActionErrors validate(ActionMapping mapping,
+			HttpServletRequest request) {
+		
+		ActionErrors loginerrors = new ActionErrors();
+		
+		if(username.equalsIgnoreCase("null") || username.trim().equals("")){
+			loginerrors.add("username",new ActionMessage("error.username.required"));
+		}else if(password.equalsIgnoreCase("null") || password.trim().equals("")){
+			loginerrors.add("password", new ActionMessage("error.password.required"));
+		}else if(role.equalsIgnoreCase("0") || role.trim().equals("")){
+			loginerrors.add("role", new ActionMessage("error.role.required"));
+		}								
+		return loginerrors;
+	}*/
+		
+	@Override
+	public void reset(ActionMapping mapping, HttpServletRequest request) {
+		
+		super.reset(mapping, request);
+		username = "";
+		password = "";
+		role ="";
+		}	
 	
 	
 	

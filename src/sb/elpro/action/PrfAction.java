@@ -67,42 +67,42 @@ public class PrfAction extends DispatchAction {
 		 if(!(usersession == null)){
 			 JSONObject prfjsonobj = new JSONObject();
 			 System.out.println("usersession "+usersession.getId());
-			 System.out.println("request  "+usersession.getAttribute("prfactionform"));
-			 if(usersession.getAttribute("prfactionform").equals("add")){
-				boolean issavedPrf = prfbo.savePrfform(prfbean);
-				if(issavedPrf){
+			 System.out.println("request  "+usersession.getAttribute("prfactionform")); 
+			 if(usersession.getAttribute("prfactionform").equals("edit")){ // Errors Falls here for Save
+				 System.out.println("In Edit ");
+				    boolean isupdatePrf = prfbo.updatePrfform(prfbean);
+					//boolean isupdatePrf = prfbo.savePrfform(prfbean);
+					if(isupdatePrf){
+						prfjsonobj.put("result", isupdatePrf);
+						prfjsonobj.put("success", "Successfully Updated The Form");
+						prfsaveform.reset(map, request);
+						out.println(prfjsonobj);
+						return map.findForward("bulkisloaded");
+					}else{
+						prfjsonobj.put("result", isupdatePrf);
+						prfjsonobj.put("error", "Error in Updated The Form");
+						out.println(prfjsonobj);
+						return null;
+				}
+			 }else{
+				 boolean issavedPrf = prfbo.savePrfform(prfbean);
+				 if(issavedPrf){
 				    System.out.println("In ADD ");
 					prfjsonobj.put("result", issavedPrf);
 					prfjsonobj.put("success", "Successfully Saved The Form");
 					prfsaveform.reset(map, request);
 					out.println(prfjsonobj);
 					return map.findForward("prfissaved");
-				}else{
+				 }else{
 					prfjsonobj.put("result", issavedPrf);
 					prfjsonobj.put("error", "Error in Saving The Form");
 					out.println(prfjsonobj);
 					return null;
-				}
-			 }else{
-				System.out.println("In Edit ");
-			    boolean isupdatePrf = prfbo.updatePrfform(prfbean);
-				//boolean isupdatePrf = prfbo.savePrfform(prfbean);
-				if(isupdatePrf){
-					prfjsonobj.put("result", isupdatePrf);
-					prfjsonobj.put("success", "Successfully Updated The Form");
-					prfsaveform.reset(map, request);
-					out.println(prfjsonobj);
-					return map.findForward("bulkisloaded");
-				}else{
-					prfjsonobj.put("result", isupdatePrf);
-					prfjsonobj.put("error", "Error in Updated The Form");
-					out.println(prfjsonobj);
-					return null;
-				}			
+				 }			
 			 }	 
 		 }else{	
 		   usersession.invalidate();
-		   System.out.println(" LOgin Credential Fails");
+		   System.out.println(" Login Credential Fails");
 		   return map.findForward("logout");
 		 }
 	}
@@ -261,38 +261,50 @@ public class PrfAction extends DispatchAction {
 	public ActionForward POPrint(ActionMapping mapping, ActionForm form, 
 			HttpServletRequest request, HttpServletResponse response) throws Exception{
 		System.out.println("POSAVE Print ");
-		Connection conn = null;
+		Connection conn1 = null;
 		try {
             Class.forName("com.mysql.jdbc.Driver");
-            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/elpro","root","tiger");
-            System.out.println("conn "+conn.getCatalog());
+            conn1 = DriverManager.getConnection("jdbc:mysql://localhost:3306/elpro","root","tiger");
+            System.out.println("conn "+conn1.getCatalog());
             } catch (SQLException ex) {
             } catch (ClassNotFoundException ex) {
             }
 		response.setContentType("application/ms-excel"); 
 		response.setHeader("Content-Disposition", "attachment; filename=PRFPO.xls");
 		ServletOutputStream  myout = response.getOutputStream();
-		JasperReport report = JasperCompileManager.compileReport("C:/Users/meetw_000/Desktop/report/PrfPoForm.jrxml");
-		HashMap<String, Object> hm = new HashMap<String, Object>();
-		hm.put("pojw_pojwno",request.getParameter("pojw_pojwno"));
-		hm.put("pojw_orderdate", request.getParameter("pojw_orderdate"));
-		hm.put("pojw_cddate", request.getParameter("pojw_cddate"));
-		hm.put("pojw_contractno", request.getParameter("pojw_contractno"));
-		hm.put("pojw_comm", request.getParameter("pojw_comm"));
-		hm.put("pojw_tanname", request.getParameter("pojw_tanname"));
-		hm.put("pojw_tanattn", request.getParameter("pojw_tanattn"));
-		hm.put("pojw_tanaddr", request.getParameter("pojw_tanaddr"));
-		hm.put("pojw_tanphone", request.getParameter("pojw_tanphone"));
-		hm.put("pojw_tanfax", request.getParameter("pojw_tanfax"));
-		hm.put("pojw_splcdn", request.getParameter("pojw_splcdn"));
-		hm.put("pojw_payterms", request.getParameter("pojw_payterms"));
+		JasperReport report1 = JasperCompileManager.compileReport("C:/Users/meetw_000/Desktop/report/PrfPoForm.jrxml");
+		HashMap<String, Object> hm1 = new HashMap<String, Object>();
+		hm1.put("pojw_pojwno",request.getParameter("pojw_pojwno"));
+		System.out.println("pojw_pojwno"+request.getParameter("pojw_pojwno"));
+		hm1.put("pojw_orderdate", request.getParameter("pojw_orderdate"));
+		System.out.println("pojw_pojwno"+request.getParameter("pojw_orderdate"));
+		hm1.put("pojw_cddate", request.getParameter("pojw_cddate"));
+		System.out.println("pojw_pojwno"+request.getParameter("pojw_cddate"));
+		hm1.put("pojw_contractno", request.getParameter("pojw_contractno"));
+		System.out.println("pojw_pojwno"+request.getParameter("pojw_contractno"));
+		hm1.put("pojw_comm", request.getParameter("pojw_comm"));
+		System.out.println("pojw_pojwno"+request.getParameter("pojw_comm"));
+		hm1.put("pojw_tanname", request.getParameter("pojw_tanname"));
+		System.out.println("pojw_pojwno"+request.getParameter("pojw_tanname"));
+		hm1.put("pojw_tanattn", request.getParameter("pojw_tanattn"));
+		System.out.println("pojw_pojwno"+request.getParameter("pojw_tanattn"));
+		hm1.put("pojw_tanaddr", request.getParameter("pojw_tanaddr"));
+		System.out.println("pojw_pojwno"+request.getParameter("pojw_tanaddr"));
+		hm1.put("pojw_tanphone", request.getParameter("pojw_tanphone"));
+		System.out.println("pojw_pojwno"+request.getParameter("pojw_tanphone"));
+		hm1.put("pojw_tanfax", request.getParameter("pojw_tanfax"));
+		System.out.println("pojw_pojwno"+request.getParameter("pojw_tanfax"));
+		hm1.put("pojw_splcdn", request.getParameter("pojw_splcdn"));
+		System.out.println("pojw_pojwno"+request.getParameter("pojw_splcdn"));
+		hm1.put("pojw_payterms", request.getParameter("pojw_payterms"));
+		System.out.println("pojw_pojwno"+request.getParameter("pojw_payterms"));
 		
-		JasperPrint print = JasperFillManager.fillReport(report, hm, conn);
+		JasperPrint print1 = JasperFillManager.fillReport(report1, hm1, conn1);
 		
 		JRXlsxExporter excelexporter = new JRXlsxExporter(); // supports jaspersoft 5.5.1 
       
  		// Here we assign the parameters jp and baos to the exporter
-         excelexporter.setParameter(JRXlsExporterParameter.JASPER_PRINT, print);
+         excelexporter.setParameter(JRXlsExporterParameter.JASPER_PRINT, print1);
          excelexporter.setParameter(JRXlsExporterParameter.OUTPUT_STREAM, myout);
  	
          // Excel specific parameters

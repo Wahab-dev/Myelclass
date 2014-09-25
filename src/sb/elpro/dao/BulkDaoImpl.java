@@ -36,8 +36,6 @@ public class BulkDaoImpl implements BulkDao {
 			st = (Statement) con.createStatement();// limit "+pag+", "+rows+" 
 			String sql = "SELECT article.prfarticleid, form.agent, form.Ctno, Orderdt, pono,  tan.tanshform as Tanner,  exp.tanshform as Exporter, cust.shortform as custshform, cdd_date, add_date, destination, terms, payment, commission, form.splcdn, inspcdn, consigneeid, form.notifyid,  form.bankid,  pojw.pojwno as pojw, article.articleid, articletype, articleshfrom,  articlename, color, size, substance, selection, selectionpercent, quantity , unit, pcs, rate, tc, article.prfarticleid, user,  stats.prf_articleid, status, qshipped, qbal, invdetails, reps,  comments,  feddback, stats.contractno, rdd_date, consig.shortform as consigshform ,notify.shortform as notifyshform ,bank.shortform as bankshform  FROM  elpro.tbl_prf_article article  join elpro.tbl_prfarticle_status stats on article.prfarticleid = stats.prf_articleid  join elpro.tbl_prfform form on form.Ctno = article.contractno  left outer join elpro.tbl_pojw pojw on  pojw.Ctno = form.Ctno  left outer join elpro.tbl_tannery exp on  exp.tanid = form.tanneryid  left outer join elpro.tbl_tannery tan on  tan.tanid = pojw.Tannery  left outer join elpro.tbl_customer cust on  cust.custid = form.customerid  left outer join elpro.tbl_consignee consig on  consig.consigid = form.consigneeid  left outer join elpro.tbl_notify notify on  notify.notifyid = form.notifyid  left outer join elpro.tbl_bank bank on  bank.bankid = form.bankid  order by form.Orderdt desc, form.Ctno desc, articlename asc, color asc";
 			System.out.println(sql);
-			System.out.println(" Rows "+rows);
-			System.out.println(" Page "+pag);
 			rs = st.executeQuery(sql);
 			while(rs.next()) {	
 			BulkArticle bulkbean = new BulkArticle();
@@ -85,7 +83,6 @@ public class BulkDaoImpl implements BulkDao {
 				bulkbean.setComments(rs.getString("comments"));
 				bulkbean.setFeddback(rs.getString("feddback"));
 				bulkbean.setRdd_date(DateConversion.ConverttoNormalDate(rs.getString("rdd_date")));
-				System.out.println("RDD DAte "+ DateConversion.ConverttoNormalDate(rs.getString("rdd_date")));
 				bulkarray.add(bulkbean);
 				}
 			}catch(Exception e){
@@ -151,18 +148,13 @@ public class BulkDaoImpl implements BulkDao {
 			String sqlquery_updateBtrStatus = sql_updateBtrStatus.toString();
 			pst = (PreparedStatement) con.prepareStatement(sqlquery_updateBtrStatus);
 			pst.setString(1, bulkmodel.getArticlename());
-			System.out.println("getArticlename " +bulkmodel.getArticlename());
 			pst.setString(2, bulkmodel.getStatus());
-			System.out.println("getStatus " +bulkmodel.getStatus());
 			pst.setString(3, bulkmodel.getQshipped());
 			pst.setString(4, bulkmodel.getQbal());
 			pst.setString(5, bulkmodel.getInvdetails());
 			pst.setString(6, bulkmodel.getReps());
 			pst.setString(7, bulkmodel.getComments());
-			System.out.println("getComments "+bulkmodel.getComments());
 			pst.setString(8, bulkmodel.getFeddback());
-			System.out.println("getFeddback "+bulkmodel.getFeddback());
-			System.out.println("getContracts "+bulkmodel.getCtno());
 			pst.setString(9, bulkmodel.getCtno());
 			pst.setString(10, bulkmodel.getRdd_date());
 			

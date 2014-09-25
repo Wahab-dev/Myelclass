@@ -74,7 +74,9 @@ $(document).ready(function() {
 		var vl = $(this).val();
 		if(vl){
 			if(vl == "clear"){
-				debtrackgrid.jqGrid('groupingRemove',true);	
+				debtrackgrid.jqGrid('groupingRemove',true,{
+					groupColumnShow: [true]
+				});	
 			}else{
 				debtrackgrid.jqGrid('groupingGroupBy', vl, {
 					groupOrder : ['asc'],

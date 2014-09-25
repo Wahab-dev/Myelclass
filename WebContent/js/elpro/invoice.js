@@ -140,13 +140,13 @@ $(document).ready(function() {
 		  	 });
 		 function clickheremethod(){
 			 var selctnos="";
-		 		 var ids = invctgrid.jqGrid('getGridParam','selarrrow');
-		 		 for (var i=0; i<ids.length;i++){
-		 		     var rowData = invctgrid.jqGrid('getRowData',ids[i]);
-		 			 var ctno = " '"+rowData.ctno+"',";
-		 			 selctnos = selctnos+ctno;
-		 		   }
-		 		 var itemp =selctnos.lastIndexOf(",");
+		 	 var ids = invctgrid.jqGrid('getGridParam','selarrrow');
+		 	 for (var i=0; i<ids.length;i++){
+		 	     var rowData = invctgrid.jqGrid('getRowData',ids[i]);
+		 		 var ctno = " '"+rowData.ctno+"',";
+		 		 selctnos = selctnos+ctno;
+		 	 }
+		 	 var itemp =selctnos.lastIndexOf(",");
 			 var ctnoselc = selctnos.substring(0, itemp);
 			 type = $('#inv_includeSample').val();
 				 billgrid.jqGrid('setGridParam',{url:"/Myelclass/InvSelectCtfromCust.do?ctno="+ctnoselc+"&type="+type+"&action="+"loadsubgrid",page:1});

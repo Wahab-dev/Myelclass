@@ -17,12 +17,13 @@
 <body>
 
 <div id="loginform" title="Login form" align="center">
-<h1><h:errors/></h1>
+
 <table style="height: 250px">
 	<tr>
 	</tr>
 </table>
-<h:form action="/login" method="post">
+<%-- <div style="color: red;"><h4><h:errors/></h4></div> --%>
+<h:form action="/login" method="post" styleId="LoginForm" onsubmit="return validateLoginForm(this);">
 	<table>
 	<tr>	
 		<td> User Name :</td>
@@ -38,7 +39,7 @@
 		<td>Role :</td>
 		<td>
 			<h:select property="role" styleId="role"> 
-				<h:option value="0"><i>Select Role</i></h:option>
+				<h:option value=""><i>Select Role</i></h:option>
 				<h:option value="Admin">Administrator</h:option>
 				<h:option value="User">User</h:option>
 				<h:option value="QC">QC</h:option>
@@ -50,7 +51,7 @@
 	 <tr>
 	 	<td></td>
 	 	<td><h:submit property="loginaction" value="Login" styleId="loginaction"></h:submit></td>
-	 	<td><h:submit property="loginaction" value="Clear" styleId="loginaction"></h:submit></td>
+	 	<td><h:reset property="loginaction" value="Clear" styleId="loginaction"></h:reset></td>
 	 </tr>
 	 <tr height="35"></tr>
 	<%--  <tr>
@@ -59,6 +60,7 @@
 	 	<td></td>
 	 </tr>  --%>
 	</table>
+	<h:javascript formName="LoginForm"/>
  	</h:form>	
 </div>
  	

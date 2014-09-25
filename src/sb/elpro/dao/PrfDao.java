@@ -45,9 +45,9 @@ public interface PrfDao {
 
 //	ArrayList<DestinationDetails> getDestinationList() throws SQLException;
 
-	ArrayList<PaymentDetails> getPaymnetList() throws SQLException;
+	ArrayList<AutoComplete> getPaymnetList(String terms) throws SQLException;
 
-	ArrayList<TermsDetails> getTermsList()throws SQLException;
+	ArrayList<AutoComplete> getTermsList(String terms)throws SQLException;
 
 	ArrayList<CommissionDetails> getCommissionList(String comminsion) throws SQLException;
 	ArrayList<CommissionDetails> getOtherCommissionList(String othercomminsion) throws SQLException;
@@ -57,15 +57,13 @@ public interface PrfDao {
 
 	ArrayList<ArticleDetails> getArticleList()throws SQLException;
 
-	ArrayList<ColourDetails> getColorList()throws SQLException;
-
 	ArrayList<RateDetails> getRateList()throws SQLException;
 
-	ArrayList<SelectionDetails> getSelectionList()throws SQLException;
+	//ArrayList<SelectionDetails> getSelectionList()throws SQLException;
 
-	ArrayList<ShipmentDetails> getShipmentList()throws SQLException;
+	//ArrayList<AutoComplete> getShipmentList()throws SQLException;
 
-	ArrayList<SizeRemarks> getSizeremarksList()throws SQLException;
+	//ArrayList<SizeRemarks> getSizeremarksList()throws SQLException;
 
 	ArrayList<TcDetails> getTcAgentList() throws SQLException;
 	
@@ -74,7 +72,7 @@ public interface PrfDao {
 	/*
 	 * Article Page
 	 */
-	List<SelectArticle> getArticleNameList() throws SQLException;
+	//List<SelectArticle> getArticleNameList() throws SQLException;
 	/*
 	 * Load Article dDetails Based on Article Name
 	 */
@@ -177,5 +175,44 @@ public interface PrfDao {
 	 */
 	ArrayList<AutoComplete> getSizeRemList()throws SQLException;
 
+	/**  
+	 * (Method description)
+	 * @param
+	 * @return
+	 * etc
+	 */
+	ArrayList<AutoComplete> getQtyunitList()throws SQLException;
+
+	/**  
+	 * (Method description)
+	 * @param
+	 * @return
+	 * etc
+	 */
+	ArrayList<AutoComplete> getCurrencyList()throws SQLException;
+
+	/**  
+	 * (Method description)
+	 * @param
+	 * @return
+	 * etc
+	 */
+	ArrayList<AutoComplete> getSubCurrencyList()throws SQLException;
+
+	/**  
+	 * (Method description)
+	 * @param
+	 * @return
+	 * etc
+	 */
+	ArrayList<AutoComplete> getTcCustList()throws SQLException;
+
+	/**  
+	 * (Method description)
+	 * @param
+	 * @return
+	 * etc
+	 */
+	ArrayList<PrfArticle> addpoArticle(String copyctno, String copypojw) throws SQLException;
 
 }

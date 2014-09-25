@@ -12,20 +12,16 @@ import sb.elpro.model.AgentDetails;
 import sb.elpro.model.ArticleDetails;
 import sb.elpro.model.AutoComplete;
 import sb.elpro.model.BankDetails;
-import sb.elpro.model.ColourDetails;
 import sb.elpro.model.CommissionDetails;
 import sb.elpro.model.ConsigneeDetails;
 import sb.elpro.model.CustomerDetails;
 import sb.elpro.model.NotifyConsigneeDetails;
 import sb.elpro.model.PaymentDetails;
-import sb.elpro.model.PoJwBean;
-import sb.elpro.model.PojwArticle;
 import sb.elpro.model.PrfArticle;
 import sb.elpro.model.ProductDetails;
 import sb.elpro.model.RateDetails;
 import sb.elpro.model.SelectArticle;
 import sb.elpro.model.SelectionDetails;
-import sb.elpro.model.ShipmentDetails;
 import sb.elpro.model.SizeRemarks;
 import sb.elpro.model.TanneryDetails;
 import sb.elpro.model.TcDetails;
@@ -72,14 +68,14 @@ public class PrfBoImpl implements PrfBo {
 	}
 */
 	@Override
-	public ArrayList<PaymentDetails> getPaymentDetails() throws Exception {
-		ArrayList<PaymentDetails> paymentList = prfdao.getPaymnetList();
+	public ArrayList<AutoComplete> getPaymentDetails(String terms) throws Exception {
+		ArrayList<AutoComplete> paymentList = prfdao.getPaymnetList(terms);
 		return paymentList;
 	}
 
 	@Override
-	public ArrayList<TermsDetails> getTermsDetails() throws Exception {
-		ArrayList<TermsDetails> termList = prfdao.getTermsList();
+	public ArrayList<AutoComplete> getTermsDetails(String payment) throws Exception {
+		ArrayList<AutoComplete> termList = prfdao.getTermsList(payment);
 		return termList;
 	}
 
@@ -97,17 +93,11 @@ public class PrfBoImpl implements PrfBo {
 		return articleList;
 	}
 	//get the Article Name
-	@Override
+	/*@Override
 	public List<SelectArticle> getarticlename() throws Exception {
 		List<SelectArticle> articlenameList = prfdao.getArticleNameList();
 		return articlenameList;
-	}
-
-	@Override
-	public ArrayList<ColourDetails> getColorDetails() throws Exception {
-		ArrayList<ColourDetails> colorList = prfdao.getColorList();
-		return colorList;
-	}
+	}*/
 
 	@Override
 	public ArrayList<RateDetails> getRateDetails() throws Exception {
@@ -115,23 +105,23 @@ public class PrfBoImpl implements PrfBo {
 		return rateList;
 	}
 
-	@Override
+	/*@Override
 	public ArrayList<SelectionDetails> getSelectionDetails() throws Exception {
 		ArrayList<SelectionDetails> selecList = prfdao.getSelectionList();
 		return selecList;
-	}
+	}*/
 
-	@Override
-	public ArrayList<ShipmentDetails> getShipmentDetails() throws Exception {
-		ArrayList<ShipmentDetails> shipmentList = prfdao.getShipmentList();
+	/*@Override
+	public ArrayList<AutoComplete> getShipmentDetails() throws Exception {
+		ArrayList<AutoComplete> shipmentList = prfdao.getShipmentList();
 		return shipmentList;
-	}
+	}*/
 
-	@Override
+/*	@Override
 	public ArrayList<SizeRemarks> getSizeremarksDetails() throws Exception {
 		ArrayList<SizeRemarks> sizeremarksList = prfdao.getSizeremarksList();
 		return sizeremarksList;
-	}
+	}*/
 
 	@Override
 	public ArrayList<TcDetails> getTcAgentDetails() throws Exception {
@@ -326,6 +316,52 @@ public class PrfBoImpl implements PrfBo {
 	public List<AutoComplete> getPrfSizeRem() throws Exception {
 		ArrayList<AutoComplete> sizeremList = prfdao.getSizeRemList();
 		return sizeremList;
+	}
+
+	/* (non-Javadoc)
+	 * @see sb.elpro.bo.PrfBo#getQtyUnitDetails(java.lang.String)
+	 */
+	@Override
+	public List<AutoComplete> getQtyUnitDetails(String term) throws Exception {
+		ArrayList<AutoComplete> qtyunitList = prfdao.getQtyunitList();
+		return qtyunitList;
+	}
+
+	/* (non-Javadoc)
+	 * @see sb.elpro.bo.PrfBo#getCurrencyDetails(java.lang.String)
+	 */
+	@Override
+	public List<AutoComplete> getCurrencyDetails(String term) throws Exception {
+		ArrayList<AutoComplete> currncyList = prfdao.getCurrencyList();
+		return currncyList;
+	}
+
+	/* (non-Javadoc)
+	 * @see sb.elpro.bo.PrfBo#getSubCurrencyDetails(java.lang.String)
+	 */
+	@Override
+	public List<AutoComplete> getSubCurrencyDetails(String term)
+			throws Exception {
+		ArrayList<AutoComplete> subcurrncyList = prfdao.getSubCurrencyList();
+		return subcurrncyList;
+	}
+
+	/* (non-Javadoc)
+	 * @see sb.elpro.bo.PrfBo#getTcCustDetails(java.lang.String)
+	 */
+	@Override
+	public List<AutoComplete> getTcCustDetails(String term) throws Exception {
+		ArrayList<AutoComplete> tccustList = prfdao.getTcCustList();
+		return tccustList;
+	}
+
+	/* (non-Javadoc)
+	 * @see sb.elpro.bo.PrfBo#getPoJwPrfArticleDetails(java.lang.String, java.lang.String)
+	 */
+	@Override
+	public List<PrfArticle> getPoJwPrfArticleDetails(String copyctno, String copypojw) throws Exception {
+		ArrayList<PrfArticle> tccustList = prfdao.addpoArticle(copyctno, copypojw);
+			return tccustList;
 	}
 
 

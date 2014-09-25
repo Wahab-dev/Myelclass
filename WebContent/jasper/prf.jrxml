@@ -1087,7 +1087,7 @@
 						<textElement textAlignment="Left" verticalAlignment="Middle">
 							<font fontName="Times New Roman" size="9"/>
 						</textElement>
-						<textFieldExpression><![CDATA[ $P{pdesti}]]></textFieldExpression>
+						<textFieldExpression><![CDATA[$P{pdesti}]]></textFieldExpression>
 					</textField>
 					<staticText>
 						<reportElement mode="Opaque" x="180" y="0" width="70" height="12" backcolor="#C0C0C0" uuid="5e0ae90e-c2f1-452a-bbdd-2ceb937d60db">
@@ -1196,7 +1196,7 @@
 						<textElement textAlignment="Left" verticalAlignment="Middle">
 							<font fontName="Times New Roman" size="9"/>
 						</textElement>
-						<textFieldExpression><![CDATA[ $P{pcomm}]]></textFieldExpression>
+						<textFieldExpression><![CDATA[$P{pcomm}]]></textFieldExpression>
 					</textField>
 					<textField>
 						<reportElement x="520" y="0" width="65" height="12" uuid="a6aad372-e542-4c31-a1bb-565e0704f65e">
@@ -1281,7 +1281,7 @@
 						<textElement>
 							<font fontName="Times New Roman" size="9"/>
 						</textElement>
-						<textFieldExpression><![CDATA[ $P{psplcdn}]]></textFieldExpression>
+						<textFieldExpression><![CDATA[$P{psplcdn}]]></textFieldExpression>
 					</textField>
 				</frame>
 				<frame>

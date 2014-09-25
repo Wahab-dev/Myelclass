@@ -66,7 +66,6 @@ public class LoginDaoImpl implements LoginDao{
 			String sqlquery_savenewUser = sql_savenewUser.toString();
 			pst = (PreparedStatement) con.prepareStatement(sqlquery_savenewUser);
 			
-			//pst.setString(1, userdetails.getu());
 			pst.setString(1, userdetails.getfName());
 			pst.setString(2, userdetails.getlName());
 			pst.setString(3, userdetails.getAge());

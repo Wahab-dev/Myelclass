@@ -3,13 +3,10 @@
  */
 package sb.elpro.dao;
 
-
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-
-
 import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.PreparedStatement;
 import com.mysql.jdbc.Statement;
@@ -18,22 +15,15 @@ import sb.elpro.model.AgentDetails;
 import sb.elpro.model.ArticleDetails;
 import sb.elpro.model.AutoComplete;
 import sb.elpro.model.BankDetails;
-import sb.elpro.model.ColourDetails;
 import sb.elpro.model.CommissionDetails;
 import sb.elpro.model.ConsigneeDetails;
 import sb.elpro.model.CustomerDetails;
 import sb.elpro.model.NotifyConsigneeDetails;
-import sb.elpro.model.PaymentDetails;
 import sb.elpro.model.PrfArticle;
 import sb.elpro.model.ProductDetails;
 import sb.elpro.model.RateDetails;
-import sb.elpro.model.SelectArticle;
-import sb.elpro.model.SelectionDetails;
-import sb.elpro.model.ShipmentDetails;
-import sb.elpro.model.SizeRemarks;
 import sb.elpro.model.TanneryDetails;
 import sb.elpro.model.TcDetails;
-import sb.elpro.model.TermsDetails;
 import sb.elpro.utility.DBConnection;
 import sb.elpro.utility.DateConversion;
 
@@ -58,9 +48,10 @@ public class PrfDaoImpl implements PrfDao {
 				AgentDetails agentlist  = new AgentDetails();
 				agentlist.setAgentname(rs.getString("agentname"));
 				String ctno = rs.getString("contractno").trim();
+				String agent = ctno.substring(0, 1);
 				int ictno = Integer.parseInt(ctno.substring(1));
 				System.out.println(" CT NO  "+ ++ictno);
-				ctno = "L"+ictno;
+				ctno = agent+ictno;
 				agentlist.setContractNo(ctno);
 				System.out.println("Agent name "+agentlist.getAgentname());
 				agentarraylist.add(agentlist);
@@ -143,22 +134,53 @@ public class PrfDaoImpl implements PrfDao {
 	   }	
 		return custrraylist;
 	}
+	
 	@Override
-	public ArrayList<PaymentDetails> getPaymnetList() throws SQLException {
-		ArrayList<PaymentDetails> payarraylist = new ArrayList<PaymentDetails>();
+	public ArrayList<AutoComplete> getTermsList(String term) throws SQLException {
+		ArrayList<AutoComplete> termsarray = new ArrayList<AutoComplete>();
 		Connection con = null;
 		Statement st = null;
 		ResultSet rs = null;
 		try{			
 			con = DBConnection.getConnection();
 			st = (Statement) con.createStatement();
-			String sql = "SELECT payid, payname FROM tbl_payment";
+			String sql = "SELECT termid, termname FROM tbl_terms where termname like '%"+term+"%' order by termname";
 			rs = st.executeQuery(sql);
 			while(rs.next()) {	
-				PaymentDetails paybean = new PaymentDetails();
-				paybean.setPaymentname(rs.getString("payname"));
-				paybean.setPaymentid(rs.getString("payid"));
-				System.out.println("Payment name "+paybean.getPaymentname());
+				AutoComplete termsbean = new AutoComplete();
+				termsbean.setValue(rs.getString("termname"));
+				termsbean.setLabel(rs.getString("termid"));
+				System.out.println("Terms name "+termsbean.getValue());
+				termsarray.add(termsbean);
+				}
+			System.out.println("termname Result Added Successfully");
+			}catch(Exception e){
+				e.printStackTrace();
+				System.out.println("Terms ERROR RESULT");
+			}finally{
+				 con.close() ;
+				 st.close();
+				 rs.close();
+		   }	
+		return termsarray;
+	}
+	
+	@Override
+	public ArrayList<AutoComplete> getPaymnetList(String payment) throws SQLException {
+		ArrayList<AutoComplete> payarraylist = new ArrayList<AutoComplete>();
+		Connection con = null;
+		Statement st = null;
+		ResultSet rs = null;
+		try{			
+			con = DBConnection.getConnection();
+			st = (Statement) con.createStatement();
+			String sql = "SELECT payid, payname FROM tbl_payment where payname like '%"+payment+"%' order by payname";
+			rs = st.executeQuery(sql);
+			while(rs.next()) {	
+				AutoComplete paybean = new AutoComplete();
+				paybean.setValue(rs.getString("payname"));
+				paybean.setLabel(rs.getString("payid"));
+				System.out.println("Payment name "+paybean.getValue());
 				payarraylist.add(paybean);
 				}
 			System.out.println("payname Added Successfully");
@@ -173,35 +195,7 @@ public class PrfDaoImpl implements PrfDao {
 		return payarraylist;
 	}
 
-	@Override
-	public ArrayList<TermsDetails> getTermsList() throws SQLException {
-		ArrayList<TermsDetails> termsarray = new ArrayList<TermsDetails>();
-		Connection con = null;
-		Statement st = null;
-		ResultSet rs = null;
-		try{			
-			con = DBConnection.getConnection();
-			st = (Statement) con.createStatement();
-			String sql = "SELECT termid, termname FROM tbl_terms";
-			rs = st.executeQuery(sql);
-			while(rs.next()) {	
-				TermsDetails termsbean = new TermsDetails();
-				termsbean.setTermname(rs.getString("termname"));
-				termsbean.setTermid(rs.getString("termid"));
-				System.out.println("Terms name "+termsbean.getTermname());
-				termsarray.add(termsbean);
-				}
-			System.out.println("termname Result Added Successfully");
-			}catch(Exception e){
-				e.printStackTrace();
-				System.out.println("Terms ERROR RESULT");
-			}finally{
-				 con.close() ;
-				 st.close();
-				 rs.close();
-		   }	
-		return termsarray;
-	}
+	
 
 	@Override
 	public ArrayList<CommissionDetails> getCommissionList(String commsioon) throws SQLException {
@@ -236,72 +230,147 @@ public class PrfDaoImpl implements PrfDao {
 		   }	
 		return comarraylist;
 	}
+	@Override
+	public ArrayList<CommissionDetails> getOtherCommissionList(
+			String othercomminsion) throws SQLException {
+		ArrayList<CommissionDetails> othercomarraylist = new ArrayList<CommissionDetails>();
+		Connection con = null;
+		Statement st = null;
+		ResultSet rs = null;
+		try{			
+			con = DBConnection.getConnection();
+			st = (Statement) con.createStatement();
+			String sql = "SELECT commid, commname, commagent, commplace, commtype, agenttype FROM elpro.tbl_commission where agenttype !='el' and commname like '%"+othercomminsion+"%' order by commname";
+			rs = st.executeQuery(sql);
+			while(rs.next()) {	
+				CommissionDetails othercommbean = new CommissionDetails();
+				othercommbean.setCommissionId(rs.getString("commid"));
+				othercommbean.setValue(rs.getString("commname"));
+				othercommbean.setLabel(rs.getString("commagent"));
+				othercommbean.setCommplace(rs.getString("commplace"));
+				othercommbean.setCommtype(rs.getString("commtype"));
+				othercommbean.setAgenttype(rs.getString("agenttype"));
+				System.out.println("OTHER Commission name "+othercommbean.getCommission());
+				othercomarraylist.add(othercommbean);
+				}
+			System.out.println("Commission Result Added Successfully");
+			}catch(Exception e){
+				e.printStackTrace();
+				System.out.println("Commission ERROR RESULT");
+			}finally{
+				 con.close() ;
+				 st.close();
+				 rs.close();
+		   }	
+		return othercomarraylist;
+	}
 
 	@Override
-	public boolean savePrfForm(ProductDetails prfbean) throws SQLException {
-		System.out.println("In PRF SAVE");
+	public ArrayList<BankDetails> getbankList(String bankterm)
+			throws SQLException {
+		ArrayList<BankDetails> bankarraylist = new ArrayList<BankDetails>();
 		Connection con = null;
-		PreparedStatement pst = null;
-		int noofrows  = 0;
-		int noofrowsupdtd  = 0;
-		boolean isSaved =true;
-		
+		Statement st = null;
+		ResultSet rs = null;
+		try{			
+			con = DBConnection.getConnection();
+			st = (Statement) con.createStatement();
+			String sql = "SELECT bankid, bankname, bankbranch, bankaddr, bankphone, bankfax, swiftcode, shortform, Acctno FROM elpro.tbl_bank where bankname like '%"+bankterm+"%' order by bankname";
+			rs = st.executeQuery(sql);
+			while(rs.next()) {	
+				BankDetails bankbean = new BankDetails();
+				bankbean.setBankAddress(rs.getString("bankaddr"));
+				bankbean.setBankBranch(rs.getString("bankbranch"));
+				bankbean.setBankFax(rs.getString("bankfax"));
+				bankbean.setBankName(rs.getString("bankname"));
+				bankbean.setBankSwiftCode(rs.getString("swiftcode"));
+				bankbean.setBankContactNo(rs.getString("bankphone"));
+				bankbean.setBankAcctNo(rs.getString("Acctno"));
+				bankbean.setBankId(rs.getString("bankid"));
+				System.out.println("Bank  name "+bankbean.getBankName());
+				bankarraylist.add(bankbean);
+				}
+			System.out.println("Bank Result Added Successfully");
+			}catch(Exception e){
+				e.printStackTrace();
+				System.out.println("Bank ERROR RESULT");
+			}finally{
+				 con.close() ;
+				 st.close();
+				 rs.close();
+		   }	
+		return bankarraylist;
+	}
+
+	@Override
+	public ArrayList<ConsigneeDetails> getcnsigneeList(String consigneeterm)
+			throws SQLException {
+		ArrayList<ConsigneeDetails> consigarrayList = new ArrayList<ConsigneeDetails>();
+		Connection con = null;
+		Statement st = null;
+		ResultSet rs = null;
+		try{			
+			con = DBConnection.getConnection();
+			st = (Statement) con.createStatement();
+			String sql = "SELECT consigid, consigname, consigattn, consigaddr, consigphone, consigfax, shortform FROM elpro.tbl_consignee where consigname like '%"+consigneeterm+"%' order by consigname";
+			rs = st.executeQuery(sql);
+			while(rs.next()) {	
+				ConsigneeDetails consigbean = new ConsigneeDetails();
+				consigbean.setConsigneeAddress(rs.getString("consigaddr"));
+				consigbean.setConsigneeAttention(rs.getString("consigattn"));
+				consigbean.setConsigneefax(rs.getString("consigfax"));
+				consigbean.setLabel(rs.getString("consigname"));
+				consigbean.setValue(rs.getString("consigname"));
+				consigbean.setConsigneeId(rs.getString("consigid"));
+				consigbean.setConsigneeContactNo(rs.getString("consigphone"));
+				System.out.println("consig  name "+consigbean.getConsigneeName());
+				consigarrayList.add(consigbean);
+				}
+			System.out.println("consig Result Added Successfully");
+		}catch(Exception e){
+			e.printStackTrace();
+			System.out.println("consig ERROR RESULT");
+		}finally{
+			 con.close() ;
+			 st.close();
+			 rs.close();
+	   }	
+		return consigarrayList;
+	}
+
+	@Override
+	public ArrayList<NotifyConsigneeDetails> getnotifyList(String notifyterm)
+			throws SQLException {
+		ArrayList<NotifyConsigneeDetails> notifyconsigarrayList = new ArrayList<NotifyConsigneeDetails>();
+		Connection con = null;
+		Statement st = null;
+		ResultSet rs = null;
 		try{
 			con = DBConnection.getConnection();
-			StringBuffer sql_saveprfArticle = new StringBuffer("insert into tbl_prfform (Ctno, agent, Orderdt, pono, exporterid, tanneryid, customerid, cdd_date, add_date, destination, terms, insurance, payment, commission, othercommission, splcdn, inspcdn, consigneeid, notifyid, bankid, pojw)");
-			sql_saveprfArticle.append("values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
-			String sqlquery_saveprfArticle = sql_saveprfArticle.toString();
-			pst = (PreparedStatement) con.prepareStatement(sqlquery_saveprfArticle);
-			System.out.println(" IN PRF SAVE IN THE ");
-			pst.setString(1, prfbean.getPrf_contractno());
-			System.out.println("getPrf_contractno " +prfbean.getPrf_contractno());
-			pst.setString(2, prfbean.getPrf_agentname());
-			System.out.println("getPrf_agentname " +prfbean.getPrf_agentname());
-			pst.setString(3, prfbean.getPrf_orderdate());
-			pst.setString(4, prfbean.getPrf_poreftype() +", "+ prfbean.getPrf_poref());
-			pst.setString(5, prfbean.getPrf_exporterid());
-			pst.setString(6, prfbean.getPrf_tannid());
-			pst.setString(7, prfbean.getPrf_custid());
-			pst.setString(8, prfbean.getPrf_cdd());
-			pst.setString(9, prfbean.getPrf_add());
-			pst.setString(10, prfbean.getPrf_destination());
-			pst.setString(11, prfbean.getPrf_terms());
-			pst.setString(12, prfbean.getPrf_insurance());
-			pst.setString(13, prfbean.getPrf_payment());
-			pst.setString(14, prfbean.getPrf_elclasscommission());
-			pst.setString(15, prfbean.getPrf_commission());
-			pst.setString(16, prfbean.getPrf_special());
-			pst.setString(17, prfbean.getPrf_inspcdn());
-			pst.setString(18, prfbean.getPrf_consigneeid());
-			pst.setString(19, prfbean.getPrf_notifyid());
-			pst.setString(20, prfbean.getPrf_bankid());
-			pst.setString(21, prfbean.getPrf_pojwno());
-			System.out.println("getPrf_pojw " +prfbean.getPrf_pojwno());
-			noofrows = pst.executeUpdate();
-			if(noofrows == 1){ 
-				/*
-				 * Call the STored Procedure for the prfctno table update
-				 * Save Prfno in Table 
-				 */
-			System.out.println(" Save for Ct No table "+noofrows);
-			StringBuffer sql_updtprfctno = new StringBuffer("UPDATE elpro.tbl_prfctno SET contractno = ?  WHERE agentname = '"+prfbean.getPrf_agentname()+"' ");
-			String sqlquery_updtprfctno = sql_updtprfctno.toString();
-			pst = (PreparedStatement) con.prepareStatement(sqlquery_updtprfctno);
-			pst.setString(1, prfbean.getPrf_contractno());
-			System.out.println("getPrf_contractno " +prfbean.getPrf_contractno());
-			noofrowsupdtd = pst.executeUpdate();
-			System.out.println("Sucessfully updtd the CTNo Table." + noofrowsupdtd);
+			st = (Statement) con.createStatement();
+			String sql = "SELECT notifyid, notifyname, notifyattn, notifyaddr, notifyphone, notifyfax, shortform FROM elpro.tbl_notify where notifyname like '%"+notifyterm+"%' order by notifyname";
+			rs = st.executeQuery(sql);
+			while(rs.next()) {	
+				NotifyConsigneeDetails notifyconsigbean = new NotifyConsigneeDetails();
+				notifyconsigbean.setNotifyConsigneeAddress(rs.getString("notifyaddr"));
+				notifyconsigbean.setNotifyConsigneeId(rs.getString("notifyid"));
+				notifyconsigbean.setNotifyConsigneeAttention(rs.getString("notifyattn"));
+				notifyconsigbean.setNotifyConsigneefax(rs.getString("notifyfax"));
+				notifyconsigbean.setNotifyConsigneeName(rs.getString("notifyname"));
+				notifyconsigbean.setNotifyConsigneeContactNo(rs.getString("notifyphone"));				
+				System.out.println("Notify  name "+notifyconsigbean.getNotifyConsigneeName());
+				notifyconsigarrayList.add(notifyconsigbean);
 			}
-			System.out.println("Sucessfully inserted the record.." + noofrows);
-	}catch(Exception e){
-		e.printStackTrace();
-		isSaved = false;
-		System.out.println("ERROR RESULT");
-	}finally{
-		 con.close() ;
-		 pst.close();
-   }	
-		return isSaved;
+			System.out.println("Notify Result Added Successfully");
+		}catch(Exception e){
+			e.printStackTrace();
+			System.out.println("ERROR RESULT");
+		}finally{
+			 con.close() ;
+			 st.close();
+			 rs.close();
+	   }	
+			return notifyconsigarrayList;
 	}
 
 	@Override
@@ -316,9 +385,8 @@ public class PrfDaoImpl implements PrfDao {
 			String sql = "SELECT articleid, articletype, articlename, articleshortform, size, substance, selection, color, selectionpercent, quantity, pcs, rate, tc, othername FROM tbl_article";
 			rs = st.executeQuery(sql);
 			
-			while(rs.next()) {	
-				
-				ArticleDetails artbean = new ArticleDetails();
+			while(rs.next()) {		
+			ArticleDetails artbean = new ArticleDetails();
 				artbean.setArticleid(rs.getString("articleid"));
 				artbean.setArticletype(rs.getString("articletype"));
 				artbean.setArticlename(rs.getString("articlename"));
@@ -345,221 +413,7 @@ public class PrfDaoImpl implements PrfDao {
 		   }	
 		return artarraylist;
 	}
-
-	@Override
-	public List<SelectArticle> getArticleNameList() throws SQLException {
-		List<SelectArticle> artarrayNamelist = new ArrayList<SelectArticle>();
-		Connection con = null;
-		Statement st = null;
-		ResultSet rs = null;
-		try{			
-			con = DBConnection.getConnection();
-			st = (Statement) con.createStatement();
-			String sql = "SELECT articleid, articlename FROM tbl_article";
-			rs = st.executeQuery(sql);
-			while(rs.next()) {	
-				SelectArticle selbean= new SelectArticle();
-				selbean.setPrf_articleid(rs.getString("articleid"));
-				selbean.setPrf_articlename(rs.getString("articlename"));
-				artarrayNamelist.add(selbean);
-			}
-			System.out.println("Article name "+artarrayNamelist.toString());
-		}catch(Exception e){
-			e.printStackTrace();
-			System.out.println("Article name ERROR RESULT");
-		}finally{
-				 con.close() ;
-				 st.close();
-				 rs.close();
-		  }	
-		return artarrayNamelist;
-	}
 	
-	
-	
-	@Override
-	public ArrayList<ColourDetails> getColorList() throws SQLException {
-		ArrayList<ColourDetails> colorarraylist = new ArrayList<ColourDetails>();
-		Connection con = null;
-		Statement st = null;
-		ResultSet rs = null;
-		try{			
-			con = DBConnection.getConnection();
-			st = (Statement) con.createStatement();
-			String sql = "SELECT colorid, colorname FROM tbl_color";
-			rs = st.executeQuery(sql);
-			while(rs.next()) {	
-				ColourDetails colorbean = new ColourDetails();
-				colorbean.setColourid(rs.getString("colorid"));
-				colorbean.setColourname(rs.getString("colorname"));			
-				System.out.println("Color name "+colorbean.getColourname());
-				colorarraylist.add(colorbean);
-				}
-			System.out.println("Color Result Added Successfully");
-			}catch(Exception e){
-				e.printStackTrace();
-				System.out.println("Color ERROR RESULT");
-			}finally{
-				 con.close() ;
-				 st.close();
-				 rs.close();
-			}
-		return colorarraylist;
-	}
-
-	@Override
-	public ArrayList<RateDetails> getRateList() throws SQLException {
-		ArrayList<RateDetails> ratearraylist = new ArrayList<RateDetails>();
-		Connection con = null;
-		Statement st = null;
-		ResultSet rs = null;
-		try{			
-			con = DBConnection.getConnection();
-			st = (Statement) con.createStatement();
-			String sql = "SELECT rate_id, rate_symbol, rate_subtype FROM tbl_rate";
-			rs = st.executeQuery(sql);
-			while(rs.next()) {	
-				RateDetails ratebean = new RateDetails();
-				ratebean.setRateid(rs.getString("rate_id"));
-				ratebean.setRate(rs.getString("rate_symbol"));	
-				ratebean.setDenomination(rs.getString("rate_subtype"));
-				System.out.println("Rate name "+ratebean.getRate());
-				ratearraylist.add(ratebean);
-				}
-			System.out.println("Rate Result Added Successfully");
-			}catch(Exception e){
-				e.printStackTrace();
-				System.out.println("Rate ERROR RESULT");
-			}finally{
-				 con.close() ;
-				 st.close();
-				 rs.close();
-			}
-		return ratearraylist;
-	}
-
-	@Override
-	public ArrayList<SelectionDetails> getSelectionList() throws SQLException {
-		ArrayList<SelectionDetails> selecarraylist = new ArrayList<SelectionDetails>();
-		Connection con = null;
-		Statement st = null;
-		ResultSet rs = null;
-		try{			
-			con = DBConnection.getConnection();
-			st = (Statement) con.createStatement();
-			String sql = "SELECT selection, selectionid FROM tbl_selection";
-			rs = st.executeQuery(sql);
-			while(rs.next()) {	
-				SelectionDetails selecbean = new SelectionDetails();
-				selecbean.setSelectionid(rs.getString("selectionid"));
-				selecbean.setSelectionname(rs.getString("selection"));			
-				System.out.println("selection name "+selecbean.getSelectionname());
-				selecarraylist.add(selecbean);
-				}
-			System.out.println("selection Result Added Successfully");
-			}catch(Exception e){
-				e.printStackTrace();
-				System.out.println("selection ERROR RESULT");
-			}finally{
-				 con.close() ;
-				 st.close();
-				 rs.close();
-			}
-		return selecarraylist;
-	}
-
-	@Override
-	public ArrayList<ShipmentDetails> getShipmentList() throws SQLException {
-		ArrayList<ShipmentDetails> shiparraylist = new ArrayList<ShipmentDetails>();
-		Connection con = null;
-		Statement st = null;
-		ResultSet rs = null;
-		try{			
-			con = DBConnection.getConnection();
-			st = (Statement) con.createStatement();
-			String sql = "SELECT shipmentid, shipment FROM tbl_shipment";
-			rs = st.executeQuery(sql);
-			while(rs.next()) {	
-				ShipmentDetails shipbean = new ShipmentDetails();
-				shipbean.setShipmentid(rs.getString("shipmentid"));
-				shipbean.setShipmentname(rs.getString("shipment"));			
-				System.out.println("Shipment name "+shipbean.getShipmentname());
-				shiparraylist.add(shipbean);
-				}
-			System.out.println("Shipment Result Added Successfully");
-			}catch(Exception e){
-				e.printStackTrace();
-				System.out.println("Shipment ERROR RESULT");
-			}finally{
-				 con.close() ;
-				 st.close();
-				 rs.close();
-			}
-		return shiparraylist;
-	}
-
-	@Override
-	public ArrayList<SizeRemarks> getSizeremarksList() throws SQLException {
-		ArrayList<SizeRemarks> sizeremarraylist = new ArrayList<SizeRemarks>();
-		Connection con = null;
-		Statement st = null;
-		ResultSet rs = null;
-		try{			
-			con = DBConnection.getConnection();
-			st = (Statement) con.createStatement();
-			String sql = "SELECT sizeremarksid, sizeremarks FROM tbl_sizeremarks";
-			rs = st.executeQuery(sql);
-			while(rs.next()) {	
-				SizeRemarks sizerembean = new SizeRemarks();
-				sizerembean.setSizeremarksid(rs.getString("sizeremarksid"));
-				sizerembean.setSizeremarks(rs.getString("sizeremarks"));			
-				System.out.println("sizeremarks name "+sizerembean.getSizeremarks());
-				sizeremarraylist.add(sizerembean);
-				}
-			System.out.println("sizeremarks Result Added Successfully");
-			}catch(Exception e){
-				e.printStackTrace();
-				System.out.println("sizeremarks ERROR RESULT");
-			}finally{
-				 con.close() ;
-				 st.close();
-				 rs.close();
-			}
-		return sizeremarraylist;
-	}
-
-	@Override
-	public ArrayList<TcDetails> getTcAgentList() throws SQLException {
-		ArrayList<TcDetails> tcarraylist = new ArrayList<TcDetails>();
-		Connection con = null;
-		Statement st = null;
-		ResultSet rs = null;
-		try{			
-			con = DBConnection.getConnection();
-			st = (Statement) con.createStatement();
-			String sql = "SELECT tcid, tcagent FROM tbl_tcagent";
-			rs = st.executeQuery(sql);
-			while(rs.next()) {	
-				TcDetails tcbean = new TcDetails();
-				tcbean.setTcid(rs.getString("tcid"));
-				tcbean.setTcagent(rs.getString("tcagent"));			
-				System.out.println("tc name "+tcbean.getTcagent());
-				tcarraylist.add(tcbean);
-				}
-			System.out.println("tc Result Added Successfully");
-			}catch(Exception e){
-				e.printStackTrace();
-				System.out.println("tc ERROR RESULT");
-			}finally{
-				 con.close() ;
-				 st.close();
-				 rs.close();
-			}
-		return tcarraylist;
-	}
-
-		
-
 	@Override
 	public ArrayList<PrfArticle> getPrfArticleDetails(String ctno, String sidx, String sord) throws SQLException {
 		ArrayList<PrfArticle> articlearray = new ArrayList<PrfArticle>();
@@ -716,155 +570,201 @@ public class PrfDaoImpl implements PrfDao {
 		   }	
 		return artnameeditarraylist;
 	}
-
-
+	
 	@Override
-	public ArrayList<CommissionDetails> getOtherCommissionList(
-			String othercomminsion) throws SQLException {
-		ArrayList<CommissionDetails> othercomarraylist = new ArrayList<CommissionDetails>();
+	public ArrayList<TcDetails> getTcAgentList() throws SQLException {
+		ArrayList<TcDetails> tcarraylist = new ArrayList<TcDetails>();
 		Connection con = null;
 		Statement st = null;
 		ResultSet rs = null;
 		try{			
 			con = DBConnection.getConnection();
 			st = (Statement) con.createStatement();
-			String sql = "SELECT commid, commname, commagent, commplace, commtype, agenttype FROM elpro.tbl_commission where agenttype !='el' and commname like '%"+othercomminsion+"%' order by commname";
+			String sql = "SELECT tcid, tcagent FROM tbl_tcagent";
 			rs = st.executeQuery(sql);
 			while(rs.next()) {	
-				CommissionDetails othercommbean = new CommissionDetails();
-				othercommbean.setCommissionId(rs.getString("commid"));
-				othercommbean.setValue(rs.getString("commname"));
-				othercommbean.setLabel(rs.getString("commagent"));
-				othercommbean.setCommplace(rs.getString("commplace"));
-				othercommbean.setCommtype(rs.getString("commtype"));
-				othercommbean.setAgenttype(rs.getString("agenttype"));
-				System.out.println("OTHER Commission name "+othercommbean.getCommission());
-				othercomarraylist.add(othercommbean);
+				TcDetails tcbean = new TcDetails();
+				tcbean.setTcid(rs.getString("tcid"));
+				tcbean.setTcagent(rs.getString("tcagent"));			
+				System.out.println("tc name "+tcbean.getTcagent());
+				tcarraylist.add(tcbean);
 				}
-			System.out.println("Commission Result Added Successfully");
+			System.out.println("tc Result Added Successfully");
 			}catch(Exception e){
 				e.printStackTrace();
-				System.out.println("Commission ERROR RESULT");
+				System.out.println("tc ERROR RESULT");
 			}finally{
 				 con.close() ;
 				 st.close();
 				 rs.close();
-		   }	
-		return othercomarraylist;
-	}
-
-	@Override
-	public ArrayList<BankDetails> getbankList(String bankterm)
-			throws SQLException {
-		ArrayList<BankDetails> bankarraylist = new ArrayList<BankDetails>();
-		Connection con = null;
-		Statement st = null;
-		ResultSet rs = null;
-		try{			
-			con = DBConnection.getConnection();
-			st = (Statement) con.createStatement();
-			String sql = "SELECT bankid, bankname, bankbranch, bankaddr, bankphone, bankfax, swiftcode, shortform, Acctno FROM elpro.tbl_bank where bankname like '%"+bankterm+"%' order by bankname";
-			rs = st.executeQuery(sql);
-			while(rs.next()) {	
-				BankDetails bankbean = new BankDetails();
-				bankbean.setBankAddress(rs.getString("bankaddr"));
-				bankbean.setBankBranch(rs.getString("bankbranch"));
-				bankbean.setBankFax(rs.getString("bankfax"));
-				bankbean.setBankName(rs.getString("bankname"));
-				bankbean.setBankSwiftCode(rs.getString("swiftcode"));
-				bankbean.setBankContactNo(rs.getString("bankphone"));
-				bankbean.setBankAcctNo(rs.getString("Acctno"));
-				bankbean.setBankId(rs.getString("bankid"));
-				System.out.println("Bank  name "+bankbean.getBankName());
-				bankarraylist.add(bankbean);
-				}
-			System.out.println("Bank Result Added Successfully");
-			}catch(Exception e){
-				e.printStackTrace();
-				System.out.println("Bank ERROR RESULT");
-			}finally{
-				 con.close() ;
-				 st.close();
-				 rs.close();
-		   }	
-		return bankarraylist;
-	}
-
-	@Override
-	public ArrayList<ConsigneeDetails> getcnsigneeList(String consigneeterm)
-			throws SQLException {
-		ArrayList<ConsigneeDetails> consigarrayList = new ArrayList<ConsigneeDetails>();
-		Connection con = null;
-		Statement st = null;
-		ResultSet rs = null;
-		try{			
-			con = DBConnection.getConnection();
-			st = (Statement) con.createStatement();
-			String sql = "SELECT consigid, consigname, consigattn, consigaddr, consigphone, consigfax, shortform FROM elpro.tbl_consignee where consigname like '%"+consigneeterm+"%' order by consigname";
-			rs = st.executeQuery(sql);
-			while(rs.next()) {	
-				ConsigneeDetails consigbean = new ConsigneeDetails();
-				consigbean.setConsigneeAddress(rs.getString("consigaddr"));
-				consigbean.setConsigneeAttention(rs.getString("consigattn"));
-				consigbean.setConsigneefax(rs.getString("consigfax"));
-				consigbean.setLabel(rs.getString("consigname"));
-				consigbean.setValue(rs.getString("consigname"));
-				consigbean.setConsigneeId(rs.getString("consigid"));
-				consigbean.setConsigneeContactNo(rs.getString("consigphone"));
-				System.out.println("consig  name "+consigbean.getConsigneeName());
-				consigarrayList.add(consigbean);
-				}
-			System.out.println("consig Result Added Successfully");
-		}catch(Exception e){
-			e.printStackTrace();
-			System.out.println("consig ERROR RESULT");
-		}finally{
-			 con.close() ;
-			 st.close();
-			 rs.close();
-	   }	
-		return consigarrayList;
-	}
-
-	@Override
-	public ArrayList<NotifyConsigneeDetails> getnotifyList(String notifyterm)
-			throws SQLException {
-		ArrayList<NotifyConsigneeDetails> notifyconsigarrayList = new ArrayList<NotifyConsigneeDetails>();
-		Connection con = null;
-		Statement st = null;
-		ResultSet rs = null;
-		try{
-			con = DBConnection.getConnection();
-			st = (Statement) con.createStatement();
-			String sql = "SELECT notifyid, notifyname, notifyattn, notifyaddr, notifyphone, notifyfax, shortform FROM elpro.tbl_notify where notifyname like '%"+notifyterm+"%' order by notifyname";
-			rs = st.executeQuery(sql);
-			while(rs.next()) {	
-				NotifyConsigneeDetails notifyconsigbean = new NotifyConsigneeDetails();
-				notifyconsigbean.setNotifyConsigneeAddress(rs.getString("notifyaddr"));
-				notifyconsigbean.setNotifyConsigneeId(rs.getString("notifyid"));
-				notifyconsigbean.setNotifyConsigneeAttention(rs.getString("notifyattn"));
-				notifyconsigbean.setNotifyConsigneefax(rs.getString("notifyfax"));
-				notifyconsigbean.setNotifyConsigneeName(rs.getString("notifyname"));
-				notifyconsigbean.setNotifyConsigneeContactNo(rs.getString("notifyphone"));				
-				System.out.println("Notify  name "+notifyconsigbean.getNotifyConsigneeName());
-				notifyconsigarrayList.add(notifyconsigbean);
 			}
-			System.out.println("Notify Result Added Successfully");
-		}catch(Exception e){
-			e.printStackTrace();
-			System.out.println("ERROR RESULT");
-		}finally{
-			 con.close() ;
-			 st.close();
-			 rs.close();
-	   }	
-			return notifyconsigarrayList;
+		return tcarraylist;
+	}
+	
+	@Override
+	public ArrayList<RateDetails> getRateList() throws SQLException {
+		ArrayList<RateDetails> ratearraylist = new ArrayList<RateDetails>();
+		Connection con = null;
+		Statement st = null;
+		ResultSet rs = null;
+		try{			
+			con = DBConnection.getConnection();
+			st = (Statement) con.createStatement();
+			String sql = "SELECT rate_id, rate_symbol, rate_subtype FROM tbl_rate";
+			rs = st.executeQuery(sql);
+			while(rs.next()) {	
+				RateDetails ratebean = new RateDetails();
+				ratebean.setRateid(rs.getString("rate_id"));
+				ratebean.setRate(rs.getString("rate_symbol"));	
+				ratebean.setDenomination(rs.getString("rate_subtype"));
+				System.out.println("Rate name "+ratebean.getRate());
+				ratearraylist.add(ratebean);
+				}
+			System.out.println("Rate Result Added Successfully");
+			}catch(Exception e){
+				e.printStackTrace();
+				System.out.println("Rate ERROR RESULT");
+			}finally{
+				 con.close() ;
+				 st.close();
+				 rs.close();
+			}
+		return ratearraylist;
+	}
+
+	/*@Override
+	public ArrayList<AutoComplete> getShipmentList() throws SQLException {
+		ArrayList<AutoComplete> shiparraylist = new ArrayList<AutoComplete>();
+		Connection con = null;
+		Statement st = null;
+		ResultSet rs = null;
+		try{			
+			con = DBConnection.getConnection();
+			st = (Statement) con.createStatement();
+			String sql = "SELECT shipmentid, shipment FROM tbl_shipment order by shipmentid";
+			rs = st.executeQuery(sql);
+			while(rs.next()) {	
+				AutoComplete shipbean = new AutoComplete();
+				shipbean.setShform(rs.getString("shipmentid"));
+				shipbean.setValue(rs.getString("shipment"));			
+				System.out.println("Shipment name "+shipbean.getValue());
+				shiparraylist.add(shipbean);
+				}
+			System.out.println("Shipment Result Added Successfully");
+			}catch(Exception e){
+				e.printStackTrace();
+				System.out.println("Shipment ERROR RESULT");
+			}finally{
+				 con.close() ;
+				 st.close();
+				 rs.close();
+			}
+		return shiparraylist;
+	}*/
+
+	/* (non-Javadoc)
+	 * @see sb.elpro.dao.PrfDao#getShipmentList(java.lang.String)
+	 */
+	@Override
+	public ArrayList<AutoComplete> getShipmentList(String term)throws SQLException {
+		ArrayList<AutoComplete> shipmentlist = new ArrayList<AutoComplete>() ;
+		Connection con = null;
+		Statement st = null;
+		ResultSet rs = null;
+		try{			
+			con = DBConnection.getConnection();
+			st = (Statement) con.createStatement();
+			String sql = "SELECT shipment FROM elpro.tbl_shipment order by shipment";
+			System.out.println(sql);
+			rs = st.executeQuery(sql);
+			
+			while(rs.next()) {	
+				AutoComplete shpmntbean = new AutoComplete();
+				shpmntbean.setValue(rs.getString("shipment"));	
+				shipmentlist.add(shpmntbean);
+				}
+			System.out.println(" dest Result Added Successfully");
+			}catch(Exception e){
+				e.printStackTrace();
+				System.out.println("dest ERROR RESULT");
+			}finally{
+				 con.close() ;
+				 st.close();
+				 rs.close();
+		   }	
+		return shipmentlist;
+	}
+
+	/* (non-Javadoc)
+	 * @see sb.elpro.dao.PrfDao#getPrfSelectionList()
+	 */
+	@Override
+	public ArrayList<AutoComplete> getPrfSelectionList() throws SQLException {
+		ArrayList<AutoComplete> selectlist = new ArrayList<AutoComplete>() ;
+		Connection con = null;
+		Statement st = null;
+		ResultSet rs = null;
+		try{			
+			con = DBConnection.getConnection();
+			st = (Statement) con.createStatement();
+			String sql = "SELECT selection FROM elpro.tbl_selection order by selection";
+			System.out.println(sql);
+			rs = st.executeQuery(sql);
+			
+			while(rs.next()) {	
+				AutoComplete selectbean = new AutoComplete();
+				selectbean.setValue(rs.getString("selection"));	
+				selectlist.add(selectbean);
+				}
+			System.out.println(" dest Result Added Successfully");
+			}catch(Exception e){
+				e.printStackTrace();
+				System.out.println("dest ERROR RESULT");
+			}finally{
+				 con.close() ;
+				 st.close();
+				 rs.close();
+		   }	
+		return selectlist;
+	}
+
+	/* (non-Javadoc)
+	 * @see sb.elpro.dao.PrfDao#getPrfColorMatchList()
+	 */
+	@Override
+	public ArrayList<AutoComplete> getPrfColorMatchList() throws SQLException {
+		ArrayList<AutoComplete> colormatchlist = new ArrayList<AutoComplete>() ;
+		Connection con = null;
+		Statement st = null;
+		ResultSet rs = null;
+		try{			
+			con = DBConnection.getConnection();
+			st = (Statement) con.createStatement();
+			String sql = "SELECT colormatch FROM elpro.tbl_colormatch order by colormatch";
+			System.out.println(sql);
+			rs = st.executeQuery(sql);
+			
+			while(rs.next()) {	
+				AutoComplete colormatchbean = new AutoComplete();
+				colormatchbean.setValue(rs.getString("colormatch"));	
+				colormatchlist.add(colormatchbean);
+				}
+			System.out.println(" dest Result Added Successfully");
+			}catch(Exception e){
+				e.printStackTrace();
+				System.out.println("dest ERROR RESULT");
+			}finally{
+				 con.close() ;
+				 st.close();
+				 rs.close();
+		   }	
+		return colormatchlist;
 	}
 	/*
 	 * Load Article dDetails Based on Article Name
 	 */
 
-@Override
+	@Override
 	public int saveprfArticleList(PrfArticle prfarticlebean)
 			throws SQLException {
 		Connection con = null;
@@ -1107,6 +1007,245 @@ public class PrfDaoImpl implements PrfDao {
 		   }	
 			return isdel;
 	}
+	
+	/* (non-Javadoc)
+	 * @see sb.elpro.dao.PrfDao#getSizeRemList()
+	 */
+	@Override
+	public ArrayList<AutoComplete> getSizeRemList() throws SQLException {
+		ArrayList<AutoComplete> sizeremarraylist = new ArrayList<AutoComplete>();
+		Connection con = null;
+		Statement st = null;
+		ResultSet rs = null;
+		try{			
+			con = DBConnection.getConnection();
+			st = (Statement) con.createStatement();
+			String sql = "SELECT shform, sizeremarksid FROM elpro.tbl_sizeremarks order by sizeremarks";
+			rs = st.executeQuery(sql);
+			while(rs.next()) {	
+				AutoComplete sizerembean = new AutoComplete();
+				sizerembean.setValue(rs.getString("shform"));		
+				System.out.println("selection name "+sizerembean.getValue());
+				sizeremarraylist.add(sizerembean);
+				}
+			System.out.println("selection Result Added Successfully");
+			}catch(Exception e){
+				e.printStackTrace();
+				System.out.println("selection ERROR RESULT");
+			}finally{
+				 con.close() ;
+				 st.close();
+				 rs.close();
+			}
+		return sizeremarraylist;
+	}
+
+	/* (non-Javadoc)
+	 * @see sb.elpro.dao.PrfDao#getQtyunitList()
+	 */
+	@Override
+	public ArrayList<AutoComplete> getQtyunitList() throws SQLException {
+		ArrayList<AutoComplete> qtyunitarraylist = new ArrayList<AutoComplete>();
+		Connection con = null;
+		Statement st = null;
+		ResultSet rs = null;
+		try{			
+			con = DBConnection.getConnection();
+			st = (Statement) con.createStatement();
+			String sql = "SELECT unit, comments FROM elpro.tbl_unit order by unitid";
+			rs = st.executeQuery(sql);
+			while(rs.next()) {	
+				AutoComplete qtyunitbean = new AutoComplete();
+				qtyunitbean.setValue(rs.getString("unit"));		
+				System.out.println("unit name "+qtyunitbean.getValue());
+				qtyunitarraylist.add(qtyunitbean);
+				}
+			System.out.println("qty unit Result Added Successfully");
+			}catch(Exception e){
+				e.printStackTrace();
+				System.out.println("qty unit ERROR RESULT");
+			}finally{
+				 con.close() ;
+				 st.close();
+				 rs.close();
+			}
+		return qtyunitarraylist;
+	}
+
+	/* (non-Javadoc)
+	 * @see sb.elpro.dao.PrfDao#getCurrencyList()
+	 */
+	@Override
+	public ArrayList<AutoComplete> getCurrencyList() throws SQLException {
+		ArrayList<AutoComplete> currencyarraylist = new ArrayList<AutoComplete>();
+		Connection con = null;
+		Statement st = null;
+		ResultSet rs = null;
+		try{			
+			con = DBConnection.getConnection();
+			st = (Statement) con.createStatement();
+			String sql = "SELECT name, symbol FROM elpro.tbl_currency order by currencyid";
+			rs = st.executeQuery(sql);
+			while(rs.next()) {	
+				AutoComplete currencybean = new AutoComplete();
+				currencybean.setValue(rs.getString("symbol"));		
+				System.out.println("getCurrencyList "+currencybean.getValue());
+				currencyarraylist.add(currencybean);
+				}
+			System.out.println("symbol Result Added Successfully");
+			}catch(Exception e){
+				e.printStackTrace();
+				System.out.println("symbol ERROR RESULT");
+			}finally{
+				 con.close() ;
+				 st.close();
+				 rs.close();
+			}
+		return currencyarraylist;
+	}
+
+	/* (non-Javadoc)
+	 * @see sb.elpro.dao.PrfDao#getSubCurrencyList()
+	 */
+	@Override
+	public ArrayList<AutoComplete> getSubCurrencyList() throws SQLException {
+		ArrayList<AutoComplete> subcurrencyarraylist = new ArrayList<AutoComplete>();
+		Connection con = null;
+		Statement st = null;
+		ResultSet rs = null;
+		try{			
+			con = DBConnection.getConnection();
+			st = (Statement) con.createStatement();
+			String sql = "SELECT distinct sub FROM elpro.tbl_currency order by currencyid";
+			rs = st.executeQuery(sql);
+			while(rs.next()) {	
+				AutoComplete subcurrencybean = new AutoComplete();
+				subcurrencybean.setValue(rs.getString("sub"));		
+				System.out.println("getsubCurrencyList "+subcurrencybean.getValue());
+				subcurrencyarraylist.add(subcurrencybean);
+				}
+			System.out.println("symbol Result Added Successfully");
+			}catch(Exception e){
+				e.printStackTrace();
+				System.out.println("symbol ERROR RESULT");
+			}finally{
+				 con.close() ;
+				 st.close();
+				 rs.close();
+			}
+		return subcurrencyarraylist;
+	}
+
+	/* (non-Javadoc)
+	 * @see sb.elpro.dao.PrfDao#getTcCustList()
+	 */
+	@Override
+	public ArrayList<AutoComplete> getTcCustList() throws SQLException {
+		ArrayList<AutoComplete> tccustarraylist = new ArrayList<AutoComplete>();
+		Connection con = null;
+		Statement st = null;
+		ResultSet rs = null;
+		try{			
+			con = DBConnection.getConnection();
+			st = (Statement) con.createStatement();
+			String sql = "SELECT distinct tcagent FROM elpro.tbl_tcagent order by tcagent";
+			rs = st.executeQuery(sql);
+			while(rs.next()) {	
+				AutoComplete tccustbean = new AutoComplete();
+				tccustbean.setValue(rs.getString("tcagent"));		
+				System.out.println("tcagent "+tccustbean.getValue());
+				tccustarraylist.add(tccustbean);
+				}
+			System.out.println("tcagent Result Added Successfully");
+			}catch(Exception e){
+				e.printStackTrace();
+				System.out.println("tcagent ERROR RESULT");
+			}finally{
+				 con.close() ;
+				 st.close();
+				 rs.close();
+			}
+		return tccustarraylist;
+	}
+
+	
+	@Override
+	public boolean savePrfForm(ProductDetails prfbean) throws SQLException {
+		System.out.println("In PRF SAVE");
+		Connection con = null;
+		PreparedStatement pst = null;
+		int noofrows  = 0;
+		int noofrowsupdtd  = 0;
+		boolean isSaved =true;
+		
+		try{
+			con = DBConnection.getConnection();
+			StringBuffer sql_saveprfArticle = new StringBuffer("insert into tbl_prfform (Ctno, agent, Orderdt, pono, exporterid, tanneryid, customerid, cdd_date, add_date, destination, terms, insurance, payment, commission, othercommission, splcdn, inspcdn, consigneeid, notifyid, bankid, pojw)");
+			sql_saveprfArticle.append("values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+			String sqlquery_saveprfArticle = sql_saveprfArticle.toString();
+			pst = (PreparedStatement) con.prepareStatement(sqlquery_saveprfArticle);
+			System.out.println(" IN PRF SAVE IN THE ");
+			pst.setString(1, prfbean.getPrf_contractno());
+			System.out.println("getPrf_contractno " +prfbean.getPrf_contractno());
+			pst.setString(2, prfbean.getPrf_agentname());
+			System.out.println("getPrf_agentname " +prfbean.getPrf_agentname());
+			pst.setString(3, prfbean.getPrf_orderdate());
+			pst.setString(4, prfbean.getPrf_poreftype() +", "+ prfbean.getPrf_poref());
+			pst.setString(5, prfbean.getPrf_exporterid());
+			pst.setString(6, prfbean.getPrf_tannid());
+			pst.setString(7, prfbean.getPrf_custid());
+			pst.setString(8, prfbean.getPrf_cdd());
+			pst.setString(9, prfbean.getPrf_add());
+			pst.setString(10, prfbean.getPrf_destination());
+			pst.setString(11, prfbean.getPrf_terms());
+			pst.setString(12, prfbean.getPrf_insurance());
+			pst.setString(13, prfbean.getPrf_payment());
+			pst.setString(14, prfbean.getPrf_elclasscommission());
+			pst.setString(15, prfbean.getPrf_commission());
+			pst.setString(16, prfbean.getPrf_special());
+			pst.setString(17, prfbean.getPrf_inspcdn());
+			pst.setString(18, prfbean.getPrf_consigneeid());
+			pst.setString(19, prfbean.getPrf_notifyid());
+			pst.setString(20, prfbean.getPrf_bankid());
+			pst.setString(21, prfbean.getPrf_pojwno());
+			System.out.println("getPrf_pojw " +prfbean.getPrf_pojwno());
+			noofrows = pst.executeUpdate();
+			if(noofrows == 1){ 
+				/*
+				 * Call the STored Procedure for the prfctno table update
+				 * Save Prfno in Table 
+				 */
+			System.out.println(" Save for Ct No table "+noofrows);
+			StringBuffer sql_updtprfctno = new StringBuffer("UPDATE elpro.tbl_prfctno SET contractno = ?  WHERE agentname = '"+prfbean.getPrf_agentname()+"' ");
+			String sqlquery_updtprfctno = sql_updtprfctno.toString();
+			pst = (PreparedStatement) con.prepareStatement(sqlquery_updtprfctno);
+			pst.setString(1, prfbean.getPrf_contractno());
+			System.out.println("getPrf_contractno " +prfbean.getPrf_contractno());
+			noofrowsupdtd = pst.executeUpdate();
+			System.out.println("Sucessfully updtd the CTNo Table." + noofrowsupdtd);
+			}
+			System.out.println("Sucessfully inserted the record.." + noofrows);
+	}catch(Exception e){
+		e.printStackTrace();
+		isSaved = false;
+		System.out.println("ERROR RESULT");
+	}finally{
+		 con.close() ;
+		 pst.close();
+   }	
+		return isSaved;
+	}
+
+	
+	
+
+		
+
+	
+
+
+	
+	
 
 	@Override
 	public List<ProductDetails> getEditPrfFormDetails(String ctno)
@@ -1352,104 +1491,7 @@ public class PrfDaoImpl implements PrfDao {
 		return isSaved;
 	}
 
-	/* (non-Javadoc)
-	 * @see sb.elpro.dao.PrfDao#getShipmentList(java.lang.String)
-	 */
-	@Override
-	public ArrayList<AutoComplete> getShipmentList(String term)throws SQLException {
-		ArrayList<AutoComplete> shipmentlist = new ArrayList<AutoComplete>() ;
-		Connection con = null;
-		Statement st = null;
-		ResultSet rs = null;
-		try{			
-			con = DBConnection.getConnection();
-			st = (Statement) con.createStatement();
-			String sql = "SELECT shipment FROM elpro.tbl_shipment order by shipment";
-			System.out.println(sql);
-			rs = st.executeQuery(sql);
-			
-			while(rs.next()) {	
-				AutoComplete shpmntbean = new AutoComplete();
-				shpmntbean.setValue(rs.getString("shipment"));	
-				shipmentlist.add(shpmntbean);
-				}
-			System.out.println(" dest Result Added Successfully");
-			}catch(Exception e){
-				e.printStackTrace();
-				System.out.println("dest ERROR RESULT");
-			}finally{
-				 con.close() ;
-				 st.close();
-				 rs.close();
-		   }	
-		return shipmentlist;
-	}
-
-	/* (non-Javadoc)
-	 * @see sb.elpro.dao.PrfDao#getPrfSelectionList()
-	 */
-	@Override
-	public ArrayList<AutoComplete> getPrfSelectionList() throws SQLException {
-		ArrayList<AutoComplete> selectlist = new ArrayList<AutoComplete>() ;
-		Connection con = null;
-		Statement st = null;
-		ResultSet rs = null;
-		try{			
-			con = DBConnection.getConnection();
-			st = (Statement) con.createStatement();
-			String sql = "SELECT selection FROM elpro.tbl_selection order by selection";
-			System.out.println(sql);
-			rs = st.executeQuery(sql);
-			
-			while(rs.next()) {	
-				AutoComplete selectbean = new AutoComplete();
-				selectbean.setValue(rs.getString("selection"));	
-				selectlist.add(selectbean);
-				}
-			System.out.println(" dest Result Added Successfully");
-			}catch(Exception e){
-				e.printStackTrace();
-				System.out.println("dest ERROR RESULT");
-			}finally{
-				 con.close() ;
-				 st.close();
-				 rs.close();
-		   }	
-		return selectlist;
-	}
-
-	/* (non-Javadoc)
-	 * @see sb.elpro.dao.PrfDao#getPrfColorMatchList()
-	 */
-	@Override
-	public ArrayList<AutoComplete> getPrfColorMatchList() throws SQLException {
-		ArrayList<AutoComplete> colormatchlist = new ArrayList<AutoComplete>() ;
-		Connection con = null;
-		Statement st = null;
-		ResultSet rs = null;
-		try{			
-			con = DBConnection.getConnection();
-			st = (Statement) con.createStatement();
-			String sql = "SELECT colormatch FROM elpro.tbl_colormatch order by colormatch";
-			System.out.println(sql);
-			rs = st.executeQuery(sql);
-			
-			while(rs.next()) {	
-				AutoComplete colormatchbean = new AutoComplete();
-				colormatchbean.setValue(rs.getString("colormatch"));	
-				colormatchlist.add(colormatchbean);
-				}
-			System.out.println(" dest Result Added Successfully");
-			}catch(Exception e){
-				e.printStackTrace();
-				System.out.println("dest ERROR RESULT");
-			}finally{
-				 con.close() ;
-				 st.close();
-				 rs.close();
-		   }	
-		return colormatchlist;
-	}
+	
 
 	/* (non-Javadoc)
 	 * @see sb.elpro.dao.PrfDao#getPojwArticleDetails(java.lang.String)
@@ -1503,38 +1545,118 @@ public class PrfDaoImpl implements PrfDao {
 	}
 
 	/* (non-Javadoc)
-	 * @see sb.elpro.dao.PrfDao#getSizeRemList()
+	 * @see sb.elpro.dao.PrfDao#addpoArticle(java.lang.String, java.lang.String)
 	 */
 	@Override
-	public ArrayList<AutoComplete> getSizeRemList() throws SQLException {
-		ArrayList<AutoComplete> sizeremarraylist = new ArrayList<AutoComplete>();
+	public ArrayList<PrfArticle> addpoArticle(String copyctno, String copypojw)
+			throws SQLException {
+		ArrayList<PrfArticle> pojwloadarticlearray = new ArrayList<PrfArticle>();
 		Connection con = null;
+		//PreparedStatement pst = null;
+		PreparedStatement pst1 = null;
+		PreparedStatement pst2 = null;
 		Statement st = null;
 		ResultSet rs = null;
+		int noofrows  = 0;
+		int addstatusrow = 0;
 		try{			
 			con = DBConnection.getConnection();
 			st = (Statement) con.createStatement();
-			String sql = "SELECT shform, sizeremarksid FROM elpro.tbl_sizeremarks order by sizeremarks";
+			String sql = "SELECT articleid, articletype, articleshfrom, articlename, size, substance, selection, selectionpercent, color, quantity, unit, pcs, rate, tc, user, contractno, prfarticleid FROM tbl_prf_article where contractno = '"+copyctno+"' ";
+			System.out.println(sql);
 			rs = st.executeQuery(sql);
 			while(rs.next()) {	
-				AutoComplete sizerembean = new AutoComplete();
-				sizerembean.setValue(rs.getString("shform"));		
-				System.out.println("selection name "+sizerembean.getValue());
-				sizeremarraylist.add(sizerembean);
+			PrfArticle pojwselartbean = new PrfArticle();
+				pojwselartbean.setArticleid(rs.getString("articleid"));
+				pojwselartbean.setPrf_articletype(rs.getString("articletype"));
+				pojwselartbean.setPrf_articlename(rs.getString("articlename"));
+				pojwselartbean.setArtshform(rs.getString("articleshfrom"));
+				pojwselartbean.setPrf_size(rs.getString("size"));
+				System.out.println("size "+rs.getString("size"));
+				pojwselartbean.setPrf_substance(rs.getString("substance"));
+				pojwselartbean.setPrf_selection(rs.getString("selection"));
+				pojwselartbean.setPrf_selectionp(rs.getString("selectionpercent"));
+				pojwselartbean.setPrf_color(rs.getString("color"));
+				pojwselartbean.setPrf_quantity(rs.getString("quantity"));
+				pojwselartbean.setPrf_contractnum(rs.getString("contractno"));
+				pojwselartbean.setPrf_articleid(rs.getString("prfarticleid"));
+				pojwselartbean.setPrf_unit(rs.getString("unit"));
+				pojwselartbean.setPrf_pieces(rs.getString("pcs"));
+				pojwselartbean.setPrf_rate(rs.getString("rate"));
+				System.out.println("rate "+rs.getString("rate"));
+				pojwselartbean.setPrf_tc(rs.getString("tc"));
+				System.out.println("rate "+rs.getString("tc"));
+				pojwselartbean.setUser(rs.getString("user"));
+				pojwselartbean.setPrf_articleid(rs.getString("prfarticleid"));	
+				System.out.println("Artilce REtrieved Successfully");
+				System.out.println("Article name "+pojwselartbean.getPrf_articlename());
+				pojwloadarticlearray.add(pojwselartbean);
 				}
-			System.out.println("selection Result Added Successfully");
-			}catch(Exception e){
-				e.printStackTrace();
-				System.out.println("selection ERROR RESULT");
-			}finally{
-				 con.close() ;
-				 st.close();
-				 rs.close();
+		/*
+		 * Method to Copy the Article from Contract TO POJW 
+		 */
+			StringBuffer sql_saveprfArticle = new StringBuffer("insert into tbl_prf_article (articleid, articlename, size, substance, selection, selectionpercent, color, quantity, unit, pcs, rate, tc, contractno, articletype, articleshfrom,user)");
+			sql_saveprfArticle.append("values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+			String sqlquery_saveprfArticle = sql_saveprfArticle.toString();
+			pst1 = (PreparedStatement) con.prepareStatement(sqlquery_saveprfArticle);
+			for(int i=0; i<pojwloadarticlearray.size(); i++){
+				PrfArticle  pojwarticlearray = pojwloadarticlearray.get(i);
+				pst1.setString(1, pojwarticlearray.getArticleid());
+				System.out.println("getArticleid " +pojwarticlearray.getArticleid());
+				pst1.setString(2, pojwarticlearray.getPrf_articlename());
+				System.out.println("getArticlename " +pojwarticlearray.getPrf_articlename());
+				pst1.setString(3, pojwarticlearray.getPrf_size());
+				pst1.setString(4, pojwarticlearray.getPrf_substance());
+				pst1.setString(5, pojwarticlearray.getPrf_selection());
+				pst1.setString(6, pojwarticlearray.getPrf_selectionp());
+				pst1.setString(7, pojwarticlearray.getPrf_color());
+				pst1.setString(8, pojwarticlearray.getPrf_quantity());
+				pst1.setString(9, pojwarticlearray.getPrf_unit());
+				pst1.setString(10, pojwarticlearray.getPrf_pieces());
+				pst1.setString(11, pojwarticlearray.getPrf_rate());
+				pst1.setString(12, pojwarticlearray.getPrf_tc());
+				pst1.setString(13, copypojw);
+				pst1.setString(14, pojwarticlearray.getPrf_articletype());
+				pst1.setString(15, pojwarticlearray.getArtshform() );
+				pst1.setString(16, pojwarticlearray.getUser());
+				System.out.println("getContractno " +pojwarticlearray.getPrf_contractnum());
 			}
-		return sizeremarraylist;
+			noofrows = pst1.executeUpdate();
+			System.out.println("noofrows INSERTED  "+noofrows);
+			if(noofrows == 1){
+				System.out.println(" Save for Status table "+noofrows);
+				StringBuffer sql_saveprfArticlestatus = new StringBuffer("insert into elpro.tbl_prfarticle_status (artname, status, qty, qshipped, qbal, invdetails, reps, comments, feddback, contractno, rdd_date) ");
+				sql_saveprfArticlestatus.append("values (?,?,?,?,?,?,?,?,?,?,?)");
+				String sqlquery_saveprfArticlestatus = sql_saveprfArticlestatus.toString();
+				System.out.println("Save quert" +sqlquery_saveprfArticlestatus);
+				pst2 = (PreparedStatement) con.prepareStatement(sqlquery_saveprfArticlestatus);
+				for(int i=0; i<pojwloadarticlearray.size(); i++){
+				 PrfArticle  pojwstatusarticlearray = pojwloadarticlearray.get(i);
+					pst2.setString(1, pojwstatusarticlearray.getPrf_articlename());
+					System.out.println("getPrf_articlename " +pojwstatusarticlearray.getPrf_articlename());
+					pst2.setString(2, "P");
+					pst2.setString(3, pojwstatusarticlearray.getPrf_quantity());
+					pst2.setString(4, "0");
+					pst2.setString(5, pojwstatusarticlearray.getPrf_quantity());
+					pst2.setString(6, "NA");
+					pst2.setString(7, "NA");
+					pst2.setString(8, "NA");
+					pst2.setString(9, "NA");
+					pst2.setString(10, pojwstatusarticlearray.getPrf_contractnum());
+					pst2.setString(11, "2014-01-01");
+				}
+				//int prfarticleid = Integer.parseInt(pojwarticlearray.getPrf_articleid());
+				addstatusrow = pst2.executeUpdate();
+				System.out.println("Sucessfully Inseerter in Status Table." + addstatusrow);
+			}
+		}catch(Exception e){
+			e.printStackTrace();
+			System.out.println("ERROR RESULT");
+		}finally{
+			 con.close() ;
+			 st.close();
+			 rs.close();
+	   }	
+		return pojwloadarticlearray;
 	}
-
-	
-
-	
 }

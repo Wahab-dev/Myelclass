@@ -130,7 +130,9 @@ $(function() {
 		var vl = $(this).val();
 		if(vl){
 			if(vl == "clear"){
-				bulkgrid.jqGrid('groupingRemove',true);	
+				bulkgrid.jqGrid('groupingRemove',true,{
+					groupColumnShow: [true]
+				});				
 			}else{
 				bulkgrid.jqGrid('groupingGroupBy', vl, {
 					groupOrder : ['asc'],
@@ -138,7 +140,7 @@ $(function() {
 					groupSummary : [true],
 					groupColumnShow: [false],
 					groupingView: {
-						groupCollapse: [true],
+						groupCollapse: [false],
 					}
 				});
 			}	
@@ -157,34 +159,71 @@ $(function() {
 		          'Bank', 'Destination', 'Splcdn', 'Representative', 'Prfarticleid', 'User','ApplytoAll'
 		          ],
 		colModel :[
-		          {name: 'status', index: 'status', align: 'center', width:45, editable:true, sortable: true, hidden:false,
-						search: true, stype:'select', searchrules:{required:true}, edittype: 'select',
-						editoptions:{value:{P:'Pending',I:'Inspection',D:'Delivered',PS:'Partial Ship',S:'Shipped',RW:'Rework',AA:'Await Approval',AP:'Await Payment',C:'Closed',CA:'Cancel'},defaultValue: 'Pending'},
-						searchoptions:{value:":All;P:Pending;I:Inspection;D:Delivered;PS:Partial Ship;S:Shipped;RW:Rework;AA:Await Approval;AP:Await Payment;C:Closed;CA:Cancel"},
-							
-				  },
-				  {name: 'ctno', index: 'ctno', align:'center', width:60, editable:true, sortable: true, hidden:false, frozen:true,
-						editrules :{require : true}, formatter: "dynamicLink",
-						formatoptions: {
-								url: function (cellValue, rowId, rowData) {
-									return '/Myelclass/LoadPrf.do'+ '?' +'action=editform&'+
-									$.param({
-										ctno: rowData.ctno
-									});
-									}
-								 }
-				  },
-				  {name: 'agent', index: 'agent', align:'center', width:30, editable:true, sortable: true, hidden:true, search: true, stype:'text',
-					      editrules :{require : true},			
-				  },
-				  {name: 'orderdt', index: 'orderdt', align:'center', width:65, editable:true, sortable: true, hidden: false, search: true, 								
-						sorttype: 'date',
-						//stype:'date',
-						formatter: 'date', formatoptions: { newformat: 'd-m-Y' }, editable: true, datefmt: 'd-M-Y',
-	                       // editoptions: { dataInit: initDateEdit },
-	                        searchoptions: { sopt: ['eq', 'ne', 'lt', 'le', 'gt', 'ge'], dataInit: initDateSearch } 	
-						
-				  },
+				          	{name: 'status', index: 'status', align: 'center', width:45, editable:true, sortable: true, hidden:false, classes: 'statusbgcolor', 
+								search: true, stype:'select', searchrules:{required:true}, edittype: 'select',
+								editoptions:{value:{P:'Pending',I:'Inspection',D:'Delivered',PS:'Partial Ship',S:'Shipped',RW:'Rework',AA:'Await Approval',AP:'Await Payment',C:'Closed',CA:'Cancel'},defaultValue: 'Pending'},
+								searchoptions:{value:":All;P:Pending;I:Inspection;D:Delivered;PS:Partial Ship;S:Shipped;RW:Rework;AA:Await Approval;AP:Await Payment;C:Closed;CA:Cancel",sopt:['eq','ne'] },
+								
+						  	},
+						  	{name: 'ctno', index: 'ctno', align:'center', width:60, editable:true, sortable: true, hidden:false, //frozen:true,
+								editrules :{require : true}, formatter: "dynamicLink",
+								formatoptions: {
+										url: function (cellValue, rowId, rowData) {
+											return '/Myelclass/LoadPrf.do'+ '?' +'action=editform&'+
+											$.param({
+												ctno: rowData.ctno
+											});
+											}
+										 },
+								/*cellattr: function (rowId, tv, rawObject, cm, rdata) {
+										alert(rawObject[11]);
+							                 //conditional formatting
+							                     if (rawObject[11] > 0) {
+							                         return 'style="background-color:#FFCCCC"';
+							                     }
+								},*/
+								/*cellattr: function(cellValue) {
+									var value = cellValue;
+									alert(value);
+									return (value.substring(0,2) == "L4") ? ' class="ui-state-error-text"' : '';
+								},*/
+								 /*formatter: function (cellvalue) {
+					                            var color;
+					                            var val = cellvalue;
+					        
+					                            if (val.substring(0,2) == "L4") {
+					                                color = 'red';
+					                            } else {
+					                                color = 'green';
+					                            }
+					                            return '<span class="cellWithoutBackground" style="background-color:' + color + ';">' + cellvalue + '</span>';
+					                        }*/
+								
+						  	},
+						  	{name: 'agent', index: 'agent', align:'center', width:30, editable:true, sortable: true, hidden:true, search: true, stype:'text',
+							      editrules :{require : true},	
+							      /*
+							       * Background color Change Based on value
+							       */
+							      /*formatter: function (cellvalue) {
+			                            var color;
+			                            var val = cellvalue;
+			                            if (val == ("IC")) {
+			                                color = '#E0E0FF';
+			                            } else {
+			                                color = '#FFF5FF';
+			                            }
+			                            return '<span class="cellWithoutBackground" style="background-color:' + color + ';">' + cellvalue + '</span>';
+			                        }*/
+						  	},
+						  	{name: 'orderdt', index: 'orderdt', align:'center', width:65, editable:true, sortable: true, hidden: false, search: true, 								
+								sorttype: 'date',
+								//stype:'date',
+								formatter: 'date', formatoptions: { newformat: 'd-m-Y' }, editable: true, datefmt: 'd-M-Y',
+			                       // editoptions: { dataInit: initDateEdit },
+			                        searchoptions: { sopt: ['eq', 'ne', 'lt', 'le', 'gt', 'ge'], dataInit: initDateSearch } 	
+								
+						  	},
 							{name: 'pono', index: 'pono', align:'center', width:90, editable:true, sortable: true, hidden:true,
 								editrules :{require : true},
 							},
@@ -197,7 +236,7 @@ $(function() {
 							{name: 'customerid', index: 'customerid', align:'center', width:60, editable:true, sortable: true, hidden:false,
 								editrules :{require : true},
 							},
-							{name: 'articletype', index: 'articletype', align:'center', width:90, editable:true, sortable: true, hidden:true,
+							{name: 'articletype', index: 'articletype', align:'center', width:90, editable:true, sortable: true, hidden:false, // as per mary  req on 11-08-2014
 								//	editrules :{require : true},
 							},							
 							{name: 'articlename', index: 'articlename', align:'center', width:90, editable:true, sortable: true, hidden:false,
@@ -228,10 +267,10 @@ $(function() {
 							{name: 'unit', index: 'unit', align:'center', width:70, editable:true, sortable: true, hidden:true,
 							//	editrules :{require : true},
 							},
-							{name: 'qshipped', index: 'qshipped', align:'right', width:50, editable:true, sortable: true, hidden: false,
+							{name: 'qshipped', index: 'qshipped', align:'right', width:50, editable:true, sortable: true, hidden: false,classes: 'qshpdbgcolor',
 								summaryType:'sum', summaryTpl:'<b> {0}</b>',
 							},
-							{name: 'qbal', index: 'qbal', align:'right', width:50, editable:true, sortable: true, hidden:false,
+							{name: 'qbal', index: 'qbal', align:'right', width:50, editable:true, sortable: true, hidden:false, classes: 'qbalbgcolor',
 							//	editrules :{require : true},
 							},
 							{name: 'comments', index: 'Pro Stat', align:'center', width:90, editable:true, sortable: true, hidden:true,
@@ -296,7 +335,7 @@ $(function() {
 							//	editrules :{require : true},formoptions : {
 							},
 							
-							{name: 'splcdn', index: 'splcdn', align:'center', width:90, editable:true, sortable: true, hidden: true,
+							{name: 'splcdn', index: 'splcdn', align:'center', width:90, editable:true, sortable: true, hidden: true, viewable: true,
 								edittype: 'textarea',
 								editrules :{require : true},
 							},
@@ -324,7 +363,7 @@ $(function() {
 		caption: "Bulk Tracking Report",
 		loadtext: "Bulk Tracking is Loading",
 		pager: '#bulkktrackpager',
-		rowNum: 500,
+		rowNum: 1000,
 		rowList: [20,50,100,200,500,1000],
 		rownumbers: true,
 		height : "360",
@@ -340,6 +379,7 @@ $(function() {
 		gridview : true,
 		viewrecords: true,
 		footerrow: true,
+		// scroll: 1, when Enabled it implements infinite Scrolling for the Biulk Tracking Report -- 
 		altRows: true, // altrows and altclass for alternate color on grid rows
 		emptyrecords: 'No records to display',
 		loadComplete: function() {
@@ -361,9 +401,22 @@ $(function() {
 		},	
 	},{},{},{},
 	{
+		//Serach
 	 	multipleSearch:true,
 	 	stringResult  :true,
 	 	multipleGroup:true,
+	 },{
+		 top : 50,
+		 left : 100,
+		 width : 350,
+		 beforeShowForm: function(form) {
+			$("#trv_splcdn").show();
+			$("#trv_commission").show();	
+		},
+		 afterclickPgButtons: function(whichbutton, form, rowid) {
+             $("#trv_splcdn").show();
+             $("#trv_commission").show();
+         }
 	 }	
 	);
 	bulkgrid.jqGrid('navButtonAdd','#'+bulkgrid[0].id+'_toppager_left',{
@@ -470,10 +523,9 @@ $(function() {
   $("#search_" + bulkgrid[0].id, bottomPagerDiv).remove(); 
   $("#refresh_" + bulkgrid[0].id, bottomPagerDiv).remove(); 
 	
-	/*
-	 * Function to print the Master Page
-	 */
-
+   /*
+	* Function to print the Master Page
+	*/
 	function downloadPdf()
 	{
 		download('pdf');
@@ -496,8 +548,7 @@ $(function() {
 			modal: true,
 			buttons: {"Close": function() {
 				$(this).dialog("close");
-			}
-			}
+			}}
 		});
 	}	
 });

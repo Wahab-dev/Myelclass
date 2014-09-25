@@ -16,7 +16,9 @@ $(function() {
 			var vl = $(this).val();
 			if(vl){
 				if(vl == "clear"){
-					insptrackgrid.jqGrid('groupingRemove',true);	
+					insptrackgrid.jqGrid('groupingRemove',true,{
+						groupColumnShow: [true]
+					});	
 				}else{
 					insptrackgrid.jqGrid('groupingGroupBy', vl, {
 						groupOrder : ['asc'],
